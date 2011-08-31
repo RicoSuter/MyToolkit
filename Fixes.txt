@@ -18,6 +18,7 @@ Add to App.xaml to stretch ListBoxes:
 
 
 
+
 MVVM: ViewModel instantiation in XAML
 =====================================
 
