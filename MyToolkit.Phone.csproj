@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
@@ -84,6 +85,7 @@
     <Compile Include="UI\PasswordBoxBinding.cs" />
     <Compile Include="UI\ItemsControlEx.cs" />
     <Compile Include="UI\NavigationList.cs" />
+    <Compile Include="UI\ProgressIndicatorProxy.cs" />
     <Compile Include="UI\TextBoxBinding.cs" />
     <Compile Include="Utilities\Notifications\Notification.cs" />
     <Compile Include="Utilities\StringUtility.cs" />
