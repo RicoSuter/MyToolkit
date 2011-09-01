@@ -232,7 +232,10 @@ namespace MyToolkit.Network
 						req.Query["__dcachetime"] = DateTime.Now.Ticks.ToString(); // TODO auch im else, wenn kein query
 
 					var queryString = GetQueryString(req.Query);
-					request = (HttpWebRequest)WebRequest.Create(req.URI + "?" + queryString);
+					if (req.URI.Contains("?"))
+						request = (HttpWebRequest)WebRequest.Create(req.URI + "&" + queryString);
+					else
+						request = (HttpWebRequest)WebRequest.Create(req.URI + "?" + queryString);
 				} else
 					request = (HttpWebRequest)WebRequest.Create(req.URI);
 
