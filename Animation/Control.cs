@@ -22,7 +22,6 @@ namespace MyToolkit.Animation
 			if (finishedAction != null)
 				story.Completed += delegate { finishedAction(); };
 
-			target.Visibility = Visibility.Visible; 
 			story.Begin();
 		}
 
@@ -42,7 +41,6 @@ namespace MyToolkit.Animation
 			story.Completed += delegate
 			                   	{
 			                   		target.Opacity = 0.0;
-			                   		target.Visibility = Visibility.Collapsed;
 			                   		if (finishedAction != null)
 			                   			finishedAction();
 			                   	};
