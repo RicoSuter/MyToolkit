@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?><ItemProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Properties><Property><Name>svn:ignore</Name><Value>_ReSharper.MyToolkit
+Bin
+MyToolkit.5.0.ReSharper.user
+MyToolkit.Phone.csproj.user
+MyToolkit.Silverlight.csproj.user
+MyToolkit.suo
+MyToolkit.WPF.csproj.user
+obj
+</Value></Property></Properties></ItemProperties>
