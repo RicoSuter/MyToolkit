@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 
 namespace MyToolkit.Collections
@@ -17,11 +18,11 @@ namespace MyToolkit.Collections
 			this.originalCollection = originalCollection;
 			this.where = where;
 
-			originalCollection.CollectionChanged += delegate { UpdateList(); };
-			UpdateList();
+			originalCollection.CollectionChanged += UpdateList;
+			UpdateList(null, null);
 		}
 
-		private void UpdateList()
+		private void UpdateList(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
 		{
 			var list = originalCollection.Where(where).OrderBy(orderBy).ToList();
 
@@ -46,6 +47,11 @@ namespace MyToolkit.Collections
 				}
 				prev++;
 			}
+		}
+
+		public void Unload()
+		{
+			originalCollection.CollectionChanged -= UpdateList;
 		}
 	}
 }

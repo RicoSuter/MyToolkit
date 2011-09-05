@@ -26,11 +26,11 @@ namespace MyToolkit.Collections
 			this.originalCollection = originalCollection;
 			this.where = where;
 
-			originalCollection.CollectionChanged += delegate { UpdateList(); };
-			UpdateList();
+			originalCollection.CollectionChanged += UpdateList;
+			UpdateList(null, null);
 		}
 
-		private void UpdateList()
+		private void UpdateList(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
 		{
 			var list = originalCollection.Where(where).ToList();
 			
@@ -55,6 +55,11 @@ namespace MyToolkit.Collections
 				}
 				prev++; 
 			}
+		}
+
+		public void Unload()
+		{
+			originalCollection.CollectionChanged -= UpdateList;
 		}
 	}
 }
