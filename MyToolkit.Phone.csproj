@@ -56,6 +56,8 @@
     <Compile Include="Animation\Background.cs" />
     <Compile Include="Animation\Control.cs" />
     <Compile Include="Animation\UIElement.cs" />
+    <Compile Include="Collections\FilteredObservableCollection.cs" />
+    <Compile Include="Collections\OrderedObservableCollection.cs" />
     <Compile Include="Converters\TypeVisibilityConverter.cs" />
     <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\ImageBackgroundColorConverter.cs" />
