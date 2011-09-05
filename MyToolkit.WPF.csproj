@@ -52,6 +52,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\FilteredObservableCollection.cs" />
+    <Compile Include="Collections\OrderedObservableCollection.cs" />
     <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\NotConverter.cs" />
     <Compile Include="Converters\TypeVisibilityConverter.cs" />
