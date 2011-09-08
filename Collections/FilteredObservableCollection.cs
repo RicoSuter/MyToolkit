@@ -3,16 +3,6 @@ using System.Collections.Generic;
 using System.Linq; 
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using MyToolkit.Utilities;
 
 namespace MyToolkit.Collections
@@ -27,24 +17,23 @@ namespace MyToolkit.Collections
 			this.originalCollection = originalCollection;
 			this.where = where;
 
-			var wref = new WeakEvent<ObservableCollection<T>, FilteredObservableCollection<T>, NotifyCollectionChangedEventHandler>(originalCollection, this);
-			wref.Event = (s, e) => OnCollectionChanged(wref, s, e);
-			originalCollection.CollectionChanged += wref.Event;
+			var weakEvent = new WeakEvent<ObservableCollection<T>, FilteredObservableCollection<T>, NotifyCollectionChangedEventHandler>(originalCollection, this);
+			weakEvent.Event = (s, e) => OnCollectionChanged(weakEvent);
+			originalCollection.CollectionChanged += weakEvent.Event;
 
-			UpdateList(null, null);
+			UpdateList();
 		}
 
 		private static void OnCollectionChanged(
-			WeakEvent<ObservableCollection<T>, FilteredObservableCollection<T>, NotifyCollectionChangedEventHandler> weakEvent, 
-			object sender, NotifyCollectionChangedEventArgs args)
+			WeakEvent<ObservableCollection<T>, FilteredObservableCollection<T>, NotifyCollectionChangedEventHandler> weakEvent)
 		{
 			if (weakEvent.IsAlive)
-				weakEvent.Reference.UpdateList(sender, args);
+				weakEvent.Reference.UpdateList();
 			else
 				weakEvent.Target.CollectionChanged -= weakEvent.Event;
 		}
 
-		private void UpdateList(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+		private void UpdateList()
 		{
 			var list = originalCollection.Where(where).ToList();
 			
@@ -69,11 +58,6 @@ namespace MyToolkit.Collections
 				}
 				prev++; 
 			}
-		}
-
-		public void Unload()
-		{
-			originalCollection.CollectionChanged -= UpdateList;
 		}
 	}
 }
