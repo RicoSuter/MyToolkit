@@ -90,6 +90,7 @@
     <Compile Include="UI\TextBoxBinding.cs" />
     <Compile Include="Utilities\Notifications\Notification.cs" />
     <Compile Include="Utilities\StringUtility.cs" />
+    <Compile Include="Utilities\WeakEvent.cs" />
     <Compile Include="Utilities\Xml.cs" />
   </ItemGroup>
   <ItemGroup>

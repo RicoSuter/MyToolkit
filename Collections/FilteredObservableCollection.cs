@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using MyToolkit.Utilities;
 
 namespace MyToolkit.Collections
 {
@@ -26,8 +27,21 @@ namespace MyToolkit.Collections
 			this.originalCollection = originalCollection;
 			this.where = where;
 
-			originalCollection.CollectionChanged += UpdateList;
+			var wref = new WeakEvent<ObservableCollection<T>, FilteredObservableCollection<T>, NotifyCollectionChangedEventHandler>(originalCollection, this);
+			wref.Event = (s, e) => OnCollectionChanged(wref, s, e);
+			originalCollection.CollectionChanged += wref.Event;
+
 			UpdateList(null, null);
+		}
+
+		private static void OnCollectionChanged(
+			WeakEvent<ObservableCollection<T>, FilteredObservableCollection<T>, NotifyCollectionChangedEventHandler> weakEvent, 
+			object sender, NotifyCollectionChangedEventArgs args)
+		{
+			if (weakEvent.IsAlive)
+				weakEvent.Reference.UpdateList(sender, args);
+			else
+				weakEvent.Target.CollectionChanged -= weakEvent.Event;
 		}
 
 		private void UpdateList(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)

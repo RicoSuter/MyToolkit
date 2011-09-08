@@ -16,7 +16,7 @@ namespace MyToolkit.Messages
 		private static readonly List<MyTriple> actions = new List<MyTriple>();
 		
 		/// <summary>
-		/// Registers an action for the given receiver.  
+		/// Registers an action for the given receiver. WARNING: You have to unregister the action to avoid memory leaks!
 		/// </summary>
 		/// <typeparam name="T">Type of the message</typeparam>
 		/// <param name="receiver">Receiver to use as identifier</param>

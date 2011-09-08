@@ -71,6 +71,8 @@
     <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="Network\Http.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\StringUtility.cs" />
+    <Compile Include="Utilities\WeakEvent.cs" />
     <Compile Include="Utilities\Xml.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
