@@ -39,11 +39,12 @@ namespace MyToolkit.MVVM
 	[DataContract]
 	public class NotifyPropertyChanged<TU> : NotifyPropertyChanged
 	{
-		private readonly IDictionary<object, string> expressionDictionary =  
-            new Dictionary<object, string>(); 
+		private IDictionary<object, string> expressionDictionary; 
 	
 		public bool SetProperty<T>(Expression<Func<TU, T>> expression, ref T oldValue, T newValue)
 		{
+			if (expressionDictionary == null)
+				expressionDictionary = new Dictionary<object, string>();
 			if (!expressionDictionary.ContainsKey(expression))
 				expressionDictionary[expression] = ((MemberExpression) expression.Body).Member.Name;
 			return SetProperty(expressionDictionary[expression], ref oldValue, newValue);
@@ -51,6 +52,8 @@ namespace MyToolkit.MVVM
 
 		public void RaisePropertyChanged<T>(Expression<Func<TU, T>> expression)
 		{
+			if (expressionDictionary == null)
+				expressionDictionary = new Dictionary<object, string>();
 			if (!expressionDictionary.ContainsKey(expression))
 				expressionDictionary[expression] = ((MemberExpression) expression.Body).Member.Name;
 			RaisePropertyChanged(expressionDictionary[expression]);
