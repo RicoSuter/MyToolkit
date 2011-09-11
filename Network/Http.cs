@@ -12,7 +12,7 @@ namespace MyToolkit.Network
 		public UploadFile(string name, string filename, string path)
 		{
 			Name = name;
-			Filename = filename;
+			Filename = System.IO.Path.GetFileName(filename);
 			Path = path;
 			CloseStream = true; 
 		}
@@ -28,7 +28,7 @@ namespace MyToolkit.Network
 		public UploadFile(string name, string filename, Stream stream, bool closeStream = true)
 			: this(name, null)
 		{
-			Filename = filename;
+			Filename = System.IO.Path.GetFileName(filename);
 			Stream = stream;
 			CloseStream = closeStream;
 		}
