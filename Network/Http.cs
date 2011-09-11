@@ -9,23 +9,32 @@ namespace MyToolkit.Network
 {
 	public class UploadFile
 	{
-		public UploadFile(string name/*, string filename*/, string path)
+		public UploadFile(string name, string filename, string path)
 		{
 			Name = name;
-//			Filename = filename;
+			Filename = filename;
 			Path = path;
 			CloseStream = true; 
 		}
 
-		public UploadFile(string name, /*string filename,*/ Stream stream, bool closeStream = true)
+		public UploadFile(string name, string path)
+		{
+			Name = name;
+			Filename = System.IO.Path.GetFileName(path);
+			Path = path;
+			CloseStream = true;
+		}
+
+		public UploadFile(string name, string filename, Stream stream, bool closeStream = true)
 			: this(name, null)
 		{
+			Filename = filename;
 			Stream = stream;
 			CloseStream = closeStream;
 		}
 
 		public string Name { get; private set; }
-		//public string Filename { get; private set; }
+		public string Filename { get; private set; }
 		public string Path { get; private set; } // use Path OR Stream
 		public Stream Stream { get; private set; }
 		public bool CloseStream { get; private set; }
@@ -173,13 +182,12 @@ namespace MyToolkit.Network
 				}
 			}
 
-			//const string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n";
-			const string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"\r\nContent-Type: {1}\r\n\r\n";
+			const string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n";
 			foreach (var file in files)
 			{
 				stream.Write(boundarybytes, 0, boundarybytes.Length);
 
-				var header = string.Format(headerTemplate, file.Name, /*file.Filename,*/ file.ContentType ?? "application/octet-stream");
+				var header = string.Format(headerTemplate, file.Name, file.Filename, file.ContentType ?? "application/octet-stream");
 				var headerbytes = encoding.GetBytes(header);
 
 				stream.Write(headerbytes, 0, headerbytes.Length);
