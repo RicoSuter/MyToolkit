@@ -263,18 +263,21 @@ namespace MyToolkit.Network
 						using (var reader = new StreamReader(response.GetResponseStream(), req.Encoding))
 						{
 							var result = reader.ReadToEnd();
-							action(result, null);
+							if (action != null)
+								action(result, null);
 						}
 					}
 					catch (Exception e)
 					{
-						action(null, e);
+						if (action != null)
+							action(null, e);
 					}
 				}, request);
 			}
 			catch (Exception e)
 			{
-				action(null, e);
+				if (action != null)
+					action(null, e);
 			}
 		}
 

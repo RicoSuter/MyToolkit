@@ -89,6 +89,7 @@
     <Compile Include="UI\NavigationList.cs" />
     <Compile Include="UI\ProgressIndicatorProxy.cs" />
     <Compile Include="UI\TextBoxBinding.cs" />
+    <Compile Include="Utilities\Image.cs" />
     <Compile Include="Utilities\Notifications\Notification.cs" />
     <Compile Include="Utilities\StringUtility.cs" />
     <Compile Include="Utilities\WeakEvent.cs" />
