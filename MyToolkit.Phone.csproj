@@ -80,6 +80,7 @@
     <Compile Include="Performance\GlobalSuppressions.cs" />
     <Compile Include="Performance\LowProfileImageLoader.cs" />
     <Compile Include="Phone\Marketplace.cs" />
+    <Compile Include="Phone\MemoryDiagnosticsHelper.cs" />
     <Compile Include="Phone\Resources.cs" />
     <Compile Include="Phone\Settings.cs" />
     <Compile Include="Phone\Thombstone.cs" />
