@@ -62,7 +62,6 @@
     <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\ImageBackgroundColorConverter.cs" />
     <Compile Include="Converters\NotConverter.cs" />
-    <Compile Include="Converters\ReadColorConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="Encryption\SimpleEncryption.cs" />
     <Compile Include="Messages\ActionMessage.cs" />
