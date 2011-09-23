@@ -90,6 +90,7 @@
     <Compile Include="UI\NavigationList.cs" />
     <Compile Include="UI\ProgressIndicatorProxy.cs" />
     <Compile Include="UI\TextBoxBinding.cs" />
+    <Compile Include="UI\UnstyledButton.cs" />
     <Compile Include="Utilities\ImageUtil.cs" />
     <Compile Include="Utilities\Notifications\Notification.cs" />
     <Compile Include="Utilities\StringUtility.cs" />
