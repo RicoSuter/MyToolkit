@@ -27,15 +27,15 @@ namespace MyToolkit.Network
 
 		public static void Wake(string macAddress, Action sentAction, Action<SocketError> failureAction)
 		{
-			Wake(IPAddress.Broadcast, 7, MacAddressToBytes(macAddress), sentAction, failureAction);
+			Wake(new IPEndPoint(IPAddress.Broadcast, 7), MacAddressToBytes(macAddress), sentAction, failureAction);
 		}
 
-		public static void Wake(string ipAddress, int port, string macAddress, Action sentAction, Action<SocketError> failureAction)
+		public static void Wake(string host, int port, string macAddress, Action sentAction, Action<SocketError> failureAction)
 		{
-			Wake(IPAddress.Parse(ipAddress), port, MacAddressToBytes(macAddress), sentAction, failureAction);
+			Wake(new DnsEndPoint(host, port), MacAddressToBytes(macAddress), sentAction, failureAction);
 		}
 
-		public static void Wake(IPAddress ipAddress, int port, byte[] macAddress, Action sentAction, Action<SocketError> failureAction)
+		public static void Wake(EndPoint endPoint, byte[] macAddress, Action sentAction, Action<SocketError> failureAction)
 		{
 			var packet = new List<byte>();
 			for (var i = 0; i < 6; i++) // Trailer of 6 FF packets
@@ -45,7 +45,7 @@ namespace MyToolkit.Network
 			
 			var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 			var args = new SocketAsyncEventArgs();
-			args.RemoteEndPoint = new IPEndPoint(ipAddress, port);
+			args.RemoteEndPoint = endPoint;
 			args.Completed += (s, e) =>
 			{
 				if (e.SocketError != SocketError.Success)
