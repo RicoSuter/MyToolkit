@@ -47,8 +47,8 @@ namespace MyToolkit.UI.Popups
 			// TODO unregister other events and add them again on close
 			PhoneApplication.CurrentPage.BackKeyPress += (s, e) => 
 			{ 
-				e.Cancel = true; 
-				control.GoBack(); 
+				e.Cancel = true;
+				Deployment.Current.Dispatcher.BeginInvoke(control.GoBack);
 			};
 
 			PhoneApplication.CurrentPage.Content = grid;
@@ -58,12 +58,14 @@ namespace MyToolkit.UI.Popups
 				oldControl.Opacity = oldControlOpacity;
 				SystemTray.BackgroundColor = oldTrayBg;
 				SystemTray.ForegroundColor = oldTrayFg;
+
 				PhoneApplication.CurrentPage.ApplicationBar.BackgroundColor = oldBarBgColor;
 				PhoneApplication.CurrentPage.ApplicationBar.IsMenuEnabled = oldBarMenu;
 				foreach (var b in oldEnabledButtons)
 					b.IsEnabled = true;
 
-			    grid.Children.Remove(oldControl);
+				grid.Children.Remove((UIElement)control);
+				grid.Children.Remove(oldControl);
 				PhoneApplication.CurrentPage.Content = oldControl;
 			};
 		}
