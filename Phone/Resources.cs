@@ -5,6 +5,11 @@ namespace MyToolkit.Phone
 {
 	public static class Resources
 	{
+		public static Visibility PhoneLightThemeVisibility
+		{
+			get { return (Visibility)Application.Current.Resources["PhoneLightThemeVisibility"]; }
+		}
+
 		#region Colors
 
 		public static Color PhoneBackgroundColor
@@ -29,7 +34,7 @@ namespace MyToolkit.Phone
 
 		public static Color PhoneDisabledColor
 		{
-			get { return (Color)Application.Current.Resources["PhoneDisabledColor "]; }
+			get { return (Color)Application.Current.Resources["PhoneDisabledColor"]; }
 		}
 
 		public static Color PhoneSubtleColor

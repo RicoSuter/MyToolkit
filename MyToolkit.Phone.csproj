@@ -80,18 +80,25 @@
     <Compile Include="Performance\LowProfileImageLoader.cs" />
     <Compile Include="Phone\Marketplace.cs" />
     <Compile Include="Phone\MemoryDiagnosticsHelper.cs" />
+    <Compile Include="Phone\PhoneApplication.cs" />
     <Compile Include="Phone\Resources.cs" />
     <Compile Include="Phone\Settings.cs" />
     <Compile Include="Phone\Thombstone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Designer.cs" />
     <Compile Include="UI\ImageButton.cs" />
+    <Compile Include="UI\Popups\InputBox.xaml.cs">
+      <DependentUpon>InputBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Popups\IPopupControl.xaml.cs" />
     <Compile Include="UI\PasswordBoxBinding.cs" />
     <Compile Include="UI\ItemsControlEx.cs" />
     <Compile Include="UI\NavigationList.cs" />
+    <Compile Include="UI\Popups\Popup.cs" />
     <Compile Include="UI\ProgressIndicatorProxy.cs" />
     <Compile Include="UI\TextBoxBinding.cs" />
     <Compile Include="UI\UnstyledButton.cs" />
+    <Compile Include="Utilities\ColorUtility.cs" />
     <Compile Include="Utilities\ImageUtil.cs" />
     <Compile Include="Utilities\Notifications\Notification.cs" />
     <Compile Include="Utilities\StringUtility.cs" />
@@ -109,6 +116,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="UI\Popups\InputBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
