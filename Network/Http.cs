@@ -136,25 +136,7 @@ namespace MyToolkit.Network
 						else
 							WritePostData(stream, req.Data, req.Encoding);
 						stream.Close();
-
-						request.BeginGetResponse(delegate(IAsyncResult ar2)
-						{
-							try
-							{
-								var response = request.EndGetResponse(ar2);
-								if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
-									response = new GZipWebResponse(response); 
-								using (var reader = new StreamReader(response.GetResponseStream()))
-								{
-									var result = reader.ReadToEnd();
-									action(result, null);
-								}
-							}
-							catch (Exception e)
-							{
-								action(null, e);
-							}
-						}, request);
+						request.BeginGetResponse(r => ProcessResponse(r, request, req, action), request);
 					}
 					catch (Exception e)
 					{
@@ -266,28 +248,28 @@ namespace MyToolkit.Network
 				request.Method = "GET";
 				if (req.RequestGZIP)
 					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
+				request.BeginGetResponse(r => ProcessResponse(r, request, req, action), request);
+			}
+			catch (Exception e)
+			{
+				if (action != null)
+					action(null, e);
+			}
+		}
 
-				request.BeginGetResponse(delegate(IAsyncResult ar2)
+		private static void ProcessResponse(IAsyncResult asyncResult, WebRequest request, GetRequest req, Action<string, Exception> action)
+		{
+			try
+			{
+				var response = request.EndGetResponse(asyncResult);
+				if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
+					response = new GZipWebResponse(response); 
+				using (var reader = new StreamReader(response.GetResponseStream(), req.Encoding))
 				{
-					try
-					{
-						var response = request.EndGetResponse(ar2);
-						if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
-							response = new GZipWebResponse(response); 
-						using (var reader = new StreamReader(response.GetResponseStream(), req.Encoding))
-						{
-							var result = reader.ReadToEnd();
-
-							if (action != null)
-								action(result, null);
-						}
-					}
-					catch (Exception e)
-					{
-						if (action != null)
-							action(null, e);
-					}
-				}, request);
+					var result = reader.ReadToEnd();
+					if (action != null)
+						action(result, null);
+				}
 			}
 			catch (Exception e)
 			{
@@ -316,5 +298,22 @@ namespace MyToolkit.Network
 		{
 			return new GZipStream(response.GetResponseStream(), CompressionMode.Decompress); 
 		}
+
+#if SILVERLIGHT
+		public override long ContentLength
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public override string ContentType
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public override Uri ResponseUri
+		{
+			get { throw new NotImplementedException(); }
+		}
+#endif
 	}
 }
