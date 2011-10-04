@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Windows.Threading;
+using Ionic.Zlib;
 
 namespace MyToolkit.Network
 {
@@ -66,7 +68,8 @@ namespace MyToolkit.Network
 			Query = query;
 			Cookies = new List<Cookie>();
 			UseCache = true;
-			Encoding = Encoding.UTF8; 
+			Encoding = Encoding.UTF8;
+			RequestGZIP = true; 
 		}
 
 		public string URI { get; private set; }
@@ -75,6 +78,7 @@ namespace MyToolkit.Network
 
 		public bool UseCache { get; set; }
 		public Encoding Encoding { get; set; }
+		public bool RequestGZIP { get; set; }
 	}
 
 	public static class Http
@@ -119,6 +123,9 @@ namespace MyToolkit.Network
 				}
 
 				request.Method = "POST";
+				if (req.RequestGZIP)
+					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
+
 				request.BeginGetRequestStream(delegate(IAsyncResult ar1)
 				{
 					try
@@ -134,7 +141,9 @@ namespace MyToolkit.Network
 						{
 							try
 							{
-								var response = (HttpWebResponse)request.EndGetResponse(ar2);
+								var response = request.EndGetResponse(ar2);
+								if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
+									response = new GZipWebResponse(response); 
 								using (var reader = new StreamReader(response.GetResponseStream()))
 								{
 									var result = reader.ReadToEnd();
@@ -247,7 +256,6 @@ namespace MyToolkit.Network
 				} else
 					request = (HttpWebRequest)WebRequest.Create(req.URI);
 
-				request.Method = "GET";
 				if (req.Cookies.Count > 0)
 				{
 					request.CookieContainer = new CookieContainer();
@@ -255,14 +263,21 @@ namespace MyToolkit.Network
 						request.CookieContainer.Add(request.RequestUri, c);
 				}
 
+				request.Method = "GET";
+				if (req.RequestGZIP)
+					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
+
 				request.BeginGetResponse(delegate(IAsyncResult ar2)
 				{
 					try
 					{
-						var response = (HttpWebResponse)request.EndGetResponse(ar2);
+						var response = request.EndGetResponse(ar2);
+						if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
+							response = new GZipWebResponse(response); 
 						using (var reader = new StreamReader(response.GetResponseStream(), req.Encoding))
 						{
 							var result = reader.ReadToEnd();
+
 							if (action != null)
 								action(result, null);
 						}
@@ -287,6 +302,19 @@ namespace MyToolkit.Network
 			foreach (var p in query)
 				queryString += Uri.EscapeDataString(p.Key) + "=" + (p.Value == null ? "" : Uri.EscapeDataString(p.Value)) + "&";
 			return queryString.Trim('&');
+		}
+	}
+
+	internal class GZipWebResponse : WebResponse
+	{
+		readonly WebResponse response;
+		internal GZipWebResponse(WebResponse resp)
+		{
+			response = resp;
+		}
+		public override Stream GetResponseStream()
+		{
+			return new GZipStream(response.GetResponseStream(), CompressionMode.Decompress); 
 		}
 	}
 }
