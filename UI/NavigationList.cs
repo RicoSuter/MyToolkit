@@ -129,6 +129,7 @@ namespace MyToolkit.UI
 			DependencyProperty.Register("ItemsSource", typeof(IEnumerable),
 			typeof(NavigationList), new PropertyMetadata(null));
 
+
 		public DataTemplate ItemTemplate
 		{
 			get { return (DataTemplate)GetValue(ItemTemplateProperty); }
@@ -137,6 +138,17 @@ namespace MyToolkit.UI
 
 		public static readonly DependencyProperty ItemTemplateProperty =
 			DependencyProperty.Register("ItemTemplate", typeof(DataTemplate),
+			typeof(NavigationList), new PropertyMetadata(null));
+
+
+		public Thickness InnerMargin
+		{
+			get { return (Thickness)GetValue(InnerMarginProperty); }
+			set { SetValue(InnerMarginProperty, value); }
+		}
+
+		public static readonly DependencyProperty InnerMarginProperty =
+			DependencyProperty.Register("InnerMargin", typeof(Thickness),
 			typeof(NavigationList), new PropertyMetadata(null));
 
 		public NavigationList()
@@ -149,6 +161,7 @@ namespace MyToolkit.UI
 			base.OnApplyTemplate();
 			var itemsControl = (ItemsControlEx) GetTemplateChild("itemsControl");
 			itemsControl.PrepareContainerForItem += ItemsControl_PrepareContainerForItem;
+			itemsControl.InnerMargin = InnerMargin;
 		}
 
 		private void ItemsControl_PrepareContainerForItem(object sender, PrepareContainerForItemEventArgs e)

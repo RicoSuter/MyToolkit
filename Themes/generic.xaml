@@ -84,7 +84,7 @@
 						</UI:ItemsControlEx.ItemsPanel>
 						<UI:ItemsControlEx.Template>
 							<ControlTemplate>
-								<ItemsPresenter/>
+                                <ItemsPresenter x:Name="itemsPresenter" />
 							</ControlTemplate>
 						</UI:ItemsControlEx.Template>
 					</UI:ItemsControlEx>
@@ -115,7 +115,7 @@
 						<UI:ItemsControlEx.Template>
 							<ControlTemplate>
 								<ScrollViewer>
-									<ItemsPresenter/>
+                                    <ItemsPresenter x:Name="itemsPresenter" />
 								</ScrollViewer>
 							</ControlTemplate>
 						</UI:ItemsControlEx.Template>

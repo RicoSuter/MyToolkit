@@ -17,6 +17,16 @@ namespace MyToolkit.UI
 			OnPrepareContainerForItem(new PrepareContainerForItemEventArgs(element, item));
 		}
 
+		public Thickness InnerMargin
+		{
+			get { return (Thickness)GetValue(InnerMarginProperty); }
+			set { SetValue(InnerMarginProperty, value); }
+		}
+
+		public static readonly DependencyProperty InnerMarginProperty =
+			DependencyProperty.Register("InnerMargin", typeof(Thickness),
+			typeof(ItemsControlEx), new PropertyMetadata(null));
+
 		/// <summary>
 		/// Occurs when the PrepareContainerForItemOverride method is invoked
 		/// </summary>
@@ -29,6 +39,12 @@ namespace MyToolkit.UI
 		{
 			if (PrepareContainerForItem != null)
 				PrepareContainerForItem(this, args);
+		}
+
+		public override void OnApplyTemplate()
+		{
+			var itemsPresenter = (ItemsPresenter) GetTemplateChild("itemsPresenter");
+			itemsPresenter.Margin = InnerMargin;
 		}
 	}
 
