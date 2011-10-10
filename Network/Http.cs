@@ -299,6 +299,11 @@ namespace MyToolkit.Network
 			return new GZipStream(response.GetResponseStream(), CompressionMode.Decompress); 
 		}
 
+	    public override void Close()
+	    {
+	       
+	    }
+
 #if SILVERLIGHT
 		public override long ContentLength
 		{
