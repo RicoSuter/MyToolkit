@@ -11,18 +11,25 @@ namespace MyToolkit.Network
 	{
 		public static byte[] MacAddressToBytes(string macAddress) 
 		{
-			var macBytes = new byte[6];
-			var macAddr = Regex.Replace(macAddress, @"[^0-9A-Fa-f]", ""); 
-			if (macAddr.Length != 12)
-				throw new ArgumentException("macAddress"); 
-			
-			for (var i=0; i < macBytes.Length; i++)
+			try
 			{
-				var hex = new String( new [] { macAddr[i*2], macAddr[i*2+1] } );
-				macBytes[i] = byte.Parse(hex, System.Globalization.NumberStyles.HexNumber); 
-			}
+				var macBytes = new byte[6];
+				var macAddr = Regex.Replace(macAddress, @"[^0-9A-Fa-f]", "");
+				if (macAddr.Length != 12)
+					throw new ArgumentException("macAddress");
 
-			return macBytes; 
+				for (var i = 0; i < macBytes.Length; i++)
+				{
+					var hex = new String(new[] { macAddr[i * 2], macAddr[i * 2 + 1] });
+					macBytes[i] = byte.Parse(hex, System.Globalization.NumberStyles.HexNumber);
+				}
+
+				return macBytes; 				
+			}
+			catch
+			{
+				throw new ArgumentException("macAddress");
+			}
 		}
 
 		public static void Wake(string macAddress, Action sentAction, Action<SocketError> failureAction)
