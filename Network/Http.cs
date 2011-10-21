@@ -7,6 +7,8 @@ using System.Text;
 using System.Windows.Threading;
 using Ionic.Zlib;
 
+// developed by Rico Suter (rsuter.com)
+
 namespace MyToolkit.Network
 {
 	public class HttpPostFile
