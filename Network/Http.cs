@@ -9,9 +9,9 @@ using Ionic.Zlib;
 
 namespace MyToolkit.Network
 {
-	public class UploadFile
+	public class HttpPostFile
 	{
-		public UploadFile(string name, string filename, string path)
+		public HttpPostFile(string name, string filename, string path)
 		{
 			Name = name;
 			Filename = System.IO.Path.GetFileName(filename);
@@ -19,7 +19,7 @@ namespace MyToolkit.Network
 			CloseStream = true; 
 		}
 
-		public UploadFile(string name, string path)
+		public HttpPostFile(string name, string path)
 		{
 			Name = name;
 			Filename = System.IO.Path.GetFileName(path);
@@ -27,7 +27,7 @@ namespace MyToolkit.Network
 			CloseStream = true;
 		}
 
-		public UploadFile(string name, string filename, Stream stream, bool closeStream = true)
+		public HttpPostFile(string name, string filename, Stream stream, bool closeStream = true)
 			: this(name, null)
 		{
 			Filename = System.IO.Path.GetFileName(filename);
@@ -44,25 +44,25 @@ namespace MyToolkit.Network
 		public string ContentType { get; set; } // default: application/octet-stream
 	}
 
-	public class PostRequest : GetRequest
+	public class HttpPostRequest : HttpGetRequest
 	{
-		public PostRequest(string uri) : base(uri)
+		public HttpPostRequest(string uri) : base(uri)
 		{
 			Data = new Dictionary<string, string>();
-			Files = new List<UploadFile>();
+			Files = new List<HttpPostFile>();
 		}
 
 		public Dictionary<string, string> Data { get; private set; }
-		public List<UploadFile> Files { get; private set; }
+		public List<HttpPostFile> Files { get; private set; }
 	}
 
-	public class GetRequest
+	public class HttpGetRequest
 	{
-		public GetRequest(string uri)
+		public HttpGetRequest(string uri)
 			: this(uri, new Dictionary<string, string>())
 		{ }
 
-		public GetRequest(string uri, Dictionary<string, string> query) 
+		public HttpGetRequest(string uri, Dictionary<string, string> query) 
 		{
 			URI = uri;
 			Query = query;
@@ -85,20 +85,20 @@ namespace MyToolkit.Network
 	{
 		public static void Post(string uri, Action<String, Exception> action, Dispatcher dispatcher)
 		{
-			Post(new PostRequest(uri), (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
+			Post(new HttpPostRequest(uri), (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
 		}
 
 		public static void Post(string uri, Action<String, Exception> action)
 		{
-			Post(new PostRequest(uri), action);
+			Post(new HttpPostRequest(uri), action);
 		}
 
-		public static void Post(PostRequest req, Action<String, Exception> action, Dispatcher dispatcher)
+		public static void Post(HttpPostRequest req, Action<String, Exception> action, Dispatcher dispatcher)
 		{
 			Post(req, (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
 		}
 
-		public static void Post(PostRequest req, Action<String, Exception> action)
+		public static void Post(HttpPostRequest req, Action<String, Exception> action)
 		{
 			try
 			{
@@ -156,7 +156,7 @@ namespace MyToolkit.Network
 			stream.Write(bytes, 0, bytes.Length);
 		}
 
-		private static void WritePostData(Stream stream, String boundary, Dictionary<String, String> postData, IEnumerable<UploadFile> files, Encoding encoding)
+		private static void WritePostData(Stream stream, String boundary, Dictionary<String, String> postData, IEnumerable<HttpPostFile> files, Encoding encoding)
 		{
 			var boundarybytes = encoding.GetBytes("\r\n--" + boundary + "\r\n");
 
@@ -207,20 +207,20 @@ namespace MyToolkit.Network
 
 		public static void Get(string uri, Action<String, Exception> action, Dispatcher dispatcher)
 		{
-			Get(new GetRequest(uri), (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
+			Get(new HttpGetRequest(uri), (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
 		}
 
 		public static void Get(string uri, Action<String, Exception> action)
 		{
-			Get(new GetRequest(uri), action);
+			Get(new HttpGetRequest(uri), action);
 		}
 
-		public static void Get(GetRequest req, Action<String, Exception> action, Dispatcher dispatcher)
+		public static void Get(HttpGetRequest req, Action<String, Exception> action, Dispatcher dispatcher)
 		{
 			Get(req, (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
 		}
 
-		public static void Get(GetRequest req, Action<String, Exception> action)
+		public static void Get(HttpGetRequest req, Action<String, Exception> action)
 		{
 			try
 			{
@@ -257,7 +257,7 @@ namespace MyToolkit.Network
 			}
 		}
 
-		private static void ProcessResponse(IAsyncResult asyncResult, WebRequest request, GetRequest req, Action<string, Exception> action)
+		private static void ProcessResponse(IAsyncResult asyncResult, WebRequest request, HttpGetRequest req, Action<string, Exception> action)
 		{
 			try
 			{

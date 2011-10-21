@@ -44,6 +44,7 @@
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -109,6 +110,9 @@
     <Compile Include="UI\NavigationList.cs" />
     <Compile Include="UI\Popups\Popup.cs" />
     <Compile Include="UI\ProgressIndicatorProxy.cs" />
+    <Compile Include="UI\RichTextBlock.xaml.cs">
+      <DependentUpon>RichTextBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\TextBoxBinding.cs" />
     <Compile Include="UI\UnstyledButton.cs" />
     <Compile Include="Utilities\ColorUtility.cs" />
@@ -140,6 +144,10 @@
     <Page Include="UI\Popups\InputBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\RichTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
