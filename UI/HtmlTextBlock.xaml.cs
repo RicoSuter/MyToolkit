@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,18 +10,10 @@ using MyToolkit.MVVM;
 
 namespace MyToolkit.UI
 {
-	public partial class RichTextBlock : UserControl
+	public partial class HtmlTextBlock : UserControl
 	{
 		public static readonly DependencyProperty HtmlProperty =
-			DependencyProperty.Register("Html", typeof(String), typeof(RichTextBlock), new PropertyMetadata(default(String), OnHtmlChanged));
-
-		private static void OnHtmlChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
-		{
-			var box = (RichTextBlock)obj;
-			var html = (string)e.NewValue;
-			box.Html = html;
-			box.Generate(html);
-		}
+			DependencyProperty.Register("Html", typeof(String), typeof(HtmlTextBlock), new PropertyMetadata(default(String), OnChanged));
 
 		public String Html
 		{
@@ -28,18 +21,32 @@ namespace MyToolkit.UI
 			set { SetValue(HtmlProperty, value); }
 		}
 
-		private int paragraphMargin = 12; 
+		public static readonly DependencyProperty ParagraphMarginProperty =
+			DependencyProperty.Register("ParagraphMargin", typeof (int), typeof (HtmlTextBlock), new PropertyMetadata(12));
+
 		public int ParagraphMargin
 		{
-			get { return paragraphMargin; }
-			set 
-			{ 
-				paragraphMargin = value;
-				Generate(Html);
-			}
+			get { return (int) GetValue(ParagraphMarginProperty); }
+			set { SetValue(ParagraphMarginProperty, value); }
 		}
 
-		public RichTextBlock()
+		public static readonly DependencyProperty BaseUriProperty =
+			DependencyProperty.Register("BaseUri", typeof (Uri), typeof (HtmlTextBlock), new PropertyMetadata(default(Uri)));
+
+		public Uri BaseUri
+		{
+			get { return (Uri) GetValue(BaseUriProperty); }
+			set { SetValue(BaseUriProperty, value); }
+		}
+
+		private static void OnChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+		{
+			var box = (HtmlTextBlock)obj;
+			var html = box.Html;
+			box.Generate(html);
+		}
+
+		public HtmlTextBlock()
 		{
 			InitializeComponent();
 		}
@@ -53,8 +60,7 @@ namespace MyToolkit.UI
 				html = html + "</p>";
 
 			var stack = LayoutRoot;
-			stack.Children.Clear();
-
+			var boxes = new List<RichTextBox>();
 			var matches = Regex.Matches(html, "<p>(.*?)</p>");
 			for (var i = 0; i < matches.Count; i++ )
 			{
@@ -88,14 +94,21 @@ namespace MyToolkit.UI
 				var box = new RichTextBox();
 				box.Margin = new Thickness(0, 0, 0, i == matches.Count - 1 ? 0 : ParagraphMargin);
 				box.Blocks.Add(para);
-				stack.Children.Add(box);
+				boxes.Add(box);
 			}
+
+			stack.Children.Clear();
+			foreach (var b in boxes)
+				stack.Children.Add(b);
 		}
 
 		public virtual Hyperlink CreateHyperlink(string label, string link)
 		{
+			var uri = link.StartsWith("http://") || link.StartsWith("https://") ? 
+				new Uri(link, UriKind.Absolute) : new Uri(BaseUri, link);
+
 			var hr = new Hyperlink();
-			hr.Command = new RelayCommand(() => new WebBrowserTask {Uri = new Uri(link)}.Show());
+			hr.Command = new RelayCommand(() => new WebBrowserTask { Uri = uri }.Show());
 			hr.TextDecorations = TextDecorations.Underline;
 			hr.Inlines.Add(label);
 			return hr;

@@ -110,8 +110,8 @@
     <Compile Include="UI\NavigationList.cs" />
     <Compile Include="UI\Popups\Popup.cs" />
     <Compile Include="UI\ProgressIndicatorProxy.cs" />
-    <Compile Include="UI\RichTextBlock.xaml.cs">
-      <DependentUpon>RichTextBlock.xaml</DependentUpon>
+    <Compile Include="UI\HtmlTextBlock.xaml.cs">
+      <DependentUpon>HtmlTextBlock.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\TextBoxBinding.cs" />
     <Compile Include="UI\UnstyledButton.cs" />
@@ -145,7 +145,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\RichTextBlock.xaml">
+    <Page Include="UI\HtmlTextBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
