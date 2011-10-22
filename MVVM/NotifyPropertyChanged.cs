@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
+
+#if METRO
+using System.Reflection;
+#endif
 
 namespace MyToolkit.MVVM
 {
@@ -11,11 +16,16 @@ namespace MyToolkit.MVVM
 		public static bool IsProperty<TU>(this PropertyChangedEventArgs args, string propertyName)
 		{
 			#if DEBUG
-			if (typeof(TU).GetProperty(propertyName) == null)
-				throw new ArgumentException("propertyName");
-			#endif
-			
-			return args.PropertyName == propertyName;
+				#if METRO
+					if (typeof(TU).GetTypeInfo().DeclaredProperties.Any(p => p.Name == propertyName))
+						throw new ArgumentException("propertyName");
+				#else
+					if (typeof(TU).GetProperty(propertyName) == null)
+						throw new ArgumentException("propertyName");
+				#endif
+            #endif
+
+            return args.PropertyName == propertyName;
 		}
 
 		private static IDictionary<object, string> expressionDictionary; 
@@ -78,9 +88,14 @@ namespace MyToolkit.MVVM
 		public void RaisePropertyChanged(string propertyName)
 		{
 			#if DEBUG
-			if (GetType().GetProperty(propertyName) == null)
-				throw new ArgumentException("propertyName");
-			#endif
+				#if METRO
+					if (GetType().GetTypeInfo().DeclaredProperties.Any(p => p.Name == propertyName))
+						throw new ArgumentException("propertyName");
+				#else
+					if (GetType().GetProperty(propertyName) == null)
+						throw new ArgumentException("propertyName");
+				#endif
+            #endif
 
 			if (PropertyChanged != null)
 				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));

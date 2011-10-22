@@ -298,7 +298,24 @@ namespace Ionic.Zlib
             _z = null;
         }
 
+#if METRO
+		protected override void Dispose(bool disposing)
+		{
+			if (_stream == null) return;
 
+			try
+			{
+				finish();
+			}
+			finally
+			{
+				end();
+				if (!_leaveOpen) _stream.Dispose();
+				_stream = null;
+			}
+			base.Dispose(disposing);
+		}
+#else
         public override void Close()
         {
             if (_stream == null) return;
@@ -313,6 +330,7 @@ namespace Ionic.Zlib
                 _stream = null;
             }
         }
+#endif
 
         public override void Flush()
         {

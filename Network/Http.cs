@@ -4,8 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Windows.Threading;
 using Ionic.Zlib;
+
+#if !METRO
+using System.Windows.Threading;
+#endif
 
 // developed by Rico Suter (rsuter.com)
 
@@ -13,6 +16,7 @@ namespace MyToolkit.Network
 {
 	public class HttpPostFile
 	{
+#if !METRO
 		public HttpPostFile(string name, string filename, string path)
 		{
 			Name = name;
@@ -28,11 +32,16 @@ namespace MyToolkit.Network
 			Path = path;
 			CloseStream = true;
 		}
+#endif
 
 		public HttpPostFile(string name, string filename, Stream stream, bool closeStream = true)
-			: this(name, null)
 		{
-			Filename = System.IO.Path.GetFileName(filename);
+			Name = name;
+			#if METRO
+				Filename = filename;
+			#else
+				Filename = System.IO.Path.GetFileName(filename);
+			#endif
 			Stream = stream;
 			CloseStream = closeStream;
 		}
@@ -85,19 +94,21 @@ namespace MyToolkit.Network
 
 	public static class Http
 	{
+#if !METRO
 		public static void Post(string uri, Action<String, Exception> action, Dispatcher dispatcher)
 		{
 			Post(new HttpPostRequest(uri), (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
 		}
 
-		public static void Post(string uri, Action<String, Exception> action)
-		{
-			Post(new HttpPostRequest(uri), action);
-		}
-
 		public static void Post(HttpPostRequest req, Action<String, Exception> action, Dispatcher dispatcher)
 		{
 			Post(req, (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
+		}
+#endif
+
+		public static void Post(string uri, Action<String, Exception> action)
+		{
+			Post(new HttpPostRequest(uri), action);
 		}
 
 		public static void Post(HttpPostRequest req, Action<String, Exception> action)
@@ -132,12 +143,13 @@ namespace MyToolkit.Network
 				{
 					try
 					{
-						var stream = request.EndGetRequestStream(ar1);
-						if (req.Files.Count > 0)
-							WritePostData(stream, boundary, req.Data, req.Files, req.Encoding);
-						else
-							WritePostData(stream, req.Data, req.Encoding);
-						stream.Close();
+						using (var stream = request.EndGetRequestStream(ar1))
+						{
+							if (req.Files.Count > 0)
+								WritePostData(stream, boundary, req.Data, req.Files, req.Encoding);
+							else
+								WritePostData(stream, req.Data, req.Encoding);
+						}
 						request.BeginGetResponse(r => ProcessResponse(r, request, req, action), request);
 					}
 					catch (Exception e)
@@ -186,8 +198,10 @@ namespace MyToolkit.Network
 				stream.Write(headerbytes, 0, headerbytes.Length);
 
 				var fileStream = file.Stream;
+				#if !METRO
 				if (fileStream == null)
 					fileStream = new FileStream(file.Path, FileMode.Open, FileAccess.Read);
+				#endif
 
 				try
 				{
@@ -199,7 +213,7 @@ namespace MyToolkit.Network
 				finally
 				{
 					if (file.CloseStream)
-						fileStream.Close();
+						fileStream.Dispose();
 				}
 			}
 
@@ -207,19 +221,21 @@ namespace MyToolkit.Network
 			stream.Write(boundarybytes, 0, boundarybytes.Length);
 		}
 
+#if !METRO
 		public static void Get(string uri, Action<String, Exception> action, Dispatcher dispatcher)
 		{
 			Get(new HttpGetRequest(uri), (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
 		}
 
-		public static void Get(string uri, Action<String, Exception> action)
-		{
-			Get(new HttpGetRequest(uri), action);
-		}
-
 		public static void Get(HttpGetRequest req, Action<String, Exception> action, Dispatcher dispatcher)
 		{
 			Get(req, (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
+		}
+#endif
+
+		public static void Get(string uri, Action<String, Exception> action)
+		{
+			Get(new HttpGetRequest(uri), action);
 		}
 
 		public static void Get(HttpGetRequest req, Action<String, Exception> action)
@@ -266,11 +282,14 @@ namespace MyToolkit.Network
 				var response = request.EndGetResponse(asyncResult);
 				if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
 					response = new GZipWebResponse(response); 
-				using (var reader = new StreamReader(response.GetResponseStream(), req.Encoding))
+				using (response)
 				{
-					var result = reader.ReadToEnd();
-					if (action != null)
-						action(result, null);
+					using (var reader = new StreamReader(response.GetResponseStream(), req.Encoding))
+					{
+						var result = reader.ReadToEnd();
+						if (action != null)
+							action(result, null);
+					}
 				}
 			}
 			catch (Exception e)
@@ -289,22 +308,36 @@ namespace MyToolkit.Network
 		}
 	}
 
-	internal class GZipWebResponse : WebResponse
+	internal class GZipWebResponse : WebResponse, IDisposable
 	{
 		readonly WebResponse response;
 		internal GZipWebResponse(WebResponse resp)
 		{
 			response = resp;
 		}
+
 		public override Stream GetResponseStream()
 		{
 			return new GZipStream(response.GetResponseStream(), CompressionMode.Decompress); 
 		}
 
-	    public override void Close()
-	    {
-	       
-	    }
+#if METRO
+		protected override void Dispose(bool disposing)
+		{
+			response.Dispose(disposing);
+			base.Dispose(disposing);
+		}
+#else
+		void IDisposable.Dispose()
+		{
+			Close();
+		}
+
+		public override void Close()
+		{
+			response.Close();
+		}
+#endif
 
 #if SILVERLIGHT
 		public override long ContentLength

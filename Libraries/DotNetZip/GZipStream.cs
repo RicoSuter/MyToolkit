@@ -195,7 +195,9 @@ namespace Ionic.Zlib
                 if (_FileName.IndexOf("\\") != -1)
                 {
                     // trim any leading path
+#if !METRO
                     _FileName = Path.GetFileName(_FileName);
+#endif
                 }
             }
         }
@@ -642,8 +644,12 @@ namespace Ionic.Zlib
                 {
                     if (disposing && (this._baseStream != null))
                     {
-                        this._baseStream.Close();
-                        this._Crc32 = _baseStream.Crc32;
+#if METRO
+                        this._baseStream.Dispose();
+#else
+						this._baseStream.Close();
+#endif
+						this._Crc32 = _baseStream.Crc32;
                     }
                     _disposed = true;
                 }

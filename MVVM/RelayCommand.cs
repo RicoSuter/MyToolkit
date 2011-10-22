@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+
+#if METRO
+using Windows.UI.Xaml.Input;
+#else
 using System.Windows.Input;
+#endif
 
 namespace MyToolkit.MVVM
 {
@@ -39,7 +44,11 @@ namespace MyToolkit.MVVM
 				CanExecuteChanged(this, new EventArgs());
 		}
 
+#if METRO
+		public event Windows.UI.Xaml.EventHandler CanExecuteChanged;
+#else
 		public event EventHandler CanExecuteChanged;
+#endif
 	}
 
 	public class RelayCommand<T> : NotifyPropertyChanged, ICommand
@@ -79,6 +88,10 @@ namespace MyToolkit.MVVM
 				CanExecuteChanged(this, new EventArgs());
 		}
 
+#if METRO
+		public event Windows.UI.Xaml.EventHandler CanExecuteChanged;
+#else
 		public event EventHandler CanExecuteChanged;
+#endif
 	} 
 }
