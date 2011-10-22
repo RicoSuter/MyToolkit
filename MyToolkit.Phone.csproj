@@ -95,6 +95,7 @@
     <Compile Include="Phone\Resources.cs" />
     <Compile Include="Phone\Settings.cs" />
     <Compile Include="Phone\Thombstone.cs" />
+    <Compile Include="Phone\YouTube.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Designer.cs" />
     <Compile Include="UI\ImageButton.cs" />
