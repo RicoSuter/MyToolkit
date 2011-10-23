@@ -8,118 +8,44 @@ using Ionic.Zlib;
 
 #if !METRO
 using System.Windows.Threading;
+using MyToolkit.Network;
+
 #endif
 
 // developed by Rico Suter (rsuter.com)
 
 namespace MyToolkit.Network
 {
-	public class HttpPostFile
-	{
-#if !METRO
-		public HttpPostFile(string name, string filename, string path)
-		{
-			Name = name;
-			Filename = System.IO.Path.GetFileName(filename);
-			Path = path;
-			CloseStream = true; 
-		}
-
-		public HttpPostFile(string name, string path)
-		{
-			Name = name;
-			Filename = System.IO.Path.GetFileName(path);
-			Path = path;
-			CloseStream = true;
-		}
-#endif
-
-		public HttpPostFile(string name, string filename, Stream stream, bool closeStream = true)
-		{
-			Name = name;
-			#if METRO
-				Filename = filename;
-			#else
-				Filename = System.IO.Path.GetFileName(filename);
-			#endif
-			Stream = stream;
-			CloseStream = closeStream;
-		}
-
-		public string Name { get; private set; }
-		public string Filename { get; private set; }
-		public string Path { get; private set; } // use Path OR Stream
-		public Stream Stream { get; private set; }
-		public bool CloseStream { get; private set; }
-
-		public string ContentType { get; set; } // default: application/octet-stream
-	}
-
-	public class HttpPostRequest : HttpGetRequest
-	{
-		public HttpPostRequest(string uri) : base(uri)
-		{
-			Data = new Dictionary<string, string>();
-			Files = new List<HttpPostFile>();
-		}
-
-		public Dictionary<string, string> Data { get; private set; }
-		public List<HttpPostFile> Files { get; private set; }
-	}
-
-	public class HttpGetRequest
-	{
-		public HttpGetRequest(string uri)
-			: this(uri, new Dictionary<string, string>())
-		{ }
-
-		public HttpGetRequest(string uri, Dictionary<string, string> query) 
-		{
-			URI = uri;
-			Query = query;
-			Cookies = new List<Cookie>();
-			UseCache = true;
-			Encoding = Encoding.UTF8;
-			RequestGZIP = true; 
-		}
-
-		public string URI { get; private set; }
-		public Dictionary<string, string> Query { get; private set; }
-		public List<Cookie> Cookies { get; private set; }
-
-		public bool UseCache { get; set; }
-		public Encoding Encoding { get; set; }
-		public bool RequestGZIP { get; set; }
-	}
-
 	public static class Http
 	{
 #if !METRO
-		public static void Post(string uri, Action<String, Exception> action, Dispatcher dispatcher)
+		public static HttpResponse Post(string uri, Action<HttpResponse> action, Dispatcher dispatcher)
 		{
-			Post(new HttpPostRequest(uri), (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
+			return Post(new HttpPostRequest(uri), r => dispatcher.BeginInvoke(() => action(r)));
 		}
 
-		public static void Post(HttpPostRequest req, Action<String, Exception> action, Dispatcher dispatcher)
+		public static HttpResponse Post(HttpPostRequest req, Action<HttpResponse> action, Dispatcher dispatcher)
 		{
-			Post(req, (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
+			return Post(req, r => dispatcher.BeginInvoke(() => action(r)));
 		}
 #endif
 
-		public static void Post(string uri, Action<String, Exception> action)
+		public static HttpResponse Post(string uri, Action<HttpResponse> action)
 		{
-			Post(new HttpPostRequest(uri), action);
+			return Post(new HttpPostRequest(uri), action);
 		}
 
-		public static void Post(HttpPostRequest req, Action<String, Exception> action)
+		public static HttpResponse Post(HttpPostRequest req, Action<HttpResponse> action)
 		{
+			var response = new HttpResponse(req);
 			try
 			{
 				var boundary = "";
-
 				var queryString = GetQueryString(req.Query);
-				var request = (HttpWebRequest)WebRequest.Create(req.URI + "?" + queryString);
-			
+
+				var request = (HttpWebRequest)WebRequest.Create(req.Uri + "?" + queryString);
+				response.WebRequest = request; 
+
 				if (req.Files.Count == 0)
 					request.ContentType = "application/x-www-form-urlencoded";
 				else
@@ -150,18 +76,23 @@ namespace MyToolkit.Network
 							else
 								WritePostData(stream, req.Data, req.Encoding);
 						}
-						request.BeginGetResponse(r => ProcessResponse(r, request, req, action), request);
+						request.BeginGetResponse(r => ProcessResponse(r, request, response, action), request);
 					}
 					catch (Exception e)
 					{
-						action(null, e);
+						response.Exception = e;
+						if (action != null)
+							action(response);
 					}
 				}, request);
 			}
 			catch (Exception e)
 			{
-				action(null, e);
+				response.Exception = e;
+				if (action != null)
+					action(response);
 			}
+			return response;
 		}
 
 		private static void WritePostData(Stream stream, Dictionary<string, string> postData, Encoding encoding)
@@ -222,24 +153,25 @@ namespace MyToolkit.Network
 		}
 
 #if !METRO
-		public static void Get(string uri, Action<String, Exception> action, Dispatcher dispatcher)
+		public static HttpResponse Get(string uri, Action<HttpResponse> action, Dispatcher dispatcher)
 		{
-			Get(new HttpGetRequest(uri), (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
+			return Get(new HttpGetRequest(uri), r => dispatcher.BeginInvoke(() => action(r)));
 		}
 
-		public static void Get(HttpGetRequest req, Action<String, Exception> action, Dispatcher dispatcher)
+		public static HttpResponse Get(HttpGetRequest req, Action<HttpResponse> action, Dispatcher dispatcher)
 		{
-			Get(req, (s, e) => dispatcher.BeginInvoke(() => action(s, e)));
+			return Get(req, r => dispatcher.BeginInvoke(() => action(r)));
 		}
 #endif
 
-		public static void Get(string uri, Action<String, Exception> action)
+		public static HttpResponse Get(string uri, Action<HttpResponse> action)
 		{
-			Get(new HttpGetRequest(uri), action);
+			return Get(new HttpGetRequest(uri), action);
 		}
 
-		public static void Get(HttpGetRequest req, Action<String, Exception> action)
+		public static HttpResponse Get(HttpGetRequest req, Action<HttpResponse> action)
 		{
+			var response = new HttpResponse(req);
 			try
 			{
 				HttpWebRequest request;
@@ -249,12 +181,13 @@ namespace MyToolkit.Network
 						req.Query["__dcachetime"] = DateTime.Now.Ticks.ToString(); // TODO auch im else, wenn kein query
 
 					var queryString = GetQueryString(req.Query);
-					if (req.URI.Contains("?"))
-						request = (HttpWebRequest)WebRequest.Create(req.URI + "&" + queryString);
+					if (req.Uri.Contains("?"))
+						request = (HttpWebRequest)WebRequest.Create(req.Uri + "&" + queryString);
 					else
-						request = (HttpWebRequest)WebRequest.Create(req.URI + "?" + queryString);
+						request = (HttpWebRequest)WebRequest.Create(req.Uri + "?" + queryString);
 				} else
-					request = (HttpWebRequest)WebRequest.Create(req.URI);
+					request = (HttpWebRequest)WebRequest.Create(req.Uri);
+				response.WebRequest = request;
 
 				if (req.Cookies.Count > 0)
 				{
@@ -266,16 +199,18 @@ namespace MyToolkit.Network
 				request.Method = "GET";
 				if (req.RequestGZIP)
 					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
-				request.BeginGetResponse(r => ProcessResponse(r, request, req, action), request);
+				request.BeginGetResponse(r => ProcessResponse(r, request, response, action), request);
 			}
 			catch (Exception e)
 			{
+				response.Exception = e; 
 				if (action != null)
-					action(null, e);
+					action(response);
 			}
+			return response;
 		}
 
-		private static void ProcessResponse(IAsyncResult asyncResult, WebRequest request, HttpGetRequest req, Action<string, Exception> action)
+		private static void ProcessResponse(IAsyncResult asyncResult, WebRequest request, HttpResponse resp, Action<HttpResponse> action)
 		{
 			try
 			{
@@ -284,18 +219,19 @@ namespace MyToolkit.Network
 					response = new GZipWebResponse(response); 
 				using (response)
 				{
-					using (var reader = new StreamReader(response.GetResponseStream(), req.Encoding))
+					using (var reader = new StreamReader(response.GetResponseStream(), resp.Request.Encoding))
 					{
-						var result = reader.ReadToEnd();
+						resp.Response = reader.ReadToEnd();
 						if (action != null)
-							action(result, null);
+							action(resp);
 					}
 				}
 			}
 			catch (Exception e)
 			{
+				resp.Exception = e; 
 				if (action != null)
-					action(null, e);
+					action(resp);
 			}
 		}
 

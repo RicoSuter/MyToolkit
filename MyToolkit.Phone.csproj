@@ -84,6 +84,10 @@
     <Compile Include="MVVM\NotifyPropertyChanged.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="Network\Http.cs" />
+    <Compile Include="Network\HttpGetRequest.cs" />
+    <Compile Include="Network\HttpPostFile.cs" />
+    <Compile Include="Network\HttpPostRequest.cs" />
+    <Compile Include="Network\HttpResponse.cs" />
     <Compile Include="Network\WakeOnLan.cs" />
     <Compile Include="Performance\DeferredLoadListBox.cs" />
     <Compile Include="Performance\DeferredLoadListBoxItem.cs" />

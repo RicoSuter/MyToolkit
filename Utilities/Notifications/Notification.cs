@@ -38,12 +38,12 @@ namespace MyToolkit.Utilities.Notifications
 
 		public static void Check(string url, Action<Exception> failure = null)
 		{
-			Http.Get(url, (s, e) => Deployment.Current.Dispatcher.BeginInvoke(() => OnAction(s, e, failure)));
+			Http.Get(url, r => Deployment.Current.Dispatcher.BeginInvoke(() => OnAction(r, failure)));
 		}
 
-		private static void OnAction(string s, Exception e, Action<Exception> failure)
+		private static void OnAction(HttpResponse response, Action<Exception> failure)
 		{
-			if (e == null)
+			if (response.Successful)
 			{
 				try
 				{
@@ -52,7 +52,7 @@ namespace MyToolkit.Utilities.Notifications
 						: CultureInfo.CurrentCulture.Parent.Name;
 
 					var date = Settings.GetSetting("MyToolkitNotificationDate", DateTime.MinValue);
-					var notifications = Xml.Deserialize<Notifications>(s);
+					var notifications = Xml.Deserialize<Notifications>(response.Response);
 					foreach (var n in notifications.List.OrderBy(n => n.Date))
 					{
 						if (n.Date >= date)
@@ -74,7 +74,7 @@ namespace MyToolkit.Utilities.Notifications
 			else
 			{
 				if (failure != null)
-					failure(e);
+					failure(response.Exception);
 			}
 		}
 	}

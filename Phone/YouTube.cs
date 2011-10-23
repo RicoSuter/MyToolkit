@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
+using System.Windows.Navigation;
+using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using MyToolkit.Network;
@@ -21,33 +24,89 @@ namespace MyToolkit.Phone
 
 	public static class YouTube
 	{
-		public static void Play(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFinished = null)
+		public static HttpResponse Play(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFinished = null)
 		{
-			Http.Get("http://www.youtube.com/watch?v=" + youTubeId, (s, e) => OnHtmlDownloaded(s, e, maxQuality, onFinished));
+			return Http.Get("http://www.youtube.com/watch?v=" + youTubeId, r => OnHtmlDownloaded(r, maxQuality, onFinished));
 		}
 
 		/// <summary>
-		/// This method disables the current page and shows a progress indicator until the youtube movie has been loaded and will start soon
+		/// This method disables the current page and shows a progress indicator until the youtube movie url has been loaded and starts
 		/// </summary>
 		/// <param name="youTubeId"></param>
 		/// <param name="maxQuality"></param>
-		/// <param name="onFinished"></param>
+		/// <param name="onFailure"></param>
 		public static void PlayWithProgressIndicator(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFailure = null)
 		{
-			PhoneApplication.CurrentPage.IsEnabled = false;
-			if (SystemTray.ProgressIndicator == null)
-				SystemTray.ProgressIndicator = new ProgressIndicator();
-			SystemTray.ProgressIndicator.IsVisible = true; 
+			lock (typeof(YouTube))
+			{
+				if (oldEnabledButtons != null)
+					return;
 
-			Play(youTubeId, YouTubeQuality.Quality480P, ex => Deployment.Current.Dispatcher.BeginInvoke(
-				delegate
+				PhoneApplication.CurrentPage.IsEnabled = false;
+				if (SystemTray.ProgressIndicator == null)
+					SystemTray.ProgressIndicator = new ProgressIndicator();
+				SystemTray.ProgressIndicator.IsVisible = true;
+
+				var page = PhoneApplication.CurrentPage;
+				oldEnabledButtons = new List<ApplicationBarIconButton>();
+				oldEnabledMenus = new List<ApplicationBarMenuItem>();
+				if (page.ApplicationBar != null)
 				{
-					if (ex != null && onFailure != null)
-						onFailure(ex);
+					foreach (var b in page.ApplicationBar.Buttons.
+						OfType<ApplicationBarIconButton>().Where(i => i.IsEnabled))
+					{
+						b.IsEnabled = false;
+						oldEnabledButtons.Add(b);
+					}
 
-					PhoneApplication.CurrentPage.IsEnabled = true;
-					SystemTray.ProgressIndicator.IsVisible = false;
-				}));
+					foreach (var b in page.ApplicationBar.MenuItems.
+						OfType<ApplicationBarMenuItem>().Where(i => i.IsEnabled))
+					{
+						b.IsEnabled = false;
+						oldEnabledMenus.Add(b);
+					}
+				}
+
+				httpResponse = Play(youTubeId, YouTubeQuality.Quality480P, ex => Deployment.Current.Dispatcher.BeginInvoke(
+					delegate
+						{
+							if (page != PhoneApplication.CurrentPage) // user navigated away
+								return;
+							if (ex != null && onFailure != null)
+								onFailure(ex);
+							CancelPlayWithProgressIndicator();
+						}));
+			}
+		}
+
+		private static HttpResponse httpResponse;
+		private static List<ApplicationBarIconButton> oldEnabledButtons;
+		private static List<ApplicationBarMenuItem> oldEnabledMenus;
+
+		/// <summary>
+		/// call this in OnBackKeyPress() of the page: e.Cancel = YouTube.CancelPlayWithProgressIndicator();
+		/// </summary>
+		/// <returns></returns>
+		public static bool CancelPlayWithProgressIndicator()
+		{
+			lock (typeof(YouTube))
+			{
+				if (oldEnabledButtons == null)
+					return false;
+
+				httpResponse.Abort();
+				PhoneApplication.CurrentPage.IsEnabled = true;
+				SystemTray.ProgressIndicator.IsVisible = false;
+				foreach (var b in oldEnabledButtons)
+					b.IsEnabled = true;
+				foreach (var b in oldEnabledMenus)
+					b.IsEnabled = true;
+
+				httpResponse = null; 
+				oldEnabledButtons = null;
+				oldEnabledMenus = null;
+				return true;
+			}
 		}
 		
 		private static int GetQualityIdentifier(YouTubeQuality quality)
@@ -61,14 +120,14 @@ namespace MyToolkit.Phone
 			throw new ArgumentException("maxQuality");
 		}
 
-		private static void OnHtmlDownloaded(string s, Exception e, YouTubeQuality quality, Action<Exception> onFinished)
+		private static void OnHtmlDownloaded(HttpResponse response, YouTubeQuality quality, Action<Exception> onFinished)
 		{
-			if (e == null)
+			if (response.Successful)
 			{
 				var urls = new List<YouTubeUrl>();
 				try
 				{
-					var match = Regex.Match(s, "url_encoded_fmt_stream_map=(.*?)&");
+					var match = Regex.Match(response.Response, "url_encoded_fmt_stream_map=(.*?)&");
 					var data = Uri.UnescapeDataString(match.Groups[1].Value);
 
 					//match = Regex.Match(data, "^(.*?)\\\\u0026"); // TODO: what for?
@@ -91,22 +150,24 @@ namespace MyToolkit.Phone
 								else if (key == "itag")
 									tuple.Itag = int.Parse(value);
 								else if (key == "type" && value.Contains("video/mp4"))
-									tuple.Type = value; 
+									tuple.Type = value;
 							}
 						}
-						
+
 						if (tuple.IsValid)
 							urls.Add(tuple);
 					}
 
-					var itag = GetQualityIdentifier(quality); 
+					var itag = GetQualityIdentifier(quality);
 					foreach (var u in urls.Where(u => u.Itag > itag).ToArray())
 						urls.Remove(u);
 
 				}
 				catch (Exception ex)
 				{
-					e = ex;
+					if (onFinished != null)
+						onFinished(ex);
+					return; 
 				}
 
 				var entry = urls.OrderByDescending(u => u.Itag).FirstOrDefault();
@@ -124,9 +185,8 @@ namespace MyToolkit.Phone
 					launcher.Show();
 				}
 			}
-
-			if (e != null && onFinished != null)
-				onFinished(e);
+			else if (onFinished != null)
+				onFinished(response.Exception);
 		}
 
 		private class YouTubeUrl

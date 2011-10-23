@@ -14,13 +14,15 @@ namespace MyToolkit.UI.Popups
 		public static void Show(IPopupControl control)
 		{
 			// TODO animations
+			// TODO check if ApplicationBar is available (!= null)
+
 			var oldTrayBg = SystemTray.BackgroundColor;
 			var oldTrayFg = SystemTray.ForegroundColor;
 			var oldControl = PhoneApplication.CurrentPage.Content;
 			var oldControlOpacity = oldControl.Opacity;
+
 			var oldBarBgColor = PhoneApplication.CurrentPage.ApplicationBar.BackgroundColor;
 			var oldBarMenu = PhoneApplication.CurrentPage.ApplicationBar.IsMenuEnabled;
-			var oldEnabledButtons = new List<ApplicationBarIconButton>();
 
 			PhoneApplication.CurrentPage.Content = null;
 
@@ -38,10 +40,21 @@ namespace MyToolkit.UI.Popups
 
 			PhoneApplication.CurrentPage.ApplicationBar.BackgroundColor = ColorUtility.Mix(oldBarBgColor, 0.325, Resources.PhoneBackgroundColor);
 			PhoneApplication.CurrentPage.ApplicationBar.IsMenuEnabled = false;
-			foreach (var b in PhoneApplication.CurrentPage.ApplicationBar.Buttons.OfType<ApplicationBarIconButton>().Where(i => i.IsEnabled))
+
+			var oldEnabledButtons = new List<ApplicationBarIconButton>();
+			foreach (var b in PhoneApplication.CurrentPage.ApplicationBar.Buttons.
+				OfType<ApplicationBarIconButton>().Where(i => i.IsEnabled))
 			{
 				b.IsEnabled = false;
 				oldEnabledButtons.Add(b);
+			}
+
+			var oldEnabledMenus = new List<ApplicationBarMenuItem>();
+			foreach (var b in PhoneApplication.CurrentPage.ApplicationBar.MenuItems.
+				OfType<ApplicationBarMenuItem>().Where(i => i.IsEnabled))
+			{
+				b.IsEnabled = false;
+				oldEnabledMenus.Add(b);
 			}
 
 			// TODO unregister other events and add them again on close
@@ -62,6 +75,8 @@ namespace MyToolkit.UI.Popups
 				PhoneApplication.CurrentPage.ApplicationBar.BackgroundColor = oldBarBgColor;
 				PhoneApplication.CurrentPage.ApplicationBar.IsMenuEnabled = oldBarMenu;
 				foreach (var b in oldEnabledButtons)
+					b.IsEnabled = true;
+				foreach (var b in oldEnabledMenus)
 					b.IsEnabled = true;
 
 				grid.Children.Remove((UIElement)control);
