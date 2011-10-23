@@ -29,96 +29,6 @@ namespace MyToolkit.Phone
 		{
 			return Http.Get("http://www.youtube.com/watch?v=" + youTubeId, r => OnHtmlDownloaded(r, maxQuality, onFinished));
 		}
-
-		/// <summary>
-		/// This method disables the current page and shows a progress indicator until the youtube movie url has been loaded and starts
-		/// </summary>
-		/// <param name="youTubeId"></param>
-		/// <param name="maxQuality"></param>
-		/// <param name="onFailure"></param>
-		public static void PlayWithProgressIndicator(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFailure = null)
-		{
-			lock (typeof(YouTube))
-			{
-				if (oldState != null)
-					return;
-
-				//PhoneApplication.CurrentPage.IsEnabled = false;
-				//if (SystemTray.ProgressIndicator == null)
-				//    SystemTray.ProgressIndicator = new ProgressIndicator();
-				//SystemTray.ProgressIndicator.IsVisible = true;
-
-				//var page = PhoneApplication.CurrentPage;
-				//oldEnabledButtons = new List<ApplicationBarIconButton>();
-				//oldEnabledMenus = new List<ApplicationBarMenuItem>();
-				//if (page.ApplicationBar != null)
-				//{
-				//    foreach (var b in page.ApplicationBar.Buttons.
-				//        OfType<ApplicationBarIconButton>().Where(i => i.IsEnabled))
-				//    {
-				//        b.IsEnabled = false;
-				//        oldEnabledButtons.Add(b);
-				//    }
-
-				//    foreach (var b in page.ApplicationBar.MenuItems.
-				//        OfType<ApplicationBarMenuItem>().Where(i => i.IsEnabled))
-				//    {
-				//        b.IsEnabled = false;
-				//        oldEnabledMenus.Add(b);
-				//    }
-				//}
-
-				if (SystemTray.ProgressIndicator == null)
-					SystemTray.ProgressIndicator = new ProgressIndicator();
-				SystemTray.ProgressIndicator.IsVisible = true;
-
-				var page = PhoneApplication.CurrentPage;
-				oldState = OldPopupState.Inactivate();
-				httpResponse = Play(youTubeId, YouTubeQuality.Quality480P, ex => Deployment.Current.Dispatcher.BeginInvoke(
-					delegate
-						{
-							if (page != PhoneApplication.CurrentPage) // user navigated away
-								return;
-							if (ex != null && onFailure != null)
-								onFailure(ex);
-							CancelPlayWithProgressIndicator();
-						}));
-			}
-		}
-
-		private static HttpResponse httpResponse;
-		private static OldPopupState oldState; 
-		//private static List<ApplicationBarIconButton> oldEnabledButtons;
-		//private static List<ApplicationBarMenuItem> oldEnabledMenus;
-
-		/// <summary>
-		/// call this in OnBackKeyPress() of the page: e.Cancel = YouTube.CancelPlayWithProgressIndicator();
-		/// </summary>
-		/// <returns></returns>
-		public static bool CancelPlayWithProgressIndicator()
-		{
-			lock (typeof(YouTube))
-			{
-				if (oldState == null)
-					return false;
-
-				httpResponse.Abort();
-				oldState.Revert();
-				//PhoneApplication.CurrentPage.IsEnabled = true;
-				SystemTray.ProgressIndicator.IsVisible = false;
-				//foreach (var b in oldEnabledButtons)
-				//    b.IsEnabled = true;
-				//foreach (var b in oldEnabledMenus)
-				//    b.IsEnabled = true;
-
-				//httpResponse = null; 
-				//oldEnabledButtons = null;
-				//oldEnabledMenus = null;
-				httpResponse = null;
-				oldState = null; 
-				return true;
-			}
-		}
 		
 		private static int GetQualityIdentifier(YouTubeQuality quality)
 		{
@@ -211,5 +121,79 @@ namespace MyToolkit.Phone
 				get { return Url != null && Itag > 0 && Type != null; }
 			}
 		}
+		
+		#region Phone
+
+		private static HttpResponse httpResponse;
+		private static OldPopupState oldState;
+
+		/// <summary>
+		/// This method disables the current page and shows a progress indicator until the youtube movie url has been loaded and starts
+		/// </summary>
+		/// <param name="youTubeId"></param>
+		/// <param name="manualActivate">if true add YouTube.CancelPlay() in OnNavigatedTo() of the page (better)</param>
+		/// <param name="maxQuality"></param>
+		/// <param name="onFailure"></param>
+		public static void Play(string youTubeId, bool manualActivate, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFailure = null)
+		{
+			lock (typeof(YouTube))
+			{
+				if (oldState != null)
+					return;
+
+				if (SystemTray.ProgressIndicator == null)
+					SystemTray.ProgressIndicator = new ProgressIndicator();
+				SystemTray.ProgressIndicator.IsVisible = true;
+
+				var page = PhoneApplication.CurrentPage;
+				oldState = OldPopupState.Inactivate();
+				httpResponse = Play(youTubeId, YouTubeQuality.Quality480P, ex => Deployment.Current.Dispatcher.BeginInvoke(
+					delegate
+					{
+						if (page != PhoneApplication.CurrentPage) // user navigated away
+							return;
+						if (ex != null && onFailure != null)
+							onFailure(ex);
+						CancelPlay(manualActivate);
+					}));
+			}
+		}
+
+		/// <summary>
+		/// call this in OnBackKeyPress() of the page: 
+		/// e.Cancel = YouTube.CancelPlay();
+		/// or in OnNavigatedTo() and use manualActivate = true
+		/// </summary>
+		/// <returns></returns>
+		public static bool CancelPlay()
+		{
+			return CancelPlay(false);
+		}
+
+		private static bool CancelPlay(bool manualActivate)
+		{
+			lock (typeof(YouTube))
+			{
+				if (oldState == null && httpResponse == null)
+					return false;
+
+				if (httpResponse != null)
+				{
+					httpResponse.Abort();
+					httpResponse = null;
+				}
+
+				if (!manualActivate && oldState != null)
+				{
+					oldState.Revert();
+					SystemTray.ProgressIndicator.IsVisible = false;
+					oldState = null;
+				}
+
+				return true;
+			}
+		}
+		
+		#endregion
 	}
 }
