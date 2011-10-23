@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using MyToolkit.Network;
+using MyToolkit.UI.Popups;
 
 // developed by Rico Suter (rsuter.com)
 // this code only works with mango (video urls with query don't work in previous versions)
@@ -39,34 +40,40 @@ namespace MyToolkit.Phone
 		{
 			lock (typeof(YouTube))
 			{
-				if (oldEnabledButtons != null)
+				if (oldState != null)
 					return;
 
-				PhoneApplication.CurrentPage.IsEnabled = false;
+				//PhoneApplication.CurrentPage.IsEnabled = false;
+				//if (SystemTray.ProgressIndicator == null)
+				//    SystemTray.ProgressIndicator = new ProgressIndicator();
+				//SystemTray.ProgressIndicator.IsVisible = true;
+
+				//var page = PhoneApplication.CurrentPage;
+				//oldEnabledButtons = new List<ApplicationBarIconButton>();
+				//oldEnabledMenus = new List<ApplicationBarMenuItem>();
+				//if (page.ApplicationBar != null)
+				//{
+				//    foreach (var b in page.ApplicationBar.Buttons.
+				//        OfType<ApplicationBarIconButton>().Where(i => i.IsEnabled))
+				//    {
+				//        b.IsEnabled = false;
+				//        oldEnabledButtons.Add(b);
+				//    }
+
+				//    foreach (var b in page.ApplicationBar.MenuItems.
+				//        OfType<ApplicationBarMenuItem>().Where(i => i.IsEnabled))
+				//    {
+				//        b.IsEnabled = false;
+				//        oldEnabledMenus.Add(b);
+				//    }
+				//}
+
 				if (SystemTray.ProgressIndicator == null)
 					SystemTray.ProgressIndicator = new ProgressIndicator();
 				SystemTray.ProgressIndicator.IsVisible = true;
 
 				var page = PhoneApplication.CurrentPage;
-				oldEnabledButtons = new List<ApplicationBarIconButton>();
-				oldEnabledMenus = new List<ApplicationBarMenuItem>();
-				if (page.ApplicationBar != null)
-				{
-					foreach (var b in page.ApplicationBar.Buttons.
-						OfType<ApplicationBarIconButton>().Where(i => i.IsEnabled))
-					{
-						b.IsEnabled = false;
-						oldEnabledButtons.Add(b);
-					}
-
-					foreach (var b in page.ApplicationBar.MenuItems.
-						OfType<ApplicationBarMenuItem>().Where(i => i.IsEnabled))
-					{
-						b.IsEnabled = false;
-						oldEnabledMenus.Add(b);
-					}
-				}
-
+				oldState = OldPopupState.Inactivate();
 				httpResponse = Play(youTubeId, YouTubeQuality.Quality480P, ex => Deployment.Current.Dispatcher.BeginInvoke(
 					delegate
 						{
@@ -80,8 +87,9 @@ namespace MyToolkit.Phone
 		}
 
 		private static HttpResponse httpResponse;
-		private static List<ApplicationBarIconButton> oldEnabledButtons;
-		private static List<ApplicationBarMenuItem> oldEnabledMenus;
+		private static OldPopupState oldState; 
+		//private static List<ApplicationBarIconButton> oldEnabledButtons;
+		//private static List<ApplicationBarMenuItem> oldEnabledMenus;
 
 		/// <summary>
 		/// call this in OnBackKeyPress() of the page: e.Cancel = YouTube.CancelPlayWithProgressIndicator();
@@ -91,20 +99,23 @@ namespace MyToolkit.Phone
 		{
 			lock (typeof(YouTube))
 			{
-				if (oldEnabledButtons == null)
+				if (oldState == null)
 					return false;
 
 				httpResponse.Abort();
-				PhoneApplication.CurrentPage.IsEnabled = true;
+				oldState.Revert();
+				//PhoneApplication.CurrentPage.IsEnabled = true;
 				SystemTray.ProgressIndicator.IsVisible = false;
-				foreach (var b in oldEnabledButtons)
-					b.IsEnabled = true;
-				foreach (var b in oldEnabledMenus)
-					b.IsEnabled = true;
+				//foreach (var b in oldEnabledButtons)
+				//    b.IsEnabled = true;
+				//foreach (var b in oldEnabledMenus)
+				//    b.IsEnabled = true;
 
-				httpResponse = null; 
-				oldEnabledButtons = null;
-				oldEnabledMenus = null;
+				//httpResponse = null; 
+				//oldEnabledButtons = null;
+				//oldEnabledMenus = null;
+				httpResponse = null;
+				oldState = null; 
 				return true;
 			}
 		}
