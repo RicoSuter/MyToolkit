@@ -152,9 +152,14 @@ namespace MyToolkit.Phone
 					{
 						if (page != PhoneApplication.CurrentPage) // user navigated away
 							return;
-						CancelPlay(manualActivate);
+
 						if (ex != null && onFailure != null)
+						{
 							onFailure(ex);
+							CancelPlay(false);
+						}
+						else
+							CancelPlay(manualActivate);
 					}));
 			}
 		}
