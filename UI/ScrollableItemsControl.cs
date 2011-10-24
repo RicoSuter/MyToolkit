@@ -18,5 +18,22 @@ namespace MyToolkit.UI
 		{
 			DefaultStyleKey = typeof(ScrollableItemsControl);
 		}
+
+		public Thickness InnerMargin
+		{
+			get { return (Thickness)GetValue(InnerMarginProperty); }
+			set { SetValue(InnerMarginProperty, value); }
+		}
+
+		public static readonly DependencyProperty InnerMarginProperty =
+			DependencyProperty.Register("InnerMargin", typeof(Thickness),
+			typeof(ScrollableItemsControl), new PropertyMetadata(null));
+
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+			var itemsPresenter = (ItemsPresenter)GetTemplateChild("itemsPresenter");
+			itemsPresenter.Margin = InnerMargin;
+		}
 	}
 }

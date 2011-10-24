@@ -43,6 +43,7 @@ namespace MyToolkit.UI
 
 		public override void OnApplyTemplate()
 		{
+			base.OnApplyTemplate();
 			var itemsPresenter = (ItemsPresenter) GetTemplateChild("itemsPresenter");
 			itemsPresenter.Margin = InnerMargin;
 		}

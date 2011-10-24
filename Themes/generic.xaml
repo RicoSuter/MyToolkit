@@ -67,7 +67,7 @@
 		<Setter Property="ItemsPanel">
 			<Setter.Value>
 				<ItemsPanelTemplate>
-					<VirtualizingStackPanel />
+					<VirtualizingStackPanel Orientation="Vertical" />
 				</ItemsPanelTemplate>
 			</Setter.Value>
 		</Setter>
@@ -75,7 +75,7 @@
 			<Setter.Value>
 				<ControlTemplate>
 					<ScrollViewer>
-						<ItemsPresenter />
+						<ItemsPresenter x:Name="itemsPresenter" />
 					</ScrollViewer>
 				</ControlTemplate>
 			</Setter.Value>
