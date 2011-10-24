@@ -41,8 +41,8 @@
 	</Style>
 
 	<Style TargetType="UI:UnstyledButton">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="{x:Null}" />
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderBrush" Value="{x:Null}" />
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0,0,0,0"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -63,7 +63,6 @@
         </Setter>
     </Style>
 
-	
 	<Style TargetType="UI:ScrollableItemsControl">
 		<Setter Property="ItemsPanel">
 			<Setter.Value>
@@ -144,13 +143,14 @@
 		</Setter>
 	</Style>
 	
-	<Style TargetType="UI:ItemsControlEx">
+	<!--<Style TargetType="UI:ItemsControlEx">
 		<Setter Property="ItemContainerStyle">
 			<Setter.Value>
 				<Style TargetType="ListBoxItem">
 					<Setter Property="Template">
 						<Setter.Value>
 							<ControlTemplate>
+
 								<ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 							</ControlTemplate>
 						</Setter.Value>
@@ -158,6 +158,6 @@
 				</Style>
 			</Setter.Value>
 		</Setter>
-	</Style>
+	</Style>-->
 </ResourceDictionary>
   

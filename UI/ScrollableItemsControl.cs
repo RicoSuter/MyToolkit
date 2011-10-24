@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 
 namespace MyToolkit.UI
 {
-	public class ScrollableItemsControl : ListBox
+	public class ScrollableItemsControl : ListBox // TODO: change to ItemsControl => problem: long list, scroll to bottom, go to other page, go back => wrong scroll position ?? correct only with ListBox 
 	{
 		public ScrollableItemsControl()
 		{
