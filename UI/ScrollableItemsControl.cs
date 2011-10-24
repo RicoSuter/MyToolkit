@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 
 namespace MyToolkit.UI
 {
-	public class ScrollableItemsControl : ItemsControl
+	public class ScrollableItemsControl : ListBox
 	{
 		public ScrollableItemsControl()
 		{

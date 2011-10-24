@@ -8,7 +8,7 @@ namespace MyToolkit.UI
 	/// Extends an ItemsControl, raising an event when the PrepareContainerForItemOverride
 	/// override is invoked.
 	/// </summary>
-	public class ItemsControlEx : ItemsControl
+	public class ItemsControlEx : ListBox
 	{
 		protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
 		{

@@ -43,26 +43,27 @@
 	<Style TargetType="UI:UnstyledButton">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="{x:Null}" />
-        <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
-        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}"/>
         <Setter Property="Padding" Value="0,0,0,0"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid Background="Transparent">
-                        <Border x:Name="ButtonBackground" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0" Margin="0,8,0,0">
-                            <ContentControl x:Name="ContentContainer" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                    </Grid>
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
+							Background="{TemplateBinding Background}" CornerRadius="0" Margin="0" Padding="0">
+                        <ContentControl ContentTemplate="{TemplateBinding ContentTemplate}" 
+										Content="{TemplateBinding Content}" 
+										Foreground="{TemplateBinding Foreground}" 
+										HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+										Padding="{TemplateBinding Padding}" 
+										VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
+	
 	<Style TargetType="UI:ScrollableItemsControl">
 		<Setter Property="ItemsPanel">
 			<Setter.Value>
@@ -80,16 +81,22 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
+		<Setter Property="ItemContainerStyle">
+			<Setter.Value>
+				<Style TargetType="ListBoxItem">
+					<Setter Property="Template">
+						<Setter.Value>
+							<ControlTemplate>
+								<ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+							</ControlTemplate>
+						</Setter.Value>
+					</Setter>
+				</Style>
+			</Setter.Value>
+		</Setter>
 	</Style>
 
 	<Style TargetType="UI:FixedNavigationList">
-		<Setter Property="ItemTemplate">
-			<Setter.Value>
-				<DataTemplate>
-					<TextBlock Text="{Binding}"/>
-				</DataTemplate>
-			</Setter.Value>
-		</Setter>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate>
@@ -113,13 +120,6 @@
 	</Style>
 	
 	<Style TargetType="UI:NavigationList">
-		<Setter Property="ItemTemplate">
-			<Setter.Value>
-				<DataTemplate>
-					<TextBlock Text="{Binding}"/>
-				</DataTemplate>
-			</Setter.Value>
-		</Setter>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate>
@@ -140,6 +140,22 @@
 						</UI:ItemsControlEx.Template>
 					</UI:ItemsControlEx>
 				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
+	<Style TargetType="UI:ItemsControlEx">
+		<Setter Property="ItemContainerStyle">
+			<Setter.Value>
+				<Style TargetType="ListBoxItem">
+					<Setter Property="Template">
+						<Setter.Value>
+							<ControlTemplate>
+								<ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+							</ControlTemplate>
+						</Setter.Value>
+					</Setter>
+				</Style>
 			</Setter.Value>
 		</Setter>
 	</Style>
