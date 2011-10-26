@@ -92,6 +92,12 @@ namespace MyToolkit.UI
 				}
 
 				var box = new RichTextBox();
+				box.FontSize = FontSize;
+				box.FontFamily = FontFamily;
+				box.FontStretch = FontStretch;
+				box.FontStyle = FontStyle;
+				box.FontWeight = FontWeight;
+
 				box.Margin = new Thickness(0, 0, 0, i == matches.Count - 1 ? 0 : ParagraphMargin);
 				box.Blocks.Add(para);
 				boxes.Add(box);
@@ -102,16 +108,31 @@ namespace MyToolkit.UI
 				stack.Children.Add(b);
 		}
 
-		public virtual Hyperlink CreateHyperlink(string label, string link)
+		public virtual Inline CreateHyperlink(string label, string link)
 		{
-			var uri = link.StartsWith("http://") || link.StartsWith("https://") ? 
-				new Uri(link, UriKind.Absolute) : new Uri(BaseUri, link);
+			try
+			{
+				var hr = new Hyperlink();
+				if (link.StartsWith("mailto:"))
+					hr.Command = new RelayCommand(() => new EmailComposeTask { To = link.Substring(7) }.Show());
+				else
+				{
+					var uri = link.StartsWith("http://") || link.StartsWith("https://") ?
+						new Uri(link, UriKind.Absolute) : new Uri(BaseUri, link);
+					hr.Command = new RelayCommand(() => new WebBrowserTask { Uri = uri }.Show());
+				}
 
-			var hr = new Hyperlink();
-			hr.Command = new RelayCommand(() => new WebBrowserTask { Uri = uri }.Show());
-			hr.TextDecorations = TextDecorations.Underline;
-			hr.Inlines.Add(label);
-			return hr;
+				hr.TextDecorations = TextDecorations.Underline;
+				hr.Inlines.Add(label);
+				return hr;
+			}
+			catch
+			{
+#if DEBUG
+				throw;
+#endif
+				return new Run { Text = label };
+			}
 		}
 	}
 }
