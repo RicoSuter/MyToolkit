@@ -125,7 +125,7 @@ namespace MyToolkit.Phone
 		#region Phone
 
 		private static HttpResponse httpResponse;
-		private static OldPopupState oldState;
+		private static PageDeactivator oldState;
 
 		/// <summary>
 		/// This method disables the current page and shows a progress indicator until the youtube movie url has been loaded and starts
@@ -146,7 +146,7 @@ namespace MyToolkit.Phone
 				SystemTray.ProgressIndicator.IsVisible = true;
 
 				var page = PhoneApplication.CurrentPage;
-				oldState = OldPopupState.Inactivate();
+				oldState = PageDeactivator.Inactivate();
 				httpResponse = Play(youTubeId, YouTubeQuality.Quality480P, ex => Deployment.Current.Dispatcher.BeginInvoke(
 					delegate
 					{
