@@ -131,10 +131,10 @@ namespace MyToolkit.Phone
 		/// This method disables the current page and shows a progress indicator until the youtube movie url has been loaded and starts
 		/// </summary>
 		/// <param name="youTubeId"></param>
-		/// <param name="manualActivate">if true add YouTube.CancelPlay() in OnNavigatedTo() of the page (better)</param>
+		/// <param name="manualActivatePage">if true add YouTube.CancelPlay() in OnNavigatedTo() of the page (better)</param>
 		/// <param name="maxQuality"></param>
 		/// <param name="onFailure"></param>
-		public static void Play(string youTubeId, bool manualActivate, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFailure = null)
+		public static void Play(string youTubeId, bool manualActivatePage, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFailure = null)
 		{
 			lock (typeof(YouTube))
 			{
@@ -159,7 +159,7 @@ namespace MyToolkit.Phone
 							CancelPlay(false);
 						}
 						else
-							CancelPlay(manualActivate);
+							CancelPlay(manualActivatePage);
 					}));
 			}
 		}
@@ -167,7 +167,7 @@ namespace MyToolkit.Phone
 		/// <summary>
 		/// call this in OnBackKeyPress() of the page: 
 		/// e.Cancel = YouTube.CancelPlay();
-		/// or in OnNavigatedTo() and use manualActivate = true
+		/// or in OnNavigatedTo() and use manualActivatePage = true
 		/// </summary>
 		/// <returns></returns>
 		public static bool CancelPlay()
