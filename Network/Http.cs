@@ -80,8 +80,11 @@ namespace MyToolkit.Network
 				}
 
 				request.Method = "GET";
+#if USE_GZIP
 				if (req.RequestGZIP)
 					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
+#endif
+
 				request.BeginGetResponse(r => ProcessResponse(r, request, response, action), request);
 			}
 			catch (Exception e)
@@ -148,8 +151,11 @@ namespace MyToolkit.Network
 				}
 
 				request.Method = "POST";
+
+#if USE_GZIP
 				if (req.RequestGZIP)
 					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
+#endif
 
 				request.BeginGetRequestStream(delegate(IAsyncResult ar1)
 				{
@@ -252,8 +258,12 @@ namespace MyToolkit.Network
 			try
 			{
 				var response = request.EndGetResponse(asyncResult);
+
+#if USE_GZIP
 				if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
 					response = new GZipWebResponse(response); 
+#endif
+
 				using (response)
 				{
 					using (var reader = new StreamReader(response.GetResponseStream(), resp.Request.Encoding))
@@ -281,6 +291,7 @@ namespace MyToolkit.Network
 		}
 	}
 
+#if USE_GZIP
 	internal class GZipWebResponse : WebResponse, IDisposable
 	{
 		readonly WebResponse response;
@@ -330,4 +341,5 @@ namespace MyToolkit.Network
 		}
 #endif
 	}
+#endif
 }

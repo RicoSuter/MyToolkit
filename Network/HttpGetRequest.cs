@@ -23,7 +23,10 @@ namespace MyToolkit.Network
 			Cookies = new List<Cookie>();
 			UseCache = true;
 			Encoding = Encoding.UTF8;
+
+			#if USE_GZIP
 			RequestGZIP = true; 
+			#endif
 		}
 
 		public string Uri { get; private set; }
@@ -32,6 +35,9 @@ namespace MyToolkit.Network
 
 		public bool UseCache { get; set; }
 		public Encoding Encoding { get; set; }
+
+		#if USE_GZIP
 		public bool RequestGZIP { get; set; }
+		#endif
 	}
 }
