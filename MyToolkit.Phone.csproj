@@ -67,16 +67,36 @@
     <Compile Include="Converters\NotConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="Encryption\SimpleEncryption.cs" />
-    <Compile Include="Libraries\DotNetZip\CRC32.cs" />
-    <Compile Include="Libraries\DotNetZip\Deflate.cs" />
-    <Compile Include="Libraries\DotNetZip\GZipStream.cs" />
-    <Compile Include="Libraries\DotNetZip\Inflate.cs" />
-    <Compile Include="Libraries\DotNetZip\InfTree.cs" />
-    <Compile Include="Libraries\DotNetZip\Tree.cs" />
-    <Compile Include="Libraries\DotNetZip\Zlib.cs" />
-    <Compile Include="Libraries\DotNetZip\ZlibBaseStream.cs" />
-    <Compile Include="Libraries\DotNetZip\ZlibCodec.cs" />
-    <Compile Include="Libraries\DotNetZip\ZlibConstants.cs" />
+    <Compile Include="Libraries\DotNetZip\CRC32.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Libraries\DotNetZip\Deflate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Libraries\DotNetZip\GZipStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Libraries\DotNetZip\Inflate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Libraries\DotNetZip\InfTree.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Libraries\DotNetZip\Tree.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Libraries\DotNetZip\Zlib.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Libraries\DotNetZip\ZlibBaseStream.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Libraries\DotNetZip\ZlibCodec.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Libraries\DotNetZip\ZlibConstants.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Messages\ActionMessage.cs" />
     <Compile Include="Messages\DefaultActions.cs" />
     <Compile Include="Messages\DefaultActions.Phone.cs" />

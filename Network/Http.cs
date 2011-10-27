@@ -8,8 +8,11 @@ using Ionic.Zlib;
 
 #if !METRO
 using System.Windows.Threading;
-using MyToolkit.Network;
+#endif
 
+#if WINDOWS_PHONE
+using Microsoft.Phone.Controls;
+using MyToolkit.Phone;
 #endif
 
 // developed by Rico Suter (rsuter.com)
@@ -18,6 +21,89 @@ namespace MyToolkit.Network
 {
 	public static class Http
 	{
+#if WINDOWS_PHONE
+		private static Dictionary<HttpResponse, PhoneApplicationPage> responses;  
+		public static void AbortRequests(PhoneApplicationPage page)
+		{
+			if (responses == null)
+				return; 
+			foreach (var r in responses.Where(p => p.Value == page).Select(i => i.Key))
+				r.Abort();
+		}
+#endif
+
+		#region GET
+
+#if !METRO
+		public static HttpResponse Get(string uri, Action<HttpResponse> action, Dispatcher dispatcher)
+		{
+			return Get(new HttpGetRequest(uri), r => dispatcher.BeginInvoke(() => action(r)));
+		}
+
+		public static HttpResponse Get(HttpGetRequest req, Action<HttpResponse> action, Dispatcher dispatcher)
+		{
+			return Get(req, r => dispatcher.BeginInvoke(() => action(r)));
+		}
+#endif
+
+		public static HttpResponse Get(string uri, Action<HttpResponse> action)
+		{
+			return Get(new HttpGetRequest(uri), action);
+		}
+
+		public static HttpResponse Get(HttpGetRequest req, Action<HttpResponse> action)
+		{
+			var response = new HttpResponse(req);
+			try
+			{
+				HttpWebRequest request;
+				if (req.Query != null)
+				{
+					if (!req.UseCache)
+						req.Query["__dcachetime"] = DateTime.Now.Ticks.ToString(); // TODO auch im else, wenn kein query
+
+					var queryString = GetQueryString(req.Query);
+					if (req.Uri.Contains("?"))
+						request = (HttpWebRequest)WebRequest.Create(req.Uri + "&" + queryString);
+					else
+						request = (HttpWebRequest)WebRequest.Create(req.Uri + "?" + queryString);
+				}
+				else
+					request = (HttpWebRequest)WebRequest.Create(req.Uri);
+				response.WebRequest = request;
+
+				if (req.Cookies.Count > 0)
+				{
+					request.CookieContainer = new CookieContainer();
+					foreach (var c in req.Cookies)
+						request.CookieContainer.Add(request.RequestUri, c);
+				}
+
+				request.Method = "GET";
+				if (req.RequestGZIP)
+					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
+				request.BeginGetResponse(r => ProcessResponse(r, request, response, action), request);
+			}
+			catch (Exception e)
+			{
+				response.Exception = e;
+				if (action != null)
+					action(response);
+			}
+
+#if WINDOWS_PHONE
+			if (responses == null)
+				responses = new Dictionary<HttpResponse, PhoneApplicationPage>();
+			responses.Add(response, PhoneApplication.CurrentPage);
+#endif
+
+			return response;
+		}
+
+		#endregion
+
+		#region POST
+
 #if !METRO
 		public static HttpResponse Post(string uri, Action<HttpResponse> action, Dispatcher dispatcher)
 		{
@@ -92,6 +178,13 @@ namespace MyToolkit.Network
 				if (action != null)
 					action(response);
 			}
+
+#if WINDOWS_PHONE
+			if (responses == null)
+				responses = new Dictionary<HttpResponse, PhoneApplicationPage>();
+			responses.Add(response, PhoneApplication.CurrentPage);
+#endif
+
 			return response;
 		}
 
@@ -129,10 +222,10 @@ namespace MyToolkit.Network
 				stream.Write(headerbytes, 0, headerbytes.Length);
 
 				var fileStream = file.Stream;
-				#if !METRO
+#if !METRO
 				if (fileStream == null)
 					fileStream = new FileStream(file.Path, FileMode.Open, FileAccess.Read);
-				#endif
+#endif
 
 				try
 				{
@@ -152,63 +245,7 @@ namespace MyToolkit.Network
 			stream.Write(boundarybytes, 0, boundarybytes.Length);
 		}
 
-#if !METRO
-		public static HttpResponse Get(string uri, Action<HttpResponse> action, Dispatcher dispatcher)
-		{
-			return Get(new HttpGetRequest(uri), r => dispatcher.BeginInvoke(() => action(r)));
-		}
-
-		public static HttpResponse Get(HttpGetRequest req, Action<HttpResponse> action, Dispatcher dispatcher)
-		{
-			return Get(req, r => dispatcher.BeginInvoke(() => action(r)));
-		}
-#endif
-
-		public static HttpResponse Get(string uri, Action<HttpResponse> action)
-		{
-			return Get(new HttpGetRequest(uri), action);
-		}
-
-		public static HttpResponse Get(HttpGetRequest req, Action<HttpResponse> action)
-		{
-			var response = new HttpResponse(req);
-			try
-			{
-				HttpWebRequest request;
-				if (req.Query != null)
-				{
-					if (!req.UseCache)
-						req.Query["__dcachetime"] = DateTime.Now.Ticks.ToString(); // TODO auch im else, wenn kein query
-
-					var queryString = GetQueryString(req.Query);
-					if (req.Uri.Contains("?"))
-						request = (HttpWebRequest)WebRequest.Create(req.Uri + "&" + queryString);
-					else
-						request = (HttpWebRequest)WebRequest.Create(req.Uri + "?" + queryString);
-				} else
-					request = (HttpWebRequest)WebRequest.Create(req.Uri);
-				response.WebRequest = request;
-
-				if (req.Cookies.Count > 0)
-				{
-					request.CookieContainer = new CookieContainer();
-					foreach (var c in req.Cookies)
-						request.CookieContainer.Add(request.RequestUri, c);
-				}
-
-				request.Method = "GET";
-				if (req.RequestGZIP)
-					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
-				request.BeginGetResponse(r => ProcessResponse(r, request, response, action), request);
-			}
-			catch (Exception e)
-			{
-				response.Exception = e; 
-				if (action != null)
-					action(response);
-			}
-			return response;
-		}
+		#endregion
 
 		private static void ProcessResponse(IAsyncResult asyncResult, WebRequest request, HttpResponse resp, Action<HttpResponse> action)
 		{
@@ -264,6 +301,7 @@ namespace MyToolkit.Network
 			base.Dispose(disposing);
 		}
 #else
+
 		void IDisposable.Dispose()
 		{
 			Close();
