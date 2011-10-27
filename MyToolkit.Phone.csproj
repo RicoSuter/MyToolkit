@@ -145,9 +145,8 @@
     <Compile Include="UI\TextBoxBinding.cs" />
     <Compile Include="UI\UnstyledButton.cs" />
     <Compile Include="Utilities\ColorUtility.cs" />
-    <Compile Include="Utilities\ImageUtil.cs" />
     <Compile Include="Utilities\Notifications\Notification.cs" />
-    <Compile Include="Utilities\StringUtility.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="Utilities\WeakEvent.cs" />
     <Compile Include="Utilities\Xml.cs" />
   </ItemGroup>
