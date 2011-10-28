@@ -28,45 +28,48 @@ namespace MyToolkit.MVVM
             return args.PropertyName == propertyName;
 		}
 
-		private static IDictionary<object, string> expressionDictionary; 
+		//private static IDictionary<object, string> expressionDictionary; 
 		public static bool IsProperty<TU>(this PropertyChangedEventArgs args, Expression<Func<TU, object>> expression)
 		{
-			if (expressionDictionary == null)
-				expressionDictionary = new Dictionary<object, string>(); 
+			//if (expressionDictionary == null)
+			//	expressionDictionary = new Dictionary<object, string>(); 
 			
-			if (!expressionDictionary.ContainsKey(expression))
-			{
+			//if (!expressionDictionary.ContainsKey(expression))
+			//{
 				var memexp = expression.Body is UnaryExpression ?
 					(MemberExpression)((UnaryExpression)expression.Body).Operand :
 					((MemberExpression)expression.Body);
-				expressionDictionary[expression] = memexp.Member.Name;
-			}
+				return args.PropertyName == memexp.Member.Name;
+				//expressionDictionary[expression] = memexp.Member.Name;
+			//}
 			
-			return args.PropertyName == expressionDictionary[expression];
+			//return args.PropertyName == expressionDictionary[expression];
 		}
 	}
 
 	[DataContract]
 	public class NotifyPropertyChanged<TU> : NotifyPropertyChanged
 	{
-		private IDictionary<object, string> expressionDictionary; 
+		//private IDictionary<object, string> expressionDictionary; 
 	
 		public bool SetProperty<T>(Expression<Func<TU, T>> expression, ref T oldValue, T newValue)
 		{
-			if (expressionDictionary == null)
-				expressionDictionary = new Dictionary<object, string>();
-			if (!expressionDictionary.ContainsKey(expression))
-				expressionDictionary[expression] = ((MemberExpression) expression.Body).Member.Name;
-			return SetProperty(expressionDictionary[expression], ref oldValue, newValue);
+			//if (expressionDictionary == null)
+			//    expressionDictionary = new Dictionary<object, string>();
+			//if (!expressionDictionary.ContainsKey(expression))
+			//    expressionDictionary[expression] = ((MemberExpression) expression.Body).Member.Name;
+			//return SetProperty(expressionDictionary[expression], ref oldValue, newValue);
+			return SetProperty(((MemberExpression)expression.Body).Member.Name, ref oldValue, newValue);
 		}
 
 		public void RaisePropertyChanged<T>(Expression<Func<TU, T>> expression)
 		{
-			if (expressionDictionary == null)
-				expressionDictionary = new Dictionary<object, string>();
-			if (!expressionDictionary.ContainsKey(expression))
-				expressionDictionary[expression] = ((MemberExpression) expression.Body).Member.Name;
-			RaisePropertyChanged(expressionDictionary[expression]);
+			//if (expressionDictionary == null)
+			//    expressionDictionary = new Dictionary<object, string>();
+			//if (!expressionDictionary.ContainsKey(expression))
+			//    expressionDictionary[expression] = ((MemberExpression) expression.Body).Member.Name;
+			//RaisePropertyChanged(expressionDictionary[expression]);
+			RaisePropertyChanged(((MemberExpression)expression.Body).Member.Name); 
 		}
 	}
 
