@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("MyToolkit")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Rico Suter, rsuter.com")]
 [assembly: AssemblyProduct("MyToolkit")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2011")]
+[assembly: AssemblyCopyright("Rico Suter, rsuter.com")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
