@@ -22,14 +22,14 @@ namespace MyToolkit.Network
 	public static class Http
 	{
 #if WINDOWS_PHONE
-		private static Dictionary<HttpResponse, PhoneApplicationPage> responses;  
-		public static void AbortRequests(PhoneApplicationPage page)
-		{
-			if (responses == null)
-				return; 
-			foreach (var r in responses.Where(p => p.Value == page).Select(i => i.Key))
-				r.Abort();
-		}
+		//private static Dictionary<HttpResponse, PhoneApplicationPage> responses;  
+		//public static void AbortRequests(PhoneApplicationPage page)
+		//{
+		//    if (responses == null)
+		//        return; 
+		//    foreach (var r in responses.Where(p => p.Value == page).Select(i => i.Key))
+		//        r.Abort();
+		//}
 #endif
 
 		#region GET
@@ -95,9 +95,9 @@ namespace MyToolkit.Network
 			}
 
 #if WINDOWS_PHONE
-			if (responses == null)
-				responses = new Dictionary<HttpResponse, PhoneApplicationPage>();
-			responses.Add(response, PhoneApplication.CurrentPage);
+			//if (responses == null)
+			//    responses = new Dictionary<HttpResponse, PhoneApplicationPage>();
+			//responses.Add(response, PhoneApplication.CurrentPage);
 #endif
 
 			return response;
@@ -186,9 +186,9 @@ namespace MyToolkit.Network
 			}
 
 #if WINDOWS_PHONE
-			if (responses == null)
-				responses = new Dictionary<HttpResponse, PhoneApplicationPage>();
-			responses.Add(response, PhoneApplication.CurrentPage);
+			//if (responses == null)
+			//    responses = new Dictionary<HttpResponse, PhoneApplicationPage>();
+			//responses.Add(response, PhoneApplication.CurrentPage);
 #endif
 
 			return response;
