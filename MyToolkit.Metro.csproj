@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;METRO</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;METRO;USE_GZIP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -55,7 +55,12 @@
     <Compile Include="MVVM\NotifyPropertyChanged.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="Network\Http.cs" />
+    <Compile Include="Network\HttpGetRequest.cs" />
+    <Compile Include="Network\HttpPostFile.cs" />
+    <Compile Include="Network\HttpPostRequest.cs" />
+    <Compile Include="Network\HttpResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="Utilities\WeakEvent.cs" />
     <Compile Include="Utilities\Xml.cs" />
   </ItemGroup>

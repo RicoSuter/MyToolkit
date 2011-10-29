@@ -308,7 +308,7 @@ namespace MyToolkit.Network
 #if METRO
 		protected override void Dispose(bool disposing)
 		{
-			response.Dispose(disposing);
+            response.Dispose();
 			base.Dispose(disposing);
 		}
 #else
