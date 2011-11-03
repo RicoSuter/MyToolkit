@@ -86,7 +86,7 @@
     <Compile Include="Network\HttpResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Designer.cs" />
-    <Compile Include="Utilities\StringUtility.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="Utilities\WeakEvent.cs" />
     <Compile Include="Utilities\Xml.cs" />
   </ItemGroup>
