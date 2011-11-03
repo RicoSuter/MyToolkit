@@ -104,6 +104,7 @@
     <Compile Include="Messages\Messenger.cs" />
     <Compile Include="Messages\TextMessage.cs" />
     <Compile Include="MVVM\NotifyPropertyChanged.cs" />
+    <Compile Include="MVVM\PropertyChangedEventArgsExtensions.cs" />
     <Compile Include="MVVM\RelayCommand.cs" />
     <Compile Include="Network\Http.cs" />
     <Compile Include="Network\HttpGetRequest.cs" />
