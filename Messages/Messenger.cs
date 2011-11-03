@@ -11,6 +11,19 @@ namespace MyToolkit.Messages
 		public object Action; 
 	}
 
+	public static class MessengerExtensions
+	{
+		/// <summary>
+		/// Usage: new TextMessage("Test").Send();
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="msg"></param>
+		public static void Send<T>(this T msg)
+		{
+			Messenger.Send(msg);
+		}
+	}
+
 	public static class Messenger
 	{
 		private static readonly List<MyTriple> actions = new List<MyTriple>();
