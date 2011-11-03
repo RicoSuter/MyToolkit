@@ -11,17 +11,17 @@ using System.Windows.Shapes;
 
 namespace MyToolkit.UI
 {
-	public static class TextBoxBinding
-	{
-		public static void ForceTextUpdate(object sender)
-		{
-			var textBox = sender as TextBox;
-			if (textBox != null)
-			{
-				var bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
-				if (bindingExpression != null)
-					bindingExpression.UpdateSource();
-			} 
-		}
-	}
+	//public static class TextBoxBinding
+	//{
+	//    public static void ForceTextUpdate(object sender)
+	//    {
+	//        var textBox = sender as TextBox;
+	//        if (textBox != null)
+	//        {
+	//            var bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+	//            if (bindingExpression != null)
+	//                bindingExpression.UpdateSource();
+	//        } 
+	//    }
+	//}
 }
