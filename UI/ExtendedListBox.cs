@@ -21,7 +21,7 @@ namespace MyToolkit.UI
 
 		public static readonly DependencyProperty InnerMarginProperty =
 			DependencyProperty.Register("InnerMargin", typeof(Thickness),
-			typeof(ExtendedItemsControl), new PropertyMetadata(null));
+			typeof(ExtendedListBox), new PropertyMetadata(null));
 
 		public override void OnApplyTemplate()
 		{
