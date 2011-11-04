@@ -116,6 +116,7 @@
     <Compile Include="Performance\DeferredLoadListBoxItem.cs" />
     <Compile Include="Performance\GlobalSuppressions.cs" />
     <Compile Include="Performance\LowProfileImageLoader.cs" />
+    <Compile Include="Phone\Environment.cs" />
     <Compile Include="Phone\Marketplace.cs" />
     <Compile Include="Phone\MemoryDiagnosticsHelper.cs" />
     <Compile Include="Phone\PhoneApplication.cs" />
