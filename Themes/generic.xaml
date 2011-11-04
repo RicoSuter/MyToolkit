@@ -99,20 +99,20 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate>
-					<UI:ItemsControlEx x:Name="itemsControl"
+					<UI:ExtendedItemsControl x:Name="itemsControl"
                         ItemsSource="{Binding Path=ItemsSource, RelativeSource={RelativeSource TemplatedParent}}"
                         ItemTemplate="{Binding Path=ItemTemplate, RelativeSource={RelativeSource TemplatedParent}}">
-						<UI:ItemsControlEx.ItemsPanel>
+						<UI:ExtendedItemsControl.ItemsPanel>
 							<ItemsPanelTemplate>
 								<VirtualizingStackPanel Orientation="Vertical"/>
 							</ItemsPanelTemplate>
-						</UI:ItemsControlEx.ItemsPanel>
-						<UI:ItemsControlEx.Template>
+						</UI:ExtendedItemsControl.ItemsPanel>
+						<UI:ExtendedItemsControl.Template>
 							<ControlTemplate>
                                 <ItemsPresenter x:Name="itemsPresenter" />
 							</ControlTemplate>
-						</UI:ItemsControlEx.Template>
-					</UI:ItemsControlEx>
+						</UI:ExtendedItemsControl.Template>
+					</UI:ExtendedItemsControl>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
@@ -122,42 +122,52 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate>
-					<UI:ItemsControlEx x:Name="itemsControl"
+					<UI:ExtendedListBox x:Name="itemsControl"
                         ItemsSource="{Binding Path=ItemsSource, RelativeSource={RelativeSource TemplatedParent}}"
                         ItemTemplate="{Binding Path=ItemTemplate, RelativeSource={RelativeSource TemplatedParent}}">
-						<UI:ItemsControlEx.ItemsPanel>
+						<UI:ExtendedListBox.ItemsPanel>
 							<ItemsPanelTemplate>
 								<VirtualizingStackPanel Orientation="Vertical"/>
 							</ItemsPanelTemplate>
-						</UI:ItemsControlEx.ItemsPanel>
-						<UI:ItemsControlEx.Template>
+						</UI:ExtendedListBox.ItemsPanel>
+						<UI:ExtendedListBox.Template>
+							<ControlTemplate>
+								<ScrollViewer>
+									<ItemsPresenter x:Name="itemsPresenter" />
+								</ScrollViewer>
+							</ControlTemplate>
+						</UI:ExtendedListBox.Template>
+						<UI:ExtendedListBox.ItemContainerStyle>
+							<Style TargetType="ListBoxItem">
+								<Setter Property="Template">
+									<Setter.Value>
+										<ControlTemplate>
+											<ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+										</ControlTemplate>
+									</Setter.Value>
+								</Setter>
+							</Style>
+						</UI:ExtendedListBox.ItemContainerStyle>
+					</UI:ExtendedListBox>
+					<!--<UI:ExtendedItemsControl x:Name="itemsControl"
+                        ItemsSource="{Binding Path=ItemsSource, RelativeSource={RelativeSource TemplatedParent}}"
+                        ItemTemplate="{Binding Path=ItemTemplate, RelativeSource={RelativeSource TemplatedParent}}">
+						<UI:ExtendedItemsControl.ItemsPanel>
+							<ItemsPanelTemplate>
+								<VirtualizingStackPanel Orientation="Vertical"/>
+							</ItemsPanelTemplate>
+						</UI:ExtendedItemsControl.ItemsPanel>
+						<UI:ExtendedItemsControl.Template>
 							<ControlTemplate>
 								<ScrollViewer>
                                     <ItemsPresenter x:Name="itemsPresenter" />
 								</ScrollViewer>
 							</ControlTemplate>
-						</UI:ItemsControlEx.Template>
-					</UI:ItemsControlEx>
+						</UI:ExtendedItemsControl.Template>
+					</UI:ExtendedItemsControl>-->
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
 	</Style>
-	
-	<!--<Style TargetType="UI:ItemsControlEx">
-		<Setter Property="ItemContainerStyle">
-			<Setter.Value>
-				<Style TargetType="ListBoxItem">
-					<Setter Property="Template">
-						<Setter.Value>
-							<ControlTemplate>
-
-								<ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-							</ControlTemplate>
-						</Setter.Value>
-					</Setter>
-				</Style>
-			</Setter.Value>
-		</Setter>
-	</Style>-->
 </ResourceDictionary>
   

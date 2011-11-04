@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,14 +11,8 @@ using System.Windows.Shapes;
 
 namespace MyToolkit.UI
 {
-	// TODO: change to ItemsControl => problem: long list, scroll to bottom, go to other page, go back => wrong scroll position ?? correct only with ListBox 
-	public class ScrollableItemsControl : ListBox
+	public class ExtendedListBox : ListBox
 	{
-		public ScrollableItemsControl()
-		{
-			DefaultStyleKey = typeof(ScrollableItemsControl);
-		}
-
 		public Thickness InnerMargin
 		{
 			get { return (Thickness)GetValue(InnerMarginProperty); }
@@ -28,13 +21,26 @@ namespace MyToolkit.UI
 
 		public static readonly DependencyProperty InnerMarginProperty =
 			DependencyProperty.Register("InnerMargin", typeof(Thickness),
-			typeof(ScrollableItemsControl), new PropertyMetadata(null));
+			typeof(ExtendedItemsControl), new PropertyMetadata(null));
 
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
 			var itemsPresenter = (ItemsPresenter)GetTemplateChild("itemsPresenter");
 			itemsPresenter.Margin = InnerMargin;
+		}
+
+		protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+		{
+			base.PrepareContainerForItemOverride(element, item);
+			OnPrepareContainerForItem(new PrepareContainerForItemEventArgs(element, item));
+		}
+
+		public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
+		protected void OnPrepareContainerForItem(PrepareContainerForItemEventArgs args)
+		{
+			if (PrepareContainerForItem != null)
+				PrepareContainerForItem(this, args);
 		}
 	}
 }
