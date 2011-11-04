@@ -104,7 +104,7 @@
                         ItemTemplate="{Binding Path=ItemTemplate, RelativeSource={RelativeSource TemplatedParent}}">
 						<UI:ExtendedItemsControl.ItemsPanel>
 							<ItemsPanelTemplate>
-								<VirtualizingStackPanel Orientation="Vertical"/>
+								<StackPanel Orientation="Vertical"/>
 							</ItemsPanelTemplate>
 						</UI:ExtendedItemsControl.ItemsPanel>
 						<UI:ExtendedItemsControl.Template>
