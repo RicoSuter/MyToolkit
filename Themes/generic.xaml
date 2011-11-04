@@ -46,9 +46,9 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0,0,0,0"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="Template">
+        <!--<Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+				<ControlTemplate TargetType="ContentControl">
                     <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
 							Background="{TemplateBinding Background}" CornerRadius="0" Margin="0" Padding="0">
                         <ContentControl ContentTemplate="{TemplateBinding ContentTemplate}" 
@@ -60,7 +60,7 @@
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
     </Style>
 
 	<Style TargetType="UI:ScrollableItemsControl">
