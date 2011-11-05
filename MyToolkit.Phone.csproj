@@ -128,6 +128,7 @@
     <Compile Include="UI\Designer.cs" />
     <Compile Include="UI\ExtendedListBox.cs" />
     <Compile Include="UI\FixedNavigationList.cs" />
+    <Compile Include="UI\FrameworkElementExtensions.cs" />
     <Compile Include="UI\ImageButton.cs" />
     <Compile Include="Phone\PageDeactivator.cs" />
     <Compile Include="UI\NavigationListEventArgs.cs" />

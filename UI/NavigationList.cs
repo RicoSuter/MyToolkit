@@ -59,9 +59,16 @@ namespace MyToolkit.UI
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
-			var itemsControl = (ExtendedListBox) GetTemplateChild("itemsControl");
+			itemsControl = (ExtendedListBox) GetTemplateChild("itemsControl");
 			itemsControl.PrepareContainerForItem += PrepareContainerForItem;
 			itemsControl.InnerMargin = InnerMargin;
+		}
+
+		private ExtendedListBox itemsControl;
+		public event EventHandler<ScrollingStateChangedEventArgs> ScrollingStateChanged
+		{
+			add { itemsControl.ScrollingStateChanged += value;  }
+			remove { itemsControl.ScrollingStateChanged -= value; }
 		}
 
 		private void PrepareContainerForItem(object sender, PrepareContainerForItemEventArgs e)
@@ -74,6 +81,7 @@ namespace MyToolkit.UI
 		}
 
 		private bool manipulationDeltaStarted;
+
 		private void ElementManipulationDelta(object sender, ManipulationDeltaEventArgs e)
 		{
 			manipulationDeltaStarted = true;

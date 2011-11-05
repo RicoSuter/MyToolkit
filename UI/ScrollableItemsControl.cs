@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,29 +13,11 @@ using System.Windows.Shapes;
 
 namespace MyToolkit.UI
 {
-	// TODO: change to ItemsControl => problem: long list, scroll to bottom, go to other page, go back => wrong scroll position ?? correct only with ListBox 
-	public class ScrollableItemsControl : ListBox
+	public class ScrollableItemsControl : ExtendedListBox
 	{
 		public ScrollableItemsControl()
 		{
 			DefaultStyleKey = typeof(ScrollableItemsControl);
-		}
-
-		public Thickness InnerMargin
-		{
-			get { return (Thickness)GetValue(InnerMarginProperty); }
-			set { SetValue(InnerMarginProperty, value); }
-		}
-
-		public static readonly DependencyProperty InnerMarginProperty =
-			DependencyProperty.Register("InnerMargin", typeof(Thickness),
-			typeof(ScrollableItemsControl), new PropertyMetadata(null));
-
-		public override void OnApplyTemplate()
-		{
-			base.OnApplyTemplate();
-			var itemsPresenter = (ItemsPresenter)GetTemplateChild("itemsPresenter");
-			itemsPresenter.Margin = InnerMargin;
 		}
 	}
 }

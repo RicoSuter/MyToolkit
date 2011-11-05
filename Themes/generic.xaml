@@ -74,7 +74,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate>
-					<ScrollViewer>
+					<ScrollViewer x:Name="scrollViewer">
 						<ItemsPresenter x:Name="itemsPresenter" />
 					</ScrollViewer>
 				</ControlTemplate>
@@ -132,7 +132,7 @@
 						</UI:ExtendedListBox.ItemsPanel>
 						<UI:ExtendedListBox.Template>
 							<ControlTemplate>
-								<ScrollViewer>
+								<ScrollViewer x:Name="scrollViewer">
 									<ItemsPresenter x:Name="itemsPresenter" />
 								</ScrollViewer>
 							</ControlTemplate>

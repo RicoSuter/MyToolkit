@@ -91,6 +91,28 @@ namespace MyToolkit.Performance
             }
         }
 
+		private static object mutex = new object();
+    	private static bool isWorking = true; 
+    	public static bool IsWorking
+    	{
+    		get { lock (mutex) { return isWorking; } }
+			set
+			{
+				lock (mutex)
+				{
+					if (isWorking == value)
+						return; 
+					isWorking = value; 
+				}
+
+				if (value)
+				{
+					lock (_syncBlock)
+						Monitor.Pulse(_syncBlock);
+				}
+			}
+    	}
+
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Relevant exceptions don't have a common base class.")]
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Linear flow is easy to understand.")]
         private static void WorkerThreadProc(object unused)
@@ -103,7 +125,8 @@ namespace MyToolkit.Performance
                 lock (_syncBlock)
                 {
                     // Wait for more work if there's nothing left to do
-                    if ((0 == _pendingRequests.Count) && (0 == _pendingResponses.Count) && (0 == pendingRequests.Count) && (0 == pendingResponses.Count))
+					if (!IsWorking || ((0 == _pendingRequests.Count) && (0 == _pendingResponses.Count) && 
+						(0 == pendingRequests.Count) && (0 == pendingResponses.Count)))
                     {
                         Monitor.Wait(_syncBlock);
                         if (_exiting)
@@ -111,32 +134,37 @@ namespace MyToolkit.Performance
                             return;
                         }
                     }
-                    // Copy work items to private collections
-                    while (0 < _pendingRequests.Count)
-                    {
-                        var pendingRequest = _pendingRequests.Dequeue();
-                        // Search for another pending request for the same Image element
-                        for (var i = 0; i < pendingRequests.Count; i++)
-                        {
-                            if (pendingRequests[i].Image == pendingRequest.Image)
-                            {
-                                // Found one; replace it
-                                pendingRequests[i] = pendingRequest;
-                                pendingRequest = null;
-                                break;
-                            }
-                        }
-                        if (null != pendingRequest)
-                        {
-                            // Unique request; add it
-                            pendingRequests.Add(pendingRequest);
-                        }
-                    }
-                    while (0 < _pendingResponses.Count)
-                    {
-                        pendingResponses.Enqueue(_pendingResponses.Dequeue());
-                    }
+
+					if (!IsWorking)
+						continue;
+                	
+					// Copy work items to private collections
+					while (0 < _pendingRequests.Count)
+					{
+						var pendingRequest = _pendingRequests.Dequeue();
+						// Search for another pending request for the same Image element
+						for (var i = 0; i < pendingRequests.Count; i++)
+						{
+							if (pendingRequests[i].Image == pendingRequest.Image)
+							{
+								// Found one; replace it
+								pendingRequests[i] = pendingRequest;
+								pendingRequest = null;
+								break;
+							}
+						}
+						if (null != pendingRequest)
+						{
+							// Unique request; add it
+							pendingRequests.Add(pendingRequest);
+						}
+					}
+					while (0 < _pendingResponses.Count)
+					{
+						pendingResponses.Enqueue(_pendingResponses.Dequeue());
+					}
                 }
+
                 Queue<PendingCompletion> pendingCompletions = new Queue<PendingCompletion>();
                 // Process pending requests
                 var count = pendingRequests.Count;
