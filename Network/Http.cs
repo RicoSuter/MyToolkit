@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
+
+#if SILVERLIGHT
 using Ionic.Zlib;
+#else
+using System.IO.Compression;
+#endif
 
 #if !METRO
 using System.Windows.Threading;

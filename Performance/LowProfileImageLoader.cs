@@ -92,20 +92,20 @@ namespace MyToolkit.Performance
         }
 
 		private static object mutex = new object();
-    	private static bool isWorking = true; 
-    	public static bool IsWorking
+    	private static bool isSuspended = false; 
+    	public static bool IsSuspended
     	{
-    		get { lock (mutex) { return isWorking; } }
+    		get { lock (mutex) { return isSuspended; } }
 			set
 			{
 				lock (mutex)
 				{
-					if (isWorking == value)
+					if (isSuspended == value)
 						return; 
-					isWorking = value; 
+					isSuspended = value; 
 				}
 
-				if (value)
+				if (!value) // is active
 				{
 					lock (_syncBlock)
 						Monitor.Pulse(_syncBlock);
@@ -125,7 +125,7 @@ namespace MyToolkit.Performance
                 lock (_syncBlock)
                 {
                     // Wait for more work if there's nothing left to do
-					if (!IsWorking || ((0 == _pendingRequests.Count) && (0 == _pendingResponses.Count) && 
+					if (IsSuspended || ((0 == _pendingRequests.Count) && (0 == _pendingResponses.Count) && 
 						(0 == pendingRequests.Count) && (0 == pendingResponses.Count)))
                     {
                         Monitor.Wait(_syncBlock);
@@ -135,7 +135,7 @@ namespace MyToolkit.Performance
                         }
                     }
 
-					if (!IsWorking)
+					if (IsSuspended)
 						continue;
                 	
 					// Copy work items to private collections
