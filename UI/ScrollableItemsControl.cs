@@ -15,9 +15,6 @@ namespace MyToolkit.UI
 {
 	public class ScrollableItemsControl : ExtendedListBox
 	{
-		public ScrollableItemsControl()
-		{
-			DefaultStyleKey = typeof(ScrollableItemsControl);
-		}
+		
 	}
 }

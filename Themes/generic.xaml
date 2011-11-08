@@ -63,7 +63,7 @@
         </Setter>-->
     </Style>
 
-	<Style TargetType="UI:ScrollableItemsControl">
+	<Style TargetType="UI:ExtendedListBox">
 		<Setter Property="ItemsPanel">
 			<Setter.Value>
 				<ItemsPanelTemplate>

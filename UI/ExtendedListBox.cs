@@ -27,6 +27,11 @@ namespace MyToolkit.UI
 
 	public class ExtendedListBox : ListBox
 	{
+		public ExtendedListBox()
+		{
+			DefaultStyleKey = typeof(ExtendedListBox);
+		}
+
 		public Thickness InnerMargin
 		{
 			get { return (Thickness)GetValue(InnerMarginProperty); }
