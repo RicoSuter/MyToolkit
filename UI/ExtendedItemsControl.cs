@@ -6,6 +6,8 @@ namespace MyToolkit.UI
 {
 	public class ExtendedItemsControl : ItemsControl
 	{
+		#region inner margin
+
 		public Thickness InnerMargin
 		{
 			get { return (Thickness)GetValue(InnerMarginProperty); }
@@ -14,13 +16,34 @@ namespace MyToolkit.UI
 
 		public static readonly DependencyProperty InnerMarginProperty =
 			DependencyProperty.Register("InnerMargin", typeof(Thickness),
-			typeof(ExtendedItemsControl), new PropertyMetadata(null));
+			typeof(ExtendedItemsControl), new PropertyMetadata(null, InnerMarginChanged));
+
+		private static void InnerMarginChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var box = (ExtendedItemsControl)d;
+			if (box.lastElement != null)
+				box.ResetLastItemMargin();
+			box.ResetInnerMargin();
+		}
 
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
+			ResetInnerMargin();
+		}
+
+		private void ResetInnerMargin()
+		{
 			var itemsPresenter = (ItemsPresenter)GetTemplateChild("itemsPresenter");
-			itemsPresenter.Margin = InnerMargin;
+			if (itemsPresenter != null)
+				itemsPresenter.Margin = InnerMargin;
+		}
+
+		private void ResetLastItemMargin()
+		{
+			lastElementMargin = lastElement.Margin;
+			lastElement.Margin = new Thickness(lastElementMargin.Left, lastElementMargin.Top, lastElementMargin.Right,
+				lastElementMargin.Bottom + InnerMargin.Top + InnerMargin.Bottom);
 		}
 
 		private FrameworkElement lastElement = null;
@@ -30,19 +53,18 @@ namespace MyToolkit.UI
 			base.PrepareContainerForItemOverride(element, item);
 			OnPrepareContainerForItem(new PrepareContainerForItemEventArgs(element, item));
 
-			// changes to this function must be applied also to ExtendedItemsControl
-			// TODO: hack to see all elements, only needed if InnerMargin is set
 			if (InnerMargin != new Thickness() && Items.IndexOf(item) == Items.Count - 1)
 			{
 				if (lastElement != null)
 					lastElement.Margin = lastElementMargin;
-
 				lastElement = (FrameworkElement)element;
-				lastElementMargin = lastElement.Margin;
-				lastElement.Margin = new Thickness(lastElementMargin.Left, lastElementMargin.Top,
-					lastElementMargin.Right, lastElementMargin.Bottom + InnerMargin.Top + InnerMargin.Bottom);
+				ResetLastItemMargin();
 			}
 		}
+
+		#endregion
+
+		#region prepare container for item event
 
 		public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
 		protected void OnPrepareContainerForItem(PrepareContainerForItemEventArgs args)
@@ -50,5 +72,7 @@ namespace MyToolkit.UI
 			if (PrepareContainerForItem != null)
 				PrepareContainerForItem(this, args);
 		}
+
+		#endregion
 	}
 }

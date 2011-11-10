@@ -32,6 +32,8 @@ namespace MyToolkit.UI
 			DefaultStyleKey = typeof(ExtendedListBox);
 		}
 
+		#region inner margin
+
 		public Thickness InnerMargin
 		{
 			get { return (Thickness)GetValue(InnerMarginProperty); }
@@ -40,7 +42,66 @@ namespace MyToolkit.UI
 
 		public static readonly DependencyProperty InnerMarginProperty =
 			DependencyProperty.Register("InnerMargin", typeof(Thickness),
-			typeof(ExtendedListBox), new PropertyMetadata(null));
+			typeof(ExtendedListBox), new PropertyMetadata(null, InnerMarginChanged));
+
+		private static void InnerMarginChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var box = (ExtendedListBox)d;
+			if (box.lastElement != null)
+				box.ResetLastItemMargin();
+			box.ResetInnerMargin();
+		}
+
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+			ResetInnerMargin();
+		}
+
+		private void ResetInnerMargin()
+		{
+			var itemsPresenter = (ItemsPresenter)GetTemplateChild("itemsPresenter");
+			if (itemsPresenter != null)
+				itemsPresenter.Margin = InnerMargin;
+		}
+
+		private void ResetLastItemMargin()
+		{
+			lastElementMargin = lastElement.Margin;
+			lastElement.Margin = new Thickness(lastElementMargin.Left, lastElementMargin.Top, lastElementMargin.Right,
+				lastElementMargin.Bottom + InnerMargin.Top + InnerMargin.Bottom);
+		}
+
+		private FrameworkElement lastElement = null;
+		private Thickness lastElementMargin;
+		protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+		{
+			base.PrepareContainerForItemOverride(element, item);
+			OnPrepareContainerForItem(new PrepareContainerForItemEventArgs(element, item));
+
+			if (InnerMargin != new Thickness() && Items.IndexOf(item) == Items.Count - 1)
+			{
+				if (lastElement != null)
+					lastElement.Margin = lastElementMargin;
+				lastElement = (FrameworkElement)element;
+				ResetLastItemMargin();
+			}
+		}
+
+		#endregion
+
+		#region prepare container for item event
+
+		public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
+		protected void OnPrepareContainerForItem(PrepareContainerForItemEventArgs args)
+		{
+			if (PrepareContainerForItem != null)
+				PrepareContainerForItem(this, args);
+		}
+
+		#endregion
+
+		#region scrolling
 
 		public event EventHandler<ScrollingStateChangedEventArgs> ScrollingStateChanged;
 
@@ -80,13 +141,6 @@ namespace MyToolkit.UI
 			IsScrolling = (e.NewState.Name == "Scrolling");
 		}
 
-		public override void OnApplyTemplate()
-		{
-			base.OnApplyTemplate();
-			var itemsPresenter = (ItemsPresenter) GetTemplateChild("itemsPresenter");
-			itemsPresenter.Margin = InnerMargin;
-		}
-
 		protected override Size ArrangeOverride(Size finalSize)
 		{
 			var size = base.ArrangeOverride(finalSize);
@@ -102,35 +156,9 @@ namespace MyToolkit.UI
 				}
 			}
 			catch { }
-			return size; 
+			return size;
 		}
 
-		private FrameworkElement lastElement = null;
-		private Thickness lastElementMargin;
-		protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
-		{
-			base.PrepareContainerForItemOverride(element, item);
-			OnPrepareContainerForItem(new PrepareContainerForItemEventArgs(element, item));
-
-			// changes to this function must be applied also to ExtendedItemsControl
-			// TODO: hack to see all elements, only needed if InnerMargin is set
-			if (InnerMargin != new Thickness() && Items.IndexOf(item) == Items.Count - 1) 
-			{
-				if (lastElement != null)
-					lastElement.Margin = lastElementMargin;
-
-				lastElement = (FrameworkElement) element;
-				lastElementMargin = lastElement.Margin;
-				lastElement.Margin = new Thickness(lastElementMargin.Left, lastElementMargin.Top, 
-					lastElementMargin.Right, lastElementMargin.Bottom + InnerMargin.Top + InnerMargin.Bottom);
-			}
-		}
-
-		public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
-		protected void OnPrepareContainerForItem(PrepareContainerForItemEventArgs args)
-		{
-			if (PrepareContainerForItem != null)
-				PrepareContainerForItem(this, args);
-		}
+		#endregion
 	}
 }
