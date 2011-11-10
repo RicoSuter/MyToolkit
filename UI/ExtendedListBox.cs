@@ -105,10 +105,25 @@ namespace MyToolkit.UI
 			return size; 
 		}
 
+		private FrameworkElement lastElement = null;
+		private Thickness lastElementMargin;
 		protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
 		{
 			base.PrepareContainerForItemOverride(element, item);
 			OnPrepareContainerForItem(new PrepareContainerForItemEventArgs(element, item));
+
+			// changes to this function must be applied also to ExtendedItemsControl
+			// TODO: hack to see all elements, only needed if InnerMargin is set
+			if (InnerMargin != new Thickness() && Items.IndexOf(item) == Items.Count - 1) 
+			{
+				if (lastElement != null)
+					lastElement.Margin = lastElementMargin;
+
+				lastElement = (FrameworkElement) element;
+				lastElementMargin = lastElement.Margin;
+				lastElement.Margin = new Thickness(lastElementMargin.Left, lastElementMargin.Top, 
+					lastElementMargin.Right, lastElementMargin.Bottom + InnerMargin.Top + InnerMargin.Bottom);
+			}
 		}
 
 		public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
