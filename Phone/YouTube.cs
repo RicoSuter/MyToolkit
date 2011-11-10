@@ -11,7 +11,7 @@ using Microsoft.Phone.Tasks;
 using MyToolkit.Network;
 using MyToolkit.UI.Popups;
 
-// developed by Rico Suter (rsuter.com)
+// developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
 // this code only works with mango (video urls with query don't work in previous versions)
 
 namespace MyToolkit.Phone

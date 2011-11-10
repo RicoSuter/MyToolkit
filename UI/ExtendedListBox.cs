@@ -12,6 +12,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using MyToolkit.UI.UIExtensionMethods;
 
+// developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
+
 namespace MyToolkit.UI
 {
 	public class ScrollingStateChangedEventArgs : EventArgs

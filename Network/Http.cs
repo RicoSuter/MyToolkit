@@ -19,7 +19,7 @@ using Microsoft.Phone.Controls;
 using MyToolkit.Phone;
 #endif
 
-// developed by Rico Suter (rsuter.com)
+// developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
 
 namespace MyToolkit.Network
 {
