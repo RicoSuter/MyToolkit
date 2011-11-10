@@ -42,7 +42,7 @@ namespace MyToolkit.UI
 
 		public static readonly DependencyProperty InnerMarginProperty =
 			DependencyProperty.Register("InnerMargin", typeof(Thickness),
-			typeof(ExtendedListBox), new PropertyMetadata(null, InnerMarginChanged));
+			typeof(ExtendedListBox), new PropertyMetadata(new Thickness(), InnerMarginChanged));
 
 		private static void InnerMarginChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
@@ -67,7 +67,6 @@ namespace MyToolkit.UI
 
 		private void ResetLastItemMargin()
 		{
-			lastElementMargin = lastElement.Margin;
 			lastElement.Margin = new Thickness(lastElementMargin.Left, lastElementMargin.Top, lastElementMargin.Right,
 				lastElementMargin.Bottom + InnerMargin.Top + InnerMargin.Bottom);
 		}
@@ -84,6 +83,7 @@ namespace MyToolkit.UI
 				if (lastElement != null)
 					lastElement.Margin = lastElementMargin;
 				lastElement = (FrameworkElement)element;
+				lastElementMargin = lastElement.Margin;
 				ResetLastItemMargin();
 			}
 		}
