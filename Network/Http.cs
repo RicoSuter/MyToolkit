@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Linq;
 
 #if SILVERLIGHT
 using Ionic.Zlib;
@@ -262,6 +263,7 @@ namespace MyToolkit.Network
 			try
 			{
 				var response = request.EndGetResponse(asyncResult);
+				var origResponse = response;
 
 #if USE_GZIP
 				if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
@@ -273,6 +275,17 @@ namespace MyToolkit.Network
 					using (var reader = new StreamReader(response.GetResponseStream(), resp.Request.Encoding))
 					{
 						resp.Response = reader.ReadToEnd();
+
+						if (origResponse.Headers.AllKeys.Contains("Set-Cookie"))
+						{
+							foreach (var c in origResponse.Headers["Set-Cookie"].Split(';'))
+							{
+								var index = c.IndexOf('=');
+								if (index != -1 && index < c.Length - 1)
+									resp.Cookies.Add(c.Substring(0, index).Trim(' '), c.Substring(index + 1));
+							}
+						}
+
 						if (action != null)
 							action(resp);
 					}

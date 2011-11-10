@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace MyToolkit.Network
@@ -8,6 +9,7 @@ namespace MyToolkit.Network
 		public HttpResponse(IHttpRequest request)
 		{
 			Request = request;
+			Cookies = new Dictionary<string, string>();
 		}
 
 		public IHttpRequest Request { get; internal set; }
@@ -51,5 +53,7 @@ namespace MyToolkit.Network
 		/// If Response is null and Exception is null as well the request has been canceled
 		/// </summary>
 		public string Response { get; internal set; }
+
+		public Dictionary<string, string> Cookies { get; private set; }
 	}
 }
