@@ -50,24 +50,24 @@ namespace MyToolkit.UI
 		{
 			var box = (ExtendedListBox)d;
 			if (box.lastElement != null)
-				box.ResetLastItemMargin();
-			box.ResetInnerMargin();
+				box.UpdateLastItemMargin();
+			box.UpdateInnerMargin();
 		}
 
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
-			ResetInnerMargin();
+			UpdateInnerMargin();
 		}
 
-		private void ResetInnerMargin()
+		private void UpdateInnerMargin()
 		{
 			var itemsPresenter = (ItemsPresenter)GetTemplateChild("itemsPresenter");
 			if (itemsPresenter != null)
 				itemsPresenter.Margin = InnerMargin;
 		}
 
-		private void ResetLastItemMargin()
+		private void UpdateLastItemMargin()
 		{
 			lastElement.Margin = new Thickness(lastElementMargin.Left, lastElementMargin.Top, lastElementMargin.Right,
 				lastElementMargin.Bottom + InnerMargin.Top + InnerMargin.Bottom);
@@ -80,13 +80,24 @@ namespace MyToolkit.UI
 			base.PrepareContainerForItemOverride(element, item);
 			OnPrepareContainerForItem(new PrepareContainerForItemEventArgs(element, item));
 
-			if (InnerMargin != new Thickness() && Items.IndexOf(item) == Items.Count - 1)
+			if ((InnerMargin.Top > 0.0 || InnerMargin.Bottom > 0.0))
 			{
-				if (lastElement != null)
+				if (Items.IndexOf(item) == Items.Count - 1) // is last element of list
+				{
+					if (lastElement != element) // margin not already set
+					{
+						if (lastElement != null)
+							lastElement.Margin = lastElementMargin;
+						lastElement = (FrameworkElement)element;
+						lastElementMargin = lastElement.Margin;
+						UpdateLastItemMargin();
+					}
+				}
+				else if (lastElement == element) // if last element is recycled it appears inside the list => reset margin
+				{
 					lastElement.Margin = lastElementMargin;
-				lastElement = (FrameworkElement)element;
-				lastElementMargin = lastElement.Margin;
-				ResetLastItemMargin();
+					lastElement = null; 
+				}
 			}
 		}
 
