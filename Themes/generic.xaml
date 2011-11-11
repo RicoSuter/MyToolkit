@@ -46,21 +46,6 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0,0,0,0"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <!--<Setter Property="Template">
-            <Setter.Value>
-				<ControlTemplate TargetType="ContentControl">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
-							Background="{TemplateBinding Background}" CornerRadius="0" Margin="0" Padding="0">
-                        <ContentControl ContentTemplate="{TemplateBinding ContentTemplate}" 
-										Content="{TemplateBinding Content}" 
-										Foreground="{TemplateBinding Foreground}" 
-										HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
-										Padding="{TemplateBinding Padding}" 
-										VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>-->
     </Style>
 
 	<Style TargetType="UI:ExtendedListBox">
@@ -149,22 +134,6 @@
 							</Style>
 						</UI:ExtendedListBox.ItemContainerStyle>
 					</UI:ExtendedListBox>
-					<!--<UI:ExtendedItemsControl x:Name="itemsControl"
-                        ItemsSource="{Binding Path=ItemsSource, RelativeSource={RelativeSource TemplatedParent}}"
-                        ItemTemplate="{Binding Path=ItemTemplate, RelativeSource={RelativeSource TemplatedParent}}">
-						<UI:ExtendedItemsControl.ItemsPanel>
-							<ItemsPanelTemplate>
-								<VirtualizingStackPanel Orientation="Vertical"/>
-							</ItemsPanelTemplate>
-						</UI:ExtendedItemsControl.ItemsPanel>
-						<UI:ExtendedItemsControl.Template>
-							<ControlTemplate>
-								<ScrollViewer>
-                                    <ItemsPresenter x:Name="itemsPresenter" />
-								</ScrollViewer>
-							</ControlTemplate>
-						</UI:ExtendedItemsControl.Template>
-					</UI:ExtendedItemsControl>-->
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
