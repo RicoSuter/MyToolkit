@@ -282,7 +282,13 @@ namespace MyToolkit.Network
 							{
 								var index = c.IndexOf('=');
 								if (index != -1 && index < c.Length - 1)
-									resp.Cookies.Add(c.Substring(0, index).Trim(' '), c.Substring(index + 1));
+								{
+									var key = c.Substring(0, index).Trim(' ');
+									var value = c.Substring(index + 1);
+									if (resp.Cookies.ContainsKey(key))
+										resp.Cookies.Remove(key);
+									resp.Cookies.Add(key, value);
+								}
 							}
 						}
 
