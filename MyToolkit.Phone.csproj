@@ -154,6 +154,7 @@
     <Compile Include="UI\UnstyledButton.cs" />
     <Compile Include="Utilities\ColorUtility.cs" />
     <Compile Include="Utilities\EnumerableExtensions.cs" />
+    <Compile Include="Utilities\IdentityGenerator.cs" />
     <Compile Include="Utilities\Notifications\Notification.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="Utilities\WeakEvent.cs" />

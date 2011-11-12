@@ -11,17 +11,17 @@ using System.Windows.Shapes;
 
 namespace MyToolkit.UI
 {
-	public static class PasswordBoxBinding
-	{
-		public static void ForceTextUpdate(object sender)
-		{
-			var textBox = sender as PasswordBox;
-			if (textBox != null)
-			{
-				var bindingExpression = textBox.GetBindingExpression(PasswordBox.PasswordProperty);
-				if (bindingExpression != null)
-					bindingExpression.UpdateSource();
-			}
-		}
-	}
+	//public static class PasswordBoxBinding
+	//{
+	//    public static void ForceTextUpdate(object sender)
+	//    {
+	//        var textBox = sender as PasswordBox;
+	//        if (textBox != null)
+	//        {
+	//            var bindingExpression = textBox.GetBindingExpression(PasswordBox.PasswordProperty);
+	//            if (bindingExpression != null)
+	//                bindingExpression.UpdateSource();
+	//        }
+	//    }
+	//}
 }
