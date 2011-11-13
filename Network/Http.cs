@@ -104,12 +104,9 @@ namespace MyToolkit.Network
 					action(response);
 			}
 
-#if WINDOWS_PHONE
-			//if (responses == null)
-			//    responses = new Dictionary<HttpResponse, PhoneApplicationPage>();
-			//responses.Add(response, PhoneApplication.CurrentPage);
-#endif
-
+			if (pendingRequests == null)
+				pendingRequests = new List<HttpResponse>();
+			pendingRequests.Add(response);
 			return response;
 		}
 
@@ -280,7 +277,6 @@ namespace MyToolkit.Network
 					using (var reader = new StreamReader(response.GetResponseStream(), resp.Request.Encoding))
 					{
 						resp.Response = reader.ReadToEnd();
-
 						if (origResponse.Headers.AllKeys.Contains("Set-Cookie"))
 						{
 							foreach (var c in origResponse.Headers["Set-Cookie"].Split(';'))
