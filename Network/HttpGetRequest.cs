@@ -8,6 +8,7 @@ namespace MyToolkit.Network
 	{
 		string Uri { get; }
 		Encoding Encoding { get; }
+		object Tag { get; }
 	}
 
 	public class HttpGetRequest : IHttpRequest
@@ -35,6 +36,8 @@ namespace MyToolkit.Network
 
 		public bool UseCache { get; set; }
 		public Encoding Encoding { get; set; }
+
+		public object Tag { get; set; }
 
 		#if USE_GZIP
 		public bool RequestGZIP { get; set; }

@@ -15,27 +15,32 @@ using System.IO.Compression;
 using System.Windows.Threading;
 #endif
 
-#if WINDOWS_PHONE
-using Microsoft.Phone.Controls;
-using MyToolkit.Phone;
-#endif
-
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
 
 namespace MyToolkit.Network
 {
 	public static class Http
 	{
-#if WINDOWS_PHONE
-		//private static Dictionary<HttpResponse, PhoneApplicationPage> responses;  
-		//public static void AbortRequests(PhoneApplicationPage page)
-		//{
-		//    if (responses == null)
-		//        return; 
-		//    foreach (var r in responses.Where(p => p.Value == page).Select(i => i.Key))
-		//        r.Abort();
-		//}
-#endif
+		private static List<HttpResponse> pendingRequests;
+		public static IEnumerable<HttpResponse> PendingRequests { get { return pendingRequests; } }
+		
+		public static void AbortRequests()
+		{
+			if (pendingRequests != null)
+			{
+				foreach (var r in pendingRequests)
+					r.Abort();
+			}
+		}
+
+		public static void AbortRequests(Func<HttpResponse, bool> abortPredicate)
+		{
+			if (pendingRequests != null)
+			{
+				foreach (var r in pendingRequests.Where(abortPredicate))
+					r.Abort();
+			}
+		}
 
 		#region GET
 
@@ -190,12 +195,9 @@ namespace MyToolkit.Network
 					action(response);
 			}
 
-#if WINDOWS_PHONE
-			//if (responses == null)
-			//    responses = new Dictionary<HttpResponse, PhoneApplicationPage>();
-			//responses.Add(response, PhoneApplication.CurrentPage);
-#endif
-
+			if (pendingRequests == null)
+				pendingRequests = new List<HttpResponse>();
+			pendingRequests.Add(response);
 			return response;
 		}
 
@@ -260,6 +262,9 @@ namespace MyToolkit.Network
 
 		private static void ProcessResponse(IAsyncResult asyncResult, WebRequest request, HttpResponse resp, Action<HttpResponse> action)
 		{
+			if (pendingRequests != null && pendingRequests.Contains(resp))
+				pendingRequests.Remove(resp);
+
 			try
 			{
 				var response = request.EndGetResponse(asyncResult);
@@ -285,17 +290,16 @@ namespace MyToolkit.Network
 								{
 									var key = c.Substring(0, index).Trim(' ');
 									var value = c.Substring(index + 1);
-									if (resp.Cookies.ContainsKey(key))
+									if (resp.Cookies.ContainsKey(key)) // TODO: can contain the same key multiple times?
 										resp.Cookies.Remove(key);
 									resp.Cookies.Add(key, value);
 								}
 							}
 						}
-
-						if (action != null)
-							action(resp);
 					}
 				}
+				if (action != null)
+					action(resp);
 			}
 			catch (Exception e)
 			{
