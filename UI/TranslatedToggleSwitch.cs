@@ -27,7 +27,7 @@ namespace MyToolkit.UI
 			var isChecked = IsChecked.HasValue && IsChecked.Value;
 			var text = isChecked ? "On" : "Off";
 				
-			switch (CultureInfo.CurrentCulture.TwoLetterISOLanguageName)
+			switch (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)
 			{
 				case "de": text = isChecked ? "Ein" : "Aus"; break;
 				case "fr": text = isChecked ? "Activé" : "Désactivé"; break;
