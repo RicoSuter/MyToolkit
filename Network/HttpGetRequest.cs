@@ -36,6 +36,7 @@ namespace MyToolkit.Network
 
 		public bool UseCache { get; set; }
 		public Encoding Encoding { get; set; }
+		public string ContentType { get; set; }
 
 		public object Tag { get; set; }
 

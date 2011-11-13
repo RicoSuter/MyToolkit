@@ -10,6 +10,7 @@ namespace MyToolkit.Network
 			Files = new List<HttpPostFile>();
 		}
 
+		public byte[] RawData { get; set; }
 		public Dictionary<string, string> Data { get; private set; }
 		public List<HttpPostFile> Files { get; private set; }
 	}

@@ -90,6 +90,9 @@ namespace MyToolkit.Network
 				}
 
 				request.Method = "GET";
+				if (req.ContentType != null)
+					request.ContentType = req.ContentType; 
+
 #if USE_GZIP
 				if (req.RequestGZIP)
 					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
@@ -158,6 +161,8 @@ namespace MyToolkit.Network
 				}
 
 				request.Method = "POST";
+				if (req.ContentType != null)
+					request.ContentType = req.ContentType; 
 
 #if USE_GZIP
 				if (req.RequestGZIP)
@@ -171,9 +176,9 @@ namespace MyToolkit.Network
 						using (var stream = request.EndGetRequestStream(ar1))
 						{
 							if (req.Files.Count > 0)
-								WritePostData(stream, boundary, req.Data, req.Files, req.Encoding);
+								WritePostData(stream, boundary, req);
 							else
-								WritePostData(stream, req.Data, req.Encoding);
+								WritePostData(stream, req);
 						}
 						request.BeginGetResponse(r => ProcessResponse(r, request, response, action), request);
 					}
@@ -198,36 +203,36 @@ namespace MyToolkit.Network
 			return response;
 		}
 
-		private static void WritePostData(Stream stream, Dictionary<string, string> postData, Encoding encoding)
+		private static void WritePostData(Stream stream, HttpPostRequest request)
 		{
-			var bytes = encoding.GetBytes(GetQueryString(postData));
+			var bytes = request.RawData ?? request.Encoding.GetBytes(GetQueryString(request.Data));
 			stream.Write(bytes, 0, bytes.Length);
 		}
 
-		private static void WritePostData(Stream stream, String boundary, Dictionary<String, String> postData, IEnumerable<HttpPostFile> files, Encoding encoding)
+		private static void WritePostData(Stream stream, String boundary, HttpPostRequest request)
 		{
-			var boundarybytes = encoding.GetBytes("\r\n--" + boundary + "\r\n");
+			var boundarybytes = request.Encoding.GetBytes("\r\n--" + boundary + "\r\n");
 
 			var formdataTemplate = "\r\n--" + boundary + "\r\nContent-Disposition: form-data; name=\"{0}\";\r\n\r\n{1}";
-			if (postData != null)
-			{
-				foreach (var tuple in postData)
-				{
-					stream.Write(boundarybytes, 0, boundarybytes.Length);
+			if (request.RawData != null)
+				throw new Exception("RawData not allowed if uploading files");
 
-					var formitem = string.Format(formdataTemplate, tuple.Key, tuple.Value);
-					var formitembytes = encoding.GetBytes(formitem);
-					stream.Write(formitembytes, 0, formitembytes.Length);
-				}
+			foreach (var tuple in request.Data)
+			{
+				stream.Write(boundarybytes, 0, boundarybytes.Length);
+
+				var formitem = string.Format(formdataTemplate, tuple.Key, tuple.Value);
+				var formitembytes = request.Encoding.GetBytes(formitem);
+				stream.Write(formitembytes, 0, formitembytes.Length);
 			}
 
 			const string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n";
-			foreach (var file in files)
+			foreach (var file in request.Files)
 			{
 				stream.Write(boundarybytes, 0, boundarybytes.Length);
 
 				var header = string.Format(headerTemplate, file.Name, file.Filename, file.ContentType ?? "application/octet-stream");
-				var headerbytes = encoding.GetBytes(header);
+				var headerbytes = request.Encoding.GetBytes(header);
 
 				stream.Write(headerbytes, 0, headerbytes.Length);
 
@@ -251,7 +256,7 @@ namespace MyToolkit.Network
 				}
 			}
 
-			boundarybytes = encoding.GetBytes("\r\n--" + boundary + "--\r\n");
+			boundarybytes = request.Encoding.GetBytes("\r\n--" + boundary + "--\r\n");
 			stream.Write(boundarybytes, 0, boundarybytes.Length);
 		}
 
