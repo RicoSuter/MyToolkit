@@ -24,7 +24,7 @@ namespace MyToolkit.Network
 		private static List<HttpResponse> pendingRequests;
 		public static IEnumerable<HttpResponse> PendingRequests { get { return pendingRequests; } }
 		
-		public static void AbortRequests()
+		public static void AbortAllRequests()
 		{
 			if (pendingRequests != null)
 			{
