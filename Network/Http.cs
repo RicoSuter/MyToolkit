@@ -13,6 +13,8 @@ using System.IO.Compression;
 
 #if !METRO
 using System.Windows.Threading;
+using MyToolkit.Utilities;
+
 #endif
 
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
@@ -284,17 +286,12 @@ namespace MyToolkit.Network
 						resp.Response = reader.ReadToEnd();
 						if (origResponse.Headers.AllKeys.Contains("Set-Cookie"))
 						{
-							foreach (var c in origResponse.Headers["Set-Cookie"].Split(';'))
+							var cookies = origResponse.Headers["Set-Cookie"];
+							var index = cookies.IndexOf(';');
+							if (index != -1)
 							{
-								var index = c.IndexOf('=');
-								if (index != -1 && index < c.Length - 1)
-								{
-									var key = c.Substring(0, index).Trim(' ');
-									var value = c.Substring(index + 1);
-									if (resp.Cookies.ContainsKey(key)) // TODO: can contain the same key multiple times?
-										resp.Cookies.Remove(key);
-									resp.Cookies.Add(key, value);
-								}
+								foreach (var c in HttpUtilityExtensions.ParseQueryString(cookies.Substring(0, index)))
+									resp.Cookies.Add(new Cookie(c.Key, c.Value));
 							}
 						}
 					}

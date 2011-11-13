@@ -9,7 +9,7 @@ namespace MyToolkit.Network
 		public HttpResponse(IHttpRequest request)
 		{
 			Request = request;
-			Cookies = new Dictionary<string, string>();
+			Cookies = new List<Cookie>();
 		}
 
 		public IHttpRequest Request { get; internal set; }
@@ -54,6 +54,6 @@ namespace MyToolkit.Network
 		/// </summary>
 		public string Response { get; internal set; }
 
-		public Dictionary<string, string> Cookies { get; private set; }
+		public List<Cookie> Cookies { get; private set; }
 	}
 }
