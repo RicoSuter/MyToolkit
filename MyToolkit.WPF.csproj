@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Collections\FilteredObservableCollection.cs" />
     <Compile Include="Collections\OrderedObservableCollection.cs" />
+    <Compile Include="MVVM\PropertyChangedEventArgsExtensions.cs" />
     <Compile Include="Network\HttpGetRequest.cs" />
     <Compile Include="Network\HttpPostFile.cs" />
     <Compile Include="Network\HttpPostRequest.cs" />
