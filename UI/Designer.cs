@@ -6,14 +6,21 @@ namespace MyToolkit.UI
 #if !SILVERLIGHT
 	internal class MyDependencyObject : DependencyObject { }
 #endif
+
 	public static class Designer
 	{
-		public static bool IsDesignMode
+#if !SILVERLIGHT
+		private static bool? isInDesignMode = null; 
+#endif
+
+		public static bool IsInDesignMode
 		{
 			get
 			{
 #if !SILVERLIGHT
-				return DesignerProperties.GetIsInDesignMode(new MyDependencyObject());
+				if (!isInDesignMode.HasValue)
+					isInDesignMode = DesignerProperties.GetIsInDesignMode(new MyDependencyObject());
+				return isInDesignMode.Value;
 #else
 				return DesignerProperties.IsInDesignTool;
 #endif
