@@ -125,6 +125,7 @@
     <Compile Include="Phone\Thombstone.cs" />
     <Compile Include="Phone\YouTube.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\DataTemplateSelector.cs" />
     <Compile Include="UI\Designer.cs" />
     <Compile Include="UI\ExtendedListBox.cs" />
     <Compile Include="UI\FixedNavigationList.cs" />
