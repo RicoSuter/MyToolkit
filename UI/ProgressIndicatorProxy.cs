@@ -1,6 +1,8 @@
 ﻿//http://www.codeproject.com/Articles/246355/Binding-the-WP7-ProgressIndicator-in-XAML?display=Print
 
 /*
+
+ <mytoolkit:ProgressIndicatorProxy IsIndeterminate="True" IsVisible="{Binding IsLoading}" />
  
  <Grid x:Name="LayoutRoot" Background="Transparent">
 	 <Grid.RowDefinitions>...</Grid.RowDefinitions>
