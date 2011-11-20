@@ -82,7 +82,6 @@ namespace MyToolkit.Phone
 					var itag = GetQualityIdentifier(quality);
 					foreach (var u in urls.Where(u => u.Itag > itag).ToArray())
 						urls.Remove(u);
-
 				}
 				catch (Exception ex)
 				{
@@ -105,6 +104,8 @@ namespace MyToolkit.Phone
 					};
 					launcher.Show();
 				}
+				else if (onFinished != null)
+					onFinished(new Exception("no_video_urls_found"));
 			}
 			else if (onFinished != null)
 				onFinished(response.Exception);
