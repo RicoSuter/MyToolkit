@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace MyToolkit.MVVM
 {
-	public class RelayCommand : NotifyPropertyChanged, ICommand // NotifyPropertyChanged used allow bindings to CanExecute property
+	public class RelayCommand : ICommand 
 	{
 		private readonly Action execute;
 		private readonly Func<bool> canExecute;
@@ -29,7 +29,7 @@ namespace MyToolkit.MVVM
 		[DebuggerStepThrough]
 		public bool CanExecute(object parameter)
 		{
-			return canExecute == null ? true : canExecute();
+			return canExecute == null || canExecute();
 		}
 
 		public void Execute(object parameter)
@@ -39,7 +39,7 @@ namespace MyToolkit.MVVM
 
 		public void RaiseCanExecuteChanged()
 		{
-			RaisePropertyChanged("CanExecute");
+			
 			if (CanExecuteChanged != null)
 				CanExecuteChanged(this, new EventArgs());
 		}
@@ -51,7 +51,7 @@ namespace MyToolkit.MVVM
 #endif
 	}
 
-	public class RelayCommand<T> : NotifyPropertyChanged, ICommand
+	public class RelayCommand<T> : ICommand
 	{
 		private readonly Action<T> execute;
 		private readonly Predicate<T> canExecute;
@@ -73,7 +73,7 @@ namespace MyToolkit.MVVM
 		[DebuggerStepThrough]
 		public bool CanExecute(object parameter)
 		{
-			return canExecute == null ? true : canExecute((T)parameter);
+			return canExecute == null || canExecute((T)parameter);
 		}
 
 		public void Execute(object parameter)
@@ -83,7 +83,6 @@ namespace MyToolkit.MVVM
 
 		public void RaiseCanExecuteChanged()
 		{
-			RaisePropertyChanged("CanExecute");
 			if (CanExecuteChanged != null)
 				CanExecuteChanged(this, new EventArgs());
 		}
