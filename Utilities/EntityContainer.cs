@@ -13,21 +13,27 @@ using System.Windows.Shapes;
 
 namespace MyToolkit.Utilities
 {
-	public interface IEntity<U>
+	public interface IEntity
 	{
-		U ID { get; }
+		int ID { get; }
 	}
 
 	public class EntityContainer<T, U>
-		where T : class, IEntity<U>
+		where T : class, IEntity
 		where U : IEquatable<U>
 	{
 		private readonly ObservableCollection<T> collection = new ObservableCollection<T>();
 		public ObservableCollection<T> Collection { get { return collection; } }
-		
-		public T Get(U id)
+
+		public T Get(string idAsString)
 		{
-			return collection.SingleOrDefault(n => n.ID.Equals(id));
+			var id = int.Parse(idAsString);
+			return collection.SingleOrDefault(n => n.ID == id);
+		}
+
+		public T Get(int id)
+		{
+			return collection.SingleOrDefault(n => n.ID == id);
 		}
 
 		public void Add(T item)
@@ -45,13 +51,9 @@ namespace MyToolkit.Utilities
 				collection.Remove(c);
 		}
 
-		/// <summary>
-		/// This works only if U == int
-		/// </summary>
-		/// <returns></returns>
 		public int GenerateIdentity()
 		{
-			return IdentityGenerator.Generate(i => collection.Any(c => c.ID.Equals(i)));
+			return IdentityGenerator.Generate(i => collection.Any(c => c.ID == i));
 		}
 	}
 }
