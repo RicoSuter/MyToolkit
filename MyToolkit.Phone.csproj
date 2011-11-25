@@ -155,6 +155,7 @@
     <Compile Include="UI\TranslatedToggleSwitch.cs" />
     <Compile Include="UI\UnstyledButton.cs" />
     <Compile Include="Utilities\ColorUtility.cs" />
+    <Compile Include="Utilities\EntityContainer.cs" />
     <Compile Include="Utilities\EnumerableExtensions.cs" />
     <Compile Include="Utilities\HttpUtilityExtensions.cs" />
     <Compile Include="Utilities\IdentityGenerator.cs" />
