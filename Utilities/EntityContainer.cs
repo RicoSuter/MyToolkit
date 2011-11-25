@@ -1,15 +1,7 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+using MyToolkit.Phone;
 
 namespace MyToolkit.Utilities
 {
@@ -18,9 +10,8 @@ namespace MyToolkit.Utilities
 		int ID { get; }
 	}
 
-	public class EntityContainer<T, U>
+	public class EntityContainer<T>
 		where T : class, IEntity
-		where U : IEquatable<U>
 	{
 		private readonly ObservableCollection<T> collection = new ObservableCollection<T>();
 		public ObservableCollection<T> Collection { get { return collection; } }
@@ -51,7 +42,19 @@ namespace MyToolkit.Utilities
 				collection.Remove(c);
 		}
 
-		public int GenerateIdentity()
+		public void SaveToSettings(string key)
+		{
+			Settings.SetSetting(key, collection.ToList());
+		}
+
+		public void LoadFromSettings(string key)
+		{
+			collection.Clear();
+			foreach (var a in Settings.GetSetting(key, new List<T>()))
+				collection.Add(a);
+		}
+
+		public virtual int GenerateIdentity()
 		{
 			return IdentityGenerator.Generate(i => collection.Any(c => c.ID == i));
 		}

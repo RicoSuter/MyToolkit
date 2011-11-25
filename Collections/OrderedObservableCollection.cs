@@ -12,7 +12,7 @@ namespace MyToolkit.Collections
 		private readonly Func<T, bool> where; 
 		private readonly Func<T, TOrderByKey> orderBy;
 
-		public OrderedObservableCollection(ObservableCollection<T> originalCollection, Func<T, TOrderByKey> orderBy, Func<T, bool> where) 
+		public OrderedObservableCollection(ObservableCollection<T> originalCollection, Func<T, TOrderByKey> orderBy, Func<T, bool> where = null) 
 		{
 			this.orderBy = orderBy;
 			this.originalCollection = originalCollection;
@@ -36,7 +36,9 @@ namespace MyToolkit.Collections
 
 		private void UpdateList()
 		{
-			var list = originalCollection.Where(where).OrderBy(orderBy).ToList();
+			var list = where != null ? 
+				originalCollection.Where(where).OrderBy(orderBy).ToList() :
+				originalCollection.OrderBy(orderBy).ToList();
 
 			foreach (var item in this.ToArray()) // remove items
 			{
