@@ -27,6 +27,11 @@ namespace MyToolkit.Utilities
 			return collection.SingleOrDefault(n => n.ID == id);
 		}
 
+		public void Clear()
+		{
+			Collection.Clear();
+		}
+		
 		public void Add(T item)
 		{
 			var c = Get(item.ID);
