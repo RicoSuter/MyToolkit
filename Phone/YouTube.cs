@@ -145,6 +145,7 @@ namespace MyToolkit.Phone
 				if (SystemTray.ProgressIndicator == null)
 					SystemTray.ProgressIndicator = new ProgressIndicator();
 				SystemTray.ProgressIndicator.IsVisible = true;
+				SystemTray.ProgressIndicator.IsIndeterminate = true; 
 
 				var page = PhoneApplication.CurrentPage;
 				oldState = PageDeactivator.Inactivate();

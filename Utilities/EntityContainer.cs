@@ -27,6 +27,13 @@ namespace MyToolkit.Utilities
 			return collection.SingleOrDefault(n => n.ID == id);
 		}
 
+		public void Init(IEnumerable<T> items)
+		{
+			Collection.Clear();
+			foreach (var i in items)
+				Collection.Add(i);
+		}
+
 		public void Clear()
 		{
 			Collection.Clear();
