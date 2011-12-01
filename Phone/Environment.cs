@@ -4,17 +4,26 @@ namespace MyToolkit.Phone
 {
 	public static class PhoneEnvironment
 	{
+		public static bool IsMobileConnected
+		{
+			get
+			{
+				return NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.MobileBroadbandGsm ||
+					NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.MobileBroadbandCdma;
+			}
+		}
+
 		public static bool IsWirelessConnected
 		{
 			get
 			{
-				foreach (var i in new NetworkInterfaceList())
-				{
-					if (i.InterfaceType == NetworkInterfaceType.Wireless80211 && i.InterfaceState == ConnectState.Connected)
-						return true; 
-				}
-				return false; 
+				return NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211;
 			}
+		}
+
+		public static bool IsConnected
+		{
+			get { return NetworkInterface.NetworkInterfaceType != NetworkInterfaceType.None; }
 		}
 	}
 }
