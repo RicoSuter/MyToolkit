@@ -150,7 +150,6 @@
     </Compile>
     <Compile Include="UI\ScrollableItemsControl.cs" />
     <Compile Include="UI\TextBinding.cs" />
-    <Compile Include="UI\TextBoxBinding.cs" />
     <Compile Include="UI\TranslatedToggleSwitch.cs" />
     <Compile Include="UI\UnstyledButton.cs" />
     <Compile Include="Utilities\ColorUtility.cs" />
