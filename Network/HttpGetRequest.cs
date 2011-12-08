@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
@@ -6,7 +7,7 @@ namespace MyToolkit.Network
 {
 	public interface IHttpRequest
 	{
-		string Uri { get; }
+		Uri Uri { get; }
 		Encoding Encoding { get; }
 		object Tag { get; }
 	}
@@ -14,10 +15,18 @@ namespace MyToolkit.Network
 	public class HttpGetRequest : IHttpRequest
 	{
 		public HttpGetRequest(string uri)
+			: this(new Uri(uri, UriKind.RelativeOrAbsolute))
+		{ }
+
+		public HttpGetRequest(string uri, Dictionary<string, string> query)
+			: this(new Uri(uri, UriKind.RelativeOrAbsolute), query)
+		{ }
+
+		public HttpGetRequest(Uri uri)
 			: this(uri, new Dictionary<string, string>())
 		{ }
 
-		public HttpGetRequest(string uri, Dictionary<string, string> query) 
+		public HttpGetRequest(Uri uri, Dictionary<string, string> query) 
 		{
 			Uri = uri;
 			Query = query;
@@ -30,7 +39,7 @@ namespace MyToolkit.Network
 			#endif
 		}
 
-		public string Uri { get; private set; }
+		public Uri Uri { get; private set; }
 		public Dictionary<string, string> Query { get; private set; }
 		public List<Cookie> Cookies { get; private set; }
 
@@ -39,6 +48,7 @@ namespace MyToolkit.Network
 		public string ContentType { get; set; }
 
 		public object Tag { get; set; }
+		public ICredentials Credentials { get; set; }
 
 		#if USE_GZIP
 		public bool RequestGZIP { get; set; }

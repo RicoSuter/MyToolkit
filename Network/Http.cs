@@ -75,13 +75,16 @@ namespace MyToolkit.Network
 						req.Query["__dcachetime"] = DateTime.Now.Ticks.ToString(); // TODO auch im else, wenn kein query
 
 					var queryString = GetQueryString(req.Query);
-					if (req.Uri.Contains("?"))
-						request = (HttpWebRequest)WebRequest.Create(req.Uri + "&" + queryString);
+					if (req.Uri.AbsoluteUri.Contains("?"))
+						request = (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "&" + queryString);
 					else
-						request = (HttpWebRequest)WebRequest.Create(req.Uri + "?" + queryString);
+						request = (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "?" + queryString);
 				}
 				else
 					request = (HttpWebRequest)WebRequest.Create(req.Uri);
+
+				if (req.Credentials != null)
+					request.Credentials = req.Credentials;
 				response.WebRequest = request;
 
 				if (req.Cookies.Count > 0)
@@ -144,7 +147,14 @@ namespace MyToolkit.Network
 				var boundary = "";
 				var queryString = GetQueryString(req.Query);
 
-				var request = (HttpWebRequest)WebRequest.Create(req.Uri + "?" + queryString);
+				HttpWebRequest request;
+				if (req.Uri.AbsoluteUri.Contains("?"))
+					request = (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "&" + queryString);
+				else
+					request = (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "?" + queryString);
+
+				if (req.Credentials != null)
+					request.Credentials = req.Credentials;
 				response.WebRequest = request; 
 
 				if (req.Files.Count == 0)

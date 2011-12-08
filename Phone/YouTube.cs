@@ -27,7 +27,7 @@ namespace MyToolkit.Phone
 	{
 		public static HttpResponse Play(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFinished = null)
 		{
-			return Http.Get("http://www.youtube.com/watch?v=" + youTubeId, r => OnHtmlDownloaded(r, maxQuality, onFinished));
+			return Http.Get("http://www.youtube.com/embed/" + youTubeId, r => OnHtmlDownloaded(r, maxQuality, onFinished));
 		}
 		
 		private static int GetQualityIdentifier(YouTubeQuality quality)
