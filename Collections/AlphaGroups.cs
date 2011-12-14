@@ -22,14 +22,16 @@ namespace MyToolkit.Collections
 			if (group == null)
 				group = this.First();
 
-			// TODO: optimize
-			var list = group.ToList();
-			list.Add(item);
-			list = list.OrderBy(i => i.ToString()).ToList();
-			var newIndex = list.IndexOf(item);
+			var newTitle = item.ToString();
+			var newIndex = 0; 
+			foreach (var i in group)
+			{
+				if (i.ToString().CompareTo(newTitle) > 0)
+					break;
+				newIndex++;
+			}
 
 			group.Insert(newIndex, item);
-
 			var index = IndexOf(group);
 			if (CollectionChanged != null)
 				CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, group, group, index));
