@@ -10,10 +10,9 @@ namespace MyToolkit.Collections
 	{
 		public Group(string title) : this(title, new List<T>()) { }
 		public Group(string title, IEnumerable<T> items)
+			: base(items)
 		{
 			Title = title;
-			foreach (var i in items)
-				Add(i);
 		}
 
 		public string Title { get; private set; }

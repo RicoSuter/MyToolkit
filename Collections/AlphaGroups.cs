@@ -7,38 +7,42 @@ namespace MyToolkit.Collections
 	public class AlphaGroups<T> : List<Group<T>>, INotifyCollectionChanged
 	{
 		private const string Characters = "#abcdefghijklmnopqrstuvwxyz";
+		private Dictionary<string, Group<T>> groups; // user for faster group access
 
 		public AlphaGroups()
 		{
-			foreach (var alpha in Characters)
-				Add(new Group<T>(alpha.ToString()));
+			Initialize(new List<T>());
 		}
 
 		public void Initialize(IEnumerable<T> items)
 		{
-			foreach (var group in this)
-				group.Clear();
+			Clear();
+			groups = new Dictionary<string, Group<T>>();
 
-			var list = items.OrderBy(i => i.ToString());
-			foreach (var item in list)
-				AddEx(item, false);
+			var itemGroups = items.OrderBy(i => i.ToString()).
+				GroupBy(i => GetFirstCharacter(i.ToString())).
+				ToDictionary(g => g.Key);
 
-			foreach (var group in this)
-				RaiseGroupChanged(group);
+			foreach (var alpha in Characters)
+			{
+				var title = alpha.ToString();
+				var group = itemGroups.ContainsKey(title) ? 
+					new Group<T>(title, itemGroups[title]) : new Group<T>(title);
+				groups.Add(title, group);
+				Add(group);
+			}
+
+			if (CollectionChanged != null)
+				CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 		}
 
 		public void AddRange(IEnumerable<T> items)
-		{
-			AddRangeEx(items, true);
-		}
-
-		public void AddRangeEx(IEnumerable<T> items, bool searchPosition)
 		{
 			var changedGroups = new List<Group<T>>();
 
 			foreach (var item in items)
 			{
-				var group = AddEx(item, searchPosition);
+				var group = AddEx(item, true);
 				if (!changedGroups.Contains(group))
 					changedGroups.Add(group);
 			}
@@ -63,10 +67,7 @@ namespace MyToolkit.Collections
 		private Group<T> AddEx(T item, bool searchPosition)
 		{
 			var name = item.ToString();
-			var firstCharacter = GetFirstCharacter(name);
-			var group = this.SingleOrDefault(g => g.Title == firstCharacter);
-			if (group == null)
-				group = this.First();
+			var group = groups[GetFirstCharacter(name)];
 
 			if (searchPosition && group.Count > 0)
 			{
@@ -101,6 +102,7 @@ namespace MyToolkit.Collections
 					case "ä": return "a";
 					case "ö": return "o";
 					case "î": return "i";
+					default: return "#";
 				}
 			}
 			return firstCharacter;
