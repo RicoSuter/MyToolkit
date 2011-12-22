@@ -10,7 +10,7 @@ namespace MyToolkit.Collections
 	public class FilteredObservableCollection<T> : ObservableCollection<T>
 	{
 		private readonly ObservableCollection<T> originalCollection;
-		private readonly Func<T, bool> where;
+		private Func<T, bool> where;
 
 		public FilteredObservableCollection(ObservableCollection<T> originalCollection, Func<T, bool> where)
 		{
@@ -31,6 +31,12 @@ namespace MyToolkit.Collections
 				weakEvent.Reference.UpdateList();
 			else
 				weakEvent.Target.CollectionChanged -= weakEvent.Event;
+		}
+
+		public void Reset(Func<T, bool> where)
+		{
+			this.where = where;
+			UpdateList();
 		}
 
 		private void UpdateList()
