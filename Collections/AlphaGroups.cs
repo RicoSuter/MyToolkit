@@ -17,6 +17,7 @@ namespace MyToolkit.Collections
 		public void Initialize(IEnumerable<T> items)
 		{
 			Clear();
+
 			groups = new Dictionary<string, Group<T>>();
 
 			var itemGroups = items.OrderBy(i => i.ToString()).
@@ -29,8 +30,10 @@ namespace MyToolkit.Collections
 				var group = itemGroups.ContainsKey(title) ? 
 					new Group<T>(title, itemGroups[title]) : new Group<T>(title);
 				groups.Add(title, group);
-				Add(group);
 			}
+
+			foreach (var g in groups)
+				Add(g.Value);
 
 			if (CollectionChanged != null)
 				CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
