@@ -56,19 +56,22 @@ namespace MyToolkit.UI
 			DefaultStyleKey = typeof(NavigationList);
 		}
 
+		private ExtendedListBox itemsControl;
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
 			itemsControl = (ExtendedListBox) GetTemplateChild("itemsControl");
 			itemsControl.PrepareContainerForItem += PrepareContainerForItem;
 			itemsControl.InnerMargin = InnerMargin;
+			itemsControl.ScrollingStateChanged += OnScrollingStateChanged;
 		}
 
-		private ExtendedListBox itemsControl;
-		public event EventHandler<ScrollingStateChangedEventArgs> ScrollingStateChanged
+		// can be directly registred on itemsControl => add() and remove() method in event => problem: itemsControl is initialized after registering events!
+		public event EventHandler<ScrollingStateChangedEventArgs> ScrollingStateChanged;
+		private void OnScrollingStateChanged(object sender, ScrollingStateChangedEventArgs e)
 		{
-			add { itemsControl.ScrollingStateChanged += value;  }
-			remove { itemsControl.ScrollingStateChanged -= value; }
+			if (ScrollingStateChanged != null)
+				ScrollingStateChanged(sender, e);
 		}
 
 		private void PrepareContainerForItem(object sender, PrepareContainerForItemEventArgs e)
