@@ -30,7 +30,7 @@ namespace MyToolkit.Network
 		{
 			if (pendingRequests != null)
 			{
-				foreach (var r in pendingRequests)
+				foreach (var r in pendingRequests.ToArray())
 					r.Abort();
 			}
 		}
@@ -39,7 +39,7 @@ namespace MyToolkit.Network
 		{
 			if (pendingRequests != null)
 			{
-				foreach (var r in pendingRequests.Where(abortPredicate))
+				foreach (var r in pendingRequests.Where(abortPredicate).ToArray())
 					r.Abort();
 			}
 		}
