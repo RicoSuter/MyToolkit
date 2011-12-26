@@ -16,9 +16,16 @@ namespace MyToolkit.UI
 		public ImageButton()
 		{
 			DefaultStyleKey = typeof(ImageButton);
+			IsEnabledChanged += OnIsEnabledChanged;
 		}
 
-		public static readonly DependencyProperty ImageProperty = DependencyProperty.Register("Image", typeof(ImageSource), typeof(ImageButton), null);
+		private void OnIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+		{
+			Opacity = IsEnabled ? 1.0 : 0.5;
+		}
+
+		public static readonly DependencyProperty ImageProperty = 
+			DependencyProperty.Register("Image", typeof(ImageSource), typeof(ImageButton), null);
 
 		public ImageSource Image
 		{
@@ -27,7 +34,8 @@ namespace MyToolkit.UI
 
 		}
 
-		public static readonly DependencyProperty PressedImageProperty = DependencyProperty.Register("PressedImage", typeof(ImageSource), typeof(ImageButton), null);
+		public static readonly DependencyProperty PressedImageProperty = 
+			DependencyProperty.Register("PressedImage", typeof(ImageSource), typeof(ImageButton), null);
 
 		public ImageSource PressedImage
 		{
