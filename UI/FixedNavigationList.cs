@@ -8,7 +8,7 @@ using Microsoft.Phone.Controls;
 
 namespace MyToolkit.UI
 {
-	public class FixedNavigationList : Control
+	public class FixedNavigationList : ExtendedItemsControl
 	{
 		public event EventHandler<NavigationListEventArgs> Navigation;
 
@@ -20,50 +20,16 @@ namespace MyToolkit.UI
 
 		public FixedNavigationList()
 		{
-			DefaultStyleKey = typeof(FixedNavigationList);
+			PrepareContainerForItem += OnPrepareContainerForItem; 
 		}
 
-		public override void OnApplyTemplate()
-		{
-			base.OnApplyTemplate();
-			var itemsControl = (ExtendedItemsControl) GetTemplateChild("itemsControl");
-			itemsControl.PrepareContainerForItem += PrepareContainerForItem;
-		}
-
-		private void PrepareContainerForItem(object sender, PrepareContainerForItemEventArgs e)
+		private void OnPrepareContainerForItem(object sender, PrepareContainerForItemEventArgs e)
 		{
 			var element = (UIElement)e.Element;
-
 			element.MouseLeftButtonUp += ElementMouseLeftButtonUp;
 			element.ManipulationStarted += ElementManipulationStarted;
 			element.ManipulationDelta += ElementManipulationDelta;
 		}
-	
-		#region Properties
-
-		public IEnumerable ItemsSource
-		{
-			get { return (IEnumerable)GetValue(ItemsSourceProperty); }
-			set { SetValue(ItemsSourceProperty, value); }
-		}
-
-		public static readonly DependencyProperty ItemsSourceProperty =
-			DependencyProperty.Register("ItemsSource", typeof(IEnumerable),
-			                            typeof(FixedNavigationList), new PropertyMetadata(null));
-
-		public DataTemplate ItemTemplate
-		{
-			get { return (DataTemplate)GetValue(ItemTemplateProperty); }
-			set { SetValue(ItemTemplateProperty, value); }
-		}
-
-		public static readonly DependencyProperty ItemTemplateProperty =
-			DependencyProperty.Register("ItemTemplate", typeof(DataTemplate),
-			                            typeof(FixedNavigationList), new PropertyMetadata(null));
-
-		#endregion
-
-		#region Events
 
 		private bool manipulationDeltaStarted;
 		private void ElementManipulationDelta(object sender, ManipulationDeltaEventArgs e)
@@ -98,7 +64,5 @@ namespace MyToolkit.UI
 			if (Navigation != null)
 				Navigation(this, args);
 		}
-
-		#endregion
 	}
 }

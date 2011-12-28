@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
@@ -31,7 +32,17 @@ namespace MyToolkit.UI
 	{
 		public ExtendedListBox()
 		{
-			DefaultStyleKey = typeof(ExtendedListBox);
+			LayoutUpdated += RegisterScrollEvent;
+			ItemContainerStyle = (Style) XamlReader.Load(
+				@"<Style TargetType=""ListBoxItem"" xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
+					<Setter Property=""Template"">
+						<Setter.Value>
+							<ControlTemplate>
+								<ContentPresenter HorizontalAlignment=""Stretch"" VerticalAlignment=""Stretch""/>
+							</ControlTemplate>
+						</Setter.Value>
+					</Setter>
+				</Style>");
 		}
 
 		#region inner margin
@@ -62,9 +73,13 @@ namespace MyToolkit.UI
 
 		private void UpdateInnerMargin()
 		{
-			var itemsPresenter = (ItemsPresenter)GetTemplateChild("itemsPresenter");
-			if (itemsPresenter != null)
-				itemsPresenter.Margin = InnerMargin;
+			var scrollViewer = (ScrollViewer) GetTemplateChild("ScrollViewer");
+			if (scrollViewer != null)
+			{
+				var itemsPresenter = (ItemsPresenter)scrollViewer.Content;
+				if (itemsPresenter != null)
+					itemsPresenter.Margin = InnerMargin;
+			}
 		}
 
 		private void UpdateLastItemMargin()
@@ -154,11 +169,14 @@ namespace MyToolkit.UI
 			IsScrolling = (e.NewState.Name == "Scrolling");
 		}
 
-		protected override Size ArrangeOverride(Size finalSize)
+		private bool eventRegistred = false; 
+		private void RegisterScrollEvent(object s, EventArgs eventArgs)
 		{
-			var size = base.ArrangeOverride(finalSize);
-			var scrollViewer = (ScrollViewer) GetTemplateChild("scrollViewer");
-			try
+			if (eventRegistred)
+				return; 
+
+			var scrollViewer = (ScrollViewer)GetTemplateChild("ScrollViewer");
+			if (scrollViewer != null)
 			{
 				var child = scrollViewer.GetVisualChild(0);
 				var group = child.GetVisualStateGroup("ScrollStates");
@@ -166,11 +184,28 @@ namespace MyToolkit.UI
 				{
 					group.CurrentStateChanging -= ScrollingStateChanging;
 					group.CurrentStateChanging += ScrollingStateChanging;
+					eventRegistred = true; 
 				}
 			}
-			catch { }
-			return size;
 		}
+
+		//protected override Size ArrangeOverride(Size finalSize)
+		//{
+		//    var size = base.ArrangeOverride(finalSize);
+		//    var scrollViewer = (ScrollViewer) GetTemplateChild("scrollViewer");
+		//    try
+		//    {
+		//        var child = scrollViewer.GetVisualChild(0);
+		//        var group = child.GetVisualStateGroup("ScrollStates");
+		//        if (group != null)
+		//        {
+		//            group.CurrentStateChanging -= ScrollingStateChanging;
+		//            group.CurrentStateChanging += ScrollingStateChanging;
+		//        }
+		//    }
+		//    catch { }
+		//    return size;
+		//}
 
 		#endregion
 	}

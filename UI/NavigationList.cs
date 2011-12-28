@@ -11,70 +11,20 @@ using Microsoft.Phone.Controls;
 
 namespace MyToolkit.UI
 {
-	public class NavigationList : Control
+	public class NavigationList : ExtendedListBox
 	{
 		static NavigationList()
 		{
 			if (!TiltEffect.TiltableItems.Contains(typeof(ContentPresenter)))
 				TiltEffect.TiltableItems.Add(typeof(ContentPresenter));
 		}
-	
-		public IEnumerable ItemsSource
-		{
-			get { return (IEnumerable)GetValue(ItemsSourceProperty); }
-			set { SetValue(ItemsSourceProperty, value); }
-		}
-
-		public static readonly DependencyProperty ItemsSourceProperty =
-			DependencyProperty.Register("ItemsSource", typeof(IEnumerable),
-			typeof(NavigationList), new PropertyMetadata(null));
-
-
-		public DataTemplate ItemTemplate
-		{
-			get { return (DataTemplate)GetValue(ItemTemplateProperty); }
-			set { SetValue(ItemTemplateProperty, value); }
-		}
-
-		public static readonly DependencyProperty ItemTemplateProperty =
-			DependencyProperty.Register("ItemTemplate", typeof(DataTemplate),
-			typeof(NavigationList), new PropertyMetadata(null));
-
-
-		public Thickness InnerMargin
-		{
-			get { return (Thickness)GetValue(InnerMarginProperty); }
-			set { SetValue(InnerMarginProperty, value); }
-		}
-
-		public static readonly DependencyProperty InnerMarginProperty =
-			DependencyProperty.Register("InnerMargin", typeof(Thickness),
-			typeof(NavigationList), new PropertyMetadata(null));
 
 		public NavigationList()
 		{
-			DefaultStyleKey = typeof(NavigationList);
+			PrepareContainerForItem += OnPrepareContainerForItem;
 		}
 
-		private ExtendedListBox itemsControl;
-		public override void OnApplyTemplate()
-		{
-			base.OnApplyTemplate();
-			itemsControl = (ExtendedListBox) GetTemplateChild("itemsControl");
-			itemsControl.PrepareContainerForItem += PrepareContainerForItem;
-			itemsControl.InnerMargin = InnerMargin;
-			itemsControl.ScrollingStateChanged += OnScrollingStateChanged;
-		}
-
-		// can be directly registred on itemsControl => add() and remove() method in event => problem: itemsControl is initialized after registering events!
-		public event EventHandler<ScrollingStateChangedEventArgs> ScrollingStateChanged;
-		private void OnScrollingStateChanged(object sender, ScrollingStateChangedEventArgs e)
-		{
-			if (ScrollingStateChanged != null)
-				ScrollingStateChanged(sender, e);
-		}
-
-		private void PrepareContainerForItem(object sender, PrepareContainerForItemEventArgs e)
+		private void OnPrepareContainerForItem(object sender, PrepareContainerForItemEventArgs e)
 		{
 			var element = (UIElement) e.Element;
 
@@ -84,7 +34,6 @@ namespace MyToolkit.UI
 		}
 
 		private bool manipulationDeltaStarted;
-
 		private void ElementManipulationDelta(object sender, ManipulationDeltaEventArgs e)
 		{
 			manipulationDeltaStarted = true;
