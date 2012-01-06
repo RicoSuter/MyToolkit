@@ -30,11 +30,8 @@ namespace MyToolkit.Network
 		{
 			lock (pendingRequests)
 			{
-				if (pendingRequests != null)
-				{
-					foreach (var r in pendingRequests.ToArray())
-						r.Abort();
-				}
+				foreach (var r in pendingRequests.ToArray())
+					r.Abort();
 			}
 		}
 
@@ -42,11 +39,8 @@ namespace MyToolkit.Network
 		{
 			lock (pendingRequests)
 			{
-				if (pendingRequests != null)
-				{
-					foreach (var r in pendingRequests.Where(abortPredicate).ToArray())
+				foreach (var r in pendingRequests.Where(abortPredicate).ToArray())
 						r.Abort();
-				}
 			}
 		}
 
@@ -282,7 +276,7 @@ namespace MyToolkit.Network
 		{
 			lock (pendingRequests)
 			{
-				if (pendingRequests != null && pendingRequests.Contains(resp))
+				if (pendingRequests.Contains(resp))
 					pendingRequests.Remove(resp);
 			}
 			
