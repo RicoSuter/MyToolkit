@@ -40,7 +40,7 @@ namespace MyToolkit.Network
 			lock (pendingRequests)
 			{
 				foreach (var r in pendingRequests.Where(abortPredicate).ToArray())
-						r.Abort();
+					r.Abort();
 			}
 		}
 
