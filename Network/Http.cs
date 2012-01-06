@@ -23,24 +23,30 @@ namespace MyToolkit.Network
 {
 	public static class Http
 	{
-		private static List<HttpResponse> pendingRequests;
+		private static readonly List<HttpResponse> pendingRequests = new List<HttpResponse>();
 		public static IEnumerable<HttpResponse> PendingRequests { get { return pendingRequests; } }
 		
 		public static void AbortAllRequests()
 		{
-			if (pendingRequests != null)
+			lock (pendingRequests)
 			{
-				foreach (var r in pendingRequests.ToArray())
-					r.Abort();
+				if (pendingRequests != null)
+				{
+					foreach (var r in pendingRequests.ToArray())
+						r.Abort();
+				}
 			}
 		}
 
 		public static void AbortRequests(Func<HttpResponse, bool> abortPredicate)
 		{
-			if (pendingRequests != null)
+			lock (pendingRequests)
 			{
-				foreach (var r in pendingRequests.Where(abortPredicate).ToArray())
-					r.Abort();
+				if (pendingRequests != null)
+				{
+					foreach (var r in pendingRequests.Where(abortPredicate).ToArray())
+						r.Abort();
+				}
 			}
 		}
 
@@ -112,9 +118,8 @@ namespace MyToolkit.Network
 					action(response);
 			}
 
-			if (pendingRequests == null)
-				pendingRequests = new List<HttpResponse>();
-			pendingRequests.Add(response);
+			lock (pendingRequests)
+				pendingRequests.Add(response);
 			return response;
 		}
 
@@ -209,9 +214,8 @@ namespace MyToolkit.Network
 					action(response);
 			}
 
-			if (pendingRequests == null)
-				pendingRequests = new List<HttpResponse>();
-			pendingRequests.Add(response);
+			lock (pendingRequests) 
+				pendingRequests.Add(response);
 			return response;
 		}
 
@@ -276,9 +280,12 @@ namespace MyToolkit.Network
 
 		private static void ProcessResponse(IAsyncResult asyncResult, WebRequest request, HttpResponse resp, Action<HttpResponse> action)
 		{
-			if (pendingRequests != null && pendingRequests.Contains(resp))
-				pendingRequests.Remove(resp);
-
+			lock (pendingRequests)
+			{
+				if (pendingRequests != null && pendingRequests.Contains(resp))
+					pendingRequests.Remove(resp);
+			}
+			
 			try
 			{
 				var response = request.EndGetResponse(asyncResult);
