@@ -24,7 +24,7 @@ namespace MyToolkit.Network
 	public static class Http
 	{
 		private static readonly List<HttpResponse> pendingRequests = new List<HttpResponse>();
-		public static IEnumerable<HttpResponse> PendingRequests { get { return pendingRequests; } }
+		//public static IEnumerable<HttpResponse> PendingRequests { get { return pendingRequests; } }
 		
 		public static void AbortAllRequests()
 		{
