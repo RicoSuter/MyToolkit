@@ -22,5 +22,10 @@ namespace MyToolkit.Phone
 				? (T) IsolatedStorageSettings.ApplicationSettings[key]
 				: defaultValue; 
 		}
+
+		public static bool HasSetting(string key)
+		{
+			return IsolatedStorageSettings.ApplicationSettings.Contains(key);
+		}
 	}
 }
