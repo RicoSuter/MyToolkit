@@ -6,6 +6,11 @@ namespace MyToolkit.Network
 {
 	public class HttpResponse
 	{
+		public HttpResponse(Exception exception)
+		{
+			exception = exception; 
+		}
+
 		public HttpResponse(IHttpRequest request)
 		{
 			Request = request;
