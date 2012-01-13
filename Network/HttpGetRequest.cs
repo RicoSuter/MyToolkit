@@ -29,7 +29,7 @@ namespace MyToolkit.Network
 		public HttpGetRequest(Uri uri, Dictionary<string, string> query) 
 		{
 			Uri = uri;
-			Query = query;
+			Query = query ?? new Dictionary<string, string>();
 			Cookies = new List<Cookie>();
 			UseCache = true;
 			Encoding = Encoding.UTF8;

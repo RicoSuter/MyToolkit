@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.IsolatedStorage;
 using System.Net;
 using System.Text;
 using System.Linq;
@@ -44,6 +45,19 @@ namespace MyToolkit.Network
 			}
 		}
 
+		private static HttpWebRequest CreateRequest(HttpGetRequest req)
+		{
+			var queryString = GetQueryString(req.Query);
+
+			if (string.IsNullOrEmpty(queryString))
+				return (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri);
+
+			if (req.Uri.AbsoluteUri.Contains("?"))
+				return (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "&" + queryString);
+
+			return (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "?" + queryString);
+		}
+
 		#region GET
 
 #if !METRO
@@ -68,20 +82,9 @@ namespace MyToolkit.Network
 			var response = new HttpResponse(req);
 			try
 			{
-				HttpWebRequest request;
-				if (req.Query != null)
-				{
-					if (!req.UseCache)
-						req.Query["__dcachetime"] = DateTime.Now.Ticks.ToString(); // TODO auch im else, wenn kein query
-
-					var queryString = GetQueryString(req.Query);
-					if (req.Uri.AbsoluteUri.Contains("?"))
-						request = (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "&" + queryString);
-					else
-						request = (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "?" + queryString);
-				}
-				else
-					request = (HttpWebRequest)WebRequest.Create(req.Uri);
+				if (!req.UseCache)
+					req.Query["__dcachetime"] = DateTime.Now.Ticks.ToString(); 
+				var request = CreateRequest(req);
 
 				if (req.Credentials != null)
 					request.Credentials = req.Credentials;
@@ -144,13 +147,7 @@ namespace MyToolkit.Network
 			try
 			{
 				var boundary = "";
-				var queryString = GetQueryString(req.Query);
-
-				HttpWebRequest request;
-				if (req.Uri.AbsoluteUri.Contains("?"))
-					request = (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "&" + queryString);
-				else
-					request = (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "?" + queryString);
+				var request = CreateRequest(req);
 
 				if (req.Credentials != null)
 					request.Credentials = req.Credentials;
@@ -191,6 +188,7 @@ namespace MyToolkit.Network
 							else
 								WritePostData(stream, req);
 						}
+
 						request.BeginGetResponse(r => ProcessResponse(r, request, response, action), request);
 					}
 					catch (Exception e)
@@ -247,7 +245,13 @@ namespace MyToolkit.Network
 				stream.Write(headerbytes, 0, headerbytes.Length);
 
 				var fileStream = file.Stream;
-#if !METRO
+#if SILVERLIGHT
+				if (fileStream == null)
+				{
+					var isf = IsolatedStorageFile.GetUserStoreForApplication();
+					fileStream = new IsolatedStorageFileStream(file.Path, FileMode.Open, FileAccess.Read, isf);
+				}
+#else
 				if (fileStream == null)
 					fileStream = new FileStream(file.Path, FileMode.Open, FileAccess.Read);
 #endif
