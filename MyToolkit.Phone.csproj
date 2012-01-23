@@ -115,9 +115,6 @@
     <Compile Include="Network\HttpPostRequest.cs" />
     <Compile Include="Network\HttpResponse.cs" />
     <Compile Include="Network\WakeOnLan.cs" />
-    <Compile Include="Performance\DeferredLoadListBox.cs" />
-    <Compile Include="Performance\DeferredLoadListBoxItem.cs" />
-    <Compile Include="Performance\GlobalSuppressions.cs" />
     <Compile Include="Performance\LowProfileImageLoader.cs" />
     <Compile Include="Phone\Environment.cs" />
     <Compile Include="Phone\Marketplace.cs" />
