@@ -173,9 +173,9 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Fixes.txt" />
     <Content Include="Libraries\DotNetZip\Changes.txt" />
     <Content Include="Libraries\DotNetZip\License.zlib.txt" />
+    <Content Include="Readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
