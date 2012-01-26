@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.IsolatedStorage;
 using System.Net;
 using System.Text;
 using System.Linq;
@@ -10,12 +9,13 @@ using System.Linq;
 using Ionic.Zlib;
 #else
 using System.IO.Compression;
+using Windows.Storage;
 #endif
 
 #if !METRO
 using System.Windows.Threading;
 using MyToolkit.Utilities;
-
+using System.IO.IsolatedStorage;
 #endif
 
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
@@ -245,6 +245,10 @@ namespace MyToolkit.Network
 				stream.Write(headerbytes, 0, headerbytes.Length);
 
 				var fileStream = file.Stream;
+
+#if METRO
+				var t = await StorageFile.GetFileFromPathAsync(file.Path); 
+#else
 #if SILVERLIGHT
 				if (fileStream == null)
 				{
@@ -254,6 +258,7 @@ namespace MyToolkit.Network
 #else
 				if (fileStream == null)
 					fileStream = new FileStream(file.Path, FileMode.Open, FileAccess.Read);
+#endif
 #endif
 
 				try

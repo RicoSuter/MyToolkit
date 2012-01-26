@@ -48,7 +48,7 @@ namespace MyToolkit.Phone
 				var urls = new List<YouTubeUrl>();
 				try
 				{
-					var match = Regex.Match(response.Response, "url_encoded_fmt_stream_map=(.*?)&");
+					var match = Regex.Match(response.Response, "url_encoded_fmt_stream_map=(.*?)(&|\")");
 					var data = Uri.UnescapeDataString(match.Groups[1].Value);
 
 					//match = Regex.Match(data, "^(.*?)\\\\u0026"); // TODO: what for?
@@ -64,14 +64,18 @@ namespace MyToolkit.Phone
 							var index = p.IndexOf('=');
 							if (index != -1 && index < p.Length)
 							{
-								var key = p.Substring(0, index);
-								var value = Uri.UnescapeDataString(p.Substring(index + 1));
-								if (key == "url")
-									tuple.Url = value;
-								else if (key == "itag")
-									tuple.Itag = int.Parse(value);
-								else if (key == "type" && value.Contains("video/mp4"))
-									tuple.Type = value;
+								try
+								{
+									var key = p.Substring(0, index);
+									var value = Uri.UnescapeDataString(p.Substring(index + 1));
+									if (key == "url")
+										tuple.Url = value;
+									else if (key == "itag")
+										tuple.Itag = int.Parse(value);
+									else if (key == "type" && value.Contains("video/mp4"))
+										tuple.Type = value;
+								}
+								catch { }
 							}
 						}
 
