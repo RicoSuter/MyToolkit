@@ -51,10 +51,6 @@ namespace MyToolkit.Phone
 					var match = Regex.Match(response.Response, "url_encoded_fmt_stream_map=(.*?)(&|\")");
 					var data = Uri.UnescapeDataString(match.Groups[1].Value);
 
-					//match = Regex.Match(data, "^(.*?)\\\\u0026"); // TODO: what for?
-					//if (match.Success)
-					//	data = match.Groups[1].Value;
-
 					var arr = data.Split(',');
 					foreach (var d in arr)
 					{
