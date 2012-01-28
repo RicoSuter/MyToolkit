@@ -8,7 +8,7 @@ namespace MyToolkit.Network
 	{
 		public HttpResponse(Exception exception)
 		{
-			exception = exception; 
+			this.exception = exception; 
 		}
 
 		public HttpResponse(IHttpRequest request)
