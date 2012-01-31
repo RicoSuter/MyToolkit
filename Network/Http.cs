@@ -9,7 +9,9 @@ using System.Linq;
 using Ionic.Zlib;
 #else
 using System.IO.Compression;
+#if METRO
 using Windows.Storage;
+#endif
 #endif
 
 #if !METRO
