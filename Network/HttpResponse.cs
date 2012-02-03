@@ -57,8 +57,9 @@ namespace MyToolkit.Network
 		/// <summary>
 		/// If Response is null and Exception is null as well the request has been canceled
 		/// </summary>
-		public string Response { get; internal set; }
-
+		public string Response { get { return Request.Encoding.GetString(RawResponse, 0, RawResponse.Length); } }
+		public byte[] RawResponse { get; set; }
+		
 		public List<Cookie> Cookies { get; private set; }
 	}
 }

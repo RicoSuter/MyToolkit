@@ -303,18 +303,15 @@ namespace MyToolkit.Network
 
 				using (response)
 				{
-					using (var reader = new StreamReader(response.GetResponseStream(), resp.Request.Encoding))
+					resp.RawResponse = response.GetResponseStream().ReadToEnd();
+					if (origResponse.Headers.AllKeys.Contains("Set-Cookie"))
 					{
-						resp.Response = reader.ReadToEnd();
-						if (origResponse.Headers.AllKeys.Contains("Set-Cookie"))
+						var cookies = origResponse.Headers["Set-Cookie"];
+						var index = cookies.IndexOf(';');
+						if (index != -1)
 						{
-							var cookies = origResponse.Headers["Set-Cookie"];
-							var index = cookies.IndexOf(';');
-							if (index != -1)
-							{
-								foreach (var c in HttpUtilityExtensions.ParseQueryString(cookies.Substring(0, index)))
-									resp.Cookies.Add(new Cookie(c.Key, c.Value));
-							}
+							foreach (var c in HttpUtilityExtensions.ParseQueryString(cookies.Substring(0, index)))
+								resp.Cookies.Add(new Cookie(c.Key, c.Value));
 						}
 					}
 				}
