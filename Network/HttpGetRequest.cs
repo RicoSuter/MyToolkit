@@ -10,6 +10,7 @@ namespace MyToolkit.Network
 		Uri Uri { get; }
 		Encoding Encoding { get; }
 		object Tag { get; }
+		int Timeout { get; }
 	}
 
 	public class HttpGetRequest : IHttpRequest
@@ -33,11 +34,17 @@ namespace MyToolkit.Network
 			Cookies = new List<Cookie>();
 			UseCache = true;
 			Encoding = Encoding.UTF8;
+			Timeout = 0;
 
 			#if USE_GZIP
 			RequestGZIP = true; 
 			#endif
 		}
+
+		/// <summary>
+		/// In seconds. If 0 then use default timeout (better)
+		/// </summary>
+		public int Timeout { get; set; }
 
 		public Uri Uri { get; private set; }
 		public Dictionary<string, string> Query { get; private set; }

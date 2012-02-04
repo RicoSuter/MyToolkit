@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
 
 namespace MyToolkit.Network
 {
@@ -20,6 +21,11 @@ namespace MyToolkit.Network
 		public IHttpRequest Request { get; internal set; }
 		internal HttpWebRequest WebRequest { get; set; }
 
+		public bool IsPending
+		{
+			get { return Request != null && !Successful; }
+		}
+
 		public void Abort()
 		{
 			if (Request != null && !Successful)
@@ -32,6 +38,9 @@ namespace MyToolkit.Network
 			get { return exception; }
 			set
 			{
+				if (exception != null && exception is TimeoutException)
+					return; // already set
+
 				if (value is WebException && ((WebException)value).Status == WebExceptionStatus.RequestCanceled)
 				{
 					exception = null;
@@ -61,5 +70,22 @@ namespace MyToolkit.Network
 		public byte[] RawResponse { get; set; }
 		
 		public List<Cookie> Cookies { get; private set; }
+
+		private Timer timer; 
+		internal void CreateTimeoutTimer()
+		{
+			if (Request.Timeout > 0)
+			{
+				timer = new Timer(s =>
+				{
+					timer.Dispose();
+					if (IsPending)
+					{
+						Exception = new TimeoutException();
+						Abort();
+					}
+				}, null, Request.Timeout * 1000, Timeout.Infinite);
+			}
+		}
 	}
 }

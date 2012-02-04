@@ -51,13 +51,14 @@ namespace MyToolkit.Network
 		{
 			var queryString = GetQueryString(req.Query);
 
+			HttpWebRequest request = null;
 			if (string.IsNullOrEmpty(queryString))
-				return (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri);
-
-			if (req.Uri.AbsoluteUri.Contains("?"))
-				return (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "&" + queryString);
-
-			return (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "?" + queryString);
+				request = (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri);
+			else if (req.Uri.AbsoluteUri.Contains("?"))
+				request = (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "&" + queryString);
+			else 
+				request = (HttpWebRequest)WebRequest.Create(req.Uri.AbsoluteUri + "?" + queryString);
+			return request;
 		}
 
 		#region GET
@@ -108,6 +109,7 @@ namespace MyToolkit.Network
 					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
 #endif
 
+				response.CreateTimeoutTimer();
 				request.BeginGetResponse(r => ProcessResponse(r, request, response, action), request);
 			}
 			catch (Exception e)
@@ -179,6 +181,7 @@ namespace MyToolkit.Network
 					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
 #endif
 
+				response.CreateTimeoutTimer();
 				request.BeginGetRequestStream(delegate(IAsyncResult ar1)
 				{
 					try

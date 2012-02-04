@@ -62,6 +62,7 @@
     <Compile Include="UI\Designer.cs" />
     <Compile Include="Utilities\EnumerableExtensions.cs" />
     <Compile Include="Utilities\HttpUtilityExtensions.cs" />
+    <Compile Include="Utilities\StreamExtensions.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="Utilities\WeakEvent.cs" />
     <Compile Include="Converters\DateTimeConverter.cs" />
