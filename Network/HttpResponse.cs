@@ -81,7 +81,7 @@ namespace MyToolkit.Network
 					timer.Dispose();
 					if (IsPending)
 					{
-						Exception = new TimeoutException();
+						Exception = new TimeoutException("The connection timed out.");
 						Abort();
 					}
 				}, null, Request.Timeout * 1000, Timeout.Infinite);
