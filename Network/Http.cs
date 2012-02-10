@@ -5,6 +5,8 @@ using System.Net;
 using System.Text;
 using System.Linq;
 
+using MyToolkit.Utilities;
+
 #if SILVERLIGHT
 using Ionic.Zlib;
 #else
@@ -16,7 +18,6 @@ using Windows.Storage;
 
 #if !METRO
 using System.Windows.Threading;
-using MyToolkit.Utilities;
 using System.IO.IsolatedStorage;
 #endif
 
@@ -252,7 +253,19 @@ namespace MyToolkit.Network
 				var fileStream = file.Stream;
 
 #if METRO
-				var t = await StorageFile.GetFileFromPathAsync(file.Path); 
+				if (fileStream == null)
+				{
+					var f = StorageFile.GetFileFromPathAsync(file.Path);
+					var t = f.StartAsTask();
+					t.RunSynchronously();
+
+					var f2 = f.GetResults().OpenForReadAsync();
+					var t2 = f2.StartAsTask();
+					t2.RunSynchronously();
+
+					fileStream = f2.GetResults().AsStream();
+				}
+
 #else
 #if SILVERLIGHT
 				if (fileStream == null)
