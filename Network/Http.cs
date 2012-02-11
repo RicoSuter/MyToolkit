@@ -284,7 +284,12 @@ namespace MyToolkit.Network
 					var buffer = new byte[1024];
 					var bytesRead = 0;
 					while ((bytesRead = fileStream.Read(buffer, 0, buffer.Length)) != 0)
+					{
 						stream.Write(buffer, 0, bytesRead);
+						//stream.Flush();
+						// TODO: call progress changed event handler (calculate progress over all files) => use flush to have correct behaviour
+						// TODO: add progress for download
+					}
 				}
 				finally
 				{
