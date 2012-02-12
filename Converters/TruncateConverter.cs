@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Data;
+using MyToolkit.Utilities;
 
 namespace MyToolkit.Converters
 {
@@ -8,10 +9,7 @@ namespace MyToolkit.Converters
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
 			var maxLength = int.Parse((string)parameter);
-			var text = (string)value;
-			if (text.Length > maxLength)
-				return text.Substring(0, maxLength) + "...";
-			return text; 
+			return value.ToString().TruncateWithoutChopping(maxLength);
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

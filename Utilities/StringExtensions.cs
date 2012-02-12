@@ -21,5 +21,14 @@ namespace MyToolkit.Utilities
 		{
 			return text.Replace("\u008B", "‹").Replace("\u009B", "›");
 		}
+
+		public static string TruncateWithoutChopping(this string text, int length)
+		{
+			if (text == null || text.Length < length)
+				return text;
+
+			var index = text.LastIndexOf(" ", length, StringComparison.Ordinal);
+			return string.Format("{0}...", text.Substring(0, (index > 0) ? index : text.Length).Trim());
+		}
 	}
 }
