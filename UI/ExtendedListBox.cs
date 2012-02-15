@@ -32,6 +32,7 @@ namespace MyToolkit.UI
 	{
 		public ExtendedListBox()
 		{
+			//DefaultStyleKey = typeof(ExtendedListBox);
 			LayoutUpdated += RegisterScrollEvent;
 			ItemContainerStyle = (Style) XamlReader.Load(
 				@"<Style TargetType=""ListBoxItem"" xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
