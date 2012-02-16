@@ -23,6 +23,7 @@ namespace MyToolkit.Phone
 		{
 			InitializeComponent();
 			SizeChanged += OnSizeChanged;
+			Button.Click += (o, e) => { if (Click != null) Click(this, e); };
 		}
 
 		public static readonly DependencyProperty UseWidescreenProperty =
@@ -44,11 +45,7 @@ namespace MyToolkit.Phone
 			set { SetValue(YouTubeIDProperty, value); }
 		}
 
-		public event RoutedEventHandler Click
-		{
-			add { Button.Click += value; }
-			remove { Button.Click -= value; }
-		}
+		public event RoutedEventHandler Click;
 
 		private static void PropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
 		{
