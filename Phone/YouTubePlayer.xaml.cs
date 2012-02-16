@@ -8,6 +8,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MyToolkit.Network;
 
@@ -22,6 +23,16 @@ namespace MyToolkit.Phone
 		{
 			InitializeComponent();
 			SizeChanged += OnSizeChanged;
+		}
+
+		public static readonly DependencyProperty UseWidescreenProperty =
+			DependencyProperty.Register("UseWidescreen", typeof (bool), typeof (YouTubePlayer), new PropertyMetadata(default(bool)));
+
+		// TODO: does not work yet!
+		public bool UseWidescreen
+		{
+			get { return (bool) GetValue(UseWidescreenProperty); }
+			set { SetValue(UseWidescreenProperty, value); }
 		}
 
 		public static readonly DependencyProperty YouTubeIDProperty =
@@ -52,24 +63,21 @@ namespace MyToolkit.Phone
 
 		private void UpdateImage()
 		{
-			if (!imageLoaded && ActualWidth > 0.0)
+			if (ActualWidth > 0.0)
 			{
 				Image.Width = ActualWidth;
-				Image.Height = (ActualWidth / 480) * 360;
+				Image.Height = (ActualWidth / 480) * (UseWidescreen ? 270 : 360);
 
 				Button.Width = ActualWidth;
-				Button.Height = (ActualWidth / 480) * 360;
+				Button.Height = (ActualWidth / 480) * (UseWidescreen ? 270 : 360);
 
 				Performance.LowProfileImageLoader.SetUriSource(Image, imageUri);
-				imageLoaded = true; 
 			}
 		}
 
-		private bool imageLoaded = false; 
 		private Uri imageUri; 
 		private void LoadUri()
 		{
-			imageLoaded = false; 
 			if (!String.IsNullOrEmpty(YouTubeID))
 				YouTube.GetThumnailUrl(YouTubeID, ThumbnailReceived);
 			else

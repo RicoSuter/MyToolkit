@@ -11,10 +11,9 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480">
 
-	<UI:UnstyledButton x:Name="Button" toolkit:TiltEffect.IsTiltEnabled="True" Margin="0"
-					   Width="240" Height="180">
+	<UI:UnstyledButton x:Name="Button" toolkit:TiltEffect.IsTiltEnabled="True" Margin="0">
 		<Grid Background="{StaticResource PhoneInactiveBrush}">
-			<Image Stretch="UniformToFill" Width="240" Height="180" x:Name="Image" Opacity="0.5" />
+			<Image Stretch="UniformToFill" x:Name="Image" Opacity="0.5" />
 			<Image Width="48" Height="48" Source="../Images/PlayIcon.png"
 				   VerticalAlignment="Center" HorizontalAlignment="Center" />
 		</Grid>
