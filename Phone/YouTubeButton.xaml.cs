@@ -17,16 +17,16 @@ namespace MyToolkit.Phone
 	/// <summary>
 	/// Add YouTube play logic to Click event (see http://mytoolkit.codeplex.com/wikipage?title=YouTube)
 	/// </summary>
-	public partial class YouTubePlayer : UserControl
+	public partial class YouTubeButton : UserControl
 	{
-		public YouTubePlayer()
+		public YouTubeButton()
 		{
 			InitializeComponent();
 			SizeChanged += OnSizeChanged;
 		}
 
 		public static readonly DependencyProperty UseWidescreenProperty =
-			DependencyProperty.Register("UseWidescreen", typeof (bool), typeof (YouTubePlayer), new PropertyMetadata(default(bool)));
+			DependencyProperty.Register("UseWidescreen", typeof (bool), typeof (YouTubeButton), new PropertyMetadata(default(bool)));
 
 		// TODO: does not work yet!
 		public bool UseWidescreen
@@ -36,7 +36,7 @@ namespace MyToolkit.Phone
 		}
 
 		public static readonly DependencyProperty YouTubeIDProperty =
-			DependencyProperty.Register("YouTubeID", typeof (string), typeof (YouTubePlayer), new PropertyMetadata(default(string), PropertyChangedCallback));
+			DependencyProperty.Register("YouTubeID", typeof (string), typeof (YouTubeButton), new PropertyMetadata(default(string), PropertyChangedCallback));
 
 		public string YouTubeID
 		{
@@ -52,7 +52,7 @@ namespace MyToolkit.Phone
 
 		private static void PropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
 		{
-			var ctrl = (YouTubePlayer)dependencyObject;
+			var ctrl = (YouTubeButton)dependencyObject;
 			ctrl.LoadUri();
 		}
 
