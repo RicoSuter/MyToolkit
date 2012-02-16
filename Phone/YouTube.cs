@@ -25,6 +25,27 @@ namespace MyToolkit.Phone
 
 	public static class YouTube
 	{
+		public static HttpResponse GetThumnailUrl(string youTubeId, Action<HttpResponse, Uri> onFinished)
+		{
+			return Http.Get("http://www.youtube.com/watch?v=" + youTubeId, r =>
+			{
+			if (r.Successful)
+			{
+				var match = Regex.Match(r.Response, "<meta property=\"og:image\" content=\"(.*?)\">");
+				try
+				{
+					onFinished(r, new Uri(match.Groups[1].Value));
+				}
+				catch
+				{
+					onFinished(r, null);
+				}
+			}
+			else
+				onFinished(r, null);
+			});
+		}
+
 		public static HttpResponse Play(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFinished = null)
 		{
 			return Http.Get("http://www.youtube.com/watch?v=" + youTubeId, r => OnHtmlDownloaded(r, maxQuality, onFinished));

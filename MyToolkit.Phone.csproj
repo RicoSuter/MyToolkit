@@ -125,6 +125,9 @@
     <Compile Include="Phone\Settings.cs" />
     <Compile Include="Phone\Thombstone.cs" />
     <Compile Include="Phone\YouTube.cs" />
+    <Compile Include="Phone\YouTubePlayer.xaml.cs">
+      <DependentUpon>YouTubePlayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\DataTemplateSelector.cs" />
     <Compile Include="UI\Designer.cs" />
@@ -173,6 +176,7 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\PlayIcon.png" />
     <Content Include="Libraries\DotNetZip\Changes.txt" />
     <Content Include="Libraries\DotNetZip\License.zlib.txt" />
     <Content Include="Readme.txt" />
@@ -181,6 +185,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Phone\YouTubePlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Popups\ShareBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
