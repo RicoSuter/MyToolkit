@@ -26,16 +26,6 @@ namespace MyToolkit.Phone
 			Button.Click += (o, e) => { if (Click != null) Click(this, e); };
 		}
 
-		public static readonly DependencyProperty UseWidescreenProperty =
-			DependencyProperty.Register("UseWidescreen", typeof (bool), typeof (YouTubeButton), new PropertyMetadata(default(bool)));
-
-		// TODO: does not work yet!
-		public bool UseWidescreen
-		{
-			get { return (bool) GetValue(UseWidescreenProperty); }
-			set { SetValue(UseWidescreenProperty, value); }
-		}
-
 		public static readonly DependencyProperty YouTubeIDProperty =
 			DependencyProperty.Register("YouTubeID", typeof (string), typeof (YouTubeButton), new PropertyMetadata(default(string), PropertyChangedCallback));
 
@@ -63,10 +53,10 @@ namespace MyToolkit.Phone
 			if (ActualWidth > 0.0)
 			{
 				Image.Width = ActualWidth;
-				Image.Height = (ActualWidth / 480) * (UseWidescreen ? 270 : 360);
+				Image.Height = (ActualWidth / 480) * 360;
 
 				Button.Width = ActualWidth;
-				Button.Height = (ActualWidth / 480) * (UseWidescreen ? 270 : 360);
+				Button.Height = (ActualWidth / 480) * 360; 
 
 				Performance.LowProfileImageLoader.SetUriSource(Image, imageUri);
 			}
