@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 
 #if METRO
+using Windows.UI.Xaml.Data; 
 using System.Reflection;
+#else
+using System.ComponentModel;
 #endif
 
 namespace MyToolkit.MVVM
