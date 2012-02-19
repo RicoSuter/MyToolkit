@@ -5,8 +5,9 @@ using System.Linq.Expressions;
 using System.Runtime.Serialization;
 
 #if METRO
-using Windows.UI.Xaml.Data; 
+//using Windows.UI.Xaml.Data; 
 using System.Reflection;
+using System.ComponentModel;
 #else
 using System.ComponentModel;
 #endif
@@ -54,8 +55,9 @@ namespace MyToolkit.MVVM
 				#endif
             #endif
 
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			var copy = PropertyChanged; // avoid concurrent changes
+			if (copy != null)
+				copy(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }
