@@ -14,8 +14,7 @@
 	<UI:UnstyledButton x:Name="Button" toolkit:TiltEffect.IsTiltEnabled="True" Margin="0">
 		<Grid Background="{StaticResource PhoneInactiveBrush}">
 			<Image Stretch="UniformToFill" x:Name="Image" Opacity="0.5" />
-			<Image Width="48" Height="48" Source="../Images/PlayIcon.png"
-				   VerticalAlignment="Center" HorizontalAlignment="Center" />
+			<Image Width="96" Height="96" x:Name="PlayImage" VerticalAlignment="Center" HorizontalAlignment="Center" />
 		</Grid>
 	</UI:UnstyledButton>
 </UserControl>

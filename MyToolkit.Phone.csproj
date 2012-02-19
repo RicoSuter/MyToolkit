@@ -131,6 +131,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\DataTemplateSelector.cs" />
     <Compile Include="UI\Designer.cs" />
+    <Compile Include="UI\ExtendedImage.xaml.cs">
+      <DependentUpon>ExtendedImage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ExtendedListBox.cs" />
     <Compile Include="UI\ExtendedLongListSelector.cs" />
     <Compile Include="UI\FixedNavigationList.cs" />
@@ -177,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\PlayIcon.png" />
+    <Resource Include="Images\PlayIconLight.png" />
     <Content Include="Libraries\DotNetZip\Changes.txt" />
     <Content Include="Libraries\DotNetZip\License.zlib.txt" />
     <Content Include="Readme.txt" />
@@ -186,6 +190,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Phone\YouTubeButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\ExtendedImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -22,8 +22,26 @@ namespace MyToolkit.Phone
 		public YouTubeButton()
 		{
 			InitializeComponent();
+
 			SizeChanged += OnSizeChanged;
 			Button.Click += (o, e) => { if (Click != null) Click(this, e); };
+
+			PlayImage.Source = new BitmapImage(new Uri(PhoneApplication.IsDarkTheme ? "../Images/PlayIcon.png" : "../Images/PlayIconLight.png", UriKind.Relative));
+		}
+
+		public static readonly DependencyProperty ShowPlayIconProperty =
+			DependencyProperty.Register("ShowPlayIcon", typeof (bool), typeof (YouTubeButton), new PropertyMetadata(true, ShowPlayIconPropertyChangedCallback));
+
+		private static void ShowPlayIconPropertyChangedCallback(DependencyObject obj, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+		{
+			var ctrl = (YouTubeButton)obj;
+			ctrl.PlayImage.Visibility = ctrl.ShowPlayIcon ? Visibility.Visible : Visibility.Collapsed;
+		}
+
+		public bool ShowPlayIcon
+		{
+			get { return (bool) GetValue(ShowPlayIconProperty); }
+			set { SetValue(ShowPlayIconProperty, value); }
 		}
 
 		public static readonly DependencyProperty YouTubeIDProperty =
