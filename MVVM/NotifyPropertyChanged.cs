@@ -5,9 +5,8 @@ using System.Linq.Expressions;
 using System.Runtime.Serialization;
 
 #if METRO
-//using Windows.UI.Xaml.Data; 
+using Windows.UI.Xaml.Data; 
 using System.Reflection;
-using System.ComponentModel;
 #else
 using System.ComponentModel;
 #endif
@@ -47,8 +46,9 @@ namespace MyToolkit.MVVM
 		{
 			#if DEBUG
 				#if METRO
-					if (GetType().GetTypeInfo().DeclaredProperties.Any(p => p.Name == propertyName))
-						throw new ArgumentException("propertyName");
+					// TODO: search in subclasses
+					//if (GetType().GetTypeInfo().GetDeclaredProperty(propertyName) == null)
+					//	throw new ArgumentException("propertyName");
 				#else
 					if (GetType().GetProperty(propertyName) == null)
 						throw new ArgumentException("propertyName");
