@@ -27,14 +27,17 @@ namespace MyToolkit.Phone
 	{
 		public static HttpResponse GetThumnailUrl(string youTubeId, Action<HttpResponse, Uri> onFinished)
 		{
-			return Http.Get("http://www.youtube.com/watch?v=" + youTubeId, r =>
+			//return Http.Get("http://www.youtube.com/watch?v=" + youTubeId, r => // (25 kb)
+			return Http.Get("http://www.youtube.com/embed/" + youTubeId, r => // smaller html downloads (5 kb)
 			{
 			if (r.Successful)
 			{
-				var match = Regex.Match(r.Response, "<meta property=\"og:image\" content=\"(.*?)\">");
+				//var match = Regex.Match(r.Response, "<meta property=\"og:image\" content=\"(.*?)\">");
+				var match = Regex.Match(r.Response, "\"iurl\": \"(.*?)\"");
 				try
 				{
-					onFinished(r, new Uri(match.Groups[1].Value));
+					var uri = Uri.UnescapeDataString(match.Groups[1].Value).Replace("\\/", "/"); 
+					onFinished(r, new Uri(uri));
 				}
 				catch
 				{
