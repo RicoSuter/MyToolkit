@@ -1,0 +1,31 @@
+<UserControl x:Class="MyToolkit.UI.Popups.ShareBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:UI="clr-namespace:MyToolkit.UI"
+			 xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+             mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480">
+    
+    <Grid x:Name="LayoutRoot">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0" x:Name="popup">
+			<StackPanel Margin="12,12,12,36">
+				<UI:UnstyledButton toolkit:TiltEffect.IsTiltEnabled="True" Click="AsMessageClick" Margin="0,0,0,12">
+					<TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="Message"></TextBlock>
+				</UI:UnstyledButton>
+				<UI:UnstyledButton toolkit:TiltEffect.IsTiltEnabled="True" Click="AsEmailClick" Margin="0,0,0,12">
+					<TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="E-Mail"></TextBlock>
+				</UI:UnstyledButton>
+			</StackPanel>
+		</StackPanel>		
+		<Border Grid.Row="1" Background="Transparent" />
+    </Grid>
+</UserControl>

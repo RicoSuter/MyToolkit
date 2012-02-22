@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8C9D22C1-6A06-42ED-9452-A6BE3BBE6281}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyToolkit</RootNamespace>
+    <AssemblyName>MyToolkit</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug\Silverlight\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;USE_GZIP</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release\Silverlight\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;USE_GZIP</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Shared\Collections\FilteredObservableCollection.cs">
+      <Link>Collections\FilteredObservableCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Collections\OrderedObservableCollection.cs">
+      <Link>Collections\OrderedObservableCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
+      <Link>Converters\DateTimeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\NotConverter.cs">
+      <Link>Converters\NotConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\TruncateConverter.cs">
+      <Link>Converters\TruncateConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\TypeVisibilityConverter.cs">
+      <Link>Converters\TypeVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\UpperTextConverter.cs">
+      <Link>Converters\UpperTextConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\VisibilityConverter.cs">
+      <Link>Converters\VisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Encryption\SimpleEncryption.cs">
+      <Link>Encryption\SimpleEncryption.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Libraries\DotNetZip\CRC32.cs">
+      <Link>Libraries\DotNetZip\CRC32.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Libraries\DotNetZip\Deflate.cs">
+      <Link>Libraries\DotNetZip\Deflate.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Libraries\DotNetZip\GZipStream.cs">
+      <Link>Libraries\DotNetZip\GZipStream.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Libraries\DotNetZip\Inflate.cs">
+      <Link>Libraries\DotNetZip\Inflate.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Libraries\DotNetZip\InfTree.cs">
+      <Link>Libraries\DotNetZip\InfTree.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Libraries\DotNetZip\Tree.cs">
+      <Link>Libraries\DotNetZip\Tree.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Libraries\DotNetZip\Zlib.cs">
+      <Link>Libraries\DotNetZip\Zlib.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Libraries\DotNetZip\ZlibBaseStream.cs">
+      <Link>Libraries\DotNetZip\ZlibBaseStream.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Libraries\DotNetZip\ZlibCodec.cs">
+      <Link>Libraries\DotNetZip\ZlibCodec.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Libraries\DotNetZip\ZlibConstants.cs">
+      <Link>Libraries\DotNetZip\ZlibConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Messages\DefaultActions.cs">
+      <Link>Messages\DefaultActions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Messages\Messenger.cs">
+      <Link>Messages\Messenger.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Messages\TextMessage.cs">
+      <Link>Messages\TextMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\MVVM\NotifyPropertyChanged.cs">
+      <Link>MVVM\NotifyPropertyChanged.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\MVVM\PropertyChangedEventArgsExtensions.cs">
+      <Link>MVVM\PropertyChangedEventArgsExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\MVVM\RelayCommand.cs">
+      <Link>MVVM\RelayCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Network\Http.cs">
+      <Link>Network\Http.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Network\HttpGetRequest.cs">
+      <Link>Network\HttpGetRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Network\HttpPostFile.cs">
+      <Link>Network\HttpPostFile.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Network\HttpPostRequest.cs">
+      <Link>Network\HttpPostRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Network\HttpResponse.cs">
+      <Link>Network\HttpResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\UI\Designer.cs">
+      <Link>UI\Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\UI\TextBinding.cs">
+      <Link>UI\TextBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\ColorUtility.cs">
+      <Link>Utilities\ColorUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\DateTimeUtilities.cs">
+      <Link>Utilities\DateTimeUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\EnumerableExtensions.cs">
+      <Link>Utilities\EnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\HttpUtilityExtensions.cs">
+      <Link>Utilities\HttpUtilityExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\IdentityGenerator.cs">
+      <Link>Utilities\IdentityGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\StreamExtensions.cs">
+      <Link>Utilities\StreamExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\StringExtensions.cs">
+      <Link>Utilities\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\WeakEvent.cs">
+      <Link>Utilities\WeakEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\Xml.cs">
+      <Link>Utilities\Xml.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Shared\Libraries\DotNetZip\Changes.txt">
+      <Link>Libraries\DotNetZip\Changes.txt</Link>
+    </Content>
+    <Content Include="..\Shared\Libraries\DotNetZip\License.zlib.txt">
+      <Link>Libraries\DotNetZip\License.zlib.txt</Link>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
