@@ -35,7 +35,7 @@ namespace MyToolkit.Converters
 #else
 		public object Convert(object value, string targetType, object parameter, string language)
 		{
-			if (targetType == typeof(Visibility).FullName)
+			if (targetType == "Visibility")
 			{
 				var c = new VisibilityConverter();
 				var r = c.Convert(value, targetType, parameter, language);
@@ -43,7 +43,7 @@ namespace MyToolkit.Converters
 						? Visibility.Collapsed : Visibility.Visible;
 			}
 
-			if (targetType == typeof(bool).FullName)
+			if (targetType == "Boolean")
 			{
 				if (value == null)
 					return true;

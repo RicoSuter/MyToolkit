@@ -1,12 +1,14 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 
 #if METRO
 using System.Reflection;
+using Windows.UI.Xaml.Data;
+#else
+using System.ComponentModel;
 #endif
 
 
