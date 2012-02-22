@@ -1,0 +1,26 @@
+﻿GZipStream.cs: 
+	Length property (Line 712): 
+
+			public override long Length
+			{
+				get { throw new NotImplementedException(); }
+			}
+
+	Changed to: 
+
+			public override long Length
+			{
+				get { return -1; }
+			}
+	
+	To avoid break into the debugger every time. 
+
+	Remove use of Path-class (Line 198)
+
+	BaseStream Close() now Dispose() (Line 647)
+
+CRC32.cs: 
+	Added metro code for Close() and Dispose(). (Line 794)
+
+ZlibBaseStream.cs: 
+	Added metro code for Close() and Dispose(). (Line 301)
