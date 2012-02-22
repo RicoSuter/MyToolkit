@@ -14,18 +14,31 @@ namespace MyToolkit.Converters
 	{
 #if !METRO
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+		{
+			if (targetType == typeof(Visibility))
+			{
+				var c = new VisibilityConverter();
+				var r = c.Convert(value, targetType, parameter, culture);
+				return ((Visibility)r) == Visibility.Visible
+						? Visibility.Collapsed : Visibility.Visible;
+			}
+
+			if (targetType == typeof(bool))
+			{
+				if (value == null)
+					return true;
+				return !((bool) value);
+			}
+
+			return null;
+		}
 #else
 		public object Convert(object value, string targetType, object parameter, string language)
-#endif		
 		{
 			if (targetType == typeof(Visibility).FullName)
 			{
 				var c = new VisibilityConverter();
-#if !METRO
-				var r = c.Convert(value, targetType, parameter, culture);
-#else
 				var r = c.Convert(value, targetType, parameter, language);
-#endif
 				return ((Visibility)r) == Visibility.Visible
 						? Visibility.Collapsed : Visibility.Visible;
 			}
@@ -39,6 +52,8 @@ namespace MyToolkit.Converters
 
 			return null;
 		}
+#endif
+
 
 #if !METRO
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
