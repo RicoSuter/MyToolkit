@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MyToolkit</RootNamespace>
-    <AssemblyName>MyToolkit.Metro</AssemblyName>
+    <AssemblyName>MyToolkit</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -32,40 +32,94 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Collections\FilteredObservableCollection.cs" />
-    <Compile Include="Collections\OrderedObservableCollection.cs" />
-    <Compile Include="Converters\DateTimeConverter.cs" />
-    <Compile Include="Converters\NotConverter.cs" />
-    <Compile Include="Converters\TruncateConverter.cs" />
-    <Compile Include="Converters\TypeVisibilityConverter.cs" />
-    <Compile Include="Converters\UpperTextConverter.cs" />
-    <Compile Include="Converters\VisibilityConverter.cs" />
-    <Compile Include="Messages\ActionMessage.cs" />
-    <Compile Include="Messages\Messenger.cs" />
-    <Compile Include="Messages\TextMessage.cs" />
-    <Compile Include="MVVM\NotifyPropertyChanged.cs" />
-    <Compile Include="MVVM\RelayCommand.cs" />
-    <Compile Include="Network\HttpGetRequest.cs" />
-    <Compile Include="Network\HttpMetro.cs" />
-    <Compile Include="Network\HttpPostFile.cs" />
-    <Compile Include="Network\HttpPostRequest.cs" />
-    <Compile Include="Network\HttpResponse.cs" />
+    <Compile Include="..\Shared\Collections\FilteredObservableCollection.cs">
+      <Link>Collections\FilteredObservableCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Collections\OrderedObservableCollection.cs">
+      <Link>Collections\OrderedObservableCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
+      <Link>Converters\DateTimeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\NotConverter.cs">
+      <Link>Converters\NotConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\TruncateConverter.cs">
+      <Link>Converters\TruncateConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\TypeVisibilityConverter.cs">
+      <Link>Converters\TypeVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\UpperTextConverter.cs">
+      <Link>Converters\UpperTextConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\VisibilityConverter.cs">
+      <Link>Converters\VisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Messages\ActionMessage.cs">
+      <Link>Messages\ActionMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Messages\Messenger.cs">
+      <Link>Messages\Messenger.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Messages\TextMessage.cs">
+      <Link>Messages\TextMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\MVVM\NotifyPropertyChanged.cs">
+      <Link>MVVM\NotifyPropertyChanged.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\MVVM\PropertyChangedEventArgsExtensions.cs">
+      <Link>MVVM\PropertyChangedEventArgsExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\MVVM\RelayCommand.cs">
+      <Link>MVVM\RelayCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Network\HttpGetRequest.cs">
+      <Link>Network\HttpGetRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Network\HttpPostFile.cs">
+      <Link>Network\HttpPostFile.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Network\HttpPostRequest.cs">
+      <Link>Network\HttpPostRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Network\HttpResponse.cs">
+      <Link>Network\HttpResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\DateTimeUtilities.cs">
+      <Link>Utilities\DateTimeUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\EnumerableExtensions.cs">
+      <Link>Utilities\EnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\HttpUtilityExtensions.cs">
+      <Link>Utilities\HttpUtilityExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\ReflectionExtensions.cs">
+      <Link>Utilities\ReflectionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\StreamExtensions.cs">
+      <Link>Utilities\StreamExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\StringExtensions.cs">
+      <Link>Utilities\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\WeakEvent.cs">
+      <Link>Utilities\WeakEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\Xml.cs">
+      <Link>Utilities\Xml.cs</Link>
+    </Compile>
+    <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Network\Http.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controls\ImageButton.Metro.cs" />
     <Compile Include="UI\PageController.cs" />
-    <Compile Include="Utilities\HttpUtilityExtensions.cs" />
-    <Compile Include="Utilities\ReflectionExtensions.cs" />
-    <Compile Include="Utilities\StreamExtensions.cs" />
-    <Compile Include="Utilities\StringExtensions.cs" />
-    <Compile Include="Utilities\WeakEvent.cs" />
-    <Compile Include="Utilities\Xml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Themes\generic_metro.xaml">
+    <Content Include="Themes\generic.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Content>
   </ItemGroup>
