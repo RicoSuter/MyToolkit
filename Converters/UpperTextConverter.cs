@@ -1,25 +1,30 @@
 ﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
+
+#if !METRO
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+#else
+using Windows.UI.Xaml.Data;
+#endif
+
 
 namespace MyToolkit.Converters
 {
 	public class UpperTextConverter : IValueConverter
 	{
+#if !METRO
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+#else
+		public object Convert(object value, string typeName, object parameter, string language)
+#endif		
 		{
 			return value.ToString().ToUpper();
 		}
 
+		#if !METRO
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+#else
+		public object ConvertBack(object value, string typeName, object parameter, string language)
+#endif
 		{
 			throw new NotSupportedException();
 		}

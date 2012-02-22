@@ -34,6 +34,12 @@
   <ItemGroup>
     <Compile Include="Collections\FilteredObservableCollection.cs" />
     <Compile Include="Collections\OrderedObservableCollection.cs" />
+    <Compile Include="Converters\DateTimeConverter.cs" />
+    <Compile Include="Converters\NotConverter.cs" />
+    <Compile Include="Converters\TruncateConverter.cs" />
+    <Compile Include="Converters\TypeVisibilityConverter.cs" />
+    <Compile Include="Converters\UpperTextConverter.cs" />
+    <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="Messages\ActionMessage.cs" />
     <Compile Include="Messages\Messenger.cs" />
     <Compile Include="Messages\TextMessage.cs" />
