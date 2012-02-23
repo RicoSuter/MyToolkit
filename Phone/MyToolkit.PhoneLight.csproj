@@ -188,7 +188,6 @@
     <Compile Include="Phone\Environment.cs" />
     <Compile Include="Phone\Marketplace.cs" />
     <Compile Include="Phone\MemoryDiagnosticsHelper.cs" />
-    <Compile Include="Phone\PhoneApplication.cs" />
     <Compile Include="Phone\Resources.cs" />
     <Compile Include="Phone\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
