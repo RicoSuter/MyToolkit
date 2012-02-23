@@ -129,6 +129,9 @@
     <Compile Include="..\Shared\Messages\ActionMessage.cs">
       <Link>Messages\ActionMessage.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Messages\DefaultActions.cs">
+      <Link>Messages\DefaultActions.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Messages\GoBackMessage.cs">
       <Link>Messages\GoBackMessage.cs</Link>
     </Compile>
@@ -203,7 +206,6 @@
     </Compile>
     <Compile Include="Collections\AlphaGroups.cs" />
     <Compile Include="Collections\Group.cs" />
-    <Compile Include="Messages\DefaultActions.cs" />
     <Compile Include="Performance\LowProfileImageLoader.cs" />
     <Compile Include="Phone\Environment.cs" />
     <Compile Include="Phone\Marketplace.cs" />
