@@ -18,7 +18,8 @@ namespace MyToolkit.Phone
 
 		public static T GetSetting<T>(string key, T defaultValue)
 		{
-			return IsolatedStorageSettings.ApplicationSettings.Contains(key)
+			return IsolatedStorageSettings.ApplicationSettings.Contains(key) && 
+					IsolatedStorageSettings.ApplicationSettings[key] is T
 				? (T) IsolatedStorageSettings.ApplicationSettings[key]
 				: defaultValue; 
 		}
