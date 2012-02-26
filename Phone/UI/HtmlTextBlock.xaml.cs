@@ -129,45 +129,57 @@ namespace MyToolkit.UI
 						images.Add(new ImageBlock { Image = image, MaxHeight = height, MaxWidth = width });
 						boxes.Add(image);
 					}
-					catch { }
+					catch
+					{
+						if (System.Diagnostics.Debugger.IsAttached)
+							System.Diagnostics.Debugger.Break();
+					}
 				}
 				else
 				{
-					var para = new Paragraph();
-					text = Regex.Replace(text, "<a |</a>|<b>|</b>|<strong>|</strong>|<em>|</em>",
-					s => s.Groups[0].Value[1] != '/' ? "\n" + s : s + "\n");
-
-					foreach (var value in text.Split('\n'))
+					try
 					{
-						text = value.Replace("<br/>", "\n").Replace("<br>", "\n").Replace("<br />", "\n");
-						text = Regex.Replace(text, "<[^>]*>", string.Empty);
-						var markup = value.ToLower();
+						var para = new Paragraph();
+						text = Regex.Replace(text, "<a |</a>|<b>|</b>|<strong>|</strong>|<em>|</em>",
+						s => s.Groups[0].Value[1] != '/' ? "\n" + s : s + "\n");
 
-						if (markup.StartsWith("<b>") || markup.StartsWith("<strong>"))
-							para.Inlines.Add(new Run { Text = text, FontWeight = FontWeights.Bold });
-						else if (markup.StartsWith("<em>"))
-							para.Inlines.Add(new Run { Text = text, FontStyle = FontStyles.Italic });
-						else if (markup.StartsWith("<a"))
+						foreach (var value in text.Split('\n'))
 						{
-							var match = Regex.Match(value, "<a href=\"(.*?)\"(.*?)>(.*?)</a>");
-							var link = match.Groups[1].Value;
-							var label = match.Groups[3].Value;
-							para.Inlines.Add(CreateHyperlink(label, link));
+							text = value.Replace("<br/>", "\n").Replace("<br>", "\n").Replace("<br />", "\n");
+							text = Regex.Replace(text, "<[^>]*>", string.Empty);
+							var markup = value.ToLower();
+
+							if (markup.StartsWith("<b>") || markup.StartsWith("<strong>"))
+								para.Inlines.Add(new Run { Text = text, FontWeight = FontWeights.Bold });
+							else if (markup.StartsWith("<em>"))
+								para.Inlines.Add(new Run { Text = text, FontStyle = FontStyles.Italic });
+							else if (markup.StartsWith("<a"))
+							{
+								var match = Regex.Match(value, "<a href=\"(.*?)\"(.*?)>(.*?)</a>");
+								var link = match.Groups[1].Value;
+								var label = match.Groups[3].Value;
+								para.Inlines.Add(CreateHyperlink(label, link));
+							}
+							else
+								para.Inlines.Add(new Run { Text = text });
 						}
-						else
-							para.Inlines.Add(new Run { Text = text });
+
+						var box = new RichTextBox();
+						box.FontSize = FontSize;
+						box.FontFamily = FontFamily;
+						box.FontStretch = FontStretch;
+						box.FontStyle = FontStyle;
+						box.FontWeight = FontWeight;
+
+						box.Margin = new Thickness(0, 0, 0, i == matches.Count - 1 ? 0 : ParagraphMargin);
+						box.Blocks.Add(para);
+						boxes.Add(box);
 					}
-
-					var box = new RichTextBox();
-					box.FontSize = FontSize;
-					box.FontFamily = FontFamily;
-					box.FontStretch = FontStretch;
-					box.FontStyle = FontStyle;
-					box.FontWeight = FontWeight;
-
-					box.Margin = new Thickness(0, 0, 0, i == matches.Count - 1 ? 0 : ParagraphMargin);
-					box.Blocks.Add(para);
-					boxes.Add(box);
+					catch
+					{
+						if (System.Diagnostics.Debugger.IsAttached)
+							System.Diagnostics.Debugger.Break();
+					}
 				}
 			}
 
