@@ -1,5 +1,6 @@
 ﻿<UserControl x:Class="MyToolkit.UI.HtmlTextBlock"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+	FontFamily="Segoe WP">
     <StackPanel x:Name="LayoutRoot" />
 </UserControl>
