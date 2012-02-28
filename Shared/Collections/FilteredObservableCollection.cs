@@ -12,7 +12,7 @@ namespace MyToolkit.Collections
 		private readonly ObservableCollection<T> originalCollection;
 		private Func<T, bool> where;
 
-		public FilteredObservableCollection(ObservableCollection<T> originalCollection, Func<T, bool> where)
+		public FilteredObservableCollection(ObservableCollection<T> originalCollection, Func<T, bool> where = null)
 		{
 			this.originalCollection = originalCollection;
 			this.where = where;
@@ -41,7 +41,7 @@ namespace MyToolkit.Collections
 
 		private void UpdateList()
 		{
-			var list = originalCollection.Where(where).ToList();
+			var list = where != null ? originalCollection.Where(where).ToList() : originalCollection.ToList();
 			
 			foreach (var item in this.ToArray()) // remove items
 			{
