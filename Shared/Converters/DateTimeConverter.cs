@@ -53,7 +53,10 @@ namespace MyToolkit.Converters
 		public object ConvertBack(object value, string typeName, object parameter, string language)
 #endif
 		{
-			throw new NotSupportedException();
+			var text = value.ToString();
+			if (String.IsNullOrEmpty(text))
+				return null; 
+			return DateTime.Parse(text);
 		}
 	}
 }
