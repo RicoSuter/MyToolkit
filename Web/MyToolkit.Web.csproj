@@ -73,6 +73,9 @@
     <Compile Include="..\Shared\Utilities\IdentityGenerator.cs">
       <Link>Utilities\IdentityGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Utilities\ReflectionExtensions.cs">
+      <Link>Utilities\ReflectionExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Utilities\StreamExtensions.cs">
       <Link>Utilities\StreamExtensions.cs</Link>
     </Compile>
@@ -87,6 +90,7 @@
     </Compile>
     <Compile Include="Behaviors\ApplyDataContractResolverAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
