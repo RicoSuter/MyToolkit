@@ -111,6 +111,9 @@
       <Link>Utilities\Xml.cs</Link>
     </Compile>
     <Compile Include="Collections\ObservableVector.cs" />
+    <Compile Include="Controls\DatePicker.xaml.cs">
+      <DependentUpon>DatePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Network\Http.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,6 +126,12 @@
     <Content Include="Themes\generic.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\DatePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v1.0\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

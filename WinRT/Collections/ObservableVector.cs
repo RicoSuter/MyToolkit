@@ -61,9 +61,7 @@ namespace MyToolkit.Collections
 		protected void OnVectorChanged(CollectionChange collectionChange, uint index)
 		{
 			if (VectorChanged != null)
-			{
 				VectorChanged(this, new VectorChangedEventArgs(collectionChange, index));
-			}
 		}
 
 		public event VectorChangedEventHandler<object> VectorChanged;

@@ -24,7 +24,6 @@ namespace MyToolkit.Controls
 		{
 			get { return (ImageSource)GetValue(ImageProperty); }
 			set { SetValue(ImageProperty, value); }
-
 		}
 
 		public static readonly DependencyProperty PressedImageProperty =
