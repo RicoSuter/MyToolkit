@@ -57,11 +57,8 @@
     <Reference Include="System.Xml.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Shared\Collections\FilteredObservableCollection.cs">
-      <Link>Collections\FilteredObservableCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Collections\OrderedObservableCollection.cs">
-      <Link>Collections\OrderedObservableCollection.cs</Link>
+    <Compile Include="..\Shared\Collections\ExtendedObservableCollection.cs">
+      <Link>Collections\ExtendedObservableCollection.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>

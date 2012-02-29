@@ -1,5 +1,11 @@
-﻿using System.Windows;
+﻿#if METRO
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
+#else
+using System.Windows;
 using System.Windows.Controls;
+#endif
 
 namespace MyToolkit.UI
 {
@@ -29,11 +35,18 @@ namespace MyToolkit.UI
             obj.SetValue(UpdateSourceOnChangeProperty, value);
         }
 
+#if METRO
+        public static readonly DependencyProperty UpdateSourceOnChangeProperty =
+			DependencyProperty.RegisterAttached("UpdateSourceOnChange", "Boolean", "TextBinding",
+                new PropertyMetadata(false, OnUpdateSourceOnChangePropertyChanged));
+#else
         public static readonly DependencyProperty UpdateSourceOnChangeProperty =
             DependencyProperty.RegisterAttached( "UpdateSourceOnChange", typeof(bool), typeof(TextBinding),
                 new PropertyMetadata(false, OnUpdateSourceOnChangePropertyChanged));
+#endif
 
-        private static void OnUpdateSourceOnChangePropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+
+		private static void OnUpdateSourceOnChangePropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue == e.OldValue)
                 return;

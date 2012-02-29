@@ -63,11 +63,8 @@
     <Compile Include="..\Shared\Animation\UIElement.cs">
       <Link>Animation\UIElement.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Collections\FilteredObservableCollection.cs">
-      <Link>Collections\FilteredObservableCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Collections\OrderedObservableCollection.cs">
-      <Link>Collections\OrderedObservableCollection.cs</Link>
+    <Compile Include="..\Shared\Collections\ExtendedObservableCollection.cs">
+      <Link>Collections\ExtendedObservableCollection.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
