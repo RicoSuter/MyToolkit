@@ -20,7 +20,7 @@ namespace MyToolkit.Controls
 		}
 
 		public static readonly DependencyProperty AllowNullProperty =
-			DependencyProperty.Register("AllowNull", "Object", typeof(DatePicker).FullName, new PropertyMetadata(true));
+			DependencyProperty.Register("AllowNull", typeof(bool), typeof(DatePicker), new PropertyMetadata(true));
 
 		public bool AllowNull
 		{
@@ -29,7 +29,7 @@ namespace MyToolkit.Controls
 		}
 
 		public static readonly DependencyProperty SelectedItemProperty =
-			DependencyProperty.Register("SelectedItem", "Object", typeof(DatePicker).FullName, new PropertyMetadata(null, OnSelectedItemChanged));
+			DependencyProperty.Register("SelectedItem", typeof(DateTime), typeof(DatePicker), new PropertyMetadata(null, OnSelectedItemChanged));
 
 		public DateTime? SelectedItem
 		{

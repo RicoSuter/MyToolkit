@@ -71,6 +71,12 @@ namespace MyToolkit.Network
 		
 		public List<Cookie> Cookies { get; private set; }
 
+#if METRO
+        internal void CreateTimeoutTimer()
+        {
+            throw new NotImplementedException();
+        }
+#else
 		private Timer timer; 
 		internal void CreateTimeoutTimer()
 		{
@@ -87,5 +93,6 @@ namespace MyToolkit.Network
 				}, null, Request.Timeout * 1000, Timeout.Infinite);
 			}
 		}
+#endif
 	}
 }

@@ -18,7 +18,7 @@ namespace MyToolkit.Controls
 		}
 
 		public static readonly DependencyProperty ImageProperty =
-			DependencyProperty.Register("Image", typeof(ImageSource).FullName, typeof(ImageButton).FullName, null);
+			DependencyProperty.Register("Image", typeof(ImageSource), typeof(ImageButton), null);
 
 		public ImageSource Image
 		{
@@ -27,7 +27,7 @@ namespace MyToolkit.Controls
 		}
 
 		public static readonly DependencyProperty PressedImageProperty =
-			DependencyProperty.Register("PressedImage", typeof(ImageSource).FullName, typeof(ImageButton).FullName, null);
+			DependencyProperty.Register("PressedImage", typeof(ImageSource), typeof(ImageButton), null);
 
 		public ImageSource PressedImage
 		{

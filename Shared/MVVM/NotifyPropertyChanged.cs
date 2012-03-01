@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 #if METRO
 using Windows.UI.Xaml.Data; 
 using System.Reflection;
+using System.ComponentModel;
 #else
 using System.ComponentModel;
 #endif
@@ -28,7 +29,7 @@ namespace MyToolkit.MVVM
 	}
 
 	[DataContract]
-	public class NotifyPropertyChanged : INotifyPropertyChanged
+    public class NotifyPropertyChanged : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 

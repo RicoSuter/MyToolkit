@@ -25,7 +25,7 @@ namespace MyToolkit.Metro.Network
 				if (result.IsSuccessStatusCode)
 				{
 					//response.Cookies = 
-					response.RawResponse = result.Content.ReadAsByteArray();
+					response.RawResponse = await result.Content.ReadAsByteArrayAsync();
 
 				}
 				else

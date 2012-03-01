@@ -33,9 +33,9 @@ namespace MyToolkit.Converters
 			return null;
 		}
 #else
-		public object Convert(object value, string targetType, object parameter, string language)
+        public object Convert(object value, Type targetType, object parameter, string language)
 		{
-			if (targetType == "Visibility")
+			if (targetType == typeof(Visibility))
 			{
 				var c = new VisibilityConverter();
 				var r = c.Convert(value, targetType, parameter, language);
@@ -43,7 +43,7 @@ namespace MyToolkit.Converters
 						? Visibility.Collapsed : Visibility.Visible;
 			}
 
-			if (targetType == "Boolean")
+			if (targetType == typeof(bool))
 			{
 				if (value == null)
 					return true;
@@ -58,7 +58,7 @@ namespace MyToolkit.Converters
 #if !METRO
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 #else
-		public object ConvertBack(object value, string typeName, object parameter, string language)
+        public object ConvertBack(object value, Type typeName, object parameter, string language)
 #endif
 		{
 			throw new NotSupportedException();

@@ -3,6 +3,7 @@ using System.Diagnostics;
 
 #if METRO
 using Windows.UI.Xaml.Input;
+using System.Windows.Input;
 #else
 using System.Windows.Input;
 #endif
@@ -49,7 +50,7 @@ namespace MyToolkit.MVVM
 		}
 
 #if METRO
-		public event Windows.UI.Xaml.EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged;
 #else
 		public event EventHandler CanExecuteChanged;
 #endif
@@ -92,7 +93,7 @@ namespace MyToolkit.MVVM
 		}
 
 #if METRO
-		public event Windows.UI.Xaml.EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged;
 #else
 		public event EventHandler CanExecuteChanged;
 #endif

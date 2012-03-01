@@ -19,7 +19,7 @@ namespace MyToolkit.Converters
 			return value.GetType().Name == (string)parameter ? Visibility.Visible : Visibility.Collapsed; 
 		}
 #else
-		public object Convert(object value, string typeName, object parameter, string language)
+        public object Convert(object value, Type typeName, object parameter, string language)
 		{
 			return value.GetType().GetTypeInfo().Name == (string)parameter ? Visibility.Visible : Visibility.Collapsed; 
 		}
@@ -28,7 +28,7 @@ namespace MyToolkit.Converters
 #if !METRO
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 #else
-		public object ConvertBack(object value, string typeName, object parameter, string language)
+        public object ConvertBack(object value, Type typeName, object parameter, string language)
 #endif
 		{
 			throw new NotSupportedException();

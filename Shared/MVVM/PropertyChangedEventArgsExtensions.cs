@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 #if METRO
 using System.Reflection;
 using Windows.UI.Xaml.Data;
+using System.ComponentModel;
 #else
 using System.ComponentModel;
 #endif

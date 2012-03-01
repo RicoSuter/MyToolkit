@@ -28,7 +28,7 @@ namespace MyToolkit.Converters
 			}
 		}
 #else
-		public object Convert(object value, string typeName, object parameter, string language)
+		public object Convert(object value, Type typeName, object parameter, string language)
 
 		{
 			if (value == null)
@@ -50,7 +50,7 @@ namespace MyToolkit.Converters
 #if !METRO
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 #else
-		public object ConvertBack(object value, string typeName, object parameter, string language)
+        public object ConvertBack(object value, Type typeName, object parameter, string language)
 #endif
 		{
 			var text = value.ToString();
@@ -58,5 +58,5 @@ namespace MyToolkit.Converters
 				return null; 
 			return DateTime.Parse(text);
 		}
-	}
+    }
 }
