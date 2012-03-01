@@ -29,13 +29,19 @@ namespace MyToolkit.Controls
 		}
 
 		public static readonly DependencyProperty SelectedItemProperty =
-			DependencyProperty.Register("SelectedItem", typeof(DateTime), typeof(DatePicker), new PropertyMetadata(null, OnSelectedItemChanged));
+			DependencyProperty.Register("SelectedItem", typeof(Object), typeof(DatePicker), new PropertyMetadata(null, OnSelectedItemChanged));
 
-		public DateTime? SelectedItem
+        public Object SelectedItem
 		{
-			get { return (DateTime?)GetValue(SelectedItemProperty); }
+            get { return (Object)GetValue(SelectedItemProperty); }
 			set { SetValue(SelectedItemProperty, value); }
 		}
+
+        public DateTime? SelectedDate
+        {
+            get { return (DateTime?)SelectedItem; }
+            set { SelectedItem = value; }
+        }
 
 		public event RoutedEventHandler SelectedItemChanged; 
 
@@ -44,21 +50,23 @@ namespace MyToolkit.Controls
 			var ctrl = (DatePicker)d;
 			if (ctrl.initializing)
 				return;
+
+            ctrl.initializing = true;
 			ctrl.UpdateDate();
-
-
+            ctrl.initializing = false; 
+            
 			if (ctrl.SelectedItemChanged != null)
 				ctrl.SelectedItemChanged(ctrl, new RoutedEventArgs());
 		}
 
 		public void UpdateDate()
 		{
-			if (SelectedItem.HasValue)
+            if (SelectedDate.HasValue)
 			{
-				UpdateValues(SelectedItem.Value.Year, SelectedItem.Value.Month);
-				Day.SelectedIndex = SelectedItem.Value.Day;
-				Month.SelectedIndex = SelectedItem.Value.Month;
-				Year.SelectedIndex = SelectedItem.Value.Year - 2000;
+                UpdateValues(SelectedDate.Value.Year, SelectedDate.Value.Month);
+                Day.SelectedIndex = SelectedDate.Value.Day;
+                Month.SelectedIndex = SelectedDate.Value.Month;
+                Year.SelectedIndex = SelectedDate.Value.Year - 2000;
 			}
 			else
 			{
@@ -73,19 +81,19 @@ namespace MyToolkit.Controls
 		{
 			var days = new List<string>();
 			if (AllowNull)
-				days.Add("");
+				days.Add(" ");
 			for (var i = 1; i <= 31; i++)//(year != 0 && month != 0 ? DateTime.DaysInMonth(year, month) : 31); i++)
 				days.Add(i.ToString());
 
 			var months = new List<string>();
 			if (AllowNull)
-				months.Add("");
+				months.Add(" ");
 			for (var i = 1; i <= 12; i++)
 				months.Add(i.ToString());
 
 			var years = new List<string>();
 			if (AllowNull)
-				years.Add("");
+				years.Add(" ");
 			for (var i = 2000; i <= 2020; i++)
 				years.Add(i.ToString());
 
