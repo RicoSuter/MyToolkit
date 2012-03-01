@@ -64,9 +64,19 @@ namespace MyToolkit.Controls
             if (SelectedDate.HasValue)
 			{
                 UpdateValues(SelectedDate.Value.Year, SelectedDate.Value.Month);
-                Day.SelectedIndex = SelectedDate.Value.Day;
-                Month.SelectedIndex = SelectedDate.Value.Month;
-                Year.SelectedIndex = SelectedDate.Value.Year - 2000;
+
+                if (AllowNull)
+                {
+                    Day.SelectedIndex = SelectedDate.Value.Day;
+                    Month.SelectedIndex = SelectedDate.Value.Month;
+                    Year.SelectedIndex = SelectedDate.Value.Year - 2000 + 1;
+                }
+                else
+                {
+                    Day.SelectedIndex = SelectedDate.Value.Day - 1;
+                    Month.SelectedIndex = SelectedDate.Value.Month - 1;
+                    Year.SelectedIndex = SelectedDate.Value.Year - 2000;
+                }
 			}
 			else
 			{
