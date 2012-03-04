@@ -15,12 +15,14 @@ namespace MyToolkit.Messages
 	{
 		/// <summary>
 		/// Usage: new TextMessage("Test").Send();
+		/// Returns the input message for chaining. 
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="msg"></param>
-		public static void Send<T>(this T msg)
+		public static T Send<T>(this T msg)
 		{
 			Messenger.Send(msg);
+			return msg; 
 		}
 	}
 
