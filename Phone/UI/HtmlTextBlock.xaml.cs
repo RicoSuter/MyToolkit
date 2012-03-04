@@ -86,6 +86,8 @@ namespace MyToolkit.UI
 		private void Generate(string html)
 		{
 			images.Clear();
+			if (html == null)
+				return; 
 
 			html = html.Replace("\n", "").Replace("\r", "").Replace("\t", "").Trim(' ');
 			if (!html.StartsWith("<p>", StringComparison.CurrentCultureIgnoreCase))
