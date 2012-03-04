@@ -126,9 +126,9 @@ namespace MyToolkit.Controls
 			else
 			{
 				if (AllowNull)
-					SelectedItem = new DateTime(Year.SelectedIndex + 2000, Month.SelectedIndex, Day.SelectedIndex);
+					SelectedItem = new DateTime(Year.SelectedIndex + 2000 - 1, Month.SelectedIndex, Day.SelectedIndex);
 				else
-					SelectedItem = new DateTime(Year.SelectedIndex + 2000 + 1, Month.SelectedIndex + 1, Day.SelectedIndex + 1);
+					SelectedItem = new DateTime(Year.SelectedIndex + 2000, Month.SelectedIndex + 1, Day.SelectedIndex + 1);
 			}
 
 			//if (SelectedItem.HasValue)

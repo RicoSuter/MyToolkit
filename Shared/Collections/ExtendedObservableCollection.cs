@@ -8,21 +8,6 @@ using MyToolkit.Utilities;
 
 namespace MyToolkit.Collections
 {
-#if METRO
-	public class ExtendedObservableCollection<T> : ExtendedObservableCollection<T, object>
-	{
-		public ExtendedObservableCollection(ObservableVector<T> originalCollection, Func<T, bool> filter = null)
-			: base (originalCollection, filter) { }
-	}
-
-	public class ExtendedObservableCollection<T, TOrderByKey> : ObservableVector<T>
-	{
-		private readonly ObservableVector<T> originalCollection;
-
-		public ExtendedObservableCollection(ObservableVector<T> originalCollection, Func<T, bool> filter = null,
-			Func<T, TOrderByKey> orderBy = null, bool ascending = true, int limit = 0, bool trackItemChanges = false)
-		{
-#else
 	public class ExtendedObservableCollection<T> : ExtendedObservableCollection<T, object>
 	{
 		public ExtendedObservableCollection(ObservableCollection<T> originalCollection, Func<T, bool> filter = null)
@@ -36,8 +21,6 @@ namespace MyToolkit.Collections
 		public ExtendedObservableCollection(ObservableCollection<T> originalCollection, Func<T, bool> filter = null,
 			Func<T, TOrderByKey> orderBy = null, bool ascending = true, int limit = 0, bool trackItemChanges = false)
 		{
-#endif
-
 			IsTracking = false; 
 			this.originalCollection = originalCollection;
 
@@ -146,15 +129,9 @@ namespace MyToolkit.Collections
 				weakEvent.Target.PropertyChanged -= weakEvent.Event;
 		}
 
-#if METRO
 		private void OnCollectionChanged(WeakEvent<ObservableCollection<T>, ExtendedObservableCollection<T, TOrderByKey>,
 			NotifyCollectionChangedEventHandler> weakEvent, NotifyCollectionChangedEventArgs e)
 		{
-#else
-		private void OnCollectionChanged(WeakEvent<ObservableCollection<T>, ExtendedObservableCollection<T, TOrderByKey>,
-			NotifyCollectionChangedEventHandler> weakEvent, NotifyCollectionChangedEventArgs e)
-		{
-#endif	
 			if (weakEvent.IsAlive)
 			{
 				weakEvent.Reference.UpdateList();
