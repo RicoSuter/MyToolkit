@@ -15,6 +15,6 @@
 
 		<ComboBox x:Name="Day" Grid.Column="0" SelectionChanged="Day_SelectionChanged" Width="70" Margin="0,0,10,0" />
 		<ComboBox x:Name="Month" Grid.Column="1" SelectionChanged="Day_SelectionChanged" Width="70" Margin="0,0,10,0" />
-		<ComboBox x:Name="Year" Grid.Column="2" SelectionChanged="Day_SelectionChanged" Width="120" />
+		<ComboBox x:Name="Year" Grid.Column="2" SelectionChanged="Day_SelectionChanged" Width="100" />
 	</Grid>
 </UserControl>
