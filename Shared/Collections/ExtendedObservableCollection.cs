@@ -205,7 +205,14 @@ namespace MyToolkit.Collections
 				if (!Contains(item))
 				{
 					if (prev == -1)
+					{
+#if METRO
+						try { Insert(0, item); }
+						catch { } // TODO: WinRT hack => solve problem
+#else
 						Insert(0, item);
+#endif
+					}
 					else
 					{
 						var prevItem = list[prev];
