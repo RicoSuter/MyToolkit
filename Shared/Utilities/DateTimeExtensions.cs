@@ -23,5 +23,38 @@ namespace MyToolkit.Utilities
 		{
 			return dt.HasValue ? dt.Value.ToEndOfDay() : (DateTime?)null;
 		}
+
+
+
+
+		public static bool Between(this DateTime dt, DateTime start, DateTime end)
+		{
+			return start <= dt && dt < end; 
+		}
+
+		public static bool Between(this DateTime? dt, DateTime start, DateTime end)
+		{
+			return dt.HasValue ? dt.Value.Between(start, end) : false;
+		}
+
+		public static bool Between(this DateTime dt, DateTime start, DateTime? end)
+		{
+			return start <= dt && (end == null || dt < end.Value);
+		}
+
+		public static bool Between(this DateTime? dt, DateTime start, DateTime? end)
+		{
+			return dt.HasValue ? dt.Value.Between(start, end) : false;
+		}
+
+		public static bool Between(this DateTime dt, DateTime? start, DateTime? end)
+		{
+			return (end == null || start.Value <= dt) && (end == null || dt < end.Value);
+		}
+
+		public static bool Between(this DateTime? dt, DateTime? start, DateTime? end)
+		{
+			return dt.HasValue ? dt.Value.Between(start, end) : false;
+		}
 	}
 }
