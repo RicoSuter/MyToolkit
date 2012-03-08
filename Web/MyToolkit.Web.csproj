@@ -61,6 +61,9 @@
     <Compile Include="..\Shared\Utilities\ColorUtility.cs">
       <Link>Utilities\ColorUtility.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Utilities\DateTimeExtensions.cs">
+      <Link>Utilities\DateTimeExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Utilities\DateTimeUtilities.cs">
       <Link>Utilities\DateTimeUtilities.cs</Link>
     </Compile>
