@@ -215,8 +215,17 @@ namespace MyToolkit.Collections
 					}
 					else
 					{
+#if METRO
+						try
+						{
+							var prevItem = list[prev];
+							Insert(IndexOf(prevItem) + 1, item);
+						}
+						catch { } // TODO: WinRT hack => solve problem
+#else
 						var prevItem = list[prev];
 						Insert(IndexOf(prevItem) + 1, item);
+#endif
 					}
 				}
 				prev++;
