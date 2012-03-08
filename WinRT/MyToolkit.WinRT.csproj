@@ -38,8 +38,14 @@
     <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Converters\EqualityConverter.cs">
+      <Link>Converters\EqualityConverter.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Converters\NotConverter.cs">
       <Link>Converters\NotConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\TimeSpanConverter.cs">
+      <Link>Converters\TimeSpanConverter.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Converters\TruncateConverter.cs">
       <Link>Converters\TruncateConverter.cs</Link>
