@@ -13,6 +13,7 @@ using Ionic.Zlib;
 using System.IO.Compression;
 #if METRO
 using Windows.Storage;
+using System.Threading.Tasks;
 #endif
 #endif
 
@@ -27,9 +28,7 @@ namespace MyToolkit.Network
 {
 	public static class Http
 	{
-		private static readonly List<HttpResponse> pendingRequests = new List<HttpResponse>();
-		//public static IEnumerable<HttpResponse> PendingRequests { get { return pendingRequests; } }
-		
+		private static readonly List<HttpResponse> pendingRequests = new List<HttpResponse>();		
 		public static void AbortAllRequests()
 		{
 			lock (pendingRequests)
@@ -62,6 +61,73 @@ namespace MyToolkit.Network
 			return request;
 		}
 
+		#region WinRT Async
+
+#if METRO
+		public static Task<HttpResponse> GetAsync(string url)
+		{
+			var task = new TaskCompletionSource<HttpResponse>();
+			Get(url, result =>
+			{
+				if (result.Successful)
+					task.SetResult(result);
+				else if (result.Canceled)
+					task.SetCanceled();
+				else
+					task.SetException(result.Exception);
+			});
+			return task.Task;
+		}
+
+		public static Task<HttpResponse> GetAsync(HttpGetRequest request)
+		{
+			var task = new TaskCompletionSource<HttpResponse>();
+			Get(request, result =>
+			{
+				if (result.Successful)
+					task.SetResult(result);
+				else if (result.Canceled)
+					task.SetCanceled();
+				else
+					task.SetException(result.Exception);
+			});
+			return task.Task;
+		}
+
+		public static Task<HttpResponse> PostAsync(string url)
+		{
+			var task = new TaskCompletionSource<HttpResponse>();
+			Post(url, result =>
+			{
+				if (result.Successful)
+					task.SetResult(result);
+				else if (result.Canceled)
+					task.SetCanceled();
+				else
+					task.SetException(result.Exception);
+			});
+			return task.Task;
+		}
+
+		public static Task<HttpResponse> PostAsync(HttpPostRequest request)
+		{
+			var task = new TaskCompletionSource<HttpResponse>();
+			Post(request, result =>
+			{
+				if (result.Successful)
+					task.SetResult(result);
+				else if (result.Canceled)
+					task.SetCanceled();
+				else
+					task.SetException(result.Exception);
+			});
+			return task.Task;
+		}
+#endif
+
+		#endregion
+
+
 		#region GET
 
 #if !METRO
@@ -70,9 +136,9 @@ namespace MyToolkit.Network
 			return Get(new HttpGetRequest(uri), r => dispatcher.BeginInvoke(() => action(r)));
 		}
 
-		public static HttpResponse Get(HttpGetRequest req, Action<HttpResponse> action, Dispatcher dispatcher)
+		public static HttpResponse Get(HttpGetRequest request, Action<HttpResponse> action, Dispatcher dispatcher)
 		{
-			return Get(req, r => dispatcher.BeginInvoke(() => action(r)));
+			return Get(request, r => dispatcher.BeginInvoke(() => action(r)));
 		}
 #endif
 
@@ -256,14 +322,14 @@ namespace MyToolkit.Network
 				if (fileStream == null)
 				{
 					var f = StorageFile.GetFileFromPathAsync(file.Path);
-					var t = f.StartAsTask();
+					var t = f.AsTask();
 					t.RunSynchronously();
 
-					var f2 = f.GetResults().OpenForReadAsync();
-					var t2 = f2.StartAsTask();
+					var f2 = f.GetResults().OpenReadAsync();
+					var t2 = f2.AsTask();
 					t2.RunSynchronously();
 
-					fileStream = f2.GetResults().AsStream();
+					fileStream = f2.GetResults().AsStreamForRead();
 				}
 
 #else
@@ -318,8 +384,13 @@ namespace MyToolkit.Network
 				var origResponse = response;
 
 #if USE_GZIP
+#if METRO
+				if (response.Headers["Content-Encoding"] == "gzip")
+					response = new GZipWebResponse(response); 
+#else
 				if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
 					response = new GZipWebResponse(response); 
+#endif
 #endif
 
 				using (response)
@@ -377,7 +448,6 @@ namespace MyToolkit.Network
 			base.Dispose(disposing);
 		}
 #else
-
 		void IDisposable.Dispose()
 		{
 			Close();
@@ -389,7 +459,7 @@ namespace MyToolkit.Network
 		}
 #endif
 
-#if SILVERLIGHT
+#if SILVERLIGHT || METRO
 		public override long ContentLength
 		{
 			get { throw new NotImplementedException(); }

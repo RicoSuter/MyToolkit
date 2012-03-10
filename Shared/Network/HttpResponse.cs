@@ -74,7 +74,8 @@ namespace MyToolkit.Network
 #if METRO
         internal void CreateTimeoutTimer()
         {
-            throw new NotImplementedException();
+			if (Request.Timeout > 0)
+	            throw new NotImplementedException();
         }
 #else
 		private Timer timer; 
