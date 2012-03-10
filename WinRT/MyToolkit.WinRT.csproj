@@ -77,6 +77,9 @@
     <Compile Include="..\Shared\MVVM\RelayCommand.cs">
       <Link>MVVM\RelayCommand.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Network\Http.cs">
+      <Link>Network\Http.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Network\HttpGetRequest.cs">
       <Link>Network\HttpGetRequest.cs</Link>
     </Compile>
@@ -121,9 +124,9 @@
       <DependentUpon>DatePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ImageButton.cs" />
-    <Compile Include="Network\Http.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\NavigationService.cs" />
+    <Compile Include="Utilities\TaskHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
