@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using System.Reflection;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Core;
+using Windows.UI.Xaml.Navigation;
 
 namespace MyToolkit.Metro.UI
 {
@@ -16,10 +18,15 @@ namespace MyToolkit.Metro.UI
 		public object CurrentPage { get { return Frame.Content; } }
 		public int StackSize { get; private set; }
 
-		public void GoBack()
+		public bool GoBack()
 		{
 			StackSize--;
+
+			if (CallPrepareMethod(delegate { Frame.GoBack(); }))
+				return true; 
+
 			Frame.GoBack();
+			return false; 
 		}
 
 		//public bool CanGoBack { get { return Frame.CanGoBack; } }
@@ -33,57 +40,34 @@ namespace MyToolkit.Metro.UI
 
 		private void OnNavigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
 		{
-			var page = e.Content;
+			//if (e.NavigationMode == NavigationMode.New)
+			//	Frame.Content = Activator.CreateInstance(e.SourcePageType);
+
+			var page = Frame.Content; //e.Content;
 			InjectNavigationService(page);
 
-			if (e.NavigationMode == Windows.UI.Xaml.Navigation.NavigationMode.New)
-			{
-				if (PageCreated != null)
-					PageCreated(sender, page);
+			if (e.NavigationMode == NavigationMode.New)
 				OnPageCreated(sender, page);
-			}
-
-			CallOnNavigatedTo(page, e.Parameter);
 		}
 
-		public event Action<object, object> PageCreated;
 		protected virtual void OnPageCreated(object sender, object page) { }
 
-		public bool Navigate(Type type)
+		public bool Navigate(Type type, object parameter = null)
 		{
-			var lastPage = Frame.Content; 
-			if (lastPage != null)
-				return CallOnNavigatedFrom(lastPage, type);
-			else
-			{
-				NavigateInternal(type);
+			if (CallPrepareMethod(delegate { NavigateInternal(type, parameter); }))
+				return true;
+
+			NavigateInternal(type, parameter);
+			return false;
+		}
+
+		private bool CallPrepareMethod(InvokedHandler handler)
+		{
+			var page = Frame.Content;
+			if (page == null)
 				return false; 
-			}
-		}
 
-		private void NavigateInternal(Type type)
-		{
-			StackSize++;
-			Frame.Navigate(type);
-		}
-
-		private void InjectNavigationService(object page)
-		{
-			var property = page.GetType().GetTypeInfo().GetDeclaredProperty("NavigationService");
-			if (property != null)
-				property.SetValue(page, this);
-		}
-
-		private void CallOnNavigatedTo(object page, object parameter)
-		{
-			var method = page.GetType().GetTypeInfo().GetDeclaredMethod("OnNavigatedTo");
-			if (method != null)
-				method.Invoke(page, method.GetParameters().Length == 1 ? new object[] { parameter } : null);
-		}
-
-		private bool CallOnNavigatedFrom(object page, Type newPage)
-		{
-			var method = page.GetType().GetTypeInfo().GetDeclaredMethod("OnNavigatedFrom");
+			var method = page.GetType().GetTypeInfo().GetDeclaredMethod("OnPrepareNavigatingFrom");
 			if (method != null)
 			{
 				if (method.GetParameters().Count() == 1)
@@ -92,15 +76,27 @@ namespace MyToolkit.Metro.UI
 					{
 						Window.Current.Dispatcher.Invoke(
 							Windows.UI.Core.CoreDispatcherPriority.Normal,
-							delegate { NavigateInternal(newPage); }, page, null);
+							handler, page, null);
 					});
+
 					method.Invoke(page, new object[] { finishedAction });
 					return true; 
 				}
 			}
+			return false; 
+		}
 
-			NavigateInternal(newPage);
-			return false;
+		private void NavigateInternal(Type type, object parameter)
+		{
+			StackSize++;
+			Frame.Navigate(type, parameter);
+		}
+
+		private void InjectNavigationService(object page)
+		{
+			var property = page.GetType().GetTypeInfo().GetDeclaredProperty("NavigationService");
+			if (property != null)
+				property.SetValue(page, this);
 		}
 	}
 }
