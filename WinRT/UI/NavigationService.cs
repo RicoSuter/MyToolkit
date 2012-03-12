@@ -36,9 +36,12 @@ namespace MyToolkit.Metro.UI
 			var page = e.Content;
 			InjectNavigationService(page);
 
-			if (PageCreated != null)
-				PageCreated(sender, page);
-			OnPageCreated(sender, page);
+			if (e.NavigationMode == Windows.UI.Xaml.Navigation.NavigationMode.New)
+			{
+				if (PageCreated != null)
+					PageCreated(sender, page);
+				OnPageCreated(sender, page);
+			}
 
 			CallOnNavigatedTo(page, e.Parameter);
 		}
