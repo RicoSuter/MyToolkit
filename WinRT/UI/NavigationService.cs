@@ -40,6 +40,7 @@ namespace MyToolkit.Metro.UI
 
 		private void OnNavigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
 		{
+			// TODO create new instance if new page of same type
 			//if (e.NavigationMode == NavigationMode.New)
 			//	Frame.Content = Activator.CreateInstance(e.SourcePageType);
 
