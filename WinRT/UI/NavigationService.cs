@@ -11,52 +11,74 @@ namespace MyToolkit.Metro.UI
 {
 	public class NavigationService
 	{
-		public Stack<UserControl> PageStack { get; private set; }
-		public bool CanGoBack { get { return PageStack.Count > 1; } }
+		public Frame Frame { get; private set; }
 
-		public NavigationService()
+		public object CurrentPage { get { return Frame.Content; } }
+		public int StackSize { get; private set; }
+
+		public void GoBack()
 		{
-			PageStack = new Stack<UserControl>();
+			StackSize--;
+			Frame.GoBack();
 		}
 
-		public bool Navigate(UserControl page)
+		//public bool CanGoBack { get { return Frame.CanGoBack; } }
+		public bool CanGoBack { get { return StackSize > 1; } }
+
+		public NavigationService(Frame frame)
 		{
-			// TODO for better performance => create page (GetPage) after CallOnNavigatedFrom() call (performance). Problem: page in lambda not availalbe then
+			Frame = frame;
+			Frame.Navigated += OnNavigated;
+		}
+
+		private void OnNavigated(object sender, Windows.UI.Xaml.Navigation.NavigationEventArgs e)
+		{
+			var page = e.Content;
 			InjectNavigationService(page);
 
-			var lastPage = CurrentPage; 
-			PageStack.Push(page);
+			if (PageCreated != null)
+				PageCreated(sender, page);
+			OnPageCreated(sender, page);
 
+			CallOnNavigatedTo(page, e.Parameter);
+		}
+
+		public event Action<object, object> PageCreated;
+		protected virtual void OnPageCreated(object sender, object page) { }
+
+		public bool Navigate(Type type)
+		{
+			var lastPage = Frame.Content; 
 			if (lastPage != null)
-				return CallOnNavigatedFrom(lastPage, page);
+				return CallOnNavigatedFrom(lastPage, type);
 			else
 			{
-				SetPage(page);
-				CallOnNavigatedTo(page);
+				NavigateInternal(type);
 				return false; 
 			}
 		}
 
-		protected virtual void SetPage(UserControl page)
+		private void NavigateInternal(Type type)
 		{
-			Window.Current.Content = page;
+			StackSize++;
+			Frame.Navigate(type);
 		}
 
-		private void InjectNavigationService(UserControl page)
+		private void InjectNavigationService(object page)
 		{
 			var property = page.GetType().GetTypeInfo().GetDeclaredProperty("NavigationService");
 			if (property != null)
 				property.SetValue(page, this);
 		}
 
-		private void CallOnNavigatedTo(UserControl page)
+		private void CallOnNavigatedTo(object page, object parameter)
 		{
 			var method = page.GetType().GetTypeInfo().GetDeclaredMethod("OnNavigatedTo");
 			if (method != null)
-				method.Invoke(page, null);
+				method.Invoke(page, method.GetParameters().Length == 1 ? new object[] { parameter } : null);
 		}
 
-		private bool CallOnNavigatedFrom(UserControl page, UserControl newPage)
+		private bool CallOnNavigatedFrom(object page, Type newPage)
 		{
 			var method = page.GetType().GetTypeInfo().GetDeclaredMethod("OnNavigatedFrom");
 			if (method != null)
@@ -67,32 +89,15 @@ namespace MyToolkit.Metro.UI
 					{
 						Window.Current.Dispatcher.Invoke(
 							Windows.UI.Core.CoreDispatcherPriority.Normal,
-							delegate
-							{
-								SetPage(newPage);
-								CallOnNavigatedTo(newPage);
-							}, page, null);
+							delegate { NavigateInternal(newPage); }, page, null);
 					});
 					method.Invoke(page, new object[] { finishedAction });
 					return true; 
 				}
 			}
 
-			SetPage(newPage);
-			CallOnNavigatedTo(newPage);
+			NavigateInternal(newPage);
 			return false;
-		}
-
-		public UserControl CurrentPage
-		{
-			get { return PageStack.Count > 0 ? PageStack.Peek() : null; }
-		}
-
-		public void GoBack()
-		{
-			var lastPage = CurrentPage;
-			PageStack.Pop();
-			CallOnNavigatedFrom(lastPage, CurrentPage);
 		}
 	}
 }
