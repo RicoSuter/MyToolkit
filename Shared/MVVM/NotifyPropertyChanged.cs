@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using Windows.UI.Xaml.Data; 
 using System.Reflection;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 #else
 using System.ComponentModel;
 #endif
@@ -19,7 +20,7 @@ namespace MyToolkit.MVVM
 	{
 		public bool SetProperty<T>(Expression<Func<TU, T>> expression, ref T oldValue, T newValue)
 		{
-			return SetProperty(((MemberExpression)expression.Body).Member.Name, ref oldValue, newValue);
+			return SetProperty(ref oldValue, newValue, ((MemberExpression)expression.Body).Member.Name);
 		}
 
 		public void RaisePropertyChanged<T>(Expression<Func<TU, T>> expression)
@@ -35,15 +36,24 @@ namespace MyToolkit.MVVM
 
 		public bool SetProperty<T>(String propertyName, ref T oldValue, T newValue)
 		{
-			if (newValue != null && newValue.Equals(oldValue)) 
+			if (object.Equals(oldValue, newValue))
 				return false;
 
 			oldValue = newValue;
 			RaisePropertyChanged(propertyName);
-			return true; 
+			return true; 			
 		}
 
-		public void RaisePropertyChanged(string propertyName)
+#if METRO
+		public bool SetProperty<T>(ref T oldValue, T newValue, [CallerMemberName] String propertyName = null)
+		{
+			return SetProperty(propertyName, ref oldValue, newValue); 
+		} 
+
+		public void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+#else
+		public void RaisePropertyChanged(string propertyName = null)
+#endif
 		{
 			#if DEBUG
 				#if METRO

@@ -10,7 +10,11 @@ using System.Windows.Input;
 
 namespace MyToolkit.MVVM
 {
+#if METRO
+	public class RelayCommand : NotifyPropertyChanged, ICommand
+#else
 	public class RelayCommand : NotifyPropertyChanged<RelayCommand>, ICommand
+#endif
 	{
 		private readonly Action execute;
 		private readonly Func<bool> canExecute;
@@ -44,16 +48,12 @@ namespace MyToolkit.MVVM
 		
 		public void RaiseCanExecuteChanged()
 		{
-			RaisePropertyChanged(m => m.CanExecute);
+			RaisePropertyChanged("CanExecute");
 			if (CanExecuteChanged != null)
 				CanExecuteChanged(this, new EventArgs());
 		}
 
-#if METRO
-        public event EventHandler CanExecuteChanged;
-#else
 		public event EventHandler CanExecuteChanged;
-#endif
 	}
 
 	public class RelayCommand<T> : ICommand
@@ -92,10 +92,6 @@ namespace MyToolkit.MVVM
 				CanExecuteChanged(this, new EventArgs());
 		}
 
-#if METRO
-        public event EventHandler CanExecuteChanged;
-#else
 		public event EventHandler CanExecuteChanged;
-#endif
 	} 
 }
