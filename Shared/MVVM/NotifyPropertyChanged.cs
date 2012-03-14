@@ -20,7 +20,7 @@ namespace MyToolkit.MVVM
 	{
 		public bool SetProperty<T>(Expression<Func<TU, T>> expression, ref T oldValue, T newValue)
 		{
-			return SetProperty(ref oldValue, newValue, ((MemberExpression)expression.Body).Member.Name);
+			return SetProperty(((MemberExpression)expression.Body).Member.Name, ref oldValue, newValue);
 		}
 
 		public void RaisePropertyChanged<T>(Expression<Func<TU, T>> expression)
