@@ -3,9 +3,9 @@ using System.Collections.ObjectModel;
 using Windows.Foundation.Collections;
 namespace MyToolkit.Collections
 {
-	public class ObservableVector<T> : ObservableCollection<T>
-	{
-	}
+	//public class ObservableVector<T> : ObservableCollection<T>
+	//{
+	//}
 
 
 	//public class ObservableVector<T> : ObservableCollection<T>, IObservableVector<object>
