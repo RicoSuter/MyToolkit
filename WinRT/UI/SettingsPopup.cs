@@ -11,12 +11,12 @@ namespace MyToolkit.UI
 {
 	public static class SettingsPopup
 	{
-		public static void Show(FrameworkElement popupControl)
+		public static void Show(FrameworkElement popupControl, Action closed = null)
 		{
-			Show(popupControl, popupControl.Width);
+			Show(popupControl, popupControl.Width, closed);
 		}
 
-		public static void Show(FrameworkElement popupControl, double width)
+		public static void Show(FrameworkElement popupControl, double width, Action closed = null)
 		{
 			var parent = (FrameworkElement)Window.Current.Content;
 			popupControl.Height = parent.ActualHeight;
@@ -33,7 +33,12 @@ namespace MyToolkit.UI
 			popup.IsLightDismissEnabled = true;
 			popup.Child = popupControl;
 			popup.HorizontalOffset = parent.ActualWidth - width;
-			popup.Closed += delegate { Window.Current.Activated -= del; };
+			popup.Closed += delegate 
+			{ 
+				Window.Current.Activated -= del;
+				if (closed != null)
+					closed();
+			};
 			popup.IsOpen = true;
 		}
 	}
