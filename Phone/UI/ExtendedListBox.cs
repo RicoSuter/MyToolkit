@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
@@ -28,6 +29,15 @@ namespace MyToolkit.UI
 		}
 	}
 
+	public class ScrolledToEndEventArgs :EventArgs
+	{
+		public ScrollViewer ScrollViewer { get; set; }
+		public ScrolledToEndEventArgs(ScrollViewer viewer)
+		{
+			ScrollViewer = viewer;
+		}
+	}
+
 	public class ExtendedListBox : ListBox
 	{
 		public ExtendedListBox()
@@ -45,6 +55,73 @@ namespace MyToolkit.UI
 					</Setter>
 				</Style>");
 		}
+
+		private ScrollViewer scrollViewer;
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+			scrollViewer = (ScrollViewer) GetTemplateChild("ScrollViewer");
+
+			UpdateInnerMargin();
+			RegisterScrollOffset(); 
+		}
+
+		#region scroll to end
+
+		private bool verticalOffsetBindingCreated = false; 
+		public bool TriggerScrolledToEndEvents { get; set; }
+
+		public event EventHandler<ScrolledToEndEventArgs> scrolledToEnd;
+		public event EventHandler<ScrolledToEndEventArgs> ScrolledToEnd
+		{
+			add 
+			{ 
+				scrolledToEnd += value;
+				RegisterScrollOffset();
+			}
+			remove { scrolledToEnd -= value; }
+		}
+
+
+		private static void OnListVerticalOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var ctrl = (ExtendedListBox) d;
+			if (!ctrl.TriggerScrolledToEndEvents || ctrl.scrolledToEnd == null)
+				return;
+
+			var viewer = ctrl.scrollViewer;
+			if (viewer != null)
+			{
+				if (viewer.VerticalOffset >= viewer.ScrollableHeight - viewer.ViewportHeight - viewer.ViewportHeight / 2)
+				{
+					var handler = ctrl.scrolledToEnd;
+					if (handler != null)
+						handler(ctrl, new ScrolledToEndEventArgs(viewer));
+				}
+			}
+		}
+
+		private static readonly DependencyProperty ListVerticalOffsetProperty = DependencyProperty.Register(
+			"ListVerticalOffset", typeof(double), typeof(ExtendedListBox),
+			new PropertyMetadata(OnListVerticalOffsetChanged));
+
+		private void RegisterScrollOffset()
+		{
+			if (scrollViewer == null || verticalOffsetBindingCreated || scrolledToEnd == null)
+				return;
+
+			TriggerScrolledToEndEvents = true;
+
+			var binding = new Binding();
+			binding.Source = scrollViewer;
+			binding.Path = new PropertyPath("VerticalOffset");
+			binding.Mode = BindingMode.OneWay;
+			SetBinding(ListVerticalOffsetProperty, binding);
+		
+			verticalOffsetBindingCreated = true;
+		}
+
+		#endregion
 
 		#region inner margin
 
@@ -66,15 +143,8 @@ namespace MyToolkit.UI
 			box.UpdateInnerMargin();
 		}
 
-		public override void OnApplyTemplate()
-		{
-			base.OnApplyTemplate();
-			UpdateInnerMargin();
-		}
-
 		private void UpdateInnerMargin()
 		{
-			var scrollViewer = (ScrollViewer) GetTemplateChild("ScrollViewer");
 			if (scrollViewer != null)
 			{
 				var itemsPresenter = (ItemsPresenter)scrollViewer.Content;
@@ -176,7 +246,6 @@ namespace MyToolkit.UI
 			if (eventRegistred)
 				return; 
 
-			var scrollViewer = (ScrollViewer)GetTemplateChild("ScrollViewer");
 			if (scrollViewer != null)
 			{
 				var child = scrollViewer.GetVisualChild(0);
@@ -189,24 +258,6 @@ namespace MyToolkit.UI
 				}
 			}
 		}
-
-		//protected override Size ArrangeOverride(Size finalSize)
-		//{
-		//    var size = base.ArrangeOverride(finalSize);
-		//    var scrollViewer = (ScrollViewer) GetTemplateChild("scrollViewer");
-		//    try
-		//    {
-		//        var child = scrollViewer.GetVisualChild(0);
-		//        var group = child.GetVisualStateGroup("ScrollStates");
-		//        if (group != null)
-		//        {
-		//            group.CurrentStateChanging -= ScrollingStateChanging;
-		//            group.CurrentStateChanging += ScrollingStateChanging;
-		//        }
-		//    }
-		//    catch { }
-		//    return size;
-		//}
 
 		#endregion
 	}
