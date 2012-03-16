@@ -122,13 +122,18 @@
     <Compile Include="..\Shared\Utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
+    <Compile Include="Animations\Fading.cs" />
     <Compile Include="Collections\ObservableVector.cs" />
     <Compile Include="Controls\DatePicker.xaml.cs">
       <DependentUpon>DatePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Storage\Settings.cs" />
+    <Compile Include="Controls\ExtendedFrame.cs" />
     <Compile Include="UI\NavigationService.cs" />
+    <Compile Include="UI\SettingsPopup.cs" />
+    <Compile Include="Utilities\TaskHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

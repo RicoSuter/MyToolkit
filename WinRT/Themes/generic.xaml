@@ -47,5 +47,15 @@
         <Setter Property="Padding" Value="0,0,0,0"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     </Style>-->
+
+	<Style TargetType="controls:ExtendedFrame">
+        <Setter Property="Template">
+            <Setter.Value>
+				<ControlTemplate TargetType="controls:ExtendedFrame">
+					<ContentControl x:Name="content" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
+				</ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
   
