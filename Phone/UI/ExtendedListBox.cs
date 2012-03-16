@@ -68,7 +68,8 @@ namespace MyToolkit.UI
 
 		#region scroll to end
 
-		private bool verticalOffsetBindingCreated = false; 
+		// THIS IS A BETA FEATURE!!
+
 		public bool TriggerScrolledToEndEvents { get; set; }
 
 		public event EventHandler<ScrolledToEndEventArgs> scrolledToEnd;
@@ -82,7 +83,7 @@ namespace MyToolkit.UI
 			remove { scrolledToEnd -= value; }
 		}
 
-
+		private double lastViewportHeight = 0; 
 		private static void OnListVerticalOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			var ctrl = (ExtendedListBox) d;
@@ -92,8 +93,10 @@ namespace MyToolkit.UI
 			var viewer = ctrl.scrollViewer;
 			if (viewer != null)
 			{
-				if (viewer.VerticalOffset >= viewer.ScrollableHeight - viewer.ViewportHeight - viewer.ViewportHeight / 2)
+				var triggered = ctrl.lastViewportHeight == viewer.ViewportHeight;
+				if (!triggered && viewer.VerticalOffset >= viewer.ScrollableHeight - viewer.ViewportHeight - viewer.ViewportHeight / 2)
 				{
+					ctrl.lastViewportHeight = viewer.ViewportHeight;
 					var handler = ctrl.scrolledToEnd;
 					if (handler != null)
 						handler(ctrl, new ScrolledToEndEventArgs(viewer));
@@ -105,6 +108,7 @@ namespace MyToolkit.UI
 			"ListVerticalOffset", typeof(double), typeof(ExtendedListBox),
 			new PropertyMetadata(OnListVerticalOffsetChanged));
 
+		private bool verticalOffsetBindingCreated = false;
 		private void RegisterScrollOffset()
 		{
 			if (scrollViewer == null || verticalOffsetBindingCreated || scrolledToEnd == null)
