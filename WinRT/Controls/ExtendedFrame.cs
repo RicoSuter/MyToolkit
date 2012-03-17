@@ -44,15 +44,16 @@ namespace MyToolkit.Controls
 			var page = PageStack.Peek();
 			var args = new NavigationEventArgs(page, null, page.GetType(), null, NavigationMode.Back);
 
+			if (Navigated != null)
+				Navigated(this, args);
+
 			if (page is Page)
 			{
 				var method = typeof(Page).GetTypeInfo().GetDeclaredMethod("OnNavigatedTo");
 				method.Invoke(page, new object[] { args });
 			}
-			contentControl.Content = page;
 
-			if (Navigated != null)
-				Navigated(this, args);
+			contentControl.Content = page;
 		}
 
 		private Type nextType;
@@ -75,14 +76,14 @@ namespace MyToolkit.Controls
 			PageStack.Push(page);
 			contentControl.Content = page;
 
+			if (Navigated != null)
+				Navigated(this, args);
+
 			if (page is Page)
 			{
 				var method = typeof(Page).GetTypeInfo().GetDeclaredMethod("OnNavigatedTo");
 				method.Invoke(page, new object[] { args });
 			}
-
-			if (Navigated != null)
-				Navigated(this, args);
 		}
 	}
 }

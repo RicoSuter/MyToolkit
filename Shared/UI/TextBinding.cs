@@ -35,16 +35,9 @@ namespace MyToolkit.UI
             obj.SetValue(UpdateSourceOnChangeProperty, value);
         }
 
-#if METRO
-        public static readonly DependencyProperty UpdateSourceOnChangeProperty =
-			DependencyProperty.RegisterAttached("UpdateSourceOnChange", "Boolean", "TextBinding",
-                new PropertyMetadata(false, OnUpdateSourceOnChangePropertyChanged));
-#else
         public static readonly DependencyProperty UpdateSourceOnChangeProperty =
             DependencyProperty.RegisterAttached( "UpdateSourceOnChange", typeof(bool), typeof(TextBinding),
                 new PropertyMetadata(false, OnUpdateSourceOnChangePropertyChanged));
-#endif
-
 
 		private static void OnUpdateSourceOnChangePropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
@@ -92,7 +85,7 @@ namespace MyToolkit.UI
             if (dp == null)
                 return;
 
-            var bind = ((FrameworkElement)sender).GetBindingExpression(dp);
+			var bind = ((FrameworkElement)sender).GetBindingExpression(dp);
             if (bind != null)
                 bind.UpdateSource();
         }

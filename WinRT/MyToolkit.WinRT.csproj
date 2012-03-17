@@ -95,6 +95,9 @@
     <Compile Include="..\Shared\Network\HttpResponse.cs">
       <Link>Network\HttpResponse.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\UI\TextBinding.cs">
+      <Link>UI\TextBinding.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Utilities\DateTimeExtensions.cs">
       <Link>Utilities\DateTimeExtensions.cs</Link>
     </Compile>
