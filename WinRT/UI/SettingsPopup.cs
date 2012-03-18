@@ -19,11 +19,6 @@ namespace MyToolkit.UI
 
 		public static void ShowDialog<T>(T control, Action<T> closed = null) where T : FrameworkElement
 		{
-			ShowDialog(control, control.Height, closed);
-		}
-
-		public static void ShowDialog<T>(T control, double height, Action<T> closed = null) where T : FrameworkElement
-		{
 			var parent = (FrameworkElement)Window.Current.Content;
 			control.Width = parent.ActualWidth;
 
@@ -31,7 +26,12 @@ namespace MyToolkit.UI
 			var del = new WindowActivatedEventHandler((sender, e) =>
 			{
 				control.Width = parent.ActualWidth;
-				popup.VerticalOffset = (parent.ActualHeight - height) / 2;
+				popup.VerticalOffset = (parent.ActualHeight - control.ActualHeight) / 2;
+			});
+
+			var del2 = new SizeChangedEventHandler((sender, e) =>
+			{
+				popup.VerticalOffset = (parent.ActualHeight - control.ActualHeight) / 2;
 			});
 
 			Window.Current.Activated += del;
@@ -40,13 +40,18 @@ namespace MyToolkit.UI
 			parent.Opacity = 0.5; 
 			parent.IsHitTestVisible = false;
 
+			control.SizeChanged += del2;
+
 			popup.Child = control;
-			popup.VerticalOffset = (parent.ActualHeight - height) / 2;
+//			popup.VerticalOffset = (parent.control.ActualHeight - control.ActualHeight) / 2;
 			popup.Closed += delegate
 			{
 				parent.Opacity = oldOpacity; 
 				parent.IsHitTestVisible = true;
+
 				Window.Current.Activated -= del;
+				control.SizeChanged -= del2;
+
 				if (closed != null)
 					closed(control);
 			};
