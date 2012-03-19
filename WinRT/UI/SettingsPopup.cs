@@ -35,15 +35,13 @@ namespace MyToolkit.UI
 			});
 
 			Window.Current.Activated += del;
+			control.SizeChanged += del2;
 
 			var oldOpacity = parent.Opacity;
 			parent.Opacity = 0.5; 
 			parent.IsHitTestVisible = false;
 
-			control.SizeChanged += del2;
-
 			popup.Child = control;
-//			popup.VerticalOffset = (parent.control.ActualHeight - control.ActualHeight) / 2;
 			popup.Closed += delegate
 			{
 				parent.Opacity = oldOpacity; 
@@ -60,11 +58,6 @@ namespace MyToolkit.UI
 
 		public static void ShowSettings(FrameworkElement control, Action<FrameworkElement> closed = null)
 		{
-			ShowSettings(control, control.Width, closed);
-		}
-
-		public static void ShowSettings(FrameworkElement control, double width, Action<FrameworkElement> closed = null)
-		{
 			var parent = (FrameworkElement)Window.Current.Content;
 			control.Height = parent.ActualHeight;
 
@@ -74,15 +67,20 @@ namespace MyToolkit.UI
 				if (e.WindowActivationState == CoreWindowActivationState.Deactivated)
 					popup.IsOpen = false;
 			});
+			var del2 = new SizeChangedEventHandler((sender, e) =>
+			{
+				popup.HorizontalOffset = parent.ActualWidth - control.ActualWidth;
+			});
 
 			Window.Current.Activated += del;
+			control.SizeChanged += del2;
 
 			popup.IsLightDismissEnabled = true;
 			popup.Child = control;
-			popup.HorizontalOffset = parent.ActualWidth - width;
 			popup.Closed += delegate 
-			{ 
+			{
 				Window.Current.Activated -= del;
+				control.SizeChanged -= del2;
 				if (closed != null)
 					closed(control);
 			};
