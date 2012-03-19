@@ -2,6 +2,7 @@
 
 namespace MyToolkit.Phone
 {
+	// TODO move to MyToolkit.Storage !
 	public static class Settings
 	{
 		public static void SetSetting<T>(string key, T value, bool save = false)
@@ -24,9 +25,10 @@ namespace MyToolkit.Phone
 				: defaultValue; 
 		}
 
-		public static bool HasSetting(string key)
+		public static bool HasSetting<T>(string key)
 		{
-			return IsolatedStorageSettings.ApplicationSettings.Contains(key);
+			return IsolatedStorageSettings.ApplicationSettings.Contains(key) && 
+				IsolatedStorageSettings.ApplicationSettings[key] is T;
 		}
 	}
 }
