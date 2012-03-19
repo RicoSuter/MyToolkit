@@ -132,7 +132,7 @@
     <Compile Include="Storage\Settings.cs" />
     <Compile Include="Controls\ExtendedFrame.cs" />
     <Compile Include="UI\NavigationService.cs" />
-    <Compile Include="UI\SettingsPopup.cs" />
+    <Compile Include="UI\PopupHelper.cs" />
     <Compile Include="Utilities\TaskHelper.cs" />
   </ItemGroup>
   <ItemGroup>
