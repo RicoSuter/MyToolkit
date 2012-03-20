@@ -128,6 +128,7 @@
       <DependentUpon>DatePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Controls\RolloverButton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\Settings.cs" />
     <Compile Include="Controls\ExtendedFrame.cs" />
