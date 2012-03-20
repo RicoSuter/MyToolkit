@@ -12,11 +12,11 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MyToolkit.Controls
 {
-	public sealed class ExtendedFrame : Control
+	public class PageFrame : Control
 	{
-		public ExtendedFrame()
+		public PageFrame()
 		{
-			DefaultStyleKey = typeof(ExtendedFrame);
+			DefaultStyleKey = typeof(PageFrame);
 			PageStack = new Stack<object>();
 		}
 
@@ -37,7 +37,16 @@ namespace MyToolkit.Controls
 
 		public event NavigatedEventHandler Navigated;
 
-		public void GoBack()
+		public bool GoBack()
+		{
+			if (CallPrepareMethod(() => { GoBackEx(); }))
+				return true; 
+
+			GoBackEx();
+			return false; 
+		}
+
+		private void GoBackEx()
 		{
 			PageStack.Pop();
 
@@ -56,9 +65,17 @@ namespace MyToolkit.Controls
 			contentControl.Content = page;
 		}
 
+		public bool Navigate(Type type, object parameter = null)
+		{
+			if (CallPrepareMethod(() => { NavigateEx(type, parameter); }))
+				return true;
+			NavigateEx(type, parameter);
+			return false;
+		}
+
 		private Type nextType;
 		private object nextParameter; 
-		public void Navigate(Type type, object parameter)
+		private void NavigateEx(Type type, object parameter)
 		{
 			if (contentControl == null)
 			{
@@ -78,12 +95,62 @@ namespace MyToolkit.Controls
 
 			if (Navigated != null)
 				Navigated(this, args);
+			OnNavigated(this, args);
 
 			if (page is Page)
 			{
 				var method = typeof(Page).GetTypeInfo().GetDeclaredMethod("OnNavigatedTo");
 				method.Invoke(page, new object[] { args });
 			}
+		}
+
+		protected virtual void OnPageCreated(object sender, object page) { }
+
+		protected virtual void OnNavigated(object sender, NavigationEventArgs e)
+		{
+			var page = e.Content;
+			InjectPageFrame(page);
+
+			if (e.NavigationMode == NavigationMode.New)
+				OnPageCreated(sender, page);
+		}
+
+		private void InjectPageFrame(object page)
+		{
+			var property = page.GetType().GetTypeInfo().GetDeclaredProperty("PageFrame");
+			if (property != null)
+				property.SetValue(page, this);
+		}
+
+		private bool CallPrepareMethod(Action handler)
+		{
+			var page = Content;
+			if (page == null)
+				return false;
+
+			var method = page.GetType().GetTypeInfo().GetDeclaredMethod("OnPrepareNavigatingFrom");
+			if (method != null && method.GetParameters().Count() == 1)
+			{
+				var called = false; 
+				var finishedAction = new Action(() =>
+				{
+					Window.Current.Dispatcher.Invoke(
+						Windows.UI.Core.CoreDispatcherPriority.Normal,
+						(x, y) => 
+						{
+							if (!called)
+							{
+								handler();
+								called = true;
+							}
+						}, 
+						page, null);
+				});
+
+				method.Invoke(page, new object[] { finishedAction });
+				return true;
+			}
+			return false; 
 		}
 	}
 }

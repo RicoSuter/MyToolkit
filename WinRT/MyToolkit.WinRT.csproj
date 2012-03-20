@@ -129,7 +129,9 @@
     </Compile>
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\RolloverButton.cs" />
+    <Compile Include="MEF\CompositionContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\ResourceDictionary.cs" />
     <Compile Include="Storage\Settings.cs" />
     <Compile Include="Controls\ExtendedFrame.cs" />
     <Compile Include="UI\NavigationService.cs" />
