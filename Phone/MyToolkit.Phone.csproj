@@ -78,6 +78,9 @@
     <Compile Include="..\Shared\Converters\RemoveColorAlphaConverter.cs">
       <Link>Converters\RemoveColorAlphaConverter.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Converters\TimeSpanConverter.cs">
+      <Link>Converters\TimeSpanConverter.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Converters\TruncateConverter.cs">
       <Link>Converters\TruncateConverter.cs</Link>
     </Compile>

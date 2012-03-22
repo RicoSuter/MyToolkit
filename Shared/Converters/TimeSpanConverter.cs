@@ -13,23 +13,9 @@ namespace MyToolkit.Converters
 	{
 #if !METRO
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-		{
-			if (value == null)
-				return "";
-
-			if (parameter == null)
-				parameter = "datetime";
-
-			switch (parameter.ToString().ToLower())
-			{
-				case "date": return ((DateTime)value).ToShortDateString();
-				case "time": return ((DateTime)value).ToShortTimeString();
-				default: return ((DateTime)value).ToShortDateString() + " " + ((DateTime)value).ToShortTimeString();
-			}
-		}
 #else
 		public object Convert(object value, Type typeName, object parameter, string language)
-
+#endif
 		{
 			if (value == null)
 				return "";
@@ -37,7 +23,7 @@ namespace MyToolkit.Converters
 			var span = (TimeSpan)value;
 			return ((int)span.TotalHours).ToString("D2") + ":" + span.Minutes.ToString("D2") + " h";
 		}
-#endif
+
 
 #if !METRO
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
