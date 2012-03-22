@@ -27,12 +27,19 @@ namespace MyToolkit.MVVM
 		{
 			RaisePropertyChanged(((MemberExpression)expression.Body).Member.Name); 
 		}
+
+		public void SetDependency<T, U>(Expression<Func<TU, T>> propertyName, Expression<Func<TU, U>> dependentPropertyName)
+		{
+			SetDependency(((MemberExpression)propertyName.Body).Member.Name, 
+				((MemberExpression)dependentPropertyName.Body).Member.Name);
+		}
 	}
 
 	[DataContract]
     public class NotifyPropertyChanged : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
+		private List<Tuple<string, string>> dependencies; 
 
 		public bool SetProperty<T>(String propertyName, ref T oldValue, T newValue)
 		{
@@ -42,6 +49,17 @@ namespace MyToolkit.MVVM
 			oldValue = newValue;
 			RaisePropertyChanged(propertyName);
 			return true; 			
+		}
+
+		public void SetDependency(string propertyName, string dependentPropertyName)
+		{
+			if (dependencies == null)
+				dependencies = new List<Tuple<string, string>>();
+
+			if (dependencies.Any(d => d.Item1 == propertyName && d.Item2 == dependentPropertyName))
+				return;
+
+			dependencies.Add(new Tuple<string,string>(propertyName, dependentPropertyName));
 		}
 
 #if METRO
@@ -69,6 +87,12 @@ namespace MyToolkit.MVVM
 			var copy = PropertyChanged; // avoid concurrent changes
 			if (copy != null)
 				copy(this, new PropertyChangedEventArgs(propertyName));
+
+			if (dependencies != null)
+			{
+				foreach (var d in dependencies.Where(d => d.Item1 == propertyName))
+					RaisePropertyChanged(d.Item2);
+			}
 		}
 	}
 }

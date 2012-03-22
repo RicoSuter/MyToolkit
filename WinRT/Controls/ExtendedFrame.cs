@@ -36,9 +36,14 @@ namespace MyToolkit.Controls
 		public Stack<object> PageStack { get; private set; }
 
 		public event NavigatedEventHandler Navigated;
+		public bool IsNavigating { get; private set; }
 
 		public bool GoBack()
 		{
+			if (IsNavigating)
+				return false;
+			IsNavigating = true;
+
 			if (CallPrepareMethod(() => { GoBackEx(); }))
 				return true; 
 
@@ -53,6 +58,9 @@ namespace MyToolkit.Controls
 			var page = PageStack.Peek();
 			var args = new NavigationEventArgs(page, null, page.GetType(), null, NavigationMode.Back);
 
+			contentControl.Content = page;
+			IsNavigating = false; 
+
 			if (Navigated != null)
 				Navigated(this, args);
 
@@ -61,12 +69,14 @@ namespace MyToolkit.Controls
 				var method = typeof(Page).GetTypeInfo().GetDeclaredMethod("OnNavigatedTo");
 				method.Invoke(page, new object[] { args });
 			}
-
-			contentControl.Content = page;
 		}
 
 		public bool Navigate(Type type, object parameter = null)
 		{
+			if (IsNavigating)
+				return false; 
+			IsNavigating = true;
+
 			if (CallPrepareMethod(() => { NavigateEx(type, parameter); }))
 				return true;
 			NavigateEx(type, parameter);
@@ -84,6 +94,7 @@ namespace MyToolkit.Controls
 
 				nextType = type;
 				nextParameter = parameter;
+				IsNavigating = false; 
 				return; 
 			}
 
@@ -92,6 +103,8 @@ namespace MyToolkit.Controls
 		
 			PageStack.Push(page);
 			contentControl.Content = page;
+
+			IsNavigating = false;
 
 			if (Navigated != null)
 				Navigated(this, args);
