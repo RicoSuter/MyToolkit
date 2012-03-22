@@ -39,7 +39,7 @@ namespace MyToolkit.MVVM
     public class NotifyPropertyChanged : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
-		private List<Tuple<string, string>> dependencies; 
+		private List<KeyValuePair<string, string>> dependencies; 
 
 		public bool SetProperty<T>(String propertyName, ref T oldValue, T newValue)
 		{
@@ -54,12 +54,12 @@ namespace MyToolkit.MVVM
 		public void SetDependency(string propertyName, string dependentPropertyName)
 		{
 			if (dependencies == null)
-				dependencies = new List<Tuple<string, string>>();
+				dependencies = new List<KeyValuePair<string, string>>();
 
-			if (dependencies.Any(d => d.Item1 == propertyName && d.Item2 == dependentPropertyName))
+			if (dependencies.Any(d => d.Key == propertyName && d.Value == dependentPropertyName))
 				return;
 
-			dependencies.Add(new Tuple<string,string>(propertyName, dependentPropertyName));
+			dependencies.Add(new KeyValuePair<string, string>(propertyName, dependentPropertyName));
 		}
 
 #if METRO
@@ -90,8 +90,8 @@ namespace MyToolkit.MVVM
 
 			if (dependencies != null)
 			{
-				foreach (var d in dependencies.Where(d => d.Item1 == propertyName))
-					RaisePropertyChanged(d.Item2);
+				foreach (var d in dependencies.Where(d => d.Key == propertyName))
+					RaisePropertyChanged(d.Value);
 			}
 		}
 	}
