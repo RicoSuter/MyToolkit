@@ -86,5 +86,37 @@ namespace MyToolkit.UI
 			};
 			popup.IsOpen = true;
 		}
+
+		public static void ShowPane(FrameworkElement control, bool left = true, Action<FrameworkElement> closed = null)
+		{
+			var parent = (FrameworkElement)Window.Current.Content;
+			control.Height = parent.ActualHeight;
+
+			var popup = new Popup();
+			var del = new WindowActivatedEventHandler((sender, e) =>
+			{
+				if (e.WindowActivationState == CoreWindowActivationState.Deactivated)
+					popup.IsOpen = false;
+			});
+			var del2 = new SizeChangedEventHandler((sender, e) =>
+			{
+				if (!left)
+					popup.HorizontalOffset = parent.ActualWidth - control.ActualWidth;
+			});
+
+			Window.Current.Activated += del;
+			control.SizeChanged += del2;
+
+			popup.IsLightDismissEnabled = true;
+			popup.Child = control;
+			popup.Closed += delegate
+			{
+				Window.Current.Activated -= del;
+				control.SizeChanged -= del2;
+				if (closed != null)
+					closed(control);
+			};
+			popup.IsOpen = true;
+		}
 	}
 }
