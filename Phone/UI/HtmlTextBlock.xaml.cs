@@ -14,8 +14,24 @@ namespace MyToolkit.UI
 	public class ImageBlock
 	{
 		public Image Image { get; set; }
-		public int MaxWidth { get; set; }
-		public int MaxHeight { get; set; }
+		public int UserWidth { get; set; }
+		public int UserHeight { get; set; }
+		public BitmapImage Source { get; set; }
+
+		public void Update(double actualWidth)
+		{
+			if (Source.PixelWidth > 0 && actualWidth > 24)
+			{
+				var width = (int)actualWidth - 24;
+				if (Source.PixelWidth < width)
+					width = Source.PixelWidth;
+				if (UserWidth < width && UserWidth != 0)
+					width = UserWidth;
+
+				Image.Width = width;
+				Image.Height = Source.PixelHeight * width / Source.PixelWidth;
+			}
+		}
 	}
 
 	public partial class HtmlTextBlock : UserControl
@@ -63,31 +79,13 @@ namespace MyToolkit.UI
 		private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
 		{
 			foreach (var img in images)
-			{
-				var width = img.MaxWidth;
-				var height = img.MaxHeight;
-
-				var maxWidth = (int)ActualWidth - 24;
-				if (width == 0)
-					width = maxWidth;
-				if (width > maxWidth)
-				{
-					width = maxWidth;
-					height = height * (width / maxWidth);
-				}
-
-				img.Image.Width = width;
-				if (height > 0)
-					img.Image.Height = height;
-			}
+				img.Update(ActualWidth);
 		}
 
 		private readonly List<ImageBlock> images = new List<ImageBlock>(); 
 		private void Generate(string html)
 		{
 			images.Clear();
-			if (html == null)
-				return; 
 
 			html = html.Replace("\n", "").Replace("\r", "").Replace("\t", "").Trim(' ');
 			if (!html.StartsWith("<p>", StringComparison.CurrentCultureIgnoreCase))
@@ -128,7 +126,19 @@ namespace MyToolkit.UI
 						image.Source = imgSource;
 						image.Margin = new Thickness(12, -ParagraphMargin, 12, 0);
 
-						images.Add(new ImageBlock { Image = image, MaxHeight = height, MaxWidth = width });
+						if (width > 0)
+							image.Width = width;
+						if (height > 0)
+							image.Height = height;
+
+						var block = new ImageBlock {Image = image, UserHeight = height, UserWidth = width, Source = imgSource};
+						imgSource.ImageOpened += delegate
+						                         	{
+														var actualWidth = ActualWidth;
+						                         		block.Update(actualWidth);
+						                         	};
+
+						images.Add(block);
 						boxes.Add(image);
 					}
 					catch
