@@ -21,7 +21,11 @@ namespace MyToolkit.Converters
 				return "";
 
 			var span = (TimeSpan)value;
-			return ((int)span.TotalHours).ToString("D2") + ":" + span.Minutes.ToString("D2") + " h";
+			var param = parameter != null ? parameter.ToString().ToLower() : null;
+			if (param == "days")
+				return Math.Round(span.TotalDays, 2).ToString();
+			else
+				return ((int)span.TotalHours).ToString("D2") + ":" + span.Minutes.ToString("D2");
 		}
 
 

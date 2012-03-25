@@ -87,6 +87,9 @@ namespace MyToolkit.UI
 		{
 			images.Clear();
 
+			if (html == null)
+				html = "";
+
 			html = html.Replace("\n", "").Replace("\r", "").Replace("\t", "").Trim(' ');
 			if (!html.StartsWith("<p>", StringComparison.CurrentCultureIgnoreCase))
 				html = "<p>" + html;
