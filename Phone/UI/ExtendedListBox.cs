@@ -12,6 +12,7 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Microsoft.Phone.Controls;
 using MyToolkit.UI.UIExtensionMethods;
 
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
@@ -63,8 +64,48 @@ namespace MyToolkit.UI
 			scrollViewer = (ScrollViewer) GetTemplateChild("ScrollViewer");
 
 			UpdateInnerMargin();
-			RegisterScrollOffset(); 
+			RegisterScrollOffset();
+			RegisterScrollFix();
 		}
+
+		#region scroll jumping fix
+
+		public static readonly DependencyProperty UseScrollFixProperty =
+			DependencyProperty.Register("UseScrollFix", typeof(bool), typeof(ExtendedListBox), new PropertyMetadata(true, OnUseScrollFixPropertyChanged));
+
+		private static void OnUseScrollFixPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var ctrl = (ExtendedListBox) d;
+			if (ctrl.UseScrollFix)
+				ctrl.RegisterScrollFix();
+			else
+				ctrl.UnregisterScrollFix();
+		}
+
+		public bool UseScrollFix
+		{
+			get { return (bool) GetValue(UseScrollFixProperty); }
+			set { SetValue(UseScrollFixProperty, value); }
+		}
+
+		private void RegisterScrollFix()
+		{
+			GotFocus -= OnGotFocus;
+			GotFocus += OnGotFocus;
+		}
+
+		private void UnregisterScrollFix()
+		{
+			GotFocus -= OnGotFocus;
+		}
+
+		private void OnGotFocus(object sender, RoutedEventArgs e)
+		{
+			var page = (PhoneApplicationPage)((PhoneApplicationFrame)Application.Current.RootVisual).Content;
+			page.Focus();
+		}
+
+		#endregion
 
 		#region scroll to end
 
