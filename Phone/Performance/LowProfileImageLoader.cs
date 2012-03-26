@@ -12,6 +12,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using MyToolkit.Network;
 
 // http://blogs.msdn.com/b/delay/archive/2010/09/02/keep-a-low-profile-lowprofileimageloader-helps-the-windows-phone-7-ui-thread-stay-responsive-by-loading-images-in-the-background.aspx
 // Changes: added IsSuspended property to suspend all pending downloads (e.g while scrolling, etc), by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
@@ -61,11 +62,49 @@ namespace MyToolkit.Performance
             obj.SetValue(UriSourceProperty, value);
         }
 
-        /// <summary>
-        /// Identifies the UriSource attached DependencyProperty.
-        /// </summary>
-        public static readonly DependencyProperty UriSourceProperty = DependencyProperty.RegisterAttached(
-            "UriSource", typeof(Uri), typeof(LowProfileImageLoader), new PropertyMetadata(OnUriSourceChanged));
+		/// <summary>
+		/// Identifies the UriSource attached DependencyProperty.
+		/// </summary>
+		public static readonly DependencyProperty UriSourceProperty = DependencyProperty.RegisterAttached(
+			"UriSource", typeof(Uri), typeof(LowProfileImageLoader), new PropertyMetadata(OnUriSourceChanged));
+
+
+		/// <summary>
+		/// Gets the value of the Uri to use for providing the contents of the Image's Source property.
+		/// </summary>
+		/// <param name="obj">Image needing its Source property set.</param>
+		/// <returns>Uri to use for providing the contents of the Source property.</returns>
+		[SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Location is applicable only to Image elements.")]
+		public static HttpLocation GetLocation(Image obj)
+		{
+			if (null == obj)
+			{
+				throw new ArgumentNullException("obj");
+			}
+			return (HttpLocation)obj.GetValue(HttpLocationProperty);
+		}
+
+		/// <summary>
+		/// Sets the value of the Uri to use for providing the contents of the Image's Source property.
+		/// </summary>
+		/// <param name="obj">Image needing its Source property set.</param>
+		/// <param name="value">Uri to use for providing the contents of the Source property.</param>
+		[SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Location is applicable only to Image elements.")]
+		public static void SetLocation(Image obj, HttpLocation value)
+		{
+			if (null == obj)
+			{
+				throw new ArgumentNullException("obj");
+			}
+			obj.SetValue(HttpLocationProperty, value);
+		}
+
+		/// <summary>
+		/// Identifies the UriSource attached DependencyProperty.
+		/// </summary>
+		public static readonly DependencyProperty HttpLocationProperty = DependencyProperty.RegisterAttached(
+			"Location", typeof(HttpLocation), typeof(LowProfileImageLoader), new PropertyMetadata(OnLocationChanged));
+
 
         /// <summary>
         /// Gets or sets a value indicating whether low-profile image loading is enabled.
@@ -178,27 +217,29 @@ namespace MyToolkit.Performance
                     pendingRequests.RemoveAt(count - 1);
                     count--;
 
-					if (pendingRequest.Uri == null) // hack by rsuter
+					if (pendingRequest.Location == null || pendingRequest.Location.Uri == null) // hack by rsuter
 						continue;
 
-                    if (pendingRequest.Uri.IsAbsoluteUri)
+					if (pendingRequest.Location.Uri.IsAbsoluteUri)
                     {
                         // Download from network
-                        var webRequest = HttpWebRequest.CreateHttp(pendingRequest.Uri);
+                        var webRequest = HttpWebRequest.CreateHttp(pendingRequest.Location.Uri);
+						if (pendingRequest.Location.Credentials != null)
+							webRequest.Credentials = pendingRequest.Location.Credentials;
                         webRequest.AllowReadStreamBuffering = true; // Don't want to block this thread or the UI thread on network access
-                        webRequest.BeginGetResponse(HandleGetResponseResult, new ResponseState(webRequest, pendingRequest.Image, pendingRequest.Uri));
+                        webRequest.BeginGetResponse(HandleGetResponseResult, new ResponseState(webRequest, pendingRequest.Image, pendingRequest.Location));
                     }
                     else
                     {
                         // Load from application (must have "Build Action"="Content")
-                        var originalUriString = pendingRequest.Uri.OriginalString;
+						var originalUriString = pendingRequest.Location.Uri.OriginalString;
                         // Trim leading '/' to avoid problems
-                        var resourceStreamUri = originalUriString.StartsWith("/", StringComparison.Ordinal) ? new Uri(originalUriString.TrimStart('/'), UriKind.Relative) : pendingRequest.Uri;
+                        var resourceStreamUri = originalUriString.StartsWith("/", StringComparison.Ordinal) ? new Uri(originalUriString.TrimStart('/'), UriKind.Relative) : pendingRequest.Location.Uri;
                         // Enqueue resource stream for completion
                         var streamResourceInfo = Application.GetResourceStream(resourceStreamUri);
                         if (null != streamResourceInfo)
                         {
-                            pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Uri, streamResourceInfo.Stream));
+                            pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Location, streamResourceInfo.Stream));
                         }
                     }
                     // Yield to UI thread
@@ -212,7 +253,7 @@ namespace MyToolkit.Performance
                     try
                     {
                         var response = responseState.WebRequest.EndGetResponse(pendingResponse);
-                        pendingCompletions.Enqueue(new PendingCompletion(responseState.Image, responseState.Uri, response.GetResponseStream()));
+                        pendingCompletions.Enqueue(new PendingCompletion(responseState.Image, responseState.Location, response.GetResponseStream()));
                     }
                     catch (WebException)
                     {
@@ -231,7 +272,8 @@ namespace MyToolkit.Performance
                         {
                             // Decode the image and set the source
                             var pendingCompletion = pendingCompletions.Dequeue();
-                            if (GetUriSource(pendingCompletion.Image) == pendingCompletion.Uri)
+                            if (GetLocation(pendingCompletion.Image) == pendingCompletion.Location || 
+								GetUriSource(pendingCompletion.Image) == pendingCompletion.Location.Uri)
                             {
                                 var bitmap = new BitmapImage();
                                 try
@@ -256,6 +298,29 @@ namespace MyToolkit.Performance
             }
         }
 
+		private static void OnLocationChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+		{
+			var image = (Image)o;
+			var location = (HttpLocation)e.NewValue;
+
+			if (!IsEnabled || DesignerProperties.IsInDesignTool)
+			{
+				// Avoid handing off to the worker thread (can cause problems for design tools)
+				image.Source = new BitmapImage(location.Uri);
+			}
+			else
+			{
+				// Clear-out the current image because it's now stale (helps when used with virtualization)
+				image.Source = null;
+				lock (_syncBlock)
+				{
+					// Enqueue the request
+					_pendingRequests.Enqueue(new PendingRequest(image, location));
+					Monitor.Pulse(_syncBlock);
+				}
+			}
+		}
+
         private static void OnUriSourceChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             var image = (Image)o;
@@ -273,7 +338,7 @@ namespace MyToolkit.Performance
                 lock (_syncBlock)
                 {
                     // Enqueue the request
-                    _pendingRequests.Enqueue(new PendingRequest(image, uri));
+                    _pendingRequests.Enqueue(new PendingRequest(image, new HttpLocation(uri)));
                     Monitor.Pulse(_syncBlock);
                 }
             }
@@ -292,11 +357,12 @@ namespace MyToolkit.Performance
         private class PendingRequest
         {
             public Image Image { get; private set; }
-            public Uri Uri { get; private set; }
-            public PendingRequest(Image image, Uri uri)
+			public HttpLocation Location { get; private set; }
+
+			public PendingRequest(Image image, HttpLocation location)
             {
                 Image = image;
-                Uri = uri;
+				Location = location;
             }
         }
 
@@ -304,24 +370,24 @@ namespace MyToolkit.Performance
         {
             public WebRequest WebRequest { get; private set; }
             public Image Image { get; private set; }
-            public Uri Uri { get; private set; }
-            public ResponseState(WebRequest webRequest, Image image, Uri uri)
+            public HttpLocation Location { get; private set; }
+            public ResponseState(WebRequest webRequest, Image image, HttpLocation location)
             {
                 WebRequest = webRequest;
                 Image = image;
-                Uri = uri;
+                Location = location;
             }
         }
 
         private class PendingCompletion
         {
             public Image Image { get; private set; }
-            public Uri Uri { get; private set; }
+			public HttpLocation Location { get; private set; }
             public Stream Stream { get; private set; }
-            public PendingCompletion(Image image, Uri uri, Stream stream)
+            public PendingCompletion(Image image, HttpLocation location, Stream stream)
             {
                 Image = image;
-                Uri = uri;
+				Location = location;
                 Stream = stream;
             }
         }

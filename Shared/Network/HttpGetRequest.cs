@@ -11,6 +11,11 @@ namespace MyToolkit.Network
 		Encoding Encoding { get; }
 		object Tag { get; }
 		int Timeout { get; }
+
+		/// <summary>
+		/// Important: Always close stream after usage! If true, Response and RawResponse will be null in response object
+		/// </summary>
+		bool ResponseAsStream { get; }
 	}
 
 	public class HttpGetRequest : IHttpRequest
@@ -35,6 +40,7 @@ namespace MyToolkit.Network
 			UseCache = true;
 			Encoding = Encoding.UTF8;
 			Timeout = 0;
+			ResponseAsStream = false; 
 
 			#if USE_GZIP
 			RequestGZIP = true; 
@@ -45,6 +51,8 @@ namespace MyToolkit.Network
 		/// In seconds. If 0 then use default timeout (better)
 		/// </summary>
 		public int Timeout { get; set; }
+
+		public bool ResponseAsStream { get; set; }
 
 		public Uri Uri { get; private set; }
 		public Dictionary<string, string> Query { get; private set; }

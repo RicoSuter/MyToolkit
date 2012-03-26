@@ -26,6 +26,31 @@ using System.IO.IsolatedStorage;
 
 namespace MyToolkit.Network
 {
+	public class HttpLocation
+	{
+		public HttpLocation() { }
+		public HttpLocation(Uri uri) 
+			:this (uri, null, null) { }
+		public HttpLocation(string uri, string username, string password)
+			: this(new Uri(uri), username, password) { }
+
+		public HttpLocation(Uri uri, string username, string password)
+		{
+			Uri = uri;
+			UserName = username;
+			Password = password;
+		}
+
+		public Uri Uri { get; set; }
+		public string UserName { get; set; }
+		public string Password { get; set; }
+
+		public ICredentials Credentials
+		{
+			get { return UserName == null ? null : new NetworkCredential(UserName, Password); }
+		}
+	}
+
 	public static class Http
 	{
 		private static readonly List<HttpResponse> pendingRequests = new List<HttpResponse>();		
@@ -395,7 +420,11 @@ namespace MyToolkit.Network
 
 				using (response)
 				{
-					resp.RawResponse = response.GetResponseStream().ReadToEnd();
+					if (resp.Request.ResponseAsStream)
+						resp.ResponseStream = response.GetResponseStream();
+					else
+						resp.RawResponse = response.GetResponseStream().ReadToEnd();
+
 					if (origResponse.Headers.AllKeys.Contains("Set-Cookie"))
 					{
 						var cookies = origResponse.Headers["Set-Cookie"];
@@ -412,6 +441,12 @@ namespace MyToolkit.Network
 			}
 			catch (Exception e)
 			{
+				if (resp.ResponseStream != null)
+				{
+					resp.ResponseStream.Close();
+					resp.ResponseStream = null;
+				}
+
 				resp.Exception = e; 
 				if (action != null)
 					action(resp);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Threading;
 
@@ -60,14 +61,15 @@ namespace MyToolkit.Network
 		public bool Processed { get { return Canceled || Successful || HasException; } }
 
 		public bool Canceled { get; private set; }
-		public bool Successful { get { return !Canceled && Exception == null && Response != null; } }
+		public bool Successful { get { return !Canceled && Exception == null && (Response != null || ResponseStream != null); } }
 		public bool HasException { get { return Exception != null; } }
 
 		/// <summary>
 		/// If Response is null and Exception is null as well the request has been canceled
 		/// </summary>
 		public string Response { get { return RawResponse == null ? null : Request.Encoding.GetString(RawResponse, 0, RawResponse.Length); } }
-		public byte[] RawResponse { get; set; }
+		public byte[] RawResponse { get; internal set; }
+		public Stream ResponseStream { get; internal set; }
 		
 		public List<Cookie> Cookies { get; private set; }
 
