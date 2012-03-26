@@ -14,7 +14,6 @@ namespace MyToolkit.Phone
 {
 	public static class Marketplace
 	{
-		private static bool? isTrial; 
 		public static bool IsTrial
 		{
 			get
@@ -22,12 +21,8 @@ namespace MyToolkit.Phone
 				#if DEBUG
 				return true;
 				#else
-				if (!isTrial.HasValue)
-				{
-					var license = new LicenseInformation(); 
-					isTrial = license.IsTrial();
-				}
-				return isTrial.Value; 
+				var license = new LicenseInformation();
+				return license.IsTrial();
 				#endif
 			}
 		}
