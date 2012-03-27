@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MyToolkit.Utilities
 {
 	public static class EnumerableExtensions
 	{
+		public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
+		{
+			var rand = new Random((int)DateTime.Now.Ticks);
+			return source.Select(t => new KeyValuePair<int, T>(rand.Next(), t)).
+				OrderBy(pair => pair.Key).Select(pair => pair.Value).ToList();
+		}
+
 		public static T MinObject<T, U>(this IEnumerable<T> list, Func<T, U> selector)
 			where T : class
 			where U : IComparable
