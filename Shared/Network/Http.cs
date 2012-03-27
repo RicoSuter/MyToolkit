@@ -28,19 +28,12 @@ namespace MyToolkit.Network
 {
 	public class AuthenticatedUri : Uri
 	{
-<<<<<<< .mine
 		public AuthenticatedUri(string uriString, string username, string password)
 			: base(uriString)
 		{
 			UserName = username;
 			Password = password;
 		}
-=======
-		public HttpLocation(Uri uri) 
-			:this (uri, null, null) { }
-		public HttpLocation(string uri, string username, string password)
-			: this(new Uri(uri), username, password) { }
->>>>>>> .r15931
 
 		public AuthenticatedUri(string uriString, UriKind uriKind, string username, string password)
 			: base(uriString, uriKind)
@@ -464,7 +457,7 @@ namespace MyToolkit.Network
 			{
 				if (resp.ResponseStream != null)
 				{
-					resp.ResponseStream.Close();
+					resp.ResponseStream.Dispose();
 					resp.ResponseStream = null;
 				}
 
