@@ -26,21 +26,43 @@ using System.IO.IsolatedStorage;
 
 namespace MyToolkit.Network
 {
-	public class HttpLocation
+	public class AuthenticatedUri : Uri
 	{
+<<<<<<< .mine
+		public AuthenticatedUri(string uriString, string username, string password)
+			: base(uriString)
+		{
+			UserName = username;
+			Password = password;
+		}
+=======
 		public HttpLocation(Uri uri) 
 			:this (uri, null, null) { }
 		public HttpLocation(string uri, string username, string password)
 			: this(new Uri(uri), username, password) { }
+>>>>>>> .r15931
 
-		public HttpLocation(Uri uri, string username, string password)
+		public AuthenticatedUri(string uriString, UriKind uriKind, string username, string password)
+			: base(uriString, uriKind)
 		{
-			Uri = uri;
 			UserName = username;
 			Password = password;
 		}
 
-		public Uri Uri { get; set; }
+		public AuthenticatedUri(Uri baseUri, string relativeUri, string username, string password)
+			: base(baseUri, relativeUri)
+		{
+			UserName = username;
+			Password = password;
+		}
+
+		public AuthenticatedUri(Uri baseUri, Uri relativeUri, string username, string password)
+			: base(baseUri, relativeUri)
+		{
+			UserName = username;
+			Password = password;
+		}
+
 		public string UserName { get; set; }
 		public string Password { get; set; }
 
