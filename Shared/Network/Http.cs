@@ -28,7 +28,6 @@ namespace MyToolkit.Network
 {
 	public class HttpLocation
 	{
-		public HttpLocation() { }
 		public HttpLocation(Uri uri) 
 			:this (uri, null, null) { }
 		public HttpLocation(string uri, string username, string password)
