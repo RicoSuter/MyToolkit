@@ -62,49 +62,11 @@ namespace MyToolkit.Performance
             obj.SetValue(UriSourceProperty, value);
         }
 
-		/// <summary>
-		/// Identifies the UriSource attached DependencyProperty.
-		/// </summary>
-		public static readonly DependencyProperty UriSourceProperty = DependencyProperty.RegisterAttached(
-			"UriSource", typeof(Uri), typeof(LowProfileImageLoader), new PropertyMetadata(OnUriSourceChanged));
-
-
-		/// <summary>
-		/// Gets the value of the Uri to use for providing the contents of the Image's Source property.
-		/// </summary>
-		/// <param name="obj">Image needing its Source property set.</param>
-		/// <returns>Uri to use for providing the contents of the Source property.</returns>
-		[SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Location is applicable only to Image elements.")]
-		public static HttpLocation GetLocation(Image obj)
-		{
-			if (null == obj)
-			{
-				throw new ArgumentNullException("obj");
-			}
-			return (HttpLocation)obj.GetValue(HttpLocationProperty);
-		}
-
-		/// <summary>
-		/// Sets the value of the Uri to use for providing the contents of the Image's Source property.
-		/// </summary>
-		/// <param name="obj">Image needing its Source property set.</param>
-		/// <param name="value">Uri to use for providing the contents of the Source property.</param>
-		[SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "Location is applicable only to Image elements.")]
-		public static void SetLocation(Image obj, HttpLocation value)
-		{
-			if (null == obj)
-			{
-				throw new ArgumentNullException("obj");
-			}
-			obj.SetValue(HttpLocationProperty, value);
-		}
-
-		/// <summary>
-		/// Identifies the UriSource attached DependencyProperty.
-		/// </summary>
-		public static readonly DependencyProperty HttpLocationProperty = DependencyProperty.RegisterAttached(
-			"Location", typeof(HttpLocation), typeof(LowProfileImageLoader), new PropertyMetadata(OnLocationChanged));
-
+        /// <summary>
+        /// Identifies the UriSource attached DependencyProperty.
+        /// </summary>
+        public static readonly DependencyProperty UriSourceProperty = DependencyProperty.RegisterAttached(
+            "UriSource", typeof(Uri), typeof(LowProfileImageLoader), new PropertyMetadata(OnUriSourceChanged));
 
         /// <summary>
         /// Gets or sets a value indicating whether low-profile image loading is enabled.
@@ -217,29 +179,29 @@ namespace MyToolkit.Performance
                     pendingRequests.RemoveAt(count - 1);
                     count--;
 
-					if (pendingRequest.Location == null || pendingRequest.Location.Uri == null) // hack by rsuter
+					if (pendingRequest.Uri == null) // hack by rsuter
 						continue;
 
-					if (pendingRequest.Location.Uri.IsAbsoluteUri)
+                    if (pendingRequest.Uri.IsAbsoluteUri)
                     {
                         // Download from network
-                        var webRequest = HttpWebRequest.CreateHttp(pendingRequest.Location.Uri);
-						if (pendingRequest.Location.Credentials != null)
-							webRequest.Credentials = pendingRequest.Location.Credentials;
-                        webRequest.AllowReadStreamBuffering = true; // Don't want to block this thread or the UI thread on network access
-                        webRequest.BeginGetResponse(HandleGetResponseResult, new ResponseState(webRequest, pendingRequest.Image, pendingRequest.Location));
+                        var webRequest = HttpWebRequest.CreateHttp(pendingRequest.Uri);
+						if (pendingRequest.Uri is AuthenticatedUri)
+							webRequest.Credentials = ((AuthenticatedUri)pendingRequest.Uri).Credentials;
+						webRequest.AllowReadStreamBuffering = true; // Don't want to block this thread or the UI thread on network access
+                        webRequest.BeginGetResponse(HandleGetResponseResult, new ResponseState(webRequest, pendingRequest.Image, pendingRequest.Uri));
                     }
                     else
                     {
                         // Load from application (must have "Build Action"="Content")
-						var originalUriString = pendingRequest.Location.Uri.OriginalString;
+                        var originalUriString = pendingRequest.Uri.OriginalString;
                         // Trim leading '/' to avoid problems
-                        var resourceStreamUri = originalUriString.StartsWith("/", StringComparison.Ordinal) ? new Uri(originalUriString.TrimStart('/'), UriKind.Relative) : pendingRequest.Location.Uri;
+                        var resourceStreamUri = originalUriString.StartsWith("/", StringComparison.Ordinal) ? new Uri(originalUriString.TrimStart('/'), UriKind.Relative) : pendingRequest.Uri;
                         // Enqueue resource stream for completion
                         var streamResourceInfo = Application.GetResourceStream(resourceStreamUri);
                         if (null != streamResourceInfo)
                         {
-                            pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Location, streamResourceInfo.Stream));
+                            pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Uri, streamResourceInfo.Stream));
                         }
                     }
                     // Yield to UI thread
@@ -253,7 +215,7 @@ namespace MyToolkit.Performance
                     try
                     {
                         var response = responseState.WebRequest.EndGetResponse(pendingResponse);
-                        pendingCompletions.Enqueue(new PendingCompletion(responseState.Image, responseState.Location, response.GetResponseStream()));
+                        pendingCompletions.Enqueue(new PendingCompletion(responseState.Image, responseState.Uri, response.GetResponseStream()));
                     }
                     catch (WebException)
                     {
@@ -272,8 +234,7 @@ namespace MyToolkit.Performance
                         {
                             // Decode the image and set the source
                             var pendingCompletion = pendingCompletions.Dequeue();
-                            if (GetLocation(pendingCompletion.Image) == pendingCompletion.Location || 
-								GetUriSource(pendingCompletion.Image) == pendingCompletion.Location.Uri)
+                            if (GetUriSource(pendingCompletion.Image) == pendingCompletion.Uri)
                             {
                                 var bitmap = new BitmapImage();
                                 try
@@ -298,29 +259,6 @@ namespace MyToolkit.Performance
             }
         }
 
-		private static void OnLocationChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
-		{
-			var image = (Image)o;
-			var location = (HttpLocation)e.NewValue;
-
-			if (!IsEnabled || DesignerProperties.IsInDesignTool)
-			{
-				// Avoid handing off to the worker thread (can cause problems for design tools)
-				image.Source = new BitmapImage(location.Uri);
-			}
-			else
-			{
-				// Clear-out the current image because it's now stale (helps when used with virtualization)
-				image.Source = null;
-				lock (_syncBlock)
-				{
-					// Enqueue the request
-					_pendingRequests.Enqueue(new PendingRequest(image, location));
-					Monitor.Pulse(_syncBlock);
-				}
-			}
-		}
-
         private static void OnUriSourceChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             var image = (Image)o;
@@ -338,7 +276,7 @@ namespace MyToolkit.Performance
                 lock (_syncBlock)
                 {
                     // Enqueue the request
-                    _pendingRequests.Enqueue(new PendingRequest(image, new HttpLocation(uri)));
+                    _pendingRequests.Enqueue(new PendingRequest(image, uri));
                     Monitor.Pulse(_syncBlock);
                 }
             }
@@ -357,12 +295,11 @@ namespace MyToolkit.Performance
         private class PendingRequest
         {
             public Image Image { get; private set; }
-			public HttpLocation Location { get; private set; }
-
-			public PendingRequest(Image image, HttpLocation location)
+            public Uri Uri { get; private set; }
+            public PendingRequest(Image image, Uri uri)
             {
                 Image = image;
-				Location = location;
+                Uri = uri;
             }
         }
 
@@ -370,24 +307,24 @@ namespace MyToolkit.Performance
         {
             public WebRequest WebRequest { get; private set; }
             public Image Image { get; private set; }
-            public HttpLocation Location { get; private set; }
-            public ResponseState(WebRequest webRequest, Image image, HttpLocation location)
+            public Uri Uri { get; private set; }
+            public ResponseState(WebRequest webRequest, Image image, Uri uri)
             {
                 WebRequest = webRequest;
                 Image = image;
-                Location = location;
+                Uri = uri;
             }
         }
 
         private class PendingCompletion
         {
             public Image Image { get; private set; }
-			public HttpLocation Location { get; private set; }
+            public Uri Uri { get; private set; }
             public Stream Stream { get; private set; }
-            public PendingCompletion(Image image, HttpLocation location, Stream stream)
+            public PendingCompletion(Image image, Uri uri, Stream stream)
             {
                 Image = image;
-				Location = location;
+                Uri = uri;
                 Stream = stream;
             }
         }
