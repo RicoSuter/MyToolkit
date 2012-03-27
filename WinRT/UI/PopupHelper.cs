@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 using MyToolkit.Utilities;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 
 namespace MyToolkit.UI
 {
 	public static class PopupHelper
 	{
-		public static Task<T> ShowDialogAsync<T>(T control) where T : FrameworkElement
+		public static Task<Popup> ShowDialogAsync<T>(T control) where T : FrameworkElement
 		{
-			return TaskHelper.RunCallbackMethod<T, T>(ShowDialog, control);
+			return TaskHelper.RunCallbackMethod<T, Popup>((x, y) => { ShowDialog(x, y); }, control);
 		}
 
-		public static void ShowDialog<T>(T control, Action<T> closed = null) where T : FrameworkElement
+		public static Popup ShowDialog<T>(T control, Action<Popup> closed = null) where T : FrameworkElement
 		{
 			var parent = (FrameworkElement)Window.Current.Content;
 			control.Width = parent.ActualWidth;
@@ -51,12 +52,13 @@ namespace MyToolkit.UI
 				control.SizeChanged -= del2;
 
 				if (closed != null)
-					closed(control);
+					closed(popup);
 			};
 			popup.IsOpen = true;
+			return popup;
 		}
 
-		public static void ShowSettings(FrameworkElement control, Action<FrameworkElement> closed = null)
+		public static Popup ShowSettings(FrameworkElement control, Action<Popup> closed = null)
 		{
 			var parent = (FrameworkElement)Window.Current.Content;
 			control.Height = parent.ActualHeight;
@@ -82,12 +84,13 @@ namespace MyToolkit.UI
 				Window.Current.Activated -= del;
 				control.SizeChanged -= del2;
 				if (closed != null)
-					closed(control);
+					closed(popup);
 			};
-			popup.IsOpen = true;
+			popup.IsOpen = true; 
+			return popup;
 		}
 
-		public static void ShowPane(FrameworkElement control, bool left = true, Action<FrameworkElement> closed = null)
+		public static Popup ShowPane(FrameworkElement control, bool left = true, Action<Popup> closed = null)
 		{
 			var parent = (FrameworkElement)Window.Current.Content;
 			control.Height = parent.ActualHeight;
@@ -114,9 +117,10 @@ namespace MyToolkit.UI
 				Window.Current.Activated -= del;
 				control.SizeChanged -= del2;
 				if (closed != null)
-					closed(control);
+					closed(popup);
 			};
 			popup.IsOpen = true;
+			return popup;
 		}
 	}
 }
