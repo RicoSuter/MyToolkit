@@ -6,6 +6,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.Collections.Generic;
+using Microsoft.Phone.Info;
 
 // from https://blogs.msdn.com/b/ptorr/archive/2010/10/30/that-memory-thing-i-promised-you.aspx
 
