@@ -7,7 +7,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
 
-namespace MyToolkit.Network
+namespace MyToolkit.Networking
 {
 	public static class ClientBaseExtensions
 	{
