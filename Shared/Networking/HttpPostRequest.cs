@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MyToolkit.Network
+namespace MyToolkit.Networking
 {
 	public class HttpPostRequest : HttpGetRequest
 	{

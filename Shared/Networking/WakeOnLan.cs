@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Windows;
 
-namespace MyToolkit.Network
+namespace MyToolkit.Networking
 {
 	public static class WakeOnLan
 	{

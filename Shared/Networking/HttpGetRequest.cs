@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
-namespace MyToolkit.Network
+namespace MyToolkit.Networking
 {
 	public interface IHttpRequest
 	{

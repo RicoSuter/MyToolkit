@@ -8,7 +8,7 @@ using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using MyToolkit.Environment;
 using MyToolkit.Multimedia;
-using MyToolkit.Network;
+using MyToolkit.Networking;
 using MyToolkit.UI;
 
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com

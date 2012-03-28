@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace MyToolkit.Network
+namespace MyToolkit.Networking
 {
 	public class HttpPostFile
 	{

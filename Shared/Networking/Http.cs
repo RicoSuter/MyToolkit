@@ -24,7 +24,7 @@ using System.IO.IsolatedStorage;
 
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
 
-namespace MyToolkit.Network
+namespace MyToolkit.Networking
 {
 	public class AuthenticatedUri : Uri
 	{

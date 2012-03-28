@@ -4,7 +4,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 
-namespace MyToolkit.Network
+namespace MyToolkit.Networking
 {
 	public class HttpResponse
 	{
