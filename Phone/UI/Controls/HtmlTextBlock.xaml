@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="MyToolkit.UI.HtmlTextBlock"
+﻿<UserControl x:Class="MyToolkit.UI.Controls.HtmlTextBlock"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
 	FontFamily="Segoe WP">

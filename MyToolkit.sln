@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Web", "Web\MyTool
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.WPF", "WPF\MyToolkit.WPF.csproj", "{0D8F527D-868F-4DE3-8559-EA3597D9D079}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.PhoneLight", "Phone\MyToolkit.PhoneLight.csproj", "{05B68BDA-DB8E-41EC-8C84-05F435A61F36}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Phone.Light", "Phone\MyToolkit.Phone.Light.csproj", "{05B68BDA-DB8E-41EC-8C84-05F435A61F36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

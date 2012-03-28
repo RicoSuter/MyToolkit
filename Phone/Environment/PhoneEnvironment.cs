@@ -1,6 +1,6 @@
 ﻿using Microsoft.Phone.Net.NetworkInformation;
 
-namespace MyToolkit.Phone
+namespace MyToolkit.Environment
 {
 	public static class PhoneEnvironment
 	{

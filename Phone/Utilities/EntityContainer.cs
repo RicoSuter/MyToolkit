@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using MyToolkit.Phone;
+using MyToolkit.Environment;
 
 namespace MyToolkit.Utilities
 {

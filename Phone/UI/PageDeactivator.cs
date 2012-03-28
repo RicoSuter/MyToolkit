@@ -4,9 +4,10 @@ using System.Windows;
 using System.Windows.Media;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using MyToolkit.Environment;
 using MyToolkit.Utilities;
 
-namespace MyToolkit.Phone
+namespace MyToolkit.UI
 {
 	public class PageDeactivator
 	{

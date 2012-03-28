@@ -6,10 +6,9 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 using Microsoft.Phone.Tasks;
-
 using MyToolkit.MVVM;
 
-namespace MyToolkit.UI
+namespace MyToolkit.UI.Controls
 {
 	public class ImageBlock
 	{

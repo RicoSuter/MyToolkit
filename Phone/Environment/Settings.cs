@@ -1,6 +1,6 @@
 ﻿using System.IO.IsolatedStorage;
 
-namespace MyToolkit.Phone
+namespace MyToolkit.Environment
 {
 	// TODO move to MyToolkit.Storage !
 	public static class Settings

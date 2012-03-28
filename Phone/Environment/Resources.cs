@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace MyToolkit.Phone
+namespace MyToolkit.Environment
 {
 	public static class Resources
 	{

@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Collections;
 using System.Windows.Media;
 using Microsoft.Phone.Controls;
 
 // found on http://www.scottlogic.co.uk/blog/colin/2011/04/a-fast-loading-windows-phone-7-navigationlist-control/
 
-namespace MyToolkit.UI
+namespace MyToolkit.UI.Controls
 {
 	public class NavigationList : ExtendedListBox
 	{

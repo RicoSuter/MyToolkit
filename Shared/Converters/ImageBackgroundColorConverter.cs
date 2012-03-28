@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 using System.Windows.Media;
-using MyToolkit.Phone;
+using MyToolkit.Environment;
 
 namespace MyToolkit.Converters
 {

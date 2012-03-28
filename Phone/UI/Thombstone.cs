@@ -1,7 +1,7 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
-namespace MyToolkit.Phone
+namespace MyToolkit.UI
 {
 	public static class Thombstone
 	{

@@ -1,33 +1,14 @@
 ﻿using System;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+using System.Collections.Generic;
+using System.Collections;
+using System.Linq;
+using System.Diagnostics;
 
 namespace MyToolkit.UI
 {
-	using System;
-	using System.Net;
-	using System.Windows;
-	using System.Windows.Controls;
-	using System.Windows.Documents;
-	using System.Windows.Ink;
-	using System.Windows.Input;
-	using System.Windows.Media;
-	using System.Windows.Media.Animation;
-	using System.Windows.Shapes;
-	using System.Collections.Generic;
-	using System.Text;
-	using System.Collections;
-	using System.Linq;
-	using System.Diagnostics;
-	using System.Windows.Threading;
-
 	namespace UIExtensionMethods
 	{
 		public static class FrameworkElementExtensions
@@ -40,7 +21,7 @@ namespace MyToolkit.UI
 			/// <returns>The found node, or null if not found</returns>
 			public static FrameworkElement FindVisualChild(this FrameworkElement root, string name)
 			{
-				FrameworkElement temp = root.FindName(name) as FrameworkElement;
+				var temp = root.FindName(name) as FrameworkElement;
 				if (temp != null)
 					return temp;
 

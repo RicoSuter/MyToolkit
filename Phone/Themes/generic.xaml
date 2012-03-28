@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
 					xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                    xmlns:UI="clr-namespace:MyToolkit.UI">
+                    xmlns:UI="clr-namespace:MyToolkit.UI" xmlns:Controls="clr-namespace:MyToolkit.UI.Controls">
 
 	<!--<Style TargetType="UI:ExtendedListBox">
 		<Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
@@ -24,10 +24,10 @@
 		</Setter>
 	</Style>-->
 
-	<Style TargetType="UI:ImageButton">
+	<Style TargetType="Controls:ImageButton">
 		<Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="UI:ImageButton">
+				<ControlTemplate TargetType="Controls:ImageButton">
 					<Grid>
 						<VisualStateManager.VisualStateGroups>
 							<VisualStateGroup x:Name="CommonStates">
@@ -62,7 +62,7 @@
 		</Setter>
 	</Style>
 
-	<Style TargetType="UI:UnstyledButton">
+	<Style TargetType="Controls:UnstyledButton">
 		<Setter Property="Background" Value="Transparent"/>
 		<Setter Property="BorderBrush" Value="{x:Null}" />
         <Setter Property="BorderThickness" Value="0"/>
@@ -70,7 +70,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     </Style>
 
-	<Style TargetType="UI:ExtendedLongListSelector">
+	<Style TargetType="Controls:ExtendedLongListSelector">
 		<Setter Property="GroupItemsPanel">
 			<Setter.Value>
 				<ItemsPanelTemplate>
