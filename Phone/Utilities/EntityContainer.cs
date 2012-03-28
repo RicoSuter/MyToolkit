@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using MyToolkit.Environment;
+using MyToolkit.Storage;
 
 namespace MyToolkit.Utilities
 {
@@ -56,13 +57,13 @@ namespace MyToolkit.Utilities
 
 		public void SaveToSettings(string key)
 		{
-			Settings.SetSetting(key, collection.ToList());
+			ApplicationSettings.SetSetting(key, collection.ToList());
 		}
 
 		public void LoadFromSettings(string key)
 		{
 			collection.Clear();
-			foreach (var a in Settings.GetSetting(key, new List<T>()))
+			foreach (var a in ApplicationSettings.GetSetting(key, new List<T>()))
 				collection.Add(a);
 		}
 

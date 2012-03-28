@@ -207,14 +207,14 @@
     <Compile Include="Collections\AlphaGroups.cs" />
     <Compile Include="Collections\Group.cs" />
     <Compile Include="Multimedia\YouTubeQuality.cs" />
+    <Compile Include="Network\NetworkState.cs" />
     <Compile Include="Performance\LowProfileImageLoader.cs" />
-    <Compile Include="Environment\PhoneEnvironment.cs" />
     <Compile Include="Environment\Marketplace.cs" />
     <Compile Include="Performance\MemoryDiagnosticsHelper.cs" />
     <Compile Include="Environment\PhoneApplication.cs" />
     <Compile Include="Environment\PhoneManifest.cs" />
     <Compile Include="Environment\Resources.cs" />
-    <Compile Include="Environment\Settings.cs" />
+    <Compile Include="Storage\ApplicationSettings.cs" />
     <Compile Include="UI\Thombstone.cs" />
     <Compile Include="Controls\YouTubeButton.xaml.cs">
       <DependentUpon>YouTubeButton.xaml</DependentUpon>

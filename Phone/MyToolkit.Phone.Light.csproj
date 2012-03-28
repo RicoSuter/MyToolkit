@@ -162,11 +162,11 @@
     <Compile Include="Collections\AlphaGroups.cs" />
     <Compile Include="Collections\Group.cs" />
     <Compile Include="Environment\Marketplace.cs" />
-    <Compile Include="Environment\PhoneEnvironment.cs" />
     <Compile Include="Environment\PhoneManifest.cs" />
     <Compile Include="Environment\Resources.cs" />
-    <Compile Include="Environment\Settings.cs" />
+    <Compile Include="Network\NetworkState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Storage\ApplicationSettings.cs" />
     <Compile Include="Utilities\EntityContainer.cs" />
   </ItemGroup>
   <ItemGroup>
