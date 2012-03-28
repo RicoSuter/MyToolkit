@@ -100,20 +100,20 @@
     <Compile Include="..\Shared\MVVM\RelayCommand.cs">
       <Link>MVVM\RelayCommand.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Network\Http.cs">
-      <Link>Network\Http.cs</Link>
+    <Compile Include="..\Shared\Networking\Http.cs">
+      <Link>Networking\Http.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Network\HttpGetRequest.cs">
-      <Link>Network\HttpGetRequest.cs</Link>
+    <Compile Include="..\Shared\Networking\HttpGetRequest.cs">
+      <Link>Networking\HttpGetRequest.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Network\HttpPostFile.cs">
-      <Link>Network\HttpPostFile.cs</Link>
+    <Compile Include="..\Shared\Networking\HttpPostFile.cs">
+      <Link>Networking\HttpPostFile.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Network\HttpPostRequest.cs">
-      <Link>Network\HttpPostRequest.cs</Link>
+    <Compile Include="..\Shared\Networking\HttpPostRequest.cs">
+      <Link>Networking\HttpPostRequest.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Network\HttpResponse.cs">
-      <Link>Network\HttpResponse.cs</Link>
+    <Compile Include="..\Shared\Networking\HttpResponse.cs">
+      <Link>Networking\HttpResponse.cs</Link>
     </Compile>
     <Compile Include="..\Shared\UI\Designer.cs">
       <Link>UI\Designer.cs</Link>
