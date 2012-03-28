@@ -126,20 +126,20 @@
     <Compile Include="..\Shared\Libraries\DotNetZip\ZlibConstants.cs">
       <Link>Libraries\DotNetZip\ZlibConstants.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messages\ActionMessage.cs">
-      <Link>Messages\ActionMessage.cs</Link>
+    <Compile Include="..\Shared\Messaging\ActionMessage.cs">
+      <Link>Messaging\ActionMessage.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messages\DefaultActions.cs">
-      <Link>Messages\DefaultActions.cs</Link>
+    <Compile Include="..\Shared\Messaging\DefaultActions.cs">
+      <Link>Messaging\DefaultActions.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messages\GoBackMessage.cs">
-      <Link>Messages\GoBackMessage.cs</Link>
+    <Compile Include="..\Shared\Messaging\GoBackMessage.cs">
+      <Link>Messaging\GoBackMessage.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messages\Messenger.cs">
-      <Link>Messages\Messenger.cs</Link>
+    <Compile Include="..\Shared\Messaging\Messenger.cs">
+      <Link>Messaging\Messenger.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messages\TextMessage.cs">
-      <Link>Messages\TextMessage.cs</Link>
+    <Compile Include="..\Shared\Messaging\TextMessage.cs">
+      <Link>Messaging\TextMessage.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Multimedia\YouTube.cs">
       <Link>Multimedia\YouTube.cs</Link>

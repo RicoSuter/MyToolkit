@@ -1,4 +1,4 @@
-﻿namespace MyToolkit.Messages
+﻿namespace MyToolkit.Messaging
 {
 	public class GoBackMessage
 	{
