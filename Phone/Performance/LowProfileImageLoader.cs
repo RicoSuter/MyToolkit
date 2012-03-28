@@ -12,7 +12,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using MyToolkit.Network;
+using MyToolkit.Networking;
 
 // http://blogs.msdn.com/b/delay/archive/2010/09/02/keep-a-low-profile-lowprofileimageloader-helps-the-windows-phone-7-ui-thread-stay-responsive-by-loading-images-in-the-background.aspx
 // Changes: added IsSuspended property to suspend all pending downloads (e.g while scrolling, etc), by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
