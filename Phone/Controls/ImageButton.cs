@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace MyToolkit.UI.Controls
+namespace MyToolkit.Controls
 {
 	public class ImageButton : Button
 	{

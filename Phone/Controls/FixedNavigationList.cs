@@ -5,7 +5,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.Phone.Controls;
 
-namespace MyToolkit.UI.Controls
+namespace MyToolkit.Controls
 {
 	public class FixedNavigationList : ExtendedItemsControl
 	{

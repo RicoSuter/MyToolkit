@@ -7,7 +7,7 @@ using Microsoft.Phone.Controls;
 
 // found on http://www.scottlogic.co.uk/blog/colin/2011/04/a-fast-loading-windows-phone-7-navigationlist-control/
 
-namespace MyToolkit.UI.Controls
+namespace MyToolkit.Controls
 {
 	public class NavigationList : ExtendedListBox
 	{

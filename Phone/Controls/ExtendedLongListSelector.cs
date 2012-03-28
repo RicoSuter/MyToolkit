@@ -1,6 +1,6 @@
 ﻿using Microsoft.Phone.Controls;
 
-namespace MyToolkit.UI.Controls
+namespace MyToolkit.Controls
 {
 	public class ExtendedLongListSelector : LongListSelector
 	{

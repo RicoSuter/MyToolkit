@@ -2,7 +2,7 @@
 using System.Windows;
 using Microsoft.Phone.Controls;
 
-namespace MyToolkit.UI.Controls
+namespace MyToolkit.Controls
 {
 	public class TranslatedToggleSwitch : ToggleSwitch
 	{

@@ -8,7 +8,7 @@ using MyToolkit.UI.UIExtensionMethods;
 
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
 
-namespace MyToolkit.UI.Controls
+namespace MyToolkit.Controls
 {
 	public class ScrollingStateChangedEventArgs : EventArgs
 	{

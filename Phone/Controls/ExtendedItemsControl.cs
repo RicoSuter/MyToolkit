@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace MyToolkit.UI.Controls
+namespace MyToolkit.Controls
 {
 	public class ExtendedItemsControl : ItemsControl
 	{

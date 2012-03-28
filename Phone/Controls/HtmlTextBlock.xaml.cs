@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.Phone.Tasks;
 using MyToolkit.MVVM;
 
-namespace MyToolkit.UI.Controls
+namespace MyToolkit.Controls
 {
 	public class ImageBlock
 	{

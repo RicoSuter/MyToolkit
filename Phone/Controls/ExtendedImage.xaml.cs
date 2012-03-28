@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using MyToolkit.Environment;
 
-namespace MyToolkit.UI.Controls
+namespace MyToolkit.Controls
 {
 	public partial class ExtendedImage : UserControl
 	{

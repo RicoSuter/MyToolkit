@@ -216,31 +216,31 @@
     <Compile Include="Environment\Resources.cs" />
     <Compile Include="Environment\Settings.cs" />
     <Compile Include="UI\Thombstone.cs" />
-    <Compile Include="UI\Controls\YouTubeButton.xaml.cs">
+    <Compile Include="Controls\YouTubeButton.xaml.cs">
       <DependentUpon>YouTubeButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\DataTemplateSelector.cs" />
-    <Compile Include="UI\Controls\ExtendedImage.xaml.cs">
+    <Compile Include="Controls\ExtendedImage.xaml.cs">
       <DependentUpon>ExtendedImage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controls\ExtendedListBox.cs" />
-    <Compile Include="UI\Controls\ExtendedLongListSelector.cs" />
-    <Compile Include="UI\Controls\FixedNavigationList.cs" />
+    <Compile Include="Controls\ExtendedListBox.cs" />
+    <Compile Include="Controls\ExtendedLongListSelector.cs" />
+    <Compile Include="Controls\FixedNavigationList.cs" />
     <Compile Include="UI\FrameworkElementExtensions.cs" />
-    <Compile Include="UI\Controls\ImageButton.cs" />
+    <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="UI\PageDeactivator.cs" />
-    <Compile Include="UI\Controls\NavigationListEventArgs.cs" />
+    <Compile Include="Controls\NavigationListEventArgs.cs" />
     <Compile Include="UI\PasswordBoxBinding.cs" />
-    <Compile Include="UI\Controls\ExtendedItemsControl.cs" />
-    <Compile Include="UI\Controls\NavigationList.cs" />
-    <Compile Include="UI\Controls\PrepareContainerForItemEventArgs.cs" />
+    <Compile Include="Controls\ExtendedItemsControl.cs" />
+    <Compile Include="Controls\NavigationList.cs" />
+    <Compile Include="Controls\PrepareContainerForItemEventArgs.cs" />
     <Compile Include="UI\ProgressIndicatorProxy.cs" />
-    <Compile Include="UI\Controls\HtmlTextBlock.xaml.cs">
+    <Compile Include="Controls\HtmlTextBlock.xaml.cs">
       <DependentUpon>HtmlTextBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controls\TranslatedToggleSwitch.cs" />
-    <Compile Include="UI\Controls\UnstyledButton.cs" />
+    <Compile Include="Controls\TranslatedToggleSwitch.cs" />
+    <Compile Include="Controls\UnstyledButton.cs" />
     <Compile Include="Utilities\EntityContainer.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -257,7 +257,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UI\Controls\YouTubeButton.xaml">
+    <Page Include="Controls\YouTubeButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -265,11 +265,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\Controls\ExtendedImage.xaml">
+    <Page Include="Controls\ExtendedImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\Controls\HtmlTextBlock.xaml">
+    <Page Include="Controls\HtmlTextBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

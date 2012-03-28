@@ -1,7 +1,7 @@
 using System;
 using System.Windows;
 
-namespace MyToolkit.UI.Controls
+namespace MyToolkit.Controls
 {
 	public class PrepareContainerForItemEventArgs : EventArgs
 	{

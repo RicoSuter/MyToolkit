@@ -1,6 +1,6 @@
 using System;
 
-namespace MyToolkit.UI.Controls
+namespace MyToolkit.Controls
 {
 	public class NavigationListEventArgs : EventArgs
 	{
