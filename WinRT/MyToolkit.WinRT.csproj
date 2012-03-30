@@ -59,17 +59,17 @@
     <Compile Include="..\Shared\Converters\VisibilityConverter.cs">
       <Link>Converters\VisibilityConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messages\ActionMessage.cs">
-      <Link>Messages\ActionMessage.cs</Link>
+    <Compile Include="..\Shared\Messaging\ActionMessage.cs">
+      <Link>Messaging\ActionMessage.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messages\DefaultActions.cs">
-      <Link>Messages\DefaultActions.cs</Link>
+    <Compile Include="..\Shared\Messaging\DefaultActions.cs">
+      <Link>Messaging\DefaultActions.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messages\Messenger.cs">
-      <Link>Messages\Messenger.cs</Link>
+    <Compile Include="..\Shared\Messaging\Messenger.cs">
+      <Link>Messaging\Messenger.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messages\TextMessage.cs">
-      <Link>Messages\TextMessage.cs</Link>
+    <Compile Include="..\Shared\Messaging\TextMessage.cs">
+      <Link>Messaging\TextMessage.cs</Link>
     </Compile>
     <Compile Include="..\Shared\MVVM\NotifyPropertyChanged.cs">
       <Link>MVVM\NotifyPropertyChanged.cs</Link>
@@ -80,20 +80,20 @@
     <Compile Include="..\Shared\MVVM\RelayCommand.cs">
       <Link>MVVM\RelayCommand.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Network\Http.cs">
-      <Link>Network\Http.cs</Link>
+    <Compile Include="..\Shared\Networking\Http.cs">
+      <Link>Networking\Http.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Network\HttpGetRequest.cs">
-      <Link>Network\HttpGetRequest.cs</Link>
+    <Compile Include="..\Shared\Networking\HttpGetRequest.cs">
+      <Link>Networking\HttpGetRequest.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Network\HttpPostFile.cs">
-      <Link>Network\HttpPostFile.cs</Link>
+    <Compile Include="..\Shared\Networking\HttpPostFile.cs">
+      <Link>Networking\HttpPostFile.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Network\HttpPostRequest.cs">
-      <Link>Network\HttpPostRequest.cs</Link>
+    <Compile Include="..\Shared\Networking\HttpPostRequest.cs">
+      <Link>Networking\HttpPostRequest.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Network\HttpResponse.cs">
-      <Link>Network\HttpResponse.cs</Link>
+    <Compile Include="..\Shared\Networking\HttpResponse.cs">
+      <Link>Networking\HttpResponse.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\DateTimeExtensions.cs">
       <Link>Utilities\DateTimeExtensions.cs</Link>
@@ -123,6 +123,7 @@
       <Link>Utilities\Xml.cs</Link>
     </Compile>
     <Compile Include="Animations\Fading.cs" />
+    <Compile Include="Animations\Flipping.cs" />
     <Compile Include="Collections\ObservableVector.cs" />
     <Compile Include="Controls\DatePicker.xaml.cs">
       <DependentUpon>DatePicker.xaml</DependentUpon>
