@@ -56,22 +56,12 @@ namespace MyToolkit.Controls
 
 			UpdateInnerMargin();
 			RegisterScrollOffset();
-			RegisterScrollFix();
 		}
 
 		#region scroll jumping fix
 
 		public static readonly DependencyProperty UseScrollFixProperty =
-			DependencyProperty.Register("UseScrollFix", typeof(bool), typeof(ExtendedListBox), new PropertyMetadata(true, OnUseScrollFixPropertyChanged));
-
-		private static void OnUseScrollFixPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = (ExtendedListBox) d;
-			if (ctrl.UseScrollFix)
-				ctrl.RegisterScrollFix();
-			else
-				ctrl.UnregisterScrollFix();
-		}
+			DependencyProperty.Register("UseScrollFix", typeof(bool), typeof(ExtendedListBox), new PropertyMetadata(true));
 
 		public bool UseScrollFix
 		{
@@ -79,21 +69,15 @@ namespace MyToolkit.Controls
 			set { SetValue(UseScrollFixProperty, value); }
 		}
 
-		private void RegisterScrollFix()
+		protected override void OnGotFocus(RoutedEventArgs e)
 		{
-			GotFocus -= OnGotFocus;
-			GotFocus += OnGotFocus;
-		}
+			if (UseScrollFix)
+			{
+				var page = (PhoneApplicationPage)((PhoneApplicationFrame)Application.Current.RootVisual).Content;
+				page.Focus();
+			}
 
-		private void UnregisterScrollFix()
-		{
-			GotFocus -= OnGotFocus;
-		}
-
-		private void OnGotFocus(object sender, RoutedEventArgs e)
-		{
-			var page = (PhoneApplicationPage)((PhoneApplicationFrame)Application.Current.RootVisual).Content;
-			page.Focus();
+			base.OnGotFocus(e);
 		}
 
 		#endregion
