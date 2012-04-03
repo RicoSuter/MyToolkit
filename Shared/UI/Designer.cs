@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace MyToolkit.UI
 {
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !METRO
 	internal class MyDependencyObject : DependencyObject { }
 #endif
 
@@ -18,9 +18,13 @@ namespace MyToolkit.UI
 			get
 			{
 #if !SILVERLIGHT
+#if METRO
+				return Windows.ApplicationModel.DesignMode.DesignModeEnabled;
+#else
 				if (!isInDesignMode.HasValue)
 					isInDesignMode = DesignerProperties.GetIsInDesignMode(new MyDependencyObject());
 				return isInDesignMode.Value;
+#endif
 #else
 				return DesignerProperties.IsInDesignTool;
 #endif
