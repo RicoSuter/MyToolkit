@@ -3,8 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using MyToolkit.Environment;
+using MyToolkit.Multimedia;
 using MyToolkit.Networking;
-using MyToolkit.Phone;
 
 namespace MyToolkit.Controls
 {
