@@ -14,7 +14,7 @@ using MyToolkit.UI;
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
 // this code only works with mango (video urls with query don't work in previous versions)
 
-namespace MyToolkit.Phone
+namespace MyToolkit.Multimedia
 {
 	public static class YouTube
 	{

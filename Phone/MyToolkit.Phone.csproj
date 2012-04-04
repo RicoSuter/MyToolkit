@@ -144,6 +144,9 @@
     <Compile Include="..\Shared\Multimedia\YouTube.cs">
       <Link>Multimedia\YouTube.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Multimedia\YouTubeQuality.cs">
+      <Link>Multimedia\YouTubeQuality.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\MVVM\NotifyPropertyChanged.cs">
       <Link>MVVM\NotifyPropertyChanged.cs</Link>
     </Compile>
@@ -206,7 +209,6 @@
     </Compile>
     <Compile Include="Collections\AlphaGroups.cs" />
     <Compile Include="Collections\Group.cs" />
-    <Compile Include="Multimedia\YouTubeQuality.cs" />
     <Compile Include="Networking\NetworkState.cs" />
     <Compile Include="Performance\LowProfileImageLoader.cs" />
     <Compile Include="Environment\Marketplace.cs" />
