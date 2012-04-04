@@ -25,7 +25,7 @@ namespace MyToolkit.Converters
 			if (param == "days")
 				return Math.Round(span.TotalDays, 2).ToString();
 			else
-				return ((int)span.TotalHours).ToString("D2") + ":" + span.Minutes.ToString("D2");
+				return ((int)span.TotalHours).ToString("D2") + ":" + Math.Abs(span.Minutes).ToString("D2");
 		}
 
 
