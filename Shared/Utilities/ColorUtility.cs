@@ -37,6 +37,13 @@ namespace MyToolkit.Utilities
 				(byte)(foreground.B * alpha + background.B * diff));
 		}
 
+		public static string ToHex(Color color)
+		{
+			return "#" + Convert.ToInt32(color.R).ToString("X") +
+			       Convert.ToInt32(color.G).ToString("X") +
+			       Convert.ToInt32(color.B).ToString("X");
+		}
+
 		public static Color FromHex(string colorcode)
 		{
 			var argb = UInt32.Parse(colorcode.Replace("#", ""), NumberStyles.HexNumber);

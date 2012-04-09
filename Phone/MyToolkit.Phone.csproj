@@ -54,14 +54,11 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Shared\Animation\Background.cs">
-      <Link>Animation\Background.cs</Link>
+    <Compile Include="..\Shared\Animation\Fading.cs">
+      <Link>Animation\Fading.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Animation\Control.cs">
-      <Link>Animation\Control.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Animation\UIElement.cs">
-      <Link>Animation\UIElement.cs</Link>
+    <Compile Include="..\Shared\Animation\Flipping.cs">
+      <Link>Animation\Flipping.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Collections\ExtendedObservableCollection.cs">
       <Link>Collections\ExtendedObservableCollection.cs</Link>
@@ -209,6 +206,7 @@
     </Compile>
     <Compile Include="Collections\AlphaGroups.cs" />
     <Compile Include="Collections\Group.cs" />
+    <Compile Include="Controls\IntegratedWebBrowser.cs" />
     <Compile Include="Networking\NetworkState.cs" />
     <Compile Include="Performance\LowProfileImageLoader.cs" />
     <Compile Include="Environment\Marketplace.cs" />

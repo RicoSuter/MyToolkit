@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
 					xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                    xmlns:UI="clr-namespace:MyToolkit.UI" xmlns:Controls="clr-namespace:MyToolkit.Controls">
+                    xmlns:UI="clr-namespace:MyToolkit.UI" xmlns:Controls="clr-namespace:MyToolkit.Controls"
+                    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone">
 
 	<!--<Style TargetType="UI:ExtendedListBox">
 		<Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
@@ -23,6 +24,16 @@
 			</Setter.Value>
 		</Setter>
 	</Style>-->
+
+	<Style TargetType="Controls:IntegratedWebBrowser">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Controls:IntegratedWebBrowser">
+					<phone:WebBrowser x:Name="browser" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 
 	<Style TargetType="Controls:ImageButton">
 		<Setter Property="Template">
