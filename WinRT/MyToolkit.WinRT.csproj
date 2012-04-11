@@ -35,6 +35,12 @@
     <Compile Include="..\Shared\Collections\ExtendedObservableCollection.cs">
       <Link>Collections\ExtendedObservableCollection.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Controls\NavigationListEventArgs.cs">
+      <Link>Controls\NavigationListEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
+      <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
     </Compile>
@@ -128,18 +134,22 @@
     <Compile Include="Animations\Fading.cs" />
     <Compile Include="Animations\Flipping.cs" />
     <Compile Include="Collections\ObservableVector.cs" />
+    <Compile Include="Controls\DataGrid.cs" />
+    <Compile Include="Controls\DataGridTextCell.cs" />
     <Compile Include="Controls\DatePicker.xaml.cs">
       <DependentUpon>DatePicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ExtendedListBox.cs" />
     <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Controls\NavigationList.cs" />
     <Compile Include="Controls\RolloverButton.cs" />
     <Compile Include="MEF\CompositionContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourceDictionary.cs" />
     <Compile Include="Storage\Settings.cs" />
-    <Compile Include="Controls\ExtendedFrame.cs" />
-    <Compile Include="UI\NavigationService.cs" />
+    <Compile Include="Controls\PageFrame.cs" />
     <Compile Include="UI\PopupHelper.cs" />
+    <Compile Include="Utilities\PropertyPathHelper.cs" />
     <Compile Include="Utilities\TaskHelper.cs" />
   </ItemGroup>
   <ItemGroup>
