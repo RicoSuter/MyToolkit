@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel;
+#if !METRO
 using System.Windows;
+#else
+using Windows.UI.Xaml;
+#endif
 
 namespace MyToolkit.UI
 {
-#if !SILVERLIGHT && !METRO
 	internal class MyDependencyObject : DependencyObject { }
-#endif
 
 	public static class Designer
 	{

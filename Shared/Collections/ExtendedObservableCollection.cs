@@ -1,25 +1,32 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using MyToolkit.Utilities;
+using Windows.UI.Xaml;
 
 namespace MyToolkit.Collections
 {
-	public class ExtendedObservableCollection<T> : ExtendedObservableCollection<T, object>
+	public interface IExtendedObservableCollection : IList, INotifyCollectionChanged, INotifyPropertyChanged
 	{
-		public ExtendedObservableCollection(ObservableCollection<T> originalCollection, Func<T, bool> filter = null)
-			: base (originalCollection, filter) { }
+		bool IsTracking { get; set; }
+		int Limit { get; set; }
+
+		void SetOrder(PropertyPath propertyPath, bool ascending);
 	}
-	
-	public class ExtendedObservableCollection<T, TOrderByKey> : ObservableCollection<T>
+
+	public class ExtendedObservableCollection<T> : ObservableCollection<T>, IExtendedObservableCollection
 	{
 		private readonly ObservableCollection<T> originalCollection;
 
+		public ExtendedObservableCollection(ObservableCollection<T> originalCollection)
+			: this(originalCollection, null) { }
+
 		public ExtendedObservableCollection(ObservableCollection<T> originalCollection, Func<T, bool> filter = null,
-			Func<T, TOrderByKey> orderBy = null, bool ascending = true, int limit = 0, bool trackItemChanges = false)
+			Func<T, object> orderBy = null, bool ascending = true, int limit = 0, bool trackItemChanges = false)
 		{
 			IsTracking = false; 
 			this.originalCollection = originalCollection;
@@ -30,7 +37,7 @@ namespace MyToolkit.Collections
 			Ascending = ascending;
 			TrackItemChanges = trackItemChanges; 
 
-			var weakEvent = new WeakEvent<ObservableCollection<T>, ExtendedObservableCollection<T, TOrderByKey>, 
+			var weakEvent = new WeakEvent<ObservableCollection<T>, ExtendedObservableCollection<T>, 
 				NotifyCollectionChangedEventHandler>(originalCollection, this);
 
 			weakEvent.Event = (s, e) => OnCollectionChanged(weakEvent, e);
@@ -61,8 +68,20 @@ namespace MyToolkit.Collections
 			}
 		}
 
-		private Func<T, TOrderByKey> order;
-		public Func<T, TOrderByKey> Order
+		public void SetOrder(PropertyPath propertyPath, bool ascending)
+		{
+#if METRO
+			IsTracking = false;
+			Order = o => PropertyPathHelper.Evaluate(o, propertyPath);
+			Ascending = ascending;
+			IsTracking = true;
+#else
+			throw new NotImplementedException();
+#endif
+		}
+
+		private Func<T, object> order;
+		public Func<T, object> Order
 		{
 			get { return order; }
 			set
@@ -113,14 +132,14 @@ namespace MyToolkit.Collections
 			if (events.ContainsKey(item))
 				return;
 
-			var weakEvent = new WeakEvent<INotifyPropertyChanged, ExtendedObservableCollection<T, TOrderByKey>,
+			var weakEvent = new WeakEvent<INotifyPropertyChanged, ExtendedObservableCollection<T>,
 				PropertyChangedEventHandler>(originalCollection, this);
 			weakEvent.Event = (s, e) => OnItemChanged(weakEvent);
 			events.Add(item, weakEvent.Event);
 			item.PropertyChanged += weakEvent.Event;
 		}
 
-		private void OnItemChanged(WeakEvent<INotifyPropertyChanged, ExtendedObservableCollection<T, TOrderByKey>,
+		private void OnItemChanged(WeakEvent<INotifyPropertyChanged, ExtendedObservableCollection<T>,
 				PropertyChangedEventHandler> weakEvent)
 		{
 			if (weakEvent.IsAlive)
@@ -129,7 +148,7 @@ namespace MyToolkit.Collections
 				weakEvent.Target.PropertyChanged -= weakEvent.Event;
 		}
 
-		private void OnCollectionChanged(WeakEvent<ObservableCollection<T>, ExtendedObservableCollection<T, TOrderByKey>,
+		private void OnCollectionChanged(WeakEvent<ObservableCollection<T>, ExtendedObservableCollection<T>,
 			NotifyCollectionChangedEventHandler> weakEvent, NotifyCollectionChangedEventArgs e)
 		{
 			if (weakEvent.IsAlive)

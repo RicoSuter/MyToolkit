@@ -11,5 +11,11 @@ namespace MyToolkit.Utilities
 				return fullName.Substring(index + 1);
 			return fullName;
 		}
+
+		public static object CreateGenericObject(this Type type, Type innerType, params object[] args)
+		{
+			System.Type specificType = type.MakeGenericType(new System.Type[] { innerType });
+			return Activator.CreateInstance(specificType, args);
+		}
 	}
 }
