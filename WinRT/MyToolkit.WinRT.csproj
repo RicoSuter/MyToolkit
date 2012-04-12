@@ -116,6 +116,9 @@
     <Compile Include="..\Shared\Utilities\HttpUtilityExtensions.cs">
       <Link>Utilities\HttpUtilityExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Utilities\PropertyPathHelper.cs">
+      <Link>Utilities\PropertyPathHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Utilities\ReflectionExtensions.cs">
       <Link>Utilities\ReflectionExtensions.cs</Link>
     </Compile>
@@ -149,7 +152,6 @@
     <Compile Include="Storage\Settings.cs" />
     <Compile Include="Controls\PageFrame.cs" />
     <Compile Include="UI\PopupHelper.cs" />
-    <Compile Include="Utilities\PropertyPathHelper.cs" />
     <Compile Include="Utilities\TaskHelper.cs" />
   </ItemGroup>
   <ItemGroup>

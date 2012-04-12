@@ -22,8 +22,6 @@ namespace MyToolkit.Collections
 		object Order { get; set; }
 		bool Ascending { get; set; }
 		object Filter { get; set; }
-
-		void SetOrder(string propertyPath, bool ascending);
 	}
 
 	public class ExtendedObservableCollection<T> : ObservableCollection<T>, IExtendedObservableCollection
@@ -80,14 +78,6 @@ namespace MyToolkit.Collections
 				filter = value; 
 				UpdateList();
 			}
-		}
-
-		public void SetOrder(string propertyPath, bool ascending)
-		{
-			IsTracking = false;
-			Order = o => PropertyPathHelper.Evaluate(o, propertyPath);
-			Ascending = ascending;
-			IsTracking = true;
 		}
 
 		object IExtendedObservableCollection.Order

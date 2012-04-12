@@ -126,7 +126,7 @@ namespace MyToolkit.Controls
 			if (Items != null)
 			{
 				Items.IsTracking = false;
-				Items.Order = new Func<object, object>(o => PropertyPathHelper.Evaluate(o, sortedColumn.Binding));
+				Items.Order = new Func<object, object>(o => PropertyPathHelper.Evaluate(o, sortedColumn.Binding.Path));
 				Items.Ascending = sortedColumn.IsAscending;
 				Items.IsTracking = true;
 			}
