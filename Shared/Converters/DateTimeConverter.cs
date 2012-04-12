@@ -1,7 +1,7 @@
 ﻿using System;
 
 #if !METRO
-	using System.Windows.DataData;
+	using System.Windows.Data;
 #else
 	using Windows.UI.Xaml.Data;
 	using Windows.Globalization.DateTimeFormatting;
