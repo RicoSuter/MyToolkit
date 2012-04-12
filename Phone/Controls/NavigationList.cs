@@ -25,14 +25,14 @@ namespace MyToolkit.Controls
 		private void OnTapped(object sender, GestureEventArgs e)
 		{
 			var element = (FrameworkElement)sender;
-			OnNavigated(new NavigationListEventArgs(element.DataContext));
+			OnNavigation(new NavigationListEventArgs(element.DataContext));
 		}
 
-		public event EventHandler<NavigationListEventArgs> Navigated;
+		public event EventHandler<NavigationListEventArgs> Navigation;
 
-		protected void OnNavigated(NavigationListEventArgs args)
+		protected void OnNavigation(NavigationListEventArgs args)
 		{
-			var copy = Navigated;
+			var copy = Navigation;
 			if (copy != null)
 				copy(this, args);
 		}
