@@ -138,7 +138,10 @@
     <Compile Include="Animations\Flipping.cs" />
     <Compile Include="Collections\ObservableVector.cs" />
     <Compile Include="Controls\DataGrid.cs" />
+    <Compile Include="Controls\DataGridColumn.cs" />
+    <Compile Include="Controls\DataGridRow.cs" />
     <Compile Include="Controls\DataGridTextCell.cs" />
+    <Compile Include="Controls\DataGridTextColumn.cs" />
     <Compile Include="Controls\DatePicker.xaml.cs">
       <DependentUpon>DatePicker.xaml</DependentUpon>
     </Compile>

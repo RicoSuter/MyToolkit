@@ -33,31 +33,46 @@ namespace MyToolkit.Controls
 			base.OnApplyTemplate();
 
 			titleRowControl = (Grid)GetTemplateChild("titles");
+
 			listControl = (NavigationList)GetTemplateChild("list");
 			listControl.PrepareContainerForItem += OnPrepareContainerForItem;
+			listControl.SelectionChanged += OnSelectionChanged;
 
+			var currentOrdered = Columns.FirstOrDefault(c => c.CanSort); 
+			if (currentOrdered != null)
+				DefaultOrderIndex = Columns.IndexOf(currentOrdered);
 			BuildUp();
 		}
+
+		private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			var lastItem = e.RemovedItems.Count > 0 ? listControl.GetListBoxItemFromItem(e.RemovedItems[0]) : null;
+			var newItem = e.AddedItems.Count > 0 ? listControl.GetListBoxItemFromItem(e.AddedItems[0]) : null;
+
+			if (lastItem != null)
+				((DataGridRow)lastItem.Content).IsSelected = false;
+			if (newItem != null)
+				((DataGridRow)newItem.Content).IsSelected = true;
+
+			if (SelectedItem != listControl.SelectedItem)
+				SelectedItem = listControl.SelectedItem; 
+		}
+
+		public object SelectedItem
+		{
+			get { return (object)GetValue(SelectedItemProperty); }
+			set { SetValue(SelectedItemProperty, value); }
+		}
+
+		public static readonly DependencyProperty SelectedItemProperty =
+			DependencyProperty.Register("SelectedItem", typeof(object), typeof(DataGrid), new PropertyMetadata(null));
+
+
 
 		private void OnPrepareContainerForItem(object sender, PrepareContainerForItemEventArgs e)
 		{
 			var item = (ListBoxItem)e.Element;
-
-			var grid = new Grid();
-			grid.Margin = new Thickness(10, 0, 0, 5);
-
-			var x = 0;
-			foreach (var c in Columns)
-			{
-				var ctrl = c.GenerateElement(e.Item);
-
-				grid.ColumnDefinitions.Add(c.CreateGridColumnDefinition());
-				grid.Children.Add(ctrl);
-
-				Grid.SetColumn(ctrl, x++);
-			}
-
-			item.Content = grid;
+			item.Content = new DataGridRow(this, e.Item);
 			item.ContentTemplate = null;
 			item.HorizontalContentAlignment = HorizontalAlignment.Stretch;
 			item.VerticalContentAlignment = VerticalAlignment.Stretch;
@@ -72,28 +87,34 @@ namespace MyToolkit.Controls
 				copy(this, e);
 		}
 
-		public void BuildUp()
+		private void BuildUp()
 		{
 			var x = 0;
+			var hasStar = false; 
+
 			titleRowControl.ColumnDefinitions.Clear();
 			foreach (var c in Columns)
 			{
-				var title = new ContentControl 
-				{ 
-					ContentTemplate = HeaderTemplate, 
-					Content = c, 
-					VerticalContentAlignment = VerticalAlignment.Stretch, 
-					HorizontalContentAlignment = HorizontalAlignment.Stretch, 
-				};
+				var title = new ContentControl();
+				title.Content = c;
+				title.ContentTemplate = HeaderTemplate;
+				title.VerticalContentAlignment = VerticalAlignment.Stretch;
+				title.HorizontalContentAlignment = HorizontalAlignment.Stretch;
+
 				title.Tapped += OnTapped; 
 				
 				Grid.SetColumn(title, x++);
 				titleRowControl.Children.Add(title);
-				titleRowControl.ColumnDefinitions.Add(c.CreateGridColumnDefinition());
+
+				var def = c.CreateGridColumnDefinition();
+				hasStar = hasStar || def.Width.IsStar;
+				titleRowControl.ColumnDefinitions.Add(def);
 			}
 
-			UpdateItemsSource();
+			if (!hasStar)
+				titleRowControl.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
+			UpdateItemsSource();
 			SelectColumn(Columns[DefaultOrderIndex]);
 		}
 
@@ -104,7 +125,7 @@ namespace MyToolkit.Controls
 				old.IsSelected = false;
 
 			sortedColumn = column;
-			sortedColumn.IsSelected = true;
+			sortedColumn.IsSelected = sortedColumn.CanSort;
 			sortedColumn.IsAscending = old == sortedColumn ? !sortedColumn.IsAscending : sortedColumn.IsAscendingDefault;
 
 			UpdateOrder();
@@ -113,7 +134,9 @@ namespace MyToolkit.Controls
 		private DataGridColumn sortedColumn; 
 		private void OnTapped(object sender, TappedRoutedEventArgs e)
 		{
-			SelectColumn((DataGridColumn)((ContentControl)sender).Content);		
+			var column = (DataGridColumn)((ContentControl)sender).Content; 
+			if (column.CanSort)
+				SelectColumn(column);		
 		}
 
 		public IExtendedObservableCollection Items
@@ -126,10 +149,15 @@ namespace MyToolkit.Controls
 			if (Items != null)
 			{
 				Items.IsTracking = false;
-				Items.Order = new Func<object, object>(o => PropertyPathHelper.Evaluate(o, sortedColumn.Binding.Path));
+				Items.Order = new Func<object, object>(o => PropertyPathHelper.Evaluate(o, sortedColumn.OrderPropertyPath));
 				Items.Ascending = sortedColumn.IsAscending;
 				Items.IsTracking = true;
 			}
+		}
+
+		public bool ShowItemDetails
+		{
+			get { return true; }
 		}
 
 		ObservableCollection<DataGridColumn> columns = new ObservableCollection<DataGridColumn>();
@@ -190,6 +218,18 @@ namespace MyToolkit.Controls
 			}
 		}
 
+
+		public DataTemplate ItemDetailsTemplate
+		{
+			get { return (DataTemplate)GetValue(ItemDetailsTemplateProperty); }
+			set { SetValue(ItemDetailsTemplateProperty, value); }
+		}
+
+		public static readonly DependencyProperty ItemDetailsTemplateProperty =
+			DependencyProperty.Register("ItemDetailsTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
+
+
+
 		public DataTemplate HeaderTemplate
 		{
 			get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
@@ -198,128 +238,5 @@ namespace MyToolkit.Controls
 
 		public static readonly DependencyProperty HeaderTemplateProperty =
 			DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
-	}
-
-	public class DataGridTextColumn : DataGridColumn
-	{
-		private double? fontSize;
-		[DefaultValue(double.NaN)]
-		public double FontSize
-		{
-			get { return fontSize ?? Double.NaN; }
-			set { fontSize = value; }
-		}
-
-		private FontStyle? fontStyle;
-		public FontStyle FontStyle
-		{
-			get { return fontStyle ?? FontStyle.Normal; }
-			set { fontStyle = value; }
-		}
-
-		private Brush foreground;
-		public Brush Foreground
-		{
-			get { return foreground; }
-			set { foreground = value; }
-		}
-
-		private Style style;
-		public Style Style
-		{
-			get { return style; }
-			set { style = value; }
-		}
-
-		public override FrameworkElement GenerateElement(object dataItem)
-		{
-			var block = new TextBlock();
-			block.VerticalAlignment = VerticalAlignment.Center;
-
-			if (style != null)
-				block.Style = style;
-			
-			if (fontSize.HasValue)
-				block.FontSize = fontSize.Value;
-
-			if (fontStyle.HasValue)
-				block.FontStyle = fontStyle.Value;
-
-			if (foreground != null)
-				block.Foreground = foreground;
-
-			if (Binding != null)
-				block.SetBinding(TextBlock.TextProperty, Binding); 
-
-			return block;
-		}
-	}
-
-	public abstract class DataGridColumn : DependencyObject
-	{
-		public abstract FrameworkElement GenerateElement(object dataItem);
-
-		internal ColumnDefinition CreateGridColumnDefinition()
-		{
-			return new ColumnDefinition { Width = Width == 0.0 ? GridLengthHelper.Auto : GridLengthHelper.FromPixels(Width) };
-		}
-
-		public bool IsSelected
-		{
-			get { return (bool)GetValue(IsSelectedProperty); }
-			internal set { SetValue(IsSelectedProperty, value); }
-		}
-		public static readonly DependencyProperty IsSelectedProperty =
-			DependencyProperty.Register("IsSelected", typeof(bool), typeof(DataGridColumn), new PropertyMetadata(default(bool)));
-
-
-		public bool IsAscending
-		{
-			get { return (bool)GetValue(IsAscendingProperty); }
-			internal set { SetValue(IsAscendingProperty, value); }
-		}
-		public static readonly DependencyProperty IsAscendingProperty =
-			DependencyProperty.Register("IsAscending", typeof(bool), typeof(DataGridColumn), new PropertyMetadata(default(bool)));
-
-
-
-
-
-		public bool IsAscendingDefault
-		{
-			get { return (bool)GetValue(IsAscendingDefaultProperty); }
-			set { SetValue(IsAscendingDefaultProperty, value); }
-		}
-		public static readonly DependencyProperty IsAscendingDefaultProperty =
-			DependencyProperty.Register("IsAscendingDefault", typeof(bool), typeof(DataGridColumn), new PropertyMetadata(true));
-
-
-		public string Header
-		{
-			get { return (string)GetValue(HeaderProperty); }
-			set { SetValue(HeaderProperty, value); }
-		}
-		public static readonly DependencyProperty HeaderProperty =
-			DependencyProperty.Register("Header", typeof(string), typeof(DataGridColumn), new PropertyMetadata(default(string)));
-
-		private Binding binding; 
-		public Binding Binding
-		{
-			get { return binding; }
-			set { binding = value; }
-			//get { return (Binding)GetValue(BindingProperty); }
-			//set { SetValue(BindingProperty, value); }
-		}
-		//public static readonly DependencyProperty BindingProperty =
-		//	DependencyProperty.Register("Binding", typeof(Binding), typeof(DataGridColumn), new PropertyMetadata(default(Binding)));
-
-
-		public double Width
-		{
-			get { return (double)GetValue(WidthProperty); }
-			set { SetValue(WidthProperty, value); }
-		}
-		public static readonly DependencyProperty WidthProperty =
-			DependencyProperty.Register("Width", typeof(double), typeof(DataGridColumn), new PropertyMetadata(default(double)));
 	}
 }

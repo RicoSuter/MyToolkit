@@ -10,11 +10,26 @@ using Windows.UI.Xaml.Media;
 
 namespace MyToolkit.Controls
 {
-	public sealed class DataGridTextCell : Control
+	public class DefaultDataGridCell : DataGridCell
 	{
-		public DataGridTextCell()
+		public DefaultDataGridCell(FrameworkElement control)
+			: base(control) { }
+
+		public override void OnSelectedChanged(bool isSelected)
 		{
-			this.DefaultStyleKey = typeof(DataGridTextCell);
+			
+		}
+	}
+
+	public abstract class DataGridCell
+	{
+		public FrameworkElement Control { get; private set; }
+
+		public abstract void OnSelectedChanged(bool isSelected);
+
+		public DataGridCell(FrameworkElement control)
+		{
+			Control = control; 
 		}
 	}
 }

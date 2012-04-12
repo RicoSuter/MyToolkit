@@ -10,6 +10,11 @@ namespace MyToolkit.Controls
 {
 	public class ExtendedListBox : ListBox
 	{
+		public ListBoxItem GetListBoxItemFromItem(object item)
+		{
+			return (ListBoxItem)ItemContainerGenerator.ContainerFromItem(item);
+		}
+
 		#region prepare container for item event
 
 		protected override void PrepareContainerForItemOverride(DependencyObject element, object item)

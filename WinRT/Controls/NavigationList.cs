@@ -12,36 +12,17 @@ namespace MyToolkit.Controls
 {
 	public class NavigationList : ExtendedListBox
 	{
-		public NavigationList()
+		protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
 		{
-			PrepareContainerForItem += OnPrepareContainerForItem;
-		}
-
-		private void OnPrepareContainerForItem(object sender, PrepareContainerForItemEventArgs e)
-		{
-			var element = (UIElement)e.Element;
-			element.Tapped += OnTapped;
+			base.PrepareContainerForItemOverride(element, item);
+			((UIElement)element).Tapped += OnTapped;
 		}
 
 		private void OnTapped(object sender, TappedRoutedEventArgs e)
 		{
-			//if (manipulationDeltaStarted)
-			//	return;
-
 			var element = (FrameworkElement)sender;
 			OnNavigated(new NavigationListEventArgs(element.DataContext));
 		}
-
-		//private bool manipulationDeltaStarted;
-		//private void ElementManipulationDelta(object sender, ManipulationDeltaRoutedEventArgs e)
-		//{
-		//	manipulationDeltaStarted = true;
-		//}
-
-		//private void ElementManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
-		//{
-		//	manipulationDeltaStarted = false;
-		//}
 
 		public event EventHandler<NavigationListEventArgs> Navigated;
 
