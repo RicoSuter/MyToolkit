@@ -4,8 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.Phone.Controls;
-
-// found on http://www.scottlogic.co.uk/blog/colin/2011/04/a-fast-loading-windows-phone-7-navigationlist-control/
+using GestureEventArgs = System.Windows.Input.GestureEventArgs;
 
 namespace MyToolkit.Controls
 {
@@ -17,54 +16,25 @@ namespace MyToolkit.Controls
 				TiltEffect.TiltableItems.Add(typeof(ContentPresenter));
 		}
 
-		public NavigationList()
+		protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
 		{
-			PrepareContainerForItem += OnPrepareContainerForItem;
+			base.PrepareContainerForItemOverride(element, item);
+			((UIElement)element).Tap += OnTapped; 
 		}
 
-		private void OnPrepareContainerForItem(object sender, PrepareContainerForItemEventArgs e)
+		private void OnTapped(object sender, GestureEventArgs e)
 		{
-			var element = (UIElement) e.Element;
-
-			element.MouseLeftButtonUp += ElementMouseLeftButtonUp;
-			element.ManipulationStarted += ElementManipulationStarted;
-			element.ManipulationDelta += ElementManipulationDelta;
+			var element = (FrameworkElement)sender;
+			OnNavigated(new NavigationListEventArgs(element.DataContext));
 		}
 
-		private bool manipulationDeltaStarted;
-		private void ElementManipulationDelta(object sender, ManipulationDeltaEventArgs e)
+		public event EventHandler<NavigationListEventArgs> Navigated;
+
+		protected void OnNavigated(NavigationListEventArgs args)
 		{
-			manipulationDeltaStarted = true;
-		}
-
-		private void ElementManipulationStarted(object sender, ManipulationStartedEventArgs e)
-		{
-			manipulationDeltaStarted = false;
-		}
-
-		private void ElementMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-		{
-			if (manipulationDeltaStarted)
-				return;
-
-			var element = (FrameworkElement) sender;
-			var child = VisualTreeHelper.GetChild(element, 0);
-			if (child != null)
-			{
-				var menu = ContextMenuService.GetContextMenu(child);
-				if (menu != null && menu.IsOpen)
-					return;
-			}
-
-			OnNavigation(new NavigationListEventArgs(element.DataContext));
-		}
-
-		public event EventHandler<NavigationListEventArgs> Navigation;
-
-		protected void OnNavigation(NavigationListEventArgs args)
-		{
-			if (Navigation != null)
-				Navigation(this, args);
+			var copy = Navigated;
+			if (copy != null)
+				copy(this, args);
 		}
 	}
 }

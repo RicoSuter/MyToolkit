@@ -63,6 +63,12 @@
     <Compile Include="..\Shared\Collections\ExtendedObservableCollection.cs">
       <Link>Collections\ExtendedObservableCollection.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Controls\NavigationListEventArgs.cs">
+      <Link>Controls\NavigationListEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
+      <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
     </Compile>
@@ -230,11 +236,9 @@
     <Compile Include="UI\FrameworkElementExtensions.cs" />
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="UI\PageDeactivator.cs" />
-    <Compile Include="Controls\NavigationListEventArgs.cs" />
     <Compile Include="UI\PasswordBoxBinding.cs" />
     <Compile Include="Controls\ExtendedItemsControl.cs" />
     <Compile Include="Controls\NavigationList.cs" />
-    <Compile Include="Controls\PrepareContainerForItemEventArgs.cs" />
     <Compile Include="UI\ProgressIndicatorProxy.cs" />
     <Compile Include="Controls\HtmlTextBlock.xaml.cs">
       <DependentUpon>HtmlTextBlock.xaml</DependentUpon>
