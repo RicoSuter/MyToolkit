@@ -21,14 +21,14 @@ namespace MyToolkit.Controls
 		private void OnTapped(object sender, TappedRoutedEventArgs e)
 		{
 			var element = (FrameworkElement)sender;
-			OnNavigated(new NavigationListEventArgs(element.DataContext));
+			OnNavigate(new NavigationListEventArgs(element.DataContext));
 		}
 
-		public event EventHandler<NavigationListEventArgs> Navigated;
+		public event EventHandler<NavigationListEventArgs> Navigate;
 
-		protected void OnNavigated(NavigationListEventArgs args)
+		protected void OnNavigate(NavigationListEventArgs args)
 		{
-			var copy = Navigated;
+			var copy = Navigate;
 			if (copy != null)
 				copy(this, args);
 		}
