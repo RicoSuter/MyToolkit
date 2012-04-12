@@ -57,6 +57,11 @@ namespace MyToolkit.Controls
 			UpdateInnerMargin();
 			RegisterScrollOffset();
 		}
+		
+		public ListBoxItem SelectedListBoxItem
+		{
+			get { return (ListBoxItem)ItemContainerGenerator.ContainerFromItem(SelectedItem); }
+		}
 
 		#region scroll jumping fix
 
