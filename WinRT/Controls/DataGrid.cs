@@ -124,7 +124,12 @@ namespace MyToolkit.Controls
 		private void UpdateOrder()
 		{
 			if (Items != null)
-				Items.SetOrder(sortedColumn.Header, sortedColumn.IsAscending);
+			{
+				Items.IsTracking = false;
+				Items.Order = new Func<object, object>(o => PropertyPathHelper.Evaluate(o, sortedColumn.Binding));
+				Items.Ascending = sortedColumn.IsAscending;
+				Items.IsTracking = true;
+			}
 		}
 
 		ObservableCollection<DataGridColumn> columns = new ObservableCollection<DataGridColumn>();

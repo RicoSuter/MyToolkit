@@ -17,12 +17,16 @@ namespace MyToolkit.Utilities
 			typeof(DependencyObject),
 			new PropertyMetadata(null));
 
-		public static Object Evaluate(Object container, PropertyPath propertyPath)
+		public static Object Evaluate(Object container, Binding binding)
 		{
-			Binding binding = new Binding() { Source = container, Path = propertyPath };
 			DependencyObject dummyDO = new MyDependencyObject();
 			BindingOperations.SetBinding(dummyDO, DummyProperty, binding);
 			return dummyDO.GetValue(DummyProperty);
+		}
+
+		public static Object Evaluate(Object container, PropertyPath propertyPath)
+		{
+			return Evaluate(container, new Binding { Source = container, Path = propertyPath });
 		}
 
 		public static Object Evaluate(Object container, String propertyPath)
