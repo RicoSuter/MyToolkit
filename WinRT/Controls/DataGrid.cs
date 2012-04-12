@@ -67,8 +67,6 @@ namespace MyToolkit.Controls
 		public static readonly DependencyProperty SelectedItemProperty =
 			DependencyProperty.Register("SelectedItem", typeof(object), typeof(DataGrid), new PropertyMetadata(null));
 
-
-
 		private void OnPrepareContainerForItem(object sender, PrepareContainerForItemEventArgs e)
 		{
 			var item = (ListBoxItem)e.Element;
@@ -78,11 +76,11 @@ namespace MyToolkit.Controls
 			item.VerticalContentAlignment = VerticalAlignment.Stretch;
 		}
 
-		public event EventHandler<NavigationListEventArgs> Navigated;
+		public event EventHandler<NavigationListEventArgs> Navigate;
 
-		private void OnNavigated(object sender, NavigationListEventArgs e)
+		private void OnNavigate(object sender, NavigationListEventArgs e)
 		{
-			var copy = Navigated;
+			var copy = Navigate;
 			if (copy != null)
 				copy(this, e);
 		}
