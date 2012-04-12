@@ -6,7 +6,11 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using MyToolkit.Utilities;
+
+#if METRO
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Data;
+#endif
 
 namespace MyToolkit.Collections
 {
@@ -15,7 +19,11 @@ namespace MyToolkit.Collections
 		bool IsTracking { get; set; }
 		int Limit { get; set; }
 
-		void SetOrder(PropertyPath propertyPath, bool ascending);
+		object Order { get; set; }
+		bool Ascending { get; set; }
+		object Filter { get; set; }
+
+		void SetOrder(string propertyPath, bool ascending);
 	}
 
 	public class ExtendedObservableCollection<T> : ObservableCollection<T>, IExtendedObservableCollection
@@ -57,6 +65,12 @@ namespace MyToolkit.Collections
 
 		public bool TrackItemChanges { get; private set; }
 
+		object IExtendedObservableCollection.Filter
+		{
+			get { return Filter; }
+			set { Filter = (Func<T, bool>)value; }
+		}
+
 		private Func<T, bool> filter; 
 		public Func<T, bool> Filter
 		{
@@ -68,16 +82,18 @@ namespace MyToolkit.Collections
 			}
 		}
 
-		public void SetOrder(PropertyPath propertyPath, bool ascending)
+		public void SetOrder(string propertyPath, bool ascending)
 		{
-#if METRO
 			IsTracking = false;
 			Order = o => PropertyPathHelper.Evaluate(o, propertyPath);
 			Ascending = ascending;
 			IsTracking = true;
-#else
-			throw new NotImplementedException();
-#endif
+		}
+
+		object IExtendedObservableCollection.Order
+		{
+			get { return Order; }
+			set { Order = (Func<T, object>)value; }
 		}
 
 		private Func<T, object> order;
