@@ -14,7 +14,8 @@ using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
-using MyToolkit.Utilities; 
+using MyToolkit.Utilities;
+using System.Threading.Tasks; 
 
 namespace MyToolkit.Controls
 {
@@ -23,6 +24,15 @@ namespace MyToolkit.Controls
 		public DataGrid()
 		{
 			DefaultStyleKey = typeof(DataGrid);
+			Loaded += OnLoaded; 
+		}
+
+		private async void OnLoaded(object sender, RoutedEventArgs e)
+		{
+			Dispatcher.Invoke(Windows.UI.Core.CoreDispatcherPriority.Normal, delegate
+			{
+				BuildUp();
+			}, this, null);
 		}
 
 		private Grid titleRowControl;
@@ -42,7 +52,6 @@ namespace MyToolkit.Controls
 			var currentOrdered = Columns.FirstOrDefault(c => c.CanSort); 
 			if (currentOrdered != null)
 				DefaultOrderIndex = Columns.IndexOf(currentOrdered);
-			BuildUp();
 		}
 
 		private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
