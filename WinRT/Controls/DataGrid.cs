@@ -37,6 +37,7 @@ namespace MyToolkit.Controls
 			listControl = (NavigationList)GetTemplateChild("list");
 			listControl.PrepareContainerForItem += OnPrepareContainerForItem;
 			listControl.SelectionChanged += OnSelectionChanged;
+			listControl.Navigate += OnNavigate; 
 
 			var currentOrdered = Columns.FirstOrDefault(c => c.CanSort); 
 			if (currentOrdered != null)
@@ -71,7 +72,7 @@ namespace MyToolkit.Controls
 		{
 			var item = (ListBoxItem)e.Element;
 			item.Content = new DataGridRow(this, e.Item);
-			item.ContentTemplate = null;
+			item.ContentTemplate = null; 
 			item.HorizontalContentAlignment = HorizontalAlignment.Stretch;
 			item.VerticalContentAlignment = VerticalAlignment.Stretch;
 		}
@@ -93,11 +94,9 @@ namespace MyToolkit.Controls
 			titleRowControl.ColumnDefinitions.Clear();
 			foreach (var c in Columns)
 			{
-				var title = new ContentControl();
+				var title = new ContentPresenter();
 				title.Content = c;
 				title.ContentTemplate = HeaderTemplate;
-				title.VerticalContentAlignment = VerticalAlignment.Stretch;
-				title.HorizontalContentAlignment = HorizontalAlignment.Stretch;
 
 				title.Tapped += OnTapped; 
 				
@@ -132,14 +131,14 @@ namespace MyToolkit.Controls
 		private DataGridColumn sortedColumn; 
 		private void OnTapped(object sender, TappedRoutedEventArgs e)
 		{
-			var column = (DataGridColumn)((ContentControl)sender).Content; 
+			var column = (DataGridColumn)((ContentPresenter)sender).Content; 
 			if (column.CanSort)
 				SelectColumn(column);		
 		}
 
 		public IExtendedObservableCollection Items
 		{
-			get { return listControl == null ? null : (IExtendedObservableCollection)listControl.ItemsSource; }
+			get { return listControl == null ? null : listControl.ItemsSource as IExtendedObservableCollection; }
 		}
 
 		private void UpdateOrder()
@@ -201,16 +200,14 @@ namespace MyToolkit.Controls
 			{
 				try
 				{
-					var l = ItemsSource; 
-					if (l != null && !(l is IExtendedObservableCollection))
+					if (ItemsSource != null && !(ItemsSource is IExtendedObservableCollection))
 					{
 						var type = ItemsSource.GetType().GenericTypeArguments[0];
-						if (ItemsSource is INotifyCollectionChanged) // is ObservableCollection => wrap with ExtendedObservableCollection
-							l = typeof(ExtendedObservableCollection<>).CreateGenericObject(type, ItemsSource);
-						else // is ObservableCollection => wrap with ExtendedObservableCollection and ObservableCollection
-							l = typeof(ExtendedObservableCollection<>).CreateGenericObject(type, typeof(ObservableCollection<>).CreateGenericObject(type, ItemsSource));
+						var newList = typeof(ExtendedObservableCollection<>).CreateGenericObject(type, ItemsSource);
+						listControl.ItemsSource = newList;
 					}
-					listControl.ItemsSource = l;
+					else
+						listControl.ItemsSource = ItemsSource;
 				}
 				catch { } // TODO: remove workaround ()
 			}
@@ -236,5 +233,16 @@ namespace MyToolkit.Controls
 
 		public static readonly DependencyProperty HeaderTemplateProperty =
 			DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
+
+
+
+		public DataTemplate CellTemplate
+		{
+			get { return (DataTemplate)GetValue(CellTemplateProperty); }
+			set { SetValue(CellTemplateProperty, value); }
+		}
+
+		public static readonly DependencyProperty CellTemplateProperty =
+			DependencyProperty.Register("CellTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
 	}
 }

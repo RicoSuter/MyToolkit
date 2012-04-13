@@ -29,16 +29,23 @@
 				<DataTemplate>
 					<Grid Background="Transparent">
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="*" />
 							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
 
 						<TextBlock Grid.Column="0" Text="{Binding Header}" VerticalAlignment="Center" Margin="15,0,15,0" FontSize="{StaticResource HeaderMediumFontSize}" />
-						<StackPanel Grid.Column="1" Visibility="{Binding IsSelected, Converter={StaticResource vc}}" VerticalAlignment="Center">
+						<StackPanel Grid.Column="1" Visibility="{Binding IsSelected, Converter={StaticResource vc}}" VerticalAlignment="Center" HorizontalAlignment="Left">
 							<Path Data="M5,0 L0,10 L10,10 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource vc}}"/>
 							<Path Data="M0,0 L5,10 L10,0 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource nc}}"/>
 						</StackPanel>
 					</Grid>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="CellTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<ContentPresenter x:Name="content" Margin="10,0,0,5" />
 				</DataTemplate>
 			</Setter.Value>
 		</Setter>

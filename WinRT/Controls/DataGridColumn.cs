@@ -31,6 +31,7 @@ namespace MyToolkit.Controls
 
 		internal ColumnDefinition CreateGridColumnDefinition()
 		{
+			// TODO use GridLenght in DataGridColumn instead of double
 			return new ColumnDefinition { Width = Width == 0.0 ? new GridLength(1, GridUnitType.Star) : GridLengthHelper.FromPixels(Width) };
 		}
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyToolkit.Utilities;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -12,19 +13,30 @@ namespace MyToolkit.Controls
 	{
 		internal DataGridRow(DataGrid dataGrid, object item)
 		{
-			DataGrid = dataGrid;
 			Item = item;
-			Margin = new Thickness(10, 0, 0, 5);
+			DataGrid = dataGrid;
 			
 			var x = 0;
 			var hasStar = false;
 			foreach (var c in dataGrid.Columns)
 			{
-				var ctrl = c.GenerateElement(item);
-				ctrl.Control.Tag = ctrl;
+				var cell = c.GenerateElement(item);
 
-				Grid.SetColumn(ctrl.Control, x++);
-				Children.Add(ctrl.Control);
+				var content = new ContentPresenter();
+				content.Content = cell.Control;
+				content.Margin = new Thickness(10, 0, 0, 5);
+				content.Tag = cell; 
+
+				// TODO: refactor if FindName is available 
+				//var content = new ContentPresenter();
+				//content.ContentTemplate = dataGrid.CellTemplate;
+				//content.Tag = cell; 
+
+				//var presenter = content.ContentTemplate.FindName("content", content);
+				//presenter.Content = cell.Control; 
+
+				Grid.SetColumn(content, x++);
+				Children.Add(content);
 			
 				var def = c.CreateGridColumnDefinition();
 				hasStar = hasStar || def.Width.IsStar;
@@ -97,7 +109,7 @@ namespace MyToolkit.Controls
 		{
 			get 
 			{ 
-				return Children.OfType<FrameworkElement>().
+				return Children.OfType<ContentPresenter>().
 					Where(c => c.Tag is DataGridCell).
 					Select(c => (DataGridCell)c.Tag).ToList(); 
 			}
