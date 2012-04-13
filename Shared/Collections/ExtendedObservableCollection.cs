@@ -26,12 +26,12 @@ namespace MyToolkit.Collections
 
 	public class ExtendedObservableCollection<T> : ObservableCollection<T>, IExtendedObservableCollection
 	{
-		private readonly ObservableCollection<T> originalCollection;
+		private readonly IList<T> originalCollection;
 
-		public ExtendedObservableCollection(ObservableCollection<T> originalCollection)
+		public ExtendedObservableCollection(IList<T> originalCollection)
 			: this(originalCollection, null) { }
 
-		public ExtendedObservableCollection(ObservableCollection<T> originalCollection, Func<T, bool> filter = null,
+		public ExtendedObservableCollection(IList<T> originalCollection, Func<T, bool> filter = null,
 			Func<T, object> orderBy = null, bool ascending = true, int limit = 0, bool trackItemChanges = false)
 		{
 			IsTracking = false; 
@@ -41,13 +41,16 @@ namespace MyToolkit.Collections
 			Order = orderBy;
 			Filter = filter;
 			Ascending = ascending;
-			TrackItemChanges = trackItemChanges; 
+			TrackItemChanges = trackItemChanges;
 
-			var weakEvent = new WeakEvent<ObservableCollection<T>, ExtendedObservableCollection<T>, 
-				NotifyCollectionChangedEventHandler>(originalCollection, this);
+			if (originalCollection is ObservableCollection<T>)
+			{
+				var collection = (ObservableCollection<T>)originalCollection;
+				var weakEvent = new WeakEvent<ObservableCollection<T>, ExtendedObservableCollection<T>,	NotifyCollectionChangedEventHandler>(collection, this);
 
-			weakEvent.Event = (s, e) => OnCollectionChanged(weakEvent, e);
-			originalCollection.CollectionChanged += weakEvent.Event;
+				weakEvent.Event = (s, e) => OnCollectionChanged(weakEvent, e);
+				collection.CollectionChanged += weakEvent.Event;
+			}
 
 			if (TrackItemChanges)
 			{
@@ -138,15 +141,14 @@ namespace MyToolkit.Collections
 			if (events.ContainsKey(item))
 				return;
 
-			var weakEvent = new WeakEvent<INotifyPropertyChanged, ExtendedObservableCollection<T>,
-				PropertyChangedEventHandler>(originalCollection, this);
+			var weakEvent = new WeakEvent<INotifyPropertyChanged, ExtendedObservableCollection<T>, PropertyChangedEventHandler>(item, this);
 			weakEvent.Event = (s, e) => OnItemChanged(weakEvent);
+
 			events.Add(item, weakEvent.Event);
 			item.PropertyChanged += weakEvent.Event;
 		}
 
-		private void OnItemChanged(WeakEvent<INotifyPropertyChanged, ExtendedObservableCollection<T>,
-				PropertyChangedEventHandler> weakEvent)
+		private void OnItemChanged(WeakEvent<INotifyPropertyChanged, ExtendedObservableCollection<T>, PropertyChangedEventHandler> weakEvent)
 		{
 			if (weakEvent.IsAlive)
 				weakEvent.Reference.UpdateList();
@@ -220,22 +222,22 @@ namespace MyToolkit.Collections
 			for (int i = 0; i < list.Count; i++) // moved => TODO better
 			{
 				var item = list[i];
-				if (IndexOf(item) != i)
-					Remove(item);
+				if (base.IndexOf(item) != i)
+					base.Remove(item);
 			}
 
 			var prev = -1;
 			foreach (var item in list) // insert new items
 			{
-				if (!Contains(item))
+				if (!base.Contains(item))
 				{
 					if (prev == -1)
 					{
 #if METRO
-						try { Insert(0, item); }
+						try { base.Insert(0, item); }
 						catch { } // TODO: WinRT hack => solve problem
 #else
-						Insert(0, item);
+						base.Insert(0, item);
 #endif
 					}
 					else
@@ -244,12 +246,12 @@ namespace MyToolkit.Collections
 						try
 						{
 							var prevItem = list[prev];
-							Insert(IndexOf(prevItem) + 1, item);
+							base.Insert(base.IndexOf(prevItem) + 1, item);
 						}
 						catch { } // TODO: WinRT hack => solve problem
 #else
 						var prevItem = list[prev];
-						Insert(IndexOf(prevItem) + 1, item);
+						base.Insert(base.IndexOf(prevItem) + 1, item);
 #endif
 					}
 				}
