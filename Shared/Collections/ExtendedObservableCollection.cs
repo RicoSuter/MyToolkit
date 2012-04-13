@@ -14,19 +14,11 @@ using Windows.UI.Xaml.Data;
 
 namespace MyToolkit.Collections
 {
-	public interface IExtendedObservableCollection : IList, INotifyCollectionChanged, INotifyPropertyChanged
+	public class ExtendedObservableCollection<T> : IList<T>, ICollection<T>, IReadOnlyList<T>, IEnumerable<T>, IList, ICollection, IEnumerable, 
+		INotifyCollectionChanged, INotifyPropertyChanged, IExtendedObservableCollection
 	{
-		bool IsTracking { get; set; }
-		int Limit { get; set; }
-
-		object Order { get; set; }
-		bool Ascending { get; set; }
-		object Filter { get; set; }
-	}
-
-	public class ExtendedObservableCollection<T> : ObservableCollection<T>, IExtendedObservableCollection
-	{
-		private readonly IList<T> originalCollection;
+		public IList<T> Items { get; private set; }
+		private MyObservableCollection<T> internalList = new MyObservableCollection<T>();
 
 		public ExtendedObservableCollection(IList<T> originalCollection)
 			: this(originalCollection, null) { }
@@ -34,8 +26,7 @@ namespace MyToolkit.Collections
 		public ExtendedObservableCollection(IList<T> originalCollection, Func<T, bool> filter = null,
 			Func<T, object> orderBy = null, bool ascending = true, int limit = 0, bool trackItemChanges = false)
 		{
-			IsTracking = false; 
-			this.originalCollection = originalCollection;
+			Items = originalCollection;
 
 			Limit = limit;
 			Order = orderBy;
@@ -61,7 +52,11 @@ namespace MyToolkit.Collections
 				}
 			}
 
-			IsTracking = true; // calls UpdateList()
+			internalList.CollectionChanged += OnCollectionChanged;
+			internalList.MyPropertyChanged += OnPropertyChanged;
+
+			isTracking = true;
+			UpdateList();
 		}
 
 		public bool TrackItemChanges { get; private set; }
@@ -111,6 +106,17 @@ namespace MyToolkit.Collections
 			}
 		}
 
+		private int offset;
+		public int Offset
+		{
+			get { return offset; }
+			set
+			{
+				offset = value;
+				UpdateList();
+			}
+		}
+
 		private bool ascending = true;
 		public bool Ascending
 		{
@@ -122,7 +128,7 @@ namespace MyToolkit.Collections
 			}
 		}
 
-		private bool isTracking;
+		private bool isTracking = false;
 		public bool IsTracking
 		{
 			get { return isTracking; }
@@ -192,71 +198,234 @@ namespace MyToolkit.Collections
 		private void UpdateList()
 		{
 			if (!IsTracking)
-				return;
-
-			List<T> list;
-			if (Filter != null && Order != null && Ascending)
-				list = originalCollection.Where(Filter).OrderBy(Order).ToList();
-			else if (Filter != null && Order != null && !Ascending)
-				list = originalCollection.Where(Filter).OrderByDescending(Order).ToList();
-			else if (Filter == null && Order != null && Ascending)
-				list = originalCollection.OrderBy(Order).ToList();
-			else if (Filter == null && Order != null && !Ascending)
-				list = originalCollection.OrderByDescending(Order).ToList();
-			else if (Filter != null && Order == null)
-				list = originalCollection.Where(Filter).ToList();
-			else if (Filter == null && Order == null)
-				list = ((ObservableCollection<T>)originalCollection).ToList();
-			else
-				throw new Exception();
-
-			if (Limit > 0)
-				list = list.Take(Limit).ToList();
-
-			foreach (var item in ((ObservableCollection<T>)this).ToArray()) // remove items
+				return; 
+			
+			lock (this)
 			{
-				if (!list.Contains(item))
-					Remove(item);
-			}
+				List<T> list;
+				if (Filter != null && Order != null && Ascending)
+					list = Items.Where(Filter).OrderBy(Order).ToList();
+				else if (Filter != null && Order != null && !Ascending)
+					list = Items.Where(Filter).OrderByDescending(Order).ToList();
+				else if (Filter == null && Order != null && Ascending)
+					list = Items.OrderBy(Order).ToList();
+				else if (Filter == null && Order != null && !Ascending)
+					list = Items.OrderByDescending(Order).ToList();
+				else if (Filter != null && Order == null)
+					list = Items.Where(Filter).ToList();
+				else if (Filter == null && Order == null)
+					list = ((ObservableCollection<T>)Items).ToList();
+				else
+					throw new Exception();
 
-			for (int i = 0; i < list.Count; i++) // moved => TODO better
-			{
-				var item = list[i];
-				if (base.IndexOf(item) != i)
-					base.Remove(item);
-			}
+				if (Limit > 0 || Offset > 0)
+					list = list.Skip(Offset).Take(Limit).ToList();
 
-			var prev = -1;
-			foreach (var item in list) // insert new items
-			{
-				if (!base.Contains(item))
+				foreach (var item in internalList.ToArray()) // remove items
 				{
-					if (prev == -1)
+					if (!list.Contains(item))
+						internalList.Remove(item);
+				}
+
+				for (int i = 0; i < list.Count; i++) // move items
+				{
+					var item = list[i];
+					var oldIndex = internalList.IndexOf(item);
+					if (oldIndex != i)
+						internalList.Remove(item);
+				}
+
+				var prev = -1;
+				foreach (var item in list) // insert new items
+				{
+					if (!internalList.Contains(item))
 					{
-#if METRO
-						try { base.Insert(0, item); }
-						catch { } // TODO: WinRT hack => solve problem
-#else
-						base.Insert(0, item);
-#endif
-					}
-					else
-					{
-#if METRO
-						try
+						if (prev == -1)
+							internalList.Insert(0, item);
+						else
 						{
 							var prevItem = list[prev];
-							base.Insert(base.IndexOf(prevItem) + 1, item);
+							internalList.Insert(internalList.IndexOf(prevItem) + 1, item);
 						}
-						catch { } // TODO: WinRT hack => solve problem
-#else
-						var prevItem = list[prev];
-						base.Insert(base.IndexOf(prevItem) + 1, item);
-#endif
 					}
+					prev++;
 				}
-				prev++;
+
+				// TODO: change to this => Move is not implemented in WinRT!
+				//for (int i = 0; i < list.Count; i++) // move items
+				//{
+				//	var item = list[i];
+				//	var oldIndex = internalList.IndexOf(item);
+				//	if (oldIndex != i)
+				//		internalList.Move(oldIndex, i);
+				//}
 			}
 		}
+
+		#region interfaces
+
+		public event NotifyCollectionChangedEventHandler CollectionChanged;
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			var copy = CollectionChanged;
+			if (copy != null)
+				copy(this, e);
+		}
+
+		private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			var copy = PropertyChanged;
+			if (copy != null)
+				copy(this, e);
+		}
+
+		public int Count
+		{
+			get { return internalList.Count; }
+		}
+
+		public IEnumerator<T> GetEnumerator()
+		{
+			return internalList.GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return internalList.GetEnumerator();
+		}
+
+		public int IndexOf(T item)
+		{
+			return internalList.IndexOf(item);
+		}
+
+		public T this[int index]
+		{
+			get { return internalList[index]; }
+			set { throw new NotImplementedException(); }
+		}
+
+		public bool Contains(T item)
+		{
+			return internalList.Contains(item);
+		}
+
+		public bool IsReadOnly
+		{
+			get { return false; }
+		}
+
+		public bool Contains(object value)
+		{
+			return value is T && internalList.Contains((T)value);
+		}
+
+		public int IndexOf(object value)
+		{
+			if (!(value is T))
+				return -1;
+
+			return internalList.IndexOf((T)value);
+		}
+
+		object IList.this[int index]
+		{
+			get { return internalList[index]; } 
+			set { throw new NotImplementedException(); }
+		}
+
+		public bool IsFixedSize
+		{
+			get { return false; }
+		}
+
+		public bool IsSynchronized
+		{
+			get { return true; }
+		}
+
+		public object SyncRoot
+		{
+			get { return null; }
+		}
+
+		public void Insert(int index, T item)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void RemoveAt(int index)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Add(T item)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Clear()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void CopyTo(T[] array, int arrayIndex)
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool Remove(T item)
+		{
+			throw new NotImplementedException();
+		}
+
+		int IList.Add(object value)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Insert(int index, object value)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void Remove(object value)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void CopyTo(Array array, int index)
+		{
+			throw new NotImplementedException();
+		}
+
+		#endregion
 	}
+
+	#region helper classes
+
+	public interface IExtendedObservableCollection : IList, ICollection, INotifyCollectionChanged, INotifyPropertyChanged
+	{
+		bool IsTracking { get; set; }
+
+		int Limit { get; set; }
+		int Offset { get; set; }
+
+		object Order { get; set; }
+		bool Ascending { get; set; }
+		object Filter { get; set; }
+	}
+
+	public class MyObservableCollection<T> : ObservableCollection<T>
+	{
+		public event PropertyChangedEventHandler MyPropertyChanged
+		{
+			add { PropertyChanged += value; }
+			remove { PropertyChanged -= value; }
+		}
+	}
+
+	#endregion
 }
