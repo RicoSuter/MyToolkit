@@ -18,28 +18,18 @@ namespace MyToolkit.Multimedia
 {
 	public static class YouTube
 	{
-		public static HttpResponse GetThumnailUrl(string youTubeId, Action<HttpResponse, Uri> onFinished)
+		public static Uri GetThumbnailUri(string youTubeId, YouTubeThumbnailSize size = YouTubeThumbnailSize.Medium)
 		{
-			//return Http.Get("http://www.youtube.com/watch?v=" + youTubeId, r => // (25 kb)
-			return Http.Get("http://www.youtube.com/embed/" + youTubeId, r => // smaller html downloads (5 kb)
+			switch (size)
 			{
-			if (r.Successful)
-			{
-				//var match = Regex.Match(r.Response, "<meta property=\"og:image\" content=\"(.*?)\">");
-				var match = Regex.Match(r.Response, "\"iurl\": \"(.*?)\"");
-				try
-				{
-					var uri = Uri.UnescapeDataString(match.Groups[1].Value).Replace("\\/", "/"); 
-					onFinished(r, new Uri(uri));
-				}
-				catch
-				{
-					onFinished(r, null);
-				}
+				case YouTubeThumbnailSize.Small:
+					return new Uri("http://img.youtube.com/vi/" + youTubeId + "/default.jpg", UriKind.Absolute);
+				case YouTubeThumbnailSize.Medium:
+					return new Uri("http://img.youtube.com/vi/" + youTubeId + "/hqdefault.jpg", UriKind.Absolute);
+				case YouTubeThumbnailSize.Large:
+					return new Uri("http://img.youtube.com/vi/" + youTubeId + "/maxresdefault.jpg", UriKind.Absolute);
 			}
-			else
-				onFinished(r, null);
-			});
+			throw new Exception();
 		}
 
 		public static HttpResponse Play(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFinished = null)

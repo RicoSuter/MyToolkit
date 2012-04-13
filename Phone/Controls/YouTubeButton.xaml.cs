@@ -78,15 +78,12 @@ namespace MyToolkit.Controls
 		private void LoadUri()
 		{
 			if (!String.IsNullOrEmpty(YouTubeID))
-				YouTube.GetThumnailUrl(YouTubeID, ThumbnailReceived);
+			{
+				imageUri = YouTube.GetThumbnailUri(YouTubeID);
+				UpdateImage();
+			}
 			else
 				imageUri = null; 
-		}
-
-		private void ThumbnailReceived(HttpResponse response, Uri uri)
-		{
-			imageUri = uri; 
-			Dispatcher.BeginInvoke(UpdateImage);
 		}
 	}
 }
