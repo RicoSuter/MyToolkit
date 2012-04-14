@@ -17,17 +17,12 @@ namespace MyToolkit.Controls
 
 		#region prepare container for item event
 
+		public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
 		protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
 		{
 			base.PrepareContainerForItemOverride(element, item);
-			OnPrepareContainerForItem(new PrepareContainerForItemEventArgs(element, item));
-		}
-
-		public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
-		protected void OnPrepareContainerForItem(PrepareContainerForItemEventArgs args)
-		{
 			if (PrepareContainerForItem != null)
-				PrepareContainerForItem(this, args);
+				PrepareContainerForItem(this, new PrepareContainerForItemEventArgs(element, item));
 		}
 
 		#endregion

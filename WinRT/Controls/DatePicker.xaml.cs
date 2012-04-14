@@ -28,6 +28,7 @@ namespace MyToolkit.Controls
 			set { SetValue(AllowNullProperty, value); }
 		}
 
+		// TODO: change to DateTime when fixed
 		public static readonly DependencyProperty SelectedItemProperty =
 			DependencyProperty.Register("SelectedItem", typeof(Object), typeof(DatePicker), new PropertyMetadata(null, OnSelectedItemChanged));
 
@@ -120,15 +121,19 @@ namespace MyToolkit.Controls
 			if (initializing)
 				return;
 
+			var hour = SelectedItem != null ? SelectedDate.Value.Hour : 0;
+			var minute = SelectedItem != null ? SelectedDate.Value.Minute : 0;
+			var second = SelectedItem != null ? SelectedDate.Value.Second : 0;
+
 			initializing = true;
 			if (AllowNull && (Day.SelectedIndex == 0 || Month.SelectedIndex == 0 || Year.SelectedIndex == 0))
 				SelectedItem = null;
 			else
 			{
 				if (AllowNull)
-					SelectedItem = new DateTime(Year.SelectedIndex + 2000 - 1, Month.SelectedIndex, Day.SelectedIndex);
+					SelectedItem = new DateTime(Year.SelectedIndex + 2000 - 1, Month.SelectedIndex, Day.SelectedIndex, hour, minute, second);
 				else
-					SelectedItem = new DateTime(Year.SelectedIndex + 2000, Month.SelectedIndex + 1, Day.SelectedIndex + 1);
+					SelectedItem = new DateTime(Year.SelectedIndex + 2000, Month.SelectedIndex + 1, Day.SelectedIndex + 1, hour, minute, second);
 			}
 
 			//if (SelectedItem.HasValue)

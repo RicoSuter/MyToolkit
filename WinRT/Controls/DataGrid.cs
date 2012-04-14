@@ -21,14 +21,19 @@ namespace MyToolkit.Controls
 {
 	public sealed class DataGrid : Control
 	{
+		private bool loaded = false; 
 		public DataGrid()
 		{
 			DefaultStyleKey = typeof(DataGrid);
 			Loaded += OnLoaded; 
 		}
 
-		private async void OnLoaded(object sender, RoutedEventArgs e)
+		private void OnLoaded(object sender, RoutedEventArgs e)
 		{
+			if (loaded)
+				return;
+
+			loaded = true; 
 			Dispatcher.Invoke(Windows.UI.Core.CoreDispatcherPriority.Normal, delegate
 			{
 				BuildUp();
@@ -218,7 +223,7 @@ namespace MyToolkit.Controls
 					else
 						listControl.ItemsSource = ItemsSource;
 				}
-				catch { } // TODO: remove workaround ()
+				catch { } // TODO: remove workaround (try catch and Dispatcher)
 			}
 		}
 
