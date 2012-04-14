@@ -140,20 +140,6 @@ namespace MyToolkit.Collections
 			}
 		}
 
-		private readonly Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler> events =
-			new Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler>();
-		private void RegisterEvent(INotifyPropertyChanged item)
-		{
-			if (events.ContainsKey(item))
-				return;
-
-			var weakEvent = new WeakEvent<INotifyPropertyChanged, ExtendedObservableCollection<T>, PropertyChangedEventHandler>(item, this);
-			weakEvent.Event = (s, e) => OnItemChanged(weakEvent);
-
-			events.Add(item, weakEvent.Event);
-			item.PropertyChanged += weakEvent.Event;
-		}
-
 		private void OnItemChanged(WeakEvent<INotifyPropertyChanged, ExtendedObservableCollection<T>, PropertyChangedEventHandler> weakEvent)
 		{
 			if (weakEvent.IsAlive)
@@ -167,25 +153,28 @@ namespace MyToolkit.Collections
 		{
 			if (weakEvent.IsAlive)
 			{
-				weakEvent.Reference.UpdateList();
-				if (TrackItemChanges)
+				lock (this)
 				{
-					if (e.NewItems != null)
+					weakEvent.Reference.UpdateList();
+					if (TrackItemChanges)
 					{
-						foreach (var i in e.NewItems)
+						if (e.NewItems != null)
 						{
-							if (i is INotifyPropertyChanged)
-								RegisterEvent((INotifyPropertyChanged)i);
-						}
-					}
-					if (e.OldItems != null)
-					{
-						foreach (var i in e.OldItems)
-						{
-							if (i is INotifyPropertyChanged && events.ContainsKey((INotifyPropertyChanged)i))
+							foreach (var i in e.NewItems)
 							{
-								var ev = events[(INotifyPropertyChanged)i];
-								((INotifyPropertyChanged)i).PropertyChanged -= ev;
+								if (i is INotifyPropertyChanged)
+									RegisterEvent((INotifyPropertyChanged)i);
+							}
+						}
+						if (e.OldItems != null)
+						{
+							foreach (var i in e.OldItems)
+							{
+								if (i is INotifyPropertyChanged && events.ContainsKey((INotifyPropertyChanged)i))
+								{
+									var ev = events[(INotifyPropertyChanged)i];
+									((INotifyPropertyChanged)i).PropertyChanged -= ev;
+								}
 							}
 						}
 					}
@@ -193,6 +182,21 @@ namespace MyToolkit.Collections
 			}
 			else
 				weakEvent.Target.CollectionChanged -= weakEvent.Event;
+		}
+
+		private readonly Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler> events =
+			new Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler>();
+
+		private void RegisterEvent(INotifyPropertyChanged item)
+		{
+			if (events.ContainsKey(item))
+				return;
+
+			var weakEvent = new WeakEvent<INotifyPropertyChanged, ExtendedObservableCollection<T>, PropertyChangedEventHandler>(item, this);
+			weakEvent.Event = (s, e) => OnItemChanged(weakEvent);
+
+			events.Add(item, weakEvent.Event);
+			item.PropertyChanged += weakEvent.Event;
 		}
 
 		private void UpdateList()
@@ -283,33 +287,45 @@ namespace MyToolkit.Collections
 
 		public int Count
 		{
-			get { return internalList.Count; }
+			get 
+			{ 
+				lock (this)
+					return internalList.Count; 
+			}
 		}
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			return internalList.GetEnumerator();
+			lock (this)
+				return internalList.GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			return internalList.GetEnumerator();
+			lock (this)
+				return internalList.GetEnumerator();
 		}
 
 		public int IndexOf(T item)
 		{
-			return internalList.IndexOf(item);
+			lock (this)
+				return internalList.IndexOf(item);
 		}
 
 		public T this[int index]
 		{
-			get { return internalList[index]; }
+			get 
+			{
+				lock (this)
+					return internalList[index]; 
+			}
 			set { throw new NotImplementedException(); }
 		}
 
 		public bool Contains(T item)
 		{
-			return internalList.Contains(item);
+			lock (this)
+				return internalList.Contains(item);
 		}
 
 		public bool IsReadOnly
@@ -319,20 +335,25 @@ namespace MyToolkit.Collections
 
 		public bool Contains(object value)
 		{
-			return value is T && internalList.Contains((T)value);
+			lock (this)
+				return value is T && internalList.Contains((T)value);
 		}
 
 		public int IndexOf(object value)
 		{
 			if (!(value is T))
 				return -1;
-
-			return internalList.IndexOf((T)value);
+			lock (this)
+				return internalList.IndexOf((T)value);
 		}
 
 		object IList.this[int index]
 		{
-			get { return internalList[index]; } 
+			get 
+			{
+				lock (this)
+					return internalList[index]; 
+			} 
 			set { throw new NotImplementedException(); }
 		}
 
