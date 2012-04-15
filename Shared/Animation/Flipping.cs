@@ -13,22 +13,22 @@ namespace MyToolkit.Animations
 {
 	public static class Flipping
 	{
-		public static void FlipToBack(UIElement ctrl, UIElement frontCtrl, UIElement backCtrl, TimeSpan duration, Action completed = null)
+		public static void FlipToBack(UIElement parentCtrl, UIElement frontCtrl, UIElement backCtrl, TimeSpan duration, Action completed = null)
 		{
-			Flip(ctrl, frontCtrl, backCtrl, duration, true, completed);
+			Flip(parentCtrl, frontCtrl, backCtrl, duration, true, completed);
 		}
 
-		public static void FlipToFront(UIElement ctrl, UIElement frontCtrl, UIElement backCtrl, TimeSpan duration, Action completed = null)
+		public static void FlipToFront(UIElement parentCtrl, UIElement frontCtrl, UIElement backCtrl, TimeSpan duration, Action completed = null)
 		{
-			Flip(ctrl, frontCtrl, backCtrl, duration, false, completed);
+			Flip(parentCtrl, frontCtrl, backCtrl, duration, false, completed);
 		}
 
-		public static void Flip(UIElement ctrl, UIElement frontCtrl, UIElement backCtrl, TimeSpan duration, bool transitionToBack, Action completed = null)
+		public static void Flip(UIElement parentCtrl, UIElement frontCtrl, UIElement backCtrl, TimeSpan duration, bool transitionToBack, Action completed = null)
 		{
 			duration = new TimeSpan(duration.Ticks / 2);
-			var proj = ctrl.Projection is PlaneProjection ? (PlaneProjection)ctrl.Projection : new PlaneProjection();
-			if (ctrl.Projection != proj)
-				ctrl.Projection = proj;
+			var proj = parentCtrl.Projection is PlaneProjection ? (PlaneProjection)parentCtrl.Projection : new PlaneProjection();
+			if (parentCtrl.Projection != proj)
+				parentCtrl.Projection = proj;
 
 			var animation = new DoubleAnimation();
 			animation.From = 0.0;
