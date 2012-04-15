@@ -88,7 +88,7 @@ namespace MyToolkit.Networking
 				timer = new Timer(s =>
 				{
 					timer.Dispose();
-					if (IsPending)
+					if (IsPending && !WebRequest.HaveResponse)
 					{
 						Exception = new TimeoutException("The connection timed out.");
 						Abort();

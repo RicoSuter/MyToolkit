@@ -9,7 +9,7 @@ namespace MyToolkit.Environment
 			get
 			{
 				#if DEBUG
-				return true;
+				return false;
 				#else
 				var license = new LicenseInformation();
 				return license.IsTrial();
