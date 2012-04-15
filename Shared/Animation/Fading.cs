@@ -73,14 +73,14 @@ namespace MyToolkit.Animations
 		}
 
 #if !METRO
-		public static void FadeInBackground(Panel panel, string backgroundSourceUrl, double opacity, 
+		public static void FadeInBackground(Panel panel, Uri backgroundSourceUri, double opacity, 
 			int msecs, Action finishedAction = null)
 		{
-			if (String.IsNullOrEmpty(backgroundSourceUrl))
+			if (backgroundSourceUri == null)
 				return;
 
 			var brush = new ImageBrush();
-			var image = new BitmapImage { UriSource = new Uri(backgroundSourceUrl, UriKind.RelativeOrAbsolute) };
+			var image = new BitmapImage { UriSource = backgroundSourceUri };
 			brush.Opacity = panel.Background != null ? panel.Background.Opacity : 0.0;
 			brush.Stretch = Stretch.UniformToFill;
 			brush.ImageSource = image;
@@ -107,7 +107,7 @@ namespace MyToolkit.Animations
 
 		public static void FadeOutBackground(Panel panel, int msecs, Action finishedAction = null)
 		{
-			if (panel.Background.Opacity == 0.0)
+			if (panel.Background == null || panel.Background.Opacity == 0.0)
 				return;
 
 			var animation = new DoubleAnimation();

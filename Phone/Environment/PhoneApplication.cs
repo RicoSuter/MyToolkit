@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Info;
 
 namespace MyToolkit.Environment
 {
@@ -13,6 +15,23 @@ namespace MyToolkit.Environment
 		public static bool IsDarkTheme
 		{
 			get { return Resources.PhoneLightThemeVisibility == Visibility.Collapsed; }
+		}
+
+		public static bool IsLowMemoryDevice
+		{
+			get
+			{
+				try
+				{
+					var result = (long)DeviceExtendedProperties.GetValue("ApplicationWorkingSetLimit");
+					return result < 94371840; 
+
+				}
+				catch (ArgumentOutOfRangeException)
+				{
+					return false; 
+				}
+			}
 		}
 	}
 }
