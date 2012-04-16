@@ -41,7 +41,7 @@ namespace MyToolkit.Controls
 			browser.LoadCompleted += OnLoadCompleted; 
 			browser.Navigating += OnNavigating;
 
-			//timer = new Timer(OnTimer, null, 500, Timeout.Infinite);
+			//timer = new Timer(OnTimer, null, 500, ConnectionTimeout.Infinite);
 
 			//Update();
 		}
