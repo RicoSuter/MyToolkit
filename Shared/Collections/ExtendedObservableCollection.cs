@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Data;
 
 namespace MyToolkit.Collections
 {
-	public class ExtendedObservableCollection<T> : IList<T>, ICollection<T>, IReadOnlyList<T>, IEnumerable<T>, IList, ICollection, IEnumerable, 
+	public class ExtendedObservableCollection<T> : IList<T>, ICollection<T>, IEnumerable<T>, IList, ICollection, IEnumerable, 
 		INotifyCollectionChanged, INotifyPropertyChanged, IExtendedObservableCollection
 	{
 		public IList<T> Items { get; private set; }
