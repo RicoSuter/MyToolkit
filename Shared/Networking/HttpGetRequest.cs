@@ -10,7 +10,7 @@ namespace MyToolkit.Networking
 		Uri Uri { get; }
 		Encoding Encoding { get; }
 		object Tag { get; }
-		int Timeout { get; }
+		int ConnectionTimeout { get; }
 
 		/// <summary>
 		/// Important: Always close stream after usage! If true, Response and RawResponse will be null in response object
@@ -39,7 +39,7 @@ namespace MyToolkit.Networking
 			Cookies = new List<Cookie>();
 			UseCache = true;
 			Encoding = Encoding.UTF8;
-			Timeout = 0;
+			ConnectionTimeout = 0;
 			ResponseAsStream = false; 
 
 			#if USE_GZIP
@@ -48,9 +48,10 @@ namespace MyToolkit.Networking
 		}
 
 		/// <summary>
+		/// Max. duration till FIRST response from server. Download of message will never be cancelled. 
 		/// In seconds. If 0 then use default timeout (better)
 		/// </summary>
-		public int Timeout { get; set; }
+		public int ConnectionTimeout { get; set; }
 
 		public bool ResponseAsStream { get; set; }
 

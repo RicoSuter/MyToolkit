@@ -290,6 +290,7 @@ namespace MyToolkit.Networking
 				response.CreateTimeoutTimer();
 				request.BeginGetRequestStream(delegate(IAsyncResult ar1)
 				{
+					response.IsConnected = true;
 					try
 					{
 						using (var stream = request.EndGetRequestStream(ar1))
@@ -411,6 +412,7 @@ namespace MyToolkit.Networking
 
 		private static void ProcessResponse(IAsyncResult asyncResult, WebRequest request, HttpResponse resp, Action<HttpResponse> action)
 		{
+			resp.IsConnected = true;
 			lock (pendingRequests)
 			{
 				if (pendingRequests.Contains(resp))

@@ -22,6 +22,8 @@ namespace MyToolkit.Networking
 		public IHttpRequest Request { get; internal set; }
 		internal HttpWebRequest WebRequest { get; set; }
 
+		public bool IsConnected { get; internal set; }
+
 		public bool IsPending
 		{
 			get { return !HasException && !Canceled && !Successful; } // TODO: correct?
@@ -83,17 +85,17 @@ namespace MyToolkit.Networking
 		private Timer timer; 
 		internal void CreateTimeoutTimer()
 		{
-			if (Request.Timeout > 0)
+			if (Request.ConnectionTimeout > 0)
 			{
 				timer = new Timer(s =>
 				{
 					timer.Dispose();
-					if (IsPending && !WebRequest.HaveResponse)
+					if (IsPending && !IsConnected)
 					{
 						Exception = new TimeoutException("The connection timed out.");
 						Abort();
 					}
-				}, null, Request.Timeout * 1000, Timeout.Infinite);
+				}, null, Request.ConnectionTimeout * 1000, Timeout.Infinite);
 			}
 		}
 #endif

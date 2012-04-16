@@ -39,7 +39,12 @@ namespace MyToolkit.MVVM
     public class NotifyPropertyChanged : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
-		private List<KeyValuePair<string, string>> dependencies; 
+		private List<KeyValuePair<string, string>> dependencies;
+
+		public bool SetProperty<TU, T>(Expression<Func<TU, T>> expression, ref T oldValue, T newValue)
+		{
+			return SetProperty(((MemberExpression)expression.Body).Member.Name, ref oldValue, newValue);
+		}
 
 		public bool SetProperty<T>(String propertyName, ref T oldValue, T newValue)
 		{
