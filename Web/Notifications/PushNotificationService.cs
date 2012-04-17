@@ -79,12 +79,11 @@ namespace MyToolkit.Notifications
 
 			try
 			{
-				byte[] contentInBytes = Encoding.UTF8.GetBytes(xml);
+				var contentInBytes = Encoding.UTF8.GetBytes(xml);
 
-				WebRequest webRequest = HttpWebRequest.Create(uri);
-				HttpWebRequest request = webRequest as HttpWebRequest;
+				var request = (HttpWebRequest)HttpWebRequest.Create(uri);
 				request.ContentType = "text/xml";
-				webRequest.Method = "POST";
+				request.Method = "POST";
 
 				var typeString = ""; 
 				switch (type)
@@ -95,14 +94,14 @@ namespace MyToolkit.Notifications
 					default: throw new NotImplementedException();
 				}
 
-				webRequest.Headers.Add("X-WNS-Type", typeString);
-				webRequest.Headers.Add("Authorization", String.Format("Bearer {0}", accessToken));
+				request.Headers.Add("X-WNS-Type", typeString);
+				request.Headers.Add("Authorization", String.Format("Bearer {0}", accessToken));
 
-				Stream requestStream = webRequest.GetRequestStream();
+				Stream requestStream = request.GetRequestStream();
 				requestStream.Write(contentInBytes, 0, contentInBytes.Length);
 				requestStream.Close();
 
-				HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse();
+				var webResponse = (HttpWebResponse)request.GetResponse();
 				return webResponse.StatusCode;
 			}
 			catch (WebException webException)
@@ -113,10 +112,7 @@ namespace MyToolkit.Notifications
 					GetAccessToken();
 					return SendNotification(uri, xml, type);
 				}
-				else
-				{
-					throw webException;
-				}
+				throw;
 			}
 		}
 

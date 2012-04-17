@@ -93,7 +93,7 @@
     </Compile>
     <Compile Include="Behaviors\ApplyDataContractResolverAttribute.cs" />
     <Compile Include="Notifications\PhonePushNotificationService.cs" />
-    <Compile Include="Notifications\PushNotificationClass.cs" />
+    <Compile Include="Notifications\PushNotificationPriority.cs" />
     <Compile Include="Notifications\PushNotificationService.cs" />
     <Compile Include="Notifications\PushNotificationType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

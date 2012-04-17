@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -8,11 +9,16 @@ using MyToolkit.Utilities;
 
 namespace MyToolkit.Notifications
 {
-	public class PhonePushNotificationService
+	public static class PhonePushNotificationService
 	{
-		public void SendToastNotification(string url, string line1, string line2, PushNotificationClass nClass = PushNotificationClass.Regular)
+		public static void SendRawNotification(string url, string message, PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
-			string msg =
+			SendNotification(url, message, PushNotificationType.Raw, priority);
+		}
+
+		public static void SendToastNotification(string url, string line1, string line2, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		{
+			var msg =
 				"<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
 				"<wp:Notification xmlns:wp=\"WPNotification\">" +
 				   "<wp:Toast>" +
@@ -21,55 +27,89 @@ namespace MyToolkit.Notifications
 				   "</ltwp:Toast>" +
 				"</wp:Notification>";
 
-			SendNotification(url, msg, PushNotificationType.Toast);
+			SendNotification(url, msg, PushNotificationType.Toast, priority);
 		}
 
-		public void SendNotification(string url, string xml, PushNotificationType target, PushNotificationClass nClass = PushNotificationClass.Regular)
+		public static void SendTileUpdate(string url, string title, int count, PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
-			byte[] msgBytes = new UTF8Encoding().GetBytes(xml);
+			SendTileUpdate(url, title, count, null, priority);
+		}
+
+		public static void SendTileUpdate(string url, string title, int count, string backgroundImage, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		{
+			var msg = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+				"<wp:Notification xmlns:wp=\"WPNotification\">" +
+				"<wp:Tile>";
+
+			if (backgroundImage != null)
+				msg += "<wp:BackgroundImage>" + Xml.XmlEscape(backgroundImage) + "</wp:BackgroundImage>";
+
+			msg += "<wp:Count>" + count + "</wp:Count>" +
+				"<wp:Title>" + Xml.XmlEscape(title) + "</wp:Title>" +
+				"</wp:Tile> " +
+				"</wp:Notification>";
+
+			SendNotification(url, msg, PushNotificationType.Tile, priority);
+		}
+
+		public static void SendNotification(string url, string xml, PushNotificationType target, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		{
+			var message = new UTF8Encoding().GetBytes(xml);
 
 			var request = (HttpWebRequest)WebRequest.Create(url);
 			request.Method = WebRequestMethods.Http.Post;
+
 			request.ContentType = "text/xml";
-			request.ContentLength = xml.Length;
+			request.ContentLength = message.Length;
+
 			request.Headers["X-MessageID"] = Guid.NewGuid().ToString();
-			request.Headers["X-NotificationClass"] = GetClassNumber(target, nClass);
+			request.Headers["X-NotificationClass"] = GetClassNumber(target, priority);
 
 			if (target != PushNotificationType.Raw)
 				request.Headers["X-WindowsPhone-Target"] = target == PushNotificationType.Toast ? "toast" : "token";
 
-			Stream requestStream = request.GetRequestStream();
-			requestStream.Write(msgBytes, 0, msgBytes.Length);
-			requestStream.Close();
+			using (var requestStream = request.GetRequestStream())
+				requestStream.Write(message, 0, message.Length);
+
+			using (var response = (HttpWebResponse)request.GetResponse())
+			{
+				var notificationStatus = response.Headers["X-NotificationStatus"];
+				var subscriptionStatus = response.Headers["X-SubscriptionStatus"];
+				var deviceConnectionStatus = response.Headers["X-DeviceConnectionStatus"];
+
+				Debug.WriteLine(string.Format("Device Connection Status: {0}", deviceConnectionStatus));
+				Debug.WriteLine(string.Format("Notification Status: {0}", notificationStatus));
+				Debug.WriteLine(string.Format("Subscription Status: {0}", subscriptionStatus));
+			}
 		}
 
-		private static string GetClassNumber(PushNotificationType target, PushNotificationClass nClass = PushNotificationClass.Regular)
+		private static string GetClassNumber(PushNotificationType target, PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
 			if (target == PushNotificationType.Tile)
 			{
-				switch (nClass)
+				switch (priority)
 				{
-					case PushNotificationClass.Priority: return "1";
-					case PushNotificationClass.Realtime: return "11";
-					case PushNotificationClass.Regular: return "21";
+					case PushNotificationPriority.Realtime: return "1";
+					case PushNotificationPriority.Priority: return "11";
+					case PushNotificationPriority.Regular: return "21";
 				}
 			}
 			else if (target == PushNotificationType.Toast)
 			{
-				switch (nClass)
+				switch (priority)
 				{
-					case PushNotificationClass.Priority: return "2";
-					case PushNotificationClass.Realtime: return "12";
-					case PushNotificationClass.Regular: return "22";
+					case PushNotificationPriority.Realtime: return "2";
+					case PushNotificationPriority.Priority: return "12";
+					case PushNotificationPriority.Regular: return "22";
 				}
 			}
 			else if (target == PushNotificationType.Raw)
 			{
-				switch (nClass)
+				switch (priority)
 				{
-					case PushNotificationClass.Priority: return "3";
-					case PushNotificationClass.Realtime: return "13";
-					case PushNotificationClass.Regular: return "23";
+					case PushNotificationPriority.Realtime: return "3";
+					case PushNotificationPriority.Priority: return "13";
+					case PushNotificationPriority.Regular: return "23";
 				}
 			}
 			throw new NotImplementedException();
