@@ -30,24 +30,78 @@ namespace MyToolkit.Notifications
 			SendNotification(url, msg, PushNotificationType.Toast, priority);
 		}
 
-		public static void SendTileUpdate(string url, string title, int count, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		public static void SendMainTileUpdate(
+			string url, 
+			string title, int count, string image, 
+			string backTitle, string backContent, string backImage,
+			PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
-			SendTileUpdate(url, title, count, null, priority);
+			SendTileUpdate(url, null, title, count, image, backTitle, backContent, backImage, priority);
 		}
 
-		public static void SendTileUpdate(string url, string title, int count, string backgroundImage, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		public static void SendMainTileCountUpdate(
+			string url, int count, 
+			PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
 			var msg = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-				"<wp:Notification xmlns:wp=\"WPNotification\">" +
-				"<wp:Tile>";
+					  "<wp:Notification xmlns:wp=\"WPNotification\"><wp:Tile>";
+			if (count >= 0)
+				msg += "<wp:Count>" + count + "</wp:Count>";
+			else
+				msg += "<wp:Count Action=\"Clear\"></wp:Count>";
+			msg += "</wp:Tile></wp:Notification>";
 
-			if (backgroundImage != null)
-				msg += "<wp:BackgroundImage>" + Xml.XmlEscape(backgroundImage) + "</wp:BackgroundImage>";
+			SendNotification(url, msg, PushNotificationType.Tile, priority);
+		}
 
-			msg += "<wp:Count>" + count + "</wp:Count>" +
-				"<wp:Title>" + Xml.XmlEscape(title) + "</wp:Title>" +
-				"</wp:Tile> " +
-				"</wp:Notification>";
+		public static void SendTileUpdate(
+			string url, 
+			string navigationUri, 
+			string title, int count, string image, 
+			string backTitle, string backContent, string backImage,
+			PushNotificationPriority priority = PushNotificationPriority.Regular)
+		{
+			var msg = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+			          "<wp:Notification xmlns:wp=\"WPNotification\">";
+
+			if (string.IsNullOrEmpty(navigationUri))
+				msg += "<wp:Tile>";
+			else
+				msg += "<wp:Tile ID=\"" + navigationUri + "\">";
+
+			// front
+			if (title != null)
+				msg += "<wp:Title>" + Xml.XmlEscape(title) + "</wp:Title>";
+			else
+				msg += "<wp:Title Action=\"Clear\"></wp:Title>";
+
+			if (image != null)
+				msg += "<wp:BackgroundImage>" + Xml.XmlEscape(image) + "</wp:BackgroundImage>";
+			else
+				msg += "<wp:BackgroundImage Action=\"Clear\"></wp:BackgroundImage>";
+
+			if (count >= 0)
+				msg += "<wp:Count>" + count + "</wp:Count>";
+			else
+				msg += "<wp:Count Action=\"Clear\"></wp:Count>";
+
+			// back
+			if (backTitle != null)
+				msg += "<wp:BackTitle>" + Xml.XmlEscape(backTitle) + "</wp:BackTitle>";
+			else
+				msg += "<wp:BackTitle Action=\"Clear\"></wp:BackTitle>";
+			
+			if (backContent != null)
+				msg += "<wp:BackContent>" + Xml.XmlEscape(backContent) + "</wp:BackContent>";
+			else
+				msg += "<wp:BackContent Action=\"Clear\"></wp:BackContent>";
+
+			if (backImage != null)
+				msg += "<wp:BackBackgroundImage>" + Xml.XmlEscape(backImage) + "</wp:BackBackgroundImage>";
+			else
+				msg += "<wp:BackBackgroundImage Action=\"Clear\"></wp:BackBackgroundImage>";
+
+			msg += "</wp:Tile></wp:Notification>";
 
 			SendNotification(url, msg, PushNotificationType.Tile, priority);
 		}
