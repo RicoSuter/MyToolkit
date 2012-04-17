@@ -100,6 +100,9 @@
     <Compile Include="..\Shared\MVVM\RelayCommand.cs">
       <Link>MVVM\RelayCommand.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Networking\ClientBaseExtensions.cs">
+      <Link>Networking\ClientBaseExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Networking\Http.cs">
       <Link>Networking\Http.cs</Link>
     </Compile>
