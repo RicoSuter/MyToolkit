@@ -3,7 +3,7 @@ using Windows.Storage;
 
 namespace MyToolkit.Storage
 {
-	public static class Settings
+	public static class ApplicationSettings
 	{
 		public static void SetSetting<T>(string key, T value)
 		{

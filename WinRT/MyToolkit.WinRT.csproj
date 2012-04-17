@@ -152,6 +152,7 @@
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\NavigationList.cs" />
     <Compile Include="Controls\RolloverButton.cs" />
+    <Compile Include="Environment\Device.cs" />
     <Compile Include="MEF\CompositionContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourceDictionary.cs" />
