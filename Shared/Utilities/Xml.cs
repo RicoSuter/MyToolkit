@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace MyToolkit.Utilities
@@ -29,5 +30,24 @@ namespace MyToolkit.Utilities
 				return (T)serializer.Deserialize(sw);
 			}
 		}
+
+#if !METRO
+		// TODO implement for metro => should work in final version
+		public static string XmlEscape(string unescaped)
+		{
+			XmlDocument doc = new XmlDocument();
+			var node = doc.CreateElement("root");
+			node.InnerText = unescaped;
+			return node.InnerXml;
+		}
+
+		public static string XmlUnescape(string escaped)
+		{
+			XmlDocument doc = new XmlDocument();
+			var node = doc.CreateElement("root");
+			node.InnerXml = escaped;
+			return node.InnerText;
+		}
+#endif
 	}
 }
