@@ -31,7 +31,7 @@ namespace MyToolkit.Utilities
 			}
 		}
 
-#if !METRO
+#if !METRO && !SILVERLIGHT
 		// TODO implement for metro => should work in final version
 		public static string XmlEscape(string unescaped)
 		{
