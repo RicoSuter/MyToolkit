@@ -14,11 +14,11 @@ using Windows.UI.Xaml.Data;
 
 namespace MyToolkit.Collections
 {
-	public class ExtendedObservableCollection<T> : IList<T>, ICollection<T>, IEnumerable<T>, IList, ICollection, IEnumerable, 
-		INotifyCollectionChanged, INotifyPropertyChanged, IExtendedObservableCollection
+	public class ExtendedObservableCollection<T> : IList<T>, IExtendedObservableCollection
 	{
 		public IList<T> Items { get; private set; }
-		private MyObservableCollection<T> internalList = new MyObservableCollection<T>();
+
+		private readonly MyObservableCollection<T> internalList = new MyObservableCollection<T>();
 
 		public ExtendedObservableCollection(IList<T> originalCollection)
 			: this(originalCollection, null) { }
@@ -45,11 +45,8 @@ namespace MyToolkit.Collections
 
 			if (TrackItemChanges)
 			{
-				foreach (var i in originalCollection)
-				{
-					if (i is INotifyPropertyChanged)
-						RegisterEvent((INotifyPropertyChanged)i);
-				}
+				foreach (var i in originalCollection.OfType<INotifyPropertyChanged>())
+					RegisterEvent(i);
 			}
 
 			internalList.CollectionChanged += OnCollectionChanged;
@@ -153,28 +150,23 @@ namespace MyToolkit.Collections
 		{
 			if (weakEvent.IsAlive)
 			{
-				lock (this)
+				lock (SyncRoot)
 				{
 					weakEvent.Reference.UpdateList();
 					if (TrackItemChanges)
 					{
 						if (e.NewItems != null)
 						{
-							foreach (var i in e.NewItems)
-							{
-								if (i is INotifyPropertyChanged)
-									RegisterEvent((INotifyPropertyChanged)i);
-							}
+							foreach (var i in e.NewItems.OfType<INotifyPropertyChanged>())
+								RegisterEvent(i);
 						}
+
 						if (e.OldItems != null)
 						{
-							foreach (var i in e.OldItems)
+							foreach (var i in e.OldItems.OfType<INotifyPropertyChanged>().Where(i => events.ContainsKey(i)))
 							{
-								if (i is INotifyPropertyChanged && events.ContainsKey((INotifyPropertyChanged)i))
-								{
-									var ev = events[(INotifyPropertyChanged)i];
-									((INotifyPropertyChanged)i).PropertyChanged -= ev;
-								}
+								var ev = events[i];
+								i.PropertyChanged -= ev;
 							}
 						}
 					}
@@ -202,9 +194,9 @@ namespace MyToolkit.Collections
 		private void UpdateList()
 		{
 			if (!IsTracking)
-				return; 
-			
-			lock (this)
+				return;
+
+			lock (SyncRoot)
 			{
 				List<T> list;
 				if (Filter != null && Order != null && Ascending)
@@ -218,20 +210,17 @@ namespace MyToolkit.Collections
 				else if (Filter != null && Order == null)
 					list = Items.Where(Filter).ToList();
 				else if (Filter == null && Order == null)
-					list = ((ObservableCollection<T>)Items).ToList();
+					list = Items.ToList();
 				else
 					throw new Exception();
 
 				if (Limit > 0 || Offset > 0)
 					list = list.Skip(Offset).Take(Limit).ToList();
 
-				foreach (var item in internalList.ToArray()) // remove items
-				{
-					if (!list.Contains(item))
-						internalList.Remove(item);
-				}
+				foreach (var item in internalList.Where(item => !list.Contains(item)).ToArray())
+					internalList.Remove(item);
 
-				for (int i = 0; i < list.Count; i++) // move items
+				for (var i = 0; i < list.Count; i++) // move items
 				{
 					var item = list[i];
 					var oldIndex = internalList.IndexOf(item);
@@ -289,26 +278,26 @@ namespace MyToolkit.Collections
 		{
 			get 
 			{ 
-				lock (this)
+				lock (SyncRoot)
 					return internalList.Count; 
 			}
 		}
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			lock (this)
+			lock (SyncRoot)
 				return internalList.GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{
-			lock (this)
+			lock (SyncRoot)
 				return internalList.GetEnumerator();
 		}
 
 		public int IndexOf(T item)
 		{
-			lock (this)
+			lock (SyncRoot)
 				return internalList.IndexOf(item);
 		}
 
@@ -316,7 +305,7 @@ namespace MyToolkit.Collections
 		{
 			get 
 			{
-				lock (this)
+				lock (SyncRoot)
 					return internalList[index]; 
 			}
 			set { throw new NotImplementedException(); }
@@ -324,7 +313,7 @@ namespace MyToolkit.Collections
 
 		public bool Contains(T item)
 		{
-			lock (this)
+			lock (SyncRoot)
 				return internalList.Contains(item);
 		}
 
@@ -335,7 +324,7 @@ namespace MyToolkit.Collections
 
 		public bool Contains(object value)
 		{
-			lock (this)
+			lock (SyncRoot)
 				return value is T && internalList.Contains((T)value);
 		}
 
@@ -343,7 +332,8 @@ namespace MyToolkit.Collections
 		{
 			if (!(value is T))
 				return -1;
-			lock (this)
+
+			lock (SyncRoot)
 				return internalList.IndexOf((T)value);
 		}
 
@@ -351,7 +341,7 @@ namespace MyToolkit.Collections
 		{
 			get 
 			{
-				lock (this)
+				lock (SyncRoot)
 					return internalList[index]; 
 			} 
 			set { throw new NotImplementedException(); }
@@ -369,7 +359,7 @@ namespace MyToolkit.Collections
 
 		public object SyncRoot
 		{
-			get { return null; }
+			get { return Items; }
 		}
 
 		public void Insert(int index, T item)
@@ -427,7 +417,7 @@ namespace MyToolkit.Collections
 
 	#region helper classes
 
-	public interface IExtendedObservableCollection : IList, ICollection, INotifyCollectionChanged, INotifyPropertyChanged
+	public interface IExtendedObservableCollection : IList, INotifyCollectionChanged, INotifyPropertyChanged
 	{
 		bool IsTracking { get; set; }
 
