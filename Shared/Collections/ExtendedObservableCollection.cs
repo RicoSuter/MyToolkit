@@ -18,15 +18,20 @@ namespace MyToolkit.Collections
 	{
 		public IList<T> Items { get; private set; }
 
+		NotifyCollectionChangedEventHandler itemsChangedHandler; 
+
 		private readonly MyObservableCollection<T> internalList = new MyObservableCollection<T>();
 
-		public ExtendedObservableCollection(IList<T> originalCollection)
-			: this(originalCollection, null) { }
+		public ExtendedObservableCollection()
+			: this(new ObservableCollection<T>(), null) { }
 
-		public ExtendedObservableCollection(IList<T> originalCollection, Func<T, bool> filter = null,
+		public ExtendedObservableCollection(IList<T> items)
+			: this(items, null) { }
+
+		public ExtendedObservableCollection(IList<T> items, Func<T, bool> filter = null,
 			Func<T, object> orderBy = null, bool ascending = true, int limit = 0, bool trackItemChanges = false)
 		{
-			Items = originalCollection;
+			Items = items;
 
 			Limit = limit;
 			Order = orderBy;
@@ -34,29 +39,48 @@ namespace MyToolkit.Collections
 			Ascending = ascending;
 			TrackItemChanges = trackItemChanges;
 
-			if (originalCollection is ObservableCollection<T>)
+			if (Items is ObservableCollection<T>)
 			{
-				var collection = (ObservableCollection<T>)originalCollection;
-				var weakEvent = new WeakEvent<ObservableCollection<T>, ExtendedObservableCollection<T>,	NotifyCollectionChangedEventHandler>(collection, this);
+				var collection = (ObservableCollection<T>)Items;
 
-				weakEvent.Event = (s, e) => OnCollectionChanged(weakEvent, e);
-				collection.CollectionChanged += weakEvent.Event;
+				itemsChangedHandler = WeakEvent.Set<ExtendedObservableCollection<T>, NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
+					h => (o,e) => h(o,e),
+					h => collection.CollectionChanged += h,
+					h => collection.CollectionChanged -= h,
+					this, (s, e) => s.OnOriginalCollectionChanged(s, e));
+
+				//itemsChangedEvent = new WeakEvent<ExtendedObservableCollection<T>, ObservableCollection<T>, NotifyCollectionChangedEventArgs>(this, collection);
+				//itemsChangedEvent.Action = (p, s, e) => p.OnOriginalCollectionChanged(s, e);
+				//itemsChangedEvent.Unregister = (c, e) => c.CollectionChanged -= e.RaiseEvent;
+				//collection.CollectionChanged += itemsChangedEvent.RaiseEvent;
 			}
 
 			if (TrackItemChanges)
-			{
-				foreach (var i in originalCollection.OfType<INotifyPropertyChanged>())
-					RegisterEvent(i);
-			}
+				TrackAllItems();
 
-			internalList.CollectionChanged += OnCollectionChanged;
-			internalList.MyPropertyChanged += OnPropertyChanged;
+			internalList.CollectionChanged += OnInternalCollectionChanged;
+			internalList.MyPropertyChanged += OnInternalPropertyChanged;
 
 			isTracking = true;
 			UpdateList();
 		}
 
-		public bool TrackItemChanges { get; private set; }
+		private bool trackItemChanges;
+		public bool TrackItemChanges
+		{
+			get { return trackItemChanges; }
+			set
+			{
+				if (value != trackItemChanges)
+				{
+					trackItemChanges = value;
+					if (trackItemChanges)
+						TrackAllItems();
+					else
+						UntrackAllItems();
+				}
+			}
+		}
 
 		object IExtendedObservableCollection.Filter
 		{
@@ -137,43 +161,26 @@ namespace MyToolkit.Collections
 			}
 		}
 
-		private void OnItemChanged(WeakEvent<INotifyPropertyChanged, ExtendedObservableCollection<T>, PropertyChangedEventHandler> weakEvent)
+		private void OnOriginalCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
-			if (weakEvent.IsAlive)
-				weakEvent.Reference.UpdateList();
-			else
-				weakEvent.Target.PropertyChanged -= weakEvent.Event;
-		}
-
-		private void OnCollectionChanged(WeakEvent<ObservableCollection<T>, ExtendedObservableCollection<T>,
-			NotifyCollectionChangedEventHandler> weakEvent, NotifyCollectionChangedEventArgs e)
-		{
-			if (weakEvent.IsAlive)
+			lock (SyncRoot)
 			{
-				lock (SyncRoot)
+				UpdateList();
+				if (TrackItemChanges)
 				{
-					weakEvent.Reference.UpdateList();
-					if (TrackItemChanges)
+					if (e.NewItems != null)
 					{
-						if (e.NewItems != null)
-						{
-							foreach (var i in e.NewItems.OfType<INotifyPropertyChanged>())
-								RegisterEvent(i);
-						}
+						foreach (var i in e.NewItems.OfType<INotifyPropertyChanged>())
+							RegisterEvent(i);
+					}
 
-						if (e.OldItems != null)
-						{
-							foreach (var i in e.OldItems.OfType<INotifyPropertyChanged>().Where(i => events.ContainsKey(i)))
-							{
-								var ev = events[i];
-								i.PropertyChanged -= ev;
-							}
-						}
+					if (e.OldItems != null)
+					{
+						foreach (var i in e.OldItems.OfType<INotifyPropertyChanged>())
+							UnregisterEvent(i);
 					}
 				}
 			}
-			else
-				weakEvent.Target.CollectionChanged -= weakEvent.Event;
 		}
 
 		private readonly Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler> events =
@@ -184,11 +191,40 @@ namespace MyToolkit.Collections
 			if (events.ContainsKey(item))
 				return;
 
-			var weakEvent = new WeakEvent<INotifyPropertyChanged, ExtendedObservableCollection<T>, PropertyChangedEventHandler>(item, this);
-			weakEvent.Event = (s, e) => OnItemChanged(weakEvent);
+			var handler = WeakEvent.Set<ExtendedObservableCollection<T>, PropertyChangedEventHandler, PropertyChangedEventArgs>(
+				h => (o, e) => h(o, e),
+				h => item.PropertyChanged += h,
+				h => item.PropertyChanged -= h,
+				this, (s, e) => s.UpdateList());
 
-			events.Add(item, weakEvent.Event);
-			item.PropertyChanged += weakEvent.Event;
+			events.Add(item, handler);
+
+			//var weakEvent = new WeakEvent<ExtendedObservableCollection<T>, INotifyPropertyChanged, PropertyChangedEventArgs>(this, item);
+			//weakEvent.Action = (p, s, e) => p.UpdateList();
+			//weakEvent.Unregister = (c, e) => c.PropertyChanged -= e.RaiseEvent;
+			//item.PropertyChanged += weakEvent.RaiseEvent;
+		}
+
+		private void UnregisterEvent(INotifyPropertyChanged item)
+		{
+			if (!events.ContainsKey(item))
+				return;
+
+			var handler = events[item];
+			item.PropertyChanged -= handler;
+			events.Remove(item);
+		}
+
+		private void TrackAllItems()
+		{
+			foreach (var i in Items.OfType<INotifyPropertyChanged>())
+				RegisterEvent(i);
+		}
+
+		private void UntrackAllItems()
+		{
+			foreach (var i in Items.OfType<INotifyPropertyChanged>())
+				UnregisterEvent(i);
 		}
 
 		private void UpdateList()
@@ -255,19 +291,28 @@ namespace MyToolkit.Collections
 			}
 		}
 
+		public void Close()
+		{
+			if (itemsChangedHandler != null)
+				((ObservableCollection<T>)Items).CollectionChanged -= itemsChangedHandler;
+			itemsChangedHandler = null; 
+
+			TrackItemChanges = false;
+		}
+
 		#region interfaces
 
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		private void OnInternalCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			var copy = CollectionChanged;
 			if (copy != null)
 				copy(this, e);
 		}
 
-		private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+		private void OnInternalPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			var copy = PropertyChanged;
 			if (copy != null)
@@ -308,7 +353,17 @@ namespace MyToolkit.Collections
 				lock (SyncRoot)
 					return internalList[index]; 
 			}
-			set { throw new NotImplementedException(); }
+			set { throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead."); }
+		}
+
+		object IList.this[int index]
+		{
+			get
+			{
+				lock (SyncRoot)
+					return internalList[index];
+			}
+			set { throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead."); }
 		}
 
 		public bool Contains(T item)
@@ -337,16 +392,6 @@ namespace MyToolkit.Collections
 				return internalList.IndexOf((T)value);
 		}
 
-		object IList.this[int index]
-		{
-			get 
-			{
-				lock (SyncRoot)
-					return internalList[index]; 
-			} 
-			set { throw new NotImplementedException(); }
-		}
-
 		public bool IsFixedSize
 		{
 			get { return false; }
@@ -364,52 +409,56 @@ namespace MyToolkit.Collections
 
 		public void Insert(int index, T item)
 		{
-			throw new NotImplementedException();
-		}
-
-		public void RemoveAt(int index)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void Add(T item)
-		{
-			throw new NotImplementedException();
-		}
-
-		public void Clear()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void CopyTo(T[] array, int arrayIndex)
-		{
-			throw new NotImplementedException();
-		}
-
-		public bool Remove(T item)
-		{
-			throw new NotImplementedException();
-		}
-
-		int IList.Add(object value)
-		{
-			throw new NotImplementedException();
+			throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead.");
 		}
 
 		public void Insert(int index, object value)
 		{
-			throw new NotImplementedException();
+			throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead.");
 		}
 
-		public void Remove(object value)
+		public void RemoveAt(int index)
 		{
-			throw new NotImplementedException();
+			throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead.");
+		}
+
+		public int Add(object value)
+		{
+			throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead.");
+		}
+
+		public void Add(T item)
+		{
+			lock (SyncRoot)
+				Items.Add(item);
+		}
+
+		public void Clear()
+		{
+			lock (SyncRoot)
+				Items.Clear();
+		}
+
+		public void CopyTo(T[] array, int arrayIndex)
+		{
+			lock (SyncRoot)
+				Items.CopyTo(array, arrayIndex);
 		}
 
 		public void CopyTo(Array array, int index)
 		{
-			throw new NotImplementedException();
+			CopyTo((T[])array, index);
+		}
+
+		public bool Remove(T item)
+		{
+			lock (SyncRoot)
+				return Items.Remove(item);
+		}
+
+		public void Remove(object value)
+		{
+			Remove((T)value);
 		}
 
 		#endregion
