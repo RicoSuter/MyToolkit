@@ -79,7 +79,7 @@ namespace MyToolkit.Networking
         internal void CreateTimeoutTimer()
         {
 			if (Request.ConnectionTimeout > 0)
-	            throw new NotImplementedException();
+	            throw new NotImplementedException(); 
         }
 #else
 		private Timer timer; 
