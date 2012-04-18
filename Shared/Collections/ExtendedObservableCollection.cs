@@ -20,7 +20,7 @@ namespace MyToolkit.Collections
 
 		NotifyCollectionChangedEventHandler itemsChangedHandler; 
 
-		private readonly MyObservableCollection<T> internalList = new MyObservableCollection<T>();
+		private MyObservableCollection<T> internalList = new MyObservableCollection<T>();
 
 		public ExtendedObservableCollection()
 			: this(new ObservableCollection<T>(), null) { }
@@ -48,11 +48,6 @@ namespace MyToolkit.Collections
 					h => collection.CollectionChanged += h,
 					h => collection.CollectionChanged -= h,
 					this, (s, e) => s.OnOriginalCollectionChanged(s, e));
-
-				//itemsChangedEvent = new WeakEvent<ExtendedObservableCollection<T>, ObservableCollection<T>, NotifyCollectionChangedEventArgs>(this, collection);
-				//itemsChangedEvent.Action = (p, s, e) => p.OnOriginalCollectionChanged(s, e);
-				//itemsChangedEvent.Unregister = (c, e) => c.CollectionChanged -= e.RaiseEvent;
-				//collection.CollectionChanged += itemsChangedEvent.RaiseEvent;
 			}
 
 			if (TrackItemChanges)
@@ -198,11 +193,6 @@ namespace MyToolkit.Collections
 				this, (s, e) => s.UpdateList());
 
 			events.Add(item, handler);
-
-			//var weakEvent = new WeakEvent<ExtendedObservableCollection<T>, INotifyPropertyChanged, PropertyChangedEventArgs>(this, item);
-			//weakEvent.Action = (p, s, e) => p.UpdateList();
-			//weakEvent.Unregister = (c, e) => c.PropertyChanged -= e.RaiseEvent;
-			//item.PropertyChanged += weakEvent.RaiseEvent;
 		}
 
 		private void UnregisterEvent(INotifyPropertyChanged item)
@@ -298,6 +288,9 @@ namespace MyToolkit.Collections
 			itemsChangedHandler = null; 
 
 			TrackItemChanges = false;
+
+			Items = null;
+			internalList = null; 
 		}
 
 		#region interfaces
