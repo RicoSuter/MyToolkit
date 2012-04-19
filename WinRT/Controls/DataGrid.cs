@@ -212,18 +212,14 @@ namespace MyToolkit.Controls
 		{
 			if (listControl != null)
 			{
-				try
+				if (ItemsSource != null && !(ItemsSource is IExtendedObservableCollection))
 				{
-					if (ItemsSource != null && !(ItemsSource is IExtendedObservableCollection))
-					{
-						var type = ItemsSource.GetType().GenericTypeArguments[0];
-						var newList = typeof(ExtendedObservableCollection<>).CreateGenericObject(type, ItemsSource);
-						listControl.ItemsSource = newList;
-					}
-					else
-						listControl.ItemsSource = ItemsSource;
+					var type = ItemsSource.GetType().GenericTypeArguments[0];
+					var newList = typeof(ExtendedObservableCollection<>).CreateGenericObject(type, ItemsSource);
+					listControl.ItemsSource = newList;
 				}
-				catch { } // TODO: remove workaround (try catch and Dispatcher)
+				else
+					listControl.ItemsSource = ItemsSource;
 			}
 		}
 
