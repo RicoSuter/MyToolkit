@@ -13,8 +13,10 @@ namespace MyToolkit.Environment
 		{
 			get
 			{
-				// TODO: better, take WiFi not currently connected
-				return NetworkInformation.GetInternetConnectionProfile().NetworkAdapter.NetworkAdapterId.ToString();
+				return NetworkInformation.GetConnectionProfiles().
+					Where(p => p.GetNetworkConnectivityLevel() != NetworkConnectivityLevel.ConstrainedInternetAccess).
+					Select(p => p.NetworkAdapter.NetworkAdapterId).
+					OrderBy(p => p).First().ToString();
 			}
 		}
 	}

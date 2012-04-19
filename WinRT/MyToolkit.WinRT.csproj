@@ -136,7 +136,6 @@
     </Compile>
     <Compile Include="Animations\Fading.cs" />
     <Compile Include="Animations\Flipping.cs" />
-    <Compile Include="Collections\ObservableVector.cs" />
     <Compile Include="Controls\TimePicker.xaml.cs">
       <DependentUpon>TimePicker.xaml</DependentUpon>
     </Compile>
