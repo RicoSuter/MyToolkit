@@ -9,7 +9,7 @@ namespace MyToolkit.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			return new SolidColorBrush(!String.IsNullOrEmpty((String)value) ? Colors.Transparent : Resources.PhoneInactiveColor); 
+			return new SolidColorBrush(!String.IsNullOrEmpty((String)value) ? Colors.Transparent : Environment.Resources.PhoneInactiveColor); 
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

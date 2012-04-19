@@ -1,7 +1,10 @@
 ﻿using System;
 
 #if !METRO
-	using System.Windows.Data;
+using System.Linq;
+using System.Windows.Data;
+using MyToolkit.Resources;
+
 #else
 	using Windows.UI.Xaml.Data;
 	using Windows.Globalization.DateTimeFormatting;
@@ -21,11 +24,31 @@ namespace MyToolkit.Converters
 				return "";
 
 			var span = (TimeSpan)value;
-			var param = parameter != null ? parameter.ToString().ToLower() : null;
-			if (param == "days")
-				return Math.Round(span.TotalDays, 2).ToString();
-			else
-				return ((int)span.TotalHours).ToString("D2") + ":" + Math.Abs(span.Minutes).ToString("D2");
+
+			var parameters = parameter != null ? 
+				parameter.ToString().ToLower().Split(',').Select(p => p.Trim(' ')).ToArray() : 
+				new string[] {};
+
+			if (parameters.Contains("days"))
+			{
+				if (!parameters.Contains("plain"))
+				{
+					if (span.TotalDays > 1.0)
+						return Math.Round(span.TotalDays, 2) + " " + Strings.Days;
+					return Math.Round(span.TotalDays, 2) + " " + Strings.Day;
+				}
+				return Math.Round(span.TotalDays, 2);
+			}
+
+			if (!parameters.Contains("plain"))
+			{
+				var hours = (int) span.TotalHours;
+				var minutes = (int) Math.Abs(span.Minutes);
+
+				return hours + " " + (hours > 1 ? Strings.Hours : Strings.Hour) + " " + 
+					minutes + " " + (minutes > 1 ? Strings.Minutes : Strings.Minute);
+			}
+			return ((int)span.TotalHours).ToString("D2") + ":" + Math.Abs(span.Minutes).ToString("D2");
 		}
 
 

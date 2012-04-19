@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows;
 using Microsoft.Phone.Controls;
+using MyToolkit.Resources;
 
 namespace MyToolkit.Controls
 {
@@ -16,14 +17,7 @@ namespace MyToolkit.Controls
 		private void UpdateText(object sender, RoutedEventArgs routedEventArgs)
 		{
 			var isChecked = IsChecked.HasValue && IsChecked.Value;
-			var text = isChecked ? "On" : "Off";
-				
-			switch (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName)
-			{
-				case "de": text = isChecked ? "Ein" : "Aus"; break;
-				case "fr": text = isChecked ? "Activé" : "Désactivé"; break;
-			}
-
+			var text = isChecked ? Strings.On : Strings.Off;
 			Content = text; 
 		}
 	}
