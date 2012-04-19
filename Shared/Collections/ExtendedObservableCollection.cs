@@ -37,18 +37,9 @@ namespace MyToolkit.Collections
 			Order = orderBy;
 			Filter = filter;
 			Ascending = ascending;
+
 			TrackItemChanges = trackItemChanges;
-
-			if (Items is ObservableCollection<T>)
-			{
-				var collection = (ObservableCollection<T>)Items;
-
-				itemsChangedHandler = WeakEvent.Set<ExtendedObservableCollection<T>, NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
-					h => (o,e) => h(o,e),
-					h => collection.CollectionChanged += h,
-					h => collection.CollectionChanged -= h,
-					this, (s, e) => s.OnOriginalCollectionChanged(s, e));
-			}
+			TrackCollectionChanges = true; 
 
 			if (TrackItemChanges)
 				TrackAllItems();
@@ -58,23 +49,6 @@ namespace MyToolkit.Collections
 
 			isTracking = true;
 			UpdateList();
-		}
-
-		private bool trackItemChanges;
-		public bool TrackItemChanges
-		{
-			get { return trackItemChanges; }
-			set
-			{
-				if (value != trackItemChanges)
-				{
-					trackItemChanges = value;
-					if (trackItemChanges)
-						TrackAllItems();
-					else
-						UntrackAllItems();
-				}
-			}
 		}
 
 		object IExtendedObservableCollection.Filter
@@ -156,6 +130,42 @@ namespace MyToolkit.Collections
 			}
 		}
 
+		private bool trackCollectionChanges;
+		public bool TrackCollectionChanges
+		{
+			get { return trackCollectionChanges; }
+			set
+			{
+				if (value != trackCollectionChanges)
+				{
+					trackCollectionChanges = value;
+					if (trackCollectionChanges)
+						TrackCollection();
+					else
+						UntrackCollection();
+					UpdateList();
+				}
+			}
+		}
+
+		private bool trackItemChanges;
+		public bool TrackItemChanges
+		{
+			get { return trackItemChanges; }
+			set
+			{
+				if (value != trackItemChanges)
+				{
+					trackItemChanges = value;
+					if (trackItemChanges)
+						TrackAllItems();
+					else
+						UntrackAllItems();
+					UpdateList();
+				}
+			}
+		}
+
 		private void OnOriginalCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
 			lock (SyncRoot)
@@ -203,6 +213,29 @@ namespace MyToolkit.Collections
 			var handler = events[item];
 			item.PropertyChanged -= handler;
 			events.Remove(item);
+		}
+
+		private void TrackCollection()
+		{
+			if (Items is ObservableCollection<T>)
+			{
+				var collection = (ObservableCollection<T>)Items;
+
+				itemsChangedHandler = WeakEvent.Set<ExtendedObservableCollection<T>, NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
+					h => (o, e) => h(o, e),
+					h => collection.CollectionChanged += h,
+					h => collection.CollectionChanged -= h,
+					this, (s, e) => s.OnOriginalCollectionChanged(s, e));
+			}
+		}
+
+		private void UntrackCollection()
+		{
+			if (itemsChangedHandler != null)
+			{
+				((ObservableCollection<T>)Items).CollectionChanged -= itemsChangedHandler;
+				itemsChangedHandler = null;
+			}
 		}
 
 		private void TrackAllItems()
@@ -283,14 +316,11 @@ namespace MyToolkit.Collections
 
 		public void Close()
 		{
-			if (itemsChangedHandler != null)
-				((ObservableCollection<T>)Items).CollectionChanged -= itemsChangedHandler;
-			itemsChangedHandler = null; 
-
+			TrackCollectionChanges = false; 
 			TrackItemChanges = false;
 
+			internalList = null;
 			Items = null;
-			internalList = null; 
 		}
 
 		#region interfaces
@@ -415,7 +445,7 @@ namespace MyToolkit.Collections
 			throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead.");
 		}
 
-		public int Add(object value)
+		int IList.Add(object value)
 		{
 			throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead.");
 		}
