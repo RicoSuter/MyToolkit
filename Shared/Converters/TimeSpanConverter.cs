@@ -35,7 +35,6 @@ namespace MyToolkit.Converters
         public object ConvertBack(object value, Type typeName, object parameter, string language)
 #endif
 		{
-			// TODO not tested
 			var text = value.ToString();
 			if (String.IsNullOrEmpty(text))
 				return null; 

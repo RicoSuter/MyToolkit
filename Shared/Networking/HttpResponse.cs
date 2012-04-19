@@ -26,7 +26,7 @@ namespace MyToolkit.Networking
 
 		public bool IsPending
 		{
-			get { return !HasException && !Canceled && !Successful; } // TODO: correct?
+			get { return !HasException && !Canceled && !Successful; } 
 		}
 
 		public void Abort()

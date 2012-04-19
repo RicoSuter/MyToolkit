@@ -4,11 +4,10 @@ using System.Xml.Serialization;
 
 namespace MyToolkit.Utilities
 {
-	// TODO: use this?
-	/*public sealed class Utf8StringWriter : StringWriter
+	public sealed class Utf8StringWriter : StringWriter
 	{
 		public override Encoding Encoding { get { return Encoding.UTF8; } }
-	}*/
+	}
 
 	public static class Xml
 	{
