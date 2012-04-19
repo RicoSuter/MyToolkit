@@ -47,7 +47,7 @@ namespace MyToolkit.Controls
 			set { SetValue(AllowNullProperty, value); }
 		}
 
-		// TODO: change to DateTime when fixed
+		// TODO (beta) change to DateTime when fixed
 		public static readonly DependencyProperty SelectedItemProperty =
 			DependencyProperty.Register("SelectedItem", typeof(Object), typeof(TimePicker), new PropertyMetadata(null, OnSelectedItemChanged));
 

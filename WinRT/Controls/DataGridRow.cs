@@ -27,7 +27,7 @@ namespace MyToolkit.Controls
 				content.Margin = new Thickness(10, 0, 0, 5);
 				content.Tag = cell; 
 
-				// TODO: refactor if FindName is available 
+				// TODO (beta) refactor if FindName is available 
 				//var content = new ContentPresenter();
 				//content.ContentTemplate = dataGrid.CellTemplate;
 				//content.Tag = cell; 

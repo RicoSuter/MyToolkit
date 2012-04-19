@@ -31,7 +31,7 @@ namespace MyToolkit.Controls
 
 		internal ColumnDefinition CreateGridColumnDefinition()
 		{
-			// TODO use GridLenght in DataGridColumn instead of double
+			// TODO (beta) use GridLenght in DataGridColumn instead of double
 			return new ColumnDefinition { Width = Width == 0.0 ? new GridLength(1, GridUnitType.Star) : GridLengthHelper.FromPixels(Width) };
 		}
 
@@ -79,7 +79,7 @@ namespace MyToolkit.Controls
 			DependencyProperty.Register("Header", typeof(string), typeof(DataGridColumn), new PropertyMetadata(default(string)));
 
 
-		// TODO change back to GridLength, not possible in VS11 => bug
+		// TODO (beta) change back to GridLength, not possible in VS11 => bug
 		public double Width
 		{
 			get { return (double)GetValue(WidthProperty); }
