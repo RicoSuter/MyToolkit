@@ -13,6 +13,14 @@ namespace MyToolkit.Networking
 			}
 		}
 
+		public static bool IsEthernetConnected
+		{
+			get
+			{
+				return NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.Ethernet;
+			}
+		}
+
 		public static bool IsWirelessConnected
 		{
 			get
