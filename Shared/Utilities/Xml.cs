@@ -35,7 +35,7 @@ namespace MyToolkit.Utilities
 		// TODO implement for metro => should work in final version
 		public static string XmlEscape(string unescaped)
 		{
-			XmlDocument doc = new XmlDocument();
+			var doc = new XmlDocument();
 			var node = doc.CreateElement("root");
 			node.InnerText = unescaped;
 			return node.InnerXml;
@@ -43,7 +43,7 @@ namespace MyToolkit.Utilities
 
 		public static string XmlUnescape(string escaped)
 		{
-			XmlDocument doc = new XmlDocument();
+			var doc = new XmlDocument();
 			var node = doc.CreateElement("root");
 			node.InnerXml = escaped;
 			return node.InnerText;
