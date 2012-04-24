@@ -1,10 +1,9 @@
 ﻿using System;
+using MyToolkit.Resources;
+using System.Linq;
 
 #if !METRO
-using System.Linq;
-using System.Windows.Data;
-using MyToolkit.Resources;
-
+	using System.Windows.Data;
 #else
 	using Windows.UI.Xaml.Data;
 	using Windows.Globalization.DateTimeFormatting;

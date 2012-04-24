@@ -3,6 +3,8 @@ using System.Windows;
 
 #if WINDOWS_PHONE
 using Microsoft.Phone.Controls;
+using MyToolkit.Environment;
+
 #endif
 
 namespace MyToolkit.Messaging
@@ -10,8 +12,9 @@ namespace MyToolkit.Messaging
 	public static class DefaultActions
 	{
 #if WINDOWS_PHONE
-		public static void GoBack(GoBackMessage message, PhoneApplicationPage page)
+		public static void GoBack(GoBackMessage message)
 		{
+			var page = PhoneApplication.CurrentPage; 
 			Deployment.Current.Dispatcher.BeginInvoke(() => page.NavigationService.GoBack());
 		}
 #endif
