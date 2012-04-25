@@ -97,7 +97,10 @@ namespace MyToolkit.Controls
 		{
 			var copy = Navigate;
 			if (copy != null)
+			{
 				copy(this, e);
+				listControl.SelectedItem = null; // TODO add dependency property for setting
+			}
 		}
 
 		private void BuildUp()
