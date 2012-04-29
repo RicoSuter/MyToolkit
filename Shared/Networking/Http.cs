@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Linq;
 
@@ -290,7 +291,6 @@ namespace MyToolkit.Networking
 				response.CreateTimeoutTimer();
 				request.BeginGetRequestStream(delegate(IAsyncResult ar1)
 				{
-					response.IsConnected = true;
 					try
 					{
 						using (var stream = request.EndGetRequestStream(ar1))
@@ -412,7 +412,6 @@ namespace MyToolkit.Networking
 
 		private static void ProcessResponse(IAsyncResult asyncResult, WebRequest request, HttpResponse resp, Action<HttpResponse> action)
 		{
-			resp.IsConnected = true;
 			lock (pendingRequests)
 			{
 				if (pendingRequests.Contains(resp))
@@ -422,6 +421,7 @@ namespace MyToolkit.Networking
 			try
 			{
 				var response = request.EndGetResponse(asyncResult);
+				resp.IsConnected = true; 
 				var origResponse = response;
 
 #if USE_GZIP
