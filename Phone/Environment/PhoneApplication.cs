@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Info;
