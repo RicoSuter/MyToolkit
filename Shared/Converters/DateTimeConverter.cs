@@ -39,10 +39,10 @@ namespace MyToolkit.Converters
 
 			switch (parameter.ToString().ToLower())
 			{
-				case "date": return new DateTimeFormatter(YearFormat.Default, MonthFormat.Default, DayFormat.Default, DayOfWeekFormat.None).Format(((DateTime)value));
+				case "date": return new DateTimeFormatter(YearFormat.Default, MonthFormat.Numeric, DayFormat.Default, DayOfWeekFormat.None).Format(((DateTime)value));
 				case "time": return new DateTimeFormatter(HourFormat.Default, MinuteFormat.Default, SecondFormat.Default).Format(((DateTime)value));
 				case "timewithoutseconds": return new DateTimeFormatter(HourFormat.Default, MinuteFormat.Default, SecondFormat.None).Format(((DateTime)value));
-				default: return new DateTimeFormatter(YearFormat.Default, MonthFormat.Default, DayFormat.Default, DayOfWeekFormat.None).Format(((DateTime)value)) + " " +
+				default: return new DateTimeFormatter(YearFormat.Default, MonthFormat.Numeric, DayFormat.Default, DayOfWeekFormat.None).Format(((DateTime)value)) + " " +
 					new DateTimeFormatter(HourFormat.Default, MinuteFormat.Default, SecondFormat.Default).Format(((DateTime)value));
 			}
 		}
