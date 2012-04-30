@@ -44,8 +44,8 @@ namespace MyToolkit.Converters
 				var hours = (int) span.TotalHours;
 				var minutes = (int) Math.Abs(span.Minutes);
 
-				return hours + " " + (hours > 1 ? Strings.Hours : Strings.Hour) + " " + 
-					minutes + " " + (minutes > 1 ? Strings.Minutes : Strings.Minute);
+				return hours + " " + (hours != 1 ? Strings.Hours : Strings.Hour) + " " + 
+					minutes + " " + (minutes != 1 ? Strings.Minutes : Strings.Minute);
 			}
 			return ((int)span.TotalHours).ToString("D2") + ":" + Math.Abs(span.Minutes).ToString("D2");
 		}
