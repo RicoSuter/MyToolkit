@@ -32,7 +32,7 @@ namespace MyToolkit.Utilities
 		}
 
 #if !METRO && !SILVERLIGHT
-		// TODO implement for metro => should work in final version
+		// TODO (beta) implement for metro => should work in final version
 		public static string XmlEscape(string unescaped)
 		{
 			var doc = new XmlDocument();
