@@ -9,14 +9,19 @@ namespace MyToolkit.Environment
 {
 	public class Machine
 	{
+        private static string deviceId;
 		public static string DeviceID
 		{
 			get
 			{
-				return NetworkInformation.GetConnectionProfiles().
-					Where(p => p.GetNetworkConnectivityLevel() != NetworkConnectivityLevel.ConstrainedInternetAccess).
-					Select(p => p.NetworkAdapter.NetworkAdapterId).
-					OrderBy(p => p).First().ToString();
+                if (deviceId == null)
+                {
+                    deviceId = NetworkInformation.GetConnectionProfiles().
+                        Where(p => p.GetNetworkConnectivityLevel() != NetworkConnectivityLevel.ConstrainedInternetAccess).
+                        Select(p => p.NetworkAdapter.NetworkAdapterId).
+                        OrderBy(p => p).First().ToString();
+                }
+                return deviceId;
 			}
 		}
 	}
