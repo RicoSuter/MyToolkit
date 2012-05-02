@@ -31,8 +31,8 @@ namespace MyToolkit.Networking
 			GetNetworkInterfaceType(type => completed(type == NetworkInterfaceType.Wireless80211 ||
 													 type == NetworkInterfaceType.Ethernet));
 		}
-		
-		public static void IsWirelessConnected(Action<bool> completed)
+
+		public static void IsWiFiConnected(Action<bool> completed)
 		{
 			GetNetworkInterfaceType(type => completed(type == NetworkInterfaceType.Wireless80211));
 		}

@@ -216,6 +216,7 @@
     <Compile Include="Collections\Group.cs" />
     <Compile Include="Controls\IntegratedWebBrowser.cs" />
     <Compile Include="Networking\NetworkState.cs" />
+    <Compile Include="Networking\NetworkStateTracker.cs" />
     <Compile Include="Notifications\PushNotifications.cs" />
     <Compile Include="Performance\LowProfileImageLoader.cs" />
     <Compile Include="Environment\Marketplace.cs" />
