@@ -215,6 +215,7 @@
     <Compile Include="Collections\AlphaGroups.cs" />
     <Compile Include="Collections\Group.cs" />
     <Compile Include="Controls\IntegratedWebBrowser.cs" />
+    <Compile Include="Controls\NativeLongListSelector.cs" />
     <Compile Include="Networking\NetworkState.cs" />
     <Compile Include="Networking\NetworkStateTracker.cs" />
     <Compile Include="Notifications\PushNotifications.cs" />
@@ -240,7 +241,6 @@
       <DependentUpon>ExtendedImage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ExtendedListBox.cs" />
-    <Compile Include="Controls\ExtendedLongListSelector.cs" />
     <Compile Include="Controls\FixedNavigationList.cs" />
     <Compile Include="UI\FrameworkElementExtensions.cs" />
     <Compile Include="Controls\ImageButton.cs" />
