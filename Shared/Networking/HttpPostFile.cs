@@ -40,6 +40,9 @@ namespace MyToolkit.Networking
 		public Stream Stream { get; private set; }
 		public bool CloseStream { get; private set; }
 
-		public string ContentType { get; set; } // default: application/octet-stream
+		/// <summary>
+		/// default: application/octet-stream
+		/// </summary>
+		public string ContentType { get; set; } 
 	}
 }
