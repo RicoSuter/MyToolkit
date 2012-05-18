@@ -76,7 +76,7 @@ namespace MyToolkit.Controls
 
 		protected override void OnGotFocus(RoutedEventArgs e)
 		{
-			if (UseScrollFix)
+			if (UseScrollFix && !(e.OriginalSource is Button)) // disable SetFocus if clicked on Button, otherwise the Button will not work properly
 			{
 				var page = (PhoneApplicationPage)((PhoneApplicationFrame)Application.Current.RootVisual).Content;
 				page.Focus();
