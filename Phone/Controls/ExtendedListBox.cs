@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Markup;
 using Microsoft.Phone.Controls;
 using MyToolkit.UI.UIExtensionMethods;
@@ -74,16 +75,27 @@ namespace MyToolkit.Controls
 			set { SetValue(UseScrollFixProperty, value); }
 		}
 
-		protected override void OnGotFocus(RoutedEventArgs e)
+		protected override void OnManipulationCompleted(ManipulationCompletedEventArgs e)
 		{
-			if (UseScrollFix && !(e.OriginalSource is Button)) // disable SetFocus if clicked on Button, otherwise the Button will not work properly
+			if (UseScrollFix)
 			{
 				var page = (PhoneApplicationPage)((PhoneApplicationFrame)Application.Current.RootVisual).Content;
 				page.Focus();
 			}
 
-			base.OnGotFocus(e);
+			base.OnManipulationCompleted(e);
 		}
+
+		//protected override void OnGotFocus(RoutedEventArgs e)
+		//{
+		//    if (UseScrollFix && !(e.OriginalSource is Button)) // disable SetFocus if clicked on Button, otherwise the Button will not work properly
+		//    {
+		//        var page = (PhoneApplicationPage)((PhoneApplicationFrame)Application.Current.RootVisual).Content;
+		//        page.Focus();
+		//    }
+
+		//    base.OnGotFocus(e);
+		//}
 
 		#endregion
 
