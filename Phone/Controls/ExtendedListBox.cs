@@ -175,13 +175,12 @@ namespace MyToolkit.Controls
 		private static void InnerMarginChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
 			var box = (ExtendedListBox)d;
-			if (box.lastElement != null)
-				box.UpdateLastItemMargin();
 			box.UpdateInnerMargin();
 		}
 
 		private void UpdateInnerMargin()
 		{
+			UpdateLastItemMargin();
 			if (scrollViewer != null)
 			{
 				var itemsPresenter = (ItemsPresenter)scrollViewer.Content;
@@ -192,8 +191,11 @@ namespace MyToolkit.Controls
 
 		private void UpdateLastItemMargin()
 		{
-			lastElement.Margin = new Thickness(lastElementMargin.Left, lastElementMargin.Top, lastElementMargin.Right,
-				lastElementMargin.Bottom + InnerMargin.Top + InnerMargin.Bottom);
+			if (lastElement != null)
+			{
+				lastElement.Margin = new Thickness(lastElementMargin.Left, lastElementMargin.Top, lastElementMargin.Right,
+					lastElementMargin.Bottom + InnerMargin.Top + InnerMargin.Bottom);
+			}
 		}
 
 		private FrameworkElement lastElement = null;
