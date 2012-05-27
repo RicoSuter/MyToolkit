@@ -58,10 +58,32 @@ namespace MyToolkit.Controls
 			UpdateInnerMargin();
 			RegisterScrollOffset();
 		}
-		
+
 		public ListBoxItem GetListBoxItemFromItem(object item)
 		{
 			return (ListBoxItem)ItemContainerGenerator.ContainerFromItem(item);
+		}
+
+		public bool ScrollToVerticalOffset(double offset)
+		{
+			if (scrollViewer != null)
+			{
+				scrollViewer.InvalidateScrollInfo();
+				scrollViewer.ScrollToVerticalOffset(offset);
+				return true; 
+			}
+			return false;
+		}
+
+		public bool StopScrolling()
+		{
+			if (scrollViewer != null)
+			{
+				scrollViewer.InvalidateScrollInfo();
+				scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset);
+				return true;
+			}
+			return false;
 		}
 
 		#region scroll jumping fix
