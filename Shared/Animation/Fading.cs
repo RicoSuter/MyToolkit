@@ -73,11 +73,11 @@ namespace MyToolkit.Animations
 		}
 
 #if !METRO
-		public static void FadeInBackground(Panel panel, Uri backgroundSourceUri, double opacity, 
+		public static bool FadeInBackground(Panel panel, Uri backgroundSourceUri, double opacity, 
 			int msecs, Action finishedAction = null)
 		{
 			if (backgroundSourceUri == null)
-				return;
+				return false;
 
 			var brush = new ImageBrush();
 			var image = new BitmapImage { UriSource = backgroundSourceUri };
@@ -103,12 +103,13 @@ namespace MyToolkit.Animations
 					story.Completed += delegate { finishedAction(); };
 				story.Begin();
 			};
+			return true; 
 		}
 
-		public static void FadeOutBackground(Panel panel, int msecs, Action finishedAction = null)
+		public static bool FadeOutBackground(Panel panel, int msecs, Action finishedAction = null)
 		{
 			if (panel.Background == null || panel.Background.Opacity == 0.0)
-				return;
+				return false;
 
 			var animation = new DoubleAnimation();
 			animation.From = panel.Background.Opacity;
@@ -121,9 +122,15 @@ namespace MyToolkit.Animations
 			Storyboard.SetTarget(animation, panel.Background);
 			Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
 
-			if (finishedAction != null)
-				story.Completed += delegate { finishedAction(); };
+			story.Completed += delegate
+			{
+				panel.Background = null;
+				if (finishedAction != null)
+					finishedAction();
+			};
+
 			story.Begin();
+			return true; 
 		}
 #endif
 	}
