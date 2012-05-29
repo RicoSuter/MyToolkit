@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using MyToolkit.Controls.HtmlTextBlockSource.Generators;
+using MyToolkit.Utilities;
 
 namespace MyToolkit.Controls.HtmlTextBlockSource
 {
@@ -24,6 +25,7 @@ namespace MyToolkit.Controls.HtmlTextBlockSource
 
 		public HtmlNode Parse(string html)
 		{
+			html = html.ConvertUTF8Characters();
 			html = html.Replace("\r", "").Replace("\n", "").Replace("\t", "");
 			html = html.Replace("<br>", "\n").Replace("<br />", "\n").Replace("<br/>", "\n");
 			html = html.Replace("<BR>", "\n").Replace("<BR />", "\n").Replace("<BR/>", "\n");
