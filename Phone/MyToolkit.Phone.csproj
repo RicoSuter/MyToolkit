@@ -214,6 +214,21 @@
     </Compile>
     <Compile Include="Collections\AlphaGroups.cs" />
     <Compile Include="Collections\Group.cs" />
+    <Compile Include="Controls\HtmlTextBlock.xaml.cs">
+      <DependentUpon>HtmlTextBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HtmlTextBlockSource\Generators\EmGenerator.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\Generators\HtmlGenerator.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\Generators\ImageBlock.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\Generators\ImageGenerator.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\Generators\LinkGenerator.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\Generators\ParagraphGenerator.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\Generators\StrongGenerator.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\Generators\TextGenerator.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\HtmlNode.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\HtmlParser.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\IControlGenerator.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\IHtmlSettings.cs" />
     <Compile Include="Controls\IntegratedWebBrowser.cs" />
     <Compile Include="Controls\NativeLongListSelector.cs" />
     <Compile Include="Networking\NetworkState.cs" />
@@ -248,9 +263,6 @@
     <Compile Include="Controls\ExtendedItemsControl.cs" />
     <Compile Include="Controls\NavigationList.cs" />
     <Compile Include="UI\ProgressIndicatorProxy.cs" />
-    <Compile Include="Controls\HtmlTextBlock.xaml.cs">
-      <DependentUpon>HtmlTextBlock.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\TranslatedToggleSwitch.cs" />
     <Compile Include="Controls\UnstyledButton.cs" />
     <Compile Include="Utilities\EntityContainer.cs" />
@@ -269,6 +281,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\HtmlTextBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\YouTubeButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -278,10 +294,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\ExtendedImage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\HtmlTextBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
