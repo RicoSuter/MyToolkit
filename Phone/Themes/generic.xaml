@@ -44,17 +44,6 @@
 	</DataTemplate>-->
 
 
-
-	<Style TargetType="Controls:IntegratedWebBrowser">
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="Controls:IntegratedWebBrowser">
-					<phone:WebBrowser x:Name="browser" />
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-
 	<Style TargetType="Controls:ImageButton">
 		<Setter Property="Template">
 			<Setter.Value>

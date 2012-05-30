@@ -232,7 +232,6 @@
     <Compile Include="Controls\HtmlTextBlockSource\HtmlParser.cs" />
     <Compile Include="Controls\HtmlTextBlockSource\IControlGenerator.cs" />
     <Compile Include="Controls\HtmlTextBlockSource\IHtmlSettings.cs" />
-    <Compile Include="Controls\IntegratedWebBrowser.cs" />
     <Compile Include="Controls\NativeLongListSelector.cs" />
     <Compile Include="Networking\NetworkState.cs" />
     <Compile Include="Networking\NetworkStateTracker.cs" />
