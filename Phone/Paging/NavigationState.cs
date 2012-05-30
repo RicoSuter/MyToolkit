@@ -41,8 +41,8 @@ namespace MyToolkit.Paging
 				if (page != null)
 				{
 					SingleEvent.Register<IExtendedPhoneApplicationPage, EventArgs>(page,
-						(p, e) => { p.NavigatedTo += e; },
-						(p, e) => { p.NavigatedTo -= e; },
+						(p, e) => { p.NavigatedFrom += e; },
+						(p, e) => { p.NavigatedFrom -= e; },
 						delegate { IsNavigating = false; });
 					IsNavigating = true;
 				}

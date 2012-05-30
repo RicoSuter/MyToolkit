@@ -8,5 +8,6 @@ namespace MyToolkit.Paging
 	public interface IExtendedPhoneApplicationPage
 	{
 		event EventHandler<EventArgs> NavigatedTo;
+		event EventHandler<EventArgs> NavigatedFrom;
 	}
 }
