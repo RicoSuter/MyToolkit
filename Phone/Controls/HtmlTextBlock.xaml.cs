@@ -35,7 +35,7 @@ namespace MyToolkit.Controls
 			set { SetValue(HtmlProperty, value); }
 		}
 
-		public event EventHandler<RoutedEventArgs> HtmlLoaded;
+		public event EventHandler<EventArgs> HtmlLoaded;
 
 		public static readonly DependencyProperty ParagraphMarginProperty =
 			DependencyProperty.Register("ParagraphMargin", typeof (int), typeof (HtmlTextBlock), new PropertyMetadata(12));
@@ -72,19 +72,28 @@ namespace MyToolkit.Controls
 		{
 			ThreadPool.QueueUserWorkItem(o =>
 			{
-				var parser = new HtmlParser();
-				var node = parser.Parse(html);
+				HtmlNode node = null;
+				try
+				{
+					var parser = new HtmlParser();
+					node = parser.Parse(html);
+				} catch {}
 
 				Dispatcher.BeginInvoke(() =>
 				{
 					if (html == Html) // prevent from setting wrong control if html changed fast
 					{
-						Content = node.GetControl(this) as UIElement;
+						if (node != null)
+						{
+							try { Content = node.GetControl(this) as UIElement; }
+							catch { }
+						}
+						
 						Dispatcher.BeginInvoke(() =>
 						{
 							var copy = HtmlLoaded;
 							if (copy != null)
-								copy(this, new RoutedEventArgs());
+								copy(this, new EventArgs());
 						});
 					}
 				});
