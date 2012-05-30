@@ -2,7 +2,10 @@ using System;
 using System.Windows;
 using System.Windows.Documents;
 using Microsoft.Phone.Tasks;
+using MyToolkit.Environment;
 using MyToolkit.MVVM;
+using MyToolkit.Paging;
+using MyToolkit.Utilities;
 
 namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 {
@@ -17,8 +20,17 @@ namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 
 				var hr = new Hyperlink();
 				hr.TextDecorations = TextDecorations.Underline;
-				hr.Inlines.Add(label); 
-				hr.Command = new RelayCommand(CreateLinkAction(hr, link, settings));	
+				hr.Inlines.Add(label);
+
+				var action = CreateLinkAction(hr, link, settings);
+				var origAction = action;
+				action = delegate
+				{
+					if (NavigationState.TryBeginNavigating())
+						origAction();
+				};
+
+				hr.Command = new RelayCommand(action);	
 				return hr;
 			}
 			catch

@@ -214,6 +214,9 @@
     </Compile>
     <Compile Include="Collections\AlphaGroups.cs" />
     <Compile Include="Collections\Group.cs" />
+    <Compile Include="Controls\VideoButton.xaml.cs">
+      <DependentUpon>VideoButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\HtmlTextBlock.xaml.cs">
       <DependentUpon>HtmlTextBlock.xaml</DependentUpon>
     </Compile>
@@ -233,6 +236,8 @@
     <Compile Include="Controls\NativeLongListSelector.cs" />
     <Compile Include="Networking\NetworkState.cs" />
     <Compile Include="Networking\NetworkStateTracker.cs" />
+    <Compile Include="Paging\IExtendedPhoneApplicationPage.cs" />
+    <Compile Include="Paging\NavigationState.cs" />
     <Compile Include="Performance\LowProfileImageLoader.cs" />
     <Compile Include="Environment\Marketplace.cs" />
     <Compile Include="Performance\MemoryDiagnosticsHelper.cs" />
@@ -266,6 +271,7 @@
     <Compile Include="Controls\TranslatedToggleSwitch.cs" />
     <Compile Include="Controls\UnstyledButton.cs" />
     <Compile Include="Utilities\EntityContainer.cs" />
+    <Compile Include="Utilities\SingleEvent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\PlayIcon.png" />
@@ -281,6 +287,10 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\VideoButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\HtmlTextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

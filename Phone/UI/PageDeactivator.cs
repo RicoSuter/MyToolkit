@@ -78,7 +78,7 @@ namespace MyToolkit.UI
 			}
 
 			if (disableInteractions)
-				page.IsEnabled = false; 
+				page.IsHitTestVisible = false; 
 		}
 
 		public void Revert()
@@ -99,7 +99,7 @@ namespace MyToolkit.UI
 			}
 
 			if (disableInteractions)
-				page.IsEnabled = true; 
+				page.IsHitTestVisible = true; 
 		}
 	}
 }
