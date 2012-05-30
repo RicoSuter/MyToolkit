@@ -25,6 +25,9 @@ namespace MyToolkit.Controls.HtmlTextBlockSource
 
 		public HtmlNode Parse(string html)
 		{
+			if (html == null)
+				html = "";
+
 			html = html.ConvertUTF8Characters();
 			html = html.Replace("\r", "").Replace("\n", "").Replace("\t", "");
 			html = html.Replace("<br>", "\n").Replace("<br />", "\n").Replace("<br/>", "\n");

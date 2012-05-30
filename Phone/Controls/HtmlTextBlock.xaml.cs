@@ -77,13 +77,16 @@ namespace MyToolkit.Controls
 
 				Dispatcher.BeginInvoke(() =>
 				{
-					Content = node.GetControl(this) as UIElement;
-					Dispatcher.BeginInvoke(() =>
+					if (html == Html) // prevent from setting wrong control if html changed fast
 					{
-						var copy = HtmlLoaded;
-						if (copy != null)
-							copy(this, new RoutedEventArgs());
-					});
+						Content = node.GetControl(this) as UIElement;
+						Dispatcher.BeginInvoke(() =>
+						{
+							var copy = HtmlLoaded;
+							if (copy != null)
+								copy(this, new RoutedEventArgs());
+						});
+					}
 				});
 			});
 		}
