@@ -9,7 +9,7 @@ namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 		{
 			foreach (var c in node.GetLeaves(settings))
 			{
-				var run = c as Run;
+				var run = c as TextElement;
 				if (run != null)
 					run.FontWeight = FontWeights.Bold;
 			}

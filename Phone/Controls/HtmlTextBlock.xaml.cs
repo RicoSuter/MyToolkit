@@ -38,7 +38,7 @@ namespace MyToolkit.Controls
 		public event EventHandler<EventArgs> HtmlLoaded;
 
 		public static readonly DependencyProperty ParagraphMarginProperty =
-			DependencyProperty.Register("ParagraphMargin", typeof (int), typeof (HtmlTextBlock), new PropertyMetadata(12));
+			DependencyProperty.Register("ParagraphMargin", typeof (int), typeof (HtmlTextBlock), new PropertyMetadata(6));
 
 		public int ParagraphMargin
 		{

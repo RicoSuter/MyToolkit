@@ -38,7 +38,7 @@ namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 
 				image.HorizontalAlignment = HorizontalAlignment.Left;
 				image.Source = imgSource;
-				image.Margin = new Thickness(0, settings.ParagraphMargin / 2, 0, settings.ParagraphMargin / 2); 
+				image.Margin = new Thickness(0, settings.ParagraphMargin, 0, settings.ParagraphMargin); 
 
 				if (width > 0)
 					image.Width = width;

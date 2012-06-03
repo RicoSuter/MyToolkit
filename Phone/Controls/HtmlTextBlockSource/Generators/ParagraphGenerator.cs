@@ -46,7 +46,7 @@ namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 				tb.Blocks.Add(p);
 				tb.FontSize = settings.FontSize;
 				tb.FontFamily = settings.FontFamily;
-				tb.Margin = new Thickness(-12, settings.ParagraphMargin / 2, -12, settings.ParagraphMargin / 2);
+				tb.Margin = new Thickness(-12, settings.ParagraphMargin, -12, settings.ParagraphMargin);
 				
 				list.Add(tb);
 				current.Clear();

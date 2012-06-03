@@ -7,7 +7,7 @@ namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 	{
 		public DependencyObject Generate(HtmlNode node, IHtmlSettings settings)
 		{
-			return new Run {Text = node.Value};
+			return new Run { Text = node.Value };
 		}
 	}
 }
