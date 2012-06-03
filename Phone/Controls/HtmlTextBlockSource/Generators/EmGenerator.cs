@@ -9,9 +9,9 @@ namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 		{
 			foreach (var c in node.GetLeaves(settings))
 			{
-				var run = c as Run;
-				if (run != null)
-					run.FontStyle = FontStyles.Italic;
+				var element = c as TextElement;
+				if (element != null)
+					element.FontStyle = FontStyles.Italic;
 			}
 			return null; 
 		}
