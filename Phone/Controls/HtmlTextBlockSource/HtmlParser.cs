@@ -32,6 +32,7 @@ namespace MyToolkit.Controls.HtmlTextBlockSource
 			html = html.Replace("\r", "").Replace("\n", "").Replace("\t", "");
 			html = html.Replace("<br>", "\n").Replace("<br />", "\n").Replace("<br/>", "\n");
 			html = html.Replace("<BR>", "\n").Replace("<BR />", "\n").Replace("<BR/>", "\n");
+			html = html.Replace("&nbsp;", " ");
 			html = "<p>" + html + "</p>";
 
 			var matches = Regex.Matches(html, "<(.*?)>|</(.*?)>|<(.*?)/>|([^<>]*)");

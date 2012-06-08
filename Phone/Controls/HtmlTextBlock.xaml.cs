@@ -13,6 +13,7 @@ namespace MyToolkit.Controls
 		{
 			FontSize = (double) Resources["PhoneFontSizeNormal"];
 			InitializeComponent();
+			Margin = new Thickness(12,0,12,0);
 
 			SizeChanged += OnSizeChanged;
 			SizeChangedControls = new List<ISizeChangedControl>();
