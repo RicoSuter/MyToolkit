@@ -1,11 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using MyToolkit.Controls.HtmlTextBlockSource;
 
-namespace MyToolkit.Controls
+namespace MyToolkit.Controls.HtmlTextBlockSource
 {
 	internal static class HtmlTextBlockHelper
 	{
@@ -26,7 +23,10 @@ namespace MyToolkit.Controls
 		{
 			var itemsCtrl = (ItemsControl)me;
 			if (me.HeaderItem != null)
-				itemsCtrl.ItemsSource = new List<UIElement> { me.HeaderItem };
+			{
+				itemsCtrl.Items.Clear();
+				itemsCtrl.Items.Add(me.HeaderItem);
+			}
 
 			ThreadPool.QueueUserWorkItem(o =>
 			{
@@ -46,10 +46,12 @@ namespace MyToolkit.Controls
 			            {
 			                try
 			                {
-			                    var items = node.GetControls((IHtmlSettings)me).ToList();
-			                    if (me.HeaderItem != null)
-			                        items.Insert(0, me.HeaderItem);
-			                    itemsCtrl.ItemsSource = items;
+								itemsCtrl.Items.Clear();
+								if (me.HeaderItem != null)
+									itemsCtrl.Items.Add(me.HeaderItem);
+
+								foreach (var c in node.GetControls((IHtmlSettings)me))
+									itemsCtrl.Items.Add(c);
 			                }
 			                catch { }
 			            }

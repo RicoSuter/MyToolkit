@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace MyToolkit.Controls
+namespace MyToolkit.Controls.HtmlTextBlockSource
 {
 	public interface IHtmlTextBlock
 	{
