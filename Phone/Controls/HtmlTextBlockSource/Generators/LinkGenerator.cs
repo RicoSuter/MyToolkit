@@ -9,9 +9,9 @@ using MyToolkit.Utilities;
 
 namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 {
-	public class LinkGenerator : IControlGenerator
+	public class LinkGenerator : SingleGenerator
 	{
-		public DependencyObject Generate(HtmlNode node, IHtmlSettings settings)
+		public override DependencyObject GenerateSingle(HtmlNode node, IHtmlSettings settings)
 		{
 			try
 			{

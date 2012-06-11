@@ -64,6 +64,11 @@ namespace MyToolkit.Controls
 			return (ListBoxItem)ItemContainerGenerator.ContainerFromItem(item);
 		}
 
+		public ScrollViewer ScrollViewer
+		{
+			get { return scrollViewer; }
+		}
+
 		public bool ScrollToVerticalOffset(double offset)
 		{
 			if (scrollViewer != null)

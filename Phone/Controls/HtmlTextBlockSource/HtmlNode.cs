@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace MyToolkit.Controls.HtmlTextBlockSource
 {
@@ -68,9 +70,9 @@ namespace MyToolkit.Controls.HtmlTextBlockSource
 			var list = new List<DependencyObject>();
 			foreach (var c in children)
 			{
-				var ctrl = c.GetControl(settings);
+				var ctrl = c.GetControls(settings);
 				if (ctrl != null)
-					list.Add(ctrl);
+					list.AddRange(ctrl);
 				else
 					list.AddRange(c.GetLeaves(settings));
 			}
@@ -83,8 +85,8 @@ namespace MyToolkit.Controls.HtmlTextBlockSource
 		}
 
 		private bool loaded = false; 
-		private DependencyObject control;
-		public DependencyObject GetControl(IHtmlSettings settings)
+		private DependencyObject[] controls;
+		public DependencyObject[] GetControls(IHtmlSettings settings)
 		{
 			if (!loaded)
 			{
@@ -92,10 +94,10 @@ namespace MyToolkit.Controls.HtmlTextBlockSource
 				var generator = settings.Generators.ContainsKey(value) ? settings.Generators[value] :
 					(settings.Generators.ContainsKey("unknown") ? settings.Generators["unknown"] : null);
 				if (generator != null)
-					control = generator.Generate(this, settings);
+					controls = generator.Generate(this, settings);
 				loaded = true; 
 			}
-			return control;
+			return controls;
 		}
 	}
 }

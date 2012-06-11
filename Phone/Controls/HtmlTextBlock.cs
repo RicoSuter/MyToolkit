@@ -1,25 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Net;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Ink;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
+using System.Windows.Threading;
 using MyToolkit.Controls.HtmlTextBlockSource;
 
 namespace MyToolkit.Controls
 {
-	public partial class HtmlTextBlock : UserControl, IHtmlSettings
+	public class HtmlTextBlock : ExtendedListBox, IHtmlSettings, IHtmlTextBlock
 	{
 		public HtmlTextBlock()
 		{
-			FontSize = (double) Resources["PhoneFontSizeNormal"];
-			InitializeComponent();
-			Margin = new Thickness(12,0,12,0);
+			FontSize = (double)Resources["PhoneFontSizeNormal"];
+			Margin = new Thickness(12, 0, 12, 0);
 
 			SizeChanged += OnSizeChanged;
 			SizeChangedControls = new List<ISizeChangedControl>();
 		}
 
-		public List<ISizeChangedControl> SizeChangedControls { get; private set; } 
+		public List<ISizeChangedControl> SizeChangedControls { get; private set; }
 
 		private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
 		{
@@ -32,27 +37,27 @@ namespace MyToolkit.Controls
 
 		public String Html
 		{
-			get { return (String) GetValue(HtmlProperty); }
+			get { return (String)GetValue(HtmlProperty); }
 			set { SetValue(HtmlProperty, value); }
 		}
 
 		public event EventHandler<EventArgs> HtmlLoaded;
 
 		public static readonly DependencyProperty ParagraphMarginProperty =
-			DependencyProperty.Register("ParagraphMargin", typeof (int), typeof (HtmlTextBlock), new PropertyMetadata(6));
+			DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(HtmlTextBlock), new PropertyMetadata(6));
 
 		public int ParagraphMargin
 		{
-			get { return (int) GetValue(ParagraphMarginProperty); }
+			get { return (int)GetValue(ParagraphMarginProperty); }
 			set { SetValue(ParagraphMarginProperty, value); }
 		}
 
 		public static readonly DependencyProperty BaseUriProperty =
-			DependencyProperty.Register("BaseUri", typeof (Uri), typeof (HtmlTextBlock), new PropertyMetadata(default(Uri)));
+			DependencyProperty.Register("BaseUri", typeof(Uri), typeof(HtmlTextBlock), new PropertyMetadata(default(Uri)));
 
 		public Uri BaseUri
 		{
-			get { return (Uri) GetValue(BaseUriProperty); }
+			get { return (Uri)GetValue(BaseUriProperty); }
 			set { SetValue(BaseUriProperty, value); }
 		}
 
@@ -69,36 +74,26 @@ namespace MyToolkit.Controls
 			box.Generate(html);
 		}
 
-		private void Generate(string html)
+		private UIElement headerItem;
+		public UIElement HeaderItem
 		{
-			ThreadPool.QueueUserWorkItem(o =>
+			get { return headerItem; }
+			set
 			{
-				HtmlNode node = null;
-				try
+				if (headerItem != value)
 				{
-					var parser = new HtmlParser();
-					node = parser.Parse(html);
-				} catch {}
+					var old = headerItem;
+					headerItem = value;
+					this.UpdateHeaderControl(headerItem, old);
+				}
+			}
+		}
 
-				Dispatcher.BeginInvoke(() =>
-				{
-					if (html == Html) // prevent from setting wrong control if html changed fast
-					{
-						if (node != null)
-						{
-							try { Content = node.GetControl(this) as UIElement; }
-							catch { }
-						}
-						
-						Dispatcher.BeginInvoke(() =>
-						{
-							var copy = HtmlLoaded;
-							if (copy != null)
-								copy(this, new EventArgs());
-						});
-					}
-				});
-			});
+		public void CallLoadedEvent()
+		{
+			var copy = HtmlLoaded;
+			if (copy != null)
+				copy(this, new EventArgs());
 		}
 	}
 }

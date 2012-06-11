@@ -163,8 +163,8 @@ namespace MyToolkit.Performance
 				Checkpoint("*MEMORY USAGE FAIL*");
 				peakMemoryBlock.Text = "FAIL!";
 				peakMemoryBlock.Foreground = new SolidColorBrush(Colors.Red);
-				if (Debugger.IsAttached)
-					Debug.Assert(false, "Peak memory condition violated");
+				//if (Debugger.IsAttached)
+				//    Debug.Assert(false, "Peak memory condition violated");
 			}
 		}
 

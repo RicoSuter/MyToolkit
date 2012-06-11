@@ -3,9 +3,9 @@ using System.Windows.Documents;
 
 namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 {
-	public class StrongGenerator : IControlGenerator
+	public class StrongGenerator : SingleGenerator
 	{
-		public DependencyObject Generate(HtmlNode node, IHtmlSettings settings)
+		public override DependencyObject GenerateSingle(HtmlNode node, IHtmlSettings settings)
 		{
 			foreach (var c in node.GetLeaves(settings))
 			{

@@ -5,9 +5,9 @@ using System.Windows.Media.Imaging;
 
 namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 {
-	public class ImageGenerator : IControlGenerator
+	public class ImageGenerator : SingleGenerator
 	{
-		public DependencyObject Generate(HtmlNode node, IHtmlSettings settings)
+		public override DependencyObject GenerateSingle(HtmlNode node, IHtmlSettings settings)
 		{
 			try
 			{

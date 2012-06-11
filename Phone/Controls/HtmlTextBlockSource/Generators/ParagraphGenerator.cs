@@ -8,9 +8,9 @@ namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 {
 	public class ParagraphGenerator : IControlGenerator
 	{
-		public DependencyObject Generate(HtmlNode node, IHtmlSettings settings)
+		public DependencyObject[] Generate(HtmlNode node, IHtmlSettings settings)
 		{
-			var list = new List<UIElement>();
+			var list = new List<DependencyObject>();
 
 			var current = new List<Inline>();
 			foreach (var c in node.GetLeaves(settings))
@@ -20,21 +20,17 @@ namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 				else
 				{
 					CreateTextBox(list, current, settings);
-					list.Add((UIElement)c);
+					list.Add(c);
 				}
 			}
 			CreateTextBox(list, current, settings);
 
-			if (list.Count == 1)
-				return list.First();
-
-			var panel = new StackPanel();
-			foreach (var c in list)
-				panel.Children.Add(c);
-			return panel;
+			if (list.Count == 0)
+				return null;
+			return list.ToArray();
 		}
 
-		private static void CreateTextBox(List<UIElement> list, List<Inline> current, IHtmlSettings settings)
+		private static void CreateTextBox(List<DependencyObject> list, List<Inline> current, IHtmlSettings settings)
 		{
 			if (current.Count > 0)
 			{

@@ -214,11 +214,13 @@
     </Compile>
     <Compile Include="Collections\AlphaGroups.cs" />
     <Compile Include="Collections\Group.cs" />
+    <Compile Include="Controls\FixedHtmlTextBlock.cs" />
+    <Compile Include="Controls\HtmlTextBlock.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\HtmlTextBlockHelper.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\IHtmlTextBlock.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\SingleGenerator.cs" />
     <Compile Include="Controls\VideoButton.xaml.cs">
       <DependentUpon>VideoButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\HtmlTextBlock.xaml.cs">
-      <DependentUpon>HtmlTextBlock.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\HtmlTextBlockSource\Generators\EmGenerator.cs" />
     <Compile Include="Controls\HtmlTextBlockSource\Generators\HtmlGenerator.cs" />
@@ -287,10 +289,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\VideoButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\HtmlTextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
