@@ -17,12 +17,17 @@ namespace MyToolkit.Messaging
 			var page = PhoneApplication.CurrentPage; 
 			Deployment.Current.Dispatcher.BeginInvoke(() =>
 			{
-				var successful = page.NavigationService.CanGoBack;
-				if (successful)
+				try
+				{
 					page.NavigationService.GoBack();
-
-				if (message.Completed != null)
-					message.Completed(successful);
+					if (message.Completed != null)
+						message.Completed(true);
+				}
+				catch
+				{
+					if (message.Completed != null)
+						message.Completed(false);
+				}
 			});
 		}
 #endif
