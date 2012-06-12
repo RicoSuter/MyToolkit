@@ -18,7 +18,8 @@ namespace MyToolkit.Controls
 		public HtmlTextBlock()
 		{
 			FontSize = (double)Resources["PhoneFontSizeNormal"];
-			Margin = new Thickness(12, 0, 12, 0);
+			Margin = new Thickness(0);
+			InnerMargin = new Thickness(24, 0, 24, 0);
 
 			SizeChanged += OnSizeChanged;
 			SizeChangedControls = new List<ISizeChangedControl>();
