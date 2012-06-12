@@ -15,7 +15,15 @@ namespace MyToolkit.Messaging
 		public static void GoBack(GoBackMessage message)
 		{
 			var page = PhoneApplication.CurrentPage; 
-			Deployment.Current.Dispatcher.BeginInvoke(() => page.NavigationService.GoBack());
+			Deployment.Current.Dispatcher.BeginInvoke(() =>
+			{
+				var successful = page.NavigationService.CanGoBack;
+				if (successful)
+					page.NavigationService.GoBack();
+
+				if (message.Completed != null)
+					message.Completed(successful);
+			});
 		}
 #endif
 
