@@ -6,8 +6,13 @@ using MyToolkit.Controls.HtmlTextBlockSource;
 
 namespace MyToolkit.Controls
 {
-	public class FixedHtmlTextBlock : ItemsControl, IHtmlSettings, IHtmlTextBlock
+	public class FixedHtmlTextBlock : ItemsControl, IHtmlTextBlock
 	{
+		public IDictionary<string, IControlGenerator> Generators { get { return generators; } }
+		public List<ISizeChangedControl> SizeChangedControls { get; private set; }
+
+		private readonly IDictionary<string, IControlGenerator> generators = HtmlParser.GetDefaultGenerators();
+		
 		public FixedHtmlTextBlock()
 		{
 			FontSize = (double)Resources["PhoneFontSizeNormal"];
@@ -17,16 +22,29 @@ namespace MyToolkit.Controls
 			SizeChangedControls = new List<ISizeChangedControl>();
 		}
 
-		public List<ISizeChangedControl> SizeChangedControls { get; private set; }
-
 		private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
 		{
 			foreach (var ctrl in SizeChangedControls)
 				ctrl.Update(ActualWidth);
 		}
 
+		private static void OnHtmlChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+		{
+			var box = (FixedHtmlTextBlock)obj;
+			box.Generate();
+		}
+
+		public void CallLoadedEvent()
+		{
+			var copy = HtmlLoaded;
+			if (copy != null)
+				copy(this, new EventArgs());
+		}
+
+		#region dependency properties
+
 		public static readonly DependencyProperty HtmlProperty =
-			DependencyProperty.Register("Html", typeof(String), typeof(FixedHtmlTextBlock), new PropertyMetadata(default(String), OnChanged));
+			DependencyProperty.Register("Html", typeof(String), typeof(FixedHtmlTextBlock), new PropertyMetadata(default(String), OnHtmlChanged));
 
 		public String Html
 		{
@@ -54,39 +72,6 @@ namespace MyToolkit.Controls
 			set { SetValue(BaseUriProperty, value); }
 		}
 
-		private readonly IDictionary<string, IControlGenerator> generators = HtmlParser.GetDefaultGenerators();
-		public IDictionary<string, IControlGenerator> Generators
-		{
-			get { return generators; }
-		}
-
-		private static void OnChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
-		{
-			var box = (FixedHtmlTextBlock)obj;
-			var html = box.Html;
-			box.Generate(html);
-		}
-
-		private UIElement headerItem;
-		public UIElement HeaderItem
-		{
-			get { return headerItem; }
-			set
-			{
-				if (headerItem != value)
-				{
-					var old = headerItem;
-					headerItem = value; 
-					this.UpdateHeaderControl(headerItem, old);
-				}
-			}
-		}
-
-		public void CallLoadedEvent()
-		{
-			var copy = HtmlLoaded;
-			if (copy != null)
-				copy(this, new EventArgs());
-		}
+		#endregion
 	}
 }

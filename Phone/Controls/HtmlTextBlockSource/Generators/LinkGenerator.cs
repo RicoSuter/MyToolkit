@@ -9,9 +9,9 @@ using MyToolkit.Utilities;
 
 namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 {
-	public class LinkGenerator : SingleGenerator
+	public class LinkGenerator : SingleControlGenerator
 	{
-		public override DependencyObject GenerateSingle(HtmlNode node, IHtmlSettings settings)
+		public override DependencyObject GenerateSingle(HtmlNode node, IHtmlTextBlock textBlock)
 		{
 			try
 			{
@@ -22,7 +22,7 @@ namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 				hr.TextDecorations = TextDecorations.Underline;
 				hr.Inlines.Add(label);
 
-				var action = CreateLinkAction(hr, link, settings);
+				var action = CreateLinkAction(hr, link, textBlock);
 				var origAction = action;
 				action = delegate
 				{
@@ -39,13 +39,13 @@ namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 			}
 		}
 
-		protected virtual Action CreateLinkAction(Hyperlink hyperlink, string link, IHtmlSettings settings)
+		protected virtual Action CreateLinkAction(Hyperlink hyperlink, string link, IHtmlTextBlock textBlock)
 		{
 			if (link.StartsWith("mailto:"))
 				return () => new EmailComposeTask {To = link.Substring(7)}.Show();
 
 			var uri = link.StartsWith("http://") || link.StartsWith("https://") ?
-				new Uri(link, UriKind.Absolute) : new Uri(settings.BaseUri, link);
+				new Uri(link, UriKind.Absolute) : new Uri(textBlock.BaseUri, link);
 			return () => new WebBrowserTask { Uri = uri }.Show();
 		}
 	}

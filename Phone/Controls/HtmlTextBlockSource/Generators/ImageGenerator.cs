@@ -5,9 +5,9 @@ using System.Windows.Media.Imaging;
 
 namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 {
-	public class ImageGenerator : SingleGenerator
+	public class ImageGenerator : SingleControlGenerator
 	{
-		public override DependencyObject GenerateSingle(HtmlNode node, IHtmlSettings settings)
+		public override DependencyObject GenerateSingle(HtmlNode node, IHtmlTextBlock textBlock)
 		{
 			try
 			{
@@ -34,18 +34,18 @@ namespace MyToolkit.Controls.HtmlTextBlockSource.Generators
 				            		Source = imgSource
 				            	};
 
-				imgSource.ImageOpened += delegate { block.Update(settings.ActualWidth); };
+				imgSource.ImageOpened += delegate { block.Update(textBlock.ActualWidth); };
 
 				image.HorizontalAlignment = HorizontalAlignment.Left;
 				image.Source = imgSource;
-				image.Margin = new Thickness(0, settings.ParagraphMargin, 0, settings.ParagraphMargin); 
+				image.Margin = new Thickness(0, textBlock.ParagraphMargin, 0, textBlock.ParagraphMargin); 
 
 				if (width > 0)
 					image.Width = width;
 				if (height > 0)
 					image.Height = height;
 
-				settings.SizeChangedControls.Add(block);
+				textBlock.SizeChangedControls.Add(block);
 				return image;
 			}
 			catch

@@ -13,6 +13,16 @@ namespace MyToolkit.UI
 	{
 		public static class FrameworkElementExtensions
 		{
+			public static object FindParentDataContext(this FrameworkElement elem)
+			{
+				if (elem.DataContext != null)
+					return elem.DataContext;
+				if (elem.Parent != null && elem.Parent is FrameworkElement)
+					return FindParentDataContext((FrameworkElement)elem.Parent);
+				return null;
+			}
+
+
 			/// <summary>
 			/// Equivalent of FindName, but works on the visual tree to go through templates, etc.
 			/// </summary>

@@ -6,27 +6,14 @@ namespace MyToolkit.Controls.HtmlTextBlockSource
 {
 	internal static class HtmlTextBlockHelper
 	{
-		internal static void UpdateHeaderControl(this ItemsControl me, UIElement newElem, UIElement oldElem)
+		internal static void Generate(this IHtmlTextBlock me)
 		{
-			if (oldElem == null && newElem != null)
-				me.Items.Insert(0, newElem);
-			else if (oldElem != null && newElem != null)
-			{
-				me.Items.Remove(0);
-				me.Items.Insert(0, newElem);
-			}
-			else if (oldElem != null && newElem == null)
-				me.Items.Remove(0);
-		}
-
-		internal static void Generate(this IHtmlTextBlock me, string html)
-		{
+			var html = me.Html;
 			var itemsCtrl = (ItemsControl)me;
-			if (me.HeaderItem != null)
-			{
-				itemsCtrl.Items.Clear();
-				itemsCtrl.Items.Add(me.HeaderItem);
-			}
+
+			var tb = me as HtmlTextBlock;
+			if (tb != null)
+				tb.UpdateHeader();
 
 			ThreadPool.QueueUserWorkItem(o =>
 			{
@@ -47,12 +34,16 @@ namespace MyToolkit.Controls.HtmlTextBlockSource
 			                try
 			                {
 								itemsCtrl.Items.Clear();
-								if (me.HeaderItem != null)
-									itemsCtrl.Items.Add(me.HeaderItem);
 
-								foreach (var c in node.GetControls((IHtmlSettings)me))
+								if (tb != null)
+									tb.UpdateHeader();
+
+								foreach (var c in node.GetControls(me))
 									itemsCtrl.Items.Add(c);
-			                }
+
+								if (tb != null)
+									tb.UpdateFooter();
+							}
 			                catch { }
 			            }
 

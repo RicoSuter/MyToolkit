@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
+using System.Windows.Controls;
 using MyToolkit.Controls.HtmlTextBlockSource;
+using MyToolkit.UI.UIExtensionMethods;
 
 namespace MyToolkit.Controls
 {
-	public class HtmlTextBlock : ExtendedListBox, IHtmlSettings, IHtmlTextBlock
+	public class HtmlTextBlock : ExtendedListBox, IHtmlTextBlock
 	{
+		public IDictionary<string, IControlGenerator> Generators { get { return generators; } }
+		public List<ISizeChangedControl> SizeChangedControls { get; private set; }
+
+		private readonly IDictionary<string, IControlGenerator> generators = HtmlParser.GetDefaultGenerators();
+
 		public HtmlTextBlock()
 		{
 			FontSize = (double)Resources["PhoneFontSizeNormal"];
@@ -25,16 +24,39 @@ namespace MyToolkit.Controls
 			SizeChangedControls = new List<ISizeChangedControl>();
 		}
 
-		public List<ISizeChangedControl> SizeChangedControls { get; private set; }
-
 		private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
 		{
 			foreach (var ctrl in SizeChangedControls)
 				ctrl.Update(ActualWidth);
 		}
 
+		private static void OnHtmlChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+		{
+			var box = (HtmlTextBlock)obj;
+			box.Generate();
+		}
+
+		public void CallLoadedEvent()
+		{
+			var copy = HtmlLoaded;
+			if (copy != null)
+				copy(this, new EventArgs());
+		}
+
+		private bool loaded = false; 
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+
+			loaded = true; 
+			UpdateHeader();
+			UpdateFooter();
+		}
+
+		#region dependency properties
+
 		public static readonly DependencyProperty HtmlProperty =
-			DependencyProperty.Register("Html", typeof(String), typeof(HtmlTextBlock), new PropertyMetadata(default(String), OnChanged));
+			DependencyProperty.Register("Html", typeof(String), typeof(HtmlTextBlock), new PropertyMetadata(default(String), OnHtmlChanged));
 
 		public String Html
 		{
@@ -62,39 +84,134 @@ namespace MyToolkit.Controls
 			set { SetValue(BaseUriProperty, value); }
 		}
 
-		private readonly IDictionary<string, IControlGenerator> generators = HtmlParser.GetDefaultGenerators();
-		public IDictionary<string, IControlGenerator> Generators
+		#endregion
+
+		#region Templates
+
+		private ContentPresenter headerPresenter;
+		public static readonly DependencyProperty HeaderTemplateProperty =
+			DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(HtmlTextBlock), new PropertyMetadata(default(DataTemplate), UpdateHeader));
+
+		public DataTemplate HeaderTemplate
 		{
-			get { return generators; }
+			get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
+			set { SetValue(HeaderTemplateProperty, value); }
 		}
 
-		private static void OnChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+		public static readonly DependencyProperty ShowHeaderProperty =
+			DependencyProperty.Register("ShowHeader", typeof (bool), typeof (HtmlTextBlock), new PropertyMetadata(default(bool), UpdateShowHeader));
+
+		private static void UpdateShowHeader(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var box = (HtmlTextBlock)obj;
-			var html = box.Html;
-			box.Generate(html);
+			var ctrl = (HtmlTextBlock)d;
+			if (ctrl.headerPresenter != null)
+				ctrl.headerPresenter.Visibility = ctrl.ShowHeader ? Visibility.Visible : Visibility.Collapsed;
 		}
 
-		private UIElement headerItem;
-		public UIElement HeaderItem
+		public bool ShowHeader
 		{
-			get { return headerItem; }
-			set
+			get { return (bool) GetValue(ShowHeaderProperty); }
+			set { SetValue(ShowHeaderProperty, value); }
+		}
+
+		private static void UpdateHeader(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var ctrl = (HtmlTextBlock)d;
+			ctrl.UpdateHeader();
+		}
+
+		internal void UpdateHeader()
+		{
+			if (!loaded)
+				return; 
+
+			if (HeaderTemplate == null)
 			{
-				if (headerItem != value)
+				if (headerPresenter != null)
 				{
-					var old = headerItem;
-					headerItem = value;
-					this.UpdateHeaderControl(headerItem, old);
+					if (Items.Contains(headerPresenter))
+						Items.Remove(headerPresenter);
+					headerPresenter = null;
 				}
+			}
+			else
+			{
+				if (headerPresenter == null)
+				{
+					headerPresenter = new ContentPresenter();
+					headerPresenter.Content = this.FindParentDataContext();
+					headerPresenter.Visibility = ShowHeader ? Visibility.Visible : Visibility.Collapsed;
+				}
+
+				if (!Items.Contains(headerPresenter))
+					Items.Insert(0, headerPresenter);
+
+				headerPresenter.ContentTemplate = HeaderTemplate;
 			}
 		}
 
-		public void CallLoadedEvent()
+		private ContentPresenter footerPresenter;
+		public static readonly DependencyProperty FooterTemplateProperty =
+			DependencyProperty.Register("FooterTemplate", typeof(DataTemplate), typeof(HtmlTextBlock), new PropertyMetadata(default(DataTemplate), UpdateFooter));
+
+		public DataTemplate FooterTemplate
 		{
-			var copy = HtmlLoaded;
-			if (copy != null)
-				copy(this, new EventArgs());
+			get { return (DataTemplate)GetValue(FooterTemplateProperty); }
+			set { SetValue(FooterTemplateProperty, value); }
 		}
+
+		public static readonly DependencyProperty ShowFooterProperty =
+			DependencyProperty.Register("ShowFooter", typeof (bool), typeof (HtmlTextBlock), new PropertyMetadata(default(bool), UpdateShowFooter));
+
+		private static void UpdateShowFooter(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var ctrl = (HtmlTextBlock)d;
+			if (ctrl.footerPresenter != null)
+				ctrl.footerPresenter.Visibility = ctrl.ShowFooter ? Visibility.Visible : Visibility.Collapsed;
+		}
+
+		public bool ShowFooter
+		{
+			get { return (bool) GetValue(ShowFooterProperty); }
+			set { SetValue(ShowFooterProperty, value); }
+		}
+
+		private static void UpdateFooter(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var ctrl = (HtmlTextBlock)d;
+			ctrl.UpdateFooter();
+		}
+
+		internal void UpdateFooter()
+		{
+			if (!loaded)
+				return; 
+
+			if (FooterTemplate == null)
+			{
+				if (footerPresenter != null)
+				{
+					if (Items.Contains(footerPresenter))
+						Items.Remove(footerPresenter);
+					footerPresenter = null;
+				}
+			}
+			else
+			{
+				if (footerPresenter == null)
+				{
+					footerPresenter = new ContentPresenter();
+					headerPresenter.Content = this.FindParentDataContext();
+					footerPresenter.Visibility = ShowFooter ? Visibility.Visible : Visibility.Collapsed;
+				}
+
+				if (!Items.Contains(footerPresenter))
+					Items.Add(footerPresenter);
+
+				footerPresenter.ContentTemplate = FooterTemplate;
+			}
+		}
+
+		#endregion
 	}
 }

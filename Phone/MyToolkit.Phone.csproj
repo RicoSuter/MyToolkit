@@ -216,9 +216,10 @@
     <Compile Include="Collections\Group.cs" />
     <Compile Include="Controls\FixedHtmlTextBlock.cs" />
     <Compile Include="Controls\HtmlTextBlock.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\Generators\EmptyGenerator.cs" />
     <Compile Include="Controls\HtmlTextBlockSource\HtmlTextBlockHelper.cs" />
-    <Compile Include="Controls\HtmlTextBlockSource\IHtmlTextBlock.cs" />
-    <Compile Include="Controls\HtmlTextBlockSource\SingleGenerator.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\ISizeChangedControl.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\SingleControlGenerator.cs" />
     <Compile Include="Controls\VideoButton.xaml.cs">
       <DependentUpon>VideoButton.xaml</DependentUpon>
     </Compile>
@@ -233,7 +234,7 @@
     <Compile Include="Controls\HtmlTextBlockSource\HtmlNode.cs" />
     <Compile Include="Controls\HtmlTextBlockSource\HtmlParser.cs" />
     <Compile Include="Controls\HtmlTextBlockSource\IControlGenerator.cs" />
-    <Compile Include="Controls\HtmlTextBlockSource\IHtmlSettings.cs" />
+    <Compile Include="Controls\HtmlTextBlockSource\IHtmlTextBlock.cs" />
     <Compile Include="Controls\NativeLongListSelector.cs" />
     <Compile Include="Networking\NetworkState.cs" />
     <Compile Include="Networking\NetworkStateTracker.cs" />

@@ -65,16 +65,16 @@ namespace MyToolkit.Controls.HtmlTextBlockSource
 			}
 		}
 
-		public DependencyObject[] GetLeaves(IHtmlSettings settings)
+		public DependencyObject[] GetLeaves(IHtmlTextBlock textBlock)
 		{
 			var list = new List<DependencyObject>();
 			foreach (var c in children)
 			{
-				var ctrl = c.GetControls(settings);
+				var ctrl = c.GetControls(textBlock);
 				if (ctrl != null)
 					list.AddRange(ctrl);
 				else
-					list.AddRange(c.GetLeaves(settings));
+					list.AddRange(c.GetLeaves(textBlock));
 			}
 			return list.ToArray();
 		}
@@ -86,15 +86,15 @@ namespace MyToolkit.Controls.HtmlTextBlockSource
 
 		private bool loaded = false; 
 		private DependencyObject[] controls;
-		public DependencyObject[] GetControls(IHtmlSettings settings)
+		public DependencyObject[] GetControls(IHtmlTextBlock textBlock)
 		{
 			if (!loaded)
 			{
 				var value = IsTag ? Value : "text";
-				var generator = settings.Generators.ContainsKey(value) ? settings.Generators[value] :
-					(settings.Generators.ContainsKey("unknown") ? settings.Generators["unknown"] : null);
+				var generator = textBlock.Generators.ContainsKey(value) ? textBlock.Generators[value] :
+					(textBlock.Generators.ContainsKey("unknown") ? textBlock.Generators["unknown"] : null);
 				if (generator != null)
-					controls = generator.Generate(this, settings);
+					controls = generator.Generate(this, textBlock);
 				loaded = true; 
 			}
 			return controls;
