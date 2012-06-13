@@ -48,7 +48,7 @@ namespace MyToolkit.MVVM
 
 		public bool SetProperty<T>(String propertyName, ref T oldValue, T newValue)
 		{
-			if (object.Equals(oldValue, newValue))
+			if (Equals(oldValue, newValue))
 				return false;
 
 			oldValue = newValue;
