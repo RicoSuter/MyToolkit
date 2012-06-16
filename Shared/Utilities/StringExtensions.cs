@@ -19,7 +19,9 @@ namespace MyToolkit.Utilities
 
 		public static string ConvertUTF8Characters(this string text)
 		{
-			return text.Replace("\u008B", "‹").Replace("\u009B", "›");
+			return text.
+				Replace("\u008B", "‹").
+				Replace("\u009B", "›");
 		}
 
 		public static string TruncateWithoutChopping(this string text, int length)

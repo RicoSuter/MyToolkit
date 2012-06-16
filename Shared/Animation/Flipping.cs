@@ -26,9 +26,9 @@ namespace MyToolkit.Animations
 		public static void Flip(UIElement parentCtrl, UIElement frontCtrl, UIElement backCtrl, TimeSpan duration, bool transitionToBack, Action completed = null)
 		{
 			duration = new TimeSpan(duration.Ticks / 2);
-			var proj = parentCtrl.Projection is PlaneProjection ? (PlaneProjection)parentCtrl.Projection : new PlaneProjection();
-			if (parentCtrl.Projection != proj)
-				parentCtrl.Projection = proj;
+
+			if (!(parentCtrl.Projection is PlaneProjection))
+				parentCtrl.Projection = new PlaneProjection();
 
 			var animation = new DoubleAnimation();
 			animation.From = 0.0;
@@ -38,7 +38,7 @@ namespace MyToolkit.Animations
 			var story = new Storyboard();
 			story.Children.Add(animation);
 
-			Storyboard.SetTarget(animation, proj);
+			Storyboard.SetTarget(animation, parentCtrl.Projection);
 #if METRO
 			Storyboard.SetTargetProperty(animation, "RotationY");
 #else
@@ -55,7 +55,7 @@ namespace MyToolkit.Animations
 				story = new Storyboard();
 				story.Children.Add(animation);
 
-				Storyboard.SetTarget(animation, proj);
+				Storyboard.SetTarget(animation, parentCtrl.Projection);
 #if METRO
 				Storyboard.SetTargetProperty(animation, "RotationY");
 #else
@@ -67,7 +67,7 @@ namespace MyToolkit.Animations
 
 				story.Completed += delegate
 				{
-					proj.RotationY = 0.0;
+					((PlaneProjection)parentCtrl.Projection).RotationY = 0.0;
 					if (completed != null)
 						completed();
 				};

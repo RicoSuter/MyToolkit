@@ -10,16 +10,15 @@ namespace MyToolkit.Converters
 	public class RemoveColorAlphaConverter : IValueConverter
 	{
 		private static Dictionary<Color, Color> colors = null; 
+
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
 			var color = (Color) value; 
 			if (colors == null)
 				colors = new Dictionary<Color, Color>();
 
-			if (colors.ContainsKey(color))
-				return colors[color];
-
-			colors[color] = ColorUtility.RemoveAlpha(color, (Color)Application.Current.Resources["PhoneBackgroundColor"]);
+			if (!colors.ContainsKey(color))
+				colors[color] = ColorUtility.RemoveAlpha(color, (Color)Application.Current.Resources["PhoneBackgroundColor"]);
 			return targetType == typeof(Color) ? (object)colors[color] : new SolidColorBrush(colors[color]);
 		}
 
