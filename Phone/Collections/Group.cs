@@ -20,6 +20,7 @@ namespace MyToolkit.Collections
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
+
 			if (e.PropertyName == "Count")
 			{
 				OnPropertyChanged(new PropertyChangedEventArgs("HasItems"));

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using MyToolkit.Controls.HtmlTextBlockSource;
+using MyToolkit.Controls.HtmlTextBlockImplementation;
 using MyToolkit.UI.UIExtensionMethods;
 
 namespace MyToolkit.Controls
@@ -10,7 +10,7 @@ namespace MyToolkit.Controls
 	public class HtmlTextBlock : ExtendedListBox, IHtmlTextBlock
 	{
 		public IDictionary<string, IControlGenerator> Generators { get { return generators; } }
-		public List<ISizeChangedControl> SizeChangedControls { get; private set; }
+		public List<ISizeDependentControl> SizeDependentControls { get; private set; }
 
 		private readonly IDictionary<string, IControlGenerator> generators = HtmlParser.GetDefaultGenerators();
 
@@ -21,12 +21,12 @@ namespace MyToolkit.Controls
 			InnerMargin = new Thickness(24, 0, 24, 0);
 
 			SizeChanged += OnSizeChanged;
-			SizeChangedControls = new List<ISizeChangedControl>();
+			SizeDependentControls = new List<ISizeDependentControl>();
 		}
 
 		private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
 		{
-			foreach (var ctrl in SizeChangedControls)
+			foreach (var ctrl in SizeDependentControls)
 				ctrl.Update(ActualWidth);
 		}
 

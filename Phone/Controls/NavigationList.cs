@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 using Microsoft.Phone.Controls;
 using GestureEventArgs = System.Windows.Input.GestureEventArgs;
 
@@ -22,7 +20,7 @@ namespace MyToolkit.Controls
 			((UIElement)element).Tap += OnTapped; 
 		}
 
-		private void OnTapped(object sender, GestureEventArgs e)
+		private void OnTapped(object sender, GestureEventArgs eventArgs)
 		{
 			var element = (FrameworkElement)sender;
 			OnNavigate(new NavigationListEventArgs(element.DataContext));

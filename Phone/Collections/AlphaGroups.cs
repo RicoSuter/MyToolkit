@@ -7,7 +7,7 @@ namespace MyToolkit.Collections
 	public class AlphaGroups<T> : List<Group<T>>, INotifyCollectionChanged
 	{
 		private const string Characters = "#abcdefghijklmnopqrstuvwxyz";
-		private Dictionary<string, Group<T>> groups; // user for faster group access
+		private Dictionary<string, Group<T>> groups; // used for faster group access
 
 		public AlphaGroups()
 		{

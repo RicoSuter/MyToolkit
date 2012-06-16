@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using MyToolkit.Controls.HtmlTextBlockSource;
+using MyToolkit.Controls.HtmlTextBlockImplementation;
 
 namespace MyToolkit.Controls
 {
 	public class FixedHtmlTextBlock : ItemsControl, IHtmlTextBlock
 	{
 		public IDictionary<string, IControlGenerator> Generators { get { return generators; } }
-		public List<ISizeChangedControl> SizeChangedControls { get; private set; }
+		public List<ISizeDependentControl> SizeDependentControls { get; private set; }
 
 		private readonly IDictionary<string, IControlGenerator> generators = HtmlParser.GetDefaultGenerators();
 		
@@ -19,12 +19,12 @@ namespace MyToolkit.Controls
 			Margin = new Thickness(12, 0, 12, 0);
 
 			SizeChanged += OnSizeChanged;
-			SizeChangedControls = new List<ISizeChangedControl>();
+			SizeDependentControls = new List<ISizeDependentControl>();
 		}
 
 		private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
 		{
-			foreach (var ctrl in SizeChangedControls)
+			foreach (var ctrl in SizeDependentControls)
 				ctrl.Update(ActualWidth);
 		}
 
