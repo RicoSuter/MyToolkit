@@ -429,8 +429,13 @@ namespace MyToolkit.Networking
 				if (response.Headers["Content-Encoding"] == "gzip")
 					response = new GZipWebResponse(response); 
 #else
+#if SILVERLIGHT
 				if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
 					response = new GZipWebResponse(response); 
+#else
+				if (response.Headers[HttpResponseHeader.ContentEncoding] == "gzip")
+					response = new GZipWebResponse(response);
+#endif
 #endif
 #endif
 
