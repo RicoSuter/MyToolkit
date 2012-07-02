@@ -15,6 +15,8 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation
 		Uri BaseUri { get; }
 		int ParagraphMargin { get; }
 
+		Brush Foreground { get; }
+		Brush Background { get; }
 		double FontSize { get; }
 		FontFamily FontFamily { get; }
 

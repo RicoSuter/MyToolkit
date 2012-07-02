@@ -1,11 +1,21 @@
 ﻿using System;
+
+#if METRO
+using Windows.Foundation;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+#else
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+#endif
+
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
 using System.Diagnostics;
+
 
 namespace MyToolkit.UI
 {
@@ -135,7 +145,7 @@ namespace MyToolkit.UI
 
 				foreach (FrameworkElement element in selfOrAncestors)
 				{
-					IList groups = VisualStateManager.GetVisualStateGroups(element);
+					var groups = VisualStateManager.GetVisualStateGroups(element);
 					foreach (object o in groups)
 					{
 						VisualStateGroup group = o as VisualStateGroup;
@@ -159,9 +169,14 @@ namespace MyToolkit.UI
 			{
 				// Determine the bounding box of the item relative to the viewport
 				GeneralTransform transform = item.TransformToVisual(viewport);
+
+#if METRO
+				Point topLeft = transform.TransformPoint(new Point(0, 0));
+				Point bottomRight = transform.TransformPoint(new Point(item.ActualWidth, item.ActualHeight));
+#else
 				Point topLeft = transform.Transform(new Point(0, 0));
 				Point bottomRight = transform.Transform(new Point(item.ActualWidth, item.ActualHeight));
-
+#endif
 				// Check for overlapping bounding box of the item vs. the viewport, depending on orientation
 				double min, max, testMin, testMax;
 				if (orientation == Orientation.Vertical)
@@ -447,12 +462,11 @@ namespace MyToolkit.UI
 				workItems.Add(action);
 			}
 
-			/// <summary>
-			/// Actual function that does work on the render event, then immediately unregisters itself
-			/// </summary>
-			/// <param name="sender">The sender</param>
-			/// <param name="args">The args</param>
+#if METRO
+			private static void DoWorkOnRender(object sender, object e)
+#else
 			static void DoWorkOnRender(object sender, EventArgs args)
+#endif
 			{
 				Debug.WriteLine("DoWorkOnRender running... if you see this message a lot then something is wrong!");
 
@@ -472,7 +486,7 @@ namespace MyToolkit.UI
 						if (Debugger.IsAttached)
 							Debugger.Break();
 
-						Debug.WriteLine("Exception while doing work for " + action.Method.Name + ". " + ex.Message);
+						Debug.WriteLine("Exception while doing work for " + action + ". " + ex.Message);
 					}
 				}
 			}

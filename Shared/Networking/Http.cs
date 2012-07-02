@@ -216,7 +216,7 @@ namespace MyToolkit.Networking
 					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
 #endif
 
-				response.CreateTimeoutTimer();
+				response.CreateTimeoutTimer(request);
 				request.BeginGetResponse(r => ProcessResponse(r, request, response, action), request);
 			}
 			catch (Exception e)
@@ -288,7 +288,7 @@ namespace MyToolkit.Networking
 					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
 #endif
 
-				response.CreateTimeoutTimer();
+				response.CreateTimeoutTimer(request);
 				request.BeginGetRequestStream(delegate(IAsyncResult ar1)
 				{
 					try

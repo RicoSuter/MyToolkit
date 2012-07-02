@@ -39,6 +39,8 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 
 				var tb = new RichTextBox();
 				tb.Blocks.Add(p);
+				tb.Foreground = textBlock.Foreground;
+				tb.Background = textBlock.Background;
 				tb.FontSize = textBlock.FontSize;
 				tb.FontFamily = textBlock.FontFamily;
 				tb.Margin = new Thickness(-12, textBlock.ParagraphMargin, -12, textBlock.ParagraphMargin);

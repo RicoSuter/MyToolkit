@@ -3,6 +3,10 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
+#if METRO
+using Windows.Data.Xml.Dom;
+#endif
+
 namespace MyToolkit.Utilities
 {
 	public sealed class Utf8StringWriter : StringWriter
@@ -32,7 +36,6 @@ namespace MyToolkit.Utilities
 		}
 
 #if !METRO && !SILVERLIGHT
-		// TODO (beta) implement for metro => should work in final version
 		public static string XmlEscape(string unescaped)
 		{
 			var doc = new XmlDocument();
@@ -48,6 +51,24 @@ namespace MyToolkit.Utilities
 			node.InnerXml = escaped;
 			return node.InnerText;
 		}
+#endif
+
+#if METRO
+        public static string XmlEscape(string unescaped)
+        {
+            var doc = new XmlDocument();
+            var node = doc.CreateElement("root");
+            node.InnerText = unescaped;
+            return node.InnerText;
+        }
+
+        public static string XmlUnescape(string escaped)
+        {
+            var doc = new XmlDocument();
+            var node = doc.CreateElement("root");
+            node.InnerText = escaped;
+            return node.InnerText;
+        }
 #endif
 	}
 }

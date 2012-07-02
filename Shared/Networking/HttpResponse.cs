@@ -4,6 +4,10 @@ using System.IO;
 using System.Net;
 using System.Threading;
 
+#if METRO
+using System.Threading.Tasks;
+#endif 
+
 namespace MyToolkit.Networking
 {
 	public class HttpResponse
@@ -76,14 +80,23 @@ namespace MyToolkit.Networking
 		public List<Cookie> Cookies { get; private set; }
 
 #if METRO
-        internal void CreateTimeoutTimer()
+        internal void CreateTimeoutTimer(HttpWebRequest request)
         {
 			if (Request.ConnectionTimeout > 0)
-	            throw new NotImplementedException(); 
+			{
+				request.ContinueTimeout = Request.ConnectionTimeout;
+				//await Task.Delay(Request.ConnectionTimeout * 1000);
+				
+				//if (IsPending && !IsConnected)
+				//{
+				//	Exception = new TimeoutException("The connection timed out.");
+				//	Abort();
+				//}
+			}
         }
 #else
 		private Timer timer; 
-		internal void CreateTimeoutTimer()
+		internal void CreateTimeoutTimer(HttpWebRequest request)
 		{
 			if (Request.ConnectionTimeout > 0)
 			{

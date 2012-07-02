@@ -1,8 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using MyToolkit.Environment;
 using MyToolkit.Storage;
+
+#if WINDOWS_PHONE && !LIGHT
+using MyToolkit.Environment;
+using MyToolkit.Messaging;
+#endif
 
 namespace MyToolkit.Utilities
 {
@@ -52,7 +57,14 @@ namespace MyToolkit.Utilities
 		{
 			var c = Get(item.ID);
 			if (c != null)
+			{
+				if (c is IDisposable)
+					((IDisposable)c).Dispose();
+
 				collection.Remove(c);
+			}
+			else if (item is IDisposable)
+				((IDisposable)item).Dispose();
 		}
 
 		public void SaveToSettings(string key)
@@ -69,7 +81,31 @@ namespace MyToolkit.Utilities
 
 		public virtual int GenerateIdentity()
 		{
-			return IdentityGenerator.Generate(i => collection.Any(c => c.ID == i));
+			lock (this)
+				return IdentityGenerator.Generate(i => collection.Any(c => c.ID == i));
 		}
+
+#if WINDOWS_PHONE && !LIGHT
+		/// <summary>
+		/// Call this method in OnBackKeyPress
+		/// </summary>
+		/// <param name="item"></param>
+		/// <param name="msg"></param>
+		/// <returns>set e.Cancel to result</returns>
+		public bool TrySave(T item, TextMessage msg)
+		{
+			if (msg != null)
+			{
+				Messenger.Send(msg);
+				if (msg.Result == TextMessage.MessageResult.OK)
+					Remove(item);
+				else
+					return true;
+			}
+			else
+				Add(item);
+			return false;
+		}
+#endif
 	}
 }

@@ -118,11 +118,12 @@ namespace MyToolkit.Messaging
 		/// </summary>
 		/// <typeparam name="T">Type of the message</typeparam>
 		/// <param name="message"></param>
-		public static void Send<T>(T message)
+		public static T Send<T>(T message)
 		{
 			var type = typeof (T);
 			foreach (var a in actions.Where(a => a.Type == type).ToArray())
 				((Action<T>)a.Action)(message);
+			return message;
 		}
 	}
 }
