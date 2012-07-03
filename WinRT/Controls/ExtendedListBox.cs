@@ -10,6 +10,12 @@ namespace MyToolkit.Controls
 {
 	public class ExtendedListBox : ListBox
 	{
+		//public Thickness InnerMargin
+		//{
+		//	get { return Padding; }
+		//	set { Padding = value; }
+		//}
+
 		public ListBoxItem GetListBoxItemFromItem(object item)
 		{
 			return (ListBoxItem)ItemContainerGenerator.ContainerFromItem(item);
