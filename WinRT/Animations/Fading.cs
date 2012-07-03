@@ -11,12 +11,24 @@ namespace MyToolkit.Animations
 {
 	public static class Fading
 	{
-		public static void FadeIn(UIElement obj, TimeSpan duration, Action completed = null)
+#if METRO
+		async public static Task FadeInAsync(UIElement obj, TimeSpan duration, double endOpacity = 1.0)
+		{
+			await TaskHelper.RunCallbackMethod(FadeIn, obj, duration, endOpacity);
+		}
+
+		async public static Task FadeOutAsync(UIElement obj, TimeSpan duration, double endOpacity = 0.0)
+		{
+			await TaskHelper.RunCallbackMethod(FadeOut, obj, duration, endOpacity);
+		}
+#endif
+
+		public static void FadeIn(UIElement obj, TimeSpan duration, double endOpacity = 1.0, Action completed = null)
 		{
 			var animation = new DoubleAnimation();
 			animation.EasingFunction = new ExponentialEase() { EasingMode = EasingMode.EaseOut, Exponent = 6 };
-			animation.From = 0.0;
-			animation.To = 1.0;
+			animation.From = obj.Opacity;
+			animation.To = endOpacity;
 			animation.Duration = new Duration(duration);
 
 			var story = new Storyboard();
@@ -30,12 +42,12 @@ namespace MyToolkit.Animations
 			story.Begin();
 		}
 
-		public static void FadeOut(UIElement obj, TimeSpan duration, Action completed = null)
+		public static void FadeOut(UIElement obj, TimeSpan duration, double endOpacity = 0.0, Action completed = null)
 		{
 			var animation = new DoubleAnimation();
 			animation.EasingFunction = new ExponentialEase() { EasingMode = EasingMode.EaseOut, Exponent = 6 };
-			animation.From = 1.0;
-			animation.To = 0.0;
+			animation.From = obj.Opacity;
+			animation.To = endOpacity;
 			animation.Duration = new Duration(duration);
 
 			var story = new Storyboard();

@@ -28,21 +28,14 @@ namespace MyToolkit.Controls
 			set { SetValue(AllowNullProperty, value); }
 		}
 
-		// TODO (beta) change to DateTime when fixed
-		public static readonly DependencyProperty SelectedItemProperty =
-			DependencyProperty.Register("SelectedItem", typeof(Object), typeof(DatePicker), new PropertyMetadata(null, OnSelectedItemChanged));
-
-        public Object SelectedItem
-		{
-            get { return (Object)GetValue(SelectedItemProperty); }
-			set { SetValue(SelectedItemProperty, value); }
-		}
+		public static readonly DependencyProperty SelectedDateProperty =
+            DependencyProperty.Register("SelectedDate", typeof(DateTime?), typeof(DatePicker), new PropertyMetadata(null, OnSelectedItemChanged));
 
         public DateTime? SelectedDate
-        {
-            get { return (DateTime?)SelectedItem; }
-            set { SelectedItem = value; }
-        }
+		{
+            get { return (DateTime?)GetValue(SelectedDateProperty); }
+            set { SetValue(SelectedDateProperty, value); }
+		}
 
 		public event RoutedEventHandler SelectedItemChanged; 
 
@@ -121,19 +114,19 @@ namespace MyToolkit.Controls
 			if (initializing)
 				return;
 
-			var hour = SelectedItem != null ? SelectedDate.Value.Hour : 0;
-			var minute = SelectedItem != null ? SelectedDate.Value.Minute : 0;
-			var second = SelectedItem != null ? SelectedDate.Value.Second : 0;
+			var hour = SelectedDate != null ? SelectedDate.Value.Hour : 0;
+            var minute = SelectedDate != null ? SelectedDate.Value.Minute : 0;
+            var second = SelectedDate != null ? SelectedDate.Value.Second : 0;
 
 			initializing = true;
 			if (AllowNull && (Day.SelectedIndex == 0 || Month.SelectedIndex == 0 || Year.SelectedIndex == 0))
-				SelectedItem = null;
+                SelectedDate = null;
 			else
 			{
 				if (AllowNull)
-					SelectedItem = new DateTime(Year.SelectedIndex + 2000 - 1, Month.SelectedIndex, Day.SelectedIndex, hour, minute, second);
+                    SelectedDate = new DateTime(Year.SelectedIndex + 2000 - 1, Month.SelectedIndex, Day.SelectedIndex, hour, minute, second);
 				else
-					SelectedItem = new DateTime(Year.SelectedIndex + 2000, Month.SelectedIndex + 1, Day.SelectedIndex + 1, hour, minute, second);
+                    SelectedDate = new DateTime(Year.SelectedIndex + 2000, Month.SelectedIndex + 1, Day.SelectedIndex + 1, hour, minute, second);
 			}
 
 			//if (SelectedItem.HasValue)

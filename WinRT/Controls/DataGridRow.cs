@@ -22,18 +22,18 @@ namespace MyToolkit.Controls
 			{
 				var cell = c.GenerateElement(item);
 
-				var content = new ContentPresenter();
-				content.Content = cell.Control;
-				content.Margin = new Thickness(10, 0, 0, 5);
-				content.Tag = cell; 
+                var content = new ContentPresenter();
+                content.Content = cell.Control;
+                content.Margin = new Thickness(10, 0, 0, 5);
+                content.Tag = cell; 
 
 				// TODO (beta) refactor if FindName is available 
-				//var content = new ContentPresenter();
-				//content.ContentTemplate = dataGrid.CellTemplate;
-				//content.Tag = cell; 
+                //var content = new ContentPresenter();
+                //content.ContentTemplate = dataGrid.CellTemplate;
+                //content.Tag = cell;
 
-				//var presenter = content.ContentTemplate.FindName("content", content);
-				//presenter.Content = cell.Control; 
+                //var presenter = content.ContentTemplate.FindName("content", content);
+                //presenter.Content = cell.Control; 
 
 				Grid.SetColumn(content, x++);
 				Children.Add(content);
@@ -47,8 +47,8 @@ namespace MyToolkit.Controls
 				ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
 			// second row used for details view
-			RowDefinitions.Add(new RowDefinition { Height = GridLengthHelper.Auto });
-			RowDefinitions.Add(new RowDefinition { Height = GridLengthHelper.Auto });
+			RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+			RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 		}
 
 		public DataGrid DataGrid { get; private set; }

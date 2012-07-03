@@ -47,21 +47,14 @@ namespace MyToolkit.Controls
 			set { SetValue(AllowNullProperty, value); }
 		}
 
-		// TODO (beta) change to DateTime when fixed
-		public static readonly DependencyProperty SelectedItemProperty =
-			DependencyProperty.Register("SelectedItem", typeof(Object), typeof(TimePicker), new PropertyMetadata(null, OnSelectedItemChanged));
+		public static readonly DependencyProperty SelectedTimeProperty =
+            DependencyProperty.Register("SelectedTime", typeof(DateTime?), typeof(TimePicker), new PropertyMetadata(null, OnSelectedItemChanged));
 
-        public Object SelectedItem
+        public DateTime? SelectedTime
 		{
-            get { return (Object)GetValue(SelectedItemProperty); }
-			set { SetValue(SelectedItemProperty, value); }
+            get { return (DateTime?)GetValue(SelectedTimeProperty); }
+            set { SetValue(SelectedTimeProperty, value); }
 		}
-
-        public DateTime? SelectedDate
-        {
-            get { return (DateTime?)SelectedItem; }
-            set { SelectedItem = value; }
-        }
 
 		public event RoutedEventHandler SelectedItemChanged; 
 
@@ -81,21 +74,21 @@ namespace MyToolkit.Controls
 
 		public void UpdateDate()
 		{
-            if (SelectedDate.HasValue)
+            if (SelectedTime.HasValue)
 			{
-                UpdateValues(SelectedDate.Value.Year, SelectedDate.Value.Month);
+                UpdateValues(SelectedTime.Value.Year, SelectedTime.Value.Month);
 
                 if (AllowNull)
                 {
-					Hour.SelectedIndex = SelectedDate.Value.Hour + 1;
-					Minute.SelectedIndex = SelectedDate.Value.Minute + 1;
-					Second.SelectedIndex = SelectedDate.Value.Second + 1;
+					Hour.SelectedIndex = SelectedTime.Value.Hour + 1;
+					Minute.SelectedIndex = SelectedTime.Value.Minute + 1;
+					Second.SelectedIndex = SelectedTime.Value.Second + 1;
                 }
                 else
                 {
-					Hour.SelectedIndex = SelectedDate.Value.Day;
-					Minute.SelectedIndex = SelectedDate.Value.Month;
-					Second.SelectedIndex = SelectedDate.Value.Year;
+					Hour.SelectedIndex = SelectedTime.Value.Day;
+					Minute.SelectedIndex = SelectedTime.Value.Month;
+					Second.SelectedIndex = SelectedTime.Value.Year;
                 }
 			}
 			else
@@ -137,19 +130,19 @@ namespace MyToolkit.Controls
 			if (initializing)
 				return;
 
-			var year = SelectedItem != null ? SelectedDate.Value.Year : 0;
-			var month = SelectedItem != null ? SelectedDate.Value.Month : 0;
-			var day = SelectedItem != null ? SelectedDate.Value.Day : 0;
+            var year = SelectedTime != null ? SelectedTime.Value.Year : 0;
+            var month = SelectedTime != null ? SelectedTime.Value.Month : 0;
+            var day = SelectedTime != null ? SelectedTime.Value.Day : 0;
 
 			initializing = true;
 			if (AllowNull && (Hour.SelectedIndex == 0 || Minute.SelectedIndex == 0 || Second.SelectedIndex == 0))
-				SelectedItem = null;
+                SelectedTime = null;
 			else
 			{
 				if (AllowNull)
-					SelectedItem = new DateTime(year, month, day, Hour.SelectedIndex - 1, Minute.SelectedIndex - 1, Second.SelectedIndex - 1);
+                    SelectedTime = new DateTime(year, month, day, Hour.SelectedIndex - 1, Minute.SelectedIndex - 1, Second.SelectedIndex - 1);
 				else
-					SelectedItem = new DateTime(year, month, day, Hour.SelectedIndex, Minute.SelectedIndex, Second.SelectedIndex);
+                    SelectedTime = new DateTime(year, month, day, Hour.SelectedIndex, Minute.SelectedIndex, Second.SelectedIndex);
 			}
 				
 			initializing = false; 

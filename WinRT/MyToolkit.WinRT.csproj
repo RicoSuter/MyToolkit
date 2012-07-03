@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Phone\UI\FrameworkElementExtensions.cs">
+      <Link>UI\FrameworkElementExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Phone\Utilities\EntityContainer.cs">
+      <Link>Utilities\EntityContainer.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Collections\ExtendedObservableCollection.cs">
       <Link>Collections\ExtendedObservableCollection.cs</Link>
     </Compile>
@@ -64,6 +70,9 @@
     </Compile>
     <Compile Include="..\Shared\Converters\VisibilityConverter.cs">
       <Link>Converters\VisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Media\ImageHelper.cs">
+      <Link>Media\ImageHelper.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Messaging\ActionMessage.cs">
       <Link>Messaging\ActionMessage.cs</Link>
@@ -116,11 +125,17 @@
     <Compile Include="..\Shared\Utilities\HttpUtilityExtensions.cs">
       <Link>Utilities\HttpUtilityExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Utilities\IdentityGenerator.cs">
+      <Link>Utilities\IdentityGenerator.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Utilities\PropertyPathHelper.cs">
       <Link>Utilities\PropertyPathHelper.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\ReflectionExtensions.cs">
       <Link>Utilities\ReflectionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\SingleEvent.cs">
+      <Link>Utilities\SingleEvent.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\StreamExtensions.cs">
       <Link>Utilities\StreamExtensions.cs</Link>
@@ -136,6 +151,8 @@
     </Compile>
     <Compile Include="Animations\Fading.cs" />
     <Compile Include="Animations\Flipping.cs" />
+    <Compile Include="Controls\ExtendedTextBox.cs" />
+    <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\TimePicker.xaml.cs">
       <DependentUpon>TimePicker.xaml</DependentUpon>
     </Compile>
@@ -160,15 +177,16 @@
     <Compile Include="Controls\PageFrame.cs" />
     <Compile Include="UI\PopupHelper.cs" />
     <Compile Include="Utilities\TaskHelper.cs" />
+    <Compile Include="Utilities\Thread.cs" />
     <Compile Include="Utilities\VisualTreeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Themes\generic.xaml">
+    <Page Include="Themes\generic.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Content>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\TimePicker.xaml">

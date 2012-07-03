@@ -51,7 +51,7 @@ namespace MyToolkit.Controls
 			PageStack.Pop();
 
 			var page = PageStack.Peek();
-			var args = new NavigationEventArgs(page, null, page.GetType(), null, NavigationMode.Back);
+            NavigationEventArgs args = null; // new NavigationEventArgs(page, null, page.GetType(), null, NavigationMode.Back); TOOD find solution
 
 			if (Navigated != null)
 				Navigated(this, args);
@@ -88,7 +88,7 @@ namespace MyToolkit.Controls
 			}
 
 			var page = (Control)Activator.CreateInstance(type);
-			var args = new NavigationEventArgs(page, parameter, type, null, NavigationMode.New);
+            NavigationEventArgs args = null; // new NavigationEventArgs(page, parameter, type, null, NavigationMode.New); // TODO find solution
 		
 			PageStack.Push(page);
 			contentControl.Content = page;
@@ -137,9 +137,9 @@ namespace MyToolkit.Controls
 				var called = false; 
 				var finishedAction = new Action(() =>
 				{
-					Window.Current.Dispatcher.Invoke(
-						Windows.UI.Core.CoreDispatcherPriority.Normal,
-						(x, y) => 
+					Window.Current.Dispatcher.RunAsync(
+						Windows.UI.Core.CoreDispatcherPriority.Normal, 
+						delegate 
 						{
 							if (!called)
 							{
@@ -149,8 +149,7 @@ namespace MyToolkit.Controls
 								handler();
 								called = true;
 							}
-						}, 
-						page, null);
+						});
 				});
 
 				method.Invoke(page, new object[] { finishedAction });

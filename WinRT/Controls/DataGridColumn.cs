@@ -31,8 +31,7 @@ namespace MyToolkit.Controls
 
 		internal ColumnDefinition CreateGridColumnDefinition()
 		{
-			// TODO (beta) use GridLenght in DataGridColumn instead of double
-			return new ColumnDefinition { Width = Width == 0.0 ? new GridLength(1, GridUnitType.Star) : GridLengthHelper.FromPixels(Width) };
+			return new ColumnDefinition { Width = Width };
 		}
 
 		public bool CanSort
@@ -79,13 +78,12 @@ namespace MyToolkit.Controls
 			DependencyProperty.Register("Header", typeof(string), typeof(DataGridColumn), new PropertyMetadata(default(string)));
 
 
-		// TODO (beta) change back to GridLength, not possible in VS11 => bug
-		public double Width
+        public GridLength Width
 		{
-			get { return (double)GetValue(WidthProperty); }
+            get { return (GridLength)GetValue(WidthProperty); }
 			set { SetValue(WidthProperty, value); }
 		}
 		public static readonly DependencyProperty WidthProperty =
-			DependencyProperty.Register("Width", typeof(double), typeof(DataGridColumn), new PropertyMetadata(default(double)));
+            DependencyProperty.Register("Width", typeof(GridLength), typeof(DataGridColumn), new PropertyMetadata(default(GridLength)));
 	}
 }

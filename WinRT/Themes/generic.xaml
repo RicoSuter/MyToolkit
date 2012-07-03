@@ -16,9 +16,9 @@
 							<RowDefinition Height="*" />
 						</Grid.RowDefinitions>
 
-						<Grid Grid.Row="0" Background="{StaticResource ControlDisabledTextBrush}" Height="50" x:Name="titles" />
+						<Grid Grid.Row="0" Background="{StaticResource ListBoxItemDisabledForegroundThemeBrush}" Height="50" x:Name="titles" />
 						<controls:NavigationList Background="Transparent" BorderThickness="0" Grid.Row="1"
-												 ItemContainerStyle="{StaticResource StretchedListBoxItem}"
+												 HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
 												 Style="{StaticResource TransparentListBox}" Margin="0" x:Name="list" />
 					</Grid>
 				</ControlTemplate>
@@ -33,8 +33,10 @@
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
 
-						<TextBlock Grid.Column="0" Text="{Binding Header}" VerticalAlignment="Center" Margin="15,0,15,0" FontSize="{StaticResource HeaderMediumFontSize}" />
-						<StackPanel Grid.Column="1" Visibility="{Binding IsSelected, Converter={StaticResource vc}}" VerticalAlignment="Center" HorizontalAlignment="Left">
+						<TextBlock Grid.Column="0" Text="{Binding Header}" VerticalAlignment="Center" Margin="15,0,15,0" 
+								   Style="{StaticResource HeaderTextStyle}" />
+						<StackPanel Grid.Column="1" Visibility="{Binding IsSelected, Converter={StaticResource vc}}" 
+									VerticalAlignment="Center" HorizontalAlignment="Left">
 							<Path Data="M5,0 L0,10 L10,10 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource vc}}"/>
 							<Path Data="M0,0 L5,10 L10,0 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource nc}}"/>
 						</StackPanel>
@@ -50,44 +52,6 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
-	
-	<!--<Style TargetType="controls:RolloverButton">
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="controls:RolloverButton">
-					<Border x:Name="LayoutRoot">
-						<VisualStateManager.VisualStateGroups>
-							<VisualStateGroup x:Name="CommonStates">
-								<VisualState x:Name="Normal"/>
-								<VisualState x:Name="PointerOver">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="LayoutRoot">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemPointerOverFillBrush}"/>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-								<VisualState x:Name="Pressed">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="LayoutRoot">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemPressedForegroundBrush}"/>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-								<VisualState x:Name="Disabled">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="LayoutRoot">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ControlDisabledTextBrush}"/>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-							</VisualStateGroup>
-						</VisualStateManager.VisualStateGroups>
-						<ContentControl Margin="10" Content="{TemplateBinding Content}" />
-					</Border>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>-->
 
 	<Style TargetType="controls:ImageButton">
 		<Setter Property="Template">
@@ -128,136 +92,23 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-	<Style x:Key="StretchedListBoxItem" TargetType="ListBoxItem">
-		<Setter Property="Background" Value="Transparent"/>
-		<Setter Property="TabNavigation" Value="Local"/>
-		<Setter Property="Padding" Value="8,10"/>
-		<Setter Property="HorizontalContentAlignment" Value="Left"/>
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="ListBoxItem">
-					<Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
-						<VisualStateManager.VisualStateGroups>
-							<VisualStateGroup x:Name="CommonStates">
-								<VisualState x:Name="Normal"/>
-								<VisualState x:Name="PointerOver">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="LayoutRoot">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemPointerOverFillBrush}"/>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-								<VisualState x:Name="Disabled">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="LayoutRoot">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
-										</ObjectAnimationUsingKeyFrames>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ControlDisabledTextBrush}"/>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-								<VisualState x:Name="Pressed">
-									<Storyboard>
-										<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PressedBackground"/>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemPressedForegroundBrush}"/>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-							</VisualStateGroup>
-							<VisualStateGroup x:Name="SelectionStates">
-								<VisualState x:Name="Unselected"/>
-								<VisualState x:Name="Selected">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="InnerGrid">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemHighlightFillBrush}"/>
-										</ObjectAnimationUsingKeyFrames>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-								<VisualState x:Name="SelectedUnfocused">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="InnerGrid">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemHighlightFillBrush}"/>
-										</ObjectAnimationUsingKeyFrames>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-								<VisualState x:Name="SelectedDisabled">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="InnerGrid">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemHighlightFillBrush}"/>
-										</ObjectAnimationUsingKeyFrames>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-								<VisualState x:Name="SelectedPointerOver">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="InnerGrid">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemHighlightHoverFillBrush}"/>
-										</ObjectAnimationUsingKeyFrames>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-								<VisualState x:Name="SelectedPressed">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="InnerGrid">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemHighlightFillBrush}"/>
-										</ObjectAnimationUsingKeyFrames>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-							</VisualStateGroup>
-							<VisualStateGroup x:Name="FocusStates">
-								<VisualState x:Name="Focused">
-									<Storyboard>
-										<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualWhite"/>
-										<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualBlack"/>
-									</Storyboard>
-								</VisualState>
-								<VisualState x:Name="Unfocused"/>
-								<VisualState x:Name="PointerFocused"/>
-							</VisualStateGroup>
-						</VisualStateManager.VisualStateGroups>
-						<Grid x:Name="InnerGrid" Background="Transparent">
-							<Rectangle x:Name="PressedBackground" Fill="{StaticResource ListBoxItemPressedFillBrush}" Opacity="0"/>
-							<ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" 
-													  Margin="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-							<Rectangle x:Name="FocusVisualWhite" Opacity="0" StrokeDashOffset=".5" StrokeEndLineCap="Square" Stroke="{StaticResource FocusVisualWhiteStrokeBrush}" StrokeDashArray="1,1"/>
-							<Rectangle x:Name="FocusVisualBlack" Opacity="0" StrokeDashOffset="1.5" StrokeEndLineCap="Square" Stroke="{StaticResource FocusVisualBlackStrokeBrush}" StrokeDashArray="1,1"/>
-						</Grid>
-					</Border>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
-
+	
 	<Style x:Key="TransparentListBox" TargetType="ListBox">
-		<Setter Property="Foreground" Value="{StaticResource InputControlTextBrush}"/>
+		<Setter Property="Foreground" Value="{StaticResource ListBoxForegroundThemeBrush}"/>
 		<Setter Property="Background" Value="Transparent"/>
-		<Setter Property="BorderBrush" Value="{StaticResource ListBoxNormalBorderBrush}"/>
-		<Setter Property="BorderThickness" Value="{StaticResource ListBoxBorderThickness}"/>
+		<Setter Property="BorderBrush" Value="{StaticResource ListBoxBorderThemeBrush}"/>
+		<Setter Property="BorderThickness" Value="{StaticResource ListBoxBorderThemeThickness}"/>
 		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
 		<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
 		<Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
-		<Setter Property="ScrollViewer.VerticalScrollMode" Value="Rails"/>
+		<Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="True"/>
+		<Setter Property="ScrollViewer.VerticalScrollMode" Value="Enabled"/>
+		<Setter Property="ScrollViewer.IsVerticalRailEnabled" Value="True"/>
 		<Setter Property="ScrollViewer.ZoomMode" Value="Disabled"/>
 		<Setter Property="IsTabStop" Value="False"/>
 		<Setter Property="TabNavigation" Value="Once"/>
-		<Setter Property="FontFamily" Value="{StaticResource ContentFontFamily}"/>
-		<Setter Property="FontSize" Value="{StaticResource ContentFontSize}"/>
+		<Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+		<Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}"/>
 		<Setter Property="ItemsPanel">
 			<Setter.Value>
 				<ItemsPanelTemplate>
@@ -268,7 +119,9 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="ListBox">
-					<Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+					<Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" 
+							BorderThickness="{TemplateBinding BorderThickness}" 
+							Background="{TemplateBinding Background}">
 						<VisualStateManager.VisualStateGroups>
 							<VisualStateGroup x:Name="CommonStates">
 								<VisualState x:Name="Normal"/>
@@ -278,17 +131,24 @@
 											<DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
 										</ObjectAnimationUsingKeyFrames>
 										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="LayoutRoot">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ControlDisabledTextBrush}"/>
+											<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxDisabledForegroundThemeBrush}"/>
 										</ObjectAnimationUsingKeyFrames>
 									</Storyboard>
 								</VisualState>
 							</VisualStateGroup>
 							<VisualStateGroup x:Name="FocusStates">
-								<VisualState x:Name="Focused" />
+								<VisualState x:Name="Focused"/>
 								<VisualState x:Name="Unfocused"/>
 							</VisualStateGroup>
 						</VisualStateManager.VisualStateGroups>
-						<ScrollViewer x:Name="ScrollViewer" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" Padding="{TemplateBinding Padding}" TabNavigation="{TemplateBinding TabNavigation}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
+						<ScrollViewer x:Name="ScrollViewer" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" 
+											  HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+											  IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" 
+											  IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" 
+											  Padding="{TemplateBinding Padding}" TabNavigation="{TemplateBinding TabNavigation}" 
+											  VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" 
+											  VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" 
+											  ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
 							<ItemsPresenter/>
 						</ScrollViewer>
 					</Border>
@@ -296,5 +156,156 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+
+	<Style TargetType="controls:Pivot">
+        <Setter Property="Template">
+            <Setter.Value>
+				<ControlTemplate TargetType="controls:Pivot">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+						
+						<controls:ExtendedListBox Background="Transparent" BorderThickness="0" Grid.Row="0" 
+												 HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+												 Margin="0,-10,0,10" x:Name="List" Style="{StaticResource TransparentListBox}">
+							<controls:ExtendedListBox.ItemTemplate>
+								<DataTemplate>
+									<TextBlock Text="{Binding Header}" FontSize="56" FontWeight="Light" Margin="0,0,20,20" />
+								</DataTemplate>
+							</controls:ExtendedListBox.ItemTemplate>
+							
+							<controls:ExtendedListBox.ItemsPanel>
+								<ItemsPanelTemplate>
+									<VirtualizingStackPanel Orientation="Horizontal" />
+								</ItemsPanelTemplate>
+							</controls:ExtendedListBox.ItemsPanel>
+							
+							<controls:ExtendedListBox.ItemContainerStyle>
+								<Style TargetType="ListBoxItem">
+									<Setter Property="Background" Value="Transparent"/>
+									<Setter Property="TabNavigation" Value="Local"/>
+									<Setter Property="Padding" Value="0"/>
+									<Setter Property="HorizontalContentAlignment" Value="Left"/>
+									<Setter Property="Template">
+										<Setter.Value>
+											<ControlTemplate TargetType="ListBoxItem">
+												<Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+													<VisualStateManager.VisualStateGroups>
+														<VisualStateGroup x:Name="CommonStates">
+															<VisualState x:Name="Normal">
+																<Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="PointerOver"><Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="Disabled">
+																<Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="0.5"/>
+																	</ObjectAnimationUsingKeyFrames>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="Pressed">
+																<Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+														</VisualStateGroup>
+														<VisualStateGroup x:Name="SelectionStates">
+															<VisualState x:Name="Unselected">
+																<Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="0.5"/>
+																	</ObjectAnimationUsingKeyFrames>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="Selected">
+																<Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="1.0"/>
+																	</ObjectAnimationUsingKeyFrames>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="SelectedUnfocused">
+																<Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="1.0"/>
+																	</ObjectAnimationUsingKeyFrames>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="SelectedDisabled">
+																<Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="0.5"/>
+																	</ObjectAnimationUsingKeyFrames>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="SelectedPointerOver">
+																
+															</VisualState>
+															<VisualState x:Name="SelectedPressed">
+																<Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+														</VisualStateGroup>
+														<VisualStateGroup x:Name="FocusStates">
+															<VisualState x:Name="Focused">
+																<Storyboard>
+																	<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualWhite"/>
+																	<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualBlack"/>
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="Unfocused"/>
+															<VisualState x:Name="PointerFocused"/>
+														</VisualStateGroup>
+													</VisualStateManager.VisualStateGroups>
+													<Grid x:Name="InnerGrid" Background="Transparent">
+														<Rectangle x:Name="PressedBackground" Opacity="0"/>
+														<ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+														<Rectangle x:Name="FocusVisualWhite" Opacity="0" StrokeDashOffset=".5" StrokeEndLineCap="Square" StrokeDashArray="1,1"/>
+														<Rectangle x:Name="FocusVisualBlack" Opacity="0" StrokeDashOffset="1.5" StrokeEndLineCap="Square" StrokeDashArray="1,1"/>
+													</Grid>
+												</Border>
+											</ControlTemplate>
+										</Setter.Value>
+									</Setter>
+								</Style>
+							</controls:ExtendedListBox.ItemContainerStyle>
+						</controls:ExtendedListBox>
+						<ContentPresenter x:Name="Content" Grid.Row="1" />
+					</Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
   
