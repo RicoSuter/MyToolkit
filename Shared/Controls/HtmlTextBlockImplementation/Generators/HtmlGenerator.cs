@@ -1,7 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+
+#if METRO
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+#else
 using System.Windows;
 using System.Windows.Controls;
+#endif
 
 namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 {

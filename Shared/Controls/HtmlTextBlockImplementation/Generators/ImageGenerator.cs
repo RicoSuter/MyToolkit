@@ -1,7 +1,14 @@
 using System;
+
+#if METRO
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
+#else
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+#endif
 
 namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 {

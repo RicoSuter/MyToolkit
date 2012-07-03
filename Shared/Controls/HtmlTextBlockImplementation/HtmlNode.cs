@@ -1,6 +1,11 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+
+#if METRO
+using Windows.UI.Xaml;
+#else
 using System.Windows;
+#endif
 
 namespace MyToolkit.Controls.HtmlTextBlockImplementation
 {

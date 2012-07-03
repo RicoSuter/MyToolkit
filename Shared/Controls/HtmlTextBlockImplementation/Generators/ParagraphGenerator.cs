@@ -1,7 +1,15 @@
 using System.Collections.Generic;
+
+#if METRO
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Documents;
+
+#else
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+#endif
 
 namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 {
@@ -37,10 +45,15 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 				foreach (var r in current)
 					p.Inlines.Add(r);
 
+#if !METRO
 				var tb = new RichTextBox();
+				tb.Background = textBlock.Background;
+#else
+				var tb = new RichTextBlock();
+				tb.IsTextSelectionEnabled = false;
+#endif
 				tb.Blocks.Add(p);
 				tb.Foreground = textBlock.Foreground;
-				tb.Background = textBlock.Background;
 				tb.FontSize = textBlock.FontSize;
 				tb.FontFamily = textBlock.FontFamily;
 				tb.Margin = new Thickness(-12, textBlock.ParagraphMargin, -12, textBlock.ParagraphMargin);

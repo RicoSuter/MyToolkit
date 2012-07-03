@@ -1,14 +1,55 @@
 using System;
+
+using MyToolkit.MVVM;
+
+#if METRO
+using Windows.System;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Documents;
+#else
 using System.Windows;
 using System.Windows.Documents;
 using Microsoft.Phone.Tasks;
-using MyToolkit.MVVM;
 using MyToolkit.Paging;
+#endif
 
 namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 {
 	public class LinkGenerator : SingleControlGenerator
 	{
+#if METRO
+		public override DependencyObject GenerateSingle(HtmlNode node, IHtmlTextBlock textBlock)
+		{
+			try
+			{
+				var link = node.Attributes["href"];
+				var label = node.Children[0].Value;
+
+				var hr = new Underline();
+				hr.Inlines.Add(new Run { Text = label });
+
+				//var action = CreateLinkAction(hr, link, textBlock);
+				//var origAction = action;
+				//action = delegate
+				//{
+				//	if (NavigationState.TryBeginNavigating())
+				//		origAction();
+				//};
+
+				//hr.Command = new RelayCommand(action);	
+				return hr;
+			}
+			catch
+			{
+				return null;
+			}
+		}
+
+		protected virtual Action CreateLinkAction(Underline hyperlink, string link, IHtmlTextBlock textBlock)
+		{
+			return () => Launcher.LaunchUriAsync(new Uri(link)).AsTask().RunSynchronously();
+		}
+#else
 		public override DependencyObject GenerateSingle(HtmlNode node, IHtmlTextBlock textBlock)
 		{
 			try
@@ -46,5 +87,6 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 				new Uri(link, UriKind.Absolute) : new Uri(textBlock.BaseUri, link);
 			return () => new WebBrowserTask { Uri = uri }.Show();
 		}
+#endif
 	}
 }

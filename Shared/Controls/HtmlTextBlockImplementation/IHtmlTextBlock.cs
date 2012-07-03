@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+
+#if METRO
+using Windows.UI.Xaml.Media;
+#else
 using System.Windows.Media;
+#endif
 
 namespace MyToolkit.Controls.HtmlTextBlockImplementation
 {

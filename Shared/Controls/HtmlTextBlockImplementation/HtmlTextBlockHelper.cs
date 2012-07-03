@@ -1,11 +1,73 @@
+using System;
 using System.Threading;
+
+
+#if METRO
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.System.Threading;
+#else
 using System.Windows;
 using System.Windows.Controls;
-
+#endif
 namespace MyToolkit.Controls.HtmlTextBlockImplementation
 {
 	internal static class HtmlTextBlockHelper
 	{
+#if METRO
+		async internal static void Generate(this IHtmlTextBlock me)
+		{
+			var html = me.Html;
+			var itemsCtrl = (ItemsControl)me;
+
+			if (string.IsNullOrEmpty(html))
+				itemsCtrl.Items.Clear();
+
+			var tb = me as HtmlTextBlock;
+			if (tb != null)
+				tb.UpdateHeader();
+
+			if (string.IsNullOrEmpty(html))
+			{
+				if (tb != null)
+					tb.UpdateFooter();
+
+				me.CallLoadedEvent();
+				return;
+			}
+
+			HtmlNode node = null;
+			await ThreadPool.RunAsync(o =>
+			{
+				try
+				{
+					var parser = new HtmlParser();
+					node = parser.Parse(html);
+				} catch { }
+			});
+
+			if (html == me.Html) 
+			{
+				if (node != null)
+				{
+					try
+					{
+						itemsCtrl.Items.Clear();
+
+						if (tb != null)
+							tb.UpdateHeader();
+
+						foreach (var c in node.GetControls(me))
+							itemsCtrl.Items.Add(c);
+
+						if (tb != null)
+							tb.UpdateFooter();
+					} catch { }
+				}
+				me.CallLoadedEvent();
+			}
+		}
+#else
 		internal static void Generate(this IHtmlTextBlock me)
 		{
 			var html = me.Html;
@@ -64,5 +126,6 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation
 			    });
 			});
 		}
+#endif
 	}
 }

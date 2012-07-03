@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
 using MyToolkit.Controls.HtmlTextBlockImplementation;
 using MyToolkit.UI.UIExtensionMethods;
+
+#if METRO
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+#else
+using System.Windows;
+using System.Windows.Controls;
+#endif
 
 namespace MyToolkit.Controls
 {
@@ -16,9 +22,11 @@ namespace MyToolkit.Controls
 
 		public HtmlTextBlock()
 		{
-			FontSize = (double)Resources["PhoneFontSizeNormal"];
-			Margin = new Thickness(0);
+#if !METRO
 			InnerMargin = new Thickness(24, 0, 24, 0);
+			FontSize = (double)Resources["PhoneFontSizeNormal"];
+#endif
+			Margin = new Thickness(0);
 
 			SizeChanged += OnSizeChanged;
 			SizeDependentControls = new List<ISizeDependentControl>();
@@ -43,8 +51,12 @@ namespace MyToolkit.Controls
 				copy(this, new EventArgs());
 		}
 
-		private bool loaded = false; 
+		private bool loaded = false;
+#if !METRO
 		public override void OnApplyTemplate()
+#else
+		protected override void OnApplyTemplate()
+#endif
 		{
 			base.OnApplyTemplate();
 

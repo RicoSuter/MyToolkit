@@ -50,6 +50,7 @@ namespace MyToolkit.Controls
 		}
 
 		private ScrollViewer scrollViewer;
+
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();

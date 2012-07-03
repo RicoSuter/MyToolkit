@@ -1,8 +1,16 @@
 using System;
 using System.Collections.Generic;
+
+using MyToolkit.Controls.HtmlTextBlockImplementation;
+
+#if METRO
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+#else
 using System.Windows;
 using System.Windows.Controls;
-using MyToolkit.Controls.HtmlTextBlockImplementation;
+#endif
+
 
 namespace MyToolkit.Controls
 {
@@ -15,8 +23,10 @@ namespace MyToolkit.Controls
 		
 		public FixedHtmlTextBlock()
 		{
+#if !METRO
 			FontSize = (double)Resources["PhoneFontSizeNormal"];
 			Margin = new Thickness(12, 0, 12, 0);
+#endif
 
 			SizeChanged += OnSizeChanged;
 			SizeDependentControls = new List<ISizeDependentControl>();

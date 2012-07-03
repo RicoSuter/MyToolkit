@@ -1,5 +1,12 @@
 using System.Windows;
+
+#if METRO
+using Windows.UI.Text;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Documents;
+#else
 using System.Windows.Documents;
+#endif
 
 namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 {
@@ -11,7 +18,11 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 			{
 				var element = c as TextElement;
 				if (element != null)
-					element.FontStyle = FontStyles.Italic;
+#if METRO
+                    element.FontStyle = FontStyle.Italic;
+#else
+                    element.FontStyle = FontStyles.Italic;
+#endif
 			}
 			return null; 
 		}
