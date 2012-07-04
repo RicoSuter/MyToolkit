@@ -1,25 +1,47 @@
 ﻿using System.Windows;
+
+#if METRO
+using Windows.UI;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+#else
 using System.Windows.Controls;
 using System.Windows.Media;
+#endif
 
 namespace MyToolkit.Controls
 {
 	public class WatermarkedTextBox : Control
 	{
+		private TextBox textBox;
+
 		public WatermarkedTextBox()
 		{
 			DefaultStyleKey = typeof(WatermarkedTextBox);
 		}
 
-		private TextBox textBox;
+#if METRO
+		protected override void OnApplyTemplate()
+		{
+			WatermarkBrush = (Brush)Resources["ListViewItemPlaceholderBackgroundThemeBrush"];
+#elif WINDOWS_PHONE
 		public override void OnApplyTemplate()
 		{
-			base.OnApplyTemplate();
+			WatermarkBrush = (Brush)Resources["PhoneSubtleColor"];
+#else
+		public override void OnApplyTemplate()
+		{
+			WatermarkBrush = new SolidColorBrush(Colors.DarkGray);
+#endif
 
+			base.OnApplyTemplate();
 			textBox = (TextBox)GetTemplateChild("textBox");
 			textBox.GotFocus += TextBoxOnGotFocus;
 			textBox.LostFocus += TextBoxOnLostFocus;
 			textBox.TextChanged += TextBoxOnTextChanged;
+
+			originalForeground = textBox.Foreground;
 
 			UpdateText();
 		}
@@ -47,6 +69,7 @@ namespace MyToolkit.Controls
 			UpdateText();
 		}
 
+		private Brush originalForeground; 
 		private void UpdateText()
 		{
 			checkTextChanges = false; 
@@ -57,12 +80,12 @@ namespace MyToolkit.Controls
 			if (string.IsNullOrEmpty(Text) && !hasFocus)
 			{
 				textBox.Text = Watermark;
-				textBox.Foreground = new SolidColorBrush(Colors.DarkGray);
+				textBox.Foreground = WatermarkBrush;
 			}
 			else
 			{
-				textBox.Text = Text;
-				textBox.Foreground = new SolidColorBrush(Colors.Black);
+				textBox.Text = Text ?? "";
+				textBox.Foreground = originalForeground;
 			}
 
 			checkTextChanges = true;
@@ -70,8 +93,17 @@ namespace MyToolkit.Controls
 
 		#region Dependency Properties
 
+		public static readonly DependencyProperty WatermarkColorProperty =
+			DependencyProperty.Register("WatermarkBrush", typeof(Brush), typeof(WatermarkedTextBox), new PropertyMetadata(default(Brush), OnPropertyChanged));
+
+		public Brush WatermarkBrush
+		{
+			get { return (Brush) GetValue(WatermarkColorProperty); }
+			set { SetValue(WatermarkColorProperty, value); }
+		}
+
 		public static readonly DependencyProperty WatermarkProperty =
-			DependencyProperty.Register("Watermark", typeof(string), typeof(WatermarkedTextBox), new PropertyMetadata(default(string), OnPropertyChanged));
+			DependencyProperty.Register("Watermark", typeof(string), typeof(WatermarkedTextBox), new PropertyMetadata("", OnPropertyChanged));
 
 		public string Watermark
 		{

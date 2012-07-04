@@ -60,6 +60,9 @@
     <Compile Include="..\Shared\Collections\ExtendedObservableCollection.cs">
       <Link>Collections\ExtendedObservableCollection.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Controls\WatermarkedTextBox.cs">
+      <Link>Controls\WatermarkedTextBox.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
     </Compile>
@@ -177,7 +180,6 @@
     <Compile Include="..\Shared\Utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
-    <Compile Include="Controls\WatermarkedTextBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

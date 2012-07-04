@@ -6,6 +6,16 @@
 	<converters:NotConverter x:Key="nc" />
 	<converters:VisibilityConverter x:Key="vc" />
 
+	<Style TargetType="controls:WatermarkedTextBox">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="controls:WatermarkedTextBox">
+					<controls:ExtendedTextBox x:Name="textBox" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	
 	<Style TargetType="controls:DataGrid">
 		<Setter Property="Template">
 			<Setter.Value>
