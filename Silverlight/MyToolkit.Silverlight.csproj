@@ -177,6 +177,7 @@
     <Compile Include="..\Shared\Utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
+    <Compile Include="Controls\WatermarkedTextBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +187,12 @@
     <Content Include="..\Shared\Libraries\DotNetZip\License.zlib.txt">
       <Link>Libraries\DotNetZip\License.zlib.txt</Link>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
