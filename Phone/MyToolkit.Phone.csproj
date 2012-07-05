@@ -188,6 +188,9 @@
     <Compile Include="..\Shared\Libraries\DotNetZip\ZlibConstants.cs">
       <Link>Libraries\DotNetZip\ZlibConstants.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Media\ImageHelper.cs">
+      <Link>Media\ImageHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Messaging\ActionMessage.cs">
       <Link>Messaging\ActionMessage.cs</Link>
     </Compile>
@@ -282,7 +285,6 @@
     <Compile Include="Networking\NetworkStateTracker.cs" />
     <Compile Include="Paging\IExtendedPhoneApplicationPage.cs" />
     <Compile Include="Paging\NavigationState.cs" />
-    <Compile Include="Performance\LowProfileImageLoader.cs" />
     <Compile Include="Environment\Marketplace.cs" />
     <Compile Include="Performance\MemoryDiagnosticsHelper.cs" />
     <Compile Include="Environment\PhoneApplication.cs" />

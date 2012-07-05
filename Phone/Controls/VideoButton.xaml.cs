@@ -77,7 +77,7 @@ namespace MyToolkit.Controls
 				Button.Width = ActualWidth;
 				Button.Height = (ActualWidth / 480) * 270; 
 
-				Performance.LowProfileImageLoader.SetUriSource(Image, ThumbnailSource);
+				Media.ImageHelper.SetSource(Image, ThumbnailSource);
 			}
 		}
 

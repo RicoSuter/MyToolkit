@@ -2,18 +2,23 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Net;
-using System.Threading;
-using System.Windows;
 using MyToolkit.Networking;
-using MyToolkit.Utilities;
+
+#if METRO
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+#else
+using System.Windows.Controls;
+using System.IO;
+using System.Net;
+using System.Threading;
+using System.Windows;
+using System.Windows.Media.Imaging;
+#endif
 
 namespace MyToolkit.Media
 {
@@ -24,7 +29,7 @@ namespace MyToolkit.Media
         private const int WorkItemQuantum = 5;
 
 		private static bool _exiting;
-		private static object mutex = new object();
+		private static readonly object mutex = new object();
 		private static readonly Queue<PendingRequest> _pendingRequests = new Queue<PendingRequest>();
         private static readonly Queue<IAsyncResult> _pendingResponses = new Queue<IAsyncResult>();
         private static readonly object _syncBlock = new object();
@@ -50,12 +55,21 @@ namespace MyToolkit.Media
 			Justification = "Static constructor performs additional tasks.")]
         static ImageHelper()
         {
+#if METRO
 			ThreadPool.RunAsync(WorkerThreadProc);
 			Application.Current.Suspending += HandleApplicationExit;
+#else
+			ThreadPool.QueueUserWorkItem(WorkerThreadProc);
+			Application.Current.Exit += HandleApplicationExit;
+#endif
             IsUsed = true;
         }
 
+#if METRO
 		private static void HandleApplicationExit(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
+#else
+		private static void HandleApplicationExit(object sender, EventArgs eventArgs)
+#endif
 		{
             _exiting = true;
             if (Monitor.TryEnter(_syncBlock, 100))
@@ -131,11 +145,9 @@ namespace MyToolkit.Media
 
 				var pendingCompletions = new Queue<PendingCompletion>();
 
-                // Process pending requests
                 var count = pendingRequests.Count;
                 for (var i = 0; (0 < count) && (i < WorkItemQuantum); i++)
                 {
-                    // Choose a random item to behave reasonably at both extremes (FIFO/FILO)
                     var index = rand.Next(count);
                     var pendingRequest = pendingRequests[index];
                     pendingRequests[index] = pendingRequests[count - 1];
@@ -152,7 +164,10 @@ namespace MyToolkit.Media
 						if (pendingRequest.Uri is AuthenticatedUri)
 							webRequest.Credentials = ((AuthenticatedUri)pendingRequest.Uri).Credentials;
 
-						//webRequest.AllowReadStreamBuffering = true; // Don't want to block this thread or the UI thread on network access
+#if !METRO
+						webRequest.AllowReadStreamBuffering = true; // Don't want to block this thread or the UI thread on network access
+#endif
+
                         webRequest.BeginGetResponse(HandleGetResponseResult, new ResponseState(webRequest, pendingRequest.Image, pendingRequest.Uri));
                     }
                     else
@@ -160,6 +175,7 @@ namespace MyToolkit.Media
 						var originalUriString = pendingRequest.Uri.OriginalString;
 						var resourceStreamUri = originalUriString.StartsWith("/", StringComparison.Ordinal) ? new Uri(originalUriString.TrimStart('/'), UriKind.Relative) : pendingRequest.Uri;
 
+#if METRO
 						try
 						{
 							var file = StorageFile.GetFileFromApplicationUriAsync(resourceStreamUri).RunSynchronouslyWithResult();
@@ -167,6 +183,11 @@ namespace MyToolkit.Media
 							if (stream != null)
 								pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Uri, stream));
 						} catch { }
+#else
+						var streamResourceInfo = Application.GetResourceStream(resourceStreamUri);
+						if (streamResourceInfo != null)
+							pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Uri, streamResourceInfo.Stream));
+#endif
                     }
 
                     Thread.Sleep(1);
@@ -187,8 +208,12 @@ namespace MyToolkit.Media
 
 				if (0 < pendingCompletions.Count)
                 {
+#if METRO
 					pendingCompletions.Peek().Image.Dispatcher.
-						RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, delegate
+						RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+#else
+					Deployment.Current.Dispatcher.BeginInvoke(() =>
+#endif
                     {
                         while (0 < pendingCompletions.Count)
                         {
@@ -198,7 +223,11 @@ namespace MyToolkit.Media
                                 var bitmap = new BitmapImage();
                                 try
                                 {
-                                    bitmap.SetSource(pendingCompletion.Stream.AsRandomAccessStream());
+#if METRO
+									bitmap.SetSource(pendingCompletion.Stream.AsRandomAccessStream());
+#else
+									bitmap.SetSource(pendingCompletion.Stream);
+#endif
                                 } catch { }
                             	pendingCompletion.Image.Source = bitmap;
                             }
@@ -214,8 +243,12 @@ namespace MyToolkit.Media
             var image = (Image)obj;
             var uri = (Uri)e.NewValue;
 
-        	if (!IsUsed || Windows.ApplicationModel.DesignMode.DesignModeEnabled)
-        		image.Source = new BitmapImage(uri);
+#if METRO
+        	if (!IsUsed ||	Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+#else
+			if (!IsUsed || DesignerProperties.IsInDesignTool)
+#endif
+				image.Source = new BitmapImage(uri);
         	else
         	{
         		// Clear-out the current image because it's now stale (helps when used with virtualization)

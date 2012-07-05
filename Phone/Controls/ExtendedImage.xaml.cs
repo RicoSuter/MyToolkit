@@ -70,9 +70,9 @@ namespace MyToolkit.Controls
 		private void UpdateSource()
 		{
 			if (PhoneApplication.IsDarkTheme || SourceLight == null)
-				Performance.LowProfileImageLoader.SetUriSource(Image, Source);
+				Media.ImageHelper.SetSource(Image, Source);
 			else
-				Performance.LowProfileImageLoader.SetUriSource(Image, SourceLight);
+				Media.ImageHelper.SetSource(Image, SourceLight);
 		}
 	}
 }
