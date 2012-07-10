@@ -8,8 +8,8 @@ namespace MyToolkit.Collections
 	{
 		public new event PropertyChangedEventHandler PropertyChanged
 		{
-			add { PropertyChanged += value; }
-			remove { PropertyChanged -= value; }
+			add { base.PropertyChanged += value; }
+			remove { base.PropertyChanged -= value; }
 		}
 		
 		public void AddRange(ICollection<T> collection)

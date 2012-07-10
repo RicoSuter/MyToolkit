@@ -147,9 +147,9 @@ namespace MyToolkit.Controls
 				SelectColumn(column);		
 		}
 
-		public IExtendedObservableCollection Items
+		public IObservableView Items
 		{
-			get { return listControl == null ? null : listControl.ItemsSource as IExtendedObservableCollection; }
+			get { return listControl == null ? null : listControl.ItemsSource as IObservableView; }
 		}
 
 		private void UpdateOrder()
@@ -209,7 +209,7 @@ namespace MyToolkit.Controls
 		{
 			if (listControl != null)
 			{
-				if (ItemsSource != null && !(ItemsSource is IExtendedObservableCollection))
+				if (ItemsSource != null && !(ItemsSource is IObservableView))
 				{
 					var type = ItemsSource.GetType().GenericTypeArguments[0];
 					var newList = typeof(ExtendedObservableCollection<>).CreateGenericObject(type, ItemsSource);
