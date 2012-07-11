@@ -185,7 +185,7 @@ namespace MyToolkit.Media
 							var file = StorageFile.GetFileFromApplicationUriAsync(resourceStreamUri).RunSynchronouslyWithResult();
 							var stream = file.OpenStreamForReadAsync().RunSynchronouslyWithResult();
 							if (stream != null)
-								pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Uri, stream));
+								pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Uri, null, stream));
 						} catch { }
 #else
 						var streamResourceInfo = Application.GetResourceStream(resourceStreamUri);
@@ -201,11 +201,15 @@ namespace MyToolkit.Media
                 {
                     var pendingResponse = pendingResponses.Dequeue();
                     var responseState = (ResponseState)pendingResponse.AsyncState;
-                    try
+					try
+					{
+						var response = responseState.WebRequest.EndGetResponse(pendingResponse);
+	                    pendingCompletions.Enqueue(new PendingCompletion(responseState.Image, responseState.Uri, response, response.GetResponseStream()));
+                    } 
+					catch (WebException)
                     {
-                        var response = responseState.WebRequest.EndGetResponse(pendingResponse);
-                        pendingCompletions.Enqueue(new PendingCompletion(responseState.Image, responseState.Uri, response.GetResponseStream()));
-                    } catch (WebException) { }
+						pendingCompletions.Enqueue(new PendingCompletion(responseState.Image, responseState.Uri, null, null));
+					}
 
 					Thread.Sleep(1);
                 }
@@ -225,17 +229,29 @@ namespace MyToolkit.Media
                             if (GetSource(pendingCompletion.Image).Equals(pendingCompletion.Uri))
                             {
                                 var bitmap = new BitmapImage();
-                                try
-                                {
+								if (pendingCompletion.Stream != null)
+								{
+									try
+									{
+										using (pendingCompletion.Stream)
+										{
 #if METRO
-									bitmap.SetSource(pendingCompletion.Stream.AsRandomAccessStream());
+											bitmap.SetSource(pendingCompletion.Stream.AsRandomAccessStream());
 #else
-									bitmap.SetSource(pendingCompletion.Stream);
+											bitmap.SetSource(pendingCompletion.Stream);
 #endif
-                                } catch { }
+										}
+									}
+									catch { }
+								}
+								else // web exception
+									bitmap.UriSource = new Uri("http://127.0.0.1:4555/no_image_url"); // TODO: used to trigger ImageFailed => better way?
+
                             	pendingCompletion.Image.Source = bitmap;
                             }
-							pendingCompletion.Stream.Dispose();
+
+							if (pendingCompletion.Response != null)
+								pendingCompletion.Response.Dispose();
                         }
                     });
                 }
@@ -302,12 +318,14 @@ namespace MyToolkit.Media
         {
             public Image Image { get; private set; }
             public Uri Uri { get; private set; }
-            public Stream Stream { get; private set; }
-            public PendingCompletion(Image image, Uri uri, Stream stream)
+            public WebResponse Response { get; private set; }
+			public Stream Stream { get; private set; }
+			public PendingCompletion(Image image, Uri uri, WebResponse response, Stream stream)
             {
                 Image = image;
                 Uri = uri;
-                Stream = stream;
+				Response = response;
+				Stream = stream;
             }
         }
     }

@@ -317,5 +317,18 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="controls:FadingImage">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:FadingImage">
+                    <Grid x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+						<Image Opacity="0" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+						<Image Opacity="0" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+					</Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
   

@@ -146,6 +146,9 @@
     <Compile Include="..\Shared\Messaging\TextMessage.cs">
       <Link>Messaging\TextMessage.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\MVVM\BaseViewModel.cs">
+      <Link>MVVM\BaseViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\MVVM\NotifyPropertyChanged.cs">
       <Link>MVVM\NotifyPropertyChanged.cs</Link>
     </Compile>
@@ -212,6 +215,7 @@
     <Compile Include="Animations\Fading.cs" />
     <Compile Include="Animations\Flipping.cs" />
     <Compile Include="Controls\ExtendedTextBox.cs" />
+    <Compile Include="Controls\FadingImage.cs" />
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\TimePicker.xaml.cs">
       <DependentUpon>TimePicker.xaml</DependentUpon>
