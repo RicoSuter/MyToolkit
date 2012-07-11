@@ -182,7 +182,7 @@
 												 Margin="0,-10,0,10" x:Name="List" Style="{StaticResource TransparentListBox}">
 							<controls:ExtendedListBox.ItemTemplate>
 								<DataTemplate>
-									<TextBlock Text="{Binding Header}" FontSize="56" FontWeight="Light" Margin="0,0,20,20" />
+									<TextBlock Text="{Binding Header}" FontSize="56" FontWeight="Light" Margin="0,0,30,20" />
 								</DataTemplate>
 							</controls:ExtendedListBox.ItemTemplate>
 							
