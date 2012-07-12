@@ -38,14 +38,14 @@ namespace MyToolkit.Media
         private static readonly Queue<IAsyncResult> _pendingResponses = new Queue<IAsyncResult>();
         private static readonly object _syncBlock = new object();
 
-        public static object GetSource(Image obj)
+        public static Uri GetSource(Image obj)
         {
             if (null == obj)
                 throw new ArgumentNullException("obj");
-			return obj.GetValue(SourceProperty);
+			return (Uri)obj.GetValue(SourceProperty);
         }
 
-		public static void SetSource(Image obj, object value)
+		public static void SetSource(Image obj, Uri value)
         {
             if (null == obj)
                 throw new ArgumentNullException("obj");
@@ -53,7 +53,7 @@ namespace MyToolkit.Media
         }
 
         public static readonly DependencyProperty SourceProperty = DependencyProperty.RegisterAttached(
-			"Source", typeof(object), typeof(ImageHelper), new PropertyMetadata(null, OnSourceChanged));
+			"Source", typeof(Uri), typeof(ImageHelper), new PropertyMetadata(null, OnSourceChanged));
 
         [SuppressMessage("Microsoft.Performance", "CA1810:InitializeReferenceTypeStaticFieldsInline", 
 			Justification = "Static constructor performs additional tasks.")]
@@ -190,7 +190,7 @@ namespace MyToolkit.Media
 #else
 						var streamResourceInfo = Application.GetResourceStream(resourceStreamUri);
 						if (streamResourceInfo != null)
-							pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Uri, streamResourceInfo.Stream));
+							pendingCompletions.Enqueue(new PendingCompletion(pendingRequest.Image, pendingRequest.Uri, null, streamResourceInfo.Stream));
 #endif
                     }
 
