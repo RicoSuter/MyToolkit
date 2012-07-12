@@ -13,6 +13,22 @@ namespace MyToolkit.Utilities
 				OrderBy(pair => pair.Key).Select(pair => pair.Value).ToList();
 		}
 
+		public static IList<T> TakeRandom<T>(this IList<T> source, int amount)
+		{
+            var count = source.Count;
+			var output = new List<T>();
+			var rand = new Random((int)DateTime.Now.Ticks);
+			for (var i = 0; (0 < count) && (i < amount); i++)
+			{
+				var index = rand.Next(count);
+				var item = source[index];
+				output.Add(item);
+				source.RemoveAt(index);
+				count--;
+			}
+			return output;
+		}
+
 		public static T MinObject<T, U>(this IEnumerable<T> list, Func<T, U> selector)
 			where T : class
 			where U : IComparable
