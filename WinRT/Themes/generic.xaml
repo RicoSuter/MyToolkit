@@ -168,6 +168,13 @@
 	</Style>
 
 	<Style TargetType="controls:Pivot">
+		<Setter Property="HeaderTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<TextBlock Text="{Binding Header}" FontSize="56" FontWeight="Light" Margin="0,-10,30,30" />
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
         <Setter Property="Template">
             <Setter.Value>
 				<ControlTemplate TargetType="controls:Pivot">
@@ -177,14 +184,9 @@
 							<RowDefinition Height="*" />
 						</Grid.RowDefinitions>
 						
-						<controls:ExtendedListBox Background="Transparent" BorderThickness="0" Grid.Row="0" 
+						<controls:ExtendedListBox Background="Transparent" BorderThickness="0" Grid.Row="0" ItemTemplate="{TemplateBinding HeaderTemplate}"
 												 HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-												 Margin="0,-10,0,10" x:Name="List" Style="{StaticResource TransparentListBox}">
-							<controls:ExtendedListBox.ItemTemplate>
-								<DataTemplate>
-									<TextBlock Text="{Binding Header}" FontSize="56" FontWeight="Light" Margin="0,0,30,20" />
-								</DataTemplate>
-							</controls:ExtendedListBox.ItemTemplate>
+												 Margin="0" x:Name="List" Style="{StaticResource TransparentListBox}">
 							
 							<controls:ExtendedListBox.ItemsPanel>
 								<ItemsPanelTemplate>

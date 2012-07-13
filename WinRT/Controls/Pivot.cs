@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MyToolkit.UI.UIExtensionMethods;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
@@ -17,7 +18,7 @@ namespace MyToolkit.Controls
 	{
 		public Pivot()
 		{
-			this.DefaultStyleKey = typeof(Pivot);
+			DefaultStyleKey = typeof(Pivot);
 		}
 
 		private ExtendedListBox list;
@@ -44,5 +45,17 @@ namespace MyToolkit.Controls
 
 		private readonly ObservableCollection<PivotItem> items = new ObservableCollection<PivotItem>();
 		public ObservableCollection<PivotItem> Items { get { return items; } }
+
+
+
+
+		public static readonly DependencyProperty HeaderTemplateProperty =
+			DependencyProperty.Register("HeaderTemplate", typeof (DataTemplate), typeof (Pivot), new PropertyMetadata(default(DataTemplate)));
+
+		public DataTemplate HeaderTemplate
+		{
+			get { return (DataTemplate) GetValue(HeaderTemplateProperty); }
+			set { SetValue(HeaderTemplateProperty, value); }
+		}	
 	}
 }

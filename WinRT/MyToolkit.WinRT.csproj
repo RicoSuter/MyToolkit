@@ -216,6 +216,7 @@
     <Compile Include="Animations\Flipping.cs" />
     <Compile Include="Controls\ExtendedTextBox.cs" />
     <Compile Include="Controls\FadingImage.cs" />
+    <Compile Include="Controls\NavigationListView.cs" />
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\TimePicker.xaml.cs">
@@ -241,6 +242,7 @@
     <Compile Include="Storage\Settings.cs" />
     <Compile Include="Controls\PageFrame.cs" />
     <Compile Include="UI\PopupHelper.cs" />
+    <Compile Include="Utilities\PageExtensions.cs" />
     <Compile Include="Utilities\TaskHelper.cs" />
     <Compile Include="Utilities\Thread.cs" />
     <Compile Include="Utilities\VisualTreeHelper.cs" />
