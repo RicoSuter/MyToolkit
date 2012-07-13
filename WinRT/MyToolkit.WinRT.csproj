@@ -217,6 +217,7 @@
     <Compile Include="Controls\ExtendedTextBox.cs" />
     <Compile Include="Controls\FadingImage.cs" />
     <Compile Include="Controls\Pivot.cs" />
+    <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\TimePicker.xaml.cs">
       <DependentUpon>TimePicker.xaml</DependentUpon>
     </Compile>

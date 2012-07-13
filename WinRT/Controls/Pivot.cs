@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using MyToolkit.UI.UIExtensionMethods;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
@@ -38,47 +37,12 @@ namespace MyToolkit.Controls
 		private void OnSelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
 		{
 			var item = (PivotItem)list.SelectedItem;
-			content.ContentTemplate = item.Template;
-			content.Content = this.FindParentDataContext();
+			//content.ContentTemplate = item.Template;
+			//content.Content = this.FindParentDataContext();
+			content.Content = item.Content;
 		}
 
-		//public static readonly DependencyProperty ItemsProperty =
-		//	DependencyProperty.Register("Items", typeof(ObservableCollection<PivotItem>), typeof(Pivot), new PropertyMetadata(default(PivotItem)));
-
-		//public ObservableCollection<PivotItem> Items
-		//{
-		//	get { return (ObservableCollection<PivotItem>)GetValue(ItemsProperty); }
-		//	set { SetValue(ItemsProperty, value); }
-		//}	
-		ObservableCollection<PivotItem> items = new ObservableCollection<PivotItem>();
-		public ObservableCollection<PivotItem> Items
-		{
-			get
-			{
-				return items;
-			}
-		}
-	}
-
-	[ContentProperty(Name = "Template")]
-	public class PivotItem : DependencyObject
-	{
-		public static readonly DependencyProperty HeaderProperty =
-			DependencyProperty.Register("Header", typeof (string), typeof (PivotItem), new PropertyMetadata(default(string)));
-
-		public string Header
-		{
-			get { return (string) GetValue(HeaderProperty); }
-			set { SetValue(HeaderProperty, value); }
-		}
-
-		public static readonly DependencyProperty TemplateProperty =
-			DependencyProperty.Register("Template", typeof (DataTemplate), typeof (PivotItem), new PropertyMetadata(default(DataTemplate)));
-
-		public DataTemplate Template
-		{
-			get { return (DataTemplate) GetValue(TemplateProperty); }
-			set { SetValue(TemplateProperty, value); }
-		}
+		private readonly ObservableCollection<PivotItem> items = new ObservableCollection<PivotItem>();
+		public ObservableCollection<PivotItem> Items { get { return items; } }
 	}
 }

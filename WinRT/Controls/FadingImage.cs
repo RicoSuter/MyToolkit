@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Media;
 
 namespace MyToolkit.Controls
 {
-	public sealed class FadingImage : Control
+	public class FadingImage : Control
 	{
 		public FadingImage()
 		{
@@ -31,29 +31,36 @@ namespace MyToolkit.Controls
 		}
 
 
-		public static readonly DependencyProperty CrossFadeImagesProperty =
-			DependencyProperty.Register("CrossFadeImages", typeof (bool), typeof (FadingImage), new PropertyMetadata(false));
+		#region dependency properties
 
-		public bool CrossFadeImages
+		public static readonly DependencyProperty StretchProperty =
+			DependencyProperty.Register("Stretch", typeof (Stretch), typeof (FadingImage), new PropertyMetadata(default(Stretch)));
+
+		public Stretch Stretch
 		{
-			get { return (bool) GetValue(CrossFadeImagesProperty); }
-			set { SetValue(CrossFadeImagesProperty, value); }
+			get { return (Stretch) GetValue(StretchProperty); }
+			set { SetValue(StretchProperty, value); }
 		}
 
 
-
-
 		public static readonly DependencyProperty FadingDurationProperty =
-			DependencyProperty.Register("FadingDuration", typeof (TimeSpan), typeof (FadingImage), new PropertyMetadata(new TimeSpan(0, 0, 2)));
+			DependencyProperty.Register("FadingDuration", typeof (TimeSpan), typeof (FadingImage), new PropertyMetadata(new TimeSpan(0, 0, 1)));
 
 		public TimeSpan FadingDuration
 		{
 			get { return (TimeSpan) GetValue(FadingDurationProperty); }
 			set { SetValue(FadingDurationProperty, value); }
 		}
+		
 
+		public static readonly DependencyProperty WaitForNextImageProperty =
+			DependencyProperty.Register("WaitForNextImage", typeof (bool), typeof (FadingImage), new PropertyMetadata(false));
 
-
+		public bool WaitForNextImage
+		{
+			get { return (bool) GetValue(WaitForNextImageProperty); }
+			set { SetValue(WaitForNextImageProperty, value); }
+		}
 
 
 		public static readonly DependencyProperty SourceProperty =
@@ -71,101 +78,83 @@ namespace MyToolkit.Controls
 			set { SetValue(SourceProperty, value); }
 		}
 
-
-
-
-
+		#endregion
 
 		private Uri lastSource = null; 
 		private bool animating = false; 
 		async private void UpdateSource()
 		{
 			if (canvas == null || animating || lastSource == Source) // is animating or no change
-				return; 
+				return;
 
+			animating = true;
+			var currentSource = Source;
 			if (lastSource == null)
 			{
-				SingleEvent.Register(ForegroundImage, 
-					(image, handler) => image.ImageOpened += handler, 
-					(image, handler) => image.ImageOpened -= handler, 
-					async (o, args) =>
-					{
-						await Fading.FadeInAsync(ForegroundImage, FadingDuration);
-						animating = false;
-						UpdateSource();
-					});
-
-				SingleEvent.Register(ForegroundImage,
-					(image, handler) => image.ImageFailed += handler,
-					(image, handler) => image.ImageFailed -= handler,
-					async (o, args) =>
-					{
-						animating = false;
-						UpdateSource();
-					});
-
-				animating = true;
 				ForegroundImage.Opacity = 0.0;
-				ImageHelper.SetSource(ForegroundImage, Source);
-			}
-			else if (Source != null) // exchange images
-			{
-				animating = true;
 
-				if (!CrossFadeImages)
+				var success = SingleEvent.WaitForEventAsync(ForegroundImage, 
+					(image, handler) => image.ImageOpened += handler, 
+					(image, handler) => image.ImageOpened -= handler);
+				var failure = SingleEvent.WaitForEventAsync(ForegroundImage,
+					(image, handler) => image.ImageFailed += handler,
+					(image, handler) => image.ImageFailed -= handler);
+
+				ImageHelper.SetSource(ForegroundImage, currentSource);
+
+				var task = await Task.WhenAny(new [] { success, failure });
+				if (task == success)
+					await Fading.FadeInAsync(ForegroundImage, FadingDuration);
+			}
+			else if (currentSource != null) // exchange images
+			{
+				BackgroundImage.Opacity = 0.0;
+
+				var success = SingleEvent.WaitForEventAsync(BackgroundImage,
+					(image, handler) => image.ImageOpened += handler,
+					(image, handler) => image.ImageOpened -= handler);
+				var failure = SingleEvent.WaitForEventAsync(BackgroundImage,
+					(image, handler) => image.ImageFailed += handler,
+					(image, handler) => image.ImageFailed -= handler);
+
+				ImageHelper.SetSource(BackgroundImage, currentSource);
+
+				if (!WaitForNextImage)
 					Fading.FadeOutAsync(ForegroundImage, FadingDuration);
 
-				SingleEvent.Register(BackgroundImage,
-					(image, handler) => image.ImageOpened += handler,
-					(image, handler) => image.ImageOpened -= handler,
-					async (o, args) =>
-					{
-						if (CrossFadeImages)
-							await Task.WhenAll(new[]
+				var task = await Task.WhenAny(new[] { success, failure });
+				if (task == success)
+				{
+					if (WaitForNextImage)
+						await Task.WhenAll(new[]
 							{
 								Fading.FadeInAsync(BackgroundImage, FadingDuration),
 								Fading.FadeOutAsync(ForegroundImage, FadingDuration)
 							});
-						else
-							await Fading.FadeInAsync(BackgroundImage, FadingDuration);
+					else
+						await Fading.FadeInAsync(BackgroundImage, FadingDuration);
 
-						ImageHelper.SetSource(ForegroundImage, null);
+					ImageHelper.SetSource(ForegroundImage, null);
 
-						// reverse image order
-						var fore = ForegroundImage;
-						var back = BackgroundImage;
-						canvas.Children.Clear();
-						canvas.Children.Add(fore);
-						canvas.Children.Add(back);
-
-						animating = false;
-						UpdateSource();
-					});
-
-				SingleEvent.Register(BackgroundImage,
-					(image, handler) => image.ImageFailed += handler,
-					(image, handler) => image.ImageFailed -= handler,
-					async (o, args) =>
-					{
-						await Fading.FadeOutAsync(ForegroundImage, FadingDuration);
-						animating = false;
-						UpdateSource();
-					});
-
-				animating = true;
-				BackgroundImage.Opacity = 0.0;
-				ImageHelper.SetSource(BackgroundImage, Source);
+					// reverse image order
+					var fore = ForegroundImage;
+					var back = BackgroundImage;
+					canvas.Children.Clear();
+					canvas.Children.Add(fore);
+					canvas.Children.Add(back);
+				}
+				else
+					await Fading.FadeOutAsync(ForegroundImage, FadingDuration);
 			}
 			else
 			{
-				animating = true;
 				BackgroundImage.Opacity = 0.0;
 				await Fading.FadeOutAsync(ForegroundImage, FadingDuration);
-				animating = false;
-				UpdateSource();
 			}
 
-			lastSource = Source; 
+			animating = false;
+			lastSource = currentSource;
+			UpdateSource();
 		}
 
 		private Image ForegroundImage

@@ -26,7 +26,7 @@ namespace MyToolkit.Animations
 		public static void FadeIn(UIElement obj, TimeSpan duration, double endOpacity = 1.0, Action completed = null)
 		{
 			var animation = new DoubleAnimation();
-			animation.EasingFunction = new ExponentialEase() { EasingMode = EasingMode.EaseOut, Exponent = 6 };
+			animation.EasingFunction = new ExponentialEase() { EasingMode = EasingMode.EaseInOut, Exponent = 1 };
 			animation.From = obj.Opacity;
 			animation.To = endOpacity;
 			animation.Duration = new Duration(duration);
@@ -45,7 +45,7 @@ namespace MyToolkit.Animations
 		public static void FadeOut(UIElement obj, TimeSpan duration, double endOpacity = 0.0, Action completed = null)
 		{
 			var animation = new DoubleAnimation();
-			animation.EasingFunction = new ExponentialEase() { EasingMode = EasingMode.EaseOut, Exponent = 6 };
+			animation.EasingFunction = new ExponentialEase() { EasingMode = EasingMode.EaseInOut, Exponent = 1 };
 			animation.From = obj.Opacity;
 			animation.To = endOpacity;
 			animation.Duration = new Duration(duration);

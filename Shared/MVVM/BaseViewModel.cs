@@ -2,7 +2,7 @@ using MyToolkit.MVVM;
 
 namespace MyToolkit.MVVM
 {
-	public class BaseViewModel<T> : NotifyPropertyChanged<BaseViewModel<T>>
+	public class BaseViewModel<T> : NotifyPropertyChanged<T>
 	{
 		private int loadingCounter = 0;
 		public bool IsLoading
@@ -18,7 +18,7 @@ namespace MyToolkit.MVVM
 #if METRO
 				RaisePropertyChanged();
 #else
-				RaisePropertyChanged(m => m.IsLoading);
+				RaisePropertyChanged("IsLoading");
 #endif
 			}
 		}

@@ -319,12 +319,13 @@
     </Style>
 
     <Style TargetType="controls:FadingImage">
+		<Setter Property="Stretch" Value="UniformToFill" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:FadingImage">
                     <Grid x:Name="canvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-						<Image Opacity="0" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-						<Image Opacity="0" Stretch="UniformToFill" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+						<Image Opacity="0" Stretch="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Stretch}" />
+						<Image Opacity="0" Stretch="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Stretch}" />
 					</Grid>
                 </ControlTemplate>
             </Setter.Value>

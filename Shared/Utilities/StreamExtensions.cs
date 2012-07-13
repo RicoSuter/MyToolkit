@@ -25,7 +25,7 @@ namespace MyToolkit.Utilities
 #if METRO
 		public static IRandomAccessStream AsRandomAccessStream(this Stream stream)
 		{
-			return new MemoryRandomAccessStream(stream.ReadToEnd()); /// TODO: uses a lot of memory...
+			return new MemoryRandomAccessStream(stream.ReadToEnd()); // TODO: uses a lot of memory...
 		}
 #endif
 	}
