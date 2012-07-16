@@ -313,7 +313,7 @@
 								</Style>
 							</controls:ExtendedListBox.ItemContainerStyle>
 						</controls:ExtendedListBox>
-						<ContentPresenter x:Name="Content" Grid.Row="1" />
+						<ContentPresenter x:Name="Content" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
 					</Grid>
                 </ControlTemplate>
             </Setter.Value>

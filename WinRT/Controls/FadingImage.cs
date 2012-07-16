@@ -33,6 +33,15 @@ namespace MyToolkit.Controls
 
 		#region dependency properties
 
+		public static readonly DependencyProperty FadingOpacityProperty =
+			DependencyProperty.Register("FadingOpacity", typeof (double), typeof (FadingImage), new PropertyMetadata(1.0));
+
+		public double FadingOpacity
+		{
+			get { return (double) GetValue(FadingOpacityProperty); }
+			set { SetValue(FadingOpacityProperty, value); }
+		}
+
 		public static readonly DependencyProperty StretchProperty =
 			DependencyProperty.Register("Stretch", typeof (Stretch), typeof (FadingImage), new PropertyMetadata(default(Stretch)));
 
@@ -104,7 +113,7 @@ namespace MyToolkit.Controls
 
 				var task = await Task.WhenAny(new [] { success, failure });
 				if (task == success)
-					await Fading.FadeInAsync(ForegroundImage, FadingDuration);
+					await Fading.FadeInAsync(ForegroundImage, FadingDuration, FadingOpacity);
 			}
 			else if (currentSource != null) // exchange images
 			{
@@ -128,11 +137,11 @@ namespace MyToolkit.Controls
 					if (WaitForNextImage)
 						await Task.WhenAll(new[]
 							{
-								Fading.FadeInAsync(BackgroundImage, FadingDuration),
+								Fading.FadeInAsync(BackgroundImage, FadingDuration, FadingOpacity),
 								Fading.FadeOutAsync(ForegroundImage, FadingDuration)
 							});
 					else
-						await Fading.FadeInAsync(BackgroundImage, FadingDuration);
+						await Fading.FadeInAsync(BackgroundImage, FadingDuration, FadingOpacity);
 
 					ImageHelper.SetSource(ForegroundImage, null);
 

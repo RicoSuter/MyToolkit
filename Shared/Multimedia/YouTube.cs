@@ -3,21 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.Phone.Shell;
-using Microsoft.Phone.Tasks;
 using MyToolkit.Environment;
 using MyToolkit.Multimedia;
 using MyToolkit.Networking;
 using MyToolkit.UI;
 
+#if METRO
+
+#elif WINDOWS_PHONE
+using Microsoft.Phone.Shell;
+using Microsoft.Phone.Tasks;
+#endif
+
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
-// this code only works with mango (video urls with query don't work in previous versions)
+// this code only works with windows phone mango (video urls with query don't work in previous versions)
 
 namespace MyToolkit.Multimedia
 {
 	public static class YouTube
 	{
+
+#if METRO
+		public static Task<YouTubeUri> GetVideoUriAsync(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P)
+		{
+			var task = new TaskCompletionSource<YouTubeUri>();
+			GetVideoUri(youTubeId, maxQuality, (u, e) =>
+			{
+				if (u != null)
+					task.SetResult(u);
+				else if (e == null)
+					task.SetCanceled();
+				else
+					task.SetException(e);
+			});
+			return task.Task;
+		} 
+#endif
+
 		public static Uri GetThumbnailUri(string youTubeId, YouTubeThumbnailSize size = YouTubeThumbnailSize.Medium)
 		{
 			switch (size)
@@ -31,11 +55,6 @@ namespace MyToolkit.Multimedia
 			}
 			throw new Exception();
 		}
-
-		public static HttpResponse Play(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFinished = null)
-		{
-			return Http.Get("http://www.youtube.com/watch?v=" + youTubeId, r => OnHtmlDownloaded(r, maxQuality, onFinished));
-		}
 		
 		private static int GetQualityIdentifier(YouTubeQuality quality)
 		{
@@ -48,11 +67,16 @@ namespace MyToolkit.Multimedia
 			throw new ArgumentException("maxQuality");
 		}
 
-		private static void OnHtmlDownloaded(HttpResponse response, YouTubeQuality quality, Action<Exception> onFinished)
+		public static HttpResponse GetVideoUri(string youTubeId, YouTubeQuality maxQuality, Action<YouTubeUri, Exception> completed)
+		{
+			return Http.Get("http://www.youtube.com/watch?v=" + youTubeId, r => OnHtmlDownloaded(r, maxQuality, completed));
+		}
+
+		private static void OnHtmlDownloaded(HttpResponse response, YouTubeQuality quality, Action<YouTubeUri, Exception> completed)
 		{
 			if (response.Successful)
 			{
-				var urls = new List<YouTubeUrl>();
+				var urls = new List<YouTubeUri>();
 				try
 				{
 					var match = Regex.Match(response.Response, "url_encoded_fmt_stream_map=(.*?)(&|\")");
@@ -61,7 +85,7 @@ namespace MyToolkit.Multimedia
 					var arr = data.Split(',');
 					foreach (var d in arr)
 					{
-						var tuple = new YouTubeUrl();
+						var tuple = new YouTubeUri();
 						foreach (var p in d.Split('&'))
 						{
 							var index = p.IndexOf('=');
@@ -72,7 +96,7 @@ namespace MyToolkit.Multimedia
 									var key = p.Substring(0, index);
 									var value = Uri.UnescapeDataString(p.Substring(index + 1));
 									if (key == "url")
-										tuple.Url = value;
+										tuple.url = value;
 									else if (key == "itag")
 										tuple.Itag = int.Parse(value);
 									else if (key == "type" && value.Contains("video/mp4"))
@@ -92,47 +116,66 @@ namespace MyToolkit.Multimedia
 				}
 				catch (Exception ex)
 				{
-					if (onFinished != null)
-						onFinished(ex);
+					if (completed != null)
+						completed(null, ex);
 					return; 
 				}
 
 				var entry = urls.OrderByDescending(u => u.Itag).FirstOrDefault();
 				if (entry != null)
 				{
-					if (onFinished != null)
-						onFinished(null);
-
-					var url = entry.Url;
-					var launcher = new MediaPlayerLauncher
-					{
-						Controls = MediaPlaybackControls.All,
-						Media = new Uri(url, UriKind.Absolute)
-					};
-					launcher.Show();
+					if (completed != null)
+						completed(entry, null);
 				}
-				else if (onFinished != null)
-					onFinished(new Exception("no_video_urls_found"));
+				else if (completed != null)
+					completed(null, new Exception("no_video_urls_found"));
 			}
-			else if (onFinished != null)
-				onFinished(response.Exception);
+			else if (completed != null)
+				completed(null, response.Exception);
 		}
 
-		private class YouTubeUrl
+		public class YouTubeUri
 		{
-			public string Url { get; set; }
+			internal string url;
+
+			public Uri Uri { get { return new Uri(url, UriKind.Absolute); } }
 			public int Itag { get; set; }
 			public string Type { get; set; }
 
 			public bool IsValid
 			{
-				get { return Url != null && Itag > 0 && Type != null; }
+				get { return url != null && Itag > 0 && Type != null; }
 			}
 		}
 		
 		#region Phone
 
 #if WINDOWS_PHONE
+
+		public static HttpResponse Play(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFinished = null)
+		{
+			return GetVideoUri(youTubeId, maxQuality, (entry, e) =>
+			{
+				if (e != null)
+			    {
+					if (onFinished != null)
+						onFinished(e);
+			    }
+				else
+			    {
+					if (onFinished != null)
+						onFinished(null);
+
+					var launcher = new MediaPlayerLauncher
+					{
+						Controls = MediaPlaybackControls.All,
+						Media = entry.Uri
+					};
+					launcher.Show();
+			    }
+			});
+		}
+
 
 		private static HttpResponse httpResponse;
 		private static PageDeactivator oldState;
