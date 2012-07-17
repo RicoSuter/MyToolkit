@@ -19,7 +19,11 @@ namespace MyToolkit.Controls
 		public WatermarkedTextBox()
 		{
 			DefaultStyleKey = typeof(WatermarkedTextBox);
+#if METRO
 			GotFocus += delegate { if (textBox != null) textBox.Focus(FocusState.Programmatic); };
+#else
+			GotFocus += delegate { if (textBox != null) textBox.Focus(); };
+#endif
 		}
 
 #if METRO

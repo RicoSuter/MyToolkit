@@ -79,6 +79,13 @@ namespace MyToolkit.Networking
 		
 		public List<Cookie> Cookies { get; private set; }
 
+		private HttpStatusCode code = HttpStatusCode.OK;
+		public HttpStatusCode HttpStatusCode
+		{
+			get { return code; }
+			internal set { code = value; }
+		}
+
 #if METRO
         internal void CreateTimeoutTimer(HttpWebRequest request)
         {

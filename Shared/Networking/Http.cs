@@ -462,6 +462,14 @@ namespace MyToolkit.Networking
 			}
 			catch (Exception e)
 			{
+				var we = e as WebException;
+				if (we != null)
+				{
+					var temp = we.Response as HttpWebResponse;
+					if (temp != null)
+						resp.HttpStatusCode = temp.StatusCode;
+				}
+
 				if (resp.ResponseStream != null)
 				{
 					resp.ResponseStream.Dispose();
