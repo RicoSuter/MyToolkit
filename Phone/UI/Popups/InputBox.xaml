@@ -30,7 +30,7 @@
 
 				<TextBlock x:Name="title" Grid.Row="0" Grid.ColumnSpan="3" Margin="12,0,12,8"
 					   Style="{StaticResource PhoneTextNormalStyle}" FontSize="33" FontWeight="Medium"></TextBlock>
-				<TextBlock x:Name="message" Grid.Row="1" Grid.ColumnSpan="3" Margin="12,0,12,4"
+				<TextBlock x:Name="message" Grid.Row="1" Grid.ColumnSpan="3" Margin="12,0,12,4" TextWrapping="Wrap"
 					   Style="{StaticResource PhoneTextNormalStyle}" FontSize="{StaticResource PhoneFontSizeMedium}"></TextBlock>
 				<TextBox Grid.Row="2" Grid.ColumnSpan="3" x:Name="box"></TextBox>
 

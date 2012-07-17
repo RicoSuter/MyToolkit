@@ -7,16 +7,22 @@ namespace MyToolkit.UI.Popups
 {
 	public partial class InputBox : UserControl, IPopupControl
 	{
-		public static void Show(String message, String title, bool showCancel, Action<object, string> completed)
+		public static void Show(String message, String title, string input, bool showCancel, Action<object, string> completed)
 		{
 			var control = new InputBox();
 			control.title.Text = title;
 			control.message.Text = message;
 			control.completed = completed;
-			control.cancel.Visibility = showCancel ? 
-				Visibility.Visible : Visibility.Collapsed; 
+			control.box.Text = input;
+			control.cancel.Visibility = showCancel ?
+				Visibility.Visible : Visibility.Collapsed;
 
 			Popup.Show(control);
+		}
+
+		public static void Show(String message, String title, bool showCancel, Action<object, string> completed)
+		{
+			Show(message, title, string.Empty, showCancel, completed);
 		}
 
 		public InputBox()
