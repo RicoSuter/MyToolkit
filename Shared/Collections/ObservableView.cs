@@ -314,7 +314,7 @@ namespace MyToolkit.Collections
 			}
 		}
 
-		public void AddRange(Collection<T> collection)
+		public void AddRange(IEnumerable<T> collection)
 		{
 			var old = TrackCollectionChanges; 
 			TrackCollectionChanges = false;

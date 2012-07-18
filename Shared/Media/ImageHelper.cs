@@ -227,7 +227,8 @@ namespace MyToolkit.Media
 						{
 							using (var pendingCompletion = pendingCompletions.Dequeue())
 							{
-								if (GetSource(pendingCompletion.Image).Equals(pendingCompletion.Uri))
+								var source = GetSource(pendingCompletion.Image);
+								if (source != null && source.Equals(pendingCompletion.Uri))
 								{
 									var bitmap = new BitmapImage();
 									if (pendingCompletion.Stream != null)
