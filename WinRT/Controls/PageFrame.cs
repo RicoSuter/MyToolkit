@@ -12,26 +12,14 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MyToolkit.Controls
 {
-	public class PageFrame : Control
+	public class PageFrame : ContentControl, INavigate
 	{
 		public PageFrame()
 		{
-			DefaultStyleKey = typeof(PageFrame);
 			PageStack = new Stack<object>();
 		}
 
-		private ContentControl contentControl;
-		protected override void OnApplyTemplate()
-		{
-			base.OnApplyTemplate();
-
-			contentControl = (ContentControl)GetTemplateChild("content");
-			if (nextType != null)
-				Navigate(nextType, nextParameter); 
-		}
-
 		public bool CanGoBack { get { return PageStack.Count > 1; } }
-		public object Content { get { return PageStack.Count == 0 ? null : PageStack.Peek(); } }
 
 		public Stack<object> PageStack { get; private set; }
 
@@ -39,7 +27,7 @@ namespace MyToolkit.Controls
 
 		public bool GoBack()
 		{
-			if (CallPrepareMethod(() => { GoBackEx(); }))
+			if (CallPrepareMethod(GoBackEx))
 				return true; 
 
 			GoBackEx();
@@ -62,12 +50,17 @@ namespace MyToolkit.Controls
 				method.Invoke(page, new object[] { args });
 			}
 
-			contentControl.Content = page;
+			Content = page;
 		}
 
-		public bool Navigate(Type type, object parameter = null)
+		public bool Navigate(Type type)
 		{
-			if (CallPrepareMethod(() => { NavigateEx(type, parameter); }))
+			return Navigate(type, null);
+		}
+
+		public bool Navigate(Type type, object parameter)
+		{
+			if (CallPrepareMethod(() => NavigateEx(type, parameter)))
 				return true;
 			NavigateEx(type, parameter);
 			return false;
@@ -77,7 +70,7 @@ namespace MyToolkit.Controls
 		private object nextParameter; 
 		private void NavigateEx(Type type, object parameter)
 		{
-			if (contentControl == null)
+			if (Content == null)
 			{
 				if (nextType != null)
 					throw new Exception();
@@ -91,7 +84,7 @@ namespace MyToolkit.Controls
             NavigationEventArgs args = null; // new NavigationEventArgs(page, parameter, type, null, NavigationMode.New); // TODO find solution
 		
 			PageStack.Push(page);
-			contentControl.Content = page;
+			Content = page;
 
 			if (Navigated != null)
 				Navigated(this, args);

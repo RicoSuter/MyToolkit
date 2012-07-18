@@ -91,17 +91,7 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
-	</Style>
-
-	<Style TargetType="controls:PageFrame">
-        <Setter Property="Template">
-            <Setter.Value>
-				<ControlTemplate TargetType="controls:PageFrame">
-					<ContentControl x:Name="content" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" />
-				</ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+	</Style>	
 	
 	<Style x:Key="TransparentListBox" TargetType="ListBox">
 		<Setter Property="Foreground" Value="{StaticResource ListBoxForegroundThemeBrush}"/>

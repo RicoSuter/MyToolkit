@@ -14,10 +14,10 @@ namespace MyToolkit.Controls
 		//protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
 		//{
 		//	base.PrepareContainerForItemOverride(element, item);
-		//	((UIElement)element).DoubleTapped += OnTapped;
+		//	((UIElement)element).Tapped += OnTapped;
 		//}
 
-		//private void OnTapped(object sender, DoubleTappedRoutedEventArgs doubleTappedRoutedEventArgs)
+		//private void OnTapped(object sender, TappedRoutedEventArgs args)
 		//{
 		//	var element = (FrameworkElement)sender;
 		//	OnNavigate(new NavigationListEventArgs(element.DataContext));
