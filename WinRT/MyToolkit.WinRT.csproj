@@ -242,6 +242,7 @@
     <Compile Include="Controls\RolloverButton.cs" />
     <Compile Include="Environment\Device.cs" />
     <Compile Include="MEF\CompositionContainer.cs" />
+    <Compile Include="Messaging\GenericMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourceDictionary.cs" />
     <Compile Include="Resources\Strings.cs" />

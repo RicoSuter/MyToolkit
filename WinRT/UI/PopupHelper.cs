@@ -13,6 +13,11 @@ namespace MyToolkit.UI
 {
 	public static class PopupHelper
 	{
+		public static void ClosePopup(this FrameworkElement control)
+		{
+			((Popup) control.Tag).IsOpen = false; 
+		}
+
 		public static Task<Popup> ShowDialogAsync<T>(T control, bool isLightDismissEnabled = false) where T : FrameworkElement
 		{
 			return TaskHelper.RunCallbackMethod<T, Popup>((x, y) => ShowDialog(x, isLightDismissEnabled, y), control);
@@ -37,6 +42,7 @@ namespace MyToolkit.UI
 
 			Window.Current.Activated += del;
 			control.SizeChanged += del2;
+			control.Tag = popup; 
 
 			var oldOpacity = parent.Opacity;
 			parent.Opacity = 0.5; 
