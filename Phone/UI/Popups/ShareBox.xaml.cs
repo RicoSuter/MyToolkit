@@ -14,7 +14,7 @@ namespace MyToolkit.UI.Popups
 			control.Title = title;
 			control.Text = text;
 			control.TextWithoutTitle = textWithoutTitle ?? title + ": " + text;
-			Popup.Show(control);
+			PopupHelper.Show(control);
 		}
 
 		public string Title { get; set; }

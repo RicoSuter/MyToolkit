@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using MyToolkit.Environment;
 using MyToolkit.Multimedia;
@@ -11,7 +10,7 @@ using MyToolkit.Networking;
 using MyToolkit.UI;
 
 #if METRO
-
+using System.Threading.Tasks;
 #elif WINDOWS_PHONE
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;

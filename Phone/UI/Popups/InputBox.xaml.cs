@@ -17,7 +17,7 @@ namespace MyToolkit.UI.Popups
 			control.cancel.Visibility = showCancel ?
 				Visibility.Visible : Visibility.Collapsed;
 
-			Popup.Show(control);
+			PopupHelper.Show(control);
 		}
 
 		public static void Show(String message, String title, bool showCancel, Action<object, string> completed)
@@ -42,20 +42,20 @@ namespace MyToolkit.UI.Popups
 		{
 			if (cancel.Visibility == Visibility.Visible)
 				Cancel(null, null);
-			else
-				Close(null, null);
 		}
 
 		private void Cancel(object sender, System.Windows.RoutedEventArgs e)
 		{
 			Closed(this);
-			completed(this, null);
+			if (completed != null)
+				completed(this, null);
 		}
 
 		private void Close(object sender, System.Windows.RoutedEventArgs e)
 		{
 			Closed(this);
-			completed(this, box.Text);
+			if (completed != null)
+				completed(this, box.Text);
 		}
 	}
 }

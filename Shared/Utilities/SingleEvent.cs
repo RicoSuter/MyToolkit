@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Net;
-using System.Threading.Tasks;
 using System.Windows;
 
 #if METRO
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 #endif
 

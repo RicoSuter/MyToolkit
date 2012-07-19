@@ -296,6 +296,14 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Storage\ApplicationSettings.cs" />
+    <Compile Include="UI\Popups\InputBox.xaml.cs">
+      <DependentUpon>InputBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Popups\IPopupControl.xaml.cs" />
+    <Compile Include="UI\Popups\PopupHelper.cs" />
+    <Compile Include="UI\Popups\ShareBox.xaml.cs">
+      <DependentUpon>ShareBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Thombstone.cs" />
     <Compile Include="Controls\YouTubeButton.xaml.cs">
       <DependentUpon>YouTubeButton.xaml</DependentUpon>
@@ -347,6 +355,14 @@
     <Page Include="Controls\ExtendedImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Popups\InputBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Popups\ShareBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

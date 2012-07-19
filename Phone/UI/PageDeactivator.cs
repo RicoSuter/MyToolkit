@@ -4,9 +4,10 @@ using System.Windows;
 using System.Windows.Media;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using MyToolkit.Environment;
 using MyToolkit.Utilities;
 
-namespace MyToolkit.Phone
+namespace MyToolkit.UI
 {
 	public class PageDeactivator
 	{
@@ -56,14 +57,14 @@ namespace MyToolkit.Phone
 
 			OldControl.Opacity = 0.325;
 
-			SystemTray.BackgroundColor = Resources.PhoneBackgroundColor;
-			SystemTray.ForegroundColor = Resources.PhoneForegroundColor;
+			SystemTray.BackgroundColor = Environment.Resources.PhoneBackgroundColor;
+			SystemTray.ForegroundColor = Environment.Resources.PhoneForegroundColor;
 
 			oldEnabledButtons = new List<ApplicationBarIconButton>();
 			oldEnabledMenus = new List<ApplicationBarMenuItem>();
 			if(page.ApplicationBar != null)
 			{
-				page.ApplicationBar.BackgroundColor = ColorUtility.Mix(oldBarBgColor, 0.325, Resources.PhoneBackgroundColor);
+				page.ApplicationBar.BackgroundColor = ColorUtility.Mix(oldBarBgColor, 0.325, Environment.Resources.PhoneBackgroundColor);
 				page.ApplicationBar.IsMenuEnabled = false;
 				foreach(var b in page.ApplicationBar.Buttons.
 					OfType<ApplicationBarIconButton>().Where(i => i.IsEnabled))

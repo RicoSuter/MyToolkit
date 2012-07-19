@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 			 xmlns:UI="clr-namespace:MyToolkit.UI"
 			 xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-             mc:Ignorable="d"
+             xmlns:Controls="clr-namespace:MyToolkit.Controls" mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -18,12 +18,12 @@
 		</Grid.RowDefinitions>
 		<StackPanel Grid.Row="0" x:Name="popup">
 			<StackPanel Margin="12,12,12,36">
-				<UI:UnstyledButton toolkit:TiltEffect.IsTiltEnabled="True" Click="AsMessageClick" Margin="0,0,0,12">
+				<Controls:UnstyledButton toolkit:TiltEffect.IsTiltEnabled="True" Click="AsMessageClick" Margin="0,0,0,12">
 					<TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="Message"></TextBlock>
-				</UI:UnstyledButton>
-				<UI:UnstyledButton toolkit:TiltEffect.IsTiltEnabled="True" Click="AsEmailClick" Margin="0,0,0,12">
+				</Controls:UnstyledButton>
+				<Controls:UnstyledButton toolkit:TiltEffect.IsTiltEnabled="True" Click="AsEmailClick" Margin="0,0,0,12">
 					<TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="E-Mail"></TextBlock>
-				</UI:UnstyledButton>
+				</Controls:UnstyledButton>
 			</StackPanel>
 		</StackPanel>		
 		<Border Grid.Row="1" Background="Transparent" />
