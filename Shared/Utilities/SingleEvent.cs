@@ -28,17 +28,6 @@ namespace MyToolkit.Utilities
 			register(sender, wrapper.Handler);
 		}
 
-#if METRO
-		public static Task WaitForEventAsync<TObj, T>(TObj sender, Action<TObj, EventHandler<T>> register,
-			Action<TObj, EventHandler<T>> unregister) where T : EventArgs
-		{
-			var task = new TaskCompletionSource<T>();
-			Register(sender, register, unregister, (o, args) => task.SetResult(args));
-			return task.Task;
-		}
-		
-
-
 		internal class SingleRoutedEventHandlerContainer
 		{
 			internal RoutedEventHandler Handler;
@@ -56,21 +45,11 @@ namespace MyToolkit.Utilities
 			register(sender, wrapper.Handler);
 		}
 
-		public static Task WaitForEventAsync<TObj>(TObj sender, Action<TObj, RoutedEventHandler> register,
-			Action<TObj, RoutedEventHandler> unregister)
-		{
-			var task = new TaskCompletionSource<RoutedEventArgs>();
-			Register(sender, register, unregister, (o, args) => task.SetResult(args));
-			return task.Task;
-		}
-		
-
-
 		internal class SingleExceptionRoutedEventHandlerContainer
 		{
 			internal ExceptionRoutedEventHandler Handler;
 		}
-		
+
 		public static void Register<TObj>(TObj sender, Action<TObj, ExceptionRoutedEventHandler> register,
 			Action<TObj, ExceptionRoutedEventHandler> unregister, Action<object, RoutedEventArgs> action)
 		{
@@ -83,6 +62,23 @@ namespace MyToolkit.Utilities
 			register(sender, wrapper.Handler);
 		}
 
+#if METRO
+		public static Task WaitForEventAsync<TObj, T>(TObj sender, Action<TObj, EventHandler<T>> register,
+			Action<TObj, EventHandler<T>> unregister) where T : EventArgs
+		{
+			var task = new TaskCompletionSource<T>();
+			Register(sender, register, unregister, (o, args) => task.SetResult(args));
+			return task.Task;
+		}
+		
+		public static Task WaitForEventAsync<TObj>(TObj sender, Action<TObj, RoutedEventHandler> register,
+			Action<TObj, RoutedEventHandler> unregister)
+		{
+			var task = new TaskCompletionSource<RoutedEventArgs>();
+			Register(sender, register, unregister, (o, args) => task.SetResult(args));
+			return task.Task;
+		}
+		
 		public static Task WaitForEventAsync<TObj>(TObj sender, Action<TObj, ExceptionRoutedEventHandler> register,
 			Action<TObj, ExceptionRoutedEventHandler> unregister)
 		{
