@@ -151,19 +151,19 @@ namespace MyToolkit.Multimedia
 
 #if WINDOWS_PHONE
 
-		public static HttpResponse Play(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFinished = null)
+		public static HttpResponse Play(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> completed = null)
 		{
 			return GetVideoUri(youTubeId, maxQuality, (entry, e) =>
 			{
 				if (e != null)
 			    {
-					if (onFinished != null)
-						onFinished(e);
+					if (completed != null)
+						completed(e);
 			    }
 				else
 			    {
-					if (onFinished != null)
-						onFinished(null);
+					if (completed != null)
+						completed(null);
 
 					var launcher = new MediaPlayerLauncher
 					{
@@ -185,8 +185,8 @@ namespace MyToolkit.Multimedia
 		/// <param name="youTubeId"></param>
 		/// <param name="manualActivatePage">if true add YouTube.CancelPlay() in OnNavigatedTo() of the page (better)</param>
 		/// <param name="maxQuality"></param>
-		/// <param name="onFailure"></param>
-		public static void Play(string youTubeId, bool manualActivatePage, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> onFailure = null)
+		/// <param name="completed"></param>
+		public static void Play(string youTubeId, bool manualActivatePage, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> completed = null)
 		{
 			lock (typeof(YouTube))
 			{
@@ -204,16 +204,11 @@ namespace MyToolkit.Multimedia
 				httpResponse = Play(youTubeId, YouTubeQuality.Quality480P, ex => Deployment.Current.Dispatcher.BeginInvoke(
 					delegate
 					{
-						if (page != PhoneApplication.CurrentPage) // user navigated away
-							return;
-
-						if (ex != null && onFailure != null)
-						{
-							onFailure(ex);
-							CancelPlay(false);
-						}
-						else
+						if (page == PhoneApplication.CurrentPage) // !user navigated away
 							CancelPlay(manualActivatePage);
+
+						if (completed != null)
+							completed(ex);
 					}));
 			}
 		}
