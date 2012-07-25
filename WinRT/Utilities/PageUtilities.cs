@@ -12,12 +12,12 @@ using Windows.UI.Xaml.Input;
 
 namespace MyToolkit.Utilities
 {
-	public static class PageExtensions
+	public static class PageUtilities
 	{
 		/// <summary>
 		/// Call this method in Loaded event as the event will be automatically deregistred when the FrameworkElement has been unloaded
 		/// </summary>
-		public static void RegisterBackKey(this Page page)
+		public static void RegisterBackKey(Page page)
 		{
 			var del = new TypedEventHandler<CoreDispatcher, AcceleratorKeyEventArgs>(
 				delegate(CoreDispatcher sender, AcceleratorKeyEventArgs args)
@@ -46,7 +46,7 @@ namespace MyToolkit.Utilities
 		/// </summary>
 		/// <param name="page"></param>
 		/// <param name="handler"></param>
-		public static void RegisterAcceleratorKeyActivated(this FrameworkElement page, TypedEventHandler<CoreDispatcher, AcceleratorKeyEventArgs> handler)
+		public static void RegisterAcceleratorKeyActivated(FrameworkElement page, TypedEventHandler<CoreDispatcher, AcceleratorKeyEventArgs> handler)
 		{
 			page.Dispatcher.AcceleratorKeyActivated += handler;
 			SingleEvent.Register(page, (p, h) => p.Unloaded += h, (p, h) => p.Unloaded -= h, (o, a) =>
@@ -54,7 +54,6 @@ namespace MyToolkit.Utilities
 				page.Dispatcher.AcceleratorKeyActivated -= handler;
 			});
 		}
-
 
 		private class SearchKeyContainer
 		{
@@ -81,7 +80,7 @@ namespace MyToolkit.Utilities
 		/// <summary>
 		/// Call this method in Loaded event as the event will be automatically deregistred when the FrameworkElement has been unloaded
 		/// </summary>
-		public static void RegisterSearchPressed(this FrameworkElement page, Action searchKeyPressed)
+		public static void RegisterSearchPressed(FrameworkElement page, Action searchKeyPressed)
 		{
 			var c = new SearchKeyContainer(searchKeyPressed);
 			RegisterAcceleratorKeyActivated(page, c.AcceleratorKeyActivated);
