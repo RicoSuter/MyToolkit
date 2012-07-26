@@ -7,13 +7,15 @@ using System.Windows;
 using MyToolkit.Environment;
 using MyToolkit.Multimedia;
 using MyToolkit.Networking;
-using MyToolkit.UI;
 
 #if METRO
 using System.Threading.Tasks;
 #elif WINDOWS_PHONE
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
+using MyToolkit.Paging;
+using MyToolkit.UI;
+
 #endif
 
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
@@ -199,12 +201,12 @@ namespace MyToolkit.Multimedia
 				SystemTray.ProgressIndicator.IsVisible = true;
 				SystemTray.ProgressIndicator.IsIndeterminate = true; 
 
-				var page = PhoneApplication.CurrentPage;
+				var page = PhonePage.CurrentPage;
 				oldState = PageDeactivator.Inactivate();
 				httpResponse = Play(youTubeId, YouTubeQuality.Quality480P, ex => Deployment.Current.Dispatcher.BeginInvoke(
 					delegate
 					{
-						if (page == PhoneApplication.CurrentPage) // !user navigated away
+						if (page == PhonePage.CurrentPage) // !user navigated away
 							CancelPlay(manualActivatePage);
 
 						if (completed != null)

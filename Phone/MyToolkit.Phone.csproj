@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FC75D593-3AA7-4C47-B7E2-64B791158BA4}</ProjectGuid>
+    <ProjectGuid>{05B68BDA-DB8E-41EC-8C84-05F435A61F36}</ProjectGuid>
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -24,7 +24,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Bin\Debug\Phone\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;USE_GZIP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;USE_GZIP;LIGHT</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -34,7 +34,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>Bin\Release\Phone\</OutputPath>
-    <DefineConstants>SILVERLIGHT;WINDOWS_PHONE;USE_GZIP</DefineConstants>
+    <DefineConstants>SILVERLIGHT;WINDOWS_PHONE;USE_GZIP;LIGHT</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -43,9 +43,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
-      <HintPath>..\packages\SilverlightToolkitWP.4.2011.12.14\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
@@ -56,80 +54,17 @@
     <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Shared\Animation\Fading.cs">
+    <Compile Include="..\shared\animation\Fading.cs">
       <Link>Animation\Fading.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Animation\Flipping.cs">
+    <Compile Include="..\shared\animation\Flipping.cs">
       <Link>Animation\Flipping.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Collections\ExtendedObservableCollection.cs">
       <Link>Collections\ExtendedObservableCollection.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Collections\ObservableView.cs">
+    <Compile Include="..\shared\collections\ObservableView.cs">
       <Link>Collections\ObservableView.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\FixedHtmlTextBlock.cs">
-      <Link>Controls\FixedHtmlTextBlock.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlock.cs">
-      <Link>Controls\HtmlTextBlock.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\EmGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\EmGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\EmptyGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\EmptyGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\HtmlGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\HtmlGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\ImageBlock.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\ImageBlock.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\ImageGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\ImageGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\LinkGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\LinkGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\ParagraphGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\ParagraphGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\StrongGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\StrongGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\TextGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\TextGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\HtmlNode.cs">
-      <Link>Controls\HtmlTextBlockImplementation\HtmlNode.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\HtmlParser.cs">
-      <Link>Controls\HtmlTextBlockImplementation\HtmlParser.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\HtmlTextBlockHelper.cs">
-      <Link>Controls\HtmlTextBlockImplementation\HtmlTextBlockHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\IControlGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\IControlGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\IHtmlTextBlock.cs">
-      <Link>Controls\HtmlTextBlockImplementation\IHtmlTextBlock.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\ISizeDependentControl.cs">
-      <Link>Controls\HtmlTextBlockImplementation\ISizeDependentControl.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\SingleControlGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\SingleControlGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\NavigationListEventArgs.cs">
-      <Link>Controls\NavigationListEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
-      <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\WatermarkedTextBox.cs">
-      <Link>Controls\WatermarkedTextBox.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
@@ -143,7 +78,7 @@
     <Compile Include="..\Shared\Converters\RemoveColorAlphaConverter.cs">
       <Link>Converters\RemoveColorAlphaConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\TimeSpanConverter.cs">
+    <Compile Include="..\shared\converters\TimeSpanConverter.cs">
       <Link>Converters\TimeSpanConverter.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Converters\TruncateConverter.cs">
@@ -191,29 +126,20 @@
     <Compile Include="..\Shared\Libraries\DotNetZip\ZlibConstants.cs">
       <Link>Libraries\DotNetZip\ZlibConstants.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Media\ImageHelper.cs">
-      <Link>Media\ImageHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Messaging\ActionMessage.cs">
+    <Compile Include="..\shared\messaging\ActionMessage.cs">
       <Link>Messaging\ActionMessage.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messaging\DefaultActions.cs">
-      <Link>Messaging\DefaultActions.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Messaging\GoBackMessage.cs">
+    <Compile Include="..\shared\messaging\GoBackMessage.cs">
       <Link>Messaging\GoBackMessage.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messaging\Messenger.cs">
+    <Compile Include="..\shared\messaging\Messenger.cs">
       <Link>Messaging\Messenger.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messaging\TextMessage.cs">
+    <Compile Include="..\shared\messaging\TextMessage.cs">
       <Link>Messaging\TextMessage.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Multimedia\YouTube.cs">
-      <Link>Multimedia\YouTube.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Multimedia\YouTubeQuality.cs">
-      <Link>Multimedia\YouTubeQuality.cs</Link>
+    <Compile Include="..\Shared\MVVM\BaseViewModel.cs">
+      <Link>MVVM\BaseViewModel.cs</Link>
     </Compile>
     <Compile Include="..\Shared\MVVM\NotifyPropertyChanged.cs">
       <Link>MVVM\NotifyPropertyChanged.cs</Link>
@@ -241,12 +167,6 @@
     </Compile>
     <Compile Include="..\Shared\Networking\WakeOnLan.cs">
       <Link>Networking\WakeOnLan.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\UI\Designer.cs">
-      <Link>UI\Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\UI\TextBinding.cs">
-      <Link>UI\TextBinding.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\ColorUtility.cs">
       <Link>Utilities\ColorUtility.cs</Link>
@@ -280,58 +200,23 @@
     </Compile>
     <Compile Include="Collections\AlphaGroups.cs" />
     <Compile Include="Collections\Group.cs" />
-    <Compile Include="Controls\VideoButton.xaml.cs">
-      <DependentUpon>VideoButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\NativeLongListSelector.cs" />
-    <Compile Include="Networking\NetworkState.cs" />
-    <Compile Include="Networking\NetworkStateTracker.cs" />
-    <Compile Include="Paging\IExtendedPhoneApplicationPage.cs" />
-    <Compile Include="Paging\NavigationState.cs" />
     <Compile Include="Environment\Marketplace.cs" />
-    <Compile Include="Performance\MemoryDiagnosticsHelper.cs" />
     <Compile Include="Environment\PhoneApplication.cs" />
     <Compile Include="Environment\PhoneManifest.cs" />
     <Compile Include="Environment\Resources.cs" />
+    <Compile Include="Networking\NetworkState.cs" />
+    <Compile Include="Networking\NetworkStateTracker.cs" />
+    <Compile Include="Performance\MemoryDiagnosticsHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Strings.Designer.cs">
+      <DependentUpon>Strings.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Storage\ApplicationSettings.cs" />
-    <Compile Include="UI\Popups\InputBox.xaml.cs">
-      <DependentUpon>InputBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Popups\IPopupControl.xaml.cs" />
-    <Compile Include="UI\Popups\PopupHelper.cs" />
-    <Compile Include="UI\Popups\ShareBox.xaml.cs">
-      <DependentUpon>ShareBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Thombstone.cs" />
-    <Compile Include="Controls\YouTubeButton.xaml.cs">
-      <DependentUpon>YouTubeButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\DataTemplateSelector.cs" />
-    <Compile Include="Controls\ExtendedImage.xaml.cs">
-      <DependentUpon>ExtendedImage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ExtendedListBox.cs" />
-    <Compile Include="Controls\FixedNavigationList.cs" />
-    <Compile Include="UI\FrameworkElementExtensions.cs" />
-    <Compile Include="Controls\ImageButton.cs" />
-    <Compile Include="UI\PageDeactivator.cs" />
-    <Compile Include="UI\PasswordBoxBinding.cs" />
-    <Compile Include="Controls\ExtendedItemsControl.cs" />
-    <Compile Include="Controls\NavigationList.cs" />
-    <Compile Include="UI\ProgressIndicatorProxy.cs" />
-    <Compile Include="Controls\TranslatedToggleSwitch.cs" />
-    <Compile Include="Controls\UnstyledButton.cs" />
     <Compile Include="Utilities\EntityContainer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\PlayIcon.png" />
-    <Resource Include="Images\PlayIconLight.png" />
     <Content Include="..\Shared\Libraries\DotNetZip\Changes.txt">
       <Link>Libraries\DotNetZip\Changes.txt</Link>
     </Content>
@@ -343,41 +228,12 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\VideoButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\YouTubeButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\ExtendedImage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\Popups\InputBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\Popups\ShareBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Strings.de.resx" />
     <EmbeddedResource Include="Resources\Strings.fr.resx" />
     <EmbeddedResource Include="Resources\Strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

@@ -37,7 +37,7 @@ namespace MyToolkit.Paging
 				if (IsNavigating)
 					return false; 
 
-				var page = PhoneApplication.CurrentPage as IExtendedPhoneApplicationPage;
+				var page = PhonePage.CurrentPage as IExtendedPhoneApplicationPage;
 				if (page != null)
 				{
 					SingleEvent.Register<IExtendedPhoneApplicationPage, EventArgs>(page,

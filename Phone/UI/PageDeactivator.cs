@@ -5,6 +5,7 @@ using System.Windows.Media;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using MyToolkit.Environment;
+using MyToolkit.Paging;
 using MyToolkit.Utilities;
 
 namespace MyToolkit.UI
@@ -41,7 +42,7 @@ namespace MyToolkit.UI
 		internal void DoIt(bool disablePageInteractions)
 		{
 			disableInteractions = disablePageInteractions;
-			page = PhoneApplication.CurrentPage;
+			page = PhonePage.CurrentPage;
 
             OldControl = page.Content;
             oldControlOpacity = OldControl.Opacity;

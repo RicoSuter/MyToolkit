@@ -10,7 +10,7 @@ using Microsoft.Phone.Info;
 
 // from https://blogs.msdn.com/b/ptorr/archive/2010/10/30/that-memory-thing-i-promised-you.aspx
 
-namespace MyToolkit.Media
+namespace MyToolkit.Performance
 {
 	/// <summary>
 	/// Helper class for showing current memory usage

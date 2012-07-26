@@ -6,6 +6,7 @@ using System.Windows.Media;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using MyToolkit.Environment;
+using MyToolkit.Paging;
 using MyToolkit.Utilities;
 
 namespace MyToolkit.UI.Popups
@@ -16,7 +17,7 @@ namespace MyToolkit.UI.Popups
 		{
 			var oldState = new PageDeactivator();
 
-			var page = PhoneApplication.CurrentPage; 
+			var page = PhonePage.CurrentPage; 
 			var content = page.Content; 
 			content.IsHitTestVisible = false;
 

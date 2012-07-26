@@ -2,8 +2,8 @@
 using System.Windows;
 
 #if WINDOWS_PHONE
-using Microsoft.Phone.Controls;
 using MyToolkit.Environment;
+using MyToolkit.Paging;
 
 #endif
 
@@ -14,7 +14,7 @@ namespace MyToolkit.Messaging
 #if WINDOWS_PHONE
 		public static void GoBack(GoBackMessage message)
 		{
-			var page = PhoneApplication.CurrentPage; 
+			var page = PhonePage.CurrentPage; 
 			Deployment.Current.Dispatcher.BeginInvoke(() =>
 			{
 				try
