@@ -19,7 +19,7 @@ namespace MyToolkit.Utilities
 		/// </summary>
 		public static void RegisterBackKey(Page page)
 		{
-			var del = new TypedEventHandler<CoreDispatcher, AcceleratorKeyEventArgs>(
+			var callback = new TypedEventHandler<CoreDispatcher, AcceleratorKeyEventArgs>(
 				delegate(CoreDispatcher sender, AcceleratorKeyEventArgs args)
 				{
 					if (!args.Handled && args.VirtualKey == VirtualKey.Back && args.EventType == CoreAcceleratorKeyEventType.KeyUp)
@@ -33,12 +33,12 @@ namespace MyToolkit.Utilities
 					}
 				});
 
-			page.Dispatcher.AcceleratorKeyActivated += del;
+			page.Dispatcher.AcceleratorKeyActivated += callback;
 
-			SingleEvent.Register(page, (p, h) => p.Unloaded += h, (p, h) => p.Unloaded -= h, (o, a) =>
-			{
-				page.Dispatcher.AcceleratorKeyActivated -= del;
-			});
+			SingleEvent.Register(page,
+				(p, h) => p.Unloaded += h,
+				(p, h) => p.Unloaded -= h,
+				(o, a) => { page.Dispatcher.AcceleratorKeyActivated -= callback; });
 		}
 
 		/// <summary>
