@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using MyToolkit.Messaging;
 using MyToolkit.Storage;
 
 #if WINDOWS_PHONE && !LIGHT
@@ -85,7 +86,7 @@ namespace MyToolkit.Utilities
 				return IdentityGenerator.Generate(i => collection.Any(c => c.ID == i));
 		}
 
-#if WINDOWS_PHONE && !LIGHT
+#if WINDOWS_PHONE
 		/// <summary>
 		/// Call this method in OnBackKeyPress
 		/// </summary>
