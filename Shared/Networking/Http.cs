@@ -211,8 +211,11 @@ namespace MyToolkit.Networking
 				if (req.ContentType != null)
 					request.ContentType = req.ContentType;
 
-				foreach (var item in req.Header)
-					request.Headers[item.Key] = item.Value;
+				if (req.Header.Count > 0)
+				{
+					foreach (var item in req.Header)
+						request.Headers[item.Key] = item.Value;
+				}
 
 #if USE_GZIP
 				if (req.RequestGZIP)
@@ -286,8 +289,11 @@ namespace MyToolkit.Networking
 				if (req.ContentType != null)
 					request.ContentType = req.ContentType;
 
-				foreach (var item in req.Header)
-					request.Headers[item.Key] = item.Value;
+				if (req.Header.Count > 0)
+				{
+					foreach (var item in req.Header)
+						request.Headers[item.Key] = item.Value;
+				}
 
 #if USE_GZIP
 				if (req.RequestGZIP)

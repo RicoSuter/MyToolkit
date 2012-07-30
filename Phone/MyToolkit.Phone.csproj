@@ -33,7 +33,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>Bin\Release\Phone\</OutputPath>
+    <OutputPath>..\- Output\Phone\</OutputPath>
     <DefineConstants>SILVERLIGHT;WINDOWS_PHONE;USE_GZIP;LIGHT</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
