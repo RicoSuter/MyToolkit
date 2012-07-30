@@ -29,5 +29,19 @@ namespace MyToolkit.Storage
 			return IsolatedStorageSettings.ApplicationSettings.Contains(key) && 
 				IsolatedStorageSettings.ApplicationSettings[key] is T;
 		}
+		
+		public static bool RemoveSetting(string key)
+		{
+			if (IsolatedStorageSettings.ApplicationSettings.Contains(key))
+			{
+				var result = IsolatedStorageSettings.ApplicationSettings.Remove(key);
+				if (result)
+					IsolatedStorageSettings.ApplicationSettings.Save();
+
+				return result;
+			}
+
+			return false;
+		}
 	}
 }

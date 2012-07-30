@@ -36,6 +36,7 @@ namespace MyToolkit.Networking
 		{
 			Uri = uri;
 			Query = query ?? new Dictionary<string, string>();
+			Header = new Dictionary<string, string>(); 
 			Cookies = new List<Cookie>();
 			UseCache = true;
 			Encoding = Encoding.UTF8;
@@ -58,6 +59,8 @@ namespace MyToolkit.Networking
 		public Uri Uri { get; private set; }
 		public Dictionary<string, string> Query { get; private set; }
 		public List<Cookie> Cookies { get; private set; }
+		public Dictionary<string, string> Header { get; private set; }
+
 
 		public bool UseCache { get; set; }
 		public Encoding Encoding { get; set; }

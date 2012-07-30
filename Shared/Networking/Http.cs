@@ -209,7 +209,10 @@ namespace MyToolkit.Networking
 
 				request.Method = "GET";
 				if (req.ContentType != null)
-					request.ContentType = req.ContentType; 
+					request.ContentType = req.ContentType;
+
+				foreach (var item in req.Header)
+					request.Headers[item.Key] = item.Value;
 
 #if USE_GZIP
 				if (req.RequestGZIP)
@@ -281,7 +284,10 @@ namespace MyToolkit.Networking
 
 				request.Method = "POST";
 				if (req.ContentType != null)
-					request.ContentType = req.ContentType; 
+					request.ContentType = req.ContentType;
+
+				foreach (var item in req.Header)
+					request.Headers[item.Key] = item.Value;
 
 #if USE_GZIP
 				if (req.RequestGZIP)

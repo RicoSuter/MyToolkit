@@ -29,5 +29,20 @@ namespace MyToolkit.Storage
 			var settings = roaming ? ApplicationData.Current.RoamingSettings : ApplicationData.Current.LocalSettings;
 			return settings.Values.ContainsKey(key) && settings.Values[key] is T;
 		}
+		
+		public static bool RemoveSetting(string key, bool roaming = true)
+		{
+			var settings = roaming ? ApplicationData.Current.RoamingSettings : ApplicationData.Current.LocalSettings;
+			if (settings.Contains(key))
+			{
+				var result = settings.Remove(key);
+				if (result)
+					settings.Save();
+
+				return result;
+			}
+
+			return false;
+		}
 	}
 }
