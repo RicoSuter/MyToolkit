@@ -22,9 +22,8 @@ namespace MyToolkit.UI.Popups
 			content.IsHitTestVisible = false;
 
 			var popup = new System.Windows.Controls.Primitives.Popup { Child = (UIElement) control };
-			popup.Width = ((FrameworkElement) content).ActualWidth;
-			
-			((FrameworkElement) control).Width = ((FrameworkElement) content).ActualWidth;
+			popup.Width = 480;//((FrameworkElement) content).ActualWidth;
+			((FrameworkElement) control).Width = 480; //((FrameworkElement)content).ActualWidth;
 
 			var color = ColorUtility.RemoveAlpha(
 				PhoneApplication.IsDarkTheme ? ColorUtility.FromHex("#22FFFFFF") : 
