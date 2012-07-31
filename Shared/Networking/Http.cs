@@ -469,8 +469,6 @@ namespace MyToolkit.Networking
 						}
 					}
 				}
-				if (action != null)
-					action(resp);
 			}
 			catch (Exception e)
 			{
@@ -491,7 +489,11 @@ namespace MyToolkit.Networking
 				resp.Exception = e; 
 				if (action != null)
 					action(resp);
+				return;
 			}
+
+			if (action != null)
+				action(resp);
 		}
 
 		private static string GetQueryString(Dictionary<string, string> query)
