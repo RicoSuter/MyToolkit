@@ -167,12 +167,15 @@ namespace MyToolkit.Multimedia
 					if (completed != null)
 						completed(null);
 
-					var launcher = new MediaPlayerLauncher
+					if (entry != null)
 					{
-						Controls = MediaPlaybackControls.All,
-						Media = entry.Uri
-					};
-					launcher.Show();
+						 var launcher = new MediaPlayerLauncher
+						 {
+							 Controls = MediaPlaybackControls.All,
+							 Media = entry.Uri
+						 };
+						 launcher.Show();
+					}
 			    }
 			});
 		}
