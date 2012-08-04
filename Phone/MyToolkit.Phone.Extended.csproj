@@ -139,6 +139,7 @@
     <Compile Include="..\Shared\UI\TextBinding.cs">
       <Link>UI\TextBinding.cs</Link>
     </Compile>
+    <Compile Include="Controls\ExtendedListPicker.cs" />
     <Compile Include="Controls\VideoButton.xaml.cs">
       <DependentUpon>VideoButton.xaml</DependentUpon>
     </Compile>
@@ -226,7 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="MyToolkit.Phone.csproj">
-      <Project>{05B68BDA-DB8E-41EC-8C84-05F435A61F36}</Project>
+      <Project>{FC75D593-3AA7-4C47-B7E2-64B791158BA4}</Project>
       <Name>MyToolkit.Phone</Name>
     </ProjectReference>
   </ItemGroup>
