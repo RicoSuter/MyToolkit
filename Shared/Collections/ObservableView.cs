@@ -318,8 +318,15 @@ namespace MyToolkit.Collections
 		{
 			var old = TrackCollectionChanges; 
 			TrackCollectionChanges = false;
-			foreach (var i in collection)
-				Add(i);
+
+			if (Items is ExtendedObservableCollection<T>)
+				((ExtendedObservableCollection<T>)Items).AddRange(collection);
+			else
+			{
+				foreach (var i in collection)
+					Add(i);
+			}
+
 			TrackCollectionChanges = old; 
 		}
 

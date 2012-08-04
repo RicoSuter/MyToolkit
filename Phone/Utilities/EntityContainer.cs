@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using MyToolkit.Collections;
 using MyToolkit.Messaging;
 using MyToolkit.Storage;
 
@@ -20,8 +21,8 @@ namespace MyToolkit.Utilities
 	public class EntityContainer<T>
 		where T : class, IEntity
 	{
-		private readonly ObservableCollection<T> collection = new ObservableCollection<T>();
-		public ObservableCollection<T> Collection { get { return collection; } }
+		private readonly ExtendedObservableCollection<T> collection = new ExtendedObservableCollection<T>();
+		public ExtendedObservableCollection<T> Collection { get { return collection; } }
 
 		public T Get(string idAsString)
 		{
@@ -36,9 +37,7 @@ namespace MyToolkit.Utilities
 
 		public void Initialize(IEnumerable<T> items)
 		{
-			Collection.Clear();
-			foreach (var i in items)
-				Collection.Add(i);
+			Collection.Initialize(items);
 		}
 
 		public void Clear()
