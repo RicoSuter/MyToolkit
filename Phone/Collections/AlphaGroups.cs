@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -78,7 +80,7 @@ namespace MyToolkit.Collections
 				var newIndex = 0;
 				foreach (var i in group)
 				{
-					if (i.ToString().CompareTo(newTitle) > 0)
+					if (String.Compare(i.ToString(), newTitle, StringComparison.Ordinal) > 0)
 						break;
 					newIndex++;
 				}

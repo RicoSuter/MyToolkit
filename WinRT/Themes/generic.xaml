@@ -1,7 +1,8 @@
 <ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
 					xmlns:controls="using:MyToolkit.Controls" 
-					xmlns:converters="using:MyToolkit.Converters">
+					xmlns:converters="using:MyToolkit.Converters" xmlns:primitives="using:Microsoft.Phone.Controls.Primitives"
+                    xmlns:Controls="using:Microsoft.Phone.Controls">
 
 	<converters:NotConverter x:Key="nc" />
 	<converters:VisibilityConverter x:Key="vc" />

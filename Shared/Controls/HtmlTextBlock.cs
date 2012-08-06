@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using MyToolkit.Controls.HtmlTextBlockImplementation;
-using MyToolkit.UI.UIExtensionMethods;
 
 #if METRO
+using MyToolkit.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+using Windows.UI;
 #else
 using System.Windows;
 using System.Windows.Controls;
@@ -13,7 +15,7 @@ using System.Windows.Controls;
 
 namespace MyToolkit.Controls
 {
-	public class HtmlTextBlock : ExtendedListBox, IHtmlTextBlock
+	public class HtmlTextBlock : ItemsControl, IHtmlTextBlock
 	{
 		public IDictionary<string, IControlGenerator> Generators { get { return generators; } }
 		public List<ISizeDependentControl> SizeDependentControls { get; private set; }
