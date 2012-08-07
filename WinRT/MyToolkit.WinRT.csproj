@@ -228,6 +228,7 @@
     <Compile Include="Animations\Flipping.cs" />
     <Compile Include="Controls\ExtendedTextBox.cs" />
     <Compile Include="Controls\FadingImage.cs" />
+    <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\LongListView.cs" />
     <Compile Include="Controls\NavigationListView.cs" />
     <Compile Include="Controls\Pivot.cs" />
@@ -246,7 +247,6 @@
       <DependentUpon>DatePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ExtendedListBox.cs" />
-    <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\NavigationList.cs" />
     <Compile Include="Controls\RolloverButton.cs" />
     <Compile Include="Environment\Device.cs" />
@@ -257,6 +257,7 @@
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="Controls\PageFrame.cs" />
     <Compile Include="UI\PopupHelper.cs" />
+    <Compile Include="UI\TiltEffect.cs" />
     <Compile Include="Utilities\PageUtilities.cs" />
     <Compile Include="Utilities\TaskHelper.cs" />
     <Compile Include="Utilities\Thread.cs" />
