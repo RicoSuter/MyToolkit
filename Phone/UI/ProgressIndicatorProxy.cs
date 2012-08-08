@@ -1,24 +1,13 @@
-﻿//http://www.codeproject.com/Articles/246355/Binding-the-WP7-ProgressIndicator-in-XAML?display=Print
-
-/*
-
- <mytoolkit:ProgressIndicatorProxy IsIndeterminate="True" IsVisible="{Binding IsLoading}" />
- 
- <Grid x:Name="LayoutRoot" Background="Transparent">
-	 <Grid.RowDefinitions>...</Grid.RowDefinitions>
-    <mytoolkit:ProgressIndicatorProxy IsIndeterminate="{Binding Indeterminate}" Text="{Binding Message}" Value="{Binding Progress}" />
+﻿/*
+<Grid x:Name="LayoutRoot" Background="Transparent">
+	<Grid.RowDefinitions>...</Grid.RowDefinitions>
+    <mytoolkit:ProgressIndicatorProxy IsIndeterminate="True" IsVisible="{Binding IsLoading}" />
 </Grid>
- 
  */
 
-using System;
 using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using MyToolkit.Messaging;
 using MyToolkit.Paging;
 
 namespace MyToolkit.UI
@@ -28,24 +17,15 @@ namespace MyToolkit.UI
 		public ProgressIndicatorProxy() 
 		{
 			Loaded += OnLoaded;
-
 		}
 	
-		bool loaded;
+		private bool loaded;
+		private ProgressIndicator progressIndicator;
 		void OnLoaded(object sender, RoutedEventArgs e)
 		{
-			if (loaded) 
+			if (loaded || DesignerProperties.IsInDesignTool) 
 				return;
-			
-			Attach();
 			loaded = true;
-		}
-
-		private ProgressIndicator progressIndicator;
-		public void Attach()
-		{
-			if (DesignerProperties.IsInDesignTool)
-				return;
 
 			progressIndicator = SystemTray.ProgressIndicator ?? new ProgressIndicator();
 			progressIndicator.Text = Text;
@@ -53,9 +33,8 @@ namespace MyToolkit.UI
 			progressIndicator.IsIndeterminate = IsIndeterminate;
 			progressIndicator.Value = Value; 
 			SystemTray.SetProgressIndicator(PhonePage.CurrentPage, progressIndicator);
+	
 		}
-
-		#region Dependency Properties
 
 		public static readonly DependencyProperty IsIndeterminateProperty = DependencyProperty.RegisterAttached("IsIndeterminate",
 			typeof(bool), typeof(ProgressIndicatorProxy), new PropertyMetadata(false, OnIsIndeterminateChanged));
@@ -64,10 +43,7 @@ namespace MyToolkit.UI
 		{
 			var ctrl = (ProgressIndicatorProxy)obj;
 			if (ctrl.progressIndicator != null)
-			{
 				ctrl.progressIndicator.IsIndeterminate = ctrl.IsIndeterminate;
-				//SystemTray.SetProgressIndicator(PhonePage.CurrentPage, ctrl.progressIndicator);
-			}
 		}
 
 		public bool IsIndeterminate
@@ -83,10 +59,7 @@ namespace MyToolkit.UI
 		{
 			var ctrl = (ProgressIndicatorProxy)obj;
 			if (ctrl.progressIndicator != null)
-			{
 				ctrl.progressIndicator.IsVisible = ctrl.IsVisible;
-				//SystemTray.SetProgressIndicator(PhonePage.CurrentPage, ctrl.progressIndicator);
-			}
 		}
 
 		public bool IsVisible
@@ -102,10 +75,7 @@ namespace MyToolkit.UI
 		{
 			var ctrl = (ProgressIndicatorProxy)obj;
 			if (ctrl.progressIndicator != null)
-			{
 				ctrl.progressIndicator.Text = ctrl.Text;
-				//SystemTray.SetProgressIndicator(PhonePage.CurrentPage, ctrl.progressIndicator);
-			}
 		}
 
 		public string Text
@@ -121,10 +91,7 @@ namespace MyToolkit.UI
 		{
 			var ctrl = (ProgressIndicatorProxy)obj;
 			if (ctrl.progressIndicator != null)
-			{
 				ctrl.progressIndicator.Value = ctrl.Value;
-				//SystemTray.SetProgressIndicator(PhonePage.CurrentPage, ctrl.progressIndicator);
-			}
 		}
 
 		public double Value
@@ -132,7 +99,5 @@ namespace MyToolkit.UI
 			get { return (double)GetValue(ValueProperty); }
 			set { SetValue(ValueProperty, value); }
 		}
-
-		#endregion
 	}
 }
