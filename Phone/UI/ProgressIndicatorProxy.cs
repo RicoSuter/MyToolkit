@@ -18,7 +18,7 @@ namespace MyToolkit.UI
 		{
 			Loaded += OnLoaded;
 		}
-	
+
 		private bool loaded;
 		private ProgressIndicator progressIndicator;
 		void OnLoaded(object sender, RoutedEventArgs e)
@@ -27,13 +27,17 @@ namespace MyToolkit.UI
 				return;
 			loaded = true;
 
-			progressIndicator = SystemTray.ProgressIndicator ?? new ProgressIndicator();
+			progressIndicator = SystemTray.ProgressIndicator;
+			if (progressIndicator == null)
+			{
+				progressIndicator = new ProgressIndicator();
+				SystemTray.SetProgressIndicator(PhonePage.CurrentPage, progressIndicator);
+			}
+
 			progressIndicator.Text = Text;
 			progressIndicator.IsVisible = IsVisible;
 			progressIndicator.IsIndeterminate = IsIndeterminate;
 			progressIndicator.Value = Value; 
-			SystemTray.SetProgressIndicator(PhonePage.CurrentPage, progressIndicator);
-	
 		}
 
 		public static readonly DependencyProperty IsIndeterminateProperty = DependencyProperty.RegisterAttached("IsIndeterminate",
