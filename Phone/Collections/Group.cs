@@ -1,14 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-
-#if METRO
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media;
-#else
 using System.Windows;
 using System.Windows.Media;
-#endif
 
 namespace MyToolkit.Collections
 {

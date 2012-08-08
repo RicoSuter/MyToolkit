@@ -11,156 +11,126 @@
  
  */
 
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using MyToolkit.Messaging;
+using MyToolkit.Paging;
 
 namespace MyToolkit.UI
 {
 	public class ProgressIndicatorProxy : FrameworkElement
 	{
-		bool loaded;
-
 		public ProgressIndicatorProxy() 
 		{
 			Loaded += OnLoaded;
-		}
 
+		}
+	
+		bool loaded;
 		void OnLoaded(object sender, RoutedEventArgs e)
 		{
-			if (loaded)
-			{
+			if (loaded) 
 				return;
-			}
-
+			
 			Attach();
-
 			loaded = true;
 		}
 
+		private ProgressIndicator progressIndicator;
 		public void Attach()
 		{
 			if (DesignerProperties.IsInDesignTool)
-			{
 				return;
-			}
 
-			var page = (PhoneApplicationPage)((PhoneApplicationFrame)Application.Current.RootVisual).Content; //this.Parent.GetVisualAncestors<PhoneApplicationPage>().First();
-
-			var progressIndicator = SystemTray.ProgressIndicator;
-			if (progressIndicator != null)
-			{
-				return;
-			}
-
-			progressIndicator = new ProgressIndicator();
-
-			SystemTray.SetProgressIndicator(page, progressIndicator);
-
-			Binding binding = new Binding("IsIndeterminate") { Source = this };
-			BindingOperations.SetBinding(
-				progressIndicator, ProgressIndicator.IsIndeterminateProperty, binding);
-
-			binding = new Binding("IsVisible") { Source = this };
-			BindingOperations.SetBinding(
-				progressIndicator, ProgressIndicator.IsVisibleProperty, binding);
-
-			binding = new Binding("Text") { Source = this };
-			BindingOperations.SetBinding(
-				progressIndicator, ProgressIndicator.TextProperty, binding);
-
-			binding = new Binding("Value") { Source = this };
-			BindingOperations.SetBinding(
-				progressIndicator, ProgressIndicator.ValueProperty, binding);
+			progressIndicator = SystemTray.ProgressIndicator ?? new ProgressIndicator();
+			progressIndicator.Text = Text;
+			progressIndicator.IsVisible = IsVisible;
+			progressIndicator.IsIndeterminate = IsIndeterminate;
+			progressIndicator.Value = Value; 
+			SystemTray.SetProgressIndicator(PhonePage.CurrentPage, progressIndicator);
 		}
 
-		#region IsIndeterminate
+		#region Dependency Properties
 
-		public static readonly DependencyProperty IsIndeterminateProperty
-			= DependencyProperty.RegisterAttached(
-				"IsIndeterminate",
-				typeof(bool),
-				typeof(ProgressIndicatorProxy), new PropertyMetadata(false));
+		public static readonly DependencyProperty IsIndeterminateProperty = DependencyProperty.RegisterAttached("IsIndeterminate",
+			typeof(bool), typeof(ProgressIndicatorProxy), new PropertyMetadata(false, OnIsIndeterminateChanged));
+
+		private static void OnIsIndeterminateChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+		{
+			var ctrl = (ProgressIndicatorProxy)obj;
+			if (ctrl.progressIndicator != null)
+			{
+				ctrl.progressIndicator.IsIndeterminate = ctrl.IsIndeterminate;
+				//SystemTray.SetProgressIndicator(PhonePage.CurrentPage, ctrl.progressIndicator);
+			}
+		}
 
 		public bool IsIndeterminate
 		{
-			get
-			{
-				return (bool)GetValue(IsIndeterminateProperty);
-			}
-			set
-			{
-				SetValue(IsIndeterminateProperty, value);
-			}
+			get { return (bool)GetValue(IsIndeterminateProperty); }
+			set { SetValue(IsIndeterminateProperty, value); }
 		}
 
-		#endregion
+		public static readonly DependencyProperty IsVisibleProperty = DependencyProperty.RegisterAttached("IsVisible",
+			typeof(bool), typeof(ProgressIndicatorProxy), new PropertyMetadata(true, OnIsVisibleChanged));
 
-		#region IsVisible
-
-		public static readonly DependencyProperty IsVisibleProperty
-			= DependencyProperty.RegisterAttached(
-				"IsVisible",
-				typeof(bool),
-				typeof(ProgressIndicatorProxy), new PropertyMetadata(true));
+		private static void OnIsVisibleChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+		{
+			var ctrl = (ProgressIndicatorProxy)obj;
+			if (ctrl.progressIndicator != null)
+			{
+				ctrl.progressIndicator.IsVisible = ctrl.IsVisible;
+				//SystemTray.SetProgressIndicator(PhonePage.CurrentPage, ctrl.progressIndicator);
+			}
+		}
 
 		public bool IsVisible
 		{
-			get
-			{
-				return (bool)GetValue(IsVisibleProperty);
-			}
-			set
-			{
-				SetValue(IsVisibleProperty, value);
-			}
+			get { return (bool)GetValue(IsVisibleProperty); }
+			set { SetValue(IsVisibleProperty, value); }
 		}
 
-		#endregion
+		public static readonly DependencyProperty TextProperty = DependencyProperty.RegisterAttached("Text", 
+			typeof(string), typeof(ProgressIndicatorProxy), new PropertyMetadata(string.Empty, OnTextChanged));
 
-		#region Text
-
-		public static readonly DependencyProperty TextProperty
-			= DependencyProperty.RegisterAttached(
-				"Text",
-				typeof(string),
-				typeof(ProgressIndicatorProxy), new PropertyMetadata(string.Empty));
+		private static void OnTextChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+		{
+			var ctrl = (ProgressIndicatorProxy)obj;
+			if (ctrl.progressIndicator != null)
+			{
+				ctrl.progressIndicator.Text = ctrl.Text;
+				//SystemTray.SetProgressIndicator(PhonePage.CurrentPage, ctrl.progressIndicator);
+			}
+		}
 
 		public string Text
 		{
-			get
+			get { return (string)GetValue(TextProperty); }
+			set { SetValue(TextProperty, value); }
+		}
+
+		public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached("Value",
+			typeof(double), typeof(ProgressIndicatorProxy), new PropertyMetadata(0.0, OnValueChanged));
+
+		private static void OnValueChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+		{
+			var ctrl = (ProgressIndicatorProxy)obj;
+			if (ctrl.progressIndicator != null)
 			{
-				return (string)GetValue(TextProperty);
-			}
-			set
-			{
-				SetValue(TextProperty, value);
+				ctrl.progressIndicator.Value = ctrl.Value;
+				//SystemTray.SetProgressIndicator(PhonePage.CurrentPage, ctrl.progressIndicator);
 			}
 		}
 
-		#endregion
-
-		#region Value
-
-		public static readonly DependencyProperty ValueProperty
-			= DependencyProperty.RegisterAttached(
-				"Value",
-				typeof(double),
-				typeof(ProgressIndicatorProxy), new PropertyMetadata(0.0));
-
 		public double Value
 		{
-			get
-			{
-				return (double)GetValue(ValueProperty);
-			}
-			set
-			{
-				SetValue(ValueProperty, value);
-			}
+			get { return (double)GetValue(ValueProperty); }
+			set { SetValue(ValueProperty, value); }
 		}
 
 		#endregion

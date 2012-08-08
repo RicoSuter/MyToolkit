@@ -131,6 +131,9 @@
     <Compile Include="..\shared\messaging\GoBackMessage.cs">
       <Link>Messaging\GoBackMessage.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Messaging\LoadingMessage.cs">
+      <Link>Messaging\LoadingMessage.cs</Link>
+    </Compile>
     <Compile Include="..\shared\messaging\Messenger.cs">
       <Link>Messaging\Messenger.cs</Link>
     </Compile>
