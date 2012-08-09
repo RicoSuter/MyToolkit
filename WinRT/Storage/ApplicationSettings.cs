@@ -33,8 +33,14 @@ namespace MyToolkit.Storage
 		public static bool RemoveSetting(string key, bool roaming = true)
 		{
 			var settings = roaming ? ApplicationData.Current.RoamingSettings : ApplicationData.Current.LocalSettings;
-			if (settings.Values.ContainsKey(key))
-				return settings.Values.Remove(key);
+			if (settings.Contains(key))
+			{
+				var result = settings.Remove(key);
+				if (result)
+					settings.Save();
+
+				return result;
+			}
 
 			return false;
 		}
