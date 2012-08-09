@@ -55,7 +55,7 @@ namespace MyToolkit.Controls
 		protected override void OnDoubleTap(System.Windows.Input.GestureEventArgs e)
 		{
 			e.Handled = true;
-			ResetImagePosition();
+			ResetImagePosition(e.GetPosition(this));
 			base.OnDoubleTap(e);
 		}
 
@@ -234,17 +234,27 @@ namespace MyToolkit.Controls
 		/// <summary>
 		/// Resets the zoom to its original scale and position
 		/// </summary>
-		private void ResetImagePosition()
+		/// <param name="point"> </param>
+		private void ResetImagePosition(Point point)
 		{
 			// TODO animate
 			if (TotalImageScale == 1 && ImagePosition.X == 0 && ImagePosition.Y == 0)
 			{
 				TotalImageScale = MaxZoomFactor;
 
-				var width = content.ActualWidth * MaxZoomFactor;
-				var height = content.ActualHeight * MaxZoomFactor;
+				var width = point.X * MaxZoomFactor;
+				if (width > content.ActualWidth * MaxZoomFactor - ActualWidth / 2)
+					width = content.ActualWidth * MaxZoomFactor - ActualWidth / 2;
+				if (width < ActualHeight / 2)
+					width = ActualWidth / 2;
 
-				ImagePosition = new Point((width / 2 - ActualWidth / 2) * -1, (height / 2 - ActualHeight / 2) * -1);
+				var height = point.Y * MaxZoomFactor;
+				if (height > content.ActualHeight * MaxZoomFactor - ActualHeight / 2)
+					height = content.ActualHeight * MaxZoomFactor - ActualHeight / 2;
+				if (height < ActualHeight / 2)
+					height = ActualHeight/2;
+
+				ImagePosition = new Point((width - ActualWidth / 2) * -1, (height - ActualHeight / 2) * -1);
 			}
 			else // reset
 			{
