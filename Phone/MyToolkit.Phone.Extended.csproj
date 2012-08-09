@@ -140,6 +140,8 @@
       <Link>UI\TextBinding.cs</Link>
     </Compile>
     <Compile Include="Controls\ExtendedListPicker.cs" />
+    <Compile Include="Controls\PanAndZoomImage.cs" />
+    <Compile Include="Controls\PanAndZoomViewer.cs" />
     <Compile Include="Controls\VideoButton.xaml.cs">
       <DependentUpon>VideoButton.xaml</DependentUpon>
     </Compile>

@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
 					xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                    xmlns:Controls="clr-namespace:MyToolkit.Controls">
+                    xmlns:Controls="clr-namespace:MyToolkit.Controls" xmlns:Media="clr-namespace:MyToolkit.Media">
 
 	<Style TargetType="Controls:WatermarkedTextBox">
 		<Setter Property="Template">
@@ -98,5 +98,36 @@
         <Setter Property="Padding" Value="0,0,0,0"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     </Style>
+
+	<Style TargetType="Controls:PanAndZoomViewer">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Controls:PanAndZoomViewer">
+					<ContentPresenter x:Name="content">
+						<ContentPresenter.RenderTransform>
+							<CompositeTransform ScaleX="1" ScaleY="1" TranslateX="0" TranslateY="0"/>
+						</ContentPresenter.RenderTransform>
+					</ContentPresenter>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style TargetType="Controls:PanAndZoomImage">
+		<Setter Property="Stretch" Value="UniformToFill"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Controls:PanAndZoomImage">
+					<Controls:PanAndZoomViewer>
+						<Border Background="{StaticResource PhoneDisabledBrush}" x:Name="content">
+							<Image Media:ImageHelper.Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Source}" 
+								   Stretch="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Stretch}">
+							</Image>
+						</Border>
+					</Controls:PanAndZoomViewer>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 </ResourceDictionary>
   

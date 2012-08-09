@@ -65,6 +65,9 @@
     <Compile Include="..\shared\collections\ObservableView.cs">
       <Link>Collections\ObservableView.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Converters\ControlClippingConverter.cs">
+      <Link>Converters\ControlClippingConverter.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
     </Compile>
