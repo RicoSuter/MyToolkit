@@ -113,6 +113,12 @@
     <Compile Include="..\Shared\Controls\NavigationListEventArgs.cs">
       <Link>Controls\NavigationListEventArgs.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Controls\PanAndZoomImage.cs">
+      <Link>Controls\PanAndZoomImage.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\PanAndZoomViewer.cs">
+      <Link>Controls\PanAndZoomViewer.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
       <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>
     </Compile>
@@ -140,8 +146,6 @@
       <Link>UI\TextBinding.cs</Link>
     </Compile>
     <Compile Include="Controls\ExtendedListPicker.cs" />
-    <Compile Include="Controls\PanAndZoomImage.cs" />
-    <Compile Include="Controls\PanAndZoomViewer.cs" />
     <Compile Include="Controls\VideoButton.xaml.cs">
       <DependentUpon>VideoButton.xaml</DependentUpon>
     </Compile>
