@@ -8,7 +8,7 @@ namespace MyToolkit.Paging
     {
 		protected override IApplicationBarMenuItem Create()
 		{
-			return new ApplicationBarIconButton();
+			return new ApplicationBarIconButton { Text = "-" };
 		}
 
 		protected override void OnItemAdded(IApplicationBar applicationBar)

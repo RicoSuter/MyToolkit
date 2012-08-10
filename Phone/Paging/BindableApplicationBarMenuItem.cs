@@ -18,7 +18,7 @@ namespace MyToolkit.Paging
 
 		protected virtual IApplicationBarMenuItem Create()
 		{
-			return new ApplicationBarMenuItem();
+			return new ApplicationBarMenuItem { Text = "-" };
 		}
 
 		protected virtual void OnItemAdded(IApplicationBar applicationBar)

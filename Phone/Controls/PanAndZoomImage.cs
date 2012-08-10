@@ -30,8 +30,10 @@ namespace MyToolkit.Controls
 			set { SetValue(StretchProperty, value); }
 		}
 
+		// TODO: default set max zoom factor to image resolution
+
 		public static readonly DependencyProperty MaxZoomFactorProperty =
-			DependencyProperty.Register("MaxZoomFactor", typeof (double), typeof (PanAndZoomImage), new PropertyMetadata(default(double)));
+			DependencyProperty.Register("MaxZoomFactor", typeof (double), typeof (PanAndZoomImage), new PropertyMetadata(5.0));
 
 		public double MaxZoomFactor
 		{
