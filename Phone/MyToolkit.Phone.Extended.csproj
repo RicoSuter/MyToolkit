@@ -146,6 +146,10 @@
       <DependentUpon>VideoButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\NativeLongListSelector.cs" />
+    <Compile Include="Paging\BindableApplicationBar.cs" />
+    <Compile Include="Paging\BindableApplicationBarIconButton.cs" />
+    <Compile Include="Paging\BindableApplicationBarItemCollection.cs" />
+    <Compile Include="Paging\BindableApplicationBarMenuItem.cs" />
     <Compile Include="Paging\IExtendedPhoneApplicationPage.cs" />
     <Compile Include="Paging\NavigationState.cs" />
     <Compile Include="Paging\PhonePage.cs" />
