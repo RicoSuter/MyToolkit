@@ -1,6 +1,13 @@
 ﻿using System;
+
+#if METRO
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Data;
+
+#else
 using System.Windows;
 using System.Windows.Data;
+#endif 
 
 namespace MyToolkit.Utilities
 {
@@ -30,13 +37,14 @@ namespace MyToolkit.Utilities
 			}
 		}
 
-		public static BindingExpressionBase Register(FrameworkElement obj, DependencyProperty property, Action<object, object> changed)
+		public static void Register(FrameworkElement obj, DependencyProperty property, Action<object, object> changed)
 		{
 			var helper = new Helper(obj, changed, obj.GetValue(property));
-			var binding = new Binding("Property");
+			var binding = new Binding();
+			binding.Path = new PropertyPath("Property");
 			binding.Source = helper;
 			binding.Mode = BindingMode.TwoWay;
-			return obj.SetBinding(property, binding);
+			obj.SetBinding(property, binding);
 		}
 	}
 }
