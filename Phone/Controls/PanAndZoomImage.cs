@@ -2,6 +2,8 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using MyToolkit.Utilities;
 
 namespace MyToolkit.Controls
 {
@@ -11,7 +13,34 @@ namespace MyToolkit.Controls
 		{
 			DefaultStyleKey = typeof(PanAndZoomImage);
 		}
+
+		private Image image;
+		public override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+
+			image = (Image)GetTemplateChild("image");
+			image.IsHitTestVisible = false;
+
+			DependencyPropertyChangedEvent.Register(image, Image.SourceProperty, UpdateMaxZoomFactor);
+			SizeChanged += delegate { UpdateMaxZoomFactor(null, null); };
+		}
 		
+		private void UpdateMaxZoomFactor(object sender, object value)
+		{
+			if (AutomaticZoomFactor && ActualHeight > 0 && ActualWidth > 0)
+			{
+				var bitmap = image.Source as BitmapImage;
+				if (bitmap != null)
+				{
+					var horizontalZoom = bitmap.PixelWidth / ActualWidth;
+					var verticalZoom = bitmap.PixelHeight / ActualHeight;
+
+					MaxZoomFactor = horizontalZoom > verticalZoom ? horizontalZoom : verticalZoom;
+				}
+			}
+		}
+
 		public static readonly DependencyProperty SourceProperty =
 			DependencyProperty.Register("Source", typeof(Uri), typeof(PanAndZoomImage), new PropertyMetadata(default(Uri)));
 
@@ -30,8 +59,6 @@ namespace MyToolkit.Controls
 			set { SetValue(StretchProperty, value); }
 		}
 
-		// TODO: default set max zoom factor to image resolution
-
 		public static readonly DependencyProperty MaxZoomFactorProperty =
 			DependencyProperty.Register("MaxZoomFactor", typeof (double), typeof (PanAndZoomImage), new PropertyMetadata(5.0));
 
@@ -40,5 +67,14 @@ namespace MyToolkit.Controls
 			get { return (double) GetValue(MaxZoomFactorProperty); }
 			set { SetValue(MaxZoomFactorProperty, value); }
 		}
+
+		public static readonly DependencyProperty AutomaticMaxZoomFactorProperty =
+			DependencyProperty.Register("AutomaticMaxZoomFactor", typeof (bool), typeof (PanAndZoomImage), new PropertyMetadata(true));
+
+		public bool AutomaticZoomFactor
+		{
+			get { return (bool) GetValue(AutomaticMaxZoomFactorProperty); }
+			set { SetValue(AutomaticMaxZoomFactorProperty, value); }
+		}	
 	}
 }

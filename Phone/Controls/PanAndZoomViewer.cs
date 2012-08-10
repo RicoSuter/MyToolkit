@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 
@@ -29,7 +30,7 @@ namespace MyToolkit.Controls
 			base.OnApplyTemplate();
 
 			content = (ContentPresenter)GetTemplateChild("content");
-			content.Content = Content; 
+			content.Content = Content;
 			
 			geometry = new RectangleGeometry();
 			Clip = geometry;
