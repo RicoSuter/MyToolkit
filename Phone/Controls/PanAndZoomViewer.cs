@@ -55,7 +55,34 @@ namespace MyToolkit.Controls
 		protected override void OnDoubleTap(System.Windows.Input.GestureEventArgs e)
 		{
 			e.Handled = true;
-			ResetImagePosition(e.GetPosition(this));
+
+			// TODO animate
+			
+			if (TotalImageScale == 1 && ImagePosition.X == 0 && ImagePosition.Y == 0)
+			{
+				var point = e.GetPosition(this);
+				TotalImageScale = MaxZoomFactor;
+
+				var width = point.X * MaxZoomFactor;
+				if (width > content.ActualWidth * MaxZoomFactor - ActualWidth / 2)
+					width = content.ActualWidth * MaxZoomFactor - ActualWidth / 2;
+				if (width < ActualHeight / 2)
+					width = ActualWidth / 2;
+
+				var height = point.Y * MaxZoomFactor;
+				if (height > content.ActualHeight * MaxZoomFactor - ActualHeight / 2)
+					height = content.ActualHeight * MaxZoomFactor - ActualHeight / 2;
+				if (height < ActualHeight / 2)
+					height = ActualHeight / 2;
+
+				ImagePosition = new Point((width - ActualWidth / 2) * -1, (height - ActualHeight / 2) * -1);
+
+				ApplyScale();
+				ApplyPosition();
+			}
+			else
+				ResetZoomAndPosition();
+	
 			base.OnDoubleTap(e);
 		}
 
@@ -231,36 +258,10 @@ namespace MyToolkit.Controls
 			((CompositeTransform)content.RenderTransform).TranslateY = ImagePosition.Y;
 		}
 
-		/// <summary>
-		/// Resets the zoom to its original scale and position
-		/// </summary>
-		/// <param name="point"> </param>
-		private void ResetImagePosition(Point point)
+		public void ResetZoomAndPosition()
 		{
-			// TODO animate
-			if (TotalImageScale == 1 && ImagePosition.X == 0 && ImagePosition.Y == 0)
-			{
-				TotalImageScale = MaxZoomFactor;
-
-				var width = point.X * MaxZoomFactor;
-				if (width > content.ActualWidth * MaxZoomFactor - ActualWidth / 2)
-					width = content.ActualWidth * MaxZoomFactor - ActualWidth / 2;
-				if (width < ActualHeight / 2)
-					width = ActualWidth / 2;
-
-				var height = point.Y * MaxZoomFactor;
-				if (height > content.ActualHeight * MaxZoomFactor - ActualHeight / 2)
-					height = content.ActualHeight * MaxZoomFactor - ActualHeight / 2;
-				if (height < ActualHeight / 2)
-					height = ActualHeight/2;
-
-				ImagePosition = new Point((width - ActualWidth / 2) * -1, (height - ActualHeight / 2) * -1);
-			}
-			else // reset
-			{
-				TotalImageScale = 1;
-				ImagePosition = new Point(0, 0);
-			}
+			TotalImageScale = 1;
+			ImagePosition = new Point(0, 0);
 
 			ApplyScale();
 			ApplyPosition();
