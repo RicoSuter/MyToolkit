@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
 #else
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -54,6 +55,8 @@ namespace MyToolkit.Controls
 			listener.PinchDelta += OnPinchDelta;
 			listener.DragDelta += OnDragDelta;			
 #else
+
+#endif
 		}
 
 #if METRO
@@ -189,7 +192,6 @@ namespace MyToolkit.Controls
 				story.Children.Add(CreateAnimation(((CompositeTransform)content.RenderTransform).TranslateX, currentPosition.X, content.RenderTransform, "TranslateX"));
 				story.Children.Add(CreateAnimation(((CompositeTransform)content.RenderTransform).TranslateY, currentPosition.Y, content.RenderTransform, "TranslateY"));
 
-				story.Duration = new Duration(TimeSpan.FromSeconds(0.5));
 				story.Completed += delegate { isAnimating = false; };
 				story.Begin();
 			}
