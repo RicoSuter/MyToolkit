@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -53,7 +54,6 @@ namespace MyToolkit.Controls
 			base.OnManipulationStarted(e);
 		}
 
-
 		private bool isAnimating = false; 
 		protected override void OnDoubleTap(System.Windows.Input.GestureEventArgs e)
 		{
@@ -61,13 +61,11 @@ namespace MyToolkit.Controls
 				return; 
 
 			e.Handled = true;
-
-			// TODO animate
 			
-			if (TotalImageScale == 1 && ImagePosition.X == 0 && ImagePosition.Y == 0)
+			if (currentScale == 1 && currentPosition.X == 0 && currentPosition.Y == 0)
 			{
 				var point = e.GetPosition(this);
-				TotalImageScale = MaxZoomFactor;
+				currentScale = MaxZoomFactor;
 
 				var width = point.X * MaxZoomFactor;
 				if (width > content.ActualWidth * MaxZoomFactor - ActualWidth / 2)
@@ -81,7 +79,7 @@ namespace MyToolkit.Controls
 				if (height < ActualHeight / 2)
 					height = ActualHeight / 2;
 
-				ImagePosition = new Point((width - ActualWidth / 2) * -1, (height - ActualHeight / 2) * -1);
+				currentPosition = new Point((width - ActualWidth / 2) * -1, (height - ActualHeight / 2) * -1);
 
 				ApplyScaleAndPosition(true);
 			}
@@ -96,12 +94,16 @@ namespace MyToolkit.Controls
 			if (animate)
 			{
 				isAnimating = true;
-				CreateAnimation(((CompositeTransform)content.RenderTransform).ScaleX, TotalImageScale, content.RenderTransform, "ScaleX").Begin();
-				CreateAnimation(((CompositeTransform)content.RenderTransform).ScaleY, TotalImageScale, content.RenderTransform, "ScaleY").Begin();
-				CreateAnimation(((CompositeTransform)content.RenderTransform).TranslateX, ImagePosition.X, content.RenderTransform, "TranslateX").Begin();
-				var animation = CreateAnimation(((CompositeTransform)content.RenderTransform).TranslateY, ImagePosition.Y, content.RenderTransform, "TranslateY");
-				animation.Completed += delegate { isAnimating = false; };
-				animation.Begin();
+
+				var story = new Storyboard();
+				story.Children.Add(CreateAnimation(((CompositeTransform)content.RenderTransform).ScaleX, currentScale, content.RenderTransform, "ScaleX"));
+				story.Children.Add(CreateAnimation(((CompositeTransform)content.RenderTransform).ScaleY, currentScale, content.RenderTransform, "ScaleY"));
+				story.Children.Add(CreateAnimation(((CompositeTransform)content.RenderTransform).TranslateX, currentPosition.X, content.RenderTransform, "TranslateX"));
+				story.Children.Add(CreateAnimation(((CompositeTransform)content.RenderTransform).TranslateY, currentPosition.Y, content.RenderTransform, "TranslateY"));
+
+				story.Duration = new Duration(TimeSpan.FromSeconds(0.5));
+				story.Completed += delegate { isAnimating = false; };
+				story.Begin();
 			}
 			else
 			{
@@ -110,21 +112,18 @@ namespace MyToolkit.Controls
 			}
 		}
 
-		private Storyboard CreateAnimation(double from, double to, DependencyObject target, string property)
+		private Timeline CreateAnimation(double from, double to, DependencyObject target, string property)
 		{
 			var animation = new DoubleAnimation();
 			animation.From = from;
 			animation.To = to;
-			animation.EasingFunction = new ExponentialEase {EasingMode = EasingMode.EaseInOut};
 			animation.Duration = new Duration(TimeSpan.FromSeconds(0.5));
-
-			var story = new Storyboard();
-			story.Children.Add(animation);
+			animation.EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut};
 
 			Storyboard.SetTarget(animation, target);
 			Storyboard.SetTargetProperty(animation, new PropertyPath(property));
 
-			return story; 
+			return animation; 
 		}
 
 		private void UpdateGeometry()
@@ -149,64 +148,43 @@ namespace MyToolkit.Controls
 			get { return (double) GetValue(MaxZoomFactorProperty); }
 			set { SetValue(MaxZoomFactorProperty, value); }
 		}
-		
 
 
+		private double currentScale = 1d;
+		private Point currentPosition = new Point(0, 0);
 
+		private double oldScaleFactor;
+		private Point oldFinger1;
+		private Point oldFinger2;
 
-
-		// these two fields fully define the zoom state:
-		private double TotalImageScale = 1d;
-		private Point ImagePosition = new Point(0, 0);
-
-
-		private Point _oldFinger1;
-		private Point _oldFinger2;
-		private double _oldScaleFactor;
-
-
-		#region Event handlers
-
-		/// <summary>
-		/// Initializes the zooming operation
-		/// </summary>
 		private void OnPinchStarted(object sender, PinchStartedGestureEventArgs e)
 		{
 			if (isAnimating)
 				return; 
 
-			_oldFinger1 = e.GetPosition(content, 0);
-			_oldFinger2 = e.GetPosition(content, 1);
-			_oldScaleFactor = 1;
+			oldFinger1 = e.GetPosition(content, 0);
+			oldFinger2 = e.GetPosition(content, 1);
+			oldScaleFactor = 1;
 			e.Handled = true; 
 		}
 
-		/// <summary>
-		/// Computes the scaling and translation to correctly zoom around your fingers.
-		/// </summary>
 		private void OnPinchDelta(object sender, PinchGestureEventArgs e)
 		{
 			if (isAnimating)
 				return; 
 
-			var scaleFactor = e.DistanceRatio / _oldScaleFactor;
+			var scaleFactor = e.DistanceRatio / oldScaleFactor;
 			if (!IsScaleValid(scaleFactor))
 				return;
 
 			var currentFinger1 = e.GetPosition(content, 0);
 			var currentFinger2 = e.GetPosition(content, 1);
 
-			var translationDelta = GetTranslationDelta(
-				currentFinger1,
-				currentFinger2,
-				_oldFinger1,
-				_oldFinger2,
-				ImagePosition,
-				scaleFactor);
+			var translationDelta = GetTranslationDelta(currentFinger1, currentFinger2, scaleFactor);
 
-			_oldFinger1 = currentFinger1;
-			_oldFinger2 = currentFinger2;
-			_oldScaleFactor = e.DistanceRatio;
+			oldFinger1 = currentFinger1;
+			oldFinger2 = currentFinger2;
+			oldScaleFactor = e.DistanceRatio;
 
 			UpdateImageScale(scaleFactor);
 			UpdateImagePosition(translationDelta);
@@ -214,33 +192,19 @@ namespace MyToolkit.Controls
 			e.Handled = true; 
 		}
 
-		/// <summary>
-		/// Moves the image around following your finger.
-		/// </summary>
 		private void OnDragDelta(object sender, DragDeltaGestureEventArgs e)
 		{
 			if (isAnimating)
 				return; 
 
 			var translationDelta = new Point(e.HorizontalChange, e.VerticalChange);
-
 			if (IsDragValid(1, translationDelta))
 				UpdateImagePosition(translationDelta);
 
 			e.Handled = true; 
 		}
 
-		#endregion
-
-		#region Utils
-
-		/// <summary>
-		/// Computes the translation needed to keep the image centered between your fingers.
-		/// </summary>
-		private Point GetTranslationDelta(
-			Point currentFinger1, Point currentFinger2,
-			Point oldFinger1, Point oldFinger2,
-			Point currentPosition, double scaleFactor)
+		private Point GetTranslationDelta(Point currentFinger1, Point currentFinger2, double scaleFactor)
 		{
 			var newPos1 = new Point(
 			 currentFinger1.X + (currentPosition.X - oldFinger1.X) * scaleFactor,
@@ -259,88 +223,67 @@ namespace MyToolkit.Controls
 				newPos.Y - currentPosition.Y);
 		}
 
-		/// <summary>
-		/// Updates the scaling factor by multiplying the delta.
-		/// </summary>
 		private void UpdateImageScale(double scaleFactor)
 		{
-			TotalImageScale *= scaleFactor;
+			currentScale *= scaleFactor;
 			ApplyScale();
 		}
 
-		/// <summary>
-		/// Applies the computed scale to the image control.
-		/// </summary>
-		private void ApplyScale()
-		{
-			((CompositeTransform)content.RenderTransform).ScaleX = TotalImageScale;
-			((CompositeTransform)content.RenderTransform).ScaleY = TotalImageScale;
-		}
-
-		/// <summary>
-		/// Updates the image position by applying the delta.
-		/// Checks that the image does not leave empty space around its edges.
-		/// </summary>
 		private void UpdateImagePosition(Point delta)
 		{
-			var newPosition = new Point(ImagePosition.X + delta.X, ImagePosition.Y + delta.Y);
+			var newPosition = new Point(currentPosition.X + delta.X, currentPosition.Y + delta.Y);
 
 			if (newPosition.X > 0) newPosition.X = 0;
 			if (newPosition.Y > 0) newPosition.Y = 0;
 
-			if ((content.ActualWidth * TotalImageScale) + newPosition.X < content.ActualWidth)
-				newPosition.X = content.ActualWidth - (content.ActualWidth * TotalImageScale);
+			if ((content.ActualWidth * currentScale) + newPosition.X < content.ActualWidth)
+				newPosition.X = content.ActualWidth - (content.ActualWidth * currentScale);
 
-			if ((content.ActualHeight * TotalImageScale) + newPosition.Y < content.ActualHeight)
-				newPosition.Y = content.ActualHeight - (content.ActualHeight * TotalImageScale);
+			if ((content.ActualHeight * currentScale) + newPosition.Y < content.ActualHeight)
+				newPosition.Y = content.ActualHeight - (content.ActualHeight * currentScale);
 
-			ImagePosition = newPosition;
+			currentPosition = newPosition;
 
 			ApplyPosition();
 		}
 
-		/// <summary>
-		/// Applies the computed position to the image control.
-		/// </summary>
-		private void ApplyPosition()
-		{
-			((CompositeTransform)content.RenderTransform).TranslateX = ImagePosition.X;
-			((CompositeTransform)content.RenderTransform).TranslateY = ImagePosition.Y;
-		}
-
 		public void ResetZoomAndPosition(bool animate)
 		{
-			TotalImageScale = 1;
-			ImagePosition = new Point(0, 0);
+			currentScale = 1;
+			currentPosition = new Point(0, 0);
 
 			ApplyScaleAndPosition(animate);
 		}
 
-		/// <summary>
-		/// Checks that dragging by the given amount won't result in empty space around the image
-		/// </summary>
+		private void ApplyScale()
+		{
+			((CompositeTransform)content.RenderTransform).ScaleX = currentScale;
+			((CompositeTransform)content.RenderTransform).ScaleY = currentScale;
+		}
+
+		private void ApplyPosition()
+		{
+			((CompositeTransform)content.RenderTransform).TranslateX = currentPosition.X;
+			((CompositeTransform)content.RenderTransform).TranslateY = currentPosition.Y;
+		}
+
 		private bool IsDragValid(double scaleDelta, Point translateDelta)
 		{
-			if (ImagePosition.X + translateDelta.X > 0 || ImagePosition.Y + translateDelta.Y > 0)
+			if (currentPosition.X + translateDelta.X > 0 || currentPosition.Y + translateDelta.Y > 0)
 				return false;
 
-			if ((content.ActualWidth * TotalImageScale * scaleDelta) + (ImagePosition.X + translateDelta.X) < content.ActualWidth)
+			if ((content.ActualWidth * currentScale * scaleDelta) + (currentPosition.X + translateDelta.X) < content.ActualWidth)
 				return false;
 
-			if ((content.ActualHeight * TotalImageScale * scaleDelta) + (ImagePosition.Y + translateDelta.Y) < content.ActualHeight)
+			if ((content.ActualHeight * currentScale * scaleDelta) + (currentPosition.Y + translateDelta.Y) < content.ActualHeight)
 				return false;
 
 			return true;
 		}
 
-		/// <summary>
-		/// Tells if the scaling is inside the desired range
-		/// </summary>
 		private bool IsScaleValid(double scaleDelta)
 		{
-			return (TotalImageScale * scaleDelta >= 1) && (TotalImageScale * scaleDelta <= MaxZoomFactor);
+			return (currentScale * scaleDelta >= 1) && (currentScale * scaleDelta <= MaxZoomFactor);
 		}
-
-		#endregion
 	}
 }

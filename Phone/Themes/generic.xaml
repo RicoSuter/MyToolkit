@@ -118,7 +118,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="Controls:PanAndZoomImage">
-					<Controls:PanAndZoomViewer>
+					<Controls:PanAndZoomViewer MaxZoomFactor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MaxZoomFactor}">
 						<Border Background="{StaticResource PhoneDisabledBrush}" x:Name="content">
 							<Image Media:ImageHelper.Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Source}" 
 								   Stretch="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Stretch}">

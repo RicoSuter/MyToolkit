@@ -29,5 +29,14 @@ namespace MyToolkit.Controls
 			get { return (Stretch)GetValue(StretchProperty); }
 			set { SetValue(StretchProperty, value); }
 		}
+
+		public static readonly DependencyProperty MaxZoomFactorProperty =
+			DependencyProperty.Register("MaxZoomFactor", typeof (double), typeof (PanAndZoomImage), new PropertyMetadata(default(double)));
+
+		public double MaxZoomFactor
+		{
+			get { return (double) GetValue(MaxZoomFactorProperty); }
+			set { SetValue(MaxZoomFactorProperty, value); }
+		}
 	}
 }
