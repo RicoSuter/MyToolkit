@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -52,8 +53,13 @@ namespace MyToolkit.Controls
 			base.OnManipulationStarted(e);
 		}
 
+
+		private bool isAnimating = false; 
 		protected override void OnDoubleTap(System.Windows.Input.GestureEventArgs e)
 		{
+			if (isAnimating)
+				return; 
+
 			e.Handled = true;
 
 			// TODO animate
@@ -77,13 +83,48 @@ namespace MyToolkit.Controls
 
 				ImagePosition = new Point((width - ActualWidth / 2) * -1, (height - ActualHeight / 2) * -1);
 
+				ApplyScaleAndPosition(true);
+			}
+			else
+				ResetZoomAndPosition(true);
+	
+			base.OnDoubleTap(e);
+		}
+
+		private void ApplyScaleAndPosition(bool animate)
+		{
+			if (animate)
+			{
+				isAnimating = true;
+				CreateAnimation(((CompositeTransform)content.RenderTransform).ScaleX, TotalImageScale, content.RenderTransform, "ScaleX").Begin();
+				CreateAnimation(((CompositeTransform)content.RenderTransform).ScaleY, TotalImageScale, content.RenderTransform, "ScaleY").Begin();
+				CreateAnimation(((CompositeTransform)content.RenderTransform).TranslateX, ImagePosition.X, content.RenderTransform, "TranslateX").Begin();
+				var animation = CreateAnimation(((CompositeTransform)content.RenderTransform).TranslateY, ImagePosition.Y, content.RenderTransform, "TranslateY");
+				animation.Completed += delegate { isAnimating = false; };
+				animation.Begin();
+			}
+			else
+			{
 				ApplyScale();
 				ApplyPosition();
 			}
-			else
-				ResetZoomAndPosition();
-	
-			base.OnDoubleTap(e);
+		}
+
+		private Storyboard CreateAnimation(double from, double to, DependencyObject target, string property)
+		{
+			var animation = new DoubleAnimation();
+			animation.From = from;
+			animation.To = to;
+			animation.EasingFunction = new ExponentialEase {EasingMode = EasingMode.EaseInOut};
+			animation.Duration = new Duration(TimeSpan.FromSeconds(0.5));
+
+			var story = new Storyboard();
+			story.Children.Add(animation);
+
+			Storyboard.SetTarget(animation, target);
+			Storyboard.SetTargetProperty(animation, new PropertyPath(property));
+
+			return story; 
 		}
 
 		private void UpdateGeometry()
@@ -131,6 +172,9 @@ namespace MyToolkit.Controls
 		/// </summary>
 		private void OnPinchStarted(object sender, PinchStartedGestureEventArgs e)
 		{
+			if (isAnimating)
+				return; 
+
 			_oldFinger1 = e.GetPosition(content, 0);
 			_oldFinger2 = e.GetPosition(content, 1);
 			_oldScaleFactor = 1;
@@ -142,6 +186,9 @@ namespace MyToolkit.Controls
 		/// </summary>
 		private void OnPinchDelta(object sender, PinchGestureEventArgs e)
 		{
+			if (isAnimating)
+				return; 
+
 			var scaleFactor = e.DistanceRatio / _oldScaleFactor;
 			if (!IsScaleValid(scaleFactor))
 				return;
@@ -172,6 +219,9 @@ namespace MyToolkit.Controls
 		/// </summary>
 		private void OnDragDelta(object sender, DragDeltaGestureEventArgs e)
 		{
+			if (isAnimating)
+				return; 
+
 			var translationDelta = new Point(e.HorizontalChange, e.VerticalChange);
 
 			if (IsDragValid(1, translationDelta))
@@ -258,13 +308,12 @@ namespace MyToolkit.Controls
 			((CompositeTransform)content.RenderTransform).TranslateY = ImagePosition.Y;
 		}
 
-		public void ResetZoomAndPosition()
+		public void ResetZoomAndPosition(bool animate)
 		{
 			TotalImageScale = 1;
 			ImagePosition = new Point(0, 0);
 
-			ApplyScale();
-			ApplyPosition();
+			ApplyScaleAndPosition(animate);
 		}
 
 		/// <summary>
