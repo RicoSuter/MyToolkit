@@ -17,6 +17,8 @@ namespace MyToolkit.Controls
 {
 	public class PanAndZoomImage : PanAndZoomViewer
 	{
+		public event EventHandler ImageLoaded;
+
 		private Image image;
 		public PanAndZoomImage()
 		{
@@ -34,11 +36,20 @@ namespace MyToolkit.Controls
 			image = (Image)GetTemplateChild("image");
 			image.IsHitTestVisible = false;
 
-			DependencyPropertyChangedEvent.Register(image, Image.SourceProperty, UpdateMaxZoomFactor);
-			SizeChanged += delegate { UpdateMaxZoomFactor(null, null); };
+			DependencyPropertyChangedEvent.Register(image, Image.SourceProperty, OnSourcePropertyChanged);
+			SizeChanged += delegate { UpdateMaxZoomFactor(); };
+		}
+
+		private void OnSourcePropertyChanged(object arg1, object arg2)
+		{
+			UpdateMaxZoomFactor();
+
+			var copy = ImageLoaded;
+			if (copy != null)
+				copy(this, new EventArgs());
 		}
 		
-		private void UpdateMaxZoomFactor(object sender, object value)
+		private void UpdateMaxZoomFactor()
 		{
 			if (AutomaticZoomFactor && ActualHeight > 0 && ActualWidth > 0)
 			{
