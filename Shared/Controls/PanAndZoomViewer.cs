@@ -41,7 +41,8 @@ namespace MyToolkit.Controls
 			base.OnApplyTemplate();
 
 			content = (ContentPresenter)GetTemplateChild("content");
-			content.Content = Content;
+			if (content.Content == null)
+				content.Content = Content;
 			
 			geometry = new RectangleGeometry();
 			Clip = geometry;
@@ -57,6 +58,14 @@ namespace MyToolkit.Controls
 #else
 
 #endif
+		}
+
+		public void CalculateMaxZoomFactor(int maxWidth, int maxHeight)
+		{
+			var horizontalZoom = maxWidth / ActualWidth;
+			var verticalZoom = maxHeight / ActualHeight;
+
+			MaxZoomFactor = horizontalZoom > verticalZoom ? horizontalZoom : verticalZoom;
 		}
 
 #if METRO

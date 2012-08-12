@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 
 namespace MyToolkit.Controls
 {
-	public class PanAndZoomImage : Control
+	public class PanAndZoomImage : PanAndZoomViewer
 	{
 		private Image image;
 		public PanAndZoomImage()
@@ -44,12 +44,7 @@ namespace MyToolkit.Controls
 			{
 				var bitmap = image.Source as BitmapImage;
 				if (bitmap != null)
-				{
-					var horizontalZoom = bitmap.PixelWidth / ActualWidth;
-					var verticalZoom = bitmap.PixelHeight / ActualHeight;
-
-					MaxZoomFactor = horizontalZoom > verticalZoom ? horizontalZoom : verticalZoom;
-				}
+					CalculateMaxZoomFactor(bitmap.PixelWidth, bitmap.PixelHeight);
 			}
 		}
 
@@ -69,15 +64,6 @@ namespace MyToolkit.Controls
 		{
 			get { return (Stretch)GetValue(StretchProperty); }
 			set { SetValue(StretchProperty, value); }
-		}
-
-		public static readonly DependencyProperty MaxZoomFactorProperty =
-			DependencyProperty.Register("MaxZoomFactor", typeof (double), typeof (PanAndZoomImage), new PropertyMetadata(5.0));
-
-		public double MaxZoomFactor
-		{
-			get { return (double) GetValue(MaxZoomFactorProperty); }
-			set { SetValue(MaxZoomFactorProperty, value); }
 		}
 
 		public static readonly DependencyProperty AutomaticMaxZoomFactorProperty =
