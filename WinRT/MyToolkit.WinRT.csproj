@@ -188,6 +188,9 @@
     <Compile Include="..\Shared\Utilities\DateTimeUtilities.cs">
       <Link>Utilities\DateTimeUtilities.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Utilities\DependencyPropertyChangedEvent.cs">
+      <Link>Utilities\DependencyPropertyChangedEvent.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Utilities\EnumerableExtensions.cs">
       <Link>Utilities\EnumerableExtensions.cs</Link>
     </Compile>
