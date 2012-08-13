@@ -15,7 +15,7 @@ namespace MyToolkit.Utilities
 {
 	public interface IEntity
 	{
-		int ID { get; }
+		long ID { get; }
 	}
 
 	public class EntityContainer<T>
@@ -30,7 +30,7 @@ namespace MyToolkit.Utilities
 			return collection.SingleOrDefault(n => n.ID == id);
 		}
 
-		public T Get(int id)
+		public T Get(long id)
 		{
 			return collection.SingleOrDefault(n => n.ID == id);
 		}
