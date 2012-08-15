@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Phone\Collections\AlphaGroups.cs">
+      <Link>Collections\AlphaGroups.cs</Link>
+    </Compile>
+    <Compile Include="..\Phone\Collections\Group.cs">
+      <Link>Collections\Group.cs</Link>
+    </Compile>
     <Compile Include="..\Phone\UI\FrameworkElementExtensions.cs">
       <Link>UI\FrameworkElementExtensions.cs</Link>
     </Compile>
@@ -225,6 +231,7 @@
     <Compile Include="Animations\Flipping.cs" />
     <Compile Include="Controls\ExtendedTextBox.cs" />
     <Compile Include="Controls\FadingImage.cs" />
+    <Compile Include="Controls\LongListView.cs" />
     <Compile Include="Controls\NavigationListView.cs" />
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
