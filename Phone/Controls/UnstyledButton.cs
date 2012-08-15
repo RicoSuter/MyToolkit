@@ -22,6 +22,17 @@ namespace MyToolkit.Controls
 			set { SetValue(CommandProperty, value); }
 		}
 
+
+		public static readonly DependencyProperty CommandParameterProperty =
+			DependencyProperty.Register("CommandParameter", typeof (object), typeof (UnstyledButton), new PropertyMetadata(default(object)));
+
+		public object CommandParameter
+		{
+			get { return (object) GetValue(CommandParameterProperty); }
+			set { SetValue(CommandParameterProperty, value); }
+		}
+
+
 		public event RoutedEventHandler Click;
 		public UnstyledButton()
 		{
@@ -36,8 +47,8 @@ namespace MyToolkit.Controls
 			if (copy != null)
 				copy(this, new RoutedEventArgs());
 
-			if (Command != null && Command.CanExecute(null))
-				Command.Execute(null);
+			if (Command != null && Command.CanExecute(CommandParameter))
+				Command.Execute(CommandParameter);
 		}
 	}
 }
