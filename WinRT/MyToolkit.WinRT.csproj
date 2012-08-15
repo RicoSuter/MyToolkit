@@ -83,6 +83,9 @@
     <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\TextGenerator.cs">
       <Link>Controls\HtmlTextBlockImplementation\Generators\TextGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\UlGenerator.cs">
+      <Link>Controls\HtmlTextBlockImplementation\Generators\UlGenerator.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\HtmlNode.cs">
       <Link>Controls\HtmlTextBlockImplementation\HtmlNode.cs</Link>
     </Compile>
@@ -259,6 +262,8 @@
     <Compile Include="Controls\PageFrame.cs" />
     <Compile Include="Storage\ApplicationSettings.cs" />
     <Compile Include="UI\PopupHelper.cs" />
+    <Compile Include="UI\TemplatedVisualTreeExtensions.cs" />
+    <Compile Include="UI\TiltEffect.cs" />
     <Compile Include="Utilities\PageUtilities.cs" />
     <Compile Include="Utilities\TaskHelper.cs" />
     <Compile Include="Utilities\Thread.cs" />

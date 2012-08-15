@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Media;
 using MyToolkit.MVVM;
 
 #if METRO
 using Windows.System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 #else
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows;
 using System.Windows.Documents;
-using Microsoft.Phone.Tasks;
-using MyToolkit.Paging;
 #endif
 
 namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
