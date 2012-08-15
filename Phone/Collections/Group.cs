@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 #if METRO
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 #else
 using System.Windows;
@@ -43,9 +43,13 @@ namespace MyToolkit.Collections
 		{
 			get 
 			{
+#if METRO
+				throw new NotImplementedException();
+#else
 				return HasItems
 					? (SolidColorBrush) Application.Current.Resources["PhoneAccentBrush"]
 					: (SolidColorBrush) Application.Current.Resources["PhoneChromeBrush"];
+#endif
 			}
 		}
 	}
