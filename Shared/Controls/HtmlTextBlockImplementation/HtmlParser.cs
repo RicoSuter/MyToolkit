@@ -20,6 +20,7 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation
 			list.Add("i", list["em"]);
 			list.Add("a", new LinkGenerator());
 			list.Add("img", new ImageGenerator());
+			list.Add("ul", new UlGenerator());
 			list.Add("script", new EmptyGenerator());
 			return list; 
 		}

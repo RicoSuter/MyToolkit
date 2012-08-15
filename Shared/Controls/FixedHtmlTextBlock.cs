@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using System.Windows.Media;
 using MyToolkit.Controls.HtmlTextBlockImplementation;
 
 #if METRO
@@ -25,6 +25,7 @@ namespace MyToolkit.Controls
 		{
 #if !METRO
 			FontSize = (double)Resources["PhoneFontSizeNormal"];
+			Foreground = (Brush)Resources["PhoneForegroundBrush"];
 			Margin = new Thickness(12, 0, 12, 0);
 #endif
 

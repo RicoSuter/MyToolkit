@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 #if METRO
@@ -14,16 +15,13 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation
 		public bool IsTag { get; private set; }
 		public string Value { get; private set; }
 
-		public Dictionary<string, string> Attributes { get { return attributes; } }
-		public HtmlNode[] Children { get { return children.ToArray(); } }
+		public Dictionary<string, string> Attributes { get; private set; }
+		public List<HtmlNode> Children { get; private set; }
 
-		private readonly List<HtmlNode> children;
-		private readonly Dictionary<string, string> attributes;  
-
-		public HtmlNode(string value, bool isTag)
+		public HtmlNode(string value, bool isTag, List<HtmlNode> children = null)
 		{
-			children = new List<HtmlNode>();
-			attributes = new Dictionary<string, string>();
+			Children = children == null ? new List<HtmlNode>() : new List<HtmlNode>(children);
+			Attributes = new Dictionary<string, string>();
 
 			IsTag = isTag;
 			SetValue(value);
@@ -57,13 +55,13 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation
 				var key = m.Groups[1].Value.Trim(' ', '\r', '\n');
 				var val = m.Groups[2].Value.Trim(' ', '\r', '\n');
 				if (!string.IsNullOrEmpty(key))
-					attributes.Add(key.ToLower(), val);
+					Attributes.Add(key.ToLower(), val);
 				else
 				{
 					key = m.Groups[3].Value.Trim(' ', '\r', '\n');
 					val = m.Groups[4].Value.Trim(' ', '\r', '\n');
 					if (!string.IsNullOrEmpty(key))
-						attributes.Add(key.ToLower(), val);
+						Attributes.Add(key.ToLower(), val);
 				}
 			}
 		}
@@ -71,7 +69,7 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation
 		public DependencyObject[] GetLeaves(IHtmlTextBlock textBlock)
 		{
 			var list = new List<DependencyObject>();
-			foreach (var c in children)
+			foreach (var c in Children)
 			{
 				var ctrl = c.GetControls(textBlock);
 				if (ctrl != null)
@@ -84,7 +82,7 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation
 
 		internal void AddChild(HtmlNode node)
 		{
-			children.Add(node);
+			Children.Add(node);
 		}
 
 		private bool loaded = false; 
@@ -101,6 +99,13 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation
 				loaded = true; 
 			}
 			return controls;
+		}
+
+		public void ToHtmlBlock()
+		{
+			var children = Children.ToList();
+			Children.Clear();
+			Children.Add(new HtmlNode("html", true, new List<HtmlNode> { new HtmlNode("p", true, children) }));
 		}
 	}
 }
