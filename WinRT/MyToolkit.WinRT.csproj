@@ -249,8 +249,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourceDictionary.cs" />
     <Compile Include="Resources\Strings.cs" />
-    <Compile Include="Storage\Settings.cs" />
     <Compile Include="Controls\PageFrame.cs" />
+    <Compile Include="Storage\ApplicationSettings.cs" />
     <Compile Include="UI\PopupHelper.cs" />
     <Compile Include="Utilities\PageUtilities.cs" />
     <Compile Include="Utilities\TaskHelper.cs" />
