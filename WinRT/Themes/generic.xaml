@@ -64,30 +64,25 @@
 	</Style>
 
 	<Style TargetType="controls:ImageButton">
+		<Setter Property="IsPressedAnimationEnabled" Value="True" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:ImageButton">
-					<Grid>
-						<VisualStateManager.VisualStateGroups>
-							<VisualStateGroup x:Name="CommonStates">
-								<VisualState x:Name="Normal"/>
-								<VisualState x:Name="MouseOver"/>
-								<VisualState x:Name="Pressed">
-									<Storyboard>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="PressedImage">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
-										</ObjectAnimationUsingKeyFrames>
-										<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NormalImage">
-											<DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
-										</ObjectAnimationUsingKeyFrames>
-									</Storyboard>
-								</VisualState>
-								<VisualState x:Name="Disabled"/>
-							</VisualStateGroup>
-						</VisualStateManager.VisualStateGroups>
-						<Image x:Name="NormalImage" Source="{TemplateBinding Image}"/>
-						<Image x:Name="PressedImage" Source="{TemplateBinding PressedImage}" Visibility="Collapsed"/>
-					</Grid>
+					<StackPanel Orientation="Horizontal" x:Name="container" Background="Transparent">
+						<StackPanel.Resources>
+							<Storyboard x:Name="pointerDownStoryboard">
+								<PointerDownThemeAnimation TargetName="container" />
+							</Storyboard>
+							<Storyboard x:Name="pointerUpStoryboard">
+								<PointerUpThemeAnimation TargetName="container" />
+							</Storyboard>
+						</StackPanel.Resources>
+						
+						<ContentPresenter x:Name="content" VerticalAlignment="Center" />
+						<TextBlock x:Name="header" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header}"
+								   Margin="15,0,0,0" FontSize="36" FontWeight="SemiLight" VerticalAlignment="Center"
+								   Visibility="{Binding ElementName=header, Path=Text, Converter={StaticResource vc}}" />
+					</StackPanel>
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
