@@ -6,11 +6,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using MyToolkit.UI;
+using MyToolkit.UI.UIExtensionMethods;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace System.Windows.Controls
+namespace MyToolkit.UI
 {
 	/// <summary>
 	/// A static class providing methods for working with the visual tree using generics.  
