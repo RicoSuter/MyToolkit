@@ -15,7 +15,7 @@ namespace MyToolkit.Utilities
 {
 	public interface IEntity
 	{
-		long ID { get; }
+		int ID { get; }
 	}
 
 	public class EntityContainer<T>
