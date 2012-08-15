@@ -89,6 +89,9 @@
     <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\TextGenerator.cs">
       <Link>Controls\HtmlTextBlockImplementation\Generators\TextGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\UlGenerator.cs">
+      <Link>Controls\HtmlTextBlockImplementation\Generators\UlGenerator.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\HtmlNode.cs">
       <Link>Controls\HtmlTextBlockImplementation\HtmlNode.cs</Link>
     </Compile>
