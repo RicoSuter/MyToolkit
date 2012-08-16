@@ -243,7 +243,7 @@ namespace MyToolkit.Media
 											bitmap.SetSource(pendingCompletion.Stream);
 #endif
 										}
-										catch 
+										catch (Exception e)
 										{ 
 											bitmap.UriSource = new Uri("http://0.0.0.0");
 										}

@@ -4,8 +4,6 @@ using MyToolkit.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 
 namespace MyToolkit.Controls
 {
@@ -144,21 +142,6 @@ namespace MyToolkit.Controls
 		{
 			get { return (string) GetValue(HeaderProperty); }
 			set { SetValue(HeaderProperty, value); }
-		}
-
-
-		public static readonly DependencyProperty IsPressedAnimationEnabledProperty =
-			DependencyProperty.Register("IsPressedAnimationEnabled", typeof(bool), typeof(ImageButton), new PropertyMetadata(default(bool), PropertyChangedCallback));
-
-		private static void PropertyChangedCallback(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-		{
-			TiltEffect.SetIsTiltEnabled((UIElement)obj, (bool)args.NewValue);
-		}
-
-		public bool IsPressedAnimationEnabled
-		{
-			get { return (bool) GetValue(IsPressedAnimationEnabledProperty); }
-			set { SetValue(IsPressedAnimationEnabledProperty, value); }
 		}
 	}
 }

@@ -25,7 +25,8 @@ namespace MyToolkit.Utilities
 #if METRO
 		public static IRandomAccessStream AsRandomAccessStream(this Stream stream)
 		{
-			return new MemoryRandomAccessStream(stream.ReadToEnd()); // TODO: uses a lot of memory...
+			// TODO: uses a lot of memory...
+			return new MemoryRandomAccessStream(stream.ReadToEnd());
 		}
 #endif
 	}
@@ -34,40 +35,34 @@ namespace MyToolkit.Utilities
 #if METRO
 	internal class MemoryRandomAccessStream : IRandomAccessStream
 	{
-		private Stream m_InternalStream;
+		private readonly Stream internalStream;
 
 		public MemoryRandomAccessStream(Stream stream)
 		{
-			this.m_InternalStream = stream;
+			internalStream = stream;
 		}
-
-
-
+		
 		public MemoryRandomAccessStream(byte[] bytes)
 		{
-			this.m_InternalStream = new MemoryStream(bytes);
+			internalStream = new MemoryStream(bytes);
 		}
 
 		public IInputStream GetInputStreamAt(ulong position)
 		{
-			this.m_InternalStream.Position = (long)position;
-
-
-			return this.m_InternalStream.AsInputStream();
+			internalStream.Position = (long)position;
+			return internalStream.AsInputStream();
 		}
 
 		public IOutputStream GetOutputStreamAt(ulong position)
 		{
-			this.m_InternalStream.Position = (long)position;
-
-
-			return this.m_InternalStream.AsOutputStream();
+			internalStream.Position = (long)position;
+			return internalStream.AsOutputStream();
 		}
 
 		public ulong Size
 		{
-			get { return (ulong)this.m_InternalStream.Length; }
-			set { this.m_InternalStream.SetLength((long)value); }
+			get { return (ulong)internalStream.Length; }
+			set { internalStream.SetLength((long)value); }
 		}
 
 		public bool CanRead
@@ -87,77 +82,41 @@ namespace MyToolkit.Utilities
 
 		public ulong Position
 		{
-			get { return (ulong)this.m_InternalStream.Position; }
+			get { return (ulong)internalStream.Position; }
 		}
 
 		public void Seek(ulong position)
 		{
-			this.m_InternalStream.Seek((long)position, 0);
+			internalStream.Seek((long)position, 0);
 		}
 
 		public void Dispose()
 		{
-			this.m_InternalStream.Dispose();
+			internalStream.Dispose();
 		}
 
 		public Windows.Foundation.IAsyncOperationWithProgress<IBuffer, uint> ReadAsync(IBuffer buffer, uint count, InputStreamOptions options)
 		{
-			var inputStream = this.GetInputStreamAt(0);
+			var inputStream = GetInputStreamAt(0);
 			return inputStream.ReadAsync(buffer, count, options);
 		}
 
 		public Windows.Foundation.IAsyncOperation<bool>
 
-
-	FlushAsync()
+		FlushAsync()
 		{
-			var outputStream = this.GetOutputStreamAt(0);
+			var outputStream = GetOutputStreamAt(0);
 			return outputStream.FlushAsync();
 		}
 
 		public Windows.Foundation.IAsyncOperationWithProgress<uint, uint>
 
-
-	 WriteAsync(IBuffer buffer)
+		WriteAsync(IBuffer buffer)
 		{
 			var outputStream = this.GetOutputStreamAt(0);
 			return outputStream.WriteAsync(buffer);
 		}
 	}
-
-	//internal class RandomAccessStream : IRandomAccessStream
-	//{
-	//	Stream stream;
-
-	//	public RandomAccessStream(Stream stream)
-	//	{
-	//		this.stream = stream;
-	//	}
-
-	//	public IInputStream GetInputStreamAt(ulong position)
-	//	{
-	//		stream.Position = (long)position;
-	//		return stream.AsInputStream();
-	//	}
-
-	//	public IOutputStream GetOutputStreamAt(ulong position)
-	//	{
-	//		stream.Position = (long)position;
-	//		return stream.AsOutputStream();
-	//	}
-
-	//	public ulong Size
-	//	{
-	//		get
-	//		{
-	//			return (ulong)stream.Length;
-	//		}
-	//		set
-	//		{
-	//			stream.SetLength((long)value);
-	//		}
-	//	}
-	//}
 
 #endif
 }

@@ -64,7 +64,6 @@
 	</Style>
 
 	<Style TargetType="controls:ImageButton">
-		<Setter Property="IsPressedAnimationEnabled" Value="True" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:ImageButton">
