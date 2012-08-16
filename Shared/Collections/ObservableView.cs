@@ -171,6 +171,7 @@ namespace MyToolkit.Collections
 			lock (SyncRoot)
 			{
 				UpdateList();
+
 				if (TrackItemChanges)
 				{
 					if (e.NewItems != null)
@@ -183,6 +184,12 @@ namespace MyToolkit.Collections
 					{
 						foreach (var i in e.OldItems.OfType<INotifyPropertyChanged>())
 							UnregisterEvent(i);
+					}
+
+					if (e.Action == NotifyCollectionChangedAction.Reset)
+					{
+						foreach (var item in events.Select(p => p.Key).ToArray())
+							UnregisterEvent(item);
 					}
 				}
 			}

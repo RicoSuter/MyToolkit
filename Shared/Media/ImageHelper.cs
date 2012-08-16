@@ -236,14 +236,16 @@ namespace MyToolkit.Media
 										try
 										{
 #if METRO
-                                            await bitmap.SetSourceAsync(pendingCompletion.Stream.AsRandomAccessStream());
+											// TODO use awaitable SetSource
+											//await bitmap.SetSourceAsync(pendingCompletion.Stream.AsRandomAccessStream());
+											bitmap.SetSource(pendingCompletion.Stream.AsRandomAccessStream());
 #else
 											bitmap.SetSource(pendingCompletion.Stream);
 #endif
 										}
 										catch 
 										{ 
-											bitmap.UriSource = new Uri("http://0.0.0.0"); // TODO: used to trigger ImageFailed => better way?
+											bitmap.UriSource = new Uri("http://0.0.0.0");
 										}
 									}
 									else // web exception

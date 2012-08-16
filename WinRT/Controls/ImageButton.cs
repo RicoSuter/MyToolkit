@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using MyToolkit.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -14,16 +15,14 @@ namespace MyToolkit.Controls
 		{
 			DefaultStyleKey = typeof(ImageButton);
 
-			PointerPressed += OnPressed;
-			PointerReleased += OnReleased;
+			PointerPressed += OnPointerPressed;
+			PointerReleased += OnPointerReleased;
 			PointerExited += OnPointerExited;
 			PointerEntered += OnPointerEntered;
 
 			Tapped += OnTapped; 
 		}
 
-		private Storyboard pointerDownStoryboard;
-		private Storyboard pointerUpStoryboard;
 		private ContentPresenter content;
 		protected override void OnApplyTemplate()
 		{
@@ -31,9 +30,6 @@ namespace MyToolkit.Controls
 
 			content = (ContentPresenter)GetTemplateChild("content");
 			content.Content = Content;
-
-			pointerDownStoryboard = (Storyboard)GetTemplateChild("pointerDownStoryboard");
-			pointerUpStoryboard = (Storyboard)GetTemplateChild("pointerUpStoryboard");
 		}
 
 		private void OnPointerExited(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
@@ -49,12 +45,12 @@ namespace MyToolkit.Controls
 				SetOverContent();
 		}
 
-		private void OnReleased(object sender, PointerRoutedEventArgs e)
+		private void OnPointerReleased(object sender, PointerRoutedEventArgs e)
 		{
 			SetStandardContent();
 		}
 
-		private void OnPressed(object sender, PointerRoutedEventArgs e)
+		private void OnPointerPressed(object sender, PointerRoutedEventArgs e)
 		{
 			SetPressedContent();
 		}
@@ -62,16 +58,12 @@ namespace MyToolkit.Controls
 		private void SetStandardContent()
 		{
 			content.Content = Content;
-			if (IsPressedAnimationEnabled && pointerUpStoryboard != null)
-				pointerUpStoryboard.Begin();
 		}
 
 		private void SetPressedContent()
 		{
 			if (PressedContent != null)
 				content.Content = PressedContent;
-			if (IsPressedAnimationEnabled && pointerDownStoryboard != null)
-				pointerDownStoryboard.Begin();
 		}
 
 		private void SetOverContent()
@@ -156,7 +148,12 @@ namespace MyToolkit.Controls
 
 
 		public static readonly DependencyProperty IsPressedAnimationEnabledProperty =
-			DependencyProperty.Register("IsPressedAnimationEnabled", typeof(bool), typeof(ImageButton), new PropertyMetadata(default(bool)));
+			DependencyProperty.Register("IsPressedAnimationEnabled", typeof(bool), typeof(ImageButton), new PropertyMetadata(default(bool), PropertyChangedCallback));
+
+		private static void PropertyChangedCallback(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+		{
+			TiltEffect.SetIsTiltEnabled((UIElement)obj, (bool)args.NewValue);
+		}
 
 		public bool IsPressedAnimationEnabled
 		{

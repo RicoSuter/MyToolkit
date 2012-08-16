@@ -69,15 +69,6 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:ImageButton">
 					<StackPanel Orientation="Horizontal" x:Name="container" Background="Transparent">
-						<StackPanel.Resources>
-							<Storyboard x:Name="pointerDownStoryboard">
-								<PointerDownThemeAnimation TargetName="container" />
-							</Storyboard>
-							<Storyboard x:Name="pointerUpStoryboard">
-								<PointerUpThemeAnimation TargetName="container" />
-							</Storyboard>
-						</StackPanel.Resources>
-						
 						<ContentPresenter x:Name="content" VerticalAlignment="Center" />
 						<TextBlock x:Name="header" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header}"
 								   Margin="15,0,0,0" FontSize="36" FontWeight="SemiLight" VerticalAlignment="Center"

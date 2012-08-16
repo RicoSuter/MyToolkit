@@ -16,6 +16,18 @@ namespace MyToolkit.Controls
 		public LongListView()
 		{
 			SelectionChanged += OnSelectionChanged;
+
+			// prevent memory leaks
+			Loaded += delegate
+			{
+				if (collectionChangedHandler != null)
+					((INotifyCollectionChanged)ItemsSource).CollectionChanged += collectionChangedHandler;
+			};
+			Unloaded += delegate
+			{
+				if (collectionChangedHandler != null)
+					((INotifyCollectionChanged)ItemsSource).CollectionChanged -= collectionChangedHandler;
+			};
 		}
 
 
@@ -28,19 +40,26 @@ namespace MyToolkit.Controls
 			set { SetValue(ItemsSourceProperty, value); }
 		}
 
-		private static void OnItemsSourceChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+		private static void OnItemsSourceChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
 		{
-			var ctrl = (LongListView) dependencyObject;
+			var ctrl = (LongListView)obj;
 			ctrl.UpdateList();
+
+			if (ctrl.collectionChangedHandler != null) // prevent memory leaks
+			{
+				((INotifyCollectionChanged) args.OldValue).CollectionChanged -= ctrl.collectionChangedHandler;
+				ctrl.collectionChangedHandler = null; 
+			}
 
 			var collection = ctrl.ItemsSource as INotifyCollectionChanged;
 			if (collection != null)
 			{
-				collection.CollectionChanged += delegate { ctrl.UpdateList(); };
-				// TODO unregister on old object => unregister in on Unloaded
+				ctrl.collectionChangedHandler = (sender, e) => ctrl.UpdateList();
+				collection.CollectionChanged += ctrl.collectionChangedHandler;
 			}
 		}
 
+		private NotifyCollectionChangedEventHandler collectionChangedHandler = null; 
 
 
 
