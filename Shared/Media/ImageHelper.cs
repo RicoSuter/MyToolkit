@@ -236,12 +236,15 @@ namespace MyToolkit.Media
 										try
 										{
 #if METRO
-                                            bitmap.SetSource(pendingCompletion.Stream.AsRandomAccessStream());
+                                            await bitmap.SetSourceAsync(pendingCompletion.Stream.AsRandomAccessStream());
 #else
 											bitmap.SetSource(pendingCompletion.Stream);
 #endif
 										}
-										catch { }
+										catch 
+										{ 
+											bitmap.UriSource = new Uri("http://0.0.0.0"); // TODO: used to trigger ImageFailed => better way?
+										}
 									}
 									else // web exception
 										bitmap.UriSource = new Uri("http://0.0.0.0"); // TODO: used to trigger ImageFailed => better way?
