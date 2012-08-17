@@ -12,15 +12,24 @@ namespace MyToolkit.Networking
 {
 	public class HttpResponse
 	{
-		public HttpResponse(Exception exception)
+		internal HttpResponse()
 		{
-			this.exception = exception; 
+			Cookies = new List<Cookie>();
 		}
 
-		public HttpResponse(IHttpRequest request)
+		public HttpResponse(IHttpRequest request) : this()
 		{
 			Request = request;
-			Cookies = new List<Cookie>();
+		}
+
+		public static HttpResponse CreateCancelled()
+		{
+			return new HttpResponse { Canceled = true };
+		}
+
+		public static HttpResponse CreateException(Exception exception)
+		{
+			return new HttpResponse { Exception = exception };
 		}
 
 		public IHttpRequest Request { get; internal set; }

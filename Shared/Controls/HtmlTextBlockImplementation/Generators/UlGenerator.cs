@@ -22,7 +22,7 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 		public DependencyObject[] Generate(HtmlNode node, IHtmlTextBlock textBlock)
 		{
 			var list = new List<Grid>();
-			foreach (var child in node.Children)
+			foreach (var child in node.Children.Where(c => c.Value == "li"))
 			{
 				var grid = new Grid();
 				grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });

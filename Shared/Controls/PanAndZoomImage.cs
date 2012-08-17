@@ -84,6 +84,15 @@ namespace MyToolkit.Controls
 		{
 			get { return (bool) GetValue(AutomaticMaxZoomFactorProperty); }
 			set { SetValue(AutomaticMaxZoomFactorProperty, value); }
-		}	
+		}
+
+		public static readonly DependencyProperty InnerMarginProperty =
+			DependencyProperty.Register("InnerMargin", typeof (Thickness), typeof (PanAndZoomImage), new PropertyMetadata(default(Thickness)));
+
+		public Thickness InnerMargin
+		{
+			get { return (Thickness) GetValue(InnerMarginProperty); }
+			set { SetValue(InnerMarginProperty, value); }
+		}
 	}
 }

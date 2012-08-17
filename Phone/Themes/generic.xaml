@@ -123,10 +123,11 @@
 							<CompositeTransform ScaleX="1" ScaleY="1" TranslateX="0" TranslateY="0"/>
 						</ContentPresenter.RenderTransform>
 
-						<Border Background="{StaticResource PhoneDisabledBrush}">
+						<Border Background="{StaticResource PhoneDisabledBrush}" 
+								Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InnerMargin}">
 							<Image Media:ImageHelper.Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Source}" 
-								   CacheMode="BitmapCache"
-								   Stretch="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Stretch}" x:Name="image">
+								   CacheMode="BitmapCache" Stretch="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Stretch}" 
+								   x:Name="image">
 							</Image>
 						</Border>
 					</ContentPresenter>
