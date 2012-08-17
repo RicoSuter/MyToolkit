@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using Microsoft.Phone.Controls;
 
@@ -32,6 +34,23 @@ namespace MyToolkit.Controls
 			}
 
 			SelectedItems = TypedSelectedItems;
+		}
+
+		protected override void OnItemsChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		{
+			if (SelectedItems != null)
+			{
+				var list = SelectedItems.Cast<object>().
+					Where(item => !Items.Contains(item)).ToList();
+				foreach (var item in list)
+					SelectedItems.Remove(item);
+			}
+
+			if (!Items.Contains(SelectedItem))
+				SelectedIndex = -1; 
+				//SelectedItem = null; 
+
+			base.OnItemsChanged(e);
 		}
 
 		public class Helper
@@ -72,6 +91,7 @@ namespace MyToolkit.Controls
 			set { SetValue(MySelectedItemsProperty, value); }
 		}
 
+		// used to make setter method public
 		public new IList SelectedItems
 		{
 			get { return (IList)GetValue(SelectedItemsProperty); }
