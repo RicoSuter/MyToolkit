@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
@@ -16,13 +17,20 @@ namespace MyToolkit.UI.Popups
 		public static void Show(IPopupControl control)
 		{
 			var oldState = new PageDeactivator();
-
-			var page = PhonePage.CurrentPage; 
+			var page = PhonePage.CurrentPage;
+ 
 			var content = page.Content; 
 			content.IsHitTestVisible = false;
 
-			var popup = new System.Windows.Controls.Primitives.Popup { Child = (UIElement) control };
-			popup.Width = 480;//((FrameworkElement) content).ActualWidth;
+			var popup = new Popup
+			{
+				Child = (UIElement) control, 
+				HorizontalAlignment = HorizontalAlignment.Stretch, 
+				VerticalAlignment = VerticalAlignment.Stretch
+			};
+
+//			popup.Height = 800;
+			popup.Width = 480; //((FrameworkElement) content).ActualWidth;
 			((FrameworkElement) control).Width = 480; //((FrameworkElement)content).ActualWidth;
 
 			var color = ColorUtility.RemoveAlpha(
@@ -51,7 +59,6 @@ namespace MyToolkit.UI.Popups
 				oldState.Revert();
 
 				page.BackKeyPress -= del;
-
 				SystemTray.BackgroundColor = oldColor;
 			};
 		}

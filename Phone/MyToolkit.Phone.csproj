@@ -191,6 +191,9 @@
     <Compile Include="..\Shared\Utilities\IdentityGenerator.cs">
       <Link>Utilities\IdentityGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Utilities\ReflectionExtensions.cs">
+      <Link>Utilities\ReflectionExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Utilities\SingleEvent.cs">
       <Link>Utilities\SingleEvent.cs</Link>
     </Compile>

@@ -44,7 +44,18 @@ namespace MyToolkit.Utilities
 		{
 			Collection.Clear();
 		}
-		
+
+		public void AddRange(IEnumerable<T> items)
+		{
+			foreach (var item in items)
+			{
+				var c = Get(item.ID);
+				if (c != null)
+					collection.Remove(c);
+			}
+			collection.AddRange(items);
+		}
+
 		public void Add(T item)
 		{
 			var c = Get(item.ID);
