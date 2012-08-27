@@ -58,6 +58,8 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 				var label = node.Children[0].Value;
 
 				var hr = new Hyperlink();
+				hr.MouseOverForeground = textBlock.Foreground; 
+				hr.Foreground = textBlock.Foreground;
 				hr.TextDecorations = TextDecorations.Underline;
 				hr.Inlines.Add(label);
 
