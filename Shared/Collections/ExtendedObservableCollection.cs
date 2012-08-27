@@ -20,8 +20,7 @@ namespace MyToolkit.Collections
 			if (collection == null) 
 				throw new ArgumentNullException("collection");
 
-			var list = collection.ToList();
-			foreach (var i in list) 
+			foreach (var i in collection) 
 				Items.Add(i);
 
 			OnPropertyChanged(new PropertyChangedEventArgs("Count"));

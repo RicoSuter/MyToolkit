@@ -82,10 +82,21 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 		{
 			if (link.StartsWith("mailto:"))
 				return () => new EmailComposeTask {To = link.Substring(7)}.Show();
+			if (link.StartsWith("tel:"))
+				return () => new PhoneCallTask { PhoneNumber = link.Substring(4) }.Show();
 
-			var uri = link.StartsWith("http://") || link.StartsWith("https://") ?
-				new Uri(link, UriKind.Absolute) : new Uri(textBlock.BaseUri, link);
-			return () => new WebBrowserTask { Uri = uri }.Show();
+			try
+			{
+				var uri = link.StartsWith("http://") || link.StartsWith("https://") ?
+					new Uri(link, UriKind.Absolute) : new Uri(textBlock.BaseUri, link);
+				return () => new WebBrowserTask { Uri = uri }.Show();
+			}
+			catch (Exception)
+			{
+
+			}
+
+			return () => { };
 		}
 #endif
 	}
