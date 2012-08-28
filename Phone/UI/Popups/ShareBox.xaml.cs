@@ -1,52 +1,48 @@
 using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using Microsoft.Phone.Tasks;
 
 namespace MyToolkit.UI.Popups
 {
-	public partial class ShareBox : UserControl, IPopupControl
+	public partial class ShareBox
 	{
+		#region Static methods
+
 		public static void Show(String title, String text, String textWithoutTitle)
 		{
 			var control = new ShareBox();
 			control.Title = title;
 			control.Text = text;
 			control.TextWithoutTitle = textWithoutTitle ?? title + ": " + text;
-			PopupHelper.Show(control);
+			Show(control);
 		}
+
+		#endregion
 
 		public string Title { get; set; }
 		public string Text { get; set; }
 		public string TextWithoutTitle { get; set; }
 
-		public ShareBox()
+		protected ShareBox()
 		{
 			InitializeComponent();
 		}
 
-		public event Action<object> Closed;
-		public void SetBackgroundColor(Color color)
+		public override void GoBack()
 		{
-			popup.Background = new SolidColorBrush(color);
-		}
-
-		public void GoBack()
-		{
-			Closed(this);
+			Close();
 		}
 
 		private void AsMessageClick(object sender, RoutedEventArgs e)
 		{
-			Closed(this);
+			Close();
 			var task = new SmsComposeTask { Body = TextWithoutTitle };
 			task.Show();
 		}
 
 		private void AsEmailClick(object sender, RoutedEventArgs e)
 		{
-			Closed(this);
+			Close();
 			var task = new EmailComposeTask
 			{
 				Subject = Title,

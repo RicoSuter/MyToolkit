@@ -1,0 +1,41 @@
+﻿<Popups:PopupControl x:Class="MyToolkit.UI.Popups.ListPickerBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Controls="clr-namespace:MyToolkit.Controls"
+    xmlns:ViewModels="clr-namespace:MyToolkit.UI.Popups.ViewModels" 
+	xmlns:Popups="clr-namespace:MyToolkit.UI.Popups"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}">
+
+	<Popups:PopupControl.Resources>
+		<ViewModels:BaseViewModel x:Key="viewModel" />
+	</Popups:PopupControl.Resources>
+
+	<Grid x:Name="LayoutRoot" DataContext="{StaticResource viewModel}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		
+		<Controls:ExtendedListBox x:Name="list" InnerMargin="12,24,12,0">
+			<Controls:ExtendedListBox.ItemTemplate>
+				<DataTemplate>
+					<CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" Content="{Binding Item}" />
+				</DataTemplate>
+			</Controls:ExtendedListBox.ItemTemplate>
+		</Controls:ExtendedListBox>
+		
+		<Grid Grid.Row="1" Margin="12">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="0.5*" />
+				<ColumnDefinition Width="0.5*" />
+			</Grid.ColumnDefinitions>
+
+			<Button Content="{Binding Strings.ListPickerPopupCancel}" Grid.Column="0" 
+					Click="OnCancel" FontSize="{StaticResource PhoneFontSizeMedium}" />
+			<Button Content="{Binding Strings.ListPickerPopupAccept}" Grid.Column="1" 
+					Click="OnAccept" FontSize="{StaticResource PhoneFontSizeMedium}" />
+		</Grid>
+    </Grid>
+</Popups:PopupControl>

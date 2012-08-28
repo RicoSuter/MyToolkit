@@ -129,6 +129,12 @@
   <data name="Hours" xml:space="preserve">
     <value>Stunden</value>
   </data>
+  <data name="ListPickerPopupAccept" xml:space="preserve">
+    <value>übernehmen</value>
+  </data>
+  <data name="ListPickerPopupCancel" xml:space="preserve">
+    <value>abbrechen</value>
+  </data>
   <data name="Minute" xml:space="preserve">
     <value>Minute</value>
   </data>

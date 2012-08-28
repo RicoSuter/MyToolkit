@@ -168,11 +168,14 @@
     <Compile Include="UI\Popups\InputBox.xaml.cs">
       <DependentUpon>InputBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Popups\IPopupControl.xaml.cs" />
-    <Compile Include="UI\Popups\PopupHelper.cs" />
+    <Compile Include="UI\Popups\PopupControl.cs" />
+    <Compile Include="UI\Popups\ListPickerBox.xaml.cs">
+      <DependentUpon>ListPickerBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Popups\ShareBox.xaml.cs">
       <DependentUpon>ShareBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Popups\BaseViewModel.cs" />
     <Compile Include="UI\Thombstone.cs" />
     <Compile Include="Controls\YouTubeButton.xaml.cs">
       <DependentUpon>YouTubeButton.xaml</DependentUpon>
@@ -222,6 +225,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UI\Popups\ListPickerBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Popups\ShareBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -231,7 +238,7 @@
     <EmbeddedResource Include="Resources\Strings.de.resx" />
     <EmbeddedResource Include="Resources\Strings.fr.resx" />
     <EmbeddedResource Include="Resources\Strings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

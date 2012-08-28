@@ -1,23 +1,22 @@
 using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace MyToolkit.UI.Popups
 {
-	public partial class InputBox : UserControl, IPopupControl
+	public partial class InputBox
 	{
+		#region Static methods
+
 		public static void Show(String message, String title, string input, bool showCancel, Action<object, string> completed)
 		{
 			var control = new InputBox();
 			control.title.Text = title;
 			control.message.Text = message;
-			control.completed = completed;
 			control.box.Text = input;
 			control.cancel.Visibility = showCancel ?
 				Visibility.Visible : Visibility.Collapsed;
 
-			PopupHelper.Show(control);
+			Show(control, false, false, delegate { completed(control, control.Text); });
 		}
 
 		public static void Show(String message, String title, bool showCancel, Action<object, string> completed)
@@ -25,37 +24,32 @@ namespace MyToolkit.UI.Popups
 			Show(message, title, string.Empty, showCancel, completed);
 		}
 
-		public InputBox()
+		#endregion
+
+		public string Text { get; set; }
+
+		internal InputBox()
 		{
 			InitializeComponent();
 			Loaded += delegate { box.Focus(); };
 		}
 
-		private Action<object, string> completed;
-		public event Action<object> Closed;
-		public void SetBackgroundColor(Color color)
-		{
-			popup.Background = new SolidColorBrush(color);
-		}
-
-		public void GoBack()
+		public override void GoBack()
 		{
 			if (cancel.Visibility == Visibility.Visible)
 				Cancel(null, null);
 		}
 
-		private void Cancel(object sender, System.Windows.RoutedEventArgs e)
+		private void Cancel(object sender, RoutedEventArgs e)
 		{
-			Closed(this);
-			if (completed != null)
-				completed(this, null);
+			Text = null; 
+			Close();
 		}
 
-		private void Close(object sender, System.Windows.RoutedEventArgs e)
+		private void Close(object sender, RoutedEventArgs e)
 		{
-			Closed(this);
-			if (completed != null)
-				completed(this, box.Text);
+			Text = box.Text; 
+			Close();
 		}
 	}
 }
