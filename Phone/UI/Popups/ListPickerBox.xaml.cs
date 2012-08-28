@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using MyToolkit.Utilities; 
 
 namespace MyToolkit.UI.Popups
 {
@@ -19,13 +20,25 @@ namespace MyToolkit.UI.Popups
 		#endregion
 
 		public List<ListPickerBoxItem> Items { get; private set; }
+
 		public IList SelectedItems { get; private set; }
+		public IList OriginalSelectedItems { get; private set; }
 		public bool Canceled { get; private set; }
+
+		public bool HasSelecteItemsChanged
+		{
+			get
+			{
+				return !OriginalSelectedItems.OfType<object>().ToList().
+					IsCopyOf(SelectedItems.OfType<object>().ToList());
+			}
+		}
 
 		protected ListPickerBox(IList items, IList selectedItems)
 		{
 			InitializeComponent();
 
+			OriginalSelectedItems = selectedItems; 
 			Dispatcher.BeginInvoke(delegate
 			{
 				Items = items.OfType<object>().
