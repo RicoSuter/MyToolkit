@@ -6,6 +6,15 @@ namespace MyToolkit.Utilities
 {
 	public static class EnumerableExtensions
 	{
+		public static bool IsCopyOf<T>(this IList<T> list1, IList<T> list2)
+		{
+			if (list1.Any(a => !list2.Contains(a)))
+				return false;
+			if (list2.Any(a => !list1.Contains(a)))
+				return false;
+			return true; 
+		}
+
 		public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
 		{
 			var rand = new Random((int)DateTime.Now.Ticks);

@@ -20,6 +20,8 @@ namespace MyToolkit.Utilities
 			return Activator.CreateInstance(specificType, args);
 		}
 
+#if !METRO
+
 		public static void Clone(this object source, object target)
 		{
 			var targetType = target.GetType();
@@ -33,5 +35,7 @@ namespace MyToolkit.Utilities
 				}
 			}
 		}
+#endif
+
 	}
 }
