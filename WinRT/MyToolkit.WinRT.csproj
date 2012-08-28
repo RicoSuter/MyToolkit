@@ -119,6 +119,9 @@
     <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Converters\DictionaryItemConverter.cs">
+      <Link>Converters\DictionaryItemConverter.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Converters\EqualityConverter.cs">
       <Link>Converters\EqualityConverter.cs</Link>
     </Compile>
