@@ -18,26 +18,36 @@ namespace MyToolkit.UI
 			((Popup) control.Tag).IsOpen = false; 
 		}
 
-		public static Task<Popup> ShowDialogAsync<T>(T control, bool isLightDismissEnabled = false) where T : FrameworkElement
+		public static Task<Popup> ShowDialogAsync<T>(T control, bool isLightDismissEnabled = false, bool isHorizontal = true) where T : FrameworkElement
 		{
-			return TaskHelper.RunCallbackMethod<T, Popup>((x, y) => ShowDialog(x, isLightDismissEnabled, y), control);
+			return TaskHelper.RunCallbackMethod<T, Popup>((x, y) => ShowDialog(x, isLightDismissEnabled, isHorizontal, y), control);
 		}
 
-		public static Popup ShowDialog<T>(T control, bool isLightDismissEnabled = false, Action<Popup> closed = null) where T : FrameworkElement
+		public static Popup ShowDialog<T>(T control, bool isLightDismissEnabled = false, bool isHorizontal = true, Action<Popup> closed = null) where T : FrameworkElement
 		{
 			var parent = (FrameworkElement)Window.Current.Content;
-			control.Width = parent.ActualWidth;
+
+			if (isHorizontal)
+				control.Width = parent.ActualWidth;
+			else
+				control.Height = parent.ActualHeight;
 
 			var popup = new Popup();
 			var del = new WindowActivatedEventHandler((sender, e) =>
 			{
 				control.Width = parent.ActualWidth;
-				popup.VerticalOffset = (parent.ActualHeight - control.ActualHeight) / 2;
+				if (isHorizontal)
+					popup.VerticalOffset = (parent.ActualHeight - control.ActualHeight) / 2;
+				else
+					popup.HorizontalOffset = (parent.ActualWidth - control.ActualWidth) / 2;
 			});
 
 			var del2 = new SizeChangedEventHandler((sender, e) =>
 			{
-				popup.VerticalOffset = (parent.ActualHeight - control.ActualHeight) / 2;
+				if (isHorizontal)
+					popup.VerticalOffset = (parent.ActualHeight - control.ActualHeight) / 2;
+				else
+					popup.HorizontalOffset = (parent.ActualWidth - control.ActualWidth) / 2;
 			});
 
 			Window.Current.Activated += del;
