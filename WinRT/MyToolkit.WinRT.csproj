@@ -194,6 +194,9 @@
     <Compile Include="..\Shared\UI\Designer.cs">
       <Link>UI\Designer.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Utilities\ColorUtility.cs">
+      <Link>Utilities\ColorUtility.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Utilities\DateTimeExtensions.cs">
       <Link>Utilities\DateTimeExtensions.cs</Link>
     </Compile>
