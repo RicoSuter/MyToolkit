@@ -260,6 +260,31 @@ namespace MyToolkit.Networking
 
 		public static HttpResponse Post(HttpPostRequest req, Action<HttpResponse> action)
 		{
+			return Post(req, action, "POST");
+		}
+		
+		public static HttpResponse Put(string uri, Action<HttpResponse> action)
+		{
+			return Post(new HttpPostRequest(uri), action, "PUT");
+		}
+		
+		public static HttpResponse Put(HttpPostRequest req, Action<HttpResponse> action)
+		{
+			return Post(req, action, "PUT");
+		}
+		
+		public static HttpResponse Delete(string uri, Action<HttpResponse> action)
+		{
+			return Post(new HttpPostRequest(uri), action, "DELETE");
+		}
+		
+		public static HttpResponse Delete(HttpPostRequest req, Action<HttpResponse> action)
+		{
+			return Post(req, action, "DELETE");
+		}
+		
+		private static HttpResponse Post(HttpPostRequest req, Action<HttpResponse> action, string method)
+		{
 			var response = new HttpResponse(req);
 			try
 			{
@@ -285,7 +310,7 @@ namespace MyToolkit.Networking
 						request.CookieContainer.Add(request.RequestUri, c);
 				}
 
-				request.Method = "POST";
+				request.Method = method;
 				if (req.ContentType != null)
 					request.ContentType = req.ContentType;
 
