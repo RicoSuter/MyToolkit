@@ -86,6 +86,8 @@ namespace MyToolkit.Multimedia
 					var arr = data.Split(',');
 					foreach (var d in arr)
 					{
+						var url = "";
+						var signature = "";
 						var tuple = new YouTubeUri();
 						foreach (var p in d.Split('&'))
 						{
@@ -97,23 +99,26 @@ namespace MyToolkit.Multimedia
 									var key = p.Substring(0, index);
 									var value = Uri.UnescapeDataString(p.Substring(index + 1));
 									if (key == "url")
-										tuple.url = value;
+										url = value;
 									else if (key == "itag")
 										tuple.Itag = int.Parse(value);
 									else if (key == "type" && value.Contains("video/mp4"))
 										tuple.Type = value;
+									else if (key == "sig")
+										signature = value;
 								}
 								catch { }
 							}
 						}
 
+						tuple.url = url + "&signature=" + signature;
 						if (tuple.IsValid)
 							urls.Add(tuple);
 					}
 
 					var itag = GetQualityIdentifier(quality);
 					foreach (var u in urls.Where(u => u.Itag > itag).ToArray())
-						urls.Remove(u);
+					    urls.Remove(u);
 				}
 				catch (Exception ex)
 				{
