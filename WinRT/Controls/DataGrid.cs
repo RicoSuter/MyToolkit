@@ -212,7 +212,7 @@ namespace MyToolkit.Controls
 				if (ItemsSource != null && !(ItemsSource is IObservableView))
 				{
 					var type = ItemsSource.GetType().GenericTypeArguments[0];
-					var newList = typeof(ExtendedObservableCollection<>).CreateGenericObject(type, ItemsSource);
+					var newList = typeof(ObservableView<>).CreateGenericObject(type, ItemsSource);
 					listControl.ItemsSource = newList;
 				}
 				else

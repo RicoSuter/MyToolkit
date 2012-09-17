@@ -12,6 +12,8 @@ using Windows.UI.Xaml.Navigation;
 
 namespace MyToolkit.Controls
 {
+	public delegate void MyNavigatedEventHandler(object sender, MyNavigationEventArgs e);
+
 	public class PageFrame : ContentControl, INavigate
 	{
 		public PageFrame()
@@ -23,7 +25,7 @@ namespace MyToolkit.Controls
 
 		public Stack<object> PageStack { get; private set; }
 
-		public event NavigatedEventHandler Navigated;
+		public event MyNavigatedEventHandler Navigated;
 
 		public bool GoBack()
 		{
@@ -39,7 +41,11 @@ namespace MyToolkit.Controls
 			PageStack.Pop();
 
 			var page = PageStack.Peek();
-            NavigationEventArgs args = null; // new NavigationEventArgs(page, null, page.GetType(), null, NavigationMode.Back); TOOD find solution
+
+            var args = new MyNavigationEventArgs();
+			args.Content = page;
+			args.Type = page.GetType();
+			args.NavigationMode = NavigationMode.Back; 
 
 			if (Navigated != null)
 				Navigated(this, args);
@@ -66,22 +72,15 @@ namespace MyToolkit.Controls
 			return false;
 		}
 
-		private Type nextType;
-		private object nextParameter; 
 		private void NavigateEx(Type type, object parameter)
 		{
-			if (Content == null)
-			{
-				if (nextType != null)
-					throw new Exception();
-
-				nextType = type;
-				nextParameter = parameter;
-				return; 
-			}
-
 			var page = (Control)Activator.CreateInstance(type);
-            NavigationEventArgs args = null; // new NavigationEventArgs(page, parameter, type, null, NavigationMode.New); // TODO find solution
+
+			var args = new MyNavigationEventArgs();
+			args.Content = page;
+			args.Parameter = parameter;
+			args.Type = type;
+			args.NavigationMode = NavigationMode.New;
 		
 			PageStack.Push(page);
 			Content = page;
@@ -92,14 +91,18 @@ namespace MyToolkit.Controls
 
 			if (page is Page)
 			{
-				var method = typeof(Page).GetTypeInfo().GetDeclaredMethod("OnNavigatedTo");
-				method.Invoke(page, new object[] { args });
+				var method = type.GetTypeInfo().GetDeclaredMethods("OnNavigatedTo").
+					SingleOrDefault(m => m.GetParameters().Length == 1 && 
+						m.GetParameters()[0].ParameterType == typeof(MyNavigationEventArgs));
+
+				if (method != null)
+					method.Invoke(page, new object[] { args });
 			}
 		}
 
 		protected virtual void OnPageCreated(object sender, object page) { }
 
-		protected virtual void OnNavigated(object sender, NavigationEventArgs e)
+		protected virtual void OnNavigated(object sender, MyNavigationEventArgs e)
 		{
 			var page = e.Content;
 			InjectPageFrame(page);
@@ -150,5 +153,13 @@ namespace MyToolkit.Controls
 			}
 			return false; 
 		}
+	}
+
+	public class MyNavigationEventArgs
+	{
+		public object Content { get; set; }
+		public object Parameter { get; set; }
+		public Type Type { get; set; }
+		public NavigationMode NavigationMode { get; set; }
 	}
 }
