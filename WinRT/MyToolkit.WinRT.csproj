@@ -239,6 +239,8 @@
     </Compile>
     <Compile Include="Animations\Fading.cs" />
     <Compile Include="Animations\Flipping.cs" />
+    <Compile Include="Collections\ExtendedNotifyCollectionChangedEventArgs.cs" />
+    <Compile Include="Collections\NotifyPropertyChangedListListener.cs" />
     <Compile Include="Controls\ExtendedItemsControl.cs" />
     <Compile Include="Controls\ExtendedTextBox.cs" />
     <Compile Include="Controls\FadingImage.cs" />
