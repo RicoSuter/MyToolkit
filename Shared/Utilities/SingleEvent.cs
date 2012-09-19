@@ -28,6 +28,23 @@ namespace MyToolkit.Utilities
 			register(sender, wrapper.Handler);
 		}
 
+		//internal class SingleObjectRoutedEventHandlerContainer
+		//{
+		//	internal object Handler;
+		//}
+
+		//public static void RegisterRouted<TObj, THandler, T>(TObj sender, Action<TObj, THandler> register,
+		//	Action<TObj, THandler> unregister, Action<object, T> action) where T : RoutedEventArgs
+		//{
+		//	var wrapper = new SingleObjectRoutedEventHandlerContainer();
+		//	wrapper.Handler = delegate(object s, T args)
+		//	{
+		//		unregister((TObj)s, wrapper.Handler); 
+		//		action(sender, args);
+		//	};
+		//	register(sender, (THandler)wrapper.Handler);
+		//}
+
 		internal class SingleRoutedEventHandlerContainer
 		{
 			internal RoutedEventHandler Handler;
@@ -70,6 +87,14 @@ namespace MyToolkit.Utilities
 			Register(sender, register, unregister, (o, args) => task.SetResult(args));
 			return task.Task;
 		}
+
+		//public static Task WaitForRoutedEventAsync<TObj, THandler, T>(TObj sender, Action<TObj, THandler> register,
+		//	Action<TObj, THandler> unregister) where T : RoutedEventArgs
+		//{
+		//	var task = new TaskCompletionSource<T>();
+		//	RegisterRouted<TObj, THandler, T>(sender, register, unregister, (o, args) => task.SetResult(args));
+		//	return task.Task;
+		//}
 		
 		public static Task WaitForEventAsync<TObj>(TObj sender, Action<TObj, RoutedEventHandler> register,
 			Action<TObj, RoutedEventHandler> unregister)
