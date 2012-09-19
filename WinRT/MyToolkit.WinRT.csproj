@@ -45,8 +45,14 @@
     <Compile Include="..\Phone\Utilities\EntityContainer.cs">
       <Link>Utilities\EntityContainer.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Collections\ExtendedNotifyCollectionChangedEventArgs.cs">
+      <Link>Collections\ExtendedNotifyCollectionChangedEventArgs.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Collections\ExtendedObservableCollection.cs">
       <Link>Collections\ExtendedObservableCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Collections\NotifyPropertyChangedListListener.cs">
+      <Link>Collections\NotifyPropertyChangedListListener.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Collections\ObservableView.cs">
       <Link>Collections\ObservableView.cs</Link>
@@ -239,8 +245,6 @@
     </Compile>
     <Compile Include="Animations\Fading.cs" />
     <Compile Include="Animations\Flipping.cs" />
-    <Compile Include="Collections\ExtendedNotifyCollectionChangedEventArgs.cs" />
-    <Compile Include="Collections\NotifyPropertyChangedListListener.cs" />
     <Compile Include="Controls\ExtendedItemsControl.cs" />
     <Compile Include="Controls\ExtendedTextBox.cs" />
     <Compile Include="Controls\FadingImage.cs" />
