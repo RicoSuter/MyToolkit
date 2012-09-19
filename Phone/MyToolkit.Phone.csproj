@@ -59,6 +59,9 @@
     <Compile Include="..\shared\animation\Flipping.cs">
       <Link>Animation\Flipping.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Collections\ExtendedNotifyCollectionChangedEventArgs.cs">
+      <Link>Collections\ExtendedNotifyCollectionChangedEventArgs.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Collections\ExtendedObservableCollection.cs">
       <Link>Collections\ExtendedObservableCollection.cs</Link>
     </Compile>
