@@ -8,20 +8,10 @@ using Windows.UI.Xaml.Controls;
 
 namespace MyToolkit.Controls
 {
-	public class ExtendedListBox : ListBox
+	public class ExtendedItemsControl : ItemsControl
 	{
-		//public Thickness InnerMargin
-		//{
-		//	get { return Padding; }
-		//	set { Padding = value; }
-		//}
-
-		public ListBoxItem GetListBoxItemFromItem(object item)
-		{
-			return (ListBoxItem)ItemContainerGenerator.ContainerFromItem(item);
-		}
-
 		public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
+		
 		protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
 		{
 			base.PrepareContainerForItemOverride(element, item);
