@@ -80,7 +80,7 @@ namespace MyToolkit.Utilities
 		}
 
 #if METRO
-		public static Task WaitForEventAsync<TObj, T>(TObj sender, Action<TObj, EventHandler<T>> register,
+		public static Task<T> WaitForEventAsync<TObj, T>(TObj sender, Action<TObj, EventHandler<T>> register,
 			Action<TObj, EventHandler<T>> unregister) where T : EventArgs
 		{
 			var task = new TaskCompletionSource<T>();
@@ -95,16 +95,16 @@ namespace MyToolkit.Utilities
 		//	RegisterRouted<TObj, THandler, T>(sender, register, unregister, (o, args) => task.SetResult(args));
 		//	return task.Task;
 		//}
-		
-		public static Task WaitForEventAsync<TObj>(TObj sender, Action<TObj, RoutedEventHandler> register,
+
+		public static Task<RoutedEventArgs> WaitForEventAsync<TObj>(TObj sender, Action<TObj, RoutedEventHandler> register,
 			Action<TObj, RoutedEventHandler> unregister)
 		{
 			var task = new TaskCompletionSource<RoutedEventArgs>();
 			Register(sender, register, unregister, (o, args) => task.SetResult(args));
 			return task.Task;
 		}
-		
-		public static Task WaitForEventAsync<TObj>(TObj sender, Action<TObj, ExceptionRoutedEventHandler> register,
+
+		public static Task<RoutedEventArgs> WaitForEventAsync<TObj>(TObj sender, Action<TObj, ExceptionRoutedEventHandler> register,
 			Action<TObj, ExceptionRoutedEventHandler> unregister)
 		{
 			var task = new TaskCompletionSource<RoutedEventArgs>();

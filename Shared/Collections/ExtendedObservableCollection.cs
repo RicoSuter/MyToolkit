@@ -60,5 +60,47 @@ namespace MyToolkit.Collections
 			OnPropertyChanged(new PropertyChangedEventArgs("Count"));
 			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 		}
+
+		private List<T> previousList = null;
+		private event EventHandler<ExtendedNotifyCollectionChangedEventArgs<T>> extendedCollectionChanged;
+		public event EventHandler<ExtendedNotifyCollectionChangedEventArgs<T>> ExtendedCollectionChanged
+		{
+			add
+			{
+				extendedCollectionChanged += value;
+				if (previousList == null)
+					previousList = new List<T>(this);
+			}
+			remove { extendedCollectionChanged -= value; }
+		}
+
+		protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+		{
+			base.OnCollectionChanged(e);
+
+			var copy = extendedCollectionChanged;
+			if (copy != null)
+			{
+				var addedItems = new List<T>();
+				foreach (var i in this.Where(x => !previousList.Contains(x))) // new itemss
+				{
+					addedItems.Add(i);
+					previousList.Add(i);
+				}
+
+				var removedItems = new List<T>();
+				foreach (var i in previousList.Where(x => !Contains(x)).ToArray()) // deleted items
+				{
+					removedItems.Add(i);
+					previousList.Remove(i);
+				}
+
+				copy(this, new ExtendedNotifyCollectionChangedEventArgs<T>
+				{
+					AddedItems = addedItems, 
+					RemovedItems = removedItems
+				});
+			}
+		}
 	}
 }
