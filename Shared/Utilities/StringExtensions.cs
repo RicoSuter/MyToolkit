@@ -32,5 +32,26 @@ namespace MyToolkit.Utilities
 			var index = text.LastIndexOf(" ", length, StringComparison.Ordinal);
 			return string.Format("{0}...", text.Substring(0, (index > 0) ? index : text.Length).Trim());
 		}
+
+		public static string TrimStart(this string input, string trimString)
+		{
+			var result = input;
+			while (result.StartsWith(trimString))
+				result = result.Substring(trimString.Length);
+			return result;
+		}
+
+		public static string TrimEnd(this string input, string trimString)
+		{
+			var result = input;
+			while (result.EndsWith(trimString))
+				result = result.Substring(0, result.Length - trimString.Length);
+			return result;
+		}
+
+		public static string Trim(this string input, string trimString)
+		{
+			return input.TrimStart(trimString).TrimEnd(trimString);
+		}
 	}
 }
