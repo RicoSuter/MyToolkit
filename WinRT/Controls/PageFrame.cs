@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -18,6 +19,8 @@ namespace MyToolkit.Controls
 	{
 		public PageFrame()
 		{
+			HorizontalContentAlignment = HorizontalAlignment.Stretch;
+			VerticalContentAlignment = VerticalAlignment.Stretch;
 			PageStack = new Stack<object>();
 		}
 
@@ -68,6 +71,7 @@ namespace MyToolkit.Controls
 		{
 			if (CallPrepareMethod(() => NavigateEx(type, parameter)))
 				return true;
+
 			NavigateEx(type, parameter);
 			return false;
 		}
