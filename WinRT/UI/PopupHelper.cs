@@ -18,12 +18,12 @@ namespace MyToolkit.UI
 			((Popup) control.Tag).IsOpen = false; 
 		}
 
-		public static Task<Popup> ShowDialogAsync<T>(T control, bool isLightDismissEnabled = false, bool isHorizontal = true) where T : FrameworkElement
+		public static Task<Popup> ShowDialogAsync(FrameworkElement control, bool isLightDismissEnabled = false, bool isHorizontal = true)
 		{
-			return TaskHelper.RunCallbackMethod<T, Popup>((x, y) => ShowDialog(x, isLightDismissEnabled, isHorizontal, y), control);
+			return TaskHelper.RunCallbackMethod<FrameworkElement, Popup>((x, y) => ShowDialog(x, isLightDismissEnabled, isHorizontal, y), control);
 		}
 
-		public static Popup ShowDialog<T>(T control, bool isLightDismissEnabled = false, bool isHorizontal = true, Action<Popup> closed = null) where T : FrameworkElement
+		public static Popup ShowDialog(FrameworkElement control, bool isLightDismissEnabled = false, bool isHorizontal = true, Action<Popup> closed = null)
 		{
 			var parent = (FrameworkElement)Window.Current.Content;
 
