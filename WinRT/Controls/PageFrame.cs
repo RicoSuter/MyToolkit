@@ -55,8 +55,14 @@ namespace MyToolkit.Controls
 
 			if (page is Page)
 			{
-				var method = typeof(Page).GetTypeInfo().GetDeclaredMethod("OnNavigatedTo");
-				method.Invoke(page, new object[] { args });
+				var method = page.GetType().GetTypeInfo().GetDeclaredMethods("OnNavigatedTo").
+					SingleOrDefault(m => m.GetParameters().Length == 1 && 
+						m.GetParameters()[0].ParameterType == typeof(MyNavigationEventArgs));
+				if (method != null)
+					method.Invoke(page, new object[] { args });
+
+				//var method = typeof(Page).GetTypeInfo().GetDeclaredMethod("OnNavigatedTo");
+				//method.Invoke(page, new object[] { args });
 			}
 
 			Content = page;
@@ -98,7 +104,6 @@ namespace MyToolkit.Controls
 				var method = type.GetTypeInfo().GetDeclaredMethods("OnNavigatedTo").
 					SingleOrDefault(m => m.GetParameters().Length == 1 && 
 						m.GetParameters()[0].ParameterType == typeof(MyNavigationEventArgs));
-
 				if (method != null)
 					method.Invoke(page, new object[] { args });
 			}

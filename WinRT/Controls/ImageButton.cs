@@ -7,18 +7,29 @@ using Windows.UI.Xaml.Input;
 
 namespace MyToolkit.Controls
 {
+	public enum ImageButtonState
+	{
+		Normal, 
+		Over, 
+		Pressed
+	}
+
 	public class ImageButton : Control
 	{
+		public ImageButtonState State { get; private set; }
+
 		public ImageButton()
 		{
 			DefaultStyleKey = typeof(ImageButton);
+
+			State = ImageButtonState.Normal;
 
 			PointerPressed += OnPointerPressed;
 			PointerReleased += OnPointerReleased;
 			PointerExited += OnPointerExited;
 			PointerEntered += OnPointerEntered;
 
-			Tapped += OnTapped; 
+			//Tapped += OnTapped; 
 		}
 
 		private ContentPresenter content;
@@ -45,31 +56,38 @@ namespace MyToolkit.Controls
 
 		private void OnPointerReleased(object sender, PointerRoutedEventArgs e)
 		{
+			if (State == ImageButtonState.Pressed)
+				OnTapped(sender, null);
 			SetStandardContent();
 		}
 
 		private void OnPointerPressed(object sender, PointerRoutedEventArgs e)
 		{
+			e.Handled = true; 
 			SetPressedContent();
 		}
 
+
 		private void SetStandardContent()
 		{
+			State = ImageButtonState.Normal;
 			content.Content = Content;
 		}
 
 		private void SetPressedContent()
 		{
+			State = ImageButtonState.Pressed;
 			if (PressedContent != null)
 				content.Content = PressedContent;
 		}
 
 		private void SetOverContent()
 		{
+			State = ImageButtonState.Over;
 			if (OverContent != null)
 				content.Content = OverContent;
 		}
-
+		
 
 		private void OnTapped(object sender, TappedRoutedEventArgs e)
 		{
@@ -81,7 +99,6 @@ namespace MyToolkit.Controls
 				Command.Execute(CommandParameter);
 		}
 		
-
 		public event RoutedEventHandler Click;
 
 

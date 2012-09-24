@@ -34,7 +34,7 @@ namespace MyToolkit.Controls
 				return;
 
 			loaded = true; 
-			await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, delegate { BuildUp(); });
+			await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, BuildUp);
 		}
 
 		private Grid titleRowControl;

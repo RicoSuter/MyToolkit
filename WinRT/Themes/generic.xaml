@@ -43,8 +43,7 @@
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
 
-						<TextBlock Grid.Column="0" Text="{Binding Header}" VerticalAlignment="Center" Margin="15,0,15,0" 
-								   Style="{StaticResource HeaderTextStyle}" />
+						<TextBlock Grid.Column="0" Text="{Binding Header}" VerticalAlignment="Center" Margin="15,0,15,0" FontSize="26.667" />
 						<StackPanel Grid.Column="1" Visibility="{Binding IsSelected, Converter={StaticResource vc}}" 
 									VerticalAlignment="Center" HorizontalAlignment="Left">
 							<Path Data="M5,0 L0,10 L10,10 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource vc}}"/>
