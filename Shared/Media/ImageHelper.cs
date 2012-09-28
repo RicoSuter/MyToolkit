@@ -240,7 +240,7 @@ namespace MyToolkit.Media
 										{
 #if METRO
 											var local = pendingCompletion;
-											var newStream = new MemoryRandomAccessStream(pendingCompletion.rstream); //pendingCompletion.Stream.AsRandomAccessStream();
+											var newStream = pendingCompletion.Stream.AsRandomAccessStream();
 											var task = bitmap.SetSourceAsync(newStream).AsTask();
 											task.GetAwaiter().OnCompleted(delegate
 												{
@@ -340,21 +340,12 @@ namespace MyToolkit.Media
 			public WebResponse Response { get; private set; }
 			public Stream Stream { get; private set; }
 
-#if METRO
-			public byte[] rstream;
-#endif
-
-
 			public PendingCompletion(Image image, Uri uri, WebResponse response, Stream stream)
 			{
 				Image = image;
 				Uri = uri;
 				Response = response;
 				Stream = stream;
-
-				var reader = new StreamReader(stream, Encoding.UTF8);
-				var x = reader.ReadToEnd();
-				rstream = Encoding.UTF8.GetBytes(x);
 			}
 
 			public void Dispose()
