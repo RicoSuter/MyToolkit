@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
+using System.Text;
 using MyToolkit.Networking;
 
 #if METRO
@@ -11,6 +13,7 @@ using System.Threading;
 using MyToolkit.Utilities;
 using Windows.Foundation;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.System.Threading;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -102,7 +105,7 @@ namespace MyToolkit.Media
 						Monitor.Pulse(_syncBlock);
 				}
 			}
-		}
+		} 
 
 		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Relevant exceptions don't have a common base class.")]
 		[SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Linear flow is easy to understand.")]
@@ -236,22 +239,36 @@ namespace MyToolkit.Media
 										try
 										{
 #if METRO
-											// TODO use awaitable SetSource
-											//await bitmap.SetSourceAsync(pendingCompletion.Stream.AsRandomAccessStream());
-											bitmap.SetSource(pendingCompletion.Stream.AsRandomAccessStream());
+											var local = pendingCompletion;
+											var newStream = new MemoryRandomAccessStream(pendingCompletion.rstream); //pendingCompletion.Stream.AsRandomAccessStream();
+											var task = bitmap.SetSourceAsync(newStream).AsTask();
+											task.GetAwaiter().OnCompleted(delegate
+												{
+													newStream.Dispose();
+													if (task.Exception != null)
+														bitmap.UriSource = new Uri("http://0.0.0.0");
+													local.Image.Source = bitmap;
+													local.Dispose();
+												});
 #else
 											bitmap.SetSource(pendingCompletion.Stream);
+											pendingCompletion.Image.Source = bitmap;
+											pendingCompletion.Dispose();
 #endif
 										}
 										catch (Exception e)
 										{ 
 											bitmap.UriSource = new Uri("http://0.0.0.0");
+											pendingCompletion.Image.Source = bitmap;
+											pendingCompletion.Dispose();
 										}
 									}
 									else // web exception
+									{
 										bitmap.UriSource = new Uri("http://0.0.0.0"); // TODO: used to trigger ImageFailed => better way?
-
-									pendingCompletion.Image.Source = bitmap;
+										pendingCompletion.Image.Source = bitmap;
+										pendingCompletion.Dispose();
+									}
 								}
 							}
 						}
@@ -322,12 +339,22 @@ namespace MyToolkit.Media
 			public Uri Uri { get; private set; }
 			public WebResponse Response { get; private set; }
 			public Stream Stream { get; private set; }
+
+#if METRO
+			public byte[] rstream;
+#endif
+
+
 			public PendingCompletion(Image image, Uri uri, WebResponse response, Stream stream)
 			{
 				Image = image;
 				Uri = uri;
 				Response = response;
 				Stream = stream;
+
+				var reader = new StreamReader(stream, Encoding.UTF8);
+				var x = reader.ReadToEnd();
+				rstream = Encoding.UTF8.GetBytes(x);
 			}
 
 			public void Dispose()
