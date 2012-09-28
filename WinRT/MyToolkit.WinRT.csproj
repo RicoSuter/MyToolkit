@@ -270,10 +270,16 @@
     <Compile Include="Environment\Device.cs" />
     <Compile Include="MEF\CompositionContainer.cs" />
     <Compile Include="Messaging\GenericMessage.cs" />
+    <Compile Include="Paging\MyLayoutAwarePage.cs" />
+    <Compile Include="Paging\MyNavigationEventArgs.cs" />
+    <Compile Include="Paging\MyPage.cs" />
+    <Compile Include="Paging\MyPlainPage.cs" />
+    <Compile Include="Paging\MySuspensionManager.cs" />
+    <Compile Include="Paging\PageDescription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourceDictionary.cs" />
     <Compile Include="Resources\Strings.cs" />
-    <Compile Include="Controls\PageFrame.cs" />
+    <Compile Include="Paging\MyFrame.cs" />
     <Compile Include="Storage\ApplicationSettings.cs" />
     <Compile Include="UI\PopupHelper.cs" />
     <Compile Include="UI\TemplatedVisualTreeExtensions.cs" />
