@@ -84,8 +84,7 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 		{
 			if (link.StartsWith("mailto:"))
 				return () => new EmailComposeTask {To = link.Substring(7)}.Show();
-			if (link.StartsWith("tel:"))
-				return () => new PhoneCallTask { PhoneNumber = link.Substring(4) }.Show();
+			// 'tel:' removed because it needs CAP_PHONEDIALER capability! Use PhoneLinkGenerator from "- Other" directory. 
 
 			try
 			{
