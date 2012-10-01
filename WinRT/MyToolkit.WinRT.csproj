@@ -267,6 +267,7 @@
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\NavigationList.cs" />
     <Compile Include="Controls\RolloverButton.cs" />
+    <Compile Include="Converters\ChainedConverter.cs" />
     <Compile Include="Environment\Device.cs" />
     <Compile Include="MEF\CompositionContainer.cs" />
     <Compile Include="Messaging\GenericMessage.cs" />
