@@ -129,8 +129,6 @@ namespace MyToolkit.Paging
 				var description = pageStack.Peek();
 				var page = description.GetPage(this);
 
-				page.IsHitTestVisible = false; // disable interactions while animating
-
 				var called = false;
 				var continuationAction = new Action(() => 
 					Window.Current.Dispatcher.RunAsync(
@@ -145,7 +143,10 @@ namespace MyToolkit.Paging
 							}
 						}));
 
-				return page.OnPrepareNavigatingFrom(continuationAction);
+				var result = page.OnPrepareNavigatingFrom(continuationAction);
+				if (result)
+					page.IsHitTestVisible = false; // disable interactions while animating
+				return result;
 			}
 			return false; 
 		}

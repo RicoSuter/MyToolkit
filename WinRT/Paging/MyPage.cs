@@ -24,7 +24,7 @@ namespace MyToolkit.Paging
 				while (frameState.Remove(nextPageKey))
 				{
 					nextPageIndex++;
-					nextPageKey = "Page-" + nextPageIndex;
+					nextPageKey = "Page" + nextPageIndex;
 				}
 				LoadState(e.Parameter, null);
 			}
