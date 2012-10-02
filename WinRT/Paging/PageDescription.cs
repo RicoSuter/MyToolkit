@@ -11,11 +11,11 @@ namespace MyToolkit.Paging
 			type = pageType;
 
 			TypeName = pageType.AssemblyQualifiedName;
-			Paramter = parameter;
+			Parameter = parameter;
 		}
 
 		public string TypeName { get; set; }
-		public object Paramter { get; set; }
+		public object Parameter { get; set; }
 
 		private MyPage page;
 		public MyPage GetPage(MyFrame frame)

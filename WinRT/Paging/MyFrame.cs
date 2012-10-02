@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using MyToolkit.Utilities;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -83,7 +84,7 @@ namespace MyToolkit.Paging
 			var args = new MyNavigationEventArgs();
 			args.Content = page;
 			args.Type = description.Type;
-			args.Parameter = description.Paramter;
+			args.Parameter = description.Parameter;
 			args.NavigationMode = mode;
 			page.OnNavigatedFrom(args);
 		}
@@ -94,7 +95,7 @@ namespace MyToolkit.Paging
 			var args = new MyNavigationEventArgs();
 			args.Content = page;
 			args.Type = description.Type;
-			args.Parameter = description.Paramter;
+			args.Parameter = description.Parameter;
 			args.NavigationMode = mode;
 			page.OnNavigatingFrom(args);
 		}
@@ -105,7 +106,7 @@ namespace MyToolkit.Paging
 			var args = new MyNavigationEventArgs();
 			args.Content = page;
 			args.Type = description.Type;
-			args.Parameter = description.Paramter;
+			args.Parameter = description.Parameter;
 			args.NavigationMode = mode;
 			page.OnNavigatedTo(args);
 
@@ -153,7 +154,7 @@ namespace MyToolkit.Paging
 
 		public void SetNavigationState(string s)
 		{
-			pageStack = new Stack<PageDescription>(Xml.Deserialize<List<PageDescription>>(s));
+			pageStack = new Stack<PageDescription>(DataContractSerialization.Deserialize<List<PageDescription>>(s));
 			Content = pageStack.Peek().GetPage(this);
 			CallOnNavigatedTo(pageStack.Peek(), NavigationMode.Refresh);
 		}
@@ -164,7 +165,7 @@ namespace MyToolkit.Paging
 			CallOnNavigatingFrom(oldPage, NavigationMode.Forward);
 			CallOnNavigatedFrom(oldPage, NavigationMode.Forward);
 
-			return Xml.Serialize(pageStack.ToList());
+			return DataContractSerialization.Serialize(pageStack.Reverse().ToList());
 		}
 
 		public int BackStackDepth

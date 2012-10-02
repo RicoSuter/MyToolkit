@@ -285,6 +285,7 @@
     <Compile Include="UI\PopupHelper.cs" />
     <Compile Include="UI\TemplatedVisualTreeExtensions.cs" />
     <Compile Include="UI\TiltEffect.cs" />
+    <Compile Include="Utilities\DataContractSerialization.cs" />
     <Compile Include="Utilities\PageUtilities.cs" />
     <Compile Include="Utilities\TaskHelper.cs" />
     <Compile Include="Utilities\Thread.cs" />
