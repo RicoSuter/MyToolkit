@@ -42,7 +42,7 @@ namespace MyToolkit.Paging
 		
 		public virtual void OnNavigatedTo(MyNavigationEventArgs e)
 		{
-			BottomAppBar.IsOpen = true; 
+			
 		}
 
 		public virtual void OnNavigatingFrom(MyNavigationEventArgs e)

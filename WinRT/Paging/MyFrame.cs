@@ -165,7 +165,7 @@ namespace MyToolkit.Paging
 			CallOnNavigatingFrom(oldPage, NavigationMode.Forward);
 			CallOnNavigatedFrom(oldPage, NavigationMode.Forward);
 
-			return DataContractSerialization.Serialize(pageStack.Reverse().ToList());
+			return DataContractSerialization.Serialize(pageStack.Reverse().ToList(), true);
 		}
 
 		public int BackStackDepth
