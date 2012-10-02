@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
 					xmlns:controls="using:MyToolkit.Controls" 
-					xmlns:converters="using:MyToolkit.Converters">
+					xmlns:converters="using:MyToolkit.Converters" xmlns:Paging="using:MyToolkit.Paging">
 
 	<converters:NotConverter x:Key="nc" />
 	<converters:VisibilityConverter x:Key="vc" />
@@ -307,5 +307,17 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+	<Style TargetType="Paging:MyPlainPage">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Paging:MyPlainPage">
+					<Page TopAppBar="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TopAppBar}"
+						  BottomAppBar="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BottomAppBar}"
+						  Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" />
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 </ResourceDictionary>
   

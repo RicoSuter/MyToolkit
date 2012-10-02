@@ -58,6 +58,7 @@ namespace MyToolkit.Paging
 		{
 			if (CallPrepareMethod(() => NavigateEx(type, parameter)))
 				return true;
+
 			NavigateEx(type, parameter);
 			return false;
 		}
@@ -128,13 +129,11 @@ namespace MyToolkit.Paging
 				var description = pageStack.Peek();
 				var page = description.GetPage(this);
 
-				var method = page.GetType().GetTypeInfo().GetDeclaredMethod("OnPrepareNavigatingFrom");
-				if (method != null && method.GetParameters().Count() == 1)
-				{
-					page.IsHitTestVisible = false; // disable interactions while animating
-					var called = false;
+				page.IsHitTestVisible = false; // disable interactions while animating
 
-					var continuationAction = new Action(() => Window.Current.Dispatcher.RunAsync(
+				var called = false;
+				var continuationAction = new Action(() => 
+					Window.Current.Dispatcher.RunAsync(
 						Windows.UI.Core.CoreDispatcherPriority.Normal,
 						delegate
 						{
@@ -146,9 +145,7 @@ namespace MyToolkit.Paging
 							}
 						}));
 
-					method.Invoke(page, new object[] { continuationAction });
-					return true;
-				}
+				return page.OnPrepareNavigatingFrom(continuationAction);
 			}
 			return false; 
 		}

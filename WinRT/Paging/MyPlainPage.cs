@@ -1,12 +1,48 @@
+using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Markup;
 
 namespace MyToolkit.Paging
 {
-	public class MyPlainPage : UserControl
+	[ContentProperty(Name = "Content")]
+	public class MyPlainPage : Control
 	{
+		public MyPlainPage()
+		{
+			DefaultStyleKey = typeof(MyPlainPage);
+		}
+
+		public static readonly DependencyProperty TopAppBarProperty =
+			DependencyProperty.Register("TopAppBar", typeof(AppBar), typeof(MyPlainPage), new PropertyMetadata(default(AppBar)));
+
+		public AppBar TopAppBar
+		{
+			get { return (AppBar)GetValue(TopAppBarProperty); }
+			set { SetValue(TopAppBarProperty, value); }
+		}
+
+		public static readonly DependencyProperty BottomAppBarProperty =
+			DependencyProperty.Register("BottomAppBar", typeof(AppBar), typeof(MyPlainPage), new PropertyMetadata(default(AppBar)));
+
+		public AppBar BottomAppBar
+		{
+			get { return (AppBar)GetValue(BottomAppBarProperty); }
+			set { SetValue(BottomAppBarProperty, value); }
+		}
+		
+		public static readonly DependencyProperty ContentProperty =
+			DependencyProperty.Register("Content", typeof (FrameworkElement), typeof (MyPlainPage), new PropertyMetadata(default(FrameworkElement)));
+
+		public FrameworkElement Content
+		{
+			get { return (FrameworkElement) GetValue(ContentProperty); }
+			set { SetValue(ContentProperty, value); }
+		}
+		
 		public virtual void OnNavigatedTo(MyNavigationEventArgs e)
 		{
-			
+			BottomAppBar.IsOpen = true; 
 		}
 
 		public virtual void OnNavigatingFrom(MyNavigationEventArgs e)
@@ -17,6 +53,11 @@ namespace MyToolkit.Paging
 		public virtual void OnNavigatedFrom(MyNavigationEventArgs e)
 		{
 			
+		}
+
+		public virtual bool OnPrepareNavigatingFrom(Action continuationAction)
+		{
+			return false; 
 		}
 	}
 }
