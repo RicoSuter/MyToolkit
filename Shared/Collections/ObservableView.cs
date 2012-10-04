@@ -7,11 +7,6 @@ using System.ComponentModel;
 using System.Linq;
 using MyToolkit.Utilities;
 
-#if METRO
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
-#endif
-
 namespace MyToolkit.Collections
 {
 	public class ObservableView<T> : IList<T>, IObservableView
