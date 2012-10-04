@@ -308,10 +308,10 @@
         </Setter>
     </Style>
 
-	<Style TargetType="Paging:MyPlainPage">
+	<Style TargetType="Paging:Page">
 		<Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="Paging:MyPlainPage">
+				<ControlTemplate TargetType="Paging:Page">
 					<Page TopAppBar="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TopAppBar}"
 						  BottomAppBar="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BottomAppBar}"
 						  Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" />

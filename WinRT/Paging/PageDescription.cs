@@ -34,12 +34,12 @@ namespace MyToolkit.Paging
 			set { Parameter = value; }
 		}
 
-		private MyPage page;
-		public MyPage GetPage(MyFrame frame)
+		private Page page;
+		public Page GetPage(Frame frame)
 		{
 			if (page == null)
 			{
-				page = (MyPage)Activator.CreateInstance(Type);
+				page = (Page)Activator.CreateInstance(Type);
 				page.Frame = frame;
 			}
 			return page;

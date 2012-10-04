@@ -39,9 +39,11 @@ namespace MyToolkit.Controls
 
 		private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
 		{
-			if (SelectedItem != null)
-				OnNavigate(new NavigationListEventArgs(SelectedItem));
+			var item = SelectedItem;
 			SelectedItem = null;
+			SelectedIndex = -1;
+			if (item != null)
+				OnNavigate(new NavigationListEventArgs(item));
 		}
 
 		public event EventHandler<NavigationListEventArgs> Navigate;

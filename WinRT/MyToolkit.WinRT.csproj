@@ -51,8 +51,8 @@
     <Compile Include="..\Shared\Collections\ExtendedObservableCollection.cs">
       <Link>Collections\ExtendedObservableCollection.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Collections\NotifyPropertyChangedListListener.cs">
-      <Link>Collections\NotifyPropertyChangedListListener.cs</Link>
+    <Compile Include="..\Shared\Collections\ObservableCollectionObserver.cs">
+      <Link>Collections\ObservableCollectionObserver.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Collections\ObservableView.cs">
       <Link>Collections\ObservableView.cs</Link>
@@ -271,16 +271,18 @@
     <Compile Include="Environment\Device.cs" />
     <Compile Include="MEF\CompositionContainer.cs" />
     <Compile Include="Messaging\GenericMessage.cs" />
-    <Compile Include="Paging\MyLayoutAwarePage.cs" />
-    <Compile Include="Paging\MyNavigationEventArgs.cs" />
-    <Compile Include="Paging\MyPage.cs" />
-    <Compile Include="Paging\MyPlainPage.cs" />
-    <Compile Include="Paging\MySuspensionManager.cs" />
+    <Compile Include="Messaging\GoBackMessage.cs" />
+    <Compile Include="Messaging\NavigateMessage.cs" />
+    <Compile Include="Paging\LayoutAwarePage.cs" />
+    <Compile Include="Paging\NavigationEventArgs.cs" />
+    <Compile Include="Paging\SuspendablePage.cs" />
+    <Compile Include="Paging\Page.cs" />
+    <Compile Include="Paging\SuspensionManager.cs" />
     <Compile Include="Paging\PageDescription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\ResourceDictionary.cs" />
     <Compile Include="Resources\Strings.cs" />
-    <Compile Include="Paging\MyFrame.cs" />
+    <Compile Include="Paging\Frame.cs" />
     <Compile Include="Storage\ApplicationSettings.cs" />
     <Compile Include="UI\PopupHelper.cs" />
     <Compile Include="UI\TemplatedVisualTreeExtensions.cs" />
