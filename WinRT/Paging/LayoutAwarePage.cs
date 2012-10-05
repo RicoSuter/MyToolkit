@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using MyToolkit.UI;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 
 namespace MyToolkit.Paging
 {
@@ -67,46 +71,57 @@ namespace MyToolkit.Paging
         private void OnAcceleratorKeyActivated(CoreDispatcher sender,
             AcceleratorKeyEventArgs args)
         {
-            var virtualKey = args.VirtualKey;
-
-			if ((args.EventType == CoreAcceleratorKeyEventType.SystemKeyDown || args.EventType == CoreAcceleratorKeyEventType.KeyDown))
+			if (args.Handled)
+				return;
+			
+			var virtualKey = args.VirtualKey;
+			if (args.EventType == CoreAcceleratorKeyEventType.SystemKeyDown || args.EventType == CoreAcceleratorKeyEventType.KeyDown)
 			{
-				if (UseBackKeyToGoBack && !args.Handled && virtualKey == VirtualKey.Back &&
-					args.EventType == CoreAcceleratorKeyEventType.KeyDown)
+				var isLeftOrRightKey = (virtualKey == VirtualKey.Left || virtualKey == VirtualKey.Right || 
+					(int) virtualKey == 166 || (int) virtualKey == 167);
+				var isBackKey = virtualKey == VirtualKey.Back;
+
+				if (isLeftOrRightKey || isBackKey)
 				{
 					var element = FocusManager.GetFocusedElement();
-					if (!(element is TextBox) && !(element is PasswordBox) && !(element is WebView) && Frame.CanGoBack)
+					if (element is FrameworkElement && PopupHelper.IsInPopup((FrameworkElement)element))
+						return;
+
+					if (isBackKey)
 					{
-						args.Handled = true;
-						Frame.GoBack();
+						if (UseBackKeyToGoBack)
+						{
+							if (!(element is TextBox) && !(element is PasswordBox) && !(element is WebView) && Frame.CanGoBack)
+							{
+								args.Handled = true;
+								Frame.GoBack();
+							}
+						}
 					}
-				}
-
-				if ((virtualKey == VirtualKey.Left || virtualKey == VirtualKey.Right || 
-					(int)virtualKey == 166 || (int)virtualKey == 167))
-				{
-					const CoreVirtualKeyStates downState = CoreVirtualKeyStates.Down;
-
-					var coreWindow = Window.Current.CoreWindow;
-					var menuKey = (coreWindow.GetKeyState(VirtualKey.Menu) & downState) == downState;
-					var controlKey = (coreWindow.GetKeyState(VirtualKey.Control) & downState) == downState;
-					var shiftKey = (coreWindow.GetKeyState(VirtualKey.Shift) & downState) == downState;
-					var noModifiers = !menuKey && !controlKey && !shiftKey;
-					var onlyAlt = menuKey && !controlKey && !shiftKey;
-
-					if (((int)virtualKey == 166 && noModifiers) || (virtualKey == VirtualKey.Left && onlyAlt))
+					else
 					{
-						args.Handled = true;
-						GoBack(this, new RoutedEventArgs());
-					}
-					else if (((int)virtualKey == 167 && noModifiers) || (virtualKey == VirtualKey.Right && onlyAlt))
-					{
-						args.Handled = true;
-						GoForward(this, new RoutedEventArgs());
+						const CoreVirtualKeyStates downState = CoreVirtualKeyStates.Down;
+
+						var coreWindow = Window.Current.CoreWindow;
+						var menuKey = (coreWindow.GetKeyState(VirtualKey.Menu) & downState) == downState;
+						var controlKey = (coreWindow.GetKeyState(VirtualKey.Control) & downState) == downState;
+						var shiftKey = (coreWindow.GetKeyState(VirtualKey.Shift) & downState) == downState;
+						var noModifiers = !menuKey && !controlKey && !shiftKey;
+						var onlyAlt = menuKey && !controlKey && !shiftKey;
+
+						if (((int)virtualKey == 166 && noModifiers) || (virtualKey == VirtualKey.Left && onlyAlt))
+						{
+							args.Handled = true;
+							GoBack(this, new RoutedEventArgs());
+						}
+						else if (((int)virtualKey == 167 && noModifiers) || (virtualKey == VirtualKey.Right && onlyAlt))
+						{
+							args.Handled = true;
+							GoForward(this, new RoutedEventArgs());
+						}
 					}
 				}
 			}
-			
         }
 
         private void OnPointerPressed(CoreWindow sender, PointerEventArgs args)

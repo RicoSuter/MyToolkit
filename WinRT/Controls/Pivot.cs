@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using MyToolkit.UI.UIExtensionMethods;
+﻿using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
-using Windows.UI.Xaml.Media;
 
 namespace MyToolkit.Controls
 {

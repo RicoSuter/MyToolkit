@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyToolkit.UI;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Core;
@@ -27,6 +28,9 @@ namespace MyToolkit.Utilities
 							args.EventType == CoreAcceleratorKeyEventType.SystemKeyDown))
 					{
 						var element = FocusManager.GetFocusedElement();
+						if (element is FrameworkElement && PopupHelper.IsInPopup((FrameworkElement)element))
+							return;
+
 						if (element is TextBox || element is PasswordBox || element is WebView)
 							return; 
 

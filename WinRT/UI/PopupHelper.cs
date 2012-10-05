@@ -13,6 +13,18 @@ namespace MyToolkit.UI
 {
 	public static class PopupHelper
 	{
+		public static bool IsInPopup(FrameworkElement element)
+		{
+			if (element is Popup)
+				return true;
+
+			var last = element.GetVisualAncestors().LastOrDefault();
+			if (last != null && last.Parent is Popup)
+				return true;
+
+			return false; 
+		}
+
 		public static void ClosePopup(this FrameworkElement control)
 		{
 			((Popup) control.Tag).IsOpen = false; 

@@ -39,9 +39,6 @@
     <Compile Include="..\Phone\Collections\Group.cs">
       <Link>Collections\Group.cs</Link>
     </Compile>
-    <Compile Include="..\Phone\UI\FrameworkElementExtensions.cs">
-      <Link>UI\FrameworkElementExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Phone\Utilities\EntityContainer.cs">
       <Link>Utilities\EntityContainer.cs</Link>
     </Compile>
@@ -200,6 +197,9 @@
     </Compile>
     <Compile Include="..\Shared\UI\Designer.cs">
       <Link>UI\Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\UI\FrameworkElementExtensions.cs">
+      <Link>UI\FrameworkElementExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\ColorUtility.cs">
       <Link>Utilities\ColorUtility.cs</Link>

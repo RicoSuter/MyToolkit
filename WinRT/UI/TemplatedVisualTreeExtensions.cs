@@ -6,7 +6,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using MyToolkit.UI.UIExtensionMethods;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
