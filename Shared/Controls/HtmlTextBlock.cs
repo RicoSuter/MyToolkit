@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using MyToolkit.Controls.HtmlTextBlockImplementation;
-using MyToolkit.UI.UIExtensionMethods;
 
 #if METRO
+using MyToolkit.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 #else
