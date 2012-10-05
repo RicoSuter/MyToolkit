@@ -1,7 +1,5 @@
 using System;
-using System.Reflection;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
 using MyToolkit.Utilities;
 
 namespace MyToolkit.Paging

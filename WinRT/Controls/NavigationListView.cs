@@ -41,9 +41,16 @@ namespace MyToolkit.Controls
 		{
 			var item = SelectedItem;
 			SelectedItem = null;
-			SelectedIndex = -1;
 			if (item != null)
+			{
 				OnNavigate(new NavigationListEventArgs(item));
+
+				if (Visibility == Visibility.Visible) // element still selected when navigating back workaround
+				{
+					Visibility = Visibility.Collapsed;
+					Visibility = Visibility.Visible;
+				}
+			}
 		}
 
 		public event EventHandler<NavigationListEventArgs> Navigate;
