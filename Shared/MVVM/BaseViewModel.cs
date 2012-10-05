@@ -2,7 +2,7 @@ using MyToolkit.MVVM;
 
 namespace MyToolkit.MVVM
 {
-	public class BaseViewModel<T> : NotifyPropertyChanged<T>
+	public class BaseViewModel<T> : NotifyPropertyChanged<T> where T : BaseViewModel<T>
 	{
 		private int loadingCounter = 0;
 		public bool IsLoading
