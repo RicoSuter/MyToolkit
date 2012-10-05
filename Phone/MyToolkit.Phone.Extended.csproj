@@ -145,6 +145,9 @@
     <Compile Include="..\Shared\UI\Designer.cs">
       <Link>UI\Designer.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\UI\FrameworkElementExtensions.cs">
+      <Link>UI\FrameworkElementExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\UI\TextBinding.cs">
       <Link>UI\TextBinding.cs</Link>
     </Compile>
@@ -187,7 +190,6 @@
     </Compile>
     <Compile Include="Controls\ExtendedListBox.cs" />
     <Compile Include="Controls\FixedNavigationList.cs" />
-    <Compile Include="UI\FrameworkElementExtensions.cs" />
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="UI\PageDeactivator.cs" />
     <Compile Include="UI\PasswordBoxBinding.cs" />
