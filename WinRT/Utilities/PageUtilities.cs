@@ -22,14 +22,19 @@ namespace MyToolkit.Utilities
 			var callback = new TypedEventHandler<CoreDispatcher, AcceleratorKeyEventArgs>(
 				delegate(CoreDispatcher sender, AcceleratorKeyEventArgs args)
 				{
-					if (!args.Handled && args.VirtualKey == VirtualKey.Back && args.EventType == CoreAcceleratorKeyEventType.KeyUp)
+					if (!args.Handled && args.VirtualKey == VirtualKey.Back &&
+						(args.EventType == CoreAcceleratorKeyEventType.KeyDown || 
+							args.EventType == CoreAcceleratorKeyEventType.SystemKeyDown))
 					{
 						var element = FocusManager.GetFocusedElement();
 						if (element is TextBox || element is PasswordBox || element is WebView)
 							return; 
 
 						if (page.Frame.CanGoBack)
+						{
+							args.Handled = true;
 							page.Frame.GoBack();
+						}
 					}
 				});
 

@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace MyToolkit.Paging
 {
     public class LayoutAwarePage : SuspendablePage
     {
         private List<Control> layoutAwareControls;
+		public bool UseBackKeyToGoBack { get; set; }
 
 		public LayoutAwarePage()
-        {
+		{
+			UseBackKeyToGoBack = true; 
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) 
 				return;
 
@@ -24,11 +26,8 @@ namespace MyToolkit.Paging
                 if (ActualHeight == Window.Current.Bounds.Height &&
                     ActualWidth == Window.Current.Bounds.Width)
                 {
-                    // Listen to the window directly so focus isn't required
-                    Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated +=
-                        OnAcceleratorKeyActivated;
-                    Window.Current.CoreWindow.PointerPressed +=
-                        OnPointerPressed;
+                    Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += OnAcceleratorKeyActivated;
+                    Window.Current.CoreWindow.PointerPressed += OnPointerPressed;
                 }
             };
 
@@ -44,7 +43,7 @@ namespace MyToolkit.Paging
 
         #region Navigation support
 
-       protected virtual void GoHome(object sender, RoutedEventArgs e)
+		protected virtual void GoHome(object sender, RoutedEventArgs e)
         {
             if (Frame != null)
             {
@@ -65,74 +64,66 @@ namespace MyToolkit.Paging
 				Frame.GoForward();
         }
 
-        /// <summary>
-        /// Invoked on every keystroke, including system keys such as Alt key combinations, when
-        /// this page is active and occupies the entire window.  Used to detect keyboard navigation
-        /// between pages even when the page itself doesn't have focus.
-        /// </summary>
-        /// <param name="sender">Instance that triggered the event.</param>
-        /// <param name="args">Event data describing the conditions that led to the event.</param>
         private void OnAcceleratorKeyActivated(CoreDispatcher sender,
             AcceleratorKeyEventArgs args)
         {
             var virtualKey = args.VirtualKey;
 
-            // Only investigate further when Left, Right, or the dedicated Previous or Next keys
-            // are pressed
-            if ((args.EventType == CoreAcceleratorKeyEventType.SystemKeyDown ||
-                args.EventType == CoreAcceleratorKeyEventType.KeyDown) &&
-                (virtualKey == VirtualKey.Left || virtualKey == VirtualKey.Right ||
-                (int)virtualKey == 166 || (int)virtualKey == 167))
-            {
-                var coreWindow = Window.Current.CoreWindow;
-                var downState = CoreVirtualKeyStates.Down;
-                bool menuKey = (coreWindow.GetKeyState(VirtualKey.Menu) & downState) == downState;
-                bool controlKey = (coreWindow.GetKeyState(VirtualKey.Control) & downState) == downState;
-                bool shiftKey = (coreWindow.GetKeyState(VirtualKey.Shift) & downState) == downState;
-                bool noModifiers = !menuKey && !controlKey && !shiftKey;
-                bool onlyAlt = menuKey && !controlKey && !shiftKey;
+			if ((args.EventType == CoreAcceleratorKeyEventType.SystemKeyDown || args.EventType == CoreAcceleratorKeyEventType.KeyDown))
+			{
+				if (UseBackKeyToGoBack && !args.Handled && virtualKey == VirtualKey.Back &&
+					args.EventType == CoreAcceleratorKeyEventType.KeyDown)
+				{
+					var element = FocusManager.GetFocusedElement();
+					if (!(element is TextBox) && !(element is PasswordBox) && !(element is WebView) && Frame.CanGoBack)
+					{
+						args.Handled = true;
+						Frame.GoBack();
+					}
+				}
 
-                if (((int)virtualKey == 166 && noModifiers) ||
-                    (virtualKey == VirtualKey.Left && onlyAlt))
-                {
-                    // When the previous key or Alt+Left are pressed navigate back
-                    args.Handled = true;
-                    this.GoBack(this, new RoutedEventArgs());
-                }
-                else if (((int)virtualKey == 167 && noModifiers) ||
-                    (virtualKey == VirtualKey.Right && onlyAlt))
-                {
-                    // When the next key or Alt+Right are pressed navigate forward
-                    args.Handled = true;
-                    this.GoForward(this, new RoutedEventArgs());
-                }
-            }
+				if ((virtualKey == VirtualKey.Left || virtualKey == VirtualKey.Right || 
+					(int)virtualKey == 166 || (int)virtualKey == 167))
+				{
+					const CoreVirtualKeyStates downState = CoreVirtualKeyStates.Down;
+
+					var coreWindow = Window.Current.CoreWindow;
+					var menuKey = (coreWindow.GetKeyState(VirtualKey.Menu) & downState) == downState;
+					var controlKey = (coreWindow.GetKeyState(VirtualKey.Control) & downState) == downState;
+					var shiftKey = (coreWindow.GetKeyState(VirtualKey.Shift) & downState) == downState;
+					var noModifiers = !menuKey && !controlKey && !shiftKey;
+					var onlyAlt = menuKey && !controlKey && !shiftKey;
+
+					if (((int)virtualKey == 166 && noModifiers) || (virtualKey == VirtualKey.Left && onlyAlt))
+					{
+						args.Handled = true;
+						GoBack(this, new RoutedEventArgs());
+					}
+					else if (((int)virtualKey == 167 && noModifiers) || (virtualKey == VirtualKey.Right && onlyAlt))
+					{
+						args.Handled = true;
+						GoForward(this, new RoutedEventArgs());
+					}
+				}
+			}
+			
         }
 
-        /// <summary>
-        /// Invoked on every mouse click, touch screen tap, or equivalent interaction when this
-        /// page is active and occupies the entire window.  Used to detect browser-style next and
-        /// previous mouse button clicks to navigate between pages.
-        /// </summary>
-        /// <param name="sender">Instance that triggered the event.</param>
-        /// <param name="args">Event data describing the conditions that led to the event.</param>
-        private void OnPointerPressed(CoreWindow sender,
-            PointerEventArgs args)
+        private void OnPointerPressed(CoreWindow sender, PointerEventArgs args)
         {
             var properties = args.CurrentPoint.Properties;
+			if (properties.IsLeftButtonPressed || properties.IsRightButtonPressed || properties.IsMiddleButtonPressed) 
+				return;
 
-            // Ignore button chords with the left, right, and middle buttons
-            if (properties.IsLeftButtonPressed || properties.IsRightButtonPressed ||
-                properties.IsMiddleButtonPressed) return;
-
-            // If back or foward are pressed (but not both) navigate appropriately
-            bool backPressed = properties.IsXButton1Pressed;
-            bool forwardPressed = properties.IsXButton2Pressed;
+            var backPressed = properties.IsXButton1Pressed;
+            var forwardPressed = properties.IsXButton2Pressed;
             if (backPressed ^ forwardPressed)
             {
                 args.Handled = true;
-                if (backPressed) this.GoBack(this, new RoutedEventArgs());
-                if (forwardPressed) this.GoForward(this, new RoutedEventArgs());
+                if (backPressed) 
+					GoBack(this, new RoutedEventArgs());
+                if (forwardPressed) 
+					GoForward(this, new RoutedEventArgs());
             }
         }
 
