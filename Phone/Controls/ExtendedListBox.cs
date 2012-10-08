@@ -5,7 +5,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
 using Microsoft.Phone.Controls;
-using MyToolkit.UI.UIExtensionMethods;
+using MyToolkit.UI;
 
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
 
