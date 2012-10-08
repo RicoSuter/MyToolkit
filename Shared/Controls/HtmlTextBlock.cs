@@ -9,6 +9,8 @@ using Windows.UI.Xaml.Controls;
 #else
 using System.Windows;
 using System.Windows.Controls;
+using MyToolkit.UI;
+
 #endif
 
 namespace MyToolkit.Controls
