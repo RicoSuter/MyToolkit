@@ -25,7 +25,31 @@ namespace MyToolkit.Converters
 			if (value is string)
 				return !String.IsNullOrEmpty((string)value)  ? Visibility.Visible : Visibility.Collapsed;
 			if (value is IList)
-				return ((IList)value).Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+			{
+				var list = (IList)value;
+				if (list.Count == 0)
+					return Visibility.Collapsed;
+
+				if (parameter is string)
+				{
+					var p = parameter.ToString();
+					if (p.StartsWith("CheckAll:"))
+					{
+						p = p.Substring(9);
+						foreach (var item in list)
+						{
+							var property = item.GetType().GetProperty(p);
+							if (property != null)
+							{
+								var val = property.GetValue(item, null);
+								if ((Visibility)Convert(val, typeof(Visibility), null, null) == Visibility.Visible)
+									return Visibility.Collapsed;
+							}
+						}
+					}
+				}
+				return Visibility.Visible;
+			}
 			if (value is int)
 				return (int)value > 0 ? Visibility.Visible : Visibility.Collapsed;
 			if (value is Visibility)
