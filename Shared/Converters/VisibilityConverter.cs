@@ -5,6 +5,7 @@ using System.Collections;
 using System.Windows;
 using System.Windows.Data;
 #else
+using System.Reflection;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml;
 #endif
@@ -38,7 +39,11 @@ namespace MyToolkit.Converters
 						p = p.Substring(9);
 						foreach (var item in list)
 						{
+#if METRO
+							var property = item.GetType().GetTypeInfo().GetDeclaredProperty(p);
+#else
 							var property = item.GetType().GetProperty(p);
+#endif
 							if (property != null)
 							{
 								var val = property.GetValue(item, null);
