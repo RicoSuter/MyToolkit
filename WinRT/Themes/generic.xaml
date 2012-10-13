@@ -75,9 +75,9 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
-	</Style>	
-	
-	<Style x:Key="TransparentListBox" TargetType="ListBox">
+	</Style>
+
+	<Style TargetType="controls:ExtendedListBox">
 		<Setter Property="Foreground" Value="{StaticResource ListBoxForegroundThemeBrush}"/>
 		<Setter Property="Background" Value="Transparent"/>
 		<Setter Property="BorderBrush" Value="{StaticResource ListBoxBorderThemeBrush}"/>
@@ -102,7 +102,7 @@
 		</Setter>
 		<Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="ListBox">
+				<ControlTemplate TargetType="controls:ExtendedListBox">
 					<Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" 
 							BorderThickness="{TemplateBinding BorderThickness}" 
 							Background="{TemplateBinding Background}">

@@ -10,6 +10,11 @@ namespace MyToolkit.Controls
 {
 	public class ExtendedListBox : ListBox
 	{
+		public ExtendedListBox()
+		{
+			DefaultStyleKey = typeof(ExtendedListBox);
+		}
+
 		//public Thickness InnerMargin
 		//{
 		//	get { return Padding; }
