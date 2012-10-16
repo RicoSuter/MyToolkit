@@ -10,7 +10,6 @@ using Windows.Storage.Streams;
 #else
 using System.Net;
 using System.Net.Sockets;
-using System.Threading.Tasks;
 using System.Windows;
 #endif
 
@@ -60,13 +59,16 @@ namespace MyToolkit.Networking
 			for (var i = 0; i < 16; i++) // Repeat 16 times the MAC address
 				packet.AddRange(macAddress);
 
-			var socket = new DatagramSocket();
-			await socket.ConnectAsync(endPoint, port.ToString());
-
-			var stream = socket.OutputStream;
-			var writer = new DataWriter(stream);
-			writer.WriteBytes(packet.ToArray());
-			await writer.StoreAsync();
+			using (var socket = new DatagramSocket())
+			{
+				await socket.ConnectAsync(endPoint, port.ToString());
+				var stream = socket.OutputStream;
+				using (var writer = new DataWriter(stream))
+				{
+					writer.WriteBytes(packet.ToArray());
+					await writer.StoreAsync();
+				}				
+			}
 		}
 #else
 		public static void Wake(string macAddress, Action sentAction, Action<SocketError> failureAction)
