@@ -1,9 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
+#if METRO
+using System.Threading.Tasks;
+using Windows.Networking;
+using Windows.Networking.Sockets;
+using Windows.Storage.Streams;
+#else
 using System.Net;
 using System.Net.Sockets;
-using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
+#endif
 
 namespace MyToolkit.Networking
 {
@@ -32,6 +41,34 @@ namespace MyToolkit.Networking
 			}
 		}
 
+#if METRO
+		public static Task WakeAsync(string macAddress)
+		{
+			return WakeAsync(new HostName("255.255.255.255"), 7, MacAddressToBytes(macAddress));
+		}
+
+		public static Task WakeAsync(string host, int port, string macAddress)
+		{
+			return WakeAsync(new HostName(host), 7, MacAddressToBytes(macAddress));
+		}
+
+		public static async Task WakeAsync(HostName endPoint, int port, byte[] macAddress)
+		{
+			var packet = new List<byte>();
+			for (var i = 0; i < 6; i++) // Trailer of 6 FF packets
+				packet.Add(0xFF);
+			for (var i = 0; i < 16; i++) // Repeat 16 times the MAC address
+				packet.AddRange(macAddress);
+
+			var socket = new DatagramSocket();
+			await socket.ConnectAsync(endPoint, port.ToString());
+
+			var stream = socket.OutputStream;
+			var writer = new DataWriter(stream);
+			writer.WriteBytes(packet.ToArray());
+			await writer.StoreAsync();
+		}
+#else
 		public static void Wake(string macAddress, Action sentAction, Action<SocketError> failureAction)
 		{
 			Wake(new IPEndPoint(IPAddress.Broadcast, 7), MacAddressToBytes(macAddress), sentAction, failureAction);
@@ -49,7 +86,7 @@ namespace MyToolkit.Networking
 				packet.Add(0xFF);
 			for (var i = 0; i < 16; i++) // Repeat 16 times the MAC address
 				packet.AddRange(macAddress);
-			
+
 			var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 			var args = new SocketAsyncEventArgs();
 			args.RemoteEndPoint = endPoint;
@@ -77,5 +114,6 @@ namespace MyToolkit.Networking
 			};
 			socket.ConnectAsync(args);
 		}
+#endif
 	}
 }
