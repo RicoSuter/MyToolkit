@@ -70,12 +70,44 @@ namespace MyToolkit.UI
 			parent.Opacity = 0.5; 
 			parent.IsHitTestVisible = false;
 
+			var topAppBarVisibility = Visibility.Collapsed;
+			var bottomAppBarVisibility = Visibility.Collapsed;
+			if (parent is Paging.Frame)
+			{
+				var page = ((Paging.Frame)parent).Content as Paging.Page;
+				if (page != null)
+				{
+					if (page.TopAppBar != null)
+					{
+						topAppBarVisibility = page.TopAppBar.Visibility;
+						page.TopAppBar.Visibility = Visibility.Collapsed;
+					}
+					if (page.BottomAppBar != null)
+					{
+						bottomAppBarVisibility = page.BottomAppBar.Visibility;
+						page.BottomAppBar.Visibility = Visibility.Collapsed;
+					}
+				}
+			}
+
 			popup.Child = control;
 			popup.IsLightDismissEnabled = isLightDismissEnabled;
 			popup.Closed += delegate
 			{
 				parent.Opacity = oldOpacity; 
 				parent.IsHitTestVisible = true;
+
+				if (parent is Paging.Frame)
+				{
+					var page = ((Paging.Frame)parent).Content as Paging.Page;
+					if (page != null)
+					{
+						if (page.TopAppBar != null)
+							page.TopAppBar.Visibility = topAppBarVisibility;
+						if (page.BottomAppBar != null)
+							page.BottomAppBar.Visibility = bottomAppBarVisibility;
+					}
+				}
 
 				Window.Current.Activated -= del;
 				control.SizeChanged -= del2;

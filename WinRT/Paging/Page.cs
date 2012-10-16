@@ -16,6 +16,14 @@ namespace MyToolkit.Paging
 			DefaultStyleKey = typeof(Page);
 		}
 
+		public Windows.UI.Xaml.Controls.Page InternalPage { get; private set; }
+
+		protected override void OnApplyTemplate()
+		{
+			base.OnApplyTemplate();
+			InternalPage = (Windows.UI.Xaml.Controls.Page)GetTemplateChild("page");
+		}
+
 		public static readonly DependencyProperty TopAppBarProperty =
 			DependencyProperty.Register("TopAppBar", typeof(AppBar), typeof(Page), new PropertyMetadata(default(AppBar)));
 

@@ -12,7 +12,8 @@ using Windows.UI.Xaml.Media;
 
 namespace MyToolkit.Paging
 {
-    public class LayoutAwarePage : SuspendablePage
+	[Windows.Foundation.Metadata.WebHostHidden]
+	public class LayoutAwarePage : SuspendablePage
     {
         private List<Control> layoutAwareControls;
 		public bool UseBackKeyToGoBack { get; set; }
@@ -25,7 +26,7 @@ namespace MyToolkit.Paging
 
             Loaded += (sender, e) =>
             {
-                StartLayoutUpdates(sender, e);
+                StartLayoutUpdates(InternalPage, e);
 
                 if (ActualHeight == Window.Current.Bounds.Height &&
                     ActualWidth == Window.Current.Bounds.Width)
@@ -37,7 +38,7 @@ namespace MyToolkit.Paging
 
             Unloaded += (sender, e) =>
             {
-                StopLayoutUpdates(sender, e);
+                StopLayoutUpdates(InternalPage, e);
                 Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -=
                     OnAcceleratorKeyActivated;
                 Window.Current.CoreWindow.PointerPressed -=
