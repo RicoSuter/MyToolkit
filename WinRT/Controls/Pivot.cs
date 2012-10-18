@@ -27,18 +27,25 @@ namespace MyToolkit.Controls
 			list.SelectedIndex = 0; 
 		}
 
-		private void OnSelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
+		public event SelectionChangedEventHandler SelectionChanged;
+
+		private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
 		{
 			var item = (PivotItem)list.SelectedItem;
 			//content.ContentTemplate = item.Template;
 			//content.Content = this.FindParentDataContext();
 			content.Content = item.Content;
+
+			SelectedIndex = list.SelectedIndex;
+			SelectedItem = list.SelectedItem;
+
+			var copy = SelectionChanged;
+			if (copy != null)
+				copy(sender, args);
 		}
 
 		private readonly ObservableCollection<PivotItem> items = new ObservableCollection<PivotItem>();
 		public ObservableCollection<PivotItem> Items { get { return items; } }
-
-
 
 
 		public static readonly DependencyProperty HeaderTemplateProperty =
@@ -48,6 +55,26 @@ namespace MyToolkit.Controls
 		{
 			get { return (DataTemplate) GetValue(HeaderTemplateProperty); }
 			set { SetValue(HeaderTemplateProperty, value); }
+		}
+
+
+		public static readonly DependencyProperty SelectedItemProperty =
+			DependencyProperty.Register("SelectedItem", typeof(object), typeof(Pivot), new PropertyMetadata(default(object), (o, args) => ((Pivot)o).list.SelectedItem = args.NewValue));
+
+		public object SelectedItem
+		{
+			get { return GetValue(SelectedItemProperty); }
+			set { SetValue(SelectedItemProperty, value); }
+		}
+
+
+		public static readonly DependencyProperty SelectedIndexProperty =
+			DependencyProperty.Register("SelectedIndex", typeof(int), typeof(Pivot), new PropertyMetadata(default(int), (o, args) => ((Pivot)o).list.SelectedIndex = (int)args.NewValue));
+
+		public int SelectedIndex
+		{
+			get { return (int) GetValue(SelectedIndexProperty); }
+			set { SetValue(SelectedIndexProperty, value); }
 		}	
 	}
 }

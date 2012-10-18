@@ -18,7 +18,13 @@ namespace MyToolkit.Controls
 		}
 
 		public static readonly DependencyProperty TextProperty =
-			DependencyProperty.Register("Text", typeof (string), typeof (ExtendedTextBox), new PropertyMetadata(default(string)));
+			DependencyProperty.Register("Text", typeof (string), typeof (ExtendedTextBox), 
+			new PropertyMetadata(default(string), (o, args) => ((ExtendedTextBox)o).SetText(args.NewValue)));
+
+		private void SetText(object newValue)
+		{
+			base.Text = newValue != null ? (String)newValue : "";
+		}
 
 		public string Text
 		{

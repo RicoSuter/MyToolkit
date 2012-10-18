@@ -211,14 +211,14 @@ namespace MyToolkit.Networking
 				if (req.ContentType != null)
 					request.ContentType = req.ContentType;
 
-				if (req.Header.Count > 0)
+				if (req.Headers.Count > 0)
 				{
-					foreach (var item in req.Header)
+					foreach (var item in req.Headers)
 						request.Headers[item.Key] = item.Value;
 				}
 
 #if USE_GZIP
-				if (req.RequestGZIP)
+				if (req.RequestGzip)
 					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
 #endif
 
@@ -314,14 +314,14 @@ namespace MyToolkit.Networking
 				if (req.ContentType != null)
 					request.ContentType = req.ContentType;
 
-				if (req.Header.Count > 0)
+				if (req.Headers.Count > 0)
 				{
-					foreach (var item in req.Header)
+					foreach (var item in req.Headers)
 						request.Headers[item.Key] = item.Value;
 				}
 
 #if USE_GZIP
-				if (req.RequestGZIP)
+				if (req.RequestGzip)
 					request.Headers[HttpRequestHeader.AcceptEncoding] = "gzip";
 #endif
 
@@ -492,6 +492,12 @@ namespace MyToolkit.Networking
 							foreach (var c in HttpUtilityExtensions.ParseQueryString(cookies.Substring(0, index)))
 								resp.Cookies.Add(new Cookie(c.Key, c.Value));
 						}
+					}
+
+					foreach (var key in origResponse.Headers.AllKeys)
+					{
+						var value = origResponse.Headers[key];
+						resp.Headers.Add(key, value);
 					}
 				}
 			}

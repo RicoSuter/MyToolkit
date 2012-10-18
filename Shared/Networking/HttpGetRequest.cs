@@ -36,7 +36,7 @@ namespace MyToolkit.Networking
 		{
 			Uri = uri;
 			Query = query ?? new Dictionary<string, string>();
-			Header = new Dictionary<string, string>(); 
+			Headers = new Dictionary<string, string>(); 
 			Cookies = new List<Cookie>();
 			UseCache = true;
 			Encoding = Encoding.UTF8;
@@ -44,7 +44,7 @@ namespace MyToolkit.Networking
 			ResponseAsStream = false; 
 
 			#if USE_GZIP
-			RequestGZIP = true; 
+			RequestGzip = true; 
 			#endif
 		}
 
@@ -59,7 +59,7 @@ namespace MyToolkit.Networking
 		public Uri Uri { get; private set; }
 		public Dictionary<string, string> Query { get; private set; }
 		public List<Cookie> Cookies { get; private set; }
-		public Dictionary<string, string> Header { get; private set; }
+		public Dictionary<string, string> Headers { get; private set; }
 
 
 		public bool UseCache { get; set; }
@@ -70,7 +70,7 @@ namespace MyToolkit.Networking
 		public ICredentials Credentials { get; set; }
 
 		#if USE_GZIP
-		public bool RequestGZIP { get; set; }
+		public bool RequestGzip { get; set; }
 		#endif
 	}
 }

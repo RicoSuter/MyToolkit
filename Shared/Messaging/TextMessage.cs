@@ -1,4 +1,6 @@
-﻿namespace MyToolkit.Messaging
+﻿using System;
+
+namespace MyToolkit.Messaging
 {
 	public class TextMessage
 	{
@@ -33,5 +35,21 @@
 		public MessageButton Button { get; set; }
 
 		public MessageResult Result { get; set; }
+
+#if METRO
+		public static Action<TextMessage> GetAction()
+		{
+			return m =>
+			{
+				if (m.Button == MessageButton.OK)
+				{
+					var msg = new Windows.UI.Popups.MessageDialog(m.Text, m.Title);
+					msg.ShowAsync();
+				}
+				else
+					throw new NotImplementedException();
+			};
+		}
+#endif
 	}
 }

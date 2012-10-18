@@ -27,6 +27,7 @@ namespace MyToolkit.Controls
 #if !METRO
 			InnerMargin = new Thickness(24, 0, 24, 0);
 			FontSize = (double)Resources["PhoneFontSizeNormal"];
+#else
 			
 #endif
 			Margin = new Thickness(0);

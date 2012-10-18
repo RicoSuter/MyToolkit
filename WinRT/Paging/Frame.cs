@@ -87,7 +87,7 @@ namespace MyToolkit.Paging
 			args.Type = description.Type;
 			args.Parameter = description.Parameter;
 			args.NavigationMode = mode;
-			page.OnNavigatedFrom(args);
+			page.InternalOnNavigatedFrom(args);
 		}
 
 		private void CallOnNavigatingFrom(PageDescription description, NavigationMode mode)
@@ -98,7 +98,7 @@ namespace MyToolkit.Paging
 			args.Type = description.Type;
 			args.Parameter = description.Parameter;
 			args.NavigationMode = mode;
-			page.OnNavigatingFrom(args);
+			page.InternalOnNavigatingFrom(args);
 		}
 
 		private void CallOnNavigatedTo(PageDescription description, NavigationMode mode)
@@ -109,7 +109,7 @@ namespace MyToolkit.Paging
 			args.Type = description.Type;
 			args.Parameter = description.Parameter;
 			args.NavigationMode = mode;
-			page.OnNavigatedTo(args);
+			page.InternalOnNavigatedTo(args);
 
 			if (Navigated != null)
 				Navigated(this, args);

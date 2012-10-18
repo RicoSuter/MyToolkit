@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using MyToolkit.Utilities;
 using Windows.Storage;
+using Windows.Storage.Streams;
 
 namespace MyToolkit.Storage
 {
@@ -39,17 +41,21 @@ namespace MyToolkit.Storage
 			return false;
 		}
 
-		public static void SetXmlSetting<T>(string key, T value, bool roaming = false)
+		public static async Task SetSettingToFileAsync<T>(string key, T value, bool roaming = false)
 		{
-			SetSetting(key, Xml.Serialize(value), roaming);
+			var file = roaming ? await ApplicationData.Current.RoamingFolder.CreateFileAsync(key + ".settings", CreationCollisionOption.ReplaceExisting) :
+				await ApplicationData.Current.LocalFolder.CreateFileAsync(key + ".settings", CreationCollisionOption.ReplaceExisting);
+
+			await FileIO.WriteTextAsync(file, Xml.Serialize(value), UnicodeEncoding.Utf8);
 		}
 
-		public static T GetXmlSetting<T>(string key, T defaultValue, bool roaming = false)
+		public static async Task<T> GetSettingFromFileAsync<T>(string key, T defaultValue, bool roaming = false)
 		{
-			var xml = GetSetting<string>(key, null, roaming);
-			if (xml != null)
-				return Xml.Deserialize<T>(xml);
-			return defaultValue;
+			var file = roaming ? await ApplicationData.Current.RoamingFolder.CreateFileAsync(key + ".settings", CreationCollisionOption.OpenIfExists) :
+				await ApplicationData.Current.LocalFolder.CreateFileAsync(key + ".settings", CreationCollisionOption.OpenIfExists);
+
+			var xml = await FileIO.ReadTextAsync(file, UnicodeEncoding.Utf8);
+			return !String.IsNullOrEmpty(xml) ? Xml.Deserialize<T>(xml) : defaultValue;
 		}
 	}
 }

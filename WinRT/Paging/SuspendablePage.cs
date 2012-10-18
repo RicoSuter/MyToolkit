@@ -7,9 +7,10 @@ namespace MyToolkit.Paging
 	public class SuspendablePage : Page
 	{
 		private String pageKey;
-		public override void OnNavigatedTo(NavigationEventArgs e)
+
+		protected internal override void InternalOnNavigatedTo(NavigationEventArgs e)
 		{
-			base.OnNavigatedTo(e);
+			base.InternalOnNavigatedTo(e);
 			if (pageKey != null) // new instance
 				return;
 
@@ -31,9 +32,9 @@ namespace MyToolkit.Paging
 				LoadState(e.Parameter, (Dictionary<String, Object>)frameState[pageKey]);
 		}
 
-		public override void OnNavigatedFrom(NavigationEventArgs e)
+		protected internal override void InternalOnNavigatedFrom(NavigationEventArgs e)
 		{
-			base.OnNavigatedTo(e);
+			base.InternalOnNavigatedFrom(e);
 			if (e.NavigationMode != NavigationMode.Back)
 			{
 				var frameState = SuspensionManager.SessionStateForFrame(Frame);

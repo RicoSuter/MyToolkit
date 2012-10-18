@@ -18,7 +18,9 @@ namespace MyToolkit.Converters
 #endif		
 		{
 			var maxLength = int.Parse((string)parameter);
-			return value.ToString().TruncateWithoutChopping(maxLength);
+			if (value != null)
+				return value.ToString().TruncateWithoutChopping(maxLength);
+	        return null; 
 		}
 
 #if !METRO

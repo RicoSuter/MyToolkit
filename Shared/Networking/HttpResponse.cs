@@ -15,6 +15,7 @@ namespace MyToolkit.Networking
 		internal HttpResponse()
 		{
 			Cookies = new List<Cookie>();
+			Headers = new Dictionary<string, string>();
 		}
 
 		public HttpResponse(IHttpRequest request) : this()
@@ -85,8 +86,9 @@ namespace MyToolkit.Networking
 		public string Response { get { return RawResponse == null ? null : Request.Encoding.GetString(RawResponse, 0, RawResponse.Length); } }
 		public byte[] RawResponse { get; internal set; }
 		public Stream ResponseStream { get; internal set; }
-		
+
 		public List<Cookie> Cookies { get; private set; }
+		public Dictionary<string, string> Headers { get; private set; }
 
 		private HttpStatusCode code = HttpStatusCode.OK;
 		public HttpStatusCode HttpStatusCode

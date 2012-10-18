@@ -3,15 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 
 namespace MyToolkit.Controls
 {
 	public class NavigationList : ExtendedListBox
 	{
+		public NavigationList()
+		{
+			Foreground = new SolidColorBrush(Colors.White);
+		}
+
 		protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
 		{
 			base.PrepareContainerForItemOverride(element, item);

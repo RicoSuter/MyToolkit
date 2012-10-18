@@ -51,6 +51,7 @@ namespace MyToolkit.Paging
 			set { SetValue(ContentProperty, value); }
 		}
 		
+
 		public virtual void OnNavigatedTo(NavigationEventArgs e)
 		{
 			
@@ -69,6 +70,25 @@ namespace MyToolkit.Paging
 		public virtual bool OnPrepareNavigatingFrom(Action continuationAction)
 		{
 			return false; 
+		}
+
+
+		// internal methods ensure that base implementations of InternalOn* is always called
+		// even if user does not call base.InternalOn* in the overridden On* method. 
+
+		internal protected virtual void InternalOnNavigatedTo(NavigationEventArgs e)
+		{
+			OnNavigatedTo(e);
+		}
+
+		internal protected virtual void InternalOnNavigatingFrom(NavigationEventArgs e)
+		{
+			OnNavigatingFrom(e);
+		}
+
+		internal protected virtual void InternalOnNavigatedFrom(NavigationEventArgs e)
+		{
+			OnNavigatedTo(e);
 		}
 	}
 }
