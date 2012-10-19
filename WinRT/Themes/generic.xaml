@@ -391,22 +391,22 @@
 		<Setter Property="FontFamily" Value="Segoe UI Symbol"/>
 		<Setter Property="FontWeight" Value="Normal"/>
 		<Setter Property="FontSize" Value="20"/>
-		<Setter Property="AutomationProperties.ItemType" Value="App Bar Button"/>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:TextButton">
 					<Grid x:Name="RootGrid" Background="Transparent">
-						<StackPanel VerticalAlignment="Top" Margin="0,12,0,0" Orientation="Horizontal">
+						<StackPanel VerticalAlignment="Top" Margin="0,0,0,0" Orientation="Horizontal">
 							<Grid Width="40" Height="40" Margin="0,0,0,0" HorizontalAlignment="Center">
-								<TextBlock x:Name="BackgroundGlyph" Text="&#xE0A8;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-4,-19,0,0" Foreground="{StaticResource AppBarItemBackgroundThemeBrush}"/>
-								<TextBlock x:Name="OutlineGlyph" Text="&#xE0A7;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-4,-19,0,0"/>
-								<ContentPresenter x:Name="Content" HorizontalAlignment="Center" Margin="-1,-1,0,0" VerticalAlignment="Center"/>
+								<TextBlock x:Name="BackgroundGlyph" Text="&#xE0A8;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-3,-19,0,0" Foreground="{StaticResource AppBarItemBackgroundThemeBrush}"/>
+								<TextBlock x:Name="OutlineGlyph" Text="&#xE0A7;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-3,-19,0,0"/>
+								<ContentPresenter x:Name="Content" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center"/>
 							</Grid>
 							<TextBlock
                                 x:Name="TextLabel"
                                 Text="{TemplateBinding AutomationProperties.Name}"
                                 Foreground="{StaticResource AppBarItemForegroundThemeBrush}"
                                 Margin="10,0,0,0"
+								Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header, Converter={StaticResource vc}}"
                                 TextAlignment="Center"
                                 TextTrimming="WordEllipsis"
                                 Style="{StaticResource SubheaderTextStyle}"/>
