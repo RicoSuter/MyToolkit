@@ -25,6 +25,18 @@ namespace MyToolkit.Controls
 			DefaultStyleKey = typeof(PanAndZoomImage);
 		}
 
+		public event EventHandler<RoutedEventArgs> ImageOpened
+		{
+			add { image.ImageOpened += value; }
+			remove { image.ImageOpened += value; }
+		}
+
+		public event EventHandler<ExceptionRoutedEventArgs> ImageFailed
+		{
+			add { image.ImageFailed += value; }
+			remove { image.ImageFailed += value; }
+		}
+
 #if METRO
 		protected override void OnApplyTemplate()
 #else
@@ -35,6 +47,7 @@ namespace MyToolkit.Controls
 
 			image = (Image)GetTemplateChild("image");
 			image.IsHitTestVisible = false;
+
 
 			DependencyPropertyChangedEvent.Register(image, Image.SourceProperty, OnSourcePropertyChanged);
 			SizeChanged += delegate { UpdateMaxZoomFactor(); };
