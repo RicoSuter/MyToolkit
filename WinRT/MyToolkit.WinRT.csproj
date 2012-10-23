@@ -288,6 +288,7 @@
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="Paging\Frame.cs" />
     <Compile Include="Storage\ApplicationSettings.cs" />
+    <Compile Include="Storage\StorageFolderExtensions.cs" />
     <Compile Include="UI\PopupHelper.cs" />
     <Compile Include="UI\TemplatedVisualTreeExtensions.cs" />
     <Compile Include="UI\TiltEffect.cs" />
