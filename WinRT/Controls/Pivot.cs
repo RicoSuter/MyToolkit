@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace MyToolkit.Controls
 {
@@ -21,6 +22,9 @@ namespace MyToolkit.Controls
 
 			list = (ExtendedListBox)GetTemplateChild("List");
 			content = (ContentPresenter)GetTemplateChild("Content");
+
+			content.Transitions = new TransitionCollection();
+			content.Transitions.Add(new EntranceThemeTransition());
 
 			list.ItemsSource = Items;
 			list.SelectionChanged += OnSelectionChanged;

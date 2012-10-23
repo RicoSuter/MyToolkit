@@ -1,10 +1,11 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media.Animation;
 
 namespace MyToolkit.Controls
 {
 	[ContentProperty(Name = "Content")]
-	public class PivotItem : DependencyObject
+	public class PivotItem : FrameworkElement
 	{
 		public static readonly DependencyProperty HeaderProperty =
 			DependencyProperty.Register("Header", typeof (string), typeof (PivotItem), new PropertyMetadata(default(string)));

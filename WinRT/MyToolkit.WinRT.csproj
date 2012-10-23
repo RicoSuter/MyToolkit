@@ -252,6 +252,7 @@
     <Compile Include="Controls\ExtendedTextBox.cs" />
     <Compile Include="Controls\FadingImage.cs" />
     <Compile Include="Controls\LongListView.cs" />
+    <Compile Include="Controls\NavigationGridView.cs" />
     <Compile Include="Controls\NavigationListView.cs" />
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
