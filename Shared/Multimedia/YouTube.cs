@@ -215,7 +215,12 @@ namespace MyToolkit.Multimedia
 					delegate
 					{
 						if (page == PhonePage.CurrentPage) // !user navigated away
-							CancelPlay(manualActivatePage);
+						{
+							if (ex == null)
+								CancelPlay(manualActivatePage);
+							else
+								CancelPlay(false);
+						}
 
 						if (completed != null)
 							completed(ex);

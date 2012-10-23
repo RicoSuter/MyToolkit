@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -16,21 +17,21 @@ namespace MyToolkit.Utilities
 
 	public static class Xml
 	{
-		public static string Serialize(object obj)
+		public static string Serialize(object obj, Type[] extraTypes = null)
 		{
 			using (var sw = new StringWriter()) 
 			{
-				var serializer = new XmlSerializer(obj.GetType());
+				var serializer = extraTypes == null ? new XmlSerializer(obj.GetType()) : new XmlSerializer(obj.GetType(), extraTypes);
 				serializer.Serialize(sw, obj);
 				return sw.ToString();
 			}
 		}
 
-		public static T Deserialize<T>(string xml)
+		public static T Deserialize<T>(string xml, Type[] extraTypes = null)
 		{
 			using (var sw = new StringReader(xml))
 			{
-				var serializer = new XmlSerializer(typeof(T));
+				var serializer = extraTypes == null ? new XmlSerializer(typeof(T)) : new XmlSerializer(typeof(T), extraTypes);
 				return (T)serializer.Deserialize(sw);
 			}
 		}
