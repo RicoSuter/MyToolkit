@@ -403,7 +403,7 @@
 							</Grid>
 							<TextBlock
                                 x:Name="TextLabel"
-                                Text="{TemplateBinding AutomationProperties.Name}"
+                                Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header}"
                                 Foreground="{StaticResource AppBarItemForegroundThemeBrush}"
                                 Margin="10,0,0,0"
 								Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header, Converter={StaticResource vc}}"
