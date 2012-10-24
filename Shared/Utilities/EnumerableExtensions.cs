@@ -6,6 +6,17 @@ namespace MyToolkit.Utilities
 {
 	public static class EnumerableExtensions
 	{
+		public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+		{
+			var keys = new HashSet<TKey>();
+			foreach (var element in source)
+			{
+				if (keys.Add(keySelector(element)))
+					yield return element;
+			}
+		}
+
+
 		public static bool IsCopyOf<T>(this IList<T> list1, IList<T> list2)
 		{
 			if (list1.Any(a => !list2.Contains(a)))
