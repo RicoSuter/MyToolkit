@@ -249,6 +249,7 @@
     <Compile Include="Animations\Fading.cs" />
     <Compile Include="Animations\Flipping.cs" />
     <Compile Include="Controls\ExtendedItemsControl.cs" />
+    <Compile Include="Controls\ExtendedListView.cs" />
     <Compile Include="Controls\ExtendedTextBox.cs" />
     <Compile Include="Controls\FadingImage.cs" />
     <Compile Include="Controls\LongListView.cs" />
