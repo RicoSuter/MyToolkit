@@ -46,7 +46,8 @@ namespace MyToolkit.Storage
 			var file = roaming ? await ApplicationData.Current.RoamingFolder.CreateFileAsync(key + ".settings", CreationCollisionOption.ReplaceExisting) :
 				await ApplicationData.Current.LocalFolder.CreateFileAsync(key + ".settings", CreationCollisionOption.ReplaceExisting);
 
-			await FileIO.WriteTextAsync(file, Xml.Serialize(value, extraTypes), UnicodeEncoding.Utf8);
+			var xml = Xml.Serialize(value, extraTypes); 
+			await FileIO.WriteTextAsync(file, xml, UnicodeEncoding.Utf8);
 		}
 
 		public static async Task<T> GetSettingFromFileAsync<T>(string key, T defaultValue, bool roaming = false, Type[] extraTypes = null)
