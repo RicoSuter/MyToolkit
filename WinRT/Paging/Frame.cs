@@ -11,46 +11,53 @@ namespace MyToolkit.Paging
 	public delegate void MyNavigatedEventHandler(object sender, NavigationEventArgs e);
 	public class Frame : ContentControl, INavigate
 	{
-		private Stack<PageDescription> pageStack;
 		public event MyNavigatedEventHandler Navigated;
-		public IEnumerable<PageDescription> PageStack { get { return pageStack; } }
-		
+		public IEnumerable<PageDescription> Pages { get { return pages; } }
+
+		private int currentIndex = -1; 
+		private List<PageDescription> pages = new List<PageDescription>();
+
+		private PageDescription Current { get { return pages.Count > 0 ? pages[currentIndex] : null; } }
+
 		public Frame()
 		{
 			HorizontalContentAlignment = HorizontalAlignment.Stretch;
 			VerticalContentAlignment = VerticalAlignment.Stretch;
-			pageStack = new Stack<PageDescription>();
 		}
 
-		public bool CanGoForward { get { return false; } }
-		public void GoForward()
+		public bool CanGoForward { get { return currentIndex < pages.Count - 1; } }
+		public bool GoForward()
 		{
-			throw new NotImplementedException();
-		}
-
-		public bool CanGoBack { get { return pageStack.Count > 1; } }
-		public bool GoBack()
-		{
-			if (CallPrepareMethod(GoBackEx))
-				return true; 
-			GoBackEx();
+			if (CallPrepareMethod(() => GoForwardOrBack(NavigationMode.Forward)))
+				return true;
+			GoForwardOrBack(NavigationMode.Forward);
 			return false; 
 		}
 
-		private void GoBackEx()
+		public bool CanGoBack { get { return currentIndex > 0; } }
+		public bool GoBack()
 		{
-			if (CanGoBack)
+			if (CallPrepareMethod(() => GoForwardOrBack(NavigationMode.Back)))
+				return true;
+			GoForwardOrBack(NavigationMode.Back);
+			return false; 
+		}
+
+		private void GoForwardOrBack(NavigationMode mode)
+		{
+			if (mode == NavigationMode.Forward ? CanGoForward : CanGoBack)
 			{
-				var oldPage = pageStack.Pop();
-				var newPage = pageStack.Peek(); 
-				
-				CallOnNavigatingFrom(oldPage, NavigationMode.Back);
+				var oldPage = Current;
+				currentIndex += mode == NavigationMode.Forward ? 1 : -1;
+				var newPage = Current;
+
+				CallOnNavigatingFrom(oldPage, mode);
 				Content = newPage.GetPage(this);
-				CallOnNavigatedFrom(oldPage, NavigationMode.Back);
-				CallOnNavigatedTo(newPage, NavigationMode.Back);
+				CallOnNavigatedFrom(oldPage, mode);
+				CallOnNavigatedTo(newPage, mode);
 			}
 			else
-				throw new Exception("cannot go back");
+				throw new Exception("cannot go forward or back");
 		}
 
 		public bool Navigate(Type type)
@@ -60,16 +67,28 @@ namespace MyToolkit.Paging
 
 		public bool Navigate(Type type, object parameter)
 		{
-			if (!CallPrepareMethod(() => NavigateEx(type, parameter)))
-				NavigateEx(type, parameter);
+			if (!CallPrepareMethod(() => NavigateInternal(type, parameter)))
+				NavigateInternal(type, parameter);
 			return true;
 		}
 
-		private void NavigateEx(Type type, object parameter)
+		private void RemoveAllAfterCurrent()
 		{
-			var oldPage = pageStack.Count > 0 ? pageStack.Peek() : null;
+			for (var i = pages.Count - 1; i > currentIndex; i--)
+			{
+				var page = pages[i];
+				pages.Remove(page);
+			}
+		}
+
+		private void NavigateInternal(Type type, object parameter)
+		{
+			var oldPage = Current;
+			RemoveAllAfterCurrent(); 
+
 			var newPage = new PageDescription(type, parameter);
-			pageStack.Push(newPage);
+			pages.Add(newPage);
+			currentIndex++; 
 
 			if (oldPage != null)
 				CallOnNavigatingFrom(oldPage, NavigationMode.Forward);
@@ -126,11 +145,11 @@ namespace MyToolkit.Paging
 
 		private bool CallPrepareMethod(Action completed)
 		{
-			if (pageStack.Count > 0)
+			var description = Current;
+			if (description != null)
 			{
-				var description = pageStack.Peek();
 				var page = description.GetPage(this);
-
+				
 				var called = false;
 				var continuationAction = new Action(() => 
 					Window.Current.Dispatcher.RunAsync(
@@ -160,23 +179,28 @@ namespace MyToolkit.Paging
 
 		public void SetNavigationState(string s)
 		{
-			pageStack = new Stack<PageDescription>(DataContractSerialization.Deserialize<List<PageDescription>>(s));
-			Content = pageStack.Peek().GetPage(this);
-			CallOnNavigatedTo(pageStack.Peek(), NavigationMode.Refresh);
+			var tuple = DataContractSerialization.Deserialize<Tuple<int, List<PageDescription>>>(s);
+			pages = new List<PageDescription>(tuple.Item2);
+			currentIndex = tuple.Item1;
+
+			Content = Current.GetPage(this);
+			CallOnNavigatedTo(Current, NavigationMode.Refresh);
 		}
 
-		public object GetNavigationState()
+		public string GetNavigationState()
 		{
-			var oldPage = pageStack.Peek();
+			var oldPage = Current;
 			CallOnNavigatingFrom(oldPage, NavigationMode.Forward);
 			CallOnNavigatedFrom(oldPage, NavigationMode.Forward);
 
-			return DataContractSerialization.Serialize(pageStack.Reverse().ToList(), true);
+			var output = DataContractSerialization.Serialize(
+				new Tuple<int, List<PageDescription>>(currentIndex, pages), true);
+			return output; 
 		}
 
 		public int BackStackDepth
 		{
-			get { return pageStack.Count; }
+			get { return currentIndex + 1; }
 		}
 	}
 }

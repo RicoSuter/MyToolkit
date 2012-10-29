@@ -35,13 +35,11 @@ namespace MyToolkit.Paging
 		protected internal override void InternalOnNavigatedFrom(NavigationEventArgs e)
 		{
 			base.InternalOnNavigatedFrom(e);
-			if (e.NavigationMode != NavigationMode.Back)
-			{
-				var frameState = SuspensionManager.SessionStateForFrame(Frame);
-				var pageState = new Dictionary<String, Object>();
-				SaveState(pageState);
-				frameState[pageKey] = pageState;
-			}
+
+			var frameState = SuspensionManager.SessionStateForFrame(Frame);
+			var pageState = new Dictionary<String, Object>();
+			SaveState(pageState);
+			frameState[pageKey] = pageState;
 		}
 
 		protected virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
