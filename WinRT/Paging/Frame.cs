@@ -30,7 +30,7 @@ namespace MyToolkit.Paging
 		/// <returns>Returns true if navigating forward, false if cancelled</returns>
 		public async Task<bool> GoForwardAsync()
 		{
-			if (await CallOnNavigatingFrom(Current, NavigationMode.Back))
+			if (await CallOnNavigatingFrom(Current, NavigationMode.Forward))
 				return false;
 
 			GoForwardOrBack(NavigationMode.Forward);
@@ -86,7 +86,7 @@ namespace MyToolkit.Paging
 
 		public async Task<bool> NavigateAsync(Type type, object parameter)
 		{
-			if (Current != null && await CallOnNavigatingFrom(Current, NavigationMode.Back))
+			if (Current != null && await CallOnNavigatingFrom(Current, NavigationMode.Forward))
 				return false;
 			
 			NavigateInternal(type, parameter);
