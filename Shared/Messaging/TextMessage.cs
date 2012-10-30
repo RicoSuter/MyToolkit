@@ -53,7 +53,7 @@ namespace MyToolkit.Messaging
 			if (m.Button == MessageButton.OK)
 			{
 				var msg = new MessageDialog(m.Text, m.Title);
-				msg.ShowAsync();
+				await msg.ShowAsync();
 			}
 			else
 			{

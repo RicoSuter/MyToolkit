@@ -153,9 +153,6 @@
     <Compile Include="..\Shared\Messaging\ActionMessage.cs">
       <Link>Messaging\ActionMessage.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messaging\DefaultActions.cs">
-      <Link>Messaging\DefaultActions.cs</Link>
-    </Compile>
     <Compile Include="..\Shared\Messaging\Messenger.cs">
       <Link>Messaging\Messenger.cs</Link>
     </Compile>
