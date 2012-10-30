@@ -26,21 +26,27 @@ namespace MyToolkit.Paging
 		}
 
 		public bool CanGoForward { get { return currentIndex < pages.Count - 1; } }
+
+		/// <returns>Returns true if navigating forward, false if cancelled</returns>
 		public bool GoForward()
 		{
-			if (CallPrepareMethod(() => GoForwardOrBack(NavigationMode.Forward)))
-				return true;
-			GoForwardOrBack(NavigationMode.Forward);
-			return false; 
+			if (CallOnNavigatingFrom(Current, NavigationMode.Back))
+				return false; 
+			if (!CallPrepareMethod(() => GoForwardOrBack(NavigationMode.Forward)))
+				GoForwardOrBack(NavigationMode.Forward);
+			return true; 
 		}
 
 		public bool CanGoBack { get { return currentIndex > 0; } }
+
+		/// <returns>Returns true if navigating back, false if cancelled</returns>
 		public bool GoBack()
 		{
-			if (CallPrepareMethod(() => GoForwardOrBack(NavigationMode.Back)))
-				return true;
-			GoForwardOrBack(NavigationMode.Back);
-			return false; 
+			if (CallOnNavigatingFrom(Current, NavigationMode.Back))
+				return false; 
+			if (!CallPrepareMethod(() => GoForwardOrBack(NavigationMode.Back)))
+				GoForwardOrBack(NavigationMode.Back);
+			return true; 
 		}
 
 		private void GoForwardOrBack(NavigationMode mode)
@@ -51,7 +57,6 @@ namespace MyToolkit.Paging
 				currentIndex += mode == NavigationMode.Forward ? 1 : -1;
 				var newPage = Current;
 
-				CallOnNavigatingFrom(oldPage, mode);
 				Content = newPage.GetPage(this);
 				CallOnNavigatedFrom(oldPage, mode);
 				CallOnNavigatedTo(newPage, mode);
@@ -67,6 +72,8 @@ namespace MyToolkit.Paging
 
 		public bool Navigate(Type type, object parameter)
 		{
+			if (CallOnNavigatingFrom(Current, NavigationMode.Back))
+				return false;
 			if (!CallPrepareMethod(() => NavigateInternal(type, parameter)))
 				NavigateInternal(type, parameter);
 			return true;
@@ -90,8 +97,6 @@ namespace MyToolkit.Paging
 			pages.Add(newPage);
 			currentIndex++; 
 
-			if (oldPage != null)
-				CallOnNavigatingFrom(oldPage, NavigationMode.Forward);
 			Content = newPage.GetPage(this);
 			if (oldPage != null)
 				CallOnNavigatedFrom(oldPage, NavigationMode.Forward);
@@ -103,21 +108,21 @@ namespace MyToolkit.Paging
 			var page = description.GetPage(this);
 			var args = new NavigationEventArgs();
 			args.Content = page;
-			args.Type = description.Type;
+			args.SourcePageType = description.Type;
 			args.Parameter = description.Parameter;
 			args.NavigationMode = mode;
 			page.InternalOnNavigatedFrom(args);
 		}
 
-		private void CallOnNavigatingFrom(PageDescription description, NavigationMode mode)
+		private bool CallOnNavigatingFrom(PageDescription description, NavigationMode mode)
 		{
 			var page = description.GetPage(this);
-			var args = new NavigationEventArgs();
+			var args = new NavigatingCancelEventArgs();
 			args.Content = page;
-			args.Type = description.Type;
-			args.Parameter = description.Parameter;
+			args.SourcePageType = description.Type;
 			args.NavigationMode = mode;
 			page.InternalOnNavigatingFrom(args);
+			return args.Cancel; 
 		}
 
 		private void CallOnNavigatedTo(PageDescription description, NavigationMode mode)
@@ -125,7 +130,7 @@ namespace MyToolkit.Paging
 			var page = description.GetPage(this);
 			var args = new NavigationEventArgs();
 			args.Content = page;
-			args.Type = description.Type;
+			args.SourcePageType = description.Type;
 			args.Parameter = description.Parameter;
 			args.NavigationMode = mode;
 			page.InternalOnNavigatedTo(args);

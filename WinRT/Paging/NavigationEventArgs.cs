@@ -5,9 +5,17 @@ namespace MyToolkit.Paging
 {
 	public class NavigationEventArgs
 	{
-		public object Content { get; set; }
-		public object Parameter { get; set; }
-		public Type Type { get; set; }
-		public NavigationMode NavigationMode { get; set; }
+		public object Content { get; internal set; }
+		public object Parameter { get; internal set; }
+		public Type SourcePageType { get; internal set; }
+		public NavigationMode NavigationMode { get; internal set; }
+	}
+
+	public class NavigatingCancelEventArgs
+	{
+		public bool Cancel { get; internal set; }
+		public object Content { get; internal set; }
+		public NavigationMode NavigationMode { get; internal set; }
+		public Type SourcePageType { get; internal set; }
 	}
 }

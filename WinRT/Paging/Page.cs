@@ -52,18 +52,12 @@ namespace MyToolkit.Paging
 			set { SetValue(ContentProperty, value); }
 		}
 		
-
-		public virtual void OnBackKeyPress(CancelEventArgs e)
-		{
-			
-		}
-
 		public virtual void OnNavigatedTo(NavigationEventArgs e)
 		{
 			
 		}
 
-		public virtual void OnNavigatingFrom(NavigationEventArgs e)
+		public virtual void OnNavigatingFrom(NavigatingCancelEventArgs e)
 		{
 
 		}
@@ -87,7 +81,7 @@ namespace MyToolkit.Paging
 			OnNavigatedTo(e);
 		}
 
-		internal protected virtual void InternalOnNavigatingFrom(NavigationEventArgs e)
+		internal protected virtual void InternalOnNavigatingFrom(NavigatingCancelEventArgs e)
 		{
 			OnNavigatingFrom(e);
 		}
