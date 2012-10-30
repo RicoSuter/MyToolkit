@@ -28,7 +28,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Bin\Debug\Silverlight\</OutputPath>
+    <OutputPath>..\- Output\Silverlight\</OutputPath>
     <DefineConstants>TRACE;DEBUG;SILVERLIGHT;USE_GZIP</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>

@@ -36,24 +36,6 @@ namespace MyToolkit.Utilities
 			}
 		}
 
-#if !METRO && !SILVERLIGHT
-		public static string XmlEscape(string unescaped)
-		{
-			var doc = new XmlDocument();
-			var node = doc.CreateElement("root");
-			node.InnerText = unescaped;
-			return node.InnerXml;
-		}
-
-		public static string XmlUnescape(string escaped)
-		{
-			var doc = new XmlDocument();
-			var node = doc.CreateElement("root");
-			node.InnerXml = escaped;
-			return node.InnerText;
-		}
-#endif
-
 #if METRO
         public static string XmlEscape(string unescaped)
         {
@@ -70,6 +52,22 @@ namespace MyToolkit.Utilities
             node.InnerText = escaped;
             return node.InnerText;
         }
+#elif !SILVERLIGHT && !WINDOWS_PHONE && !WINPRT
+		public static string XmlEscape(string unescaped)
+		{
+			var doc = new XmlDocument();
+			var node = doc.CreateElement("root");
+			node.InnerText = unescaped;
+			return node.InnerXml;
+		}
+
+		public static string XmlUnescape(string escaped)
+		{
+			var doc = new XmlDocument();
+			var node = doc.CreateElement("root");
+			node.InnerXml = escaped;
+			return node.InnerText;
+		}
 #endif
 	}
 }

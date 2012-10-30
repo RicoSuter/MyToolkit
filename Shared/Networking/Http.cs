@@ -5,26 +5,30 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Linq;
-
 using MyToolkit.Utilities;
 
 #if SILVERLIGHT
 using Ionic.Zlib;
-#else
+using System.Windows.Threading;
+using System.IO.IsolatedStorage;
+#elif WINDOWS_PHONE
+using Ionic.Zlib;
+using System.Windows.Threading;
+using System.IO.IsolatedStorage;
+#elif WINPRT
+using Ionic.Zlib;
+using System.Threading.Tasks;
+using System.Windows.Threading;
+#elif WPF
 using System.IO.Compression;
-#if METRO
+using System.Windows.Threading;
+#elif METRO
+using System.IO.Compression;
 using Windows.Storage;
 using System.Threading.Tasks;
 #endif
-#endif
-
-#if !METRO
-using System.Windows.Threading;
-using System.IO.IsolatedStorage;
-#endif
 
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
-
 namespace MyToolkit.Networking
 {
 	public class AuthenticatedUri : Uri
@@ -103,7 +107,7 @@ namespace MyToolkit.Networking
 
 		#region WinRT Async
 
-#if METRO
+#if METRO || WINPRT
 		public static Task<HttpResponse> GetAsync(string url)
 		{
 			var task = new TaskCompletionSource<HttpResponse>();
@@ -409,8 +413,7 @@ namespace MyToolkit.Networking
 					fileStream = f2.GetResults().AsStreamForRead();
 				}
 
-#else
-#if SILVERLIGHT
+#elif SILVERLIGHT 
 				if (fileStream == null)
 				{
 					var isf = IsolatedStorageFile.GetUserStoreForApplication();
@@ -462,18 +465,16 @@ namespace MyToolkit.Networking
 				var origResponse = response;
 
 #if USE_GZIP
-#if METRO
+	#if METRO || WINPRT
 				if (response.Headers["Content-Encoding"] == "gzip")
 					response = new GZipWebResponse(response); 
-#else
-#if SILVERLIGHT
+	#elif SILVERLIGHT || WINDOWS_PHONE
 				if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
 					response = new GZipWebResponse(response); 
-#else
+	#else
 				if (response.Headers[HttpResponseHeader.ContentEncoding] == "gzip")
 					response = new GZipWebResponse(response);
-#endif
-#endif
+	#endif
 #endif
 
 				using (response)
@@ -551,12 +552,15 @@ namespace MyToolkit.Networking
 		}
 
 #if METRO
+
 		protected override void Dispose(bool disposing)
 		{
             response.Dispose();
 			base.Dispose(disposing);
 		}
+
 #else
+
 		void IDisposable.Dispose()
 		{
 			Close();
@@ -566,9 +570,11 @@ namespace MyToolkit.Networking
 		{
 			response.Close();
 		}
+
 #endif
 
-#if SILVERLIGHT || METRO
+#if SILVERLIGHT || METRO || WINPRT
+
 		public override long ContentLength
 		{
 			get { throw new NotImplementedException(); }

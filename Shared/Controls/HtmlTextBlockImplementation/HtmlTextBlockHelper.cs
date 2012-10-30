@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 
-
 #if METRO
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -10,6 +9,7 @@ using Windows.System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 #endif
+
 namespace MyToolkit.Controls.HtmlTextBlockImplementation
 {
 	internal static class HtmlTextBlockHelper

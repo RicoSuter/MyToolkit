@@ -19,8 +19,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\WPF\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;USE_GZIP</DefineConstants>
+    <OutputPath>..\- Output\Web\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WEB;USE_GZIP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -28,7 +28,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\- Output\Web\</OutputPath>
-    <DefineConstants>TRACE;USE_GZIP</DefineConstants>
+    <DefineConstants>TRACE;WEB;USE_GZIP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>

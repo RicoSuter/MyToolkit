@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
-#if !METRO
-using System.Windows;
-#else
+#if METRO
 using Windows.UI.Xaml;
+#else
+using System.Windows;
 #endif
 
 namespace MyToolkit.UI
@@ -11,26 +11,27 @@ namespace MyToolkit.UI
 
 	public static class Designer
 	{
-#if !SILVERLIGHT
-		private static bool? isInDesignMode = null; 
-#endif
-
+#if METRO
 		public static bool IsInDesignMode
 		{
-			get
-			{
-#if !SILVERLIGHT
-#if METRO
-				return Windows.ApplicationModel.DesignMode.DesignModeEnabled;
+			get { return Windows.ApplicationModel.DesignMode.DesignModeEnabled; }
+		}
+#elif SILVERLIGHT
+		public static bool IsInDesignMode
+		{
+			get { return DesignerProperties.IsInDesignTool; }
+		}
 #else
+		private static bool? isInDesignMode = null; 
+		public static bool IsInDesignMode
+		{
+			get 
+			{ 
 				if (!isInDesignMode.HasValue)
 					isInDesignMode = DesignerProperties.GetIsInDesignMode(new MyDependencyObject());
 				return isInDesignMode.Value;
-#endif
-#else
-				return DesignerProperties.IsInDesignTool;
-#endif
 			}
 		}
+#endif
 	}
 }

@@ -11,6 +11,7 @@ using Windows.Storage.Streams;
 using System.Net;
 using System.Net.Sockets;
 using System.Windows;
+using System.Threading.Tasks;
 #endif
 
 namespace MyToolkit.Networking
@@ -40,7 +41,7 @@ namespace MyToolkit.Networking
 			}
 		}
 
-#if METRO
+#if METRO || WINPRT
 		public static Task WakeAsync(string macAddress)
 		{
 			return WakeAsync(new HostName("255.255.255.255"), 7, MacAddressToBytes(macAddress));
