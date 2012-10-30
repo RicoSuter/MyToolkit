@@ -49,8 +49,9 @@ namespace MyToolkit.MVVM
 		public void RaiseCanExecuteChanged()
 		{
 			RaisePropertyChanged("CanExecute");
-			if (CanExecuteChanged != null)
-				CanExecuteChanged(this, new EventArgs());
+			var copy = CanExecuteChanged;
+			if (copy != null)
+				copy(this, new EventArgs());
 		}
 
 		public event EventHandler CanExecuteChanged;
@@ -88,8 +89,9 @@ namespace MyToolkit.MVVM
 
 		public void RaiseCanExecuteChanged()
 		{
-			if (CanExecuteChanged != null)
-				CanExecuteChanged(this, new EventArgs());
+			var copy = CanExecuteChanged;
+			if (copy != null)
+				copy(this, new EventArgs());
 		}
 
 		public event EventHandler CanExecuteChanged;

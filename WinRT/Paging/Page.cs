@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -62,14 +63,19 @@ namespace MyToolkit.Paging
 
 		}
 
+		public virtual Task OnNavigatingFromAsync(NavigatingCancelEventArgs e)
+		{
+			return null; 
+		}
+
 		public virtual void OnNavigatedFrom(NavigationEventArgs e)
 		{
 			
 		}
 
-		public virtual bool OnPrepareNavigatingFrom(Action continuationAction)
+		public virtual Task OnPrepareNavigatingFrom()
 		{
-			return false; 
+			return null;
 		}
 
 
@@ -81,9 +87,13 @@ namespace MyToolkit.Paging
 			OnNavigatedTo(e);
 		}
 
-		internal protected virtual void InternalOnNavigatingFrom(NavigatingCancelEventArgs e)
+		internal protected virtual async Task InternalOnNavigatingFrom(NavigatingCancelEventArgs e)
 		{
 			OnNavigatingFrom(e);
+
+			var task = OnNavigatingFromAsync(e);
+			if (task != null)
+				await task;
 		}
 
 		internal protected virtual void InternalOnNavigatedFrom(NavigationEventArgs e)

@@ -15,5 +15,10 @@ namespace MyToolkit.Resources
 		public static string Hour { get { return CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "de" ? "Stunde" : "hour"; } }
 		public static string Day { get { return CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "de" ? "Tag" : "day"; } }
 		public static string Days { get { return CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "de" ? "Tage" : "days"; } }
+
+		public static string ButtonYes { get { return CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "de" ? "Ja" : "Yes"; } }
+		public static string ButtonNo { get { return CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "de" ? "Nein" : "No"; } }
+		public static string ButtonCancel { get { return CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "de" ? "Abbrechen" : "Cancel"; } }
+		public static string ButtonOk { get { return "OK"; } }
 	}
 }

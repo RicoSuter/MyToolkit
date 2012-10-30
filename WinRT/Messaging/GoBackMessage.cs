@@ -7,7 +7,7 @@ namespace MyToolkit.Messaging
 	{
 		public static Action<GoBackMessage> GetAction(Frame frame)
 		{
-			return m => frame.GoBack();
+			return m => frame.GoBackAsync();
 		}
 	}
 }

@@ -17,7 +17,7 @@ namespace MyToolkit.Messaging
 
 		public static Action<NavigateMessage> GetAction(Frame frame)
 		{
-			return m => frame.Navigate(m.Page, m.Parameter);
+			return m => frame.NavigateAsync(m.Page, m.Parameter);
 		}
 	}
 }

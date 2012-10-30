@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MyToolkit.UI;
 using Windows.System;
 using Windows.UI.Core;
@@ -48,25 +49,30 @@ namespace MyToolkit.Paging
 
         #region Navigation support
 
-		protected virtual void GoHome(object sender, RoutedEventArgs e)
+		protected virtual async Task<bool> GoHomeAsync(object sender, RoutedEventArgs e)
         {
             if (Frame != null)
             {
-				while (Frame.CanGoBack) 
-					Frame.GoBack();
-            }
-        }
+				while (Frame.CanGoBack)
+				{
+					if (!await Frame.GoBackAsync())
+						return false;
+				}
+				return true;
+			}
+			return false;
+		}
 
         protected virtual void GoBack(object sender, RoutedEventArgs e)
         {
 			if (Frame != null && Frame.CanGoBack) 
-				Frame.GoBack();
+				Frame.GoBackAsync();
         }
 
         protected virtual void GoForward(object sender, RoutedEventArgs e)
         {
 			if (Frame != null && Frame.CanGoForward)
-				Frame.GoForward();
+				Frame.GoForwardAsync();
         }
 
         private void OnAcceleratorKeyActivated(CoreDispatcher sender,
@@ -95,7 +101,7 @@ namespace MyToolkit.Paging
 							if (!(element is TextBox) && !(element is PasswordBox) && !(element is WebView) && Frame.CanGoBack)
 							{
 								args.Handled = true;
-								Frame.GoBack();
+								Frame.GoBackAsync();
 							}
 						}
 					}

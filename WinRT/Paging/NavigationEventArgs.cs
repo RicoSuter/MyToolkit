@@ -13,7 +13,7 @@ namespace MyToolkit.Paging
 
 	public class NavigatingCancelEventArgs
 	{
-		public bool Cancel { get; internal set; }
+		public bool Cancel { get; set; }
 		public object Content { get; internal set; }
 		public NavigationMode NavigationMode { get; internal set; }
 		public Type SourcePageType { get; internal set; }

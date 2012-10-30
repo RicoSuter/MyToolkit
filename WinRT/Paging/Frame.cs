@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using MyToolkit.Utilities;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,7 +10,7 @@ using Windows.UI.Xaml.Navigation;
 namespace MyToolkit.Paging
 {
 	public delegate void MyNavigatedEventHandler(object sender, NavigationEventArgs e);
-	public class Frame : ContentControl, INavigate
+	public class Frame : ContentControl//, INavigate
 	{
 		public event MyNavigatedEventHandler Navigated;
 		public IEnumerable<PageDescription> Pages { get { return pages; } }
@@ -28,24 +29,26 @@ namespace MyToolkit.Paging
 		public bool CanGoForward { get { return currentIndex < pages.Count - 1; } }
 
 		/// <returns>Returns true if navigating forward, false if cancelled</returns>
-		public bool GoForward()
+		public async Task<bool> GoForwardAsync()
 		{
-			if (CallOnNavigatingFrom(Current, NavigationMode.Back))
-				return false; 
-			if (!CallPrepareMethod(() => GoForwardOrBack(NavigationMode.Forward)))
-				GoForwardOrBack(NavigationMode.Forward);
+			if (await CallOnNavigatingFrom(Current, NavigationMode.Back))
+				return false;
+
+			await CallPrepareMethod();
+			GoForwardOrBack(NavigationMode.Forward);
 			return true; 
 		}
 
 		public bool CanGoBack { get { return currentIndex > 0; } }
 
 		/// <returns>Returns true if navigating back, false if cancelled</returns>
-		public bool GoBack()
+		public async Task<bool> GoBackAsync()
 		{
-			if (CallOnNavigatingFrom(Current, NavigationMode.Back))
-				return false; 
-			if (!CallPrepareMethod(() => GoForwardOrBack(NavigationMode.Back)))
-				GoForwardOrBack(NavigationMode.Back);
+			if (await CallOnNavigatingFrom(Current, NavigationMode.Back))
+				return false;
+
+			await CallPrepareMethod();
+			GoForwardOrBack(NavigationMode.Back);
 			return true; 
 		}
 
@@ -65,17 +68,32 @@ namespace MyToolkit.Paging
 				throw new Exception("cannot go forward or back");
 		}
 
-		public bool Navigate(Type type)
+		///// <returns>Return value is always true. Use NavigateAsync instead</returns>
+		//public bool Navigate(Type sourcePageType)
+		//{
+		//	NavigateAsync(sourcePageType);
+		//	return true; 
+		//}
+
+		public bool Initialize(Type sourcePageType, object parameter = null)
 		{
-			return Navigate(type, null);
+			NavigateInternal(sourcePageType, parameter);
+			return true; 
 		}
 
-		public bool Navigate(Type type, object parameter)
+		/// <returns>Returns true if the navigation process has not been cancelled</returns>
+		public Task<bool> NavigateAsync(Type type)
 		{
-			if (CallOnNavigatingFrom(Current, NavigationMode.Back))
+			return NavigateAsync(type, null);
+		}
+
+		public async Task<bool> NavigateAsync(Type type, object parameter)
+		{
+			if (Current != null && await CallOnNavigatingFrom(Current, NavigationMode.Back))
 				return false;
-			if (!CallPrepareMethod(() => NavigateInternal(type, parameter)))
-				NavigateInternal(type, parameter);
+			
+			await CallPrepareMethod();
+			NavigateInternal(type, parameter);
 			return true;
 		}
 
@@ -114,14 +132,14 @@ namespace MyToolkit.Paging
 			page.InternalOnNavigatedFrom(args);
 		}
 
-		private bool CallOnNavigatingFrom(PageDescription description, NavigationMode mode)
+		private async Task<bool> CallOnNavigatingFrom(PageDescription description, NavigationMode mode)
 		{
 			var page = description.GetPage(this);
 			var args = new NavigatingCancelEventArgs();
 			args.Content = page;
 			args.SourcePageType = description.Type;
 			args.NavigationMode = mode;
-			page.InternalOnNavigatingFrom(args);
+			await page.InternalOnNavigatingFrom(args);
 			return args.Cancel; 
 		}
 
@@ -148,38 +166,22 @@ namespace MyToolkit.Paging
 				OnPageCreated(sender, page);
 		}
 
-		private bool CallPrepareMethod(Action completed)
+		private async Task CallPrepareMethod()
 		{
 			var description = Current;
 			if (description != null)
 			{
 				var page = description.GetPage(this);
-				
-				var called = false;
-				var continuationAction = new Action(() => 
-					Window.Current.Dispatcher.RunAsync(
-						Windows.UI.Core.CoreDispatcherPriority.Normal,
-						delegate
-						{
-							if (!called)
-							{
-								page.IsPreparingNavigatingFrom = false;
-								page.IsHitTestVisible = true;
-								completed();
-								called = true;
-							}
-						}));
-
-				var result = page.OnPrepareNavigatingFrom(continuationAction);
-				if (result)
+				var task = page.OnPrepareNavigatingFrom();
+				if (task != null)
 				{
-					// disable interactions while animating
-					page.IsHitTestVisible = false; 
-					page.IsPreparingNavigatingFrom = true; 
+					page.IsHitTestVisible = false;
+					page.IsPreparingNavigatingFrom = true;
+					await task; 
+					page.IsPreparingNavigatingFrom = false;
+					page.IsHitTestVisible = true;
 				}
-				return result;
 			}
-			return false; 
 		}
 
 		public void SetNavigationState(string s)
@@ -194,9 +196,8 @@ namespace MyToolkit.Paging
 
 		public string GetNavigationState()
 		{
-			var oldPage = Current;
-			CallOnNavigatingFrom(oldPage, NavigationMode.Forward);
-			CallOnNavigatedFrom(oldPage, NavigationMode.Forward);
+			CallOnNavigatingFrom(Current, NavigationMode.Forward);
+			CallOnNavigatedFrom(Current, NavigationMode.Forward);
 
 			var output = DataContractSerialization.Serialize(
 				new Tuple<int, List<PageDescription>>(currentIndex, pages), true);

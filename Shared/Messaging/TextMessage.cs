@@ -3,6 +3,7 @@ using System.Windows;
 
 #if METRO
 using System.Threading.Tasks;
+using MyToolkit.Resources;
 using Windows.UI.Popups;
 #endif
 
@@ -13,13 +14,16 @@ namespace MyToolkit.Messaging
 		public enum MessageButton
 		{
 			OK, 
-			OKCancel
+			OKCancel, 
+			YesNoCancel
 		}
 
 		public enum MessageResult
 		{
 			OK,
-			Cancel
+			Cancel, 
+			Yes, 
+			No
 		}
 
 		public TextMessage(string text)
@@ -58,13 +62,29 @@ namespace MyToolkit.Messaging
 			else
 			{
 				var msg = new MessageDialog(m.Text, m.Title);
-				msg.Commands.Add(new UICommand("OK"));
-				msg.Commands.Add(new UICommand("Cancel"));
+				
+				if (m.Button == MessageButton.OKCancel)
+				{
+					msg.Commands.Add(new UICommand(Strings.ButtonOk));
+					msg.Commands.Add(new UICommand(Strings.ButtonCancel));
+				}
+				else if (m.Button == MessageButton.YesNoCancel)
+				{
+					msg.Commands.Add(new UICommand(Strings.ButtonYes));
+					msg.Commands.Add(new UICommand(Strings.ButtonNo));
+					msg.Commands.Add(new UICommand(Strings.ButtonCancel));
+				}
+
 				msg.DefaultCommandIndex = 0;
 				msg.CancelCommandIndex = 1;
 
 				var cmd = await msg.ShowAsync();
-				m.Result = msg.Commands.IndexOf(cmd) == 0 ? MessageResult.OK : MessageResult.Cancel;
+
+				var index = msg.Commands.IndexOf(cmd); 
+				if (m.Button == MessageButton.OKCancel)
+					m.Result = index == 0 ? MessageResult.OK : MessageResult.Cancel;
+				else if (m.Button == MessageButton.YesNoCancel)
+					m.Result = index == 0 ? MessageResult.Yes : (index == 1 ? MessageResult.No : MessageResult.Cancel);
 			}
 		}
 
