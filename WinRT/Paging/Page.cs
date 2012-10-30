@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -51,6 +52,11 @@ namespace MyToolkit.Paging
 			set { SetValue(ContentProperty, value); }
 		}
 		
+
+		public virtual void OnBackKeyPress(CancelEventArgs e)
+		{
+			
+		}
 
 		public virtual void OnNavigatedTo(NavigationEventArgs e)
 		{
