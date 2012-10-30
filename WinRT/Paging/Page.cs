@@ -11,7 +11,6 @@ namespace MyToolkit.Paging
 	public class Page : Control
 	{
 		public Frame Frame { get; internal set; }
-		public bool IsPreparingNavigatingFrom { get; internal set; }
 
 		public Page()
 		{
@@ -72,12 +71,6 @@ namespace MyToolkit.Paging
 		{
 			
 		}
-
-		public virtual Task OnPrepareNavigatingFrom()
-		{
-			return null;
-		}
-
 
 		// internal methods ensure that base implementations of InternalOn* is always called
 		// even if user does not call base.InternalOn* in the overridden On* method. 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MyToolkit.Utilities;
 using Windows.UI.Xaml;
@@ -34,7 +33,6 @@ namespace MyToolkit.Paging
 			if (await CallOnNavigatingFrom(Current, NavigationMode.Back))
 				return false;
 
-			await CallPrepareMethod();
 			GoForwardOrBack(NavigationMode.Forward);
 			return true; 
 		}
@@ -47,7 +45,6 @@ namespace MyToolkit.Paging
 			if (await CallOnNavigatingFrom(Current, NavigationMode.Back))
 				return false;
 
-			await CallPrepareMethod();
 			GoForwardOrBack(NavigationMode.Back);
 			return true; 
 		}
@@ -92,7 +89,6 @@ namespace MyToolkit.Paging
 			if (Current != null && await CallOnNavigatingFrom(Current, NavigationMode.Back))
 				return false;
 			
-			await CallPrepareMethod();
 			NavigateInternal(type, parameter);
 			return true;
 		}
@@ -164,24 +160,6 @@ namespace MyToolkit.Paging
 			var page = e.Content;
 			if (e.NavigationMode == NavigationMode.New)
 				OnPageCreated(sender, page);
-		}
-
-		private async Task CallPrepareMethod()
-		{
-			var description = Current;
-			if (description != null)
-			{
-				var page = description.GetPage(this);
-				var task = page.OnPrepareNavigatingFrom();
-				if (task != null)
-				{
-					page.IsHitTestVisible = false;
-					page.IsPreparingNavigatingFrom = true;
-					await task; 
-					page.IsPreparingNavigatingFrom = false;
-					page.IsHitTestVisible = true;
-				}
-			}
 		}
 
 		public void SetNavigationState(string s)
