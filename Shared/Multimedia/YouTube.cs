@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows;
-using MyToolkit.Environment;
 using MyToolkit.Multimedia;
 using MyToolkit.Networking;
 
@@ -15,7 +14,6 @@ using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using MyToolkit.Paging;
 using MyToolkit.UI;
-
 #endif
 
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com

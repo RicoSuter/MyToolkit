@@ -6,6 +6,8 @@ namespace MyToolkit.Utilities
 {
 	public static class EnumerableExtensions
 	{
+
+#if !WINDOWS_PHONE
 		public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
 		{
 			var keys = new HashSet<TKey>();
@@ -15,7 +17,7 @@ namespace MyToolkit.Utilities
 					yield return element;
 			}
 		}
-
+#endif
 
 		public static bool IsCopyOf<T>(this IList<T> list1, IList<T> list2)
 		{
