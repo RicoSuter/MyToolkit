@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-#if METRO
+#if WINRT
 using System.Threading.Tasks;
 using Windows.Networking;
 using Windows.Networking.Sockets;
@@ -11,7 +11,6 @@ using Windows.Storage.Streams;
 using System.Net;
 using System.Net.Sockets;
 using System.Windows;
-using System.Threading.Tasks;
 #endif
 
 namespace MyToolkit.Networking
@@ -41,7 +40,7 @@ namespace MyToolkit.Networking
 			}
 		}
 
-#if METRO || WINPRT
+#if WINRT
 		public static Task WakeAsync(string macAddress)
 		{
 			return WakeAsync(new HostName("255.255.255.255"), 7, MacAddressToBytes(macAddress));

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-#if METRO
+#if WINRT
 using Windows.UI.Xaml.Media;
 #else
 using System.Windows;
@@ -43,7 +43,7 @@ namespace MyToolkit.Collections
 		{
 			get 
 			{
-#if METRO
+#if WINRT
 				throw new NotImplementedException();
 #else
 				return HasItems

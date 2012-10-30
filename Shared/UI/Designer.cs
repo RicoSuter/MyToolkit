@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-#if METRO
+#if WINRT
 using Windows.UI.Xaml;
 #else
 using System.Windows;
@@ -11,7 +11,7 @@ namespace MyToolkit.UI
 
 	public static class Designer
 	{
-#if METRO
+#if WINRT
 		public static bool IsInDesignMode
 		{
 			get { return Windows.ApplicationModel.DesignMode.DesignModeEnabled; }

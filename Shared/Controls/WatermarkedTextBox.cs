@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-#if METRO
+#if WINRT
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,14 +19,14 @@ namespace MyToolkit.Controls
 		public WatermarkedTextBox()
 		{
 			DefaultStyleKey = typeof(WatermarkedTextBox);
-#if METRO
+#if WINRT
 			GotFocus += delegate { if (textBox != null) textBox.Focus(FocusState.Programmatic); };
 #else
 			GotFocus += delegate { if (textBox != null) textBox.Focus(); };
 #endif
 		}
 
-#if METRO
+#if WINRT
 		protected override void OnApplyTemplate()
 		{
 			WatermarkBrush = (Brush)Resources["ListViewItemPlaceholderBackgroundThemeBrush"];

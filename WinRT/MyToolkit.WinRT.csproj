@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\- Output\WinRT\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;METRO;USE_GZIP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WINRT;USE_GZIP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -28,7 +28,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\- Output\WinRT\</OutputPath>
-    <DefineConstants>TRACE;METRO;USE_GZIP</DefineConstants>
+    <DefineConstants>TRACE;WINRT;USE_GZIP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>

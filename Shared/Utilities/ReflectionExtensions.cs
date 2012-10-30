@@ -20,7 +20,7 @@ namespace MyToolkit.Utilities
 			return Activator.CreateInstance(specificType, args);
 		}
 
-#if !METRO
+#if !WINRT
 
 		public static void Clone(this object source, object target)
 		{

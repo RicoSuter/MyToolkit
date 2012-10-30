@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-#if METRO
+#if WINRT
 using System.Threading.Tasks;
 #endif
 
@@ -55,7 +55,7 @@ namespace MyToolkit.Messaging
 			Register(null, action);
 		}
 
-#if METRO
+#if WINRT
 		/// <summary>
 		/// Registers an async action for the given receiver. WARNING: You have to unregister the action to avoid memory leaks!
 		/// </summary>
@@ -150,7 +150,7 @@ namespace MyToolkit.Messaging
 			var type = typeof (T);
 			foreach (var a in actions.Where(a => a.Type == type).ToArray())
 			{
-#if METRO
+#if WINRT
 				if (a.Action is Action<T>)
 					((Action<T>)a.Action)(message);
 				else
@@ -162,7 +162,7 @@ namespace MyToolkit.Messaging
 			return message;
 		}
 
-#if METRO
+#if WINRT
 		/// <summary>
 		/// Sends a message to the registered receivers. With this method it is possible to wait until async methods have finished. Async methods are called serially. 
 		/// </summary>

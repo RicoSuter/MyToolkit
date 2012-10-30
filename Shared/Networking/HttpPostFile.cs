@@ -4,7 +4,7 @@ namespace MyToolkit.Networking
 {
 	public class HttpPostFile
 	{
-#if !METRO
+#if !WINRT
 		public HttpPostFile(string name, string filename, string path)
 		{
 			Name = name;
@@ -25,7 +25,7 @@ namespace MyToolkit.Networking
 		public HttpPostFile(string name, string filename, Stream stream, bool closeStream = true)
 		{
 			Name = name;
-#if METRO
+#if WINRT
 				Filename = filename;
 #else
 			Filename = System.IO.Path.GetFileName(filename);

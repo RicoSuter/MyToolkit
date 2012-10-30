@@ -1,6 +1,6 @@
 ﻿using System;
 
-#if METRO
+#if WINRT
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 

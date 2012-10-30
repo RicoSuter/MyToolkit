@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Globalization;
-#if !METRO
+#if !WINRT
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-#if METRO
+#if WINRT
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -168,7 +168,7 @@ namespace MyToolkit.UI
 			// Determine the bounding box of the item relative to the viewport
 			GeneralTransform transform = item.TransformToVisual(viewport);
 
-#if METRO
+#if WINRT
 			Point topLeft = transform.TransformPoint(new Point(0, 0));
 			Point bottomRight = transform.TransformPoint(new Point(item.ActualWidth, item.ActualHeight));
 #else
@@ -460,7 +460,7 @@ namespace MyToolkit.UI
 			workItems.Add(action);
 		}
 
-#if METRO
+#if WINRT
 		private static void DoWorkOnRender(object sender, object e)
 #else
 		static void DoWorkOnRender(object sender, EventArgs args)

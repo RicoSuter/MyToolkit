@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MyToolkit.MVVM;
 
-#if METRO
+#if WINRT
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

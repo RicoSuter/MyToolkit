@@ -2,7 +2,7 @@
 using System.Net;
 using System.Windows;
 
-#if METRO
+#if WINRT
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 #endif
@@ -79,7 +79,7 @@ namespace MyToolkit.Utilities
 			register(sender, wrapper.Handler);
 		}
 
-#if METRO
+#if WINRT
 		public static Task<T> WaitForEventAsync<TObj, T>(TObj sender, Action<TObj, EventHandler<T>> register,
 			Action<TObj, EventHandler<T>> unregister) where T : EventArgs
 		{

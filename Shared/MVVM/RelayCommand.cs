@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-#if METRO
+#if WINRT
 using Windows.UI.Xaml.Input;
 using System.Windows.Input;
 #else
@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace MyToolkit.MVVM
 {
-#if METRO
+#if WINRT
 	public class RelayCommand : NotifyPropertyChanged, ICommand
 #else
 	public class RelayCommand : NotifyPropertyChanged<RelayCommand>, ICommand

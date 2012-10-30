@@ -2,7 +2,7 @@ using System;
 
 using MyToolkit.MVVM;
 
-#if METRO
+#if WINRT
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Documents;
@@ -17,7 +17,7 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 {
 	public class LinkGenerator : SingleControlGenerator
 	{
-#if METRO
+#if WINRT
 		public override DependencyObject GenerateSingle(HtmlNode node, IHtmlTextBlock textBlock)
 		{
 			try

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using MyToolkit.Controls.HtmlTextBlockImplementation;
 
-#if METRO
+#if WINRT
 using MyToolkit.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,7 +24,7 @@ namespace MyToolkit.Controls
 
 		public HtmlTextBlock()
 		{
-#if !METRO
+#if !WINRT
 			InnerMargin = new Thickness(24, 0, 24, 0);
 			FontSize = (double)Resources["PhoneFontSizeNormal"];
 #else
@@ -56,7 +56,7 @@ namespace MyToolkit.Controls
 		}
 
 		private bool loaded = false;
-#if !METRO
+#if !WINRT
 		public override void OnApplyTemplate()
 #else
 		protected override void OnApplyTemplate()

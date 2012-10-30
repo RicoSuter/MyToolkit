@@ -32,7 +32,7 @@ namespace MyToolkit.Messaging
 		}
 #endif
 
-#if !METRO
+#if !WINRT
 		public static void ShowTextMessage(TextMessage message)
 		{
 			if (message.Button == TextMessage.MessageButton.OK)

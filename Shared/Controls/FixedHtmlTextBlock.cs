@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using MyToolkit.Controls.HtmlTextBlockImplementation;
 
-#if METRO
+#if WINRT
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 #else
@@ -23,7 +23,7 @@ namespace MyToolkit.Controls
 		
 		public FixedHtmlTextBlock()
 		{
-#if !METRO
+#if !WINRT
 			FontSize = (double)Resources["PhoneFontSizeNormal"];
 			Foreground = (Brush)Resources["PhoneForegroundBrush"];
 			Margin = new Thickness(12, 0, 12, 0);

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net;
 
-#if METRO
+#if WINRT
 using Windows.Storage.Streams;
 #endif
 
@@ -22,7 +22,7 @@ namespace MyToolkit.Utilities
 			}
 		}
 
-#if METRO
+#if WINRT
 		public static IRandomAccessStream AsRandomAccessStream(this Stream stream)
 		{
 			// TODO: uses a lot of memory...
@@ -32,7 +32,7 @@ namespace MyToolkit.Utilities
 	}
 
 
-#if METRO
+#if WINRT
 	internal class MemoryRandomAccessStream : IRandomAccessStream
 	{
 		private readonly Stream internalStream;

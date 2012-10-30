@@ -1,6 +1,6 @@
 ﻿using System;
 
-#if METRO
+#if WINRT
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 #else
@@ -33,7 +33,7 @@ namespace MyToolkit.Animations
 			story.Children.Add(animation);
 
 			Storyboard.SetTarget(animation, obj);
-#if METRO
+#if WINRT
 			Storyboard.SetTargetProperty(animation, "Opacity");
 #else
 			Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
@@ -61,7 +61,7 @@ namespace MyToolkit.Animations
 			story.Children.Add(animation);
 
 			Storyboard.SetTarget(animation, obj);
-#if METRO
+#if WINRT
 			Storyboard.SetTargetProperty(animation, "Opacity");
 #else
 			Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
@@ -72,7 +72,7 @@ namespace MyToolkit.Animations
 			story.Begin();
 		}
 
-#if !METRO
+#if !WINRT
 		public static bool FadeInBackground(Panel panel, Uri backgroundSourceUri, double opacity, 
 			int msecs, Action completed = null)
 		{

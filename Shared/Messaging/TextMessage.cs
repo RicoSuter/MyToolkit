@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-#if METRO
+#if WINRT
 using System.Threading.Tasks;
 using MyToolkit.Resources;
 using Windows.UI.Popups;
@@ -46,7 +46,7 @@ namespace MyToolkit.Messaging
 
 		public MessageResult Result { get; set; }
 
-#if METRO
+#if WINRT
 		public static Func<TextMessage, Task> GetAction()
 		{
 			return ShowTextMessage;

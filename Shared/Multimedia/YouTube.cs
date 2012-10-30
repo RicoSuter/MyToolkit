@@ -7,7 +7,7 @@ using System.Windows;
 using MyToolkit.Multimedia;
 using MyToolkit.Networking;
 
-#if METRO
+#if WINRT
 using System.Threading.Tasks;
 #elif WINDOWS_PHONE
 using Microsoft.Phone.Shell;
@@ -24,7 +24,7 @@ namespace MyToolkit.Multimedia
 	public static class YouTube
 	{
 
-#if METRO
+#if WINRT
 		public static Task<YouTubeUri> GetVideoUriAsync(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P)
 		{
 			var task = new TaskCompletionSource<YouTubeUri>();

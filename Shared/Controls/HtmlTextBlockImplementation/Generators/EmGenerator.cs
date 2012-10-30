@@ -1,6 +1,6 @@
 using System.Windows;
 
-#if METRO
+#if WINRT
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Documents;
@@ -18,7 +18,7 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 			{
 				var element = c as TextElement;
 				if (element != null)
-#if METRO
+#if WINRT
                     element.FontStyle = FontStyle.Italic;
 #else
                     element.FontStyle = FontStyles.Italic;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-#if METRO
+#if WINRT
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 #else
@@ -39,7 +39,7 @@ namespace MyToolkit.Animations
 			story.Children.Add(animation);
 
 			Storyboard.SetTarget(animation, parentCtrl.Projection);
-#if METRO
+#if WINRT
 			Storyboard.SetTargetProperty(animation, "RotationY");
 #else
 			Storyboard.SetTargetProperty(animation, new PropertyPath("RotationY"));
@@ -56,7 +56,7 @@ namespace MyToolkit.Animations
 				story.Children.Add(animation);
 
 				Storyboard.SetTarget(animation, parentCtrl.Projection);
-#if METRO
+#if WINRT
 				Storyboard.SetTargetProperty(animation, "RotationY");
 #else
 				Storyboard.SetTargetProperty(animation, new PropertyPath("RotationY"));

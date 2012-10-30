@@ -1,5 +1,5 @@
 using System;
-#if !METRO
+#if !WINRT
 using System.Windows;
 #else
 using Windows.UI.Xaml;

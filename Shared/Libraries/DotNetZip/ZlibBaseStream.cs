@@ -298,7 +298,7 @@ namespace Ionic.Zlib
             _z = null;
         }
 
-#if METRO
+#if WINRT
 		protected override void Dispose(bool disposing)
 		{
 			if (_stream == null) return;

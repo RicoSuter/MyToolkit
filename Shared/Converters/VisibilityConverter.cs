@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-#if !METRO
+#if !WINRT
 using System.Windows;
 using System.Windows.Data;
 #else
@@ -15,7 +15,7 @@ namespace MyToolkit.Converters
 {
 	public class VisibilityConverter : IValueConverter
 	{
-#if !METRO
+#if !WINRT
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 #else
         public object Convert(object value, Type typeName, object parameter, string language)
@@ -39,7 +39,7 @@ namespace MyToolkit.Converters
 						p = p.Substring(9);
 						foreach (var item in list)
 						{
-#if METRO
+#if WINRT
 							var property = item.GetType().GetTypeInfo().GetDeclaredProperty(p);
 #else
 							var property = item.GetType().GetProperty(p);
@@ -63,7 +63,7 @@ namespace MyToolkit.Converters
 			return value != null ? Visibility.Visible : Visibility.Collapsed; 
 		}
 
-#if !METRO
+#if !WINRT
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 #else
         public object ConvertBack(object value, Type typeName, object parameter, string language)

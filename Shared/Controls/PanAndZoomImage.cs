@@ -1,7 +1,7 @@
 using System;
 using MyToolkit.Utilities;
 
-#if METRO
+#if WINRT
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -37,7 +37,7 @@ namespace MyToolkit.Controls
 			remove { image.ImageFailed += value; }
 		}
 
-#if METRO
+#if WINRT
 		protected override void OnApplyTemplate()
 #else
 		public override void OnApplyTemplate()

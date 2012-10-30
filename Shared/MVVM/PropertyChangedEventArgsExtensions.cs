@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 
-#if METRO
+#if WINRT
 using System.Reflection;
 using Windows.UI.Xaml.Data;
 using System.ComponentModel;
@@ -20,7 +20,7 @@ namespace MyToolkit.MVVM
 		public static bool IsProperty<TU>(this PropertyChangedEventArgs args, string propertyName)
 		{
 #if DEBUG
-#if METRO
+#if WINRT
 			if (typeof(TU).GetTypeInfo().DeclaredProperties.Any(p => p.Name == propertyName))
 				throw new ArgumentException("propertyName");
 #else

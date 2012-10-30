@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 
-#if METRO
+#if WINRT
 using Windows.UI.Xaml.Data; 
 using System.Reflection;
 using System.ComponentModel;
@@ -67,7 +67,7 @@ namespace MyToolkit.MVVM
 			dependencies.Add(new KeyValuePair<string, string>(propertyName, dependentPropertyName));
 		}
 
-#if METRO
+#if WINRT
 		public bool SetProperty<T>(ref T oldValue, T newValue, [CallerMemberName] String propertyName = null)
 		{
 			return SetProperty(propertyName, ref oldValue, newValue); 
@@ -79,7 +79,7 @@ namespace MyToolkit.MVVM
 #endif
 		{
 			#if DEBUG
-				#if METRO
+				#if WINRT
 					// TODO: search in subclasses
 					//if (GetType().GetTypeInfo().GetDeclaredProperty(propertyName) == null)
 					//	throw new ArgumentException("propertyName");

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-#if METRO
+#if WINRT
 using Windows.UI.Xaml;
 #else
 using System.Windows;

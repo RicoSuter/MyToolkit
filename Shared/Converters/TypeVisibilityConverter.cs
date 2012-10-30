@@ -1,6 +1,6 @@
 ﻿using System;
 
-#if !METRO
+#if !WINRT
 using System.Windows;
 using System.Windows.Data;
 #else
@@ -13,7 +13,7 @@ namespace MyToolkit.Converters
 {
 	public class TypeVisibilityConverter : IValueConverter
 	{
-#if !METRO
+#if !WINRT
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
 			return value.GetType().Name == (string)parameter ? Visibility.Visible : Visibility.Collapsed; 
@@ -25,7 +25,7 @@ namespace MyToolkit.Converters
 		}
 #endif
 
-#if !METRO
+#if !WINRT
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 #else
         public object ConvertBack(object value, Type typeName, object parameter, string language)

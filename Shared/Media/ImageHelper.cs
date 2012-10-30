@@ -8,7 +8,7 @@ using System.Net;
 using System.Text;
 using MyToolkit.Networking;
 
-#if METRO
+#if WINRT
 using System.Threading;
 using MyToolkit.Utilities;
 using Windows.Foundation;
@@ -62,7 +62,7 @@ namespace MyToolkit.Media
 			Justification = "Static constructor performs additional tasks.")]
 		static ImageHelper()
 		{
-#if METRO
+#if WINRT
 			ThreadPool.RunAsync(WorkerThreadProc);
 			Application.Current.Suspending += HandleApplicationExit;
 #else
@@ -72,7 +72,7 @@ namespace MyToolkit.Media
 			IsUsed = true;
 		}
 
-#if METRO
+#if WINRT
 		private static void HandleApplicationExit(object sender, Windows.ApplicationModel.SuspendingEventArgs e)
 #else
 		private static void HandleApplicationExit(object sender, EventArgs eventArgs)
@@ -171,7 +171,7 @@ namespace MyToolkit.Media
 						if (pendingRequest.Uri is AuthenticatedUri)
 							webRequest.Credentials = ((AuthenticatedUri)pendingRequest.Uri).Credentials;
 
-#if !METRO
+#if !WINRT
 						webRequest.AllowReadStreamBuffering = true; // Don't want to block this thread or the UI thread on network access
 #endif
 
@@ -182,7 +182,7 @@ namespace MyToolkit.Media
 						var originalUriString = pendingRequest.Uri.OriginalString;
 						var resourceStreamUri = originalUriString.StartsWith("/", StringComparison.Ordinal) ? new Uri(originalUriString.TrimStart('/'), UriKind.Relative) : pendingRequest.Uri;
 
-#if METRO
+#if WINRT
 						try
 						{
 							var file = StorageFile.GetFileFromApplicationUriAsync(resourceStreamUri).RunSynchronouslyWithResult();
@@ -219,7 +219,7 @@ namespace MyToolkit.Media
 
 				if (0 < pendingCompletions.Count)
 				{
-#if METRO
+#if WINRT
 					pendingCompletions.Peek().Image.Dispatcher.
 						RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 #else
@@ -238,7 +238,7 @@ namespace MyToolkit.Media
 									{
 										try
 										{
-#if METRO
+#if WINRT
 											var local = pendingCompletion;
 											var newStream = pendingCompletion.Stream.AsRandomAccessStream();
 											var task = bitmap.SetSourceAsync(newStream).AsTask();
@@ -282,7 +282,7 @@ namespace MyToolkit.Media
 			var image = (Image)obj;
 			var uri = (Uri)e.NewValue;
 
-#if METRO
+#if WINRT
         	if (!IsUsed ||	Windows.ApplicationModel.DesignMode.DesignModeEnabled)
 #else
 			if (!IsUsed || DesignerProperties.IsInDesignTool)

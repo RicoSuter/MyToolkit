@@ -1,4 +1,4 @@
-#if METRO
+#if WINRT
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Documents;

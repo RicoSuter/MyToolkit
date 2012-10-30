@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-#if METRO
+#if WINRT
 using Windows.Data.Xml.Dom;
 #endif
 
@@ -36,7 +36,7 @@ namespace MyToolkit.Utilities
 			}
 		}
 
-#if METRO
+#if WINRT
         public static string XmlEscape(string unescaped)
         {
             var doc = new XmlDocument();

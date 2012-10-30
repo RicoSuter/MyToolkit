@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-#if METRO
+#if WINRT
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 #else

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-#if METRO
+#if WINRT
 using Windows.UI.Xaml.Media;
 #else
 using System.Windows.Media;

@@ -1,6 +1,6 @@
 ﻿using System;
 
-#if METRO
+#if WINRT
 using Windows.Foundation;
 using Windows.UI.Input;
 using Windows.UI.Xaml;
@@ -32,7 +32,7 @@ namespace MyToolkit.Controls
 
 		private ContentPresenter content; 
 		private RectangleGeometry geometry; 
-#if METRO
+#if WINRT
 		protected override void OnApplyTemplate()
 #else
 		public override void OnApplyTemplate()
@@ -50,7 +50,7 @@ namespace MyToolkit.Controls
 			SizeChanged += delegate { UpdateGeometry(); };
 			UpdateGeometry();
 
-#if !METRO
+#if !WINRT
 			var listener = GestureService.GetGestureListener(this);
 			listener.PinchStarted += OnPinchStarted;
 			listener.PinchDelta += OnPinchDelta;
@@ -68,7 +68,7 @@ namespace MyToolkit.Controls
 			MaxZoomFactor = horizontalZoom > verticalZoom ? horizontalZoom : verticalZoom;
 		}
 
-#if METRO
+#if WINRT
 	
 		protected override void OnManipulationStarted(Windows.UI.Xaml.Input.ManipulationStartedRoutedEventArgs e)
 		{
@@ -147,7 +147,7 @@ namespace MyToolkit.Controls
 
 		private bool isAnimating = false; 
 
-#if METRO
+#if WINRT
 		protected override void OnDoubleTapped(Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
 #else
 		protected override void OnDoubleTap(System.Windows.Input.GestureEventArgs e)
@@ -182,7 +182,7 @@ namespace MyToolkit.Controls
 			else
 				ResetZoomAndPosition(true);
 	
-#if METRO
+#if WINRT
  			base.OnDoubleTapped(e);
 #else
 			base.OnDoubleTap(e);
@@ -220,7 +220,7 @@ namespace MyToolkit.Controls
 			animation.EasingFunction = new SineEase { EasingMode = EasingMode.EaseInOut};
 
 			Storyboard.SetTarget(animation, target);
-#if METRO
+#if WINRT
 			Storyboard.SetTargetProperty(animation, property);
 #else
 			Storyboard.SetTargetProperty(animation, new PropertyPath(property));

@@ -15,7 +15,7 @@ namespace MyToolkit.MVVM
 				else if (loadingCounter > 0)
 					loadingCounter--;
 
-#if METRO
+#if WINRT
 				RaisePropertyChanged();
 #else
 				RaisePropertyChanged("IsLoading");

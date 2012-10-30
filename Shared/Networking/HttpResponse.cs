@@ -4,7 +4,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 
-#if METRO
+#if WINRT
 using System.Threading.Tasks;
 #endif 
 
@@ -97,7 +97,7 @@ namespace MyToolkit.Networking
 			internal set { code = value; }
 		}
 
-#if METRO
+#if WINRT
         internal void CreateTimeoutTimer(HttpWebRequest request)
         {
 			if (Request.ConnectionTimeout > 0)

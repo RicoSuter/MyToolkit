@@ -22,7 +22,7 @@ using System.Windows.Threading;
 #elif WPF
 using System.IO.Compression;
 using System.Windows.Threading;
-#elif METRO
+#elif WINRT
 using System.IO.Compression;
 using Windows.Storage;
 using System.Threading.Tasks;
@@ -107,7 +107,7 @@ namespace MyToolkit.Networking
 
 		#region WinRT Async
 
-#if METRO || WINPRT
+#if WINRT || WINPRT
 		public static Task<HttpResponse> GetAsync(string url)
 		{
 			var task = new TaskCompletionSource<HttpResponse>();
@@ -174,7 +174,7 @@ namespace MyToolkit.Networking
 
 		#region GET
 
-#if !METRO
+#if !WINRT
 		public static HttpResponse Get(string uri, Action<HttpResponse> action, Dispatcher dispatcher)
 		{
 			return Get(new HttpGetRequest(uri), r => dispatcher.BeginInvoke(() => action(r)));
@@ -245,7 +245,7 @@ namespace MyToolkit.Networking
 
 		#region POST
 
-#if !METRO
+#if !WINRT
 		public static HttpResponse Post(string uri, Action<HttpResponse> action, Dispatcher dispatcher)
 		{
 			return Post(new HttpPostRequest(uri), r => dispatcher.BeginInvoke(() => action(r)));
@@ -399,7 +399,7 @@ namespace MyToolkit.Networking
 
 				var fileStream = file.Stream;
 
-#if METRO
+#if WINRT
 				if (fileStream == null)
 				{
 					var f = StorageFile.GetFileFromPathAsync(file.Path);
@@ -413,7 +413,8 @@ namespace MyToolkit.Networking
 					fileStream = f2.GetResults().AsStreamForRead();
 				}
 
-#elif SILVERLIGHT 
+#else
+#if SILVERLIGHT 
 				if (fileStream == null)
 				{
 					var isf = IsolatedStorageFile.GetUserStoreForApplication();
@@ -465,7 +466,7 @@ namespace MyToolkit.Networking
 				var origResponse = response;
 
 #if USE_GZIP
-	#if METRO || WINPRT
+	#if WINRT || WINPRT
 				if (response.Headers["Content-Encoding"] == "gzip")
 					response = new GZipWebResponse(response); 
 	#elif SILVERLIGHT || WINDOWS_PHONE
@@ -551,7 +552,7 @@ namespace MyToolkit.Networking
 			return new GZipStream(response.GetResponseStream(), CompressionMode.Decompress); 
 		}
 
-#if METRO
+#if WINRT
 
 		protected override void Dispose(bool disposing)
 		{
@@ -573,7 +574,7 @@ namespace MyToolkit.Networking
 
 #endif
 
-#if SILVERLIGHT || METRO || WINPRT
+#if SILVERLIGHT || WINRT || WINPRT
 
 		public override long ContentLength
 		{

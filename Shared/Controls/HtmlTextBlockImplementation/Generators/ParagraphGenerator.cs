@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-#if METRO
+#if WINRT
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
@@ -45,7 +45,7 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 				foreach (var r in current)
 					p.Inlines.Add(r);
 
-#if !METRO
+#if !WINRT
 				var tb = new RichTextBox();
 				tb.Background = textBlock.Background;
 #else

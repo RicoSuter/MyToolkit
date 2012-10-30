@@ -791,7 +791,7 @@ namespace Ionic.Crc
         }
 
 		
-#if METRO
+#if WINRT
 		void IDisposable.Dispose()
 		{
 			Dispose(true);

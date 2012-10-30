@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 
-#if METRO
+#if WINRT
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.System.Threading;
@@ -14,7 +14,7 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation
 {
 	internal static class HtmlTextBlockHelper
 	{
-#if METRO
+#if WINRT
 		async internal static void Generate(this IHtmlTextBlock me)
 		{
 			var html = me.Html;
