@@ -1,4 +1,10 @@
 ﻿using System;
+using System.Windows;
+
+#if METRO
+using System.Threading.Tasks;
+using Windows.UI.Popups;
+#endif
 
 namespace MyToolkit.Messaging
 {
@@ -37,19 +43,47 @@ namespace MyToolkit.Messaging
 		public MessageResult Result { get; set; }
 
 #if METRO
+		public static Func<TextMessage, Task> GetAction()
+		{
+			return ShowTextMessage;
+		}
+
+		private static async Task ShowTextMessage(TextMessage m)
+		{
+			if (m.Button == MessageButton.OK)
+			{
+				var msg = new MessageDialog(m.Text, m.Title);
+				msg.ShowAsync();
+			}
+			else
+			{
+				var msg = new MessageDialog(m.Text, m.Title);
+				msg.Commands.Add(new UICommand("OK"));
+				msg.Commands.Add(new UICommand("Cancel"));
+				msg.DefaultCommandIndex = 0;
+				msg.CancelCommandIndex = 1;
+
+				var cmd = await msg.ShowAsync();
+				m.Result = msg.Commands.IndexOf(cmd) == 0 ? MessageResult.OK : MessageResult.Cancel;
+			}
+		}
+
+#else
+#if !WINDOWS_PHONE
 		public static Action<TextMessage> GetAction()
 		{
-			return m =>
+			return message =>
 			{
-				if (m.Button == MessageButton.OK)
+				if (message.Button == MessageButton.OK)
+					MessageBox.Show(message.Text, message.Title, MessageBoxButton.OK);
+				else if (message.Button == MessageButton.OKCancel)
 				{
-					var msg = new Windows.UI.Popups.MessageDialog(m.Text, m.Title);
-					msg.ShowAsync();
+					var result = MessageBox.Show(message.Text, message.Title, MessageBoxButton.OKCancel);
+					message.Result = result == MessageBoxResult.OK ? MessageResult.OK : MessageResult.Cancel;
 				}
-				else
-					throw new NotImplementedException();
 			};
 		}
+#endif
 #endif
 	}
 }

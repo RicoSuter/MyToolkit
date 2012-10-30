@@ -43,30 +43,6 @@ namespace MyToolkit.Messaging
 				message.Result = result == MessageBoxResult.OK ? TextMessage.MessageResult.OK : TextMessage.MessageResult.Cancel;
 			}
 		}
-#else
-		public static async void ShowTextMessage(TextMessage message)
-		{
-			if (message.Button == TextMessage.MessageButton.OK)
-			{
-				var msg = new Windows.UI.Popups.MessageDialog(message.Text, message.Title);
-				await msg.ShowAsync();
-			}
-			else
-				throw new NotImplementedException();
-						
-			//msg.Commands.Add(new UICommand("OK"));
-			//msg.Commands.Add(new UICommand("Cancel"));
-			//msg.DefaultCommandIndex = 0;
-			//msg.CancelCommandIndex = 1; 
-
-			//if (message.Button == TextMessage.MessageButton.OK)
-			//	MessageBox.Show(message.Text, message.Title, MessageBoxButton.OK);
-			//else if (message.Button == TextMessage.MessageButton.OKCancel)
-			//{
-			//	var result = MessageBox.Show(message.Text, message.Title, MessageBoxButton.OKCancel);
-			//	message.Result = result == MessageBoxResult.OK ? TextMessage.MessageResult.OK : TextMessage.MessageResult.Cancel;
-			//}
-		}
 #endif
 	}
 }
