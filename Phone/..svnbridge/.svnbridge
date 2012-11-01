@@ -16,4 +16,13 @@ MyToolkit.PhoneLight.csproj.user
 Service References
 MyToolkit.Phone.Light.csproj.user
 MyToolkit.Phone.Extended.csproj.user
+</Value></Property><Property><Name>svn:ignore</Name><Value>Bin
+obj
+MyToolkit.Phone.csproj.user
+MyToolkit.PhoneLight.csproj.user
+Service References
+MyToolkit.Phone.Light.csproj.user
+MyToolkit.Phone.Extended.csproj.user
+MyToolkit.Phone.Extended.WinPRT.csproj.user
+MyToolkit.Phone.WinPRT.csproj.user
 </Value></Property></Properties></ItemProperties>
