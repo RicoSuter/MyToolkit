@@ -245,6 +245,7 @@
     </Compile>
     <Compile Include="Animations\Fading.cs" />
     <Compile Include="Animations\Flipping.cs" />
+    <Compile Include="Controls\HorizontalHtmlGenerator.cs" />
     <Compile Include="Controls\ExtendedItemsControl.cs" />
     <Compile Include="Controls\ExtendedListView.cs" />
     <Compile Include="Controls\ExtendedTextBox.cs" />
