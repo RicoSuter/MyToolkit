@@ -28,6 +28,12 @@ namespace MyToolkit.Messaging
 			Messenger.Send(msg);
 			return msg; 
 		}
+
+		public static async Task<T> SendAsync<T>(this T msg)
+		{
+			await Messenger.SendAsync(msg);
+			return msg; 
+		}
 	}
 
 	public static class Messenger
