@@ -66,7 +66,7 @@ namespace MyToolkit.Controls
 
 		public GridControl()
 		{
-			SizeChanged += delegate { Update(); };
+			LayoutUpdated += delegate { Update(); };
 		}
 
 		private void UpdateOffsetX(double oldOffset, double newOffset)
@@ -91,31 +91,40 @@ namespace MyToolkit.Controls
 			}
 		}
 
+		private double lastWidth = 0.0;
+		private double lastHeight = 0.0;
 		private List<Line> verticalLines = new List<Line>(); 
 		private List<Line> horizontalLines = new List<Line>(); 
-		private void Update()
+
+		public void Update()
 		{
+			if (ActualWidth == lastWidth && ActualHeight == lastHeight)
+				return;
+
+			lastWidth = ActualWidth;
+			lastHeight = ActualHeight;
+
 			Children.Clear();
 			verticalLines.Clear();
 			horizontalLines.Clear();
 
-			for (var x = -CellWidth; x < ActualWidth + CellWidth * 2; x = x + CellWidth) // vertical lines
+			for (var x = -CellWidth * 2; x < ActualWidth + CellWidth * 2; x = x + CellWidth) // vertical lines
 			{
 				var line = new Line();
 				line.Stroke = Stroke;
 				line.X1 = x + OffsetX;
-				line.Y1 = -OffsetY; 
+				line.Y1 = -OffsetY * 2; 
 				line.X2 = x + OffsetX;
 				line.Y2 = ActualHeight + OffsetY * 2; 
 				Children.Add(line);
 				verticalLines.Add(line);
 			}
 
-			for (var y = -CellHeight; y < ActualHeight + CellHeight * 2; y = y + CellHeight) // horizontal lines
+			for (var y = -CellHeight * 2; y < ActualHeight + CellHeight * 2; y = y + CellHeight) // horizontal lines
 			{
 				var line = new Line();
 				line.Stroke = Stroke;
-				line.X1 = -OffsetX;
+				line.X1 = -OffsetX * 2;
 				line.Y1 = y + OffsetY;
 				line.X2 = ActualWidth + OffsetX * 2;
 				line.Y2 = y + OffsetY;
