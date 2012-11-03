@@ -352,7 +352,14 @@
 								</Style>
 							</controls:ExtendedListBox.ItemContainerStyle>
 						</controls:ExtendedListBox>
-						<ContentPresenter x:Name="Content" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+						<ContentControl x:Name="Content" Grid.Row="1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+										VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+							<ContentControl.ContentTransitions>
+								<TransitionCollection>
+									<EntranceThemeTransition />
+								</TransitionCollection>
+							</ContentControl.ContentTransitions>
+						</ContentControl>
 					</Grid>
                 </ControlTemplate>
             </Setter.Value>

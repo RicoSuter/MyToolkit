@@ -15,16 +15,16 @@ namespace MyToolkit.Controls
 		}
 
 		private ExtendedListBox list;
-		private ContentPresenter content; 
+		private ContentControl content; 
 		protected override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
 
 			list = (ExtendedListBox)GetTemplateChild("List");
-			content = (ContentPresenter)GetTemplateChild("Content");
+			content = (ContentControl)GetTemplateChild("Content");
 
-			content.Transitions = new TransitionCollection();
-			content.Transitions.Add(new EntranceThemeTransition());
+			//content.Transitions = new TransitionCollection();
+			//content.Transitions.Add(new EntranceThemeTransition());
 
 			list.ItemsSource = Items;
 			list.SelectionChanged += OnSelectionChanged;
