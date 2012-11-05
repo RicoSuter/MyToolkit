@@ -4,8 +4,11 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
-using Microsoft.Phone.Controls;
 using MyToolkit.UI;
+
+#if WINDOWS_PHONE || WINPRT
+using Microsoft.Phone.Controls;
+#endif
 
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
 
@@ -37,16 +40,16 @@ namespace MyToolkit.Controls
 		{
 			//DefaultStyleKey = typeof(ExtendedListBox);
 			LayoutUpdated += RegisterScrollEvent;
-			ItemContainerStyle = (Style) XamlReader.Load(
-				@"<Style TargetType=""ListBoxItem"" xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
-					<Setter Property=""Template"">
-						<Setter.Value>
-							<ControlTemplate>
-								<ContentPresenter HorizontalAlignment=""Stretch"" VerticalAlignment=""Stretch""/>
-							</ControlTemplate>
-						</Setter.Value>
-					</Setter>
-				</Style>");
+//            ItemContainerStyle = (Style) XamlReader.Load(
+//                @"<Style TargetType=""ListBoxItem"" xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
+//					<Setter Property=""Template"">
+//						<Setter.Value>
+//							<ControlTemplate>
+//								<ContentPresenter HorizontalAlignment=""Stretch"" VerticalAlignment=""Stretch""/>
+//							</ControlTemplate>
+//						</Setter.Value>
+//					</Setter>
+//				</Style>");
 		}
 
 		private ScrollViewer scrollViewer;
@@ -94,6 +97,8 @@ namespace MyToolkit.Controls
 
 		#region scroll jumping fix
 
+#if WINPRT || WINDOWS_PHONE
+
 		public static readonly DependencyProperty UseScrollFixProperty =
 			DependencyProperty.Register("UseScrollFix", typeof(bool), typeof(ExtendedListBox), new PropertyMetadata(true));
 
@@ -124,6 +129,8 @@ namespace MyToolkit.Controls
 
 		//    base.OnGotFocus(e);
 		//}
+
+#endif
 
 		#endregion
 
