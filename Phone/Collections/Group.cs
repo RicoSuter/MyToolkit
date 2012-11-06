@@ -21,16 +21,29 @@ namespace MyToolkit.Collections
 			Title = title;
 		}
 
-		public string Title { get; private set; }
+		private string title;
+		public string Title
+		{
+			get { return title; }
+			set
+			{
+				if (value != title)
+				{
+					title = value;
+					OnPropertyChanged(new PropertyChangedEventArgs("Title"));
+				}
+			}
+		}
 
 		protected override void OnPropertyChanged(PropertyChangedEventArgs e)
 		{
 			base.OnPropertyChanged(e);
-
 			if (e.PropertyName == "Count")
 			{
 				OnPropertyChanged(new PropertyChangedEventArgs("HasItems"));
+#if !WINRT
 				OnPropertyChanged(new PropertyChangedEventArgs("GroupBackgroundBrush"));
+#endif
 			}
 		}
 
@@ -39,18 +52,16 @@ namespace MyToolkit.Collections
 			get { return Items.Count > 0; }
 		}
 
+#if !WINRT
 		public Brush GroupBackgroundBrush
 		{
 			get 
 			{
-#if WINRT
-				throw new NotImplementedException();
-#else
 				return HasItems
 					? (SolidColorBrush) Application.Current.Resources["PhoneAccentBrush"]
 					: (SolidColorBrush) Application.Current.Resources["PhoneChromeBrush"];
-#endif
 			}
 		}
+#endif
 	}
 }
