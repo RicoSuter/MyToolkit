@@ -20,8 +20,21 @@ namespace MyToolkit.Utilities
 			return Activator.CreateInstance(specificType, args);
 		}
 
-#if !WINRT
-
+#if WINRT
+		public static void Clone(this object source, object target)
+		{
+			var targetType = target.GetType().GetTypeInfo();
+			foreach (var p in source.GetType().GetTypeInfo().DeclaredProperties)
+			{
+				var tp = targetType.GetDeclaredProperty(p.Name);
+				if (tp != null && p.CanWrite)
+				{
+					var value = p.GetValue(source, null);
+					tp.SetValue(target, value, null);
+				}
+			}
+		}
+#else
 		public static void Clone(this object source, object target)
 		{
 			var targetType = target.GetType();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-#if WINRT
+#if WINRT || WINPRT
 using System.Threading.Tasks;
 #endif
 

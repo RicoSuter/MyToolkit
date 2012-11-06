@@ -171,7 +171,6 @@ namespace MyToolkit.Networking
 
 		#endregion
 
-
 		#region GET
 
 #if !WINRT
