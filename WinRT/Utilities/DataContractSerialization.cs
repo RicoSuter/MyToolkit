@@ -8,13 +8,15 @@ namespace MyToolkit.Utilities
 {
 	public static class DataContractSerialization
 	{
-		public static string Serialize(object obj, bool preserveReferences)
+		public static string Serialize(object obj, bool preserveReferences, Type[] extraTypes = null)
 		{
 			using (var stringWriter = new StringWriter())
 			{
 				using (var reader = XmlWriter.Create(stringWriter))
 				{
 					var settings = new DataContractSerializerSettings();
+					if (extraTypes != null)
+						settings.KnownTypes = extraTypes; 
 					settings.PreserveObjectReferences = preserveReferences;
 					var serializer = new DataContractSerializer(obj.GetType(), settings);
 					serializer.WriteObject(reader, obj);
@@ -23,13 +25,16 @@ namespace MyToolkit.Utilities
 			}
 		}
 
-		public static T Deserialize<T>(string xml)
+		public static T Deserialize<T>(string xml, Type[] extraTypes = null)
 		{
 			using (var stringReader = new StringReader(xml))
 			{
 				using (var reader = XmlReader.Create(stringReader))
 				{
-					var serializer = new DataContractSerializer(typeof(T));
+					var settings = new DataContractSerializerSettings();
+					if (extraTypes != null)
+						settings.KnownTypes = extraTypes;
+					var serializer = new DataContractSerializer(typeof(T), settings);
 					return (T)serializer.ReadObject(reader);
 				}
 			}

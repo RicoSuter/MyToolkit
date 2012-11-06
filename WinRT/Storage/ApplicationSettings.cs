@@ -46,7 +46,7 @@ namespace MyToolkit.Storage
 			var file = roaming ? await ApplicationData.Current.RoamingFolder.CreateFileAsync(key + ".settings", CreationCollisionOption.ReplaceExisting) :
 				await ApplicationData.Current.LocalFolder.CreateFileAsync(key + ".settings", CreationCollisionOption.ReplaceExisting);
 
-			var xml = Xml.Serialize(value, extraTypes); 
+			var xml = DataContractSerialization.Serialize(value, true, extraTypes); 
 			await FileIO.WriteTextAsync(file, xml, UnicodeEncoding.Utf8);
 		}
 
@@ -56,7 +56,7 @@ namespace MyToolkit.Storage
 				await ApplicationData.Current.LocalFolder.CreateFileAsync(key + ".settings", CreationCollisionOption.OpenIfExists);
 
 			var xml = await FileIO.ReadTextAsync(file, UnicodeEncoding.Utf8);
-			return !String.IsNullOrEmpty(xml) ? Xml.Deserialize<T>(xml, extraTypes) : defaultValue;
+			return !String.IsNullOrEmpty(xml) ? DataContractSerialization.Deserialize<T>(xml, extraTypes) : defaultValue;
 		}
 	}
 }
