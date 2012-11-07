@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using MyToolkit.Utilities;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -23,6 +25,14 @@ namespace MyToolkit.Paging
 		{
 			HorizontalContentAlignment = HorizontalAlignment.Stretch;
 			VerticalContentAlignment = VerticalAlignment.Stretch;
+
+			Loaded += delegate { Window.Current.VisibilityChanged += OnVisibilityChanged; };
+			Unloaded += delegate { Window.Current.VisibilityChanged -= OnVisibilityChanged; };
+		}
+
+		private void OnVisibilityChanged(object sender, VisibilityChangedEventArgs args)
+		{
+			Current.GetPage(this).OnVisibilityChanged(args);
 		}
 
 		public bool CanGoForward { get { return currentIndex < pages.Count - 1; } }

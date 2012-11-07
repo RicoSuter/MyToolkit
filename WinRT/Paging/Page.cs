@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -68,6 +69,11 @@ namespace MyToolkit.Paging
 		}
 
 		public virtual void OnNavigatedFrom(NavigationEventArgs e)
+		{
+			
+		}
+
+		public virtual void OnVisibilityChanged(VisibilityChangedEventArgs args)
 		{
 			
 		}
