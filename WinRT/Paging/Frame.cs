@@ -32,7 +32,8 @@ namespace MyToolkit.Paging
 
 		private void OnVisibilityChanged(object sender, VisibilityChangedEventArgs args)
 		{
-			Current.GetPage(this).OnVisibilityChanged(args);
+			if (Current != null)
+				Current.GetPage(this).OnVisibilityChanged(args);
 		}
 
 		public bool CanGoForward { get { return currentIndex < pages.Count - 1; } }

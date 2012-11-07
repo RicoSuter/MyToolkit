@@ -58,5 +58,23 @@ namespace MyToolkit.Storage
 			var xml = await FileIO.ReadTextAsync(file, UnicodeEncoding.Utf8);
 			return !String.IsNullOrEmpty(xml) ? DataContractSerialization.Deserialize<T>(xml, extraTypes) : defaultValue;
 		}
+
+		public static async Task SetSettingToXmlFileAsync<T>(string key, T value, bool roaming = false, Type[] extraTypes = null)
+		{
+			var file = roaming ? await ApplicationData.Current.RoamingFolder.CreateFileAsync(key + ".settings", CreationCollisionOption.ReplaceExisting) :
+				await ApplicationData.Current.LocalFolder.CreateFileAsync(key + ".settings", CreationCollisionOption.ReplaceExisting);
+
+			var xml = Xml.Serialize(value, extraTypes);
+			await FileIO.WriteTextAsync(file, xml, UnicodeEncoding.Utf8);
+		}
+
+		public static async Task<T> GetSettingFromXmlFileAsync<T>(string key, T defaultValue, bool roaming = false, Type[] extraTypes = null)
+		{
+			var file = roaming ? await ApplicationData.Current.RoamingFolder.CreateFileAsync(key + ".settings", CreationCollisionOption.OpenIfExists) :
+				await ApplicationData.Current.LocalFolder.CreateFileAsync(key + ".settings", CreationCollisionOption.OpenIfExists);
+
+			var xml = await FileIO.ReadTextAsync(file, UnicodeEncoding.Utf8);
+			return !String.IsNullOrEmpty(xml) ? Xml.Deserialize<T>(xml, extraTypes) : defaultValue;
+		}
 	}
 }
