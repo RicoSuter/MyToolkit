@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
+#elif WINPRT
+using System.Threading.Tasks;
+using System.Windows;
+using Windows.Networking;
+using Windows.Networking.Sockets;
+using Windows.Storage.Streams;
 #else
 using System.Net;
 using System.Net.Sockets;
@@ -40,7 +46,7 @@ namespace MyToolkit.Networking
 			}
 		}
 
-#if WINRT
+#if WINRT || WINPRT
 		public static Task WakeAsync(string macAddress)
 		{
 			return WakeAsync(new HostName("255.255.255.255"), 7, MacAddressToBytes(macAddress));
@@ -70,18 +76,19 @@ namespace MyToolkit.Networking
 				}				
 			}
 		}
-#else
-		public static void Wake(string macAddress, Action sentAction, Action<SocketError> failureAction)
+#endif
+#if !WINRT
+		public static void Wake(string macAddress, Action sentAction, Action<System.Net.Sockets.SocketError> failureAction)
 		{
 			Wake(new IPEndPoint(IPAddress.Broadcast, 7), MacAddressToBytes(macAddress), sentAction, failureAction);
 		}
 
-		public static void Wake(string host, int port, string macAddress, Action sentAction, Action<SocketError> failureAction)
+		public static void Wake(string host, int port, string macAddress, Action sentAction, Action<System.Net.Sockets.SocketError> failureAction)
 		{
 			Wake(new DnsEndPoint(host, port), MacAddressToBytes(macAddress), sentAction, failureAction);
 		}
 
-		public static void Wake(EndPoint endPoint, byte[] macAddress, Action sentAction, Action<SocketError> failureAction)
+		public static void Wake(EndPoint endPoint, byte[] macAddress, Action sentAction, Action<System.Net.Sockets.SocketError> failureAction)
 		{
 			var packet = new List<byte>();
 			for (var i = 0; i < 6; i++) // Trailer of 6 FF packets
@@ -94,7 +101,7 @@ namespace MyToolkit.Networking
 			args.RemoteEndPoint = endPoint;
 			args.Completed += (s, e) =>
 			{
-				if (e.SocketError != SocketError.Success)
+				if (e.SocketError != System.Net.Sockets.SocketError.Success)
 				{
 					Deployment.Current.Dispatcher.BeginInvoke(() => failureAction(e.SocketError));
 					return;
