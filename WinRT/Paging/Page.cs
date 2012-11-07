@@ -97,7 +97,7 @@ namespace MyToolkit.Paging
 
 		internal protected virtual void InternalOnNavigatedFrom(NavigationEventArgs e)
 		{
-			OnNavigatedTo(e);
+			OnNavigatedFrom(e);
 		}
 	}
 }

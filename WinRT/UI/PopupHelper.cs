@@ -13,6 +13,9 @@ namespace MyToolkit.UI
 {
 	public static class PopupHelper
 	{
+		private static int openPopups = 0;
+		public static bool IsPopupVisible { get { return openPopups > 0; } }
+
 		public static bool IsInPopup(FrameworkElement element)
 		{
 			if (element is Popup)
@@ -114,7 +117,9 @@ namespace MyToolkit.UI
 
 				if (closed != null)
 					closed(popup);
+				openPopups--;
 			};
+			openPopups++;
 			popup.IsOpen = true;
 			return popup;
 		}
@@ -146,8 +151,10 @@ namespace MyToolkit.UI
 				control.SizeChanged -= del2;
 				if (closed != null)
 					closed(popup);
+				openPopups--;
 			};
-			popup.IsOpen = true; 
+			openPopups++;
+			popup.IsOpen = true;
 			return popup;
 		}
 
@@ -179,7 +186,9 @@ namespace MyToolkit.UI
 				control.SizeChanged -= del2;
 				if (closed != null)
 					closed(popup);
+				openPopups--;
 			};
+			openPopups++;
 			popup.IsOpen = true;
 			return popup;
 		}

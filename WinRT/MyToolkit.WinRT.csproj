@@ -249,6 +249,7 @@
     <Compile Include="Animations\Fading.cs" />
     <Compile Include="Animations\Flipping.cs" />
     <Compile Include="Collections\ObservableGroups.cs" />
+    <Compile Include="Controls\GenericDataTemplateSelector.cs" />
     <Compile Include="Controls\HorizontalHtmlGenerator.cs" />
     <Compile Include="Controls\ExtendedItemsControl.cs" />
     <Compile Include="Controls\ExtendedListView.cs" />

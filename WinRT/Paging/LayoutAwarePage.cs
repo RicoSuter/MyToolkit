@@ -90,6 +90,9 @@ namespace MyToolkit.Paging
 
 				if (isLeftOrRightKey || isBackKey)
 				{
+					if (PopupHelper.IsPopupVisible)
+						return; 
+
 					var element = FocusManager.GetFocusedElement();
 					if (element is FrameworkElement && PopupHelper.IsInPopup((FrameworkElement)element))
 						return;
