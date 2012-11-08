@@ -69,6 +69,9 @@
     <Compile Include="..\Shared\Collections\ObservableView.cs">
       <Link>Collections\ObservableView.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Controls\DataTemplateSelector.cs">
+      <Link>Controls\DataTemplateSelector.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
       <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>
     </Compile>
@@ -201,7 +204,6 @@
     <Compile Include="..\Shared\Utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
-    <Compile Include="Controls\DataTemplateSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -40,16 +40,16 @@ namespace MyToolkit.Controls
 		{
 			//DefaultStyleKey = typeof(ExtendedListBox);
 			LayoutUpdated += RegisterScrollEvent;
-//            ItemContainerStyle = (Style) XamlReader.Load(
-//                @"<Style TargetType=""ListBoxItem"" xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
-//					<Setter Property=""Template"">
-//						<Setter.Value>
-//							<ControlTemplate>
-//								<ContentPresenter HorizontalAlignment=""Stretch"" VerticalAlignment=""Stretch""/>
-//							</ControlTemplate>
-//						</Setter.Value>
-//					</Setter>
-//				</Style>");
+			ItemContainerStyle = (Style)XamlReader.Load(
+				@"<Style TargetType=""ListBoxItem"" xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
+					<Setter Property=""Template"">
+						<Setter.Value>
+							<ControlTemplate>
+								<ContentPresenter HorizontalAlignment=""Stretch"" VerticalAlignment=""Stretch""/>
+							</ControlTemplate>
+						</Setter.Value>
+					</Setter>
+				</Style>");
 		}
 
 		private ScrollViewer scrollViewer;
