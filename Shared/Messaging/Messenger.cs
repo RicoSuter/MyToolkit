@@ -70,7 +70,7 @@ namespace MyToolkit.Messaging
 		/// <typeparam name="T">Type of the message</typeparam>
 		/// <param name="receiver">Receiver to use as identifier</param>
 		/// <param name="action">Action to register</param>
-		public static void Register<T>(object receiver, Func<T, Task> action)
+		public static void RegisterTask<T>(object receiver, Func<T, Task> action)
 		{
 			actions.Add(new MyTriple { Receiver = receiver, Type = typeof(T), Action = action });
 		}
@@ -80,9 +80,9 @@ namespace MyToolkit.Messaging
 		/// </summary>
 		/// <typeparam name="T">Type of the message</typeparam>
 		/// <param name="action">Action to register</param>
-		public static void Register<T>(Func<T, Task> action)
+		public static void RegisterTask<T>(Func<T, Task> action)
 		{
-			Register(null, action);
+			RegisterTask(null, action);
 		}
 #endif
 
