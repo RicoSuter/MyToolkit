@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyToolkit.Messaging
 {
-	class MyTriple
+	class MessageDescriptor
 	{
 		public object Receiver;
 		public Type Type;
@@ -40,7 +40,7 @@ namespace MyToolkit.Messaging
 
 	public static class Messenger
 	{
-		private static readonly List<MyTriple> actions = new List<MyTriple>();
+		private static readonly List<MessageDescriptor> actions = new List<MessageDescriptor>();
 		
 		/// <summary>
 		/// Registers an action for the given receiver. WARNING: You have to unregister the action to avoid memory leaks!
@@ -50,7 +50,7 @@ namespace MyToolkit.Messaging
 		/// <param name="action">Action to register</param>
 		public static void Register<T>(object receiver, Action<T> action)
 		{
-			actions.Add(new MyTriple { Receiver = receiver, Type = typeof(T), Action = action});
+			actions.Add(new MessageDescriptor { Receiver = receiver, Type = typeof(T), Action = action});
 		}
 
 		/// <summary>
@@ -72,7 +72,7 @@ namespace MyToolkit.Messaging
 		/// <param name="action">Action to register</param>
 		public static void RegisterTask<T>(object receiver, Func<T, Task> action)
 		{
-			actions.Add(new MyTriple { Receiver = receiver, Type = typeof(T), Action = action });
+			actions.Add(new MessageDescriptor { Receiver = receiver, Type = typeof(T), Action = action });
 		}
 
 		/// <summary>
