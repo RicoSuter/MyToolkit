@@ -1,8 +1,15 @@
 using System;
-using Windows.UI.Xaml.Navigation;
 
 namespace MyToolkit.Paging
 {
+	public enum NavigationMode
+	{
+		New = 0,
+		Back = 1,
+		Forward = 2,
+		Refresh = 3,
+	}
+
 	public class NavigationEventArgs
 	{
 		public object Content { get; internal set; }

@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using MyToolkit.Utilities;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
 
 namespace MyToolkit.Paging
 {
-	public delegate void MyNavigatedEventHandler(object sender, NavigationEventArgs e);
+	public delegate void NavigatedEventHandler(object sender, NavigationEventArgs e);
 	public class Frame : ContentControl//, INavigate
 	{
-		public event MyNavigatedEventHandler Navigated;
+		public event NavigatedEventHandler Navigated;
 		public IEnumerable<PageDescription> Pages { get { return pages; } }
 
 		private int currentIndex = -1; 
