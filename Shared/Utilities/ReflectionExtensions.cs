@@ -50,6 +50,29 @@ namespace MyToolkit.Utilities
 
 			return list.ToArray();
 		}
+
+		public static PropertyInfo GetProperty(this TypeInfo type, string name)
+		{
+			var property = type.GetDeclaredProperty(name);
+			if (property != null)
+				return property;
+
+			foreach (var i in type.ImplementedInterfaces)
+			{
+				property = i.GetTypeInfo().GetProperty(name);
+				if (property != null)
+					return property;
+			}
+
+			var subtype = type.BaseType;
+			if (subtype != null)
+			{
+				property = subtype.GetTypeInfo().GetProperty(name);
+				if (property != null)
+					return property;
+			}
+			return null; 
+		}
 #else
 		public static void Clone(this object source, object target)
 		{

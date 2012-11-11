@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Runtime.Serialization;
 
 #if WINRT
+using MyToolkit.Utilities;
 using Windows.UI.Xaml.Data; 
 using System.Reflection;
 using System.ComponentModel;
@@ -80,9 +81,8 @@ namespace MyToolkit.MVVM
 		{
 			#if DEBUG
 				#if WINRT
-					// TODO: search in subclasses
-					//if (GetType().GetTypeInfo().GetDeclaredProperty(propertyName) == null)
-					//	throw new ArgumentException("propertyName");
+					if (GetType().GetTypeInfo().GetProperty(propertyName) == null)
+						throw new ArgumentException("propertyName");
 				#else
 					if (GetType().GetProperty(propertyName) == null)
 						throw new ArgumentException("propertyName");
