@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace MyToolkit.Utilities
@@ -33,6 +35,20 @@ namespace MyToolkit.Utilities
 					tp.SetValue(target, value, null);
 				}
 			}
+		}
+
+		public static IEnumerable<PropertyInfo> GetAllProperties(this TypeInfo type)
+		{
+			var list = type.DeclaredProperties.ToList();
+
+			var subtype = type.BaseType;
+			if (subtype != null)
+				list.AddRange(subtype.GetTypeInfo().GetAllProperties());
+
+			foreach (var i in type.ImplementedInterfaces)
+				list.AddRange(i.GetTypeInfo().GetAllProperties());
+
+			return list.ToArray();
 		}
 #else
 		public static void Clone(this object source, object target)
