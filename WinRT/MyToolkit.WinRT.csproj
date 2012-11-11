@@ -280,8 +280,12 @@
     <Compile Include="Controls\RolloverButton.cs" />
     <Compile Include="Controls\WrapPanel.cs" />
     <Compile Include="Converters\ChainedConverter.cs" />
+    <Compile Include="DI\Composition.cs" />
+    <Compile Include="DI\CompositionContext.cs" />
+    <Compile Include="DI\ExportAttribute.cs" />
+    <Compile Include="DI\ImportAttribute.cs" />
+    <Compile Include="DI\ImportManyAttribute.cs" />
     <Compile Include="Environment\Device.cs" />
-    <Compile Include="MEF\CompositionContainer.cs" />
     <Compile Include="Messaging\GenericMessage.cs" />
     <Compile Include="Messaging\GoBackMessage.cs" />
     <Compile Include="Messaging\NavigateMessage.cs" />
@@ -305,6 +309,9 @@
     <Compile Include="Utilities\TaskHelper.cs" />
     <Compile Include="Utilities\Thread.cs" />
     <Compile Include="Utilities\VisualTreeHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\generic.xaml">
