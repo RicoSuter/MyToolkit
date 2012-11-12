@@ -15,6 +15,12 @@ namespace MyToolkit.Messaging
 			Parameter = parameter; 
 		}
 
+		public NavigateMessage(Type page, params object[] parameters)
+		{
+			Page = page;
+			Parameter = parameters;
+		}
+
 		public static Action<NavigateMessage> GetAction(Frame frame)
 		{
 			return m => frame.NavigateAsync(m.Page, m.Parameter);
