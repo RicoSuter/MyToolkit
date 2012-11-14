@@ -14,14 +14,15 @@ namespace MyToolkit.Environment
 		{
 			get
 			{
-                if (deviceId == null)
-                {
-                    deviceId = NetworkInformation.GetConnectionProfiles().
-                        Where(p => p.GetNetworkConnectivityLevel() != NetworkConnectivityLevel.ConstrainedInternetAccess).
-                        Select(p => p.NetworkAdapter.NetworkAdapterId).
-                        OrderBy(p => p).First().ToString();
-                }
-                return deviceId;
+				if (deviceId == null)
+				{
+					deviceId = NetworkInformation.GetConnectionProfiles().
+						Where(p => p.GetNetworkConnectivityLevel() != NetworkConnectivityLevel.ConstrainedInternetAccess).
+						Select(p => p.NetworkAdapter.NetworkAdapterId).
+						OrderBy(p => p).First().ToString();
+				}
+				return deviceId;
+				//Windows.System.Profile.HardwareIdentification.GetPackageSpecificToken(null);
 			}
 		}
 	}

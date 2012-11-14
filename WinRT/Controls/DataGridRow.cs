@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MyToolkit.Utilities;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -27,15 +23,7 @@ namespace MyToolkit.Controls
                 content.Margin = new Thickness(10, 0, 0, 5);
                 content.Tag = cell; 
 
-				// TODO (beta) refactor if FindName is available 
-                //var content = new ContentPresenter();
-                //content.ContentTemplate = dataGrid.CellTemplate;
-                //content.Tag = cell;
-
-                //var presenter = content.ContentTemplate.FindName("content", content);
-                //presenter.Content = cell.Control; 
-
-				Grid.SetColumn(content, x++);
+				SetColumn(content, x++);
 				Children.Add(content);
 			
 				var def = c.CreateGridColumnDefinition();
@@ -93,8 +81,8 @@ namespace MyToolkit.Controls
 						detailsControl.HorizontalContentAlignment = HorizontalAlignment.Stretch;
 
 						Children.Add(detailsControl);
-						Grid.SetRow(detailsControl, 1);
-						Grid.SetColumnSpan(detailsControl, ColumnDefinitions.Count);
+						SetRow(detailsControl, 1);
+						SetColumnSpan(detailsControl, ColumnDefinitions.Count);
 					}
 					else
 						detailsControl.ContentTemplate = DataGrid.ItemDetailsTemplate;

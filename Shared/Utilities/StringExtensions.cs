@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -52,6 +53,20 @@ namespace MyToolkit.Utilities
 		public static string Trim(this string input, string trimString)
 		{
 			return input.TrimStart(trimString).TrimEnd(trimString);
+		}
+
+		public static string ExtractLocalizedString(this string input, string language = null)
+		{
+			if (language == null)
+				language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+			var lines = input.Split(';');
+			foreach (var line in lines)
+			{
+				if (line.StartsWith(language + ":"))
+					return line.Substring(3).Trim(' ');
+			}
+			return null;
 		}
 	}
 }
