@@ -17,7 +17,9 @@ namespace MyToolkit.Paging
 	public class LayoutAwarePage : SuspendablePage
     {
         private List<Control> layoutAwareControls;
+
 		public bool UseBackKeyToGoBack { get; set; }
+		public bool UseBackKeyToGoBackInWebView { get; set; }
 
 		public LayoutAwarePage()
 		{
@@ -101,7 +103,8 @@ namespace MyToolkit.Paging
 					{
 						if (UseBackKeyToGoBack)
 						{
-							if (!(element is TextBox) && !(element is PasswordBox) && !(element is WebView) && Frame.CanGoBack)
+							if (!(element is TextBox) && !(element is PasswordBox) && 
+								(UseBackKeyToGoBackInWebView || !(element is WebView)) && Frame.CanGoBack)
 							{
 								args.Handled = true;
 								Frame.GoBackAsync();
