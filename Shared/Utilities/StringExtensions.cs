@@ -66,7 +66,7 @@ namespace MyToolkit.Utilities
 				if (line.StartsWith(language + ":"))
 					return line.Substring(3).Trim(' ');
 			}
-			return null;
+			return input.Contains(":") ? lines[0].Substring(3).Trim(' ') : input;
 		}
 	}
 }
