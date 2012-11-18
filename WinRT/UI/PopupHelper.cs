@@ -40,29 +40,30 @@ namespace MyToolkit.UI
 
 		public static Popup ShowDialog(FrameworkElement control, bool isLightDismissEnabled = false, bool isHorizontal = true, Action<Popup> closed = null)
 		{
+			var bounds = Window.Current.CoreWindow.Bounds;
 			var parent = (FrameworkElement)Window.Current.Content;
 
 			if (isHorizontal)
-				control.Width = parent.ActualWidth;
+				control.Width = bounds.Width;
 			else
-				control.Height = parent.ActualHeight;
+				control.Height = bounds.Height;
 
 			var popup = new Popup();
 			var del = new WindowActivatedEventHandler((sender, e) =>
 			{
-				control.Width = parent.ActualWidth;
+				control.Width = bounds.Width;
 				if (isHorizontal)
-					popup.VerticalOffset = (parent.ActualHeight - control.ActualHeight) / 2;
+					popup.VerticalOffset = bounds.Top + (bounds.Height - control.ActualHeight) / 2;
 				else
-					popup.HorizontalOffset = (parent.ActualWidth - control.ActualWidth) / 2;
+					popup.HorizontalOffset = bounds.Left + (bounds.Width - control.ActualWidth) / 2;
 			});
 
 			var del2 = new SizeChangedEventHandler((sender, e) =>
 			{
 				if (isHorizontal)
-					popup.VerticalOffset = (parent.ActualHeight - control.ActualHeight) / 2;
+					popup.VerticalOffset = bounds.Top + (bounds.Height - control.ActualHeight) / 2;
 				else
-					popup.HorizontalOffset = (parent.ActualWidth - control.ActualWidth) / 2;
+					popup.HorizontalOffset = bounds.Left + (bounds.Width - control.ActualWidth) / 2;
 			});
 
 			Window.Current.Activated += del;
@@ -138,8 +139,8 @@ namespace MyToolkit.UI
 
 		public static Popup ShowSettings(FrameworkElement control, Action<Popup> closed = null)
 		{
-			var parent = (FrameworkElement)Window.Current.Content;
-			control.Height = parent.ActualHeight;
+			var bounds = Window.Current.CoreWindow.Bounds;
+			control.Height = bounds.Height;
 
 			var popup = new Popup();
 			var del = new WindowActivatedEventHandler((sender, e) =>
@@ -149,7 +150,7 @@ namespace MyToolkit.UI
 			});
 			var del2 = new SizeChangedEventHandler((sender, e) =>
 			{
-				popup.HorizontalOffset = parent.ActualWidth - control.ActualWidth;
+				popup.HorizontalOffset = bounds.Left + (bounds.Width - control.ActualWidth);
 			});
 
 			Window.Current.Activated += del;
@@ -172,8 +173,8 @@ namespace MyToolkit.UI
 
 		public static Popup ShowPane(FrameworkElement control, bool left = true, Action<Popup> closed = null)
 		{
-			var parent = (FrameworkElement)Window.Current.Content;
-			control.Height = parent.ActualHeight;
+			var bounds = Window.Current.CoreWindow.Bounds;
+			control.Height = bounds.Height;
 
 			var popup = new Popup();
 			var del = new WindowActivatedEventHandler((sender, e) =>
@@ -184,7 +185,7 @@ namespace MyToolkit.UI
 			var del2 = new SizeChangedEventHandler((sender, e) =>
 			{
 				if (!left)
-					popup.HorizontalOffset = parent.ActualWidth - control.ActualWidth;
+					popup.HorizontalOffset = bounds.Left + (bounds.Width - control.ActualWidth);
 			});
 
 			Window.Current.Activated += del;
