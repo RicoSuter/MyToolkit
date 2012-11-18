@@ -15,7 +15,8 @@ namespace MyToolkit.Messaging
 		{
 			OK, 
 			OKCancel, 
-			YesNoCancel
+			YesNoCancel, 
+			YesNo
 		}
 
 		public enum MessageResult
@@ -68,11 +69,13 @@ namespace MyToolkit.Messaging
 					msg.Commands.Add(new UICommand(Strings.ButtonOk));
 					msg.Commands.Add(new UICommand(Strings.ButtonCancel));
 				}
-				else if (m.Button == MessageButton.YesNoCancel)
+				else if (m.Button == MessageButton.YesNoCancel || m.Button == MessageButton.YesNo)
 				{
 					msg.Commands.Add(new UICommand(Strings.ButtonYes));
 					msg.Commands.Add(new UICommand(Strings.ButtonNo));
-					msg.Commands.Add(new UICommand(Strings.ButtonCancel));
+					
+					if (m.Button == MessageButton.YesNoCancel)
+						msg.Commands.Add(new UICommand(Strings.ButtonCancel));
 				}
 
 				msg.DefaultCommandIndex = 0;

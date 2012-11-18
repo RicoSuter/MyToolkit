@@ -122,16 +122,16 @@ namespace MyToolkit.UI
 			openPopups++;
 			popup.IsOpen = true;
 
-			int flyoutOffset = 0;
-			Windows.UI.ViewManagement.InputPane.GetForCurrentView().Showing += (s, args) =>
-			{
-				flyoutOffset = (int)args.OccludedRect.Height;
-				popup.VerticalOffset -= flyoutOffset;
-			};
-			Windows.UI.ViewManagement.InputPane.GetForCurrentView().Hiding += (s, args) =>
-			{
-				popup.VerticalOffset += flyoutOffset;
-			};
+			//int flyoutOffset = 0;
+			//Windows.UI.ViewManagement.InputPane.GetForCurrentView().Showing += (s, args) =>
+			//{
+			//	flyoutOffset = (int)args.OccludedRect.Height;
+			//	popup.VerticalOffset -= flyoutOffset;
+			//};
+			//Windows.UI.ViewManagement.InputPane.GetForCurrentView().Hiding += (s, args) =>
+			//{
+			//	popup.VerticalOffset += flyoutOffset;
+			//};
 
 			return popup;
 		}
