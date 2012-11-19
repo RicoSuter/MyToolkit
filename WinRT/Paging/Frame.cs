@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MyToolkit.Utilities;
 using Windows.UI.Core;
@@ -12,12 +13,13 @@ namespace MyToolkit.Paging
 	public class Frame : ContentControl//, INavigate
 	{
 		public event NavigatedEventHandler Navigated;
-		public IEnumerable<PageDescription> Pages { get { return pages; } }
+		//public IEnumerable<PageDescription> Pages { get { return pages.Select(p => p.); } }
 
 		private int currentIndex = -1; 
 		private List<PageDescription> pages = new List<PageDescription>();
 
 		private PageDescription Current { get { return pages.Count > 0 ? pages[currentIndex] : null; } }
+		public Page CurrentPage { get { return Current != null ? Current.GetPage(this) : null; } }
 
 		public Frame()
 		{

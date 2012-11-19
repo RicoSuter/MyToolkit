@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
@@ -15,7 +16,11 @@ namespace MyToolkit.Controls
 		}
 
 		private ExtendedListBox list;
-		private ContentControl content; 
+		private ContentControl content;
+
+		private int initialIndex = 0;
+		private object initialItem;
+
 		protected override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
@@ -23,12 +28,23 @@ namespace MyToolkit.Controls
 			list = (ExtendedListBox)GetTemplateChild("List");
 			content = (ContentControl)GetTemplateChild("Content");
 
-			//content.Transitions = new TransitionCollection();
-			//content.Transitions.Add(new EntranceThemeTransition());
+			//if (ImmediatelyLoadPivotItems)
+			//{
+			//	foreach (var i in Items)
+			//	{
+			//		i.Content.Measure(new Size());
+			//		i.Content.InvalidateMeasure();
+			//		i.Content.InvalidateArrange();
+			//		i.Content.UpdateLayout();
+			//	}
+			//}
 
 			list.ItemsSource = Items;
 			list.SelectionChanged += OnSelectionChanged;
-			list.SelectedIndex = 0; 
+			if (initialItem != null)
+				list.SelectedItem = initialItem;
+			else
+				list.SelectedIndex = initialIndex; 
 		}
 
 		public event SelectionChangedEventHandler SelectionChanged;
@@ -36,8 +52,6 @@ namespace MyToolkit.Controls
 		private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
 		{
 			var item = (PivotItem)list.SelectedItem;
-			//content.ContentTemplate = item.Template;
-			//content.Content = this.FindParentDataContext();
 			content.Content = item.Content;
 
 			SelectedIndex = list.SelectedIndex;
@@ -63,7 +77,14 @@ namespace MyToolkit.Controls
 
 
 		public static readonly DependencyProperty SelectedItemProperty =
-			DependencyProperty.Register("SelectedItem", typeof(object), typeof(Pivot), new PropertyMetadata(default(object), (o, args) => ((Pivot)o).list.SelectedItem = args.NewValue));
+			DependencyProperty.Register("SelectedItem", typeof(object), typeof(Pivot), new PropertyMetadata(default(object), 
+				(o, args) =>
+					{
+						if (((Pivot)o).list != null)
+							((Pivot)o).list.SelectedItem = args.NewValue;
+						else
+							((Pivot)o).initialItem = args.NewValue;
+					}));
 
 		public object SelectedItem
 		{
@@ -73,12 +94,28 @@ namespace MyToolkit.Controls
 
 
 		public static readonly DependencyProperty SelectedIndexProperty =
-			DependencyProperty.Register("SelectedIndex", typeof(int), typeof(Pivot), new PropertyMetadata(default(int), (o, args) => ((Pivot)o).list.SelectedIndex = (int)args.NewValue));
+			DependencyProperty.Register("SelectedIndex", typeof(int), typeof(Pivot), new PropertyMetadata(default(int),
+				(o, args) =>
+				{
+					if (((Pivot)o).list != null)
+						((Pivot)o).list.SelectedIndex = (int)args.NewValue;
+					else
+						((Pivot)o).initialIndex = (int)args.NewValue;
+				}));
 
 		public int SelectedIndex
 		{
 			get { return (int) GetValue(SelectedIndexProperty); }
 			set { SetValue(SelectedIndexProperty, value); }
-		}	
+		}
+
+		public static readonly DependencyProperty ImmediatelyLoadPivotItemsProperty =
+			DependencyProperty.Register("ImmediatelyLoadPivotItems", typeof (bool), typeof (Pivot), new PropertyMetadata(default(bool)));
+
+		public bool ImmediatelyLoadPivotItems
+		{
+			get { return (bool) GetValue(ImmediatelyLoadPivotItemsProperty); }
+			set { SetValue(ImmediatelyLoadPivotItemsProperty, value); }
+		}
 	}
 }
