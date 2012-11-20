@@ -88,6 +88,8 @@ namespace MyToolkit.Messaging
 					m.Result = index == 0 ? MessageResult.OK : MessageResult.Cancel;
 				else if (m.Button == MessageButton.YesNoCancel)
 					m.Result = index == 0 ? MessageResult.Yes : (index == 1 ? MessageResult.No : MessageResult.Cancel);
+				else if (m.Button == MessageButton.YesNo)
+					m.Result = index == 0 ? MessageResult.Yes : MessageResult.No;
 			}
 		}
 
