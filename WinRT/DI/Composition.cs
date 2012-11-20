@@ -27,12 +27,12 @@ namespace MyToolkit.DI
 			return CurrentContext.AddPartsFromAssembly(assembly);
 		}
 
-		public static bool AddPart<T>(object part)
+		public static bool AddPart<T>(T part)
 		{
 			return CurrentContext.AddPart(typeof(T), null, part, part.GetType());
 		}
 
-		public static bool AddPart<T>(string name, object part)
+		public static bool AddPart<T>(string name, T part)
 		{
 			return CurrentContext.AddPart(typeof(T), name, part, part.GetType());
 		}

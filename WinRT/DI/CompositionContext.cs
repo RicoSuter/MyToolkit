@@ -56,12 +56,12 @@ namespace MyToolkit.DI
 			return count; 
 		}
 
-		public bool AddPart<T>(object part)
+		public bool AddPart<T>(T part)
 		{
 			return AddPart(typeof(T), null, part, part.GetType());
 		}
 
-		public bool AddPart<T>(string name, object part)
+		public bool AddPart<T>(string name, T part)
 		{
 			return AddPart(typeof(T), name, part, part.GetType());
 		}
