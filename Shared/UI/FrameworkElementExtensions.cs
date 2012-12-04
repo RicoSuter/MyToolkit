@@ -30,6 +30,13 @@ namespace MyToolkit.UI
 			return null;
 		}
 
+		public static Rect GetElementRect(this FrameworkElement element)
+		{
+			var transform = element.TransformToVisual(null);
+			var point = transform.TransformPoint(new Point());
+			return new Rect(point, new Size(element.ActualWidth, element.ActualHeight));
+		}
+
 
 		/// <summary>
 		/// Equivalent of FindName, but works on the visual tree to go through templates, etc.
