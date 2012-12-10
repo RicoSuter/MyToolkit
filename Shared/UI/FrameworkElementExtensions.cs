@@ -37,6 +37,12 @@ namespace MyToolkit.UI
 			return new Rect(point, new Size(element.ActualWidth, element.ActualHeight));
 		}
 
+		public static Rect GetCanvasElementRect(this FrameworkElement element)
+		{
+			return new Rect(new Point(Canvas.GetLeft(element), Canvas.GetTop(element)), 
+				new Size(element.ActualWidth, element.ActualHeight));
+		}
+
 
 		/// <summary>
 		/// Equivalent of FindName, but works on the visual tree to go through templates, etc.
