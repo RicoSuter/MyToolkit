@@ -10,7 +10,7 @@ namespace MyToolkit.Controls
 		public NativeLongListSelector()
 		{
 			var dict = new ResourceDictionary();
-			dict.Source = new Uri("/MyToolkit;component/Themes/generic.xaml", UriKind.Relative);
+			dict.Source = new Uri("/MyToolkit.Extended;component/Themes/generic.xaml", UriKind.Relative);
 
 #if !WINPRT
 			GroupItemsPanel = (ItemsPanelTemplate)dict["LongListSelectorDefaultGroupItemsPanel"];
