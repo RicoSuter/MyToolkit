@@ -259,6 +259,7 @@
     <Compile Include="Controls\FadingImage.cs" />
     <Compile Include="Controls\GridControl.cs" />
     <Compile Include="Controls\LongListView.cs" />
+    <Compile Include="Controls\MenuListBox.cs" />
     <Compile Include="Controls\NavigationGridView.cs" />
     <Compile Include="Controls\NavigationListView.cs" />
     <Compile Include="Controls\OrientedSize.cs" />

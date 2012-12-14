@@ -807,5 +807,55 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+
+    <Style TargetType="controls:MenuListBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:MenuListBox">
+					<Border BorderThickness="2" BorderBrush="#2a2a2a" Background="White">
+						<controls:ExtendedItemsControl Margin="0,5,0,5" ItemsSource="{TemplateBinding ItemsSource}" x:Name="items">
+							<controls:ExtendedItemsControl.ItemTemplate>
+								<DataTemplate>
+									<Button VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
+											HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" >
+										<Button.Template>
+											<ControlTemplate>
+												<Border Background="White" Height="40" x:Name="border">
+													<TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="text"
+															   Text="{Binding}" FontSize="16" Foreground="Black" FontWeight="SemiBold" />
+													<VisualStateManager.VisualStateGroups>
+														<VisualStateGroup x:Name="CommonStates">
+															<VisualState x:Name="Normal" />
+															<VisualState x:Name="PointerOver">
+																<Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="border">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="#dedede"/>
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+															<VisualState x:Name="Pressed">
+																<Storyboard>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="border">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="Black"/>
+																	</ObjectAnimationUsingKeyFrames>
+																	<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="text">
+																		<DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+																	</ObjectAnimationUsingKeyFrames>
+																</Storyboard>
+															</VisualState>
+														</VisualStateGroup>
+													</VisualStateManager.VisualStateGroups>
+												</Border>
+											</ControlTemplate>
+										</Button.Template>
+									</Button>
+								</DataTemplate>
+							</controls:ExtendedItemsControl.ItemTemplate>
+						</controls:ExtendedItemsControl>
+					</Border>
+				</ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
   
