@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.RegularExpressions;
 
 #if WINRT
@@ -8,6 +9,7 @@ using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 #elif WINPRT
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows;
 using Windows.Networking;

@@ -30,12 +30,16 @@ namespace MyToolkit.UI
 			return null;
 		}
 
+#if WINRT
+
 		public static Rect GetElementRect(this FrameworkElement element)
 		{
 			var transform = element.TransformToVisual(null);
 			var point = transform.TransformPoint(new Point());
 			return new Rect(point, new Size(element.ActualWidth, element.ActualHeight));
 		}
+
+#endif
 
 		public static Rect GetCanvasElementRect(this FrameworkElement element)
 		{
