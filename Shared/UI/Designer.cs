@@ -16,7 +16,7 @@ namespace MyToolkit.UI
 		{
 			get { return Windows.ApplicationModel.DesignMode.DesignModeEnabled; }
 		}
-#elif SILVERLIGHT
+#elif SL4
 		public static bool IsInDesignMode
 		{
 			get { return DesignerProperties.IsInDesignTool; }

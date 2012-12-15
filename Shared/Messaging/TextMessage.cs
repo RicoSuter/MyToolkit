@@ -94,7 +94,7 @@ namespace MyToolkit.Messaging
 		}
 
 #else
-#if !WINDOWS_PHONE
+#if !WP7
 		public static Action<TextMessage> GetAction()
 		{
 			return message =>

@@ -6,7 +6,7 @@ using MyToolkit.Collections;
 using MyToolkit.Messaging;
 using MyToolkit.Storage;
 
-#if WINDOWS_PHONE && !LIGHT
+#if WP7 && !LIGHT
 using MyToolkit.Environment;
 using MyToolkit.Messaging;
 #endif
@@ -96,7 +96,7 @@ namespace MyToolkit.Utilities
 				return IdentityGenerator.Generate(i => collection.Any(c => c.ID == i));
 		}
 
-#if WINDOWS_PHONE
+#if WP7
 		/// <summary>
 		/// Call this method in OnBackKeyPress
 		/// </summary>

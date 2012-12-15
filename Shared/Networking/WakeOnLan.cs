@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Windows.Networking;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
-#elif WINPRT
+#elif WP8
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows;
@@ -48,7 +48,7 @@ namespace MyToolkit.Networking
 			}
 		}
 
-#if WINRT || WINPRT
+#if WINRT || WP8
 		public static Task WakeAsync(string macAddress)
 		{
 			return WakeAsync(new HostName("255.255.255.255"), 7, MacAddressToBytes(macAddress));

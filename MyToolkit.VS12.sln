@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.WinRT", "WinRT\MyToolkit.WinRT.csproj", "{FFAD2217-0B38-493C-9460-3660345B7B8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Phone.Extended.WinPRT", "Phone\MyToolkit.Phone.Extended.WinPRT.csproj", "{165D7BF6-152C-427F-97AE-F09A69F646AB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.WP8.Extended", "Phone\MyToolkit.WP8.Extended.csproj", "{165D7BF6-152C-427F-97AE-F09A69F646AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Phone.WinPRT", "Phone\MyToolkit.Phone.WinPRT.csproj", "{FC75D593-3AA7-4C47-B7E2-64B791158BA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.WP8", "Phone\MyToolkit.WP8.csproj", "{FC75D593-3AA7-4C47-B7E2-64B791158BA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Phone", "Phone\MyToolkit.Phone.csproj", "{EAECF0F0-1F1E-410E-B123-F5C09F8B0D5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.WP7", "Phone\MyToolkit.WP7.csproj", "{EAECF0F0-1F1E-410E-B123-F5C09F8B0D5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Phone.Extended", "Phone\MyToolkit.Phone.Extended.csproj", "{65A7577A-196F-4DB7-BC7B-0C2A4170E8D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.WP7.Extended", "Phone\MyToolkit.WP7.Extended.csproj", "{65A7577A-196F-4DB7-BC7B-0C2A4170E8D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Silverlight", "Silverlight\MyToolkit.Silverlight.csproj", "{8C9D22C1-6A06-42ED-9452-A6BE3BBE6281}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.SL4", "Silverlight\MyToolkit.SL4.csproj", "{8C9D22C1-6A06-42ED-9452-A6BE3BBE6281}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Web", "Web\MyToolkit.Web.csproj", "{7D4E4419-4B4D-42C6-AD7A-9DEAAD90B3EF}"
 EndProject

@@ -477,7 +477,7 @@ namespace MyToolkit.Controls
             internal ulong IntegerValue;
         }
 
-#if !WINDOWS_PHONE
+#if !WP7
         /// <summary>
         /// Check if a number is zero.
         /// </summary>
@@ -551,7 +551,7 @@ namespace MyToolkit.Controls
             return (-a < b) && (a > b);
         }
 
-#if !WINDOWS_PHONE
+#if !WP7
         /// <summary>
         /// Determine if one number is less than or close to another.
         /// </summary>

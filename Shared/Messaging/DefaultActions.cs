@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-#if WINDOWS_PHONE
+#if WP7
 using MyToolkit.Environment;
 using MyToolkit.Paging;
 
@@ -11,7 +11,7 @@ namespace MyToolkit.Messaging
 {
 	public static class DefaultActions
 	{
-#if WINDOWS_PHONE
+#if WP7
 		public static void GoBack(GoBackMessage message)
 		{
 			var page = PhonePage.CurrentPage; 

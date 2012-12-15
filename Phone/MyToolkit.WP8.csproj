@@ -38,7 +38,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\- Output\WinPRT\</OutputPath>
-    <DefineConstants>WINPRT;USE_GZIP;LIGHT</DefineConstants>
+    <DefineConstants>WP8;USE_GZIP;LIGHT</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>

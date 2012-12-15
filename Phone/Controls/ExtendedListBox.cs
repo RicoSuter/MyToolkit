@@ -6,7 +6,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using MyToolkit.UI;
 
-#if WINDOWS_PHONE || WINPRT
+#if WP7 || WP8
 using Microsoft.Phone.Controls;
 #endif
 
@@ -97,7 +97,7 @@ namespace MyToolkit.Controls
 
 		#region scroll jumping fix
 
-#if WINPRT || WINDOWS_PHONE
+#if WP8 || WP7
 
 		public static readonly DependencyProperty UseScrollFixProperty =
 			DependencyProperty.Register("UseScrollFix", typeof(bool), typeof(ExtendedListBox), new PropertyMetadata(true));

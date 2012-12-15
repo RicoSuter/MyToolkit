@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-#if WINRT || WINPRT
+#if WINRT || WP8
 using System.Threading.Tasks;
 #endif
 
@@ -29,7 +29,7 @@ namespace MyToolkit.Messaging
 			return msg; 
 		}
 
-#if WINRT || WINPRT
+#if WINRT || WP8
 		public static async Task<T> SendAsync<T>(this T msg)
 		{
 			await Messenger.SendAsync(msg);
@@ -63,7 +63,7 @@ namespace MyToolkit.Messaging
 			Register(null, action);
 		}
 
-#if WINRT || WINPRT
+#if WINRT || WP8
 		/// <summary>
 		/// Registers an async action for the given receiver. WARNING: You have to unregister the action to avoid memory leaks!
 		/// </summary>
@@ -158,7 +158,7 @@ namespace MyToolkit.Messaging
 			var type = typeof (T);
 			foreach (var a in actions.Where(a => a.Type == type).ToArray())
 			{
-#if WINRT || WINPRT
+#if WINRT || WP8
 				if (a.Action is Action<T>)
 					((Action<T>)a.Action)(message);
 				else
@@ -170,7 +170,7 @@ namespace MyToolkit.Messaging
 			return message;
 		}
 
-#if WINRT || WINPRT
+#if WINRT || WP8
 		/// <summary>
 		/// Sends a message to the registered receivers. With this method it is possible to wait until async methods have finished. Async methods are called serially. 
 		/// </summary>

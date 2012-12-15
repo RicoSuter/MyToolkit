@@ -7,15 +7,15 @@ using System.Text;
 using System.Linq;
 using MyToolkit.Utilities;
 
-#if SILVERLIGHT
+#if SL4
 using Ionic.Zlib;
 using System.Windows.Threading;
 using System.IO.IsolatedStorage;
-#elif WINDOWS_PHONE
+#elif WP7
 using Ionic.Zlib;
 using System.Windows.Threading;
 using System.IO.IsolatedStorage;
-#elif WINPRT
+#elif WP8
 using Ionic.Zlib;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -108,7 +108,7 @@ namespace MyToolkit.Networking
 
 		#region WinRT Async
 
-#if WINRT || WINPRT
+#if WINRT || WP8
 		public static Task<HttpResponse> GetAsync(string url)
 		{
 			var task = new TaskCompletionSource<HttpResponse>();
@@ -374,7 +374,7 @@ namespace MyToolkit.Networking
 		{
 			var boundarybytes = request.Encoding.GetBytes("\r\n--" + boundary + "\r\n");
 
-			var formdataTemplate = "\r\n--" + boundary + "\r\nContent-Disposition: form-data; name=\"{0}\";\r\n\r\n{1}";
+			const string dataHeaderTemplate = "Content-Disposition: form-data; name=\"{0}\";\r\n\r\n{1}";
 			if (request.RawData != null)
 				throw new Exception("RawData not allowed if uploading files");
 
@@ -382,19 +382,18 @@ namespace MyToolkit.Networking
 			{
 				stream.Write(boundarybytes, 0, boundarybytes.Length);
 
-				var formitem = string.Format(formdataTemplate, tuple.Key, tuple.Value);
+				var formitem = string.Format(dataHeaderTemplate, tuple.Key, tuple.Value);
 				var formitembytes = request.Encoding.GetBytes(formitem);
 				stream.Write(formitembytes, 0, formitembytes.Length);
 			}
 
-			const string headerTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n";
+			const string fileHeaderTemplate = "Content-Disposition: form-data; name=\"{0}\"; filename=\"{1}\"\r\nContent-Type: {2}\r\n\r\n";
 			foreach (var file in request.Files)
 			{
 				stream.Write(boundarybytes, 0, boundarybytes.Length);
 
-				var header = string.Format(headerTemplate, file.Name, file.Filename, file.ContentType ?? "application/octet-stream");
+				var header = string.Format(fileHeaderTemplate, file.Name, file.Filename, file.ContentType ?? "application/octet-stream");
 				var headerbytes = request.Encoding.GetBytes(header);
-
 				stream.Write(headerbytes, 0, headerbytes.Length);
 
 				var fileStream = file.Stream;
@@ -414,7 +413,7 @@ namespace MyToolkit.Networking
 				}
 
 #else
-#if SILVERLIGHT || WINDOWS_PHONE || WINPRT
+#if SL4 || WP7 || WP8
 				if (fileStream == null)
 				{
 					var isf = IsolatedStorageFile.GetUserStoreForApplication();
@@ -466,10 +465,10 @@ namespace MyToolkit.Networking
 				var origResponse = response;
 
 #if USE_GZIP
-	#if WINRT || WINPRT
+	#if WINRT || WP8
 				if (response.Headers["Content-Encoding"] == "gzip")
 					response = new GZipWebResponse(response); 
-	#elif SILVERLIGHT || WINDOWS_PHONE
+	#elif SL4 || WP7
 				if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
 					response = new GZipWebResponse(response); 
 	#else
@@ -574,7 +573,7 @@ namespace MyToolkit.Networking
 
 #endif
 
-#if SILVERLIGHT || WINRT || WINPRT
+#if SL4 || WINRT || WP8
 
 		public override long ContentLength
 		{

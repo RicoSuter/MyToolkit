@@ -30,7 +30,7 @@ namespace MyToolkit.Controls
 		protected override void OnApplyTemplate()
 		{
 			WatermarkBrush = (Brush)Resources["ListViewItemPlaceholderBackgroundThemeBrush"];
-#elif WINDOWS_PHONE
+#elif WP7
 		public override void OnApplyTemplate()
 		{
 			WatermarkBrush = (Brush)Resources["PhoneSubtleColor"];

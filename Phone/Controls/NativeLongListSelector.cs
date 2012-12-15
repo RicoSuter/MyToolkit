@@ -12,7 +12,7 @@ namespace MyToolkit.Controls
 			var dict = new ResourceDictionary();
 			dict.Source = new Uri("/MyToolkit.Extended;component/Themes/generic.xaml", UriKind.Relative);
 
-#if !WINPRT
+#if !WP8
 			GroupItemsPanel = (ItemsPanelTemplate)dict["LongListSelectorDefaultGroupItemsPanel"];
 			GroupItemTemplate = (DataTemplate)dict["LongListSelectorDefaultGroupItemTemplate"];
 #endif

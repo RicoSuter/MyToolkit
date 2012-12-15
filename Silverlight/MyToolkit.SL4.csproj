@@ -3,28 +3,33 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.20506</ProductVersion>
+    <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{EAECF0F0-1F1E-410E-B123-F5C09F8B0D5D}</ProjectGuid>
-    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectGuid>{8C9D22C1-6A06-42ED-9452-A6BE3BBE6281}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MyToolkit</RootNamespace>
     <AssemblyName>MyToolkit</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
-    <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
-    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\- Output\Phone\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;WINDOWS_PHONE;USE_GZIP;LIGHT</DefineConstants>
+    <OutputPath>Bin\Debug\Silverlight\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;USE_GZIP</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -33,31 +38,27 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\- Output\Phone\</OutputPath>
-    <DefineConstants>WINDOWS_PHONE;USE_GZIP;LIGHT</DefineConstants>
+    <OutputPath>..\- Output\Silverlight\</OutputPath>
+    <DefineConstants>TRACE;SL4;USE_GZIP</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Phone" />
-    <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="mscorlib" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
-    <Reference Include="System.Xml.Serialization" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\shared\animation\Fading.cs">
-      <Link>Animation\Fading.cs</Link>
-    </Compile>
-    <Compile Include="..\shared\animation\Flipping.cs">
-      <Link>Animation\Flipping.cs</Link>
+    <Compile Include="..\Phone\Controls\ExtendedListBox.cs">
+      <Link>Controls\ExtendedListBox.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Collections\ExtendedNotifyCollectionChangedEventArgs.cs">
       <Link>Collections\ExtendedNotifyCollectionChangedEventArgs.cs</Link>
@@ -65,26 +66,23 @@
     <Compile Include="..\Shared\Collections\ExtendedObservableCollection.cs">
       <Link>Collections\ExtendedObservableCollection.cs</Link>
     </Compile>
-    <Compile Include="..\shared\collections\ObservableView.cs">
+    <Compile Include="..\Shared\Collections\ObservableView.cs">
       <Link>Collections\ObservableView.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\ControlClippingConverter.cs">
-      <Link>Converters\ControlClippingConverter.cs</Link>
+    <Compile Include="..\Shared\Controls\DataTemplateSelector.cs">
+      <Link>Controls\DataTemplateSelector.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
+      <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\WatermarkedTextBox.cs">
+      <Link>Controls\WatermarkedTextBox.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\ImageBackgroundColorConverter.cs">
-      <Link>Converters\ImageBackgroundColorConverter.cs</Link>
-    </Compile>
     <Compile Include="..\Shared\Converters\NotConverter.cs">
       <Link>Converters\NotConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\RemoveColorAlphaConverter.cs">
-      <Link>Converters\RemoveColorAlphaConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\shared\converters\TimeSpanConverter.cs">
-      <Link>Converters\TimeSpanConverter.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Converters\TruncateConverter.cs">
       <Link>Converters\TruncateConverter.cs</Link>
@@ -131,19 +129,13 @@
     <Compile Include="..\Shared\Libraries\DotNetZip\ZlibConstants.cs">
       <Link>Libraries\DotNetZip\ZlibConstants.cs</Link>
     </Compile>
-    <Compile Include="..\shared\messaging\ActionMessage.cs">
-      <Link>Messaging\ActionMessage.cs</Link>
+    <Compile Include="..\Shared\Messaging\DefaultActions.cs">
+      <Link>Messaging\DefaultActions.cs</Link>
     </Compile>
-    <Compile Include="..\shared\messaging\GoBackMessage.cs">
-      <Link>Messaging\GoBackMessage.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Messaging\LoadingMessage.cs">
-      <Link>Messaging\LoadingMessage.cs</Link>
-    </Compile>
-    <Compile Include="..\shared\messaging\Messenger.cs">
+    <Compile Include="..\Shared\Messaging\Messenger.cs">
       <Link>Messaging\Messenger.cs</Link>
     </Compile>
-    <Compile Include="..\shared\messaging\TextMessage.cs">
+    <Compile Include="..\Shared\Messaging\TextMessage.cs">
       <Link>Messaging\TextMessage.cs</Link>
     </Compile>
     <Compile Include="..\Shared\MVVM\BaseViewModel.cs">
@@ -173,17 +165,20 @@
     <Compile Include="..\Shared\Networking\HttpResponse.cs">
       <Link>Networking\HttpResponse.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Networking\WakeOnLan.cs">
-      <Link>Networking\WakeOnLan.cs</Link>
+    <Compile Include="..\Shared\UI\Designer.cs">
+      <Link>UI\Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\UI\FrameworkElementExtensions.cs">
+      <Link>UI\FrameworkElementExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\UI\TextBinding.cs">
+      <Link>UI\TextBinding.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\ColorUtility.cs">
       <Link>Utilities\ColorUtility.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\DateTimeUtilities.cs">
       <Link>Utilities\DateTimeUtilities.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\DependencyPropertyChangedEvent.cs">
-      <Link>Utilities\DependencyPropertyChangedEvent.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\EnumerableExtensions.cs">
       <Link>Utilities\EnumerableExtensions.cs</Link>
@@ -193,9 +188,6 @@
     </Compile>
     <Compile Include="..\Shared\Utilities\IdentityGenerator.cs">
       <Link>Utilities\IdentityGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\ReflectionExtensions.cs">
-      <Link>Utilities\ReflectionExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\SingleEvent.cs">
       <Link>Utilities\SingleEvent.cs</Link>
@@ -212,23 +204,7 @@
     <Compile Include="..\Shared\Utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
-    <Compile Include="Collections\AlphaGroups.cs" />
-    <Compile Include="Collections\Group.cs" />
-    <Compile Include="Environment\Marketplace.cs" />
-    <Compile Include="Environment\PhoneApplication.cs" />
-    <Compile Include="Environment\PhoneManifest.cs" />
-    <Compile Include="Environment\Resources.cs" />
-    <Compile Include="Networking\NetworkState.cs" />
-    <Compile Include="Networking\NetworkStateTracker.cs" />
-    <Compile Include="Performance\MemoryDiagnosticsHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Strings.Designer.cs">
-      <DependentUpon>Strings.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Storage\ApplicationSettings.cs" />
-    <Compile Include="Utilities\EntityContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Shared\Libraries\DotNetZip\Changes.txt">
@@ -239,19 +215,19 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Strings.de.resx" />
-    <EmbeddedResource Include="Resources\Strings.fr.resx" />
-    <EmbeddedResource Include="Resources\Strings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
-  <ProjectExtensions />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

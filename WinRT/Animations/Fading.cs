@@ -11,7 +11,7 @@ namespace MyToolkit.Animations
 {
 	public static class Fading
 	{
-#if WINRT || WINPRT
+#if WINRT || WP8
 		async public static Task FadeInAsync(UIElement obj, TimeSpan duration, double endOpacity = 1.0)
 		{
 			await TaskHelper.RunCallbackMethod(FadeIn, obj, duration, endOpacity);

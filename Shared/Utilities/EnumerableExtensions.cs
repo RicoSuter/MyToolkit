@@ -7,7 +7,7 @@ namespace MyToolkit.Utilities
 	public static class EnumerableExtensions
 	{
 
-#if !WINDOWS_PHONE
+#if !WP7
 		public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
 		{
 			var keys = new HashSet<TKey>();
