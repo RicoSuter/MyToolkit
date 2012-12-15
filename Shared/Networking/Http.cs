@@ -19,6 +19,7 @@ using System.IO.IsolatedStorage;
 using Ionic.Zlib;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.IO.IsolatedStorage;
 #elif WPF
 using System.IO.Compression;
 using System.Windows.Threading;
@@ -413,7 +414,7 @@ namespace MyToolkit.Networking
 				}
 
 #else
-#if SILVERLIGHT 
+#if SILVERLIGHT || WINDOWS_PHONE || WINPRT
 				if (fileStream == null)
 				{
 					var isf = IsolatedStorageFile.GetUserStoreForApplication();
