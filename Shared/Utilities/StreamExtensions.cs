@@ -33,6 +33,11 @@ namespace MyToolkit.Utilities
 		}
 
 #if WINRT
+		public static IRandomAccessStream AsRandomAccessStream(this byte[] bytes)
+		{
+			return new MemoryRandomAccessStream(bytes);
+		}
+
 		public static IRandomAccessStream AsRandomAccessStream(this Stream stream)
 		{
 			// TODO: uses a lot of memory...
