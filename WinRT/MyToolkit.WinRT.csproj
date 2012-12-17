@@ -286,11 +286,11 @@
     <Compile Include="Controls\RolloverButton.cs" />
     <Compile Include="Controls\WrapPanel.cs" />
     <Compile Include="Converters\ChainedConverter.cs" />
-    <Compile Include="DI\Composition.cs" />
-    <Compile Include="DI\CompositionContext.cs" />
-    <Compile Include="DI\ExportAttribute.cs" />
-    <Compile Include="DI\ImportAttribute.cs" />
-    <Compile Include="DI\ImportManyAttribute.cs" />
+    <Compile Include="Composition\Composition.cs" />
+    <Compile Include="Composition\CompositionContext.cs" />
+    <Compile Include="Composition\ExportAttribute.cs" />
+    <Compile Include="Composition\ImportAttribute.cs" />
+    <Compile Include="Composition\ImportManyAttribute.cs" />
     <Compile Include="Environment\Device.cs" />
     <Compile Include="Messaging\GenericMessage.cs" />
     <Compile Include="Messaging\GoBackMessage.cs" />
