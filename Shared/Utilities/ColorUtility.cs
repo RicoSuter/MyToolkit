@@ -41,17 +41,26 @@ namespace MyToolkit.Utilities
 				(byte)(foreground.B * alpha + background.B * diff));
 		}
 
-		public static string ToHex(Color color)
+		public static string ToHex(Color color, bool includeAlpha = false)
 		{
-			return "#" + Convert.ToInt32(color.R).ToString("X") +
-			       Convert.ToInt32(color.G).ToString("X") +
-			       Convert.ToInt32(color.B).ToString("X");
+			if (includeAlpha)
+				return "#" +
+					Convert.ToInt32(color.A).ToString("X2") +
+					Convert.ToInt32(color.R).ToString("X2") +
+					Convert.ToInt32(color.G).ToString("X2") +
+					Convert.ToInt32(color.B).ToString("X2");
+			return "#" +
+				Convert.ToInt32(color.R).ToString("X2") +
+				Convert.ToInt32(color.G).ToString("X2") +
+				Convert.ToInt32(color.B).ToString("X2");
 		}
 
-		public static Color FromHex(string colorcode)
+		public static Color FromHex(string colorCode)
 		{
-			var argb = UInt32.Parse(colorcode.Replace("#", ""), NumberStyles.HexNumber);
-			return FromHex(argb);
+			colorCode = colorCode.Replace("#", "");
+			if (colorCode.Length == 6)
+				colorCode = "FF" + colorCode;
+			return FromHex(UInt32.Parse(colorCode, NumberStyles.HexNumber));
 		}
 
 		public static Color FromHex(uint argb)
