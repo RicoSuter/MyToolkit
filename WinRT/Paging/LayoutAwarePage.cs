@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyToolkit.Input;
 using MyToolkit.UI;
 using Windows.System;
 using Windows.UI.Core;
@@ -77,14 +78,19 @@ namespace MyToolkit.Paging
 				Frame.GoForwardAsync();
         }
 
-        private void OnAcceleratorKeyActivated(CoreDispatcher sender,
-            AcceleratorKeyEventArgs args)
+		protected virtual void OnKeyUp(AcceleratorKeyEventArgs args)
+		{
+			
+		}
+
+        private void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs args)
         {
+			OnKeyUp(args);
 			if (args.Handled)
 				return;
 			
 			var virtualKey = args.VirtualKey;
-			if (args.EventType == CoreAcceleratorKeyEventType.SystemKeyDown || args.EventType == CoreAcceleratorKeyEventType.KeyDown)
+			if (args.KeyStatus.IsKeyReleased)
 			{
 				var isLeftOrRightKey = (virtualKey == VirtualKey.Left || virtualKey == VirtualKey.Right || 
 					(int) virtualKey == 166 || (int) virtualKey == 167);
@@ -113,14 +119,12 @@ namespace MyToolkit.Paging
 					}
 					else
 					{
-						const CoreVirtualKeyStates downState = CoreVirtualKeyStates.Down;
-
-						var coreWindow = Window.Current.CoreWindow;
-						var menuKey = (coreWindow.GetKeyState(VirtualKey.Menu) & downState) == downState;
-						var controlKey = (coreWindow.GetKeyState(VirtualKey.Control) & downState) == downState;
-						var shiftKey = (coreWindow.GetKeyState(VirtualKey.Shift) & downState) == downState;
-						var noModifiers = !menuKey && !controlKey && !shiftKey;
-						var onlyAlt = menuKey && !controlKey && !shiftKey;
+						var altKey = Keyboard.IsAltKeyDown;
+						var controlKey = Keyboard.IsControlKeyDown;
+						var shiftKey = Keyboard.IsShiftKeyDown;
+						
+						var noModifiers = !altKey && !controlKey && !shiftKey;
+						var onlyAlt = altKey && !controlKey && !shiftKey;
 
 						if (((int)virtualKey == 166 && noModifiers) || (virtualKey == VirtualKey.Left && onlyAlt))
 						{

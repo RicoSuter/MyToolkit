@@ -292,6 +292,7 @@
     <Compile Include="Composition\ImportAttribute.cs" />
     <Compile Include="Composition\ImportManyAttribute.cs" />
     <Compile Include="Environment\Device.cs" />
+    <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Messaging\GenericMessage.cs" />
     <Compile Include="Messaging\GoBackMessage.cs" />
     <Compile Include="Messaging\NavigateMessage.cs" />
