@@ -38,7 +38,30 @@ namespace MyToolkit.Multimedia
 					task.SetException(e);
 			});
 			return task.Task;
-		} 
+		}
+
+		public static async Task<string> GetVideoTitleAsync(string youTubeId) // should be improved
+		{
+			var response = await Http.GetAsync("http://www.youtube.com/watch?v=" + youTubeId + "&nomobile=1");
+			if (response != null)
+			{
+				var html = response.Response;
+				var startIndex = html.IndexOf(" title=\"");
+				if (startIndex != -1)
+				{
+					startIndex = html.IndexOf(" title=\"", startIndex + 1);
+					if (startIndex != -1)
+					{
+						startIndex += 8;
+						var endIndex = html.IndexOf("\">", startIndex);
+						if (endIndex != -1)
+							return html.Substring(startIndex, endIndex - startIndex);
+					}
+				}
+			}
+			return null;
+		}
+
 #endif
 
 		public static Uri GetThumbnailUri(string youTubeId, YouTubeThumbnailSize size = YouTubeThumbnailSize.Medium)
