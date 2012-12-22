@@ -401,17 +401,11 @@ namespace MyToolkit.Networking
 #if WINRT
 				if (fileStream == null)
 				{
-					var f = StorageFile.GetFileFromPathAsync(file.Path);
-					var t = f.AsTask();
-					t.RunSynchronously();
-
-					var f2 = f.GetResults().OpenReadAsync();
-					var t2 = f2.AsTask();
-					t2.RunSynchronously();
-
-					fileStream = f2.GetResults().AsStreamForRead();
+					var operation = file.File.OpenReadAsync();
+					var task = operation.AsTask();
+					task.RunSynchronously();
+					fileStream = operation.GetResults().AsStreamForRead();
 				}
-
 #else
 #if SL4 || WP7 || WP8
 				if (fileStream == null)
