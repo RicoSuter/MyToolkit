@@ -29,7 +29,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Bin\Debug\Silverlight\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;USE_GZIP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SL4;USE_GZIP</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>

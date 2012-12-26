@@ -9,7 +9,7 @@ using MyToolkit.Networking;
 
 #if WINRT
 using System.Threading.Tasks;
-#elif WP7
+#elif WP7 || WP8
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using MyToolkit.Paging;
@@ -177,7 +177,7 @@ namespace MyToolkit.Multimedia
 		
 		#region Phone
 
-#if WP7
+#if WP7 || WP8
 
 		public static HttpResponse Play(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P, Action<Exception> completed = null)
 		{

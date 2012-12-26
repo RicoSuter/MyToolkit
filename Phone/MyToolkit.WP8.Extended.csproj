@@ -27,7 +27,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\- Output\WinPRT\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;WINPRT;USE_GZIP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WP8;USE_GZIP</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>

@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using System.IO.IsolatedStorage;
 #elif WP8
 using Ionic.Zlib;
+using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.IO.IsolatedStorage;
