@@ -291,6 +291,7 @@
     <Compile Include="Composition\ExportAttribute.cs" />
     <Compile Include="Composition\ImportAttribute.cs" />
     <Compile Include="Composition\ImportManyAttribute.cs" />
+    <Compile Include="Encryption\Sha256.cs" />
     <Compile Include="Environment\Device.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Messaging\GenericMessage.cs" />
