@@ -21,18 +21,17 @@ namespace MyToolkit.MVVM
 	{
 		public bool SetProperty(Expression<Func<T, object>> expression, ref T oldValue, T newValue)
 		{
-			return SetProperty(((MemberExpression)expression.Body).Member.Name, ref oldValue, newValue);
+			return SetProperty(GetName(expression), ref oldValue, newValue);
 		}
 
 		public void RaisePropertyChanged(Expression<Func<T, object>> expression)
 		{
-			RaisePropertyChanged(((MemberExpression)expression.Body).Member.Name); 
+			RaisePropertyChanged(GetName(expression)); 
 		}
 
 		public void SetDependency(Expression<Func<T, object>> propertyName, Expression<Func<T, object>> dependentPropertyName)
 		{
-			SetDependency(((MemberExpression)propertyName.Body).Member.Name, 
-				((MemberExpression)dependentPropertyName.Body).Member.Name);
+			SetDependency(GetName(propertyName), GetName(dependentPropertyName));
 		}
 	}
 
@@ -44,7 +43,7 @@ namespace MyToolkit.MVVM
 
 		public bool SetProperty<T>(Expression<Func<T, object>> expression, ref T oldValue, T newValue)
 		{
-			return SetProperty(((MemberExpression)expression.Body).Member.Name, ref oldValue, newValue);
+			return SetProperty(GetName(expression), ref oldValue, newValue);
 		}
 
 		public bool SetProperty<T>(String propertyName, ref T oldValue, T newValue)
@@ -70,13 +69,19 @@ namespace MyToolkit.MVVM
 
 		public void SetDependency<T>(Expression<Func<T, object>> propertyName, Expression<Func<T, object>> dependentPropertyName)
 		{
-			SetDependency(((MemberExpression)propertyName.Body).Member.Name,
-				((MemberExpression)dependentPropertyName.Body).Member.Name);
+			SetDependency(GetName(propertyName), GetName(dependentPropertyName));
 		}
 
 		public void RaisePropertyChanged<T>(Expression<Func<T, object>> expression)
 		{
-			RaisePropertyChanged(((MemberExpression)expression.Body).Member.Name);
+			RaisePropertyChanged(GetName(expression));
+		}
+
+		protected static string GetName<T>(Expression<Func<T, object>> expression)
+		{
+			if (expression.Body is UnaryExpression)
+				return (((MemberExpression) ((UnaryExpression) expression.Body).Operand).Member).Name;
+			return ((MemberExpression) expression.Body).Member.Name;
 		}
 
 #if WINRT
