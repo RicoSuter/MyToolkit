@@ -17,21 +17,23 @@ using System.ComponentModel;
 namespace MyToolkit.MVVM
 {
 	[DataContract]
-	public class NotifyPropertyChanged<T> : NotifyPropertyChanged
+	public class NotifyPropertyChanged<TClass> : NotifyPropertyChanged
 	{
-		public bool SetProperty(Expression<Func<T, object>> expression, ref T oldValue, T newValue)
+		public bool SetProperty<T>(Expression<Func<TClass, T>> expression, ref T oldValue, T newValue)
 		{
-			return SetProperty(GetName(expression), ref oldValue, newValue);
+			return SetProperty(((MemberExpression)expression.Body).Member.Name, ref oldValue, newValue);
 		}
 
-		public void RaisePropertyChanged(Expression<Func<T, object>> expression)
+		public void RaisePropertyChanged<T>(Expression<Func<TClass, T>> expression)
 		{
-			RaisePropertyChanged(GetName(expression)); 
+			RaisePropertyChanged(((MemberExpression)expression.Body).Member.Name); 
 		}
 
-		public void SetDependency(Expression<Func<T, object>> propertyName, Expression<Func<T, object>> dependentPropertyName)
+		public void SetDependency<TProp1, TProp2>(Expression<Func<TClass, TProp1>> propertyName, 
+			Expression<Func<TClass, TProp2>> dependentPropertyName)
 		{
-			SetDependency(GetName(propertyName), GetName(dependentPropertyName));
+			SetDependency(((MemberExpression)propertyName.Body).Member.Name, 
+				((MemberExpression)dependentPropertyName.Body).Member.Name);
 		}
 	}
 
@@ -41,9 +43,9 @@ namespace MyToolkit.MVVM
 		public event PropertyChangedEventHandler PropertyChanged;
 		private List<KeyValuePair<string, string>> dependencies;
 
-		public bool SetProperty<T>(Expression<Func<T, object>> expression, ref T oldValue, T newValue)
+		public bool SetProperty<TClass, TProp>(Expression<Func<TClass, TProp>> expression, ref TProp oldValue, TProp newValue)
 		{
-			return SetProperty(GetName(expression), ref oldValue, newValue);
+			return SetProperty(((MemberExpression)expression.Body).Member.Name, ref oldValue, newValue);
 		}
 
 		public bool SetProperty<T>(String propertyName, ref T oldValue, T newValue)
@@ -67,28 +69,23 @@ namespace MyToolkit.MVVM
 			dependencies.Add(new KeyValuePair<string, string>(propertyName, dependentPropertyName));
 		}
 
-		public void SetDependency<T>(Expression<Func<T, object>> propertyName, Expression<Func<T, object>> dependentPropertyName)
+		public void SetDependency<TClass, TProp1, TProp2>(Expression<Func<TClass, TProp1>> propertyName, 
+			Expression<Func<TClass, TProp2>> dependentPropertyName)
 		{
-			SetDependency(GetName(propertyName), GetName(dependentPropertyName));
+			SetDependency(((MemberExpression)propertyName.Body).Member.Name,
+				((MemberExpression)dependentPropertyName.Body).Member.Name);
 		}
 
-		public void RaisePropertyChanged<T>(Expression<Func<T, object>> expression)
+		public void RaisePropertyChanged<TClass, TProp>(Expression<Func<TClass, TProp>> expression)
 		{
-			RaisePropertyChanged(GetName(expression));
-		}
-
-		protected static string GetName<T>(Expression<Func<T, object>> expression)
-		{
-			if (expression.Body is UnaryExpression)
-				return (((MemberExpression) ((UnaryExpression) expression.Body).Operand).Member).Name;
-			return ((MemberExpression) expression.Body).Member.Name;
+			RaisePropertyChanged(((MemberExpression)expression.Body).Member.Name);
 		}
 
 #if WINRT
 		public bool SetProperty<T>(ref T oldValue, T newValue, [CallerMemberName] String propertyName = null)
 		{
 			return SetProperty(propertyName, ref oldValue, newValue); 
-		} 
+		}
 
 		public void RaisePropertyChanged([CallerMemberName] string propertyName = null)
 #else
