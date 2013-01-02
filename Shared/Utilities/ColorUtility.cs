@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 #else
+using System.Reflection;
 using Windows.UI;
 #endif
 
@@ -69,6 +70,14 @@ namespace MyToolkit.Utilities
 							  (byte)((argb & 0xff0000) >> 0x10),
 							  (byte)((argb & 0xff00) >> 8),
 							  (byte)(argb & 0xff));
+		}
+
+		public static Color FromString(string value)
+		{
+			var property = typeof(Colors).GetTypeInfo().GetProperty(value);
+			if (property != null)
+				return (Color)property.GetValue(null);
+			return ColorUtility.FromHex(value);
 		}
 	}
 }
