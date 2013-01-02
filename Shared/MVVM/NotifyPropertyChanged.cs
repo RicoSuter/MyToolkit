@@ -17,19 +17,19 @@ using System.ComponentModel;
 namespace MyToolkit.MVVM
 {
 	[DataContract]
-	public class NotifyPropertyChanged<TU> : NotifyPropertyChanged
+	public class NotifyPropertyChanged<T> : NotifyPropertyChanged
 	{
-		public bool SetProperty<T>(Expression<Func<TU, T>> expression, ref T oldValue, T newValue)
+		public bool SetProperty(Expression<Func<T, object>> expression, ref T oldValue, T newValue)
 		{
 			return SetProperty(((MemberExpression)expression.Body).Member.Name, ref oldValue, newValue);
 		}
 
-		public void RaisePropertyChanged<T>(Expression<Func<TU, T>> expression)
+		public void RaisePropertyChanged(Expression<Func<T, object>> expression)
 		{
 			RaisePropertyChanged(((MemberExpression)expression.Body).Member.Name); 
 		}
 
-		public void SetDependency<T, U>(Expression<Func<TU, T>> propertyName, Expression<Func<TU, U>> dependentPropertyName)
+		public void SetDependency(Expression<Func<T, object>> propertyName, Expression<Func<T, object>> dependentPropertyName)
 		{
 			SetDependency(((MemberExpression)propertyName.Body).Member.Name, 
 				((MemberExpression)dependentPropertyName.Body).Member.Name);
@@ -42,7 +42,7 @@ namespace MyToolkit.MVVM
 		public event PropertyChangedEventHandler PropertyChanged;
 		private List<KeyValuePair<string, string>> dependencies;
 
-		public bool SetProperty<TU, T>(Expression<Func<TU, T>> expression, ref T oldValue, T newValue)
+		public bool SetProperty<T>(Expression<Func<T, object>> expression, ref T oldValue, T newValue)
 		{
 			return SetProperty(((MemberExpression)expression.Body).Member.Name, ref oldValue, newValue);
 		}
@@ -66,6 +66,17 @@ namespace MyToolkit.MVVM
 				return;
 
 			dependencies.Add(new KeyValuePair<string, string>(propertyName, dependentPropertyName));
+		}
+
+		public void SetDependency<T>(Expression<Func<T, object>> propertyName, Expression<Func<T, object>> dependentPropertyName)
+		{
+			SetDependency(((MemberExpression)propertyName.Body).Member.Name,
+				((MemberExpression)dependentPropertyName.Body).Member.Name);
+		}
+
+		public void RaisePropertyChanged<T>(Expression<Func<T, object>> expression)
+		{
+			RaisePropertyChanged(((MemberExpression)expression.Body).Member.Name);
 		}
 
 #if WINRT
