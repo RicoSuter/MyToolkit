@@ -254,6 +254,7 @@
     <Compile Include="Collections\ObservableGroups.cs" />
     <Compile Include="Controls\AppBarButton.cs" />
     <Compile Include="Controls\AppBarToggleButton.cs" />
+    <Compile Include="Controls\ColorChooser.cs" />
     <Compile Include="Controls\GenericDataTemplateSelector.cs" />
     <Compile Include="Controls\HorizontalHtmlGenerator.cs" />
     <Compile Include="Controls\ExtendedItemsControl.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="Composition\ExportAttribute.cs" />
     <Compile Include="Composition\ImportAttribute.cs" />
     <Compile Include="Composition\ImportManyAttribute.cs" />
+    <Compile Include="Converters\ColorConverter.cs" />
     <Compile Include="Encryption\Sha256.cs" />
     <Compile Include="Environment\Device.cs" />
     <Compile Include="Input\Keyboard.cs" />

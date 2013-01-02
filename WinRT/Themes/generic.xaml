@@ -857,5 +857,26 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+	<Style TargetType="controls:ColorChooser">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="controls:ColorChooser">
+					<ComboBox Width="80" ItemsSource="{Binding Colors, RelativeSource={RelativeSource TemplatedParent}}" 
+							  SelectedItem="{Binding SelectedColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+						<ComboBox.ItemTemplate>
+							<DataTemplate>
+								<Border Width="20" Height="20" BorderBrush="Black" BorderThickness="1">
+									<Border.Background>
+										<SolidColorBrush Color="{Binding}" />
+									</Border.Background>
+								</Border>
+							</DataTemplate>
+						</ComboBox.ItemTemplate>
+					</ComboBox>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 </ResourceDictionary>
   
