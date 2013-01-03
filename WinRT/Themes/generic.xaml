@@ -554,6 +554,9 @@
 					<Grid x:Name="RootGrid" Width="100" Background="Transparent">
 						<StackPanel VerticalAlignment="Top" Margin="0,12,0,11">
 							<Grid Width="40" Height="40" Margin="0,0,0,5" HorizontalAlignment="Center">
+								<Grid.Clip> <!-- used to avoid wrong button areas (negative margins below extend the button area) -->
+									<RectangleGeometry Rect="0 0 40 40" />
+								</Grid.Clip>
 								<TextBlock x:Name="BackgroundGlyph" Text="&#xE0A8;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-4,-19,0,0" Foreground="{StaticResource AppBarItemBackgroundThemeBrush}"/>
 								<TextBlock x:Name="OutlineGlyph" Text="&#xE0A7;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-4,-19,0,0"/>
 								<ContentPresenter x:Name="Content" HorizontalAlignment="Center" Margin="-1,-1,0,0" VerticalAlignment="Center"/>
@@ -688,7 +691,11 @@
 					<Grid x:Name="RootGrid" Background="Transparent">
 						<StackPanel VerticalAlignment="Top" Margin="0,0,0,0" Orientation="Horizontal">
 							<Grid Width="40" Height="40" Margin="0,0,0,0" HorizontalAlignment="Center">
-								<TextBlock x:Name="BackgroundGlyph" Text="&#xE0A8;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-3,-19,0,0" Foreground="{StaticResource AppBarItemBackgroundThemeBrush}"/>
+								<Grid.Clip> <!-- used to avoid wrong button areas (negative margins below extend the button area) -->
+									<RectangleGeometry Rect="0 0 40 40" />
+								</Grid.Clip>
+								<TextBlock x:Name="BackgroundGlyph" Text="&#xE0A8;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-3,-19,0,0" 
+										   Foreground="{StaticResource AppBarItemBackgroundThemeBrush}"/>
 								<TextBlock x:Name="OutlineGlyph" Text="&#xE0A7;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-3,-19,0,0"/>
 								<ContentPresenter x:Name="Content" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center"/>
 							</Grid>
