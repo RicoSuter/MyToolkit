@@ -428,8 +428,8 @@ namespace MyToolkit.Networking
 					{
 						stream.Write(buffer, 0, bytesRead);
 						//stream.Flush();
-						// TODO: call progress changed event handler (calculate progress over all files) => use flush to have correct behaviour
-						// TODO: add progress for download
+						// TODO call progress changed event handler (calculate progress over all files) => use flush to have correct behaviour
+						// TODO add progress for download
 					}
 				}
 				finally

@@ -265,7 +265,7 @@ namespace MyToolkit.Media
 									}
 									else // web exception
 									{
-										bitmap.UriSource = new Uri("http://0.0.0.0"); // TODO: used to trigger ImageFailed => better way?
+										bitmap.UriSource = new Uri("http://0.0.0.0"); // TODO used to trigger ImageFailed => better way?
 										pendingCompletion.Image.Source = bitmap;
 										pendingCompletion.Dispose();
 									}

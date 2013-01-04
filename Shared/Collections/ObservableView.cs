@@ -305,7 +305,7 @@ namespace MyToolkit.Collections
 					prev++;
 				}
 
-				// TODO: change to this => Move is not implemented in WinRT!
+				// TODO change to this => Move is not implemented in WinRT!
 				//for (int i = 0; i < list.Count; i++) // move items
 				//{
 				//	var item = list[i];
