@@ -87,13 +87,7 @@ namespace MyToolkit.Controls
 				}
 			}
 		}
-
-
-
-
-
-
-
+		
 		private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
 		{
 			if (SelectedItem != null)
