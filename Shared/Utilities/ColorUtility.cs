@@ -72,6 +72,8 @@ namespace MyToolkit.Utilities
 							  (byte)(argb & 0xff));
 		}
 
+#if WINRT
+
 		public static Color FromString(string value)
 		{
 			var property = typeof(Colors).GetTypeInfo().GetProperty(value);
@@ -79,5 +81,7 @@ namespace MyToolkit.Utilities
 				return (Color)property.GetValue(null);
 			return ColorUtility.FromHex(value);
 		}
+
+#endif
 	}
 }
