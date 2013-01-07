@@ -17,5 +17,13 @@ namespace MyToolkit.Storage
 			try { return await folder.CreateFolderAsync(folderName); } catch { }
 			return await folder.GetFolderAsync(folderName);
 		}
+
+		[DebuggerHidden]
+		public static async Task<StorageFile> GetFileSaveAsync(this StorageFolder folder, string fileName)
+		{
+			try { return await folder.GetFileAsync(fileName); }
+			catch { }
+			return null; 
+		}
 	}
 }
