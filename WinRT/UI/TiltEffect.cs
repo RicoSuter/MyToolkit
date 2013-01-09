@@ -37,8 +37,7 @@ namespace MyToolkit.UI
 				element.PointerEntered -= OnPointerEntered;
 			}
 		}
-
-
+		
 		private static void OnPointerExited(object sender, PointerRoutedEventArgs pointerRoutedEventArgs)
 		{
 			ShowUpAnimation((UIElement)sender);

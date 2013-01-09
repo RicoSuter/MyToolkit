@@ -311,6 +311,7 @@
     <Compile Include="Paging\Frame.cs" />
     <Compile Include="Storage\ApplicationSettings.cs" />
     <Compile Include="Storage\StorageFolderExtensions.cs" />
+    <Compile Include="UI\VisibilityManager.cs" />
     <Compile Include="UI\PopupBase.cs" />
     <Compile Include="UI\PopupHelper.cs" />
     <Compile Include="UI\Popups\ListPickerBox.xaml.cs">
