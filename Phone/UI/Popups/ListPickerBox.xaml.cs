@@ -25,7 +25,7 @@ namespace MyToolkit.UI.Popups
 		public IList OriginalSelectedItems { get; private set; }
 		public bool Canceled { get; private set; }
 
-		public bool HasSelecteItemsChanged
+		public bool HasSelectionChanged
 		{
 			get
 			{

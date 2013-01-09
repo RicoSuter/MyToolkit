@@ -311,7 +311,11 @@
     <Compile Include="Paging\Frame.cs" />
     <Compile Include="Storage\ApplicationSettings.cs" />
     <Compile Include="Storage\StorageFolderExtensions.cs" />
+    <Compile Include="UI\PopupBase.cs" />
     <Compile Include="UI\PopupHelper.cs" />
+    <Compile Include="UI\Popups\ListPickerBox.xaml.cs">
+      <DependentUpon>ListPickerBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\TemplatedVisualTreeExtensions.cs" />
     <Compile Include="UI\TiltEffect.cs" />
     <Compile Include="Utilities\DataContractSerialization.cs" />
@@ -328,6 +332,10 @@
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Page>
+    <Page Include="UI\Popups\ListPickerBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\TimePicker.xaml">
@@ -338,9 +346,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

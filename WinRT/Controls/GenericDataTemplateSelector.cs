@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Markup;
 
 namespace MyToolkit.Controls
 {
+	[ContentProperty(Name = "Template")]
 	public class TypeDataTemplate
 	{
 		public string Type { get; set; }
