@@ -50,6 +50,16 @@ namespace MyToolkit.Paging
 
 		public bool CanGoBack { get { return currentIndex > 0; } }
 
+		public async Task<bool> GoHomeAsync()
+		{
+			while (currentIndex != 0)
+			{
+				if (!await GoBackAsync())
+					return false; 
+			}
+			return true; 
+		}
+
 		/// <returns>Returns true if navigating back, false if cancelled</returns>
 		public async Task<bool> GoBackAsync()
 		{
