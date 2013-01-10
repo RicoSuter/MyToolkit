@@ -43,10 +43,8 @@ namespace MyToolkit.Paging
             Unloaded += (sender, e) =>
             {
                 StopLayoutUpdates(InternalPage, e);
-                Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -=
-                    OnAcceleratorKeyActivated;
-                Window.Current.CoreWindow.PointerPressed -=
-                    OnPointerPressed;
+                Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= OnAcceleratorKeyActivated;
+                Window.Current.CoreWindow.PointerPressed -= OnPointerPressed;
             };
         }
 
@@ -85,7 +83,9 @@ namespace MyToolkit.Paging
 
         private void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs args)
         {
-			OnKeyUp(args);
+			if (args.KeyStatus.IsKeyReleased)
+				OnKeyUp(args);
+
 			if (args.Handled)
 				return;
 			
@@ -113,7 +113,7 @@ namespace MyToolkit.Paging
 								(UseBackKeyToGoBackInWebView || !(element is WebView)) && Frame.CanGoBack)
 							{
 								args.Handled = true;
-								Frame.GoBackAsync();
+								GoBack(this, new RoutedEventArgs());
 							}
 						}
 					}
