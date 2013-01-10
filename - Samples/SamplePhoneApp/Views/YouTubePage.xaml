@@ -34,6 +34,6 @@
         </StackPanel>
 
 		<Controls:YouTubeButton Grid.Row="1" Margin="24,0,24,0" VerticalAlignment="Top"
-								YouTubeID="25DKXGKblOw" Click="OnPlay" />
+								YouTubeID="PitGqCeJF8c" Click="OnPlay" />
 	</Grid>
 </phone:PhoneApplicationPage>

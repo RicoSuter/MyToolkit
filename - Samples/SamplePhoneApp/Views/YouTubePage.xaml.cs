@@ -34,7 +34,7 @@ namespace SamplePhoneApp.Views
 		private void OnPlay(object sender, RoutedEventArgs args)
 		{
 			Model.IsLoading = true;
-			YouTube.Play("25DKXGKblOw", true, YouTubeQuality.Quality480P, e =>
+			YouTube.Play("PitGqCeJF8c", true, YouTubeQuality.Quality480P, e =>
 			{
 				if (e != null)
 					MessageBox.Show(e.Message);

@@ -134,13 +134,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Phone\MyToolkit.Phone.csproj">
-      <Project>{FC75D593-3AA7-4C47-B7E2-64B791158BA4}</Project>
-      <Name>MyToolkit.Phone</Name>
+    <ProjectReference Include="..\..\Phone\MyToolkit.WP7.csproj">
+      <Project>{EAECF0F0-1F1E-410E-B123-F5C09F8B0D5D}</Project>
+      <Name>MyToolkit.WP7</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Phone\MyToolkit.Phone.Extended.csproj">
-      <Project>{165D7BF6-152C-427F-97AE-F09A69F646AB}</Project>
-      <Name>MyToolkit.Phone.Extended</Name>
+    <ProjectReference Include="..\..\Phone\MyToolkit.WP7.Extended.csproj">
+      <Project>{65A7577A-196F-4DB7-BC7B-0C2A4170E8D4}</Project>
+      <Name>MyToolkit.WP7.Extended</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
