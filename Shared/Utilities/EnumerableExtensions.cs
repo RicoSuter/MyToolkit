@@ -21,6 +21,14 @@ namespace MyToolkit.Utilities
 
 		public static bool IsCopyOf<T>(this IList<T> list1, IList<T> list2)
 		{
+			if (list1 == null && list2 == null)
+				return true;
+
+			if (list1 == null)
+				return false;
+			if (list2 == null)
+				return false; 
+
 			if (list1.Any(a => !list2.Contains(a)))
 				return false;
 			if (list2.Any(a => !list1.Contains(a)))
