@@ -457,54 +457,20 @@ namespace MyToolkit.Networking
 			{
 				var response = request.EndGetResponse(asyncResult);
 				resp.IsConnected = true; 
-				var origResponse = response;
-
-#if USE_GZIP
-	#if WINRT || WP8
-				if (response.Headers["Content-Encoding"] == "gzip")
-					response = new GZipWebResponse(response); 
-	#elif SL4 || WP7
-				if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
-					response = new GZipWebResponse(response); 
-	#else
-				if (response.Headers[HttpResponseHeader.ContentEncoding] == "gzip")
-					response = new GZipWebResponse(response);
-	#endif
-#endif
-
-				using (response)
-				{
-					if (resp.Request.ResponseAsStream)
-						resp.ResponseStream = response.GetResponseStream();
-					else
-						resp.RawResponse = response.GetResponseStream().ReadToEnd();
-
-					if (origResponse.Headers.AllKeys.Contains("Set-Cookie"))
-					{
-						var cookies = origResponse.Headers["Set-Cookie"];
-						var index = cookies.IndexOf(';');
-						if (index != -1)
-						{
-							foreach (var c in HttpUtilityExtensions.ParseQueryString(cookies.Substring(0, index)))
-								resp.Cookies.Add(new Cookie(c.Key, c.Value));
-						}
-					}
-
-					foreach (var key in origResponse.Headers.AllKeys)
-					{
-						var value = origResponse.Headers[key];
-						resp.Headers.Add(key, value);
-					}
-				}
+				LoadResponse(resp, response);
 			}
 			catch (Exception e)
 			{
 				var we = e as WebException;
 				if (we != null)
 				{
-					var temp = we.Response as HttpWebResponse;
-					if (temp != null)
-						resp.HttpStatusCode = temp.StatusCode;
+					var response = we.Response as HttpWebResponse;
+					if (response != null)
+					{
+						resp.HttpStatusCode = response.StatusCode;
+						try { LoadResponse(resp, response); }
+						catch { }
+					}
 				}
 
 				if (resp.ResponseStream != null)
@@ -521,6 +487,49 @@ namespace MyToolkit.Networking
 
 			if (action != null)
 				action(resp);
+		}
+
+		private static void LoadResponse(HttpResponse resp, WebResponse response)
+		{
+			using (response)
+			{
+				var stream = response.GetResponseStream();
+
+#if USE_GZIP
+#if WINRT || WP8
+				if (response.Headers["Content-Encoding"] == "gzip")
+					stream = new GZipStream(stream, CompressionMode.Decompress);
+#elif SL4 || WP7
+				if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
+					stream = new GZipStream(stream, CompressionMode.Decompress);
+#else
+				if (response.Headers[HttpResponseHeader.ContentEncoding] == "gzip")
+					stream = new GZipStream(stream, CompressionMode.Decompress);
+#endif
+#endif
+
+				if (resp.Request.ResponseAsStream)
+					resp.ResponseStream = stream;
+				else
+					resp.RawResponse = stream.ReadToEnd();
+
+				if (response.Headers.AllKeys.Contains("Set-Cookie"))
+				{
+					var cookies = response.Headers["Set-Cookie"];
+					var index = cookies.IndexOf(';');
+					if (index != -1)
+					{
+						foreach (var c in HttpUtilityExtensions.ParseQueryString(cookies.Substring(0, index)))
+							resp.Cookies.Add(new Cookie(c.Key, c.Value));
+					}
+				}
+
+				foreach (var key in response.Headers.AllKeys)
+				{
+					var value = response.Headers[key];
+					resp.Headers.Add(key, value);
+				}
+			}
 		}
 
 		private static string GetQueryString(Dictionary<string, string> query)

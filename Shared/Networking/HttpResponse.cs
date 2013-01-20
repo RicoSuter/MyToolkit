@@ -46,7 +46,13 @@ namespace MyToolkit.Networking
 		public void Abort()
 		{
 			if (Request != null && !Successful)
-				WebRequest.Abort();
+			{
+				try
+				{
+					WebRequest.Abort();
+				}
+				catch  { }
+			}
 		}
 
 		private Exception exception;
