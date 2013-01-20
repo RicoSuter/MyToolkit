@@ -91,10 +91,18 @@ namespace MyToolkit.Multimedia
 
 		public static HttpResponse GetVideoUri(string youTubeId, YouTubeQuality maxQuality, Action<YouTubeUri, Exception> completed)
 		{
-			return Http.Get("http://www.youtube.com/watch?v=" + youTubeId + "&nomobile=1", r => OnHtmlDownloaded(r, maxQuality, completed));
+			return Http.Get("http://www.youtube.com/watch?v=" + youTubeId + "&nomobile=1", 
+				r => OnHtmlDownloaded(r, YouTubeQuality.Quality480P, maxQuality, completed));
 		}
 
-		private static void OnHtmlDownloaded(HttpResponse response, YouTubeQuality quality, Action<YouTubeUri, Exception> completed)
+		public static HttpResponse GetVideoUri(string youTubeId, YouTubeQuality minQuality, YouTubeQuality maxQuality, 
+			Action<YouTubeUri, Exception> completed)
+		{
+			return Http.Get("http://www.youtube.com/watch?v=" + youTubeId + "&nomobile=1", 
+				r => OnHtmlDownloaded(r, minQuality, maxQuality, completed));
+		}
+
+		private static void OnHtmlDownloaded(HttpResponse response, YouTubeQuality minQuality, YouTubeQuality maxQuality, Action<YouTubeUri, Exception> completed)
 		{
 			if (response.Successful)
 			{
@@ -137,8 +145,9 @@ namespace MyToolkit.Multimedia
 							urls.Add(tuple);
 					}
 
-					var itag = GetQualityIdentifier(quality);
-					foreach (var u in urls.Where(u => u.Itag > itag).ToArray())
+					var minTag = GetQualityIdentifier(minQuality);
+					var maxTag = GetQualityIdentifier(maxQuality);
+					foreach (var u in urls.Where(u => u.Itag < minTag || u.Itag > maxTag).ToArray())
 					    urls.Remove(u);
 				}
 				catch (Exception ex)
