@@ -33,6 +33,12 @@ using System.Threading.Tasks;
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
 namespace MyToolkit.Networking
 {
+	public class HttpStatusException : Exception
+	{
+		public HttpResponse Result { get; set; }
+		public WebException WebException { get; set; }
+	}
+
 	public class AuthenticatedUri : Uri
 	{
 		public AuthenticatedUri(string uriString, string username, string password)
@@ -113,46 +119,32 @@ namespace MyToolkit.Networking
 		public static Task<HttpResponse> GetAsync(string url)
 		{
 			var task = new TaskCompletionSource<HttpResponse>();
-			Get(url, result =>
-			{
-				if (result.Successful)
-					task.SetResult(result);
-				else if (result.Canceled)
-					task.SetCanceled();
-				else
-					task.SetException(result.Exception);
-			});
+			Get(url, result => ProcessAsyncResponse(task, result));
 			return task.Task;
 		}
 
 		public static Task<HttpResponse> GetAsync(HttpGetRequest request)
 		{
 			var task = new TaskCompletionSource<HttpResponse>();
-			Get(request, result =>
-			{
-				if (result.Successful)
-					task.SetResult(result);
-				else if (result.Canceled)
-					task.SetCanceled();
-				else
-					task.SetException(result.Exception);
-			});
+			Get(request, result => ProcessAsyncResponse(task, result));
 			return task.Task;
 		}
 
 		public static Task<HttpResponse> PostAsync(string url)
 		{
 			var task = new TaskCompletionSource<HttpResponse>();
-			Post(url, result =>
-			{
-				if (result.Successful)
-					task.SetResult(result);
-				else if (result.Canceled)
-					task.SetCanceled();
-				else
-					task.SetException(result.Exception);
-			});
+			Post(url, result => ProcessAsyncResponse(task, result));
 			return task.Task;
+		}
+
+		private static void ProcessAsyncResponse(TaskCompletionSource<HttpResponse> task, HttpResponse result)
+		{
+			if (result.Successful)
+				task.SetResult(result);
+			else if (result.Canceled)
+				task.SetCanceled();
+			else
+				task.SetException(result.Exception);
 		}
 
 		public static Task<HttpResponse> PostAsync(HttpPostRequest request)
@@ -459,27 +451,33 @@ namespace MyToolkit.Networking
 				resp.IsConnected = true; 
 				LoadResponse(resp, response);
 			}
-			catch (Exception e)
+			catch (Exception exception)
 			{
-				var we = e as WebException;
-				if (we != null)
+				if (exception is WebException)
 				{
-					var response = we.Response as HttpWebResponse;
+					var response = ((WebException)exception).Response as HttpWebResponse;
 					if (response != null)
 					{
 						resp.HttpStatusCode = response.StatusCode;
+						
 						try { LoadResponse(resp, response); }
 						catch { }
+						
+						exception = new HttpStatusException
+						{
+							Result = resp, 
+							WebException = (WebException) exception
+						};
 					}
 				}
 
 				if (resp.ResponseStream != null)
 				{
-					resp.ResponseStream.Dispose();
-					resp.ResponseStream = null;
+					using (resp.ResponseStream)
+						resp.RawResponse = resp.ResponseStream.ReadToEnd();
 				}
 
-				resp.Exception = e; 
+				resp.Exception = exception; 
 				if (action != null)
 					action(resp);
 				return;
@@ -511,7 +509,10 @@ namespace MyToolkit.Networking
 				if (resp.Request.ResponseAsStream)
 					resp.ResponseStream = stream;
 				else
-					resp.RawResponse = stream.ReadToEnd();
+				{
+					using (stream)
+						resp.RawResponse = stream.ReadToEnd();
+				}
 
 				if (response.Headers.AllKeys.Contains("Set-Cookie"))
 				{

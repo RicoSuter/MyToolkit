@@ -13,7 +13,7 @@ namespace MyToolkit.Networking
 		int ConnectionTimeout { get; }
 
 		/// <summary>
-		/// Important: Always close stream after usage! If true, Response and RawResponse will be null in response object
+		/// Important: Always close stream after usage! If true, Result and RawResponse will be null in response object
 		/// </summary>
 		bool ResponseAsStream { get; }
 	}
