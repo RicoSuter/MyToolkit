@@ -296,6 +296,9 @@
     <Compile Include="Encryption\Sha256.cs" />
     <Compile Include="Environment\Device.cs" />
     <Compile Include="Input\Keyboard.cs" />
+    <Compile Include="Mathematics\GeometryMath.cs" />
+    <Compile Include="Mathematics\TrigonometryMath.cs" />
+    <Compile Include="Mathematics\VectorMath.cs" />
     <Compile Include="Messaging\GenericMessage.cs" />
     <Compile Include="Messaging\GoBackMessage.cs" />
     <Compile Include="Messaging\NavigateMessage.cs" />
