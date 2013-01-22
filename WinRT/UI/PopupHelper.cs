@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MyToolkit.Utilities;
+using Windows.Foundation;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Input;
 
 namespace MyToolkit.UI
 {
@@ -123,18 +126,41 @@ namespace MyToolkit.UI
 			openPopups++;
 			popup.IsOpen = true;
 
-			//int flyoutOffset = 0;
-			//Windows.UI.ViewManagement.InputPane.GetForCurrentView().Showing += (s, args) =>
-			//{
-			//	flyoutOffset = (int)args.OccludedRect.Height;
-			//	popup.VerticalOffset -= flyoutOffset;
-			//};
-			//Windows.UI.ViewManagement.InputPane.GetForCurrentView().Hiding += (s, args) =>
-			//{
-			//	popup.VerticalOffset += flyoutOffset;
-			//};
-
+			popup.Tag = 0.0;
+			InputPane.GetForCurrentView().Showing += (s, args) => UpdateElementLocation(popup);
+			InputPane.GetForCurrentView().Hiding += (s, args) =>
+			{
+				popup.VerticalOffset += (double)popup.Tag;
+				popup.Tag = 0.0;
+			};
 			return popup;
+		}
+
+		private static void UpdateElementLocation(Popup popup)
+		{
+			var occlutedRect = InputPane.GetForCurrentView().OccludedRect;
+			if (occlutedRect.Top > 0)
+			{
+				var element = FocusManager.GetFocusedElement() as FrameworkElement;
+				if (element != null)
+				{
+					SingleEvent.Register(element,
+						(e, h) => e.LostFocus += h,
+						(e, h) => e.LostFocus -= h,
+						delegate { UpdateElementLocation(popup); });
+
+					var point = element.TransformToVisual(Window.Current.Content).TransformPoint(new Point(0, 0));
+					if (point.X + element.ActualHeight + 100 > occlutedRect.Top)
+					{
+						var offset = (point.X + element.ActualHeight + 100) - occlutedRect.Top - (double)popup.Tag;
+						if (offset > 20)
+						{
+							popup.VerticalOffset -= offset;
+							popup.Tag = (double)popup.Tag + offset;
+						}
+					}
+				}
+			}
 		}
 
 		public static Popup ShowSettings(FrameworkElement control, Action<Popup> closed = null)
@@ -143,7 +169,7 @@ namespace MyToolkit.UI
 			control.Height = bounds.Height;
 
 			var popup = new Popup();
-			var del = new WindowActivatedEventHandler((sender, e) =>
+			var del1 = new WindowActivatedEventHandler((sender, e) =>
 			{
 				if (e.WindowActivationState == CoreWindowActivationState.Deactivated)
 					popup.IsOpen = false;
@@ -153,14 +179,14 @@ namespace MyToolkit.UI
 				popup.HorizontalOffset = bounds.Left + (bounds.Width - control.ActualWidth);
 			});
 
-			Window.Current.Activated += del;
+			Window.Current.Activated += del1;
 			control.SizeChanged += del2;
 
 			popup.IsLightDismissEnabled = true;
 			popup.Child = control;
 			popup.Closed += delegate 
 			{
-				Window.Current.Activated -= del;
+				Window.Current.Activated -= del1;
 				control.SizeChanged -= del2;
 				if (closed != null)
 					closed(popup);
