@@ -12,11 +12,6 @@ namespace MyToolkit.Controls
 		public ColorChooser()
 		{
 			DefaultStyleKey = typeof(ColorChooser);
-			Tapped += delegate(object sender, TappedRoutedEventArgs args)
-			{
-				if (SuppressTappedEvents)
-					args.Handled = true;
-			};
 		}
 
 		public static readonly DependencyProperty SelectedColorProperty =
@@ -36,15 +31,6 @@ namespace MyToolkit.Controls
 		{
 			get { return (Color[]) GetValue(ColorsProperty); }
 			set { SetValue(ColorsProperty, value); }
-		}
-
-		public static readonly DependencyProperty SuppressTappedEventsProperty =
-			DependencyProperty.Register("SuppressTappedEvents", typeof (bool), typeof (ColorChooser), new PropertyMetadata(false));
-
-		public bool SuppressTappedEvents
-		{
-			get { return (bool) GetValue(SuppressTappedEventsProperty); }
-			set { SetValue(SuppressTappedEventsProperty, value); }
 		}
 	}
 }
