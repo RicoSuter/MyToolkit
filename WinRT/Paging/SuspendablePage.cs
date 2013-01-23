@@ -42,7 +42,7 @@ namespace MyToolkit.Paging
 			frameState[pageKey] = pageState;
 		}
 
-		protected virtual void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+		protected virtual void LoadState(Object parameter, Dictionary<String, Object> pageState)
 		{
 
 		}
