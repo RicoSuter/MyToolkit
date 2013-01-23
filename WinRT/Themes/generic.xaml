@@ -885,5 +885,43 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
+
+	<Style TargetType="controls:PanAndZoomViewer">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="controls:PanAndZoomViewer">
+					<ContentPresenter x:Name="content">
+						<ContentPresenter.RenderTransform>
+							<CompositeTransform ScaleX="1" ScaleY="1" TranslateX="0" TranslateY="0"/>
+						</ContentPresenter.RenderTransform>
+					</ContentPresenter>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style TargetType="controls:PanAndZoomImage">
+		<Setter Property="Stretch" Value="UniformToFill"/>
+		<Setter Property="Background" Value="Gray" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="controls:PanAndZoomImage">
+					<ContentPresenter x:Name="content">
+						<ContentPresenter.RenderTransform>
+							<CompositeTransform ScaleX="1" ScaleY="1" TranslateX="0" TranslateY="0"/>
+						</ContentPresenter.RenderTransform>
+
+						<Border Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}" 
+								Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InnerMargin}">
+							<Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Source}" 
+								  Stretch="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Stretch}" 
+								   x:Name="image">
+							</Image>
+						</Border>
+					</ContentPresenter>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 </ResourceDictionary>
   

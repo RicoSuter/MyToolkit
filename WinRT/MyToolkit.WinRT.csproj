@@ -117,6 +117,12 @@
     <Compile Include="..\Shared\Controls\NavigationListEventArgs.cs">
       <Link>Controls\NavigationListEventArgs.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Controls\PanAndZoomImage.cs">
+      <Link>Controls\PanAndZoomImage.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\PanAndZoomViewer.cs">
+      <Link>Controls\PanAndZoomViewer.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
       <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>
     </Compile>
