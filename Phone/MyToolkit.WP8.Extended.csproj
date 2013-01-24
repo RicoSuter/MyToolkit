@@ -188,6 +188,7 @@
       <Link>UI\TextBinding.cs</Link>
     </Compile>
     <Compile Include="Controls\ExtendedListPicker.cs" />
+    <Compile Include="UI\PerformanceProgressBar.cs" />
     <Compile Include="Controls\TranslatedToggleSwitch.cs">
       <SubType>Code</SubType>
     </Compile>
