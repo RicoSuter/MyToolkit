@@ -20,8 +20,7 @@ namespace MyToolkit.Controls
 
 			Second.Visibility = Visibility.Collapsed; 
 		}
-
-
+		
 		public bool ShowSecond
 		{
 			get { return (bool)GetValue(ShowSecondProperty); }
@@ -29,7 +28,8 @@ namespace MyToolkit.Controls
 		}
 
 		public static readonly DependencyProperty ShowSecondProperty =
-			DependencyProperty.Register("ShowSecond", typeof(bool), typeof(TimePicker), new PropertyMetadata(false, OnShowSecondChanged));
+			DependencyProperty.Register("ShowSecond", typeof(bool), typeof(TimePicker), 
+			new PropertyMetadata(false, OnShowSecondChanged));
 
 		private static void OnShowSecondChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
@@ -39,7 +39,8 @@ namespace MyToolkit.Controls
 
 
 		public static readonly DependencyProperty AllowNullProperty =
-			DependencyProperty.Register("AllowNull", typeof(bool), typeof(TimePicker), new PropertyMetadata(true));
+			DependencyProperty.Register("AllowNull", typeof(bool), typeof(TimePicker), 
+			new PropertyMetadata(true, OnSelectedItemChanged));
 
 		public bool AllowNull
 		{
@@ -48,7 +49,8 @@ namespace MyToolkit.Controls
 		}
 
 		public static readonly DependencyProperty SelectedTimeProperty =
-            DependencyProperty.Register("SelectedTime", typeof(DateTime?), typeof(TimePicker), new PropertyMetadata(null, OnSelectedItemChanged));
+            DependencyProperty.Register("SelectedTime", typeof(object), typeof(TimePicker), 
+			new PropertyMetadata(null, OnSelectedItemChanged));
 
         public DateTime? SelectedTime
 		{
@@ -86,9 +88,9 @@ namespace MyToolkit.Controls
                 }
                 else
                 {
-					Hour.SelectedIndex = SelectedTime.Value.Day;
-					Minute.SelectedIndex = SelectedTime.Value.Month;
-					Second.SelectedIndex = SelectedTime.Value.Year;
+					Hour.SelectedIndex = SelectedTime.Value.Hour;
+					Minute.SelectedIndex = SelectedTime.Value.Minute;
+					Second.SelectedIndex = SelectedTime.Value.Second;
                 }
 			}
 			else
@@ -125,24 +127,24 @@ namespace MyToolkit.Controls
 			Second.ItemsSource = seconds; 
 		}
 
-		private void Day_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void OnUpdateTime(object sender, SelectionChangedEventArgs e)
 		{
 			if (initializing)
 				return;
 
-            var year = SelectedTime != null ? SelectedTime.Value.Year : 0;
-            var month = SelectedTime != null ? SelectedTime.Value.Month : 0;
-            var day = SelectedTime != null ? SelectedTime.Value.Day : 0;
+            var year = SelectedTime != null ? SelectedTime.Value.Year : DateTime.MinValue.Year;
+			var month = SelectedTime != null ? SelectedTime.Value.Month : DateTime.MinValue.Month;
+			var day = SelectedTime != null ? SelectedTime.Value.Day : DateTime.MinValue.Day;
 
 			initializing = true;
-			if (AllowNull && (Hour.SelectedIndex == 0 || Minute.SelectedIndex == 0 || Second.SelectedIndex == 0))
+			if (AllowNull && (Hour.SelectedIndex == 0 || Minute.SelectedIndex == 0 || (ShowSecond && Second.SelectedIndex == 0)))
                 SelectedTime = null;
 			else
 			{
 				if (AllowNull)
-                    SelectedTime = new DateTime(year, month, day, Hour.SelectedIndex - 1, Minute.SelectedIndex - 1, Second.SelectedIndex - 1);
+					SelectedTime = new DateTime(year, month, day, Hour.SelectedIndex - 1, Minute.SelectedIndex - 1, ShowSecond ? Second.SelectedIndex - 1 : 0);
 				else
-                    SelectedTime = new DateTime(year, month, day, Hour.SelectedIndex, Minute.SelectedIndex, Second.SelectedIndex);
+					SelectedTime = new DateTime(year, month, day, Hour.SelectedIndex, Minute.SelectedIndex, Second.SelectedIndex);
 			}
 				
 			initializing = false; 

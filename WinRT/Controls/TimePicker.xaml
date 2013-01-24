@@ -18,9 +18,9 @@
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 
-			<ComboBox x:Name="Hour" Grid.Column="0" SelectionChanged="Day_SelectionChanged" Width="70" Margin="0,0,10,0" />
-			<ComboBox x:Name="Minute" Grid.Column="1" SelectionChanged="Day_SelectionChanged" Width="70" Margin="0,0,10,0" />
-			<ComboBox x:Name="Second" Grid.Column="2" SelectionChanged="Day_SelectionChanged" Width="70" />
+			<ComboBox x:Name="Hour" Grid.Column="0" SelectionChanged="OnUpdateTime" Width="70" Margin="0,0,10,0" />
+			<ComboBox x:Name="Minute" Grid.Column="1" SelectionChanged="OnUpdateTime" Width="70" Margin="0,0,10,0" />
+			<ComboBox x:Name="Second" Grid.Column="2" SelectionChanged="OnUpdateTime" Width="70" />
 		</Grid>
 	</Grid>
 </UserControl>

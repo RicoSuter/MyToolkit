@@ -20,7 +20,8 @@ namespace MyToolkit.Controls
 		}
 
 		public static readonly DependencyProperty AllowNullProperty =
-			DependencyProperty.Register("AllowNull", typeof(bool), typeof(DatePicker), new PropertyMetadata(true));
+			DependencyProperty.Register("AllowNull", typeof(bool), typeof(DatePicker),
+			new PropertyMetadata(true, OnSelectedItemChanged));
 
 		public bool AllowNull
 		{
@@ -29,7 +30,8 @@ namespace MyToolkit.Controls
 		}
 
 		public static readonly DependencyProperty SelectedDateProperty =
-            DependencyProperty.Register("SelectedDate", typeof(DateTime?), typeof(DatePicker), new PropertyMetadata(null, OnSelectedItemChanged));
+            DependencyProperty.Register("SelectedDate", typeof(object), typeof(DatePicker), 
+			new PropertyMetadata(default(DateTime), OnSelectedItemChanged));
 
         public DateTime? SelectedDate
 		{
@@ -63,13 +65,29 @@ namespace MyToolkit.Controls
                 {
                     Day.SelectedIndex = SelectedDate.Value.Day;
                     Month.SelectedIndex = SelectedDate.Value.Month;
-                    Year.SelectedIndex = SelectedDate.Value.Year - 2000 + 1;
+
+					if (SelectedDate.Value.Year >= 2000)
+						Year.SelectedIndex = SelectedDate.Value.Year - 2000 + 1;
+					else
+						Year.SelectedIndex = 0; 
                 }
                 else
                 {
-                    Day.SelectedIndex = SelectedDate.Value.Day - 1;
-                    Month.SelectedIndex = SelectedDate.Value.Month - 1;
-                    Year.SelectedIndex = SelectedDate.Value.Year - 2000;
+					if (SelectedDate.Value != null)
+					{
+						Day.SelectedIndex = SelectedDate.Value.Day - 1;
+						Month.SelectedIndex = SelectedDate.Value.Month - 1;
+						if (SelectedDate.Value.Year >= 2000)
+							Year.SelectedIndex = SelectedDate.Value.Year - 2000;
+						else
+							Year.SelectedIndex = 0; 
+					}
+					else
+					{
+						Day.SelectedIndex = 0;
+						Month.SelectedIndex = 0;
+						Year.SelectedIndex = 0;
+					}
                 }
 			}
 			else
@@ -109,7 +127,7 @@ namespace MyToolkit.Controls
 			Year.ItemsSource = years; 
 		}
 
-		private void Day_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		private void OnUpdateDate(object sender, SelectionChangedEventArgs e)
 		{
 			if (initializing)
 				return;
@@ -124,16 +142,10 @@ namespace MyToolkit.Controls
 			else
 			{
 				if (AllowNull)
-                    SelectedDate = new DateTime(Year.SelectedIndex + 2000 - 1, Month.SelectedIndex, Day.SelectedIndex, hour, minute, second);
+					SelectedDate = new DateTime(Year.SelectedIndex + 2000 - 1, Month.SelectedIndex, Day.SelectedIndex, hour, minute, second);
 				else
-                    SelectedDate = new DateTime(Year.SelectedIndex + 2000, Month.SelectedIndex + 1, Day.SelectedIndex + 1, hour, minute, second);
+					SelectedDate = new DateTime(Year.SelectedIndex + 2000, Month.SelectedIndex + 1, Day.SelectedIndex + 1, hour, minute, second);
 			}
-
-			//if (SelectedItem.HasValue)
-			//	UpdateValues(SelectedItem.Value.Year, SelectedItem.Value.Month);
-			//else
-			//	UpdateValues(0, 0);
-				
 			initializing = false; 
 		}
 	}

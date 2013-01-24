@@ -18,9 +18,9 @@
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
 
-			<ComboBox x:Name="Day" Grid.Column="0" SelectionChanged="Day_SelectionChanged" Width="70" Margin="0,0,10,0" />
-			<ComboBox x:Name="Month" Grid.Column="1" SelectionChanged="Day_SelectionChanged" Width="70" Margin="0,0,10,0" />
-			<ComboBox x:Name="Year" Grid.Column="2" SelectionChanged="Day_SelectionChanged" Width="100" />
+			<ComboBox x:Name="Day" Grid.Column="0" SelectionChanged="OnUpdateDate" Width="70" Margin="0,0,10,0" />
+			<ComboBox x:Name="Month" Grid.Column="1" SelectionChanged="OnUpdateDate" Width="70" Margin="0,0,10,0" />
+			<ComboBox x:Name="Year" Grid.Column="2" SelectionChanged="OnUpdateDate" Width="100" />
 		</Grid>
 	</Grid>
 </UserControl>
