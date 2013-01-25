@@ -305,6 +305,8 @@
     <Compile Include="Environment\Device.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Mathematics\GeometryMath.cs" />
+    <Compile Include="Mathematics\Matrix.cs" />
+    <Compile Include="Mathematics\MatrixMath.cs" />
     <Compile Include="Mathematics\TrigonometryMath.cs" />
     <Compile Include="Mathematics\VectorMath.cs" />
     <Compile Include="Messaging\GenericMessage.cs" />
