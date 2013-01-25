@@ -101,7 +101,7 @@ namespace MyToolkit.Recognition.WinRT.Feedforward
             for (var i = 0; i < next.NeuronCount; i++)
             {
 				var sum = GetDotProductOfColumnWithOneFakeColumn(LayerMatrix, i, Fire);
-				Fire[i] = LayerActivationFunction.Function(sum);
+				next.Fire[i] = LayerActivationFunction.Function(sum);
             }
 
             return Fire;

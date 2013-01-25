@@ -79,7 +79,7 @@ namespace MyToolkit.Recognition.WinRT.Feedforward
                 errorCalculation.UpdateError(OutputLayer.Fire, ideal[i]);
             }
 
-            return (errorCalculation.CalculateRootMeanSquare());
+	        return errorCalculation.CalculateRootMeanSquare();
         }
 
 		public FeedforwardNetwork Clone()
