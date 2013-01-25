@@ -152,6 +152,37 @@
     <Compile Include="..\Shared\UI\TextBinding.cs">
       <Link>UI\TextBinding.cs</Link>
     </Compile>
+    <Compile Include="Animation\Transitions\AnimatedBasePage.cs" />
+    <Compile Include="Animation\Transitions\AnimatorHelperBase.cs" />
+    <Compile Include="Animation\Transitions\ContinuumAnimator.cs" />
+    <Compile Include="Animation\Transitions\ContinuumBackwardInAnimator.cs" />
+    <Compile Include="Animation\Transitions\ContinuumBackwardOutAnimator.cs" />
+    <Compile Include="Animation\Transitions\ContinuumForwardInAnimator.cs" />
+    <Compile Include="Animation\Transitions\ContinuumForwardOutAnimator.cs" />
+    <Compile Include="Animation\Transitions\DefaultPageAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateIn180ClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateIn180CounterClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateIn90ClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateIn90CounterClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateOut180ClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateOut180CounterClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateOut90ClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateOut90CounterClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideDownAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideLeftFadeInAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideLeftFadeOutAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideRightFadeInAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideRightFadeOutAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideUpAnimator.cs" />
+    <Compile Include="Animation\Transitions\Storyboards.cs" />
+    <Compile Include="Animation\Transitions\SwivelAnimator.cs" />
+    <Compile Include="Animation\Transitions\TurnstileAnimator.cs" />
+    <Compile Include="Animation\Transitions\TurnstileBackwardInAnimator.cs" />
+    <Compile Include="Animation\Transitions\TurnstileBackwardOutAnimator.cs" />
+    <Compile Include="Animation\Transitions\TurnstileForwardInAnimator.cs" />
+    <Compile Include="Animation\Transitions\TurnstileForwardOutAnimator.cs" />
     <Compile Include="Controls\ExtendedListPicker.cs" />
     <Compile Include="Controls\VideoButton.xaml.cs">
       <DependentUpon>VideoButton.xaml</DependentUpon>

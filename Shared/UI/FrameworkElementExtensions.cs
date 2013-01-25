@@ -71,6 +71,128 @@ namespace MyToolkit.UI
 		}
 
 		/// <summary>
+		/// Returns a plane projection, creating it if necessary
+		/// </summary>
+		/// <param name="element">The element</param>
+		/// <param name="create">Whether or not to create the projection if it doesn't already exist</param>
+		/// <returns>The plane project, or null if not found / created</returns>
+		public static PlaneProjection GetPlaneProjection(this UIElement element, bool create)
+		{
+			Projection originalProjection = element.Projection;
+			PlaneProjection projection = null;
+
+			// Projection is already a plane projection; return it
+			if (originalProjection is PlaneProjection)
+			{
+				return originalProjection as PlaneProjection;
+			}
+
+			// Projection is null; create it if necessary
+			if (originalProjection == null)
+			{
+				if (create)
+				{
+					projection = new PlaneProjection();
+					element.Projection = projection;
+				}
+			}
+
+			// Note that if the project is a Matrix projection, it will not be
+			// changed and null will be returned.
+			return projection;
+		}
+
+		/// <summary>
+		/// Returns a render transform of the specified type from the element, creating it if necessary
+		/// </summary>
+		/// <typeparam name="TRequestedTransform">The type of transform (Rotate, Translate, etc)</typeparam>
+		/// <param name="element">The element to check</param>
+		/// <param name="mode">The mode to use for creating transforms, if not found</param>
+		/// <returns>The specified transform, or null if not found and not created</returns>
+		public static TRequestedTransform GetTransform<TRequestedTransform>(this UIElement element, TransformCreationMode mode) where TRequestedTransform : Transform, new()
+		{
+			//if (element == null)
+			//    return null;
+
+			Transform originalTransform = element.RenderTransform;
+			TRequestedTransform requestedTransform = null;
+			MatrixTransform matrixTransform = null;
+			TransformGroup transformGroup = null;
+
+			// Current transform is null -- create if necessary and return
+			if (originalTransform == null)
+			{
+				if ((mode & TransformCreationMode.Create) == TransformCreationMode.Create)
+				{
+					requestedTransform = new TRequestedTransform();
+					element.RenderTransform = requestedTransform;
+					return requestedTransform;
+				}
+
+				return null;
+			}
+
+			// Transform is exactly what we want -- return it
+			requestedTransform = originalTransform as TRequestedTransform;
+			if (requestedTransform != null)
+				return requestedTransform;
+
+
+			// The existing transform is matrix transform - overwrite if necessary and return
+			matrixTransform = originalTransform as MatrixTransform;
+			if (matrixTransform != null)
+			{
+				if (matrixTransform.Matrix.IsIdentity
+				  && (mode & TransformCreationMode.Create) == TransformCreationMode.Create
+				  && (mode & TransformCreationMode.IgnoreIdentityMatrix) == TransformCreationMode.IgnoreIdentityMatrix)
+				{
+					requestedTransform = new TRequestedTransform();
+					element.RenderTransform = requestedTransform;
+					return requestedTransform;
+				}
+
+				return null;
+			}
+
+			// Transform is actually a group -- check for the requested type
+			transformGroup = originalTransform as TransformGroup;
+			if (transformGroup != null)
+			{
+				foreach (Transform child in transformGroup.Children)
+				{
+					// Child is the right type -- return it
+					if (child is TRequestedTransform)
+						return child as TRequestedTransform;
+				}
+
+				// Right type was not found, but we are OK to add it
+				if ((mode & TransformCreationMode.AddToGroup) == TransformCreationMode.AddToGroup)
+				{
+					requestedTransform = new TRequestedTransform();
+					transformGroup.Children.Add(requestedTransform);
+					return requestedTransform;
+				}
+
+				return null;
+			}
+
+			// Current ransform is not a group and is not what we want;
+			// create a new group containing the existing transform and the new one
+			if ((mode & TransformCreationMode.CombineIntoGroup) == TransformCreationMode.CombineIntoGroup)
+			{
+				transformGroup = new TransformGroup();
+				transformGroup.Children.Add(originalTransform);
+				transformGroup.Children.Add(requestedTransform);
+				element.RenderTransform = transformGroup;
+				return requestedTransform;
+			}
+
+			Debug.Assert(false, "Shouldn't get here");
+			return null;
+		}
+
+
+		/// <summary>
 		/// Returns the visual parent of an element
 		/// </summary>
 		/// <param name="node">The element whose parent is desired</param>
@@ -108,6 +230,104 @@ namespace MyToolkit.UI
 		}
 
 		/// <summary>
+		/// Gets the visual children of type T.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> GetVisualChildren<T>(this DependencyObject target)
+			where T : DependencyObject
+		{
+			return GetVisualChildren(target).Where(child => child is T).Cast<T>();
+		}
+
+		/// <summary>
+		/// Gets the visual children of type T.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="target">The target.</param>
+		/// <param name="strict">if set to <c>true</c> [strict].</param>
+		/// <returns></returns>
+		public static IEnumerable<T> GetVisualChildren<T>(this DependencyObject target, bool strict)
+			where T : DependencyObject
+		{
+			return GetVisualChildren(target, strict).Where(child => child is T).Cast<T>();
+		}
+
+		/// <summary>
+		/// Get the visual tree children of an element.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		/// <returns>The visual tree children of an element.</returns>
+		/// <exception cref="T:System.ArgumentNullException">
+		/// <paramref name="element"/> is null.
+		/// </exception>
+		public static IEnumerable<DependencyObject> GetVisualChildren(this DependencyObject element)
+		{
+			if (element == null)
+			{
+				throw new ArgumentNullException("element");
+			}
+
+			return GetVisualChildrenAndSelfIterator(element).Skip(1);
+		}
+
+		/// <summary>
+		/// Get the visual tree children of an element and the element itself.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		/// <returns>
+		/// The visual tree children of an element and the element itself.
+		/// </returns>
+		private static IEnumerable<DependencyObject> GetVisualChildrenAndSelfIterator(this DependencyObject element)
+		{
+			Debug.Assert(element != null, "element should not be null!");
+
+			yield return element;
+
+			int count = VisualTreeHelper.GetChildrenCount(element);
+			for (int i = 0; i < count; i++)
+			{
+				yield return VisualTreeHelper.GetChild(element, i);
+			}
+		}
+
+		/// <summary>
+		/// Gets the visual children.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <param name="strict">Prevents the search from navigating the logical tree; eg. ContentControl.Content</param>
+		/// <returns></returns>
+		public static IEnumerable<DependencyObject> GetVisualChildren(this DependencyObject target, bool strict)
+		{
+			int count = VisualTreeHelper.GetChildrenCount(target);
+			if (count == 0)
+			{
+				if (!strict && target is ContentControl)
+				{
+					var child = ((ContentControl)target).Content as DependencyObject;
+					if (child != null)
+					{
+						yield return child;
+					}
+					else
+					{
+						yield break;
+					}
+				}
+			}
+			else
+			{
+				for (int i = 0; i < count; i++)
+				{
+					yield return VisualTreeHelper.GetChild(target, i);
+				}
+			}
+
+			yield break;
+		}
+
+		/// <summary>
 		/// Gets all the visual children of the element
 		/// </summary>
 		/// <param name="root">The element to get children of</param>
@@ -116,6 +336,100 @@ namespace MyToolkit.UI
 		{
 			for (int i = 0; i < VisualTreeHelper.GetChildrenCount(root); i++)
 				yield return VisualTreeHelper.GetChild(root, i) as FrameworkElement;
+		}
+
+		/// <summary>
+		/// A helper method used to get visual decnedants using a depth-first strategy.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <param name="strict">Prevents the search from navigating the logical tree; eg. ContentControl.Content</param>
+		/// <param name="stack"></param>
+		/// <returns></returns>
+		private static IEnumerable<DependencyObject> GetVisualDecendants(DependencyObject target, bool strict, Stack<DependencyObject> stack)
+		{
+			foreach (var child in GetVisualChildren(target, strict))
+			{
+				stack.Push(child);
+			}
+
+			if (stack.Count == 0)
+			{
+				yield break;
+			}
+
+			DependencyObject node = stack.Pop();
+			yield return node;
+
+			foreach (var decendant in GetVisualDecendants(node, strict, stack))
+			{
+				yield return decendant;
+			}
+		}
+
+		/// <summary>
+		/// Get the visual tree descendants of an element.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		/// <returns>The visual tree descendants of an element.</returns>
+		/// <exception cref="T:System.ArgumentNullException">
+		/// <paramref name="element"/> is null.
+		/// </exception>
+		public static IEnumerable<DependencyObject> GetVisualDescendants(this DependencyObject element)
+		{
+			if (element == null)
+			{
+				throw new ArgumentNullException("element");
+			}
+
+			return GetVisualDescendantsAndSelfIterator(element).Skip(1);
+		}
+
+		/// <summary>
+		/// Get the visual tree descendants of an element and the element
+		/// itself.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		/// <returns>
+		/// The visual tree descendants of an element and the element itself.
+		/// </returns>
+		/// <exception cref="T:System.ArgumentNullException">
+		/// <paramref name="element"/> is null.
+		/// </exception>
+		public static IEnumerable<DependencyObject> GetVisualDescendantsAndSelf(this DependencyObject element)
+		{
+			if (element == null)
+			{
+				throw new ArgumentNullException("element");
+			}
+
+			return GetVisualDescendantsAndSelfIterator(element);
+		}
+
+		/// <summary>
+		/// Get the visual tree descendants of an element and the element
+		/// itself.
+		/// </summary>
+		/// <param name="element">The element.</param>
+		/// <returns>
+		/// The visual tree descendants of an element and the element itself.
+		/// </returns>
+		private static IEnumerable<DependencyObject> GetVisualDescendantsAndSelfIterator(DependencyObject element)
+		{
+			Debug.Assert(element != null, "element should not be null!");
+
+			var remaining = new Queue<DependencyObject>();
+			remaining.Enqueue(element);
+
+			while (remaining.Count > 0)
+			{
+				DependencyObject obj = remaining.Dequeue();
+				yield return obj;
+
+				foreach (DependencyObject child in obj.GetVisualChildren())
+				{
+					remaining.Enqueue(child);
+				}
+			}
 		}
 
 
@@ -505,5 +819,44 @@ namespace MyToolkit.UI
 				}
 			}
 		}
+	}
+
+	[Flags]
+	public enum TransformCreationMode
+	{
+		/// <summary>
+		/// Don't try and create a transform if it doesn't already exist
+		/// </summary>
+		None = 0,
+
+		/// <summary>
+		/// Create a transform if none exists
+		/// </summary>
+		Create = 1,
+
+		/// <summary>
+		/// Create and add to an existing group
+		/// </summary>
+		AddToGroup = 2,
+
+		/// <summary>
+		/// Create a group and combine with existing transform; may break existing animations
+		/// </summary>
+		CombineIntoGroup = 4,
+
+		/// <summary>
+		/// Treat identity matrix as if it wasn't there; may break existing animations
+		/// </summary>
+		IgnoreIdentityMatrix = 8,
+
+		/// <summary>
+		/// Create a new transform or add to group
+		/// </summary>
+		CreateOrAddAndIgnoreMatrix = Create | AddToGroup | IgnoreIdentityMatrix,
+
+		/// <summary>
+		/// Default behaviour, equivalent to CreateOrAddAndIgnoreMatrix
+		/// </summary>
+		Default = CreateOrAddAndIgnoreMatrix,
 	}
 }
