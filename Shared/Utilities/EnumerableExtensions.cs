@@ -94,5 +94,19 @@ namespace MyToolkit.Utilities
 			}
 			return result;
 		}
+
+		public static IList<T> MiddleElements<T>(this IList<T> list, int count)
+		{
+			if (list.Count < count)
+				return null;
+			if (list.Count == count)
+				return list.ToList();
+
+			var output = new List<T>();
+			var startIndex = list.Count/2 - count/2;
+			for (var i = 0; i < count; i++)
+				output.Add(list[startIndex + i]);
+			return output; 
+		}
 	}
 }

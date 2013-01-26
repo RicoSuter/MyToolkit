@@ -1,4 +1,5 @@
-﻿using Windows.Foundation;
+﻿using System;
+using Windows.Foundation;
 
 namespace MyToolkit.Mathematics
 {
@@ -6,13 +7,18 @@ namespace MyToolkit.Mathematics
 	{
 		public static Point Normalize(this Point vector)
 		{
-			var length = System.Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
+			var length = Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
 			return new Point(vector.X / length, vector.Y / length);
+		}
+
+		public static double Length(this Point vector)
+		{
+			return Math.Sqrt(vector.X*vector.X + vector.Y*vector.Y); 
 		}
 
 		public static double Length(Point pt1, Point pt2)
 		{
-			return System.Math.Sqrt((pt2.X - pt1.X) * (pt2.X - pt1.X) + (pt2.Y - pt1.Y) * (pt2.Y - pt1.Y));
+			return Math.Sqrt((pt2.X - pt1.X) * (pt2.X - pt1.X) + (pt2.Y - pt1.Y) * (pt2.Y - pt1.Y));
 		}
 
 		public static double LengthSquared(Point pt1, Point pt2)

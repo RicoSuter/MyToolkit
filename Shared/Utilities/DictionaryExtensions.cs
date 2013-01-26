@@ -37,7 +37,7 @@ namespace MyToolkit.Utilities
 				else if (p.Value is ObservableCollection<ObservableDictionary<string, object>>)
 				{
 					var list = (ObservableCollection<ObservableDictionary<string, object>>)p.Value;
-					output[p.Key] = list.Select(DeepCopy).ToList();
+					output[p.Key] = new ObservableCollection<ObservableDictionary<string, object>>(list.Select(DeepCopy));
 				}
 				else
 					output[p.Key] = p.Value;
