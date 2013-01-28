@@ -301,6 +301,7 @@
     <Compile Include="Composition\ImportAttribute.cs" />
     <Compile Include="Composition\ImportManyAttribute.cs" />
     <Compile Include="Converters\ColorConverter.cs" />
+    <Compile Include="Converters\CompareConverter.cs" />
     <Compile Include="Converters\NumberConverter.cs" />
     <Compile Include="Encryption\Sha256.cs" />
     <Compile Include="Environment\Device.cs" />
