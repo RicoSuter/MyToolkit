@@ -19,16 +19,16 @@ namespace MyToolkit.UI
 		private static int openPopups = 0;
 		public static bool IsPopupVisible { get { return openPopups > 0; } }
 
+		public static Popup GetParentPopup(FrameworkElement element)
+		{
+			return element.GetVisualAncestors().LastOrDefault() as Popup; 
+		}
+
 		public static bool IsInPopup(FrameworkElement element)
 		{
 			if (element is Popup)
 				return true;
-
-			var last = element.GetVisualAncestors().LastOrDefault();
-			if (last != null && last.Parent is Popup)
-				return true;
-
-			return false; 
+			return GetParentPopup(element) != null; 
 		}
 
 		public static void ClosePopup(this FrameworkElement control)
