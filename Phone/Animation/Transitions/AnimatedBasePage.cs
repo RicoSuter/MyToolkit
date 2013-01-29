@@ -11,13 +11,10 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using MyToolkit.Paging;
-using MyToolkit.UI;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 
@@ -139,88 +136,24 @@ namespace MyToolkit.Animation.Transitions
         /// </summary>
         public void CancelAnimation()
         {
-            this.isActive = false;
+            isActive = false;
         }
-
-        /// <summary>
-        /// Gets the continuum animation.
-        /// </summary>
-        /// <param name="element">
-        /// The element.
-        /// </param>
-        /// <param name="animationType">
-        /// Type of the animation.
-        /// </param>
-        /// <returns>
-        /// </returns>
-        public AnimatorHelperBase GetContinuumAnimation(FrameworkElement element, AnimationType animationType)
-        {
-            TextBlock nameText;
-
-            if (element is TextBlock)
-            {
-                nameText = element as TextBlock;
-            }
-            else
-            {
-                nameText = element.GetVisualDescendants().OfType<TextBlock>().FirstOrDefault();
-            }
-
-            if (nameText != null)
-            {
-                if (animationType == AnimationType.NavigateForwardIn)
-                {
-                    return new ContinuumForwardInAnimator { RootElement = nameText, LayoutRoot = this.AnimationContext };
-                }
-
-                if (animationType == AnimationType.NavigateForwardOut)
-                {
-                    return new ContinuumForwardOutAnimator
-                        {
-                           RootElement = nameText, LayoutRoot = this.AnimationContext 
-                        };
-                }
-
-                if (animationType == AnimationType.NavigateBackwardIn)
-                {
-                    return new ContinuumBackwardInAnimator
-                        {
-                           RootElement = nameText, LayoutRoot = this.AnimationContext 
-                        };
-                }
-
-                if (animationType == AnimationType.NavigateBackwardOut)
-                {
-                    return new ContinuumBackwardOutAnimator
-                        {
-                           RootElement = nameText, LayoutRoot = this.AnimationContext 
-                        };
-                }
-            }
-
-            return null;
-        }
-
+		
         /// <summary>
         /// Resumes the animation.
         /// </summary>
         public void ResumeAnimation()
         {
-            this.isActive = true;
+            isActive = true;
         }
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        /// Animationses the complete.
-        /// </summary>
-        /// <param name="animationType">
-        /// Type of the animation.
-        /// </param>
         protected virtual void AnimationsComplete(AnimationType animationType)
         {
+
         }
 
         /// <summary>
@@ -288,40 +221,36 @@ namespace MyToolkit.Animation.Transitions
                 return;
             }
 
-            if (!this.CanAnimate())
+            if (!CanAnimate())
             {
                 return;
             }
 
-            if (this.isAnimating)
+            if (isAnimating)
             {
                 e.Cancel = true;
                 return;
             }
 
-            if (this.loadingAndAnimatingIn)
+            if (loadingAndAnimatingIn)
             {
                 e.Cancel = true;
                 return;
             }
 
-            if (!this.NavigationService.CanGoBack)
-            {
+            if (!NavigationService.CanGoBack)
+				return;
+            if (IsPopupOpen())
                 return;
-            }
-
-            if (this.IsPopupOpen())
-            {
-                return;
-            }
 
             isNavigating = true;
             e.Cancel = true;
-            this.needsOutroAnimation = false;
-            this.currentAnimationType = AnimationType.NavigateBackwardOut;
-            this.currentNavigationMode = NavigationMode.Back;
+            
+			needsOutroAnimation = false;
+            currentAnimationType = AnimationType.NavigateBackwardOut;
+            currentNavigationMode = NavigationMode.Back;
 
-            this.RunAnimation();
+            RunAnimation();
         }
 
         /// <summary>
@@ -346,23 +275,17 @@ namespace MyToolkit.Animation.Transitions
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
-            this.currentNavigationMode = null;
-            {
-                if (this.nextUri != ExternalUri)
-                {
-                    this.loadingAndAnimatingIn = true;
-
-                    this.Loaded += this.AnimatedBasePageLoaded;
-
-                    if (this.AnimationContext != null)
-                    {
-                        this.AnimationContext.Opacity = 0;
-                    }
-                }
-            }
-
-            this.needsOutroAnimation = true;
+			currentNavigationMode = null;
+			
+			if (nextUri != ExternalUri)
+			{
+				loadingAndAnimatingIn = true;
+				Loaded += AnimatedBasePageLoaded;
+				if (AnimationContext != null)
+					AnimationContext.Opacity = 0;
+			}
+            
+			needsOutroAnimation = true;
         }
 
         /// <summary>
@@ -516,38 +439,34 @@ namespace MyToolkit.Animation.Transitions
         /// </summary>
         private void OnTransitionAnimationCompleted()
         {
-            this.isAnimating = false;
-            this.loadingAndAnimatingIn = false;
-
-            try
+            isAnimating = false;
+            loadingAndAnimatingIn = false;
+			try
             {
-                this.Dispatcher.BeginInvoke(
-                    () =>
-                        {
-                            switch (this.currentNavigationMode)
-                            {
-                                case NavigationMode.Forward:
-		                            PhonePage.CurrentPage.NavigationService.GoForward();
-                                    break;
+                Dispatcher.BeginInvoke(() =>
+                {
+                    switch (currentNavigationMode)
+                    {
+                        case NavigationMode.Forward:
+		                    PhonePage.CurrentPage.NavigationService.GoForward();
+                            break;
 
-                                case NavigationMode.Back:
-		                            PhonePage.CurrentPage.NavigationService.GoBack();
-                                    break;
+                        case NavigationMode.Back:
+		                    PhonePage.CurrentPage.NavigationService.GoBack();
+                            break;
 
-                                case NavigationMode.New:
-		                            PhonePage.CurrentPage.NavigationService.Navigate(nextUri);
-                                    break;
-                            }
-
-                            isNavigating = false;
-                        });
+                        case NavigationMode.New:
+		                    PhonePage.CurrentPage.NavigationService.Navigate(nextUri);
+                            break;
+                    }
+					isNavigating = false;
+                });
             }
             catch (Exception ex)
             {
                 Debug.WriteLine("OnTransitionAnimationCompleted Exception on {0}: {1}", this, ex);
             }
-
-            this.AnimationsComplete(this.currentAnimationType);
+			AnimationsComplete(currentAnimationType);
         }
 
         /// <summary>
@@ -555,36 +474,35 @@ namespace MyToolkit.Animation.Transitions
         /// </summary>
         private void RunAnimation()
         {
-            this.isAnimating = true;
+            isAnimating = true;
+			AnimatorHelperBase animation = null;
 
-            AnimatorHelperBase animation = null;
-
-            switch (this.currentAnimationType)
+            switch (currentAnimationType)
             {
                 case AnimationType.NavigateForwardIn:
-                    animation = this.GetAnimation(this.currentAnimationType, fromUri);
+                    animation = GetAnimation(currentAnimationType, fromUri);
                     break;
                 case AnimationType.NavigateBackwardOut:
-                    animation = this.GetAnimation(this.currentAnimationType, this.arrivedFromUri);
+                    animation = GetAnimation(currentAnimationType, arrivedFromUri);
                     break;
                 default:
-                    animation = this.GetAnimation(this.currentAnimationType, this.nextUri);
+                    animation = GetAnimation(currentAnimationType, nextUri);
                     break;
             }
 
-            this.Dispatcher.BeginInvoke(() =>
-            {
-                if (animation == null)
-                {
-                    this.AnimationContext.Opacity = 1;
-                    this.OnTransitionAnimationCompleted();
-                }
-                else
-                {
-                    this.AnimationContext.Opacity = 1;
-                    animation.Begin(this.OnTransitionAnimationCompleted);
-                }
-            });
+			if (animation == null)
+			{
+				AnimationContext.Opacity = 1;
+				OnTransitionAnimationCompleted();
+			}
+			else
+			{
+				Dispatcher.BeginInvoke(() =>
+				{
+					AnimationContext.Opacity = 1;
+					animation.Begin(OnTransitionAnimationCompleted);
+				});
+			}
         }
 
         #endregion
