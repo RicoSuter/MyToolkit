@@ -76,6 +76,11 @@ namespace MyToolkit.Paging
 				Frame.GoForwardAsync();
         }
 
+		protected virtual void OnKeyActivated(AcceleratorKeyEventArgs args)
+		{
+
+		}
+
 		protected virtual void OnKeyUp(AcceleratorKeyEventArgs args)
 		{
 			
@@ -83,6 +88,7 @@ namespace MyToolkit.Paging
 
         private void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs args)
         {
+	        OnKeyActivated(args);
 			if (args.KeyStatus.IsKeyReleased)
 				OnKeyUp(args);
 
