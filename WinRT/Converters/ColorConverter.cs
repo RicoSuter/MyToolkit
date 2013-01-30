@@ -15,13 +15,6 @@ namespace MyToolkit.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
-			if (targetType == typeof(Brush) && value is Brush)
-				return value;
-			if (targetType == typeof(Color) && value is Color)
-				return value;
-			if (targetType == typeof(string) && value is String)
-				return value; 
-
 			Color color;
 			if (value is Color)
 				color = (Color)value;
@@ -29,6 +22,13 @@ namespace MyToolkit.Converters
 				color = ColorUtility.FromString((string)value);
 			else if (value is SolidColorBrush)
 				color = ((SolidColorBrush) value).Color;
+
+			if (parameter != null)
+			{
+				var parameters = parameter.ToString().GetConverterParameters();
+				if (parameters.ContainsKey("alpha"))
+					color = ColorUtility.ChangeAlpha(color, parameters["alpha"]);
+			}
 
 			if (targetType == typeof(Brush))
 				return new SolidColorBrush(color);
@@ -38,7 +38,7 @@ namespace MyToolkit.Converters
 				return ColorUtility.ToHex(color, true);
 			return null; 
 		}
-
+		
 		public object ConvertBack(object value, Type targetType, object parameter, string language)
 		{
 			throw new NotImplementedException();
