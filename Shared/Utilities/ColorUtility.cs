@@ -42,6 +42,17 @@ namespace MyToolkit.Utilities
 				(byte)(foreground.B * alpha + background.B * diff));
 		}
 
+		public static Color ChangeAlpha(Color color, byte alpha)
+		{
+			return Color.FromArgb(alpha, color.R, color.G, color.B);
+		}
+
+		public static Color ChangeAlpha(Color color, string alpha)
+		{
+			var value = UInt32.Parse(alpha, NumberStyles.HexNumber);
+			return ChangeAlpha(color, (byte)(value & 0xff));
+		}
+
 		public static string ToHex(Color color, bool includeAlpha = false)
 		{
 			if (includeAlpha)

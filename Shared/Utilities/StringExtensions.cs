@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net;
 using System.Text;
@@ -8,6 +9,20 @@ namespace MyToolkit.Utilities
 {
 	public static class StringExtensions
 	{
+		public static Dictionary<string, string> GetConverterParameters(this string text)
+		{
+			var output = new Dictionary<string, string>();
+			foreach (var item in text.Split(','))
+			{
+				var arr = item.Split(':');
+				if (arr.Length == 2)
+					output[arr[0].ToLower()] = arr[1];
+				else
+					output[arr[0].ToLower()] = ""; 
+			}
+			return output; 
+		}
+
 		public static string RemoveHtmlTags(this string text)
 		{
 			return Regex.Replace(text, "<[^>]*>", string.Empty);
