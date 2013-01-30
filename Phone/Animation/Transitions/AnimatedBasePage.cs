@@ -72,7 +72,7 @@ namespace MyToolkit.Animation.Transitions
 	        isNavigating = false; 
 			currentNavigationMode = null;
 
-			if (nextUri != ExternalUri && TransitionAnimationsEnabled && (ForwardInAnimationOnFirstPageEnabled || !isForwardNavigation || NavigationService.CanGoBack))
+			if (TransitionAnimationsEnabled && (ForwardInAnimationOnFirstPageEnabled || !isForwardNavigation || NavigationService.CanGoBack))
 			{
 				Loaded += OnPageLoaded;
 				if (AnimationContext != null)
@@ -110,11 +110,11 @@ namespace MyToolkit.Animation.Transitions
         {
             base.OnNavigatingFrom(e);
 
-			if (!isNavigating)
+			if (!isNavigating && e.Uri != ExternalUri)
 			{
-				isNavigating = true; 
-				e.Cancel = true;
+				isNavigating = true;
 				nextUri = e.Uri;
+				e.Cancel = true;
 
 				switch (e.NavigationMode)
 				{
@@ -132,8 +132,7 @@ namespace MyToolkit.Animation.Transitions
 				}
 
 				currentNavigationMode = e.NavigationMode;
-				if (e.Uri != ExternalUri)
-					RunAnimation();
+				RunAnimation();
 			}
         }
 
@@ -175,30 +174,25 @@ namespace MyToolkit.Animation.Transitions
 
 		private void OnTransitionAnimationCompleted()
 		{
-			try
+			Dispatcher.BeginInvoke(() =>
 			{
-				Dispatcher.BeginInvoke(() =>
+				switch (currentNavigationMode)
 				{
-					switch (currentNavigationMode)
-					{
-						case NavigationMode.Forward:
+					case NavigationMode.Forward:
+						if (PhonePage.CurrentPage.NavigationService.CanGoForward)
 							PhonePage.CurrentPage.NavigationService.GoForward();
-							break;
+						break;
 
-						case NavigationMode.Back:
+					case NavigationMode.Back:
+						if (PhonePage.CurrentPage.NavigationService.CanGoBack)
 							PhonePage.CurrentPage.NavigationService.GoBack();
-							break;
+						break;
 
-						case NavigationMode.New:
-							PhonePage.CurrentPage.NavigationService.Navigate(nextUri);
-							break;
-					}
-				});
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine("OnTransitionAnimationCompleted Exception on {0}: {1}", this, ex);
-			}
+					case NavigationMode.New:
+						PhonePage.CurrentPage.NavigationService.Navigate(nextUri);
+						break;
+				}
+			});
 			AnimationsComplete(currentAnimationType);
 		}
     }
