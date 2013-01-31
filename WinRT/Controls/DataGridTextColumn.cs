@@ -7,65 +7,10 @@ using System.Threading.Tasks;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 
 namespace MyToolkit.Controls
 {
-	public class DataGridTemplatedCell : DataGridCell
-	{
-		public bool OnlyVisibleOnSelection { get; set; }
-
-		public DataGridTemplatedCell(FrameworkElement control, bool onlyVisibleOnSelection)
-			: base(control) 
-		{
-			OnlyVisibleOnSelection = onlyVisibleOnSelection; 
-		}
-
-		public override void OnSelectedChanged(bool isSelected)
-		{
-			if (OnlyVisibleOnSelection)
-				Control.Visibility = isSelected ? Visibility.Visible : Visibility.Collapsed; 
-		}
-	}
-
-	public class DataGridTemplatedColumn : DataGridColumn
-	{
-		private DataTemplate cellTemplate;
-		public DataTemplate CellTemplate
-		{
-			get { return cellTemplate; }
-			set { cellTemplate = value; }
-		}
-
-		private Binding order;
-		public Binding Order
-		{
-			get { return order; }
-			set { order = value; }
-		}
-
-		public override PropertyPath OrderPropertyPath
-		{
-			get { return order.Path; }
-		}
-
-		public bool OnlyVisibleOnSelection { get; set; }
-
-		public override DataGridCell GenerateElement(object dataItem)
-		{
-			var control = new ContentControl();
-			control.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-			control.VerticalContentAlignment = VerticalAlignment.Stretch;
-			control.Content = dataItem;
-			control.ContentTemplate = cellTemplate;
-
-			if (OnlyVisibleOnSelection)
-				control.Visibility = IsSelected ? Visibility.Visible : Visibility.Collapsed; 
-			return new DataGridTemplatedCell(control, OnlyVisibleOnSelection);
-		}
-	}
-
 	public class DataGridTextColumn : DataGridBoundColumn
 	{
 		private double? fontSize;

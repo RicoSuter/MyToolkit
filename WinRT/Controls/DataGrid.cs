@@ -67,7 +67,11 @@ namespace MyToolkit.Controls
 				((DataGridRow)newItem.Content).IsSelected = true;
 
 			if (SelectedItem != listControl.SelectedItem)
-				SelectedItem = listControl.SelectedItem; 
+				SelectedItem = listControl.SelectedItem;
+
+			var copy = SelectionChanged;
+			if (copy != null)
+				copy(sender, e);
 		}
 
 		public object SelectedItem
@@ -88,6 +92,7 @@ namespace MyToolkit.Controls
 			item.VerticalContentAlignment = VerticalAlignment.Stretch;
 		}
 
+		public event SelectionChangedEventHandler SelectionChanged;
 		public event EventHandler<NavigationListEventArgs> Navigate;
 
 		private void OnNavigate(object sender, NavigationListEventArgs e)
