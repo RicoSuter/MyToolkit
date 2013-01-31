@@ -7,8 +7,13 @@ namespace MyToolkit.Mathematics
 	{
 		public static Point Normalize(this Point vector)
 		{
-			var length = Math.Sqrt(vector.X * vector.X + vector.Y * vector.Y);
-			return new Point(vector.X / length, vector.Y / length);
+			return Normalize(vector.X, vector.Y);
+		}
+
+		public static Point Normalize(double x, double y)
+		{
+			var length = Math.Sqrt(x * x + y * y);
+			return new Point(x / length, y / length);
 		}
 
 		public static double Length(this Point vector)
