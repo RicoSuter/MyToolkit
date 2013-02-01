@@ -31,7 +31,7 @@ namespace MyToolkit.Recognition.WinRT.Feedforward.Training.Annealing
 
         override public void PutArray(double[] array)
         {
-            FeedforwardNetwork.ArrayToNetwork(array, this.Network);
+            FeedforwardNetwork.ArrayToNetwork(array, Network);
         }
 
         override public void Randomize()
@@ -42,7 +42,7 @@ namespace MyToolkit.Recognition.WinRT.Feedforward.Training.Annealing
             for (var i = 0; i < array.Length; i++)
             {
                 var add = 0.5 - (rand.NextDouble());
-                add /= StartTemperature;
+                add = add / StartTemperature;
                 add = add * Temperature;
                 array[i] = array[i] + add;
             }

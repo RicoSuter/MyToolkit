@@ -109,7 +109,7 @@
     <Compile Include="Activation\ActivationFunction.cs" />
     <Compile Include="Activation\ActivationLinear.cs" />
     <Compile Include="Activation\ActivationSigmoid.cs" />
-    <Compile Include="Activation\ActivationTAN2H.cs" />
+    <Compile Include="Activation\ActivationTanh.cs" />
     <Compile Include="Feedforward\FeedforwardLayer.cs" />
     <Compile Include="Feedforward\FeedforwardNetwork.cs" />
     <Compile Include="Feedforward\Training\Annealing\NeuralSimulatedAnnealing.cs" />
@@ -124,10 +124,11 @@
     <Compile Include="Learning\Genetic\Chromosome.cs" />
     <Compile Include="Learning\Genetic\GeneticAlgorithm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SOM\LearningMethod.cs" />
     <Compile Include="SOM\NormalizationType.cs" />
     <Compile Include="SOM\NormalizeInput.cs" />
     <Compile Include="SOM\SelfOrganizingMap.cs" />
-    <Compile Include="SOM\TrainSelfOrganizingMap.cs" />
+    <Compile Include="SOM\SelfOrganizingMapTrainer.cs" />
     <Compile Include="Utilities\BoundNumbers.cs" />
     <Compile Include="Utilities\ErrorCalculation.cs" />
   </ItemGroup>

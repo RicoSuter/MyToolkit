@@ -4,20 +4,14 @@ using MyToolkit.Mathematics;
 
 namespace MyToolkit.Recognition.WinRT.SOM
 {
-	public class TrainSelfOrganizingMap
+	public class SelfOrganizingMapTrainer
     {
-		public enum LearningMethods
-		{
-			Additive,
-			Subtractive
-		}
-
 		public double MinValue = Math.Pow(10, -30);
 
 		public double ReductionFactor { get; set; }
 		public double BestError { get; private set; }
 	    public double TotalError { get; protected set; }
-		public LearningMethods LearningMethod { get; private set; }
+		public LearningMethod LearningMethod { get; private set; }
 		public double LearningRate { get; private set; }
 
 		public SelfOrganizingMap Network { get; private set; }
@@ -33,7 +27,7 @@ namespace MyToolkit.Recognition.WinRT.SOM
 		private readonly Matrix workMatrix;
         private readonly Matrix correctionMatrix;
 
-		public TrainSelfOrganizingMap(SelfOrganizingMap network, double[][] trainingSet, LearningMethods learningMethod, double learningRate)
+		public SelfOrganizingMapTrainer(SelfOrganizingMap network, double[][] trainingSet, LearningMethod learningMethod, double learningRate)
         {
 	        ReductionFactor = 0.99;
 			TotalError = 1.0;
@@ -59,7 +53,7 @@ namespace MyToolkit.Recognition.WinRT.SOM
             neuronWinCounts = new int[outputNeuronCount];
             correctionMatrix = new Matrix(outputNeuronCount, inputNeuronCount + 1);
 
-            workMatrix = LearningMethod == LearningMethods.Additive ? new Matrix(1, inputNeuronCount + 1) : null;
+            workMatrix = LearningMethod == LearningMethod.Additive ? new Matrix(1, inputNeuronCount + 1) : null;
 
             Initialize();
             BestError = Double.MaxValue;
@@ -73,7 +67,7 @@ namespace MyToolkit.Recognition.WinRT.SOM
                     continue;
 
                 var f = 1.0 / neuronWinCounts[i];
-                if (LearningMethod == LearningMethods.Subtractive)
+                if (LearningMethod == LearningMethod.Subtractive)
                     f *= LearningRate;
 
                 for (var j = 0; j <= inputNeuronCount; j++)
@@ -107,24 +101,24 @@ namespace MyToolkit.Recognition.WinRT.SOM
                 {
                     diff = TrainingSet[tset][i] * input.NormalizationFactor - bestRow[0, i];
                     length += diff * diff;
-                    if (LearningMethod == LearningMethods.Subtractive)
+                    if (LearningMethod == LearningMethod.Subtractive)
                         correctionMatrix.Add(best, i, diff);
                     else
                         workMatrix[0, i] = LearningRate * TrainingSet[tset][i] * input.NormalizationFactor + bestRow[0, i];
                 }
 
-                diff = input.SyntheticInput - bestRow[0, this.inputNeuronCount];
+                diff = input.SyntheticInput - bestRow[0, inputNeuronCount];
                 length += diff * diff;
 
-				if (LearningMethod == LearningMethods.Subtractive)
-					correctionMatrix.Add(best, this.inputNeuronCount, diff);
+				if (LearningMethod == LearningMethod.Subtractive)
+					correctionMatrix.Add(best, inputNeuronCount, diff);
                 else
                     workMatrix[0, inputNeuronCount] =  LearningRate * input.SyntheticInput + bestRow[0, inputNeuronCount];
 
                 if (length > globalError)
                     globalError = length;
 
-				if (LearningMethod == LearningMethods.Additive)
+				if (LearningMethod == LearningMethod.Additive)
                 {
                     NormalizeRowWeight(workMatrix, 0);
                     for (var i = 0; i <= inputNeuronCount; i++)
@@ -136,14 +130,12 @@ namespace MyToolkit.Recognition.WinRT.SOM
 
         protected void ForceWin()
         {
-	        int best;
-			int which = 0;
-
-            var outputWeights = Network.OutputWeights;
+	        int which = 0;
+			var outputWeights = Network.OutputWeights;
 			var dist = Double.MaxValue;
             for (var tset = 0; tset < TrainingSet.Length; tset++)
             {
-                best = Network.GetWinner(TrainingSet[tset]);
+                var best = Network.GetWinner(TrainingSet[tset]);
                 
 				var output = Network.Output;
                 if (output[best] < dist)
@@ -154,7 +146,7 @@ namespace MyToolkit.Recognition.WinRT.SOM
             }
 
             var input = new NormalizeInput(TrainingSet[which], Network.NormalizationType);
-			best = Network.GetWinner(input);
+			Network.GetWinner(input);
             var output2 = Network.Output;
 
             dist = Double.MinValue;
