@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -76,7 +77,7 @@ namespace MyToolkit.Utilities
 				language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 
 			var lines = input.Split(';');
-			foreach (var line in lines)
+			foreach (var line in lines.Select(l => l.Trim(' ')))
 			{
 				if (line.StartsWith(language + ":"))
 					return line.Substring(3).Trim(' ');
