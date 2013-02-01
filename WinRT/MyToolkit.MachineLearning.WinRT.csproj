@@ -109,7 +109,7 @@
     <Compile Include="Activation\ActivationFunction.cs" />
     <Compile Include="Activation\ActivationLinear.cs" />
     <Compile Include="Activation\ActivationSigmoid.cs" />
-    <Compile Include="Activation\ActivationTANH.cs" />
+    <Compile Include="Activation\ActivationTAN2H.cs" />
     <Compile Include="Feedforward\FeedforwardLayer.cs" />
     <Compile Include="Feedforward\FeedforwardNetwork.cs" />
     <Compile Include="Feedforward\Training\Annealing\NeuralSimulatedAnnealing.cs" />
