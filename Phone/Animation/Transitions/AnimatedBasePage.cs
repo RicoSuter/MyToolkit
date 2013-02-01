@@ -72,14 +72,21 @@ namespace MyToolkit.Animation.Transitions
 	        isNavigating = false; 
 			currentNavigationMode = null;
 
-			if (TransitionAnimationsEnabled && (ForwardInAnimationOnFirstPageEnabled || !isForwardNavigation || NavigationService.CanGoBack))
+	        var isFirstForwardIn = e.NavigationMode == NavigationMode.New && !NavigationService.CanGoBack;
+			if ((e.IsNavigationInitiator || isFirstForwardIn) && // <- show transition only if not navigating from other app except if first launch
+				TransitionAnimationsEnabled && (ForwardInAnimationOnFirstPageEnabled || !isFirstForwardIn))
 			{
 				Loaded += OnPageLoaded;
 				if (AnimationContext != null)
 					AnimationContext.Opacity = 0;
 			}
-			else if (isForwardNavigation)
-				isForwardNavigation = false;
+			else
+			{
+				if (AnimationContext != null)
+					AnimationContext.Opacity = 1;
+				if (isForwardNavigation)
+					isForwardNavigation = false;
+			} 
 		
 			base.OnNavigatedTo(e);
 		}
