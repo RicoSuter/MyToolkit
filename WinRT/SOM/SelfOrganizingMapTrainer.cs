@@ -2,7 +2,7 @@
 using System.Linq;
 using MyToolkit.Mathematics;
 
-namespace MyToolkit.Recognition.WinRT.SOM
+namespace MyToolkit.MachineLearning.WinRT.SOM
 {
 	public class SelfOrganizingMapTrainer
     {

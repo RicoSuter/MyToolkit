@@ -2,7 +2,7 @@
 using System.Xml.Serialization;
 using MyToolkit.Mathematics;
 
-namespace MyToolkit.Recognition.WinRT.SOM
+namespace MyToolkit.MachineLearning.WinRT.SOM
 {
     public class SelfOrganizingMap
     {
@@ -27,12 +27,12 @@ namespace MyToolkit.Recognition.WinRT.SOM
 			NormalizationType = normalizationType;
         }
 
-        public int GetWinner(double[] input)
+		public int GetWinner(double[] input)
         {
             return GetWinner(new NormalizeInput(input, NormalizationType));
         }
 
-        public int GetWinner(NormalizeInput input)
+		public int GetWinner(NormalizeInput input)
         {
             var winner = 0;
 			if (Output == null)
@@ -55,7 +55,7 @@ namespace MyToolkit.Recognition.WinRT.SOM
 				if (Output[i] > 1)
 					Output[i] = 1;
             }
-            return winner;
+			return winner;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using MyToolkit.Mathematics;
 
-namespace MyToolkit.Recognition.WinRT.SOM
+namespace MyToolkit.MachineLearning.WinRT.SOM
 {
 	public class NormalizeInput
     {

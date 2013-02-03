@@ -1,4 +1,4 @@
-namespace MyToolkit.Recognition.WinRT.SOM
+namespace MyToolkit.MachineLearning.WinRT.SOM
 {
 	public enum NormalizationType
 	{

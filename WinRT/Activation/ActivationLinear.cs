@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyToolkit.Recognition.WinRT.Activation
+namespace MyToolkit.MachineLearning.WinRT.Activation
 {
     public class ActivationLinear : ActivationFunction
     {

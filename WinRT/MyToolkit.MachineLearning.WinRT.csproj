@@ -9,8 +9,8 @@
     <ProjectGuid>{813FC109-BB5B-4A5A-941B-A873CBE805D1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyToolkit.Recognition.WinRT</RootNamespace>
-    <AssemblyName>MyToolkit.Recognition.WinRT</AssemblyName>
+    <RootNamespace>MyToolkit.MachineLearning.WinRT</RootNamespace>
+    <AssemblyName>MyToolkit.MachineLearning.WinRT</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

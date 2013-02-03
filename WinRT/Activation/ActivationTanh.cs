@@ -1,7 +1,7 @@
 ﻿using System;
-using MyToolkit.Recognition.WinRT.Utilities;
+using MyToolkit.MachineLearning.WinRT.Utilities;
 
-namespace MyToolkit.Recognition.WinRT.Activation
+namespace MyToolkit.MachineLearning.WinRT.Activation
 {
     public class ActivationTanh : ActivationFunction
     {

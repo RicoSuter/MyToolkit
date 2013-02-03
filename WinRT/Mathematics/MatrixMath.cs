@@ -74,19 +74,30 @@ namespace MyToolkit.Mathematics
 
         public static double DotProduct(Matrix a, Matrix b)
         {
-            if (!a.IsVector || !b.IsVector)
+			if (!a.IsVector || !b.IsVector)
 				throw new ArgumentException("two vectors expected");
 
-	        var length = a.Data.GetLength(0);
-			if ((length != a.Data.GetLength(1) && a.Data.GetLength(1) != 1) || (b.Data.GetLength(0) != a.Data.GetLength(1) && a.Data.GetLength(0) != 1))
-				throw new ArgumentException();
+			//var length = a.Data.GetLength(0);
+			//if ((length != a.Data.GetLength(1) && a.Data.GetLength(1) != 1) || (b.Data.GetLength(0) != a.Data.GetLength(1) && a.Data.GetLength(0) != 1))
+			//	throw new ArgumentException();
 	
-			if (length != b.Data.GetLength(1))
+			//if (length != b.Data.GetLength(1))
+			//	throw new ArgumentException("vectors don't have same length");
+
+			//var result = 0.0;
+			//for (var i = 0; i < length; i++)
+			//	result += a.Data[i, 0] * b.Data[0, i];
+			//return result;
+
+			var aArray = a.ToPackedArray();
+			var bArray = b.ToPackedArray();
+
+			if (aArray.Length != bArray.Length)
 				throw new ArgumentException("vectors don't have same length");
 
-            var result = 0.0;
-            for (var i = 0; i < length; i++)
-				result += a.Data[i, 0] * b.Data[0, i];
+			var result = 0.0;
+			for (var i = 0; i < aArray.Length; i++)
+				result += aArray[i] * bArray[i];
 			return result;
         }
 

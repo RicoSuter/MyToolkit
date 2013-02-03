@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyToolkit.Recognition.WinRT.Utilities
+namespace MyToolkit.MachineLearning.WinRT.Utilities
 {
     class BoundNumbers
     {

@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace MyToolkit.Recognition.WinRT.Activation
+namespace MyToolkit.MachineLearning.WinRT.Activation
 {
 	[XmlInclude(typeof(ActivationLinear))]
 	[XmlInclude(typeof(ActivationSigmoid))]

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MyToolkit.Recognition.WinRT.Learning.Genetic
+namespace MyToolkit.MachineLearning.WinRT.Learning.Genetic
 {
 	public abstract class Chromosome<T> : IComparable<Chromosome<T>>
 	{

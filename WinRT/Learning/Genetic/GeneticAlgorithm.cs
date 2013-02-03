@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MyToolkit.Recognition.WinRT.Learning.Genetic
+namespace MyToolkit.MachineLearning.WinRT.Learning.Genetic
 {
     public abstract class GeneticAlgorithm<T>
     {

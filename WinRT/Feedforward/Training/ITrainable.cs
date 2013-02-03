@@ -1,4 +1,4 @@
-﻿namespace MyToolkit.Recognition.WinRT.Feedforward.Training
+﻿namespace MyToolkit.MachineLearning.WinRT.Feedforward.Training
 {
     public interface ITrainable
     {
