@@ -1,7 +1,7 @@
 ﻿using System;
-using MyToolkit.Recognition.WinRT.Learning.Annealing;
+using MyToolkit.MachineLearning.WinRT.Learning.Annealing;
 
-namespace MyToolkit.Recognition.WinRT.Feedforward.Training.Annealing
+namespace MyToolkit.MachineLearning.WinRT.Feedforward.Training.Annealing
 {
     public class NeuralSimulatedAnnealing : SimulatedAnnealingBase<double>, ITrainable
     {

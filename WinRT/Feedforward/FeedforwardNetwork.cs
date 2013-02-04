@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
-using MyToolkit.Recognition.WinRT.Utilities;
+using MyToolkit.MachineLearning.WinRT.Utilities;
 
-namespace MyToolkit.Recognition.WinRT.Feedforward
+namespace MyToolkit.MachineLearning.WinRT.Feedforward
 {
     public class FeedforwardNetwork
     {

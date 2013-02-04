@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyToolkit.Recognition.WinRT.Learning.Annealing
+namespace MyToolkit.MachineLearning.WinRT.Learning.Annealing
 {
     abstract public class SimulatedAnnealingBase<T>
     {

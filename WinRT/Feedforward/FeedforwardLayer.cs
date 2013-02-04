@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Xml.Serialization;
+using MyToolkit.MachineLearning.WinRT.Activation;
 using MyToolkit.Mathematics;
-using MyToolkit.Recognition.WinRT.Activation;
 
-namespace MyToolkit.Recognition.WinRT.Feedforward
+namespace MyToolkit.MachineLearning.WinRT.Feedforward
 {
 	public class FeedforwardLayer
 	{

@@ -1,4 +1,4 @@
-﻿namespace MyToolkit.Recognition.WinRT.Feedforward.Training.Genetic
+﻿namespace MyToolkit.MachineLearning.WinRT.Feedforward.Training.Genetic
 {
     class TrainingSetNeuralChromosome : NeuralChromosome
     {

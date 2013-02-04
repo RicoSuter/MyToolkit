@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MyToolkit.Recognition.WinRT.Feedforward.Training.Backpropagation
+namespace MyToolkit.MachineLearning.WinRT.Feedforward.Training.Backpropagation
 {
     public class Backpropagation : ITrainable
     {

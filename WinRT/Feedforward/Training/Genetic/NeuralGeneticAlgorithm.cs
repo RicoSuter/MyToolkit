@@ -1,6 +1,6 @@
-﻿using MyToolkit.Recognition.WinRT.Learning.Genetic;
+﻿using MyToolkit.MachineLearning.WinRT.Learning.Genetic;
 
-namespace MyToolkit.Recognition.WinRT.Feedforward.Training.Genetic
+namespace MyToolkit.MachineLearning.WinRT.Feedforward.Training.Genetic
 {
     public class NeuralGeneticAlgorithm : GeneticAlgorithm<double>, ITrainable
     {

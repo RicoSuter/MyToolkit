@@ -1,7 +1,7 @@
-﻿using MyToolkit.Mathematics;
-using MyToolkit.Recognition.WinRT.Utilities;
+﻿using MyToolkit.MachineLearning.WinRT.Utilities;
+using MyToolkit.Mathematics;
 
-namespace MyToolkit.Recognition.WinRT.Feedforward.Training.Backpropagation
+namespace MyToolkit.MachineLearning.WinRT.Feedforward.Training.Backpropagation
 {
     public class BackpropagationLayer
     {
