@@ -22,5 +22,18 @@ namespace MyToolkit.Mathematics
 			rect1.Intersect(rect2);
 			return !rect1.IsEmpty;
 		}
+
+		public static bool Intersects(this Rect r, Point[] polyline)
+		{
+			for (var i = 1; i < polyline.Length; i++)
+			{
+				var pt1 = polyline[i];
+				var pt2 = polyline[i - 1];
+
+				if (VectorMath.Intersects(pt1, pt2, r))
+					return true;
+			}
+			return false;
+		}
 	}
 }

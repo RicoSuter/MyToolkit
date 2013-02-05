@@ -73,6 +73,9 @@ namespace MyToolkit.Utilities
 
 		public static string ExtractLocalizedString(this string input, string language = null)
 		{
+			if (input == null)
+				return null; 
+
 			if (language == null)
 				language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 

@@ -39,28 +39,21 @@ namespace MyToolkit.Mathematics
 			);
 		}
 
-		public static bool Instersects(this Rect rect1, Rect rect2)
-		{
-			// TODO [low] write unit test => implement faster
-			rect1.Intersect(rect2);
-			return !rect1.IsEmpty;
-		}
-
 		public static Point? Intersects(Point a1, Point a2, Point b1, Point b2)
 		{
 			var b = new Point(a2.X - a1.X, a2.Y - a1.Y);
 			var d = new Point(b2.X - b1.X, b2.Y - b1.Y);
-			var bDotDPerp = b.X * d.Y - b.Y * d.X;
+			var det = b.X * d.Y - b.Y * d.X;
 
-			if (System.Math.Abs(bDotDPerp - 0) < 0.05)
+			if (Math.Abs(det - 0) < 0.001) // lines are parallel
 				return null;
 
 			var c = new Point(b1.X - a1.X, b1.Y - a1.Y);
-			var t = (c.X * d.Y - c.Y * d.X) / bDotDPerp;
+			var t = (c.X * d.Y - c.Y * d.X) / det;
 			if (t < 0 || t > 1)
 				return null;
 
-			var u = (c.X * b.Y - c.Y * b.X) / bDotDPerp;
+			var u = (c.X * b.Y - c.Y * b.X) / det;
 			if (u < 0 || u > 1)
 				return null;
 
@@ -75,19 +68,6 @@ namespace MyToolkit.Mathematics
 				var pt2 = polyline[i - 1];
 
 				if (Intersects(a1, a2, pt1, pt2).HasValue)
-					return true;
-			}
-			return false;
-		}
-
-		public static bool Intersects(Rect r, Point[] polyline)
-		{
-			for (var i = 1; i < polyline.Length; i++)
-			{
-				var pt1 = polyline[i];
-				var pt2 = polyline[i - 1];
-
-				if (Intersects(pt1, pt2, r))
 					return true;
 			}
 			return false;
