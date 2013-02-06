@@ -42,6 +42,8 @@ namespace MyToolkit.Utilities
 
 		public static bool CanSerialize(Type type)
 		{
+			if (type == typeof(String))
+				return true; 
 			var typeInfo = type.GetTypeInfo(); 
 			if (typeInfo.IsClass)
 				return typeInfo.GetCustomAttribute<DataContractAttribute>() != null;

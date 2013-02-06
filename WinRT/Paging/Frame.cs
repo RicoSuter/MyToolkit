@@ -185,7 +185,7 @@ namespace MyToolkit.Paging
 
 		public void SetNavigationState(string s)
 		{
-			var tuple = DataContractSerialization.Deserialize<Tuple<int, List<PageDescription>>>(s);
+			var tuple = DataContractSerialization.Deserialize<Tuple<int, List<PageDescription>>>(s, SuspensionManager.KnownTypes.ToArray());
 			pages = new List<PageDescription>(tuple.Item2);
 			currentIndex = tuple.Item1;
 
@@ -198,8 +198,19 @@ namespace MyToolkit.Paging
 			CallOnNavigatingFrom(Current, NavigationMode.Forward);
 			CallOnNavigatedFrom(Current, NavigationMode.Forward);
 
+			// remove pages which do not support tombstoning
+			var pagesToSerialize = pages;
+			var currentIndexToSerialize = currentIndex; 
+			var firstPageToRemove = pages.FirstOrDefault(p => !p.GetPage(this).CanSuspend);
+			if (firstPageToRemove != null)
+			{
+				var index = pagesToSerialize.IndexOf(firstPageToRemove);
+				pagesToSerialize = pages.Take(index).ToList();
+				currentIndexToSerialize = index - 1; 
+			}
+
 			var output = DataContractSerialization.Serialize(
-				new Tuple<int, List<PageDescription>>(currentIndex, pages), true);
+				new Tuple<int, List<PageDescription>>(currentIndexToSerialize, pagesToSerialize), true, SuspensionManager.KnownTypes.ToArray());
 			return output; 
 		}
 

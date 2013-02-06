@@ -12,10 +12,12 @@ namespace MyToolkit.Paging
 	public class Page : Control
 	{
 		public Frame Frame { get; internal set; }
+		public bool CanSuspend { get; set; }
 
 		public Page()
 		{
 			DefaultStyleKey = typeof(Page);
+			CanSuspend = true; 
 		}
 
 		public Windows.UI.Xaml.Controls.Page InternalPage { get; private set; }

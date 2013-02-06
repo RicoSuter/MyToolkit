@@ -1,4 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
+using MyToolkit.Collections;
+using MyToolkit.MVVM;
+using MyToolkit.Utilities;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -28,17 +35,6 @@ namespace MyToolkit.Controls
 			list = (ExtendedListBox)GetTemplateChild("List");
 			content = (ContentControl)GetTemplateChild("Content");
 
-			//if (ImmediatelyLoadPivotItems)
-			//{
-			//	foreach (var i in Items)
-			//	{
-			//		i.Content.Measure(new Size());
-			//		i.Content.InvalidateMeasure();
-			//		i.Content.InvalidateArrange();
-			//		i.Content.UpdateLayout();
-			//	}
-			//}
-
 			list.ItemsSource = Items;
 			list.SelectionChanged += OnSelectionChanged;
 			if (initialItem != null)
@@ -64,7 +60,6 @@ namespace MyToolkit.Controls
 
 		private readonly ObservableCollection<PivotItem> items = new ObservableCollection<PivotItem>();
 		public ObservableCollection<PivotItem> Items { get { return items; } }
-
 
 		public static readonly DependencyProperty HeaderTemplateProperty =
 			DependencyProperty.Register("HeaderTemplate", typeof (DataTemplate), typeof (Pivot), new PropertyMetadata(default(DataTemplate)));
@@ -107,15 +102,6 @@ namespace MyToolkit.Controls
 		{
 			get { return (int) GetValue(SelectedIndexProperty); }
 			set { SetValue(SelectedIndexProperty, value); }
-		}
-
-		public static readonly DependencyProperty ImmediatelyLoadPivotItemsProperty =
-			DependencyProperty.Register("ImmediatelyLoadPivotItems", typeof (bool), typeof (Pivot), new PropertyMetadata(default(bool)));
-
-		public bool ImmediatelyLoadPivotItems
-		{
-			get { return (bool) GetValue(ImmediatelyLoadPivotItemsProperty); }
-			set { SetValue(ImmediatelyLoadPivotItemsProperty, value); }
 		}
 	}
 }

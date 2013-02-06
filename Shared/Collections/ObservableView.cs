@@ -252,6 +252,11 @@ namespace MyToolkit.Collections
 				UnregisterEvent(i);
 		}
 
+		public void Update()
+		{
+			UpdateList();
+		}
+
 		private void UpdateList()
 		{
 			if (!IsTracking)
