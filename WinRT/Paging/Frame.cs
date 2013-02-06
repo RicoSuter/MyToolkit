@@ -13,13 +13,14 @@ namespace MyToolkit.Paging
 	public class Frame : ContentControl//, INavigate
 	{
 		public event NavigatedEventHandler Navigated;
-		//public IEnumerable<PageDescription> Pages { get { return pages.Select(p => p.); } }
 
 		private int currentIndex = -1; 
 		private List<PageDescription> pages = new List<PageDescription>();
 
 		private PageDescription Current { get { return pages.Count > 0 ? pages[currentIndex] : null; } }
 		public Page CurrentPage { get { return Current != null ? Current.GetPage(this) : null; } }
+		
+		public Type PreviousPageType {get { return currentIndex > 0 ? pages[currentIndex - 1].Type : null; }}
 
 		public Frame()
 		{
