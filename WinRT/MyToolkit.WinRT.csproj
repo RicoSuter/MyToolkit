@@ -320,7 +320,7 @@
     <Compile Include="Messaging\NavigateMessage.cs" />
     <Compile Include="Paging\LayoutAwarePage.cs" />
     <Compile Include="Paging\NavigationEventArgs.cs" />
-    <Compile Include="Paging\SuspendablePage.cs" />
+    <Compile Include="Paging\ExtendedPage.cs" />
     <Compile Include="Paging\Page.cs" />
     <Compile Include="Paging\PageDescription.cs" />
     <Compile Include="Paging\SuspensionManager.cs" />

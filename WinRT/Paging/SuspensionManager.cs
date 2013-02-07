@@ -216,9 +216,7 @@ namespace MyToolkit.Paging
         {
             var frameState = SessionStateForFrame(frame);
             if (frameState.ContainsKey("Navigation"))
-            {
                 frame.SetNavigationState((String)frameState["Navigation"]);
-            }
         }
 
 		private static void SaveFrameNavigationState(Frame frame)

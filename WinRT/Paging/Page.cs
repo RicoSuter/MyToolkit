@@ -1,5 +1,3 @@
-using System;
-using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -12,12 +10,10 @@ namespace MyToolkit.Paging
 	public class Page : Control
 	{
 		public Frame Frame { get; internal set; }
-		public bool CanSuspend { get; set; }
 
 		public Page()
 		{
 			DefaultStyleKey = typeof(Page);
-			CanSuspend = true; 
 		}
 
 		public Windows.UI.Xaml.Controls.Page InternalPage { get; private set; }
@@ -101,5 +97,27 @@ namespace MyToolkit.Paging
 		{
 			OnNavigatedFrom(e);
 		}
+
+		#region Event handlers
+
+		protected void GoHome(object sender, RoutedEventArgs e)
+		{
+			if (Frame != null)
+				Frame.GoHomeAsync();
+		}
+
+		protected void GoBack(object sender, RoutedEventArgs e)
+		{
+			if (Frame != null && Frame.CanGoBack)
+				Frame.GoBackAsync();
+		}
+
+		protected void GoForward(object sender, RoutedEventArgs e)
+		{
+			if (Frame != null && Frame.CanGoForward)
+				Frame.GoForwardAsync();
+		}
+
+		#endregion
 	}
 }

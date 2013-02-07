@@ -87,13 +87,6 @@ namespace MyToolkit.Paging
 				throw new Exception("cannot go forward or back");
 		}
 
-		///// <returns>Return value is always true. Use NavigateAsync instead</returns>
-		//public bool Navigate(Type sourcePageType)
-		//{
-		//	NavigateAsync(sourcePageType);
-		//	return true; 
-		//}
-
 		public bool Initialize(Type sourcePageType, object parameter = null)
 		{
 			NavigateInternal(sourcePageType, parameter);
@@ -190,8 +183,11 @@ namespace MyToolkit.Paging
 			pages = new List<PageDescription>(tuple.Item2);
 			currentIndex = tuple.Item1;
 
-			Content = Current.GetPage(this);
-			CallOnNavigatedTo(Current, NavigationMode.Refresh);
+			if (currentIndex != -1)
+			{
+				Content = Current.GetPage(this);
+				CallOnNavigatedTo(Current, NavigationMode.Refresh);
+			}
 		}
 
 		public string GetNavigationState()
@@ -202,7 +198,12 @@ namespace MyToolkit.Paging
 			// remove pages which do not support tombstoning
 			var pagesToSerialize = pages;
 			var currentIndexToSerialize = currentIndex; 
-			var firstPageToRemove = pages.FirstOrDefault(p => !p.GetPage(this).CanSuspend);
+			var firstPageToRemove = pages.FirstOrDefault(p =>
+			{
+				var page = p.GetPage(this);
+				return !(page is ExtendedPage) || !((ExtendedPage) page).IsSuspendable;
+			});
+
 			if (firstPageToRemove != null)
 			{
 				var index = pagesToSerialize.IndexOf(firstPageToRemove);
