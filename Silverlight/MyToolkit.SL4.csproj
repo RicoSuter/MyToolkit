@@ -75,6 +75,9 @@
     <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
       <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Controls\UniformGrid.cs">
+      <Link>Controls\UniformGrid.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Controls\WatermarkedTextBox.cs">
       <Link>Controls\WatermarkedTextBox.cs</Link>
     </Compile>
