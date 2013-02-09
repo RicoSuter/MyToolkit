@@ -7,6 +7,8 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 #else
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 #endif 
