@@ -6,6 +6,7 @@ namespace MyToolkit.Utilities
 {
 	public static class EnumerableExtensions
 	{
+#if !WP7
 		/// <summary>
 		/// Instead of OrderBy(...).ThenBy(...) this method calls ThenBy only if necessary
 		/// </summary>
@@ -27,7 +28,6 @@ namespace MyToolkit.Utilities
 			return result;
 		}
 
-#if !WP7
 		public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
 		{
 			var keys = new HashSet<TKey>();
