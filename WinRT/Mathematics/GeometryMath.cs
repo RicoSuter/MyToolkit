@@ -5,6 +5,11 @@ namespace MyToolkit.Mathematics
 {
 	public static class GeometryMath
 	{
+		public static Point GetCenter(this Rect rect)
+		{
+			return new Point(rect.X + rect.Width / 2, rect.Y + rect.Height / 2);
+		}
+
 		public static Rect GetEnclosingRect(Rect[] list)
 		{
 			var rect = list.First();

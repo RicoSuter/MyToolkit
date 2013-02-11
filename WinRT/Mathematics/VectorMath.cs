@@ -101,7 +101,7 @@ namespace MyToolkit.Mathematics
 			return false;
 		}
 
-		private static double DistanceFromPointToLine(this Point point, Point l1, Point l2)
+		public static double DistanceFromPointToLine(this Point point, Point l1, Point l2)
 		{
 			double nearX = 0; double nearY = 0;
 			return DistanceFromPointToLine(point, l1, l2, out nearX, out nearY);
