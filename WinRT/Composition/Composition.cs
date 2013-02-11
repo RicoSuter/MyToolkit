@@ -56,5 +56,10 @@ namespace MyToolkit.Composition
 		{
 			CurrentContext.SatisfyImports(obj);
 		}
+
+		public static void BuildCache(Type type)
+		{
+			CurrentContext.BuildCache(type);
+		}
 	}
 }

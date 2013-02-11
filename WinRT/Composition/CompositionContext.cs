@@ -135,31 +135,56 @@ namespace MyToolkit.Composition
 			return (IList<T>)GetParts(typeof(T));
 		}
 
+		private Dictionary<Type, Dictionary<PropertyInfo, Attribute>> typeMapping = null; // used for caching
 		public void SatisfyImports(object obj)
 		{
-			foreach (var property in obj.GetType().GetTypeInfo().GetAllProperties())
+			if (typeMapping == null)
+				typeMapping = new Dictionary<Type, Dictionary<PropertyInfo, Attribute>>();
+
+			var type = obj.GetType();
+			BuildCache(type);
+			foreach (var pair in typeMapping[type])
 			{
-				var attribute = property.GetCustomAttribute<ImportAttribute>();
-				if (attribute != null)
+				var property = pair.Key; 
+				if (pair.Value is ImportAttribute)
 				{
+					var attribute = (ImportAttribute)pair.Value;
 					var part = GetPart(attribute.Type, attribute.Name);
 					if (part != null)
 						property.SetValue(obj, part);
 					else
-						Debug.WriteLine("CompositionContext (Import): Part for property = " + 
-							property.Name + " not found!");
+						Debug.WriteLine("CompositionContext (Import): Part for property = " + property.Name + " not found!");
 				}
-
-				var manyAttribute = property.GetCustomAttribute<ImportManyAttribute>();
-				if (manyAttribute != null)
+				else
 				{
+					var manyAttribute = (ImportManyAttribute)pair.Value;
 					var parts = GetParts(manyAttribute.Type);
 					if (parts != null)
 						property.SetValue(obj, parts);
 					else
-						Debug.WriteLine("CompositionContext (ImportMany): Part for property = " +
-							property.Name + " not found!");
+						Debug.WriteLine("CompositionContext (ImportMany): Part for property = " + property.Name + " not found!");
 				}
+			}
+		}
+
+		public void BuildCache(Type type)
+		{
+			if (!typeMapping.ContainsKey(type))
+			{
+				var list = new Dictionary<PropertyInfo, Attribute>();
+				foreach (var p in type.GetTypeInfo().GetAllProperties())
+				{
+					var importAttribute = p.GetCustomAttribute<ImportAttribute>();
+					if (importAttribute != null)
+						list[p] = importAttribute;
+					else
+					{
+						var importManyAttribute = p.GetCustomAttribute<ImportManyAttribute>();
+						if (importManyAttribute != null)
+							list[p] = importManyAttribute;
+					}
+				}
+				typeMapping[type] = list;
 			}
 		}
 	}
