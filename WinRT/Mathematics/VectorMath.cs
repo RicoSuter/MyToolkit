@@ -118,7 +118,7 @@ namespace MyToolkit.Mathematics
 				dy = point.Y - l1.Y;
 				nearX = l1.X;
 				nearY = l1.Y;
-				return System.Math.Sqrt(dx * dx + dy * dy);
+				return Math.Sqrt(dx * dx + dy * dy);
 			}
 
 			// Calculate the t that minimizes the distance.
@@ -148,14 +148,14 @@ namespace MyToolkit.Mathematics
 				dy = point.Y - nearY;
 			}
 
-			return System.Math.Sqrt(dx * dx + dy * dy);
+			return Math.Sqrt(dx * dx + dy * dy);
 		}
 
 		public static Point Rotate(this Point pt1, double degree)
 		{
 			degree = TrigonometryMath.DegreeToRadian(degree);
-			var sin = System.Math.Sin(degree);
-			var cos = System.Math.Cos(degree); 
+			var sin = Math.Sin(degree);
+			var cos = Math.Cos(degree); 
 			return new Point(
 				pt1.X * cos + pt1.Y * sin,
 				-1 * pt1.X * sin + pt1.Y * cos
