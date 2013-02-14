@@ -116,6 +116,9 @@
     <Compile Include="..\Shared\Converters\ImageBackgroundColorConverter.cs">
       <Link>Converters\ImageBackgroundColorConverter.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Converters\JoinConverter.cs">
+      <Link>Converters\JoinConverter.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Converters\NotConverter.cs">
       <Link>Converters\NotConverter.cs</Link>
     </Compile>

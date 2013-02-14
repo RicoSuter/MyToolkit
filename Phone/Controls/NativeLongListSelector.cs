@@ -18,5 +18,22 @@ namespace MyToolkit.Controls
 #endif
 			GroupHeaderTemplate = (DataTemplate)dict["LongListSelectorDefaultGroupHeaderTemplate"];
 		}
+
+#if WP8
+		// dummy properties
+		public bool IsFlatList { get; set; }
+
+		public event EventHandler ScrollingStarted
+		{
+			add { } 
+			remove { }
+		}
+
+		public event EventHandler ScrollingCompleted
+		{
+			add { }
+			remove { }
+		}
+#endif
 	}
 }
