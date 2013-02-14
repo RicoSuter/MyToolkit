@@ -15,13 +15,20 @@ namespace MyToolkit.Controls
 #if !WP8
 			GroupItemsPanel = (ItemsPanelTemplate)dict["LongListSelectorDefaultGroupItemsPanel"];
 			GroupItemTemplate = (DataTemplate)dict["LongListSelectorDefaultGroupItemTemplate"];
+#else
+			HideEmptyGroups = true;
+			JumpListStyle = (Style)dict["LongListSelectorJumpListStyle"]; 
 #endif
 			GroupHeaderTemplate = (DataTemplate)dict["LongListSelectorDefaultGroupHeaderTemplate"];
 		}
 
 #if WP8
 		// dummy properties
-		public bool IsFlatList { get; set; }
+		public bool IsFlatList
+		{
+			get { return !IsGroupingEnabled; }
+			set { IsGroupingEnabled = !value; }
+		}
 
 		public event EventHandler ScrollingStarted
 		{
