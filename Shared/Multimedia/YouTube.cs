@@ -109,16 +109,16 @@ namespace MyToolkit.Multimedia
 				var urls = new List<YouTubeUri>();
 				try
 				{
-					var match = Regex.Match(response.Response, "url_encoded_fmt_stream_map=(.*?)(&|\")");
+					var match = Regex.Match(response.Response, "url_encoded_fmt_stream_map\": \"(.*?)\"");
 					var data = Uri.UnescapeDataString(match.Groups[1].Value);
 
-					var arr = data.Split(',');
+					var arr = Regex.Split(data, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"); // split by comma but outside quotes
 					foreach (var d in arr)
 					{
 						var url = "";
 						var signature = "";
 						var tuple = new YouTubeUri();
-						foreach (var p in d.Split('&'))
+						foreach (var p in d.Replace("\\u0026", "\t").Split('\t'))
 						{
 							var index = p.IndexOf('=');
 							if (index != -1 && index < p.Length)
