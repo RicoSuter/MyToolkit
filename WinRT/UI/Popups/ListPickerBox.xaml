@@ -4,7 +4,7 @@
 			  xmlns:Controls1="using:MyToolkit.Controls"
 			  xmlns:UI="using:MyToolkit.UI">
 
-	<Border BorderBrush="White" BorderThickness="1,0,1,0" Background="Black">
+	<Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}" BorderThickness="1,0,1,0" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
 		<Grid Width="500" Margin="0,40,0,40">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="*" />
