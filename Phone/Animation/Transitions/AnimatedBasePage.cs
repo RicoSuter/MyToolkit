@@ -27,7 +27,6 @@ namespace MyToolkit.Animation.Transitions
 		private Uri nextUri;
 		
 		private AnimationType currentAnimationType;
-		private NavigationMode? currentNavigationMode;
         private bool isForwardNavigation;
 		
         public AnimatedBasePage()
@@ -70,7 +69,6 @@ namespace MyToolkit.Animation.Transitions
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
 	        isNavigating = false; 
-			currentNavigationMode = null;
 
 	        var isFirstForwardIn = e.NavigationMode == NavigationMode.New && !NavigationService.CanGoBack;
 			if ((e.IsNavigationInitiator || isFirstForwardIn) && // <- show transition only if not navigating from other app except if first launch
@@ -101,12 +99,12 @@ namespace MyToolkit.Animation.Transitions
 				currentAnimationType = AnimationType.NavigateBackwardIn;
 
 			if (CanAnimate())
-				RunAnimation();
+				RunAnimation(null);
 			else
 			{
 				if (AnimationContext != null)
 					AnimationContext.Opacity = 1;
-				OnTransitionAnimationCompleted();
+				OnTransitionAnimationCompleted(null);
 			}
 
 			if (isForwardNavigation)
@@ -138,8 +136,7 @@ namespace MyToolkit.Animation.Transitions
 						break;
 				}
 
-				currentNavigationMode = e.NavigationMode;
-				RunAnimation();
+				RunAnimation(e.NavigationMode);
 			}
         }
 
@@ -148,7 +145,7 @@ namespace MyToolkit.Animation.Transitions
             return !isNavigating && AnimationContext != null;
         }
 
-        private void RunAnimation()
+        private void RunAnimation(NavigationMode? navigationMode)
         {
 			AnimatorHelperBase animation = null;
 			switch (currentAnimationType)
@@ -167,39 +164,42 @@ namespace MyToolkit.Animation.Transitions
 			if (animation == null)
 			{
 				AnimationContext.Opacity = 1;
-				OnTransitionAnimationCompleted();
+				OnTransitionAnimationCompleted(navigationMode);
 			}
 			else
 			{
 				Dispatcher.BeginInvoke(() =>
 				{
 					AnimationContext.Opacity = 1;
-					animation.Begin(OnTransitionAnimationCompleted);
+					animation.Begin(() => OnTransitionAnimationCompleted(navigationMode));
 				});
 			}
         }
 
-		private void OnTransitionAnimationCompleted()
+		private void OnTransitionAnimationCompleted(NavigationMode? navigationMode)
 		{
-			Dispatcher.BeginInvoke(() =>
+			if (navigationMode.HasValue)
 			{
-				switch (currentNavigationMode)
+				Dispatcher.BeginInvoke(() =>
 				{
-					case NavigationMode.Forward:
-						if (PhonePage.CurrentPage.NavigationService.CanGoForward)
-							PhonePage.CurrentPage.NavigationService.GoForward();
-						break;
+					switch (navigationMode)
+					{
+						case NavigationMode.Forward:
+							if (PhonePage.CurrentPage.NavigationService.CanGoForward)
+								PhonePage.CurrentPage.NavigationService.GoForward();
+							break;
 
-					case NavigationMode.Back:
-						if (PhonePage.CurrentPage.NavigationService.CanGoBack)
-							PhonePage.CurrentPage.NavigationService.GoBack();
-						break;
+						case NavigationMode.Back:
+							if (PhonePage.CurrentPage.NavigationService.CanGoBack)
+								PhonePage.CurrentPage.NavigationService.GoBack();
+							break;
 
-					case NavigationMode.New:
-						PhonePage.CurrentPage.NavigationService.Navigate(nextUri);
-						break;
-				}
-			});
+						case NavigationMode.New:
+							PhonePage.CurrentPage.NavigationService.Navigate(nextUri);
+							break;
+					}
+				});
+			}
 			AnimationsComplete(currentAnimationType);
 		}
     }

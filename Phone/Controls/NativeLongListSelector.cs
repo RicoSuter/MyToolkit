@@ -10,14 +10,15 @@ namespace MyToolkit.Controls
 		public NativeLongListSelector()
 		{
 			var dict = new ResourceDictionary();
-			dict.Source = new Uri("/MyToolkit.Extended;component/Themes/generic.xaml", UriKind.Relative);
 
-#if !WP8
-			GroupItemsPanel = (ItemsPanelTemplate)dict["LongListSelectorDefaultGroupItemsPanel"];
-			GroupItemTemplate = (DataTemplate)dict["LongListSelectorDefaultGroupItemTemplate"];
-#else
+#if WP8
+			dict.Source = new Uri("/MyToolkit.Extended;component/Themes/Generic.WP8.xaml", UriKind.Relative);
 			HideEmptyGroups = true;
 			JumpListStyle = (Style)dict["LongListSelectorJumpListStyle"]; 
+#else
+			dict.Source = new Uri("/MyToolkit.Extended;component/Themes/Generic.WP7.xaml", UriKind.Relative);
+			GroupItemsPanel = (ItemsPanelTemplate)dict["LongListSelectorDefaultGroupItemsPanel"];
+			GroupItemTemplate = (DataTemplate)dict["LongListSelectorDefaultGroupItemTemplate"];
 #endif
 			GroupHeaderTemplate = (DataTemplate)dict["LongListSelectorDefaultGroupHeaderTemplate"];
 		}
