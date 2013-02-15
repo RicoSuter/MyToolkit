@@ -91,8 +91,7 @@ namespace MyToolkit.Multimedia
 
 		public static HttpResponse GetVideoUri(string youTubeId, YouTubeQuality maxQuality, Action<YouTubeUri, Exception> completed)
 		{
-			return Http.Get("http://www.youtube.com/watch?v=" + youTubeId + "&nomobile=1", 
-				r => OnHtmlDownloaded(r, YouTubeQuality.Quality480P, maxQuality, completed));
+			return GetVideoUri(youTubeId, maxQuality, YouTubeQuality.Quality480P, completed);
 		}
 
 		public static HttpResponse GetVideoUri(string youTubeId, YouTubeQuality minQuality, YouTubeQuality maxQuality, 
