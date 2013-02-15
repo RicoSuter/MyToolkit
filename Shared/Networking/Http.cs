@@ -35,6 +35,9 @@ namespace MyToolkit.Networking
 {
 	public class HttpStatusException : Exception
 	{
+		public HttpStatusException() { }
+		public HttpStatusException(string message) : base(message) { }
+
 		public HttpResponse Result { get; set; }
 		public WebException WebException { get; set; }
 	}
@@ -463,7 +466,7 @@ namespace MyToolkit.Networking
 						try { LoadResponse(resp, response); }
 						catch { }
 						
-						exception = new HttpStatusException
+						exception = new HttpStatusException(exception.Message)
 						{
 							Result = resp, 
 							WebException = (WebException) exception
