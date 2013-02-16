@@ -47,12 +47,27 @@ namespace MyToolkit.Collections
 
 		private void UpdateTopItems()
 		{
+			if (updateLock)
+				return;
+
+			var collection = TopItemsCount == -1 ? this : this.Take(TopItemsCount);
 			if (TopItems == null)
-				TopItems = new ExtendedObservableCollection<T>();
+				TopItems = new ExtendedObservableCollection<T>(collection);
 			else
-				TopItems.Clear();
-	
-			TopItems.AddRange(TopItemsCount == -1 ? this : this.Take(TopItemsCount));
+				TopItems.Initialize(collection);
+		}
+
+		private bool updateLock = false; 
+		public void Initialize(IEnumerable<T> collection)
+		{
+			updateLock = true;
+
+			Clear();
+			foreach (var item in collection)
+				Add(item);
+
+			TopItems.Initialize(TopItemsCount == -1 ? this : this.Take(TopItemsCount));
+			updateLock = false; 
 		}
 
 		public ExtendedObservableCollection<T> TopItems { get; private set; }

@@ -38,7 +38,7 @@ namespace MyToolkit.Controls
 			HeaderWidth = 600; 
 			
 			Padding = new Thickness(140, 0, 40, 40);
-
+			
 			webView.SizeChanged += delegate { Update(); };
 		}
 
@@ -72,14 +72,18 @@ namespace MyToolkit.Controls
 			if (string.IsNullOrEmpty(headerHtml))
 				return
 					@"<!DOCTYPE html>
-									<html style='background-color:" + ColorUtility.ToHex(Background) + "'>" +
-						@"<style type=""text/css"">
-										body {
-											margin: 0; padding: 0;
-											font-family: 'Segoe UI'; -ms-font-feature-settings: 'ss01' 1;
-											font-size: 11pt;
-										}
-									</style>" +
+						<head>
+							<style type=""text/css"">
+								body {
+									margin: 0; padding: 0;
+									font-family: 'Segoe UI'; -ms-font-feature-settings: 'ss01' 1;
+									font-size: 11pt;
+									background-color: " + ColorUtility.ToHex(Background)+ @";
+								}
+							</style>
+							<meta name=""viewport"" content=""initial-scale=1, maximum-scale=1, user-scalable=0""/>" +
+							//"<script type=\"text/javascript\">document.documentElement.style.msScrollTranslation = 'vertical-to-horizontal';</script>" +
+						"</head><html>" +
 						"<body style='margin-left:-16px;margin-top:0px;'>" +
 							"<div style='position: absolute; column-width: " + ColumnWidth + "px; column-fill: auto; " +
 								//"column-rule-width: " + RuleWidth + "px; " +

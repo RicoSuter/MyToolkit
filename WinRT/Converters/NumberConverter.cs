@@ -15,6 +15,9 @@ namespace MyToolkit.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
+			if (value is bool)
+				value = (bool) value ? "1" : "0";
+
 			if (targetType == typeof(double))
 				return double.Parse(value.ToString());
 			if (targetType == typeof(decimal))

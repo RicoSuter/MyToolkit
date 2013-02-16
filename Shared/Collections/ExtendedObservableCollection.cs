@@ -9,6 +9,9 @@ namespace MyToolkit.Collections
 {
 	public class ExtendedObservableCollection<T> : ObservableCollection<T>
 	{
+		public ExtendedObservableCollection() {}
+ 		public ExtendedObservableCollection(IEnumerable<T> collection) : base(collection) {} 
+
 		public new event PropertyChangedEventHandler PropertyChanged
 		{
 			add { base.PropertyChanged += value; }

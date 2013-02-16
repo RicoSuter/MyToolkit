@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using MyToolkit.Collections;
 using MyToolkit.MVVM;
 using MyToolkit.Utilities;
@@ -28,7 +29,7 @@ namespace MyToolkit.Controls
 		private int initialIndex = 0;
 		private object initialItem;
 
-		protected override void OnApplyTemplate()
+		protected async override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
 
@@ -40,7 +41,17 @@ namespace MyToolkit.Controls
 			if (initialItem != null)
 				list.SelectedItem = initialItem;
 			else
-				list.SelectedIndex = initialIndex; 
+				list.SelectedIndex = initialIndex;
+
+			if (PreloadPivots)
+			{
+				foreach (var item in Items)
+				{
+					content.Content = item.Content;
+					await Task.Yield(); // TODO find better solution (evtl. hidden content presenter?)
+				}
+				content.Content = ((PivotItem)list.SelectedItem).Content;
+			}
 		}
 
 		public event SelectionChangedEventHandler SelectionChanged;
@@ -56,6 +67,15 @@ namespace MyToolkit.Controls
 			var copy = SelectionChanged;
 			if (copy != null)
 				copy(sender, args);
+		}
+
+		public static readonly DependencyProperty PreloadPivotsProperty =
+			DependencyProperty.Register("PreloadPivots", typeof (bool), typeof (Pivot), new PropertyMetadata(default(bool)));
+
+		public bool PreloadPivots
+		{
+			get { return (bool) GetValue(PreloadPivotsProperty); }
+			set { SetValue(PreloadPivotsProperty, value); }
 		}
 
 		private readonly ObservableCollection<PivotItem> items = new ObservableCollection<PivotItem>();
@@ -86,7 +106,6 @@ namespace MyToolkit.Controls
 			get { return GetValue(SelectedItemProperty); }
 			set { SetValue(SelectedItemProperty, value); }
 		}
-
 
 		public static readonly DependencyProperty SelectedIndexProperty =
 			DependencyProperty.Register("SelectedIndex", typeof(int), typeof(Pivot), new PropertyMetadata(default(int),
