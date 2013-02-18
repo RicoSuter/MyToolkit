@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using Microsoft.Phone.Net.NetworkInformation;
 
@@ -29,12 +30,17 @@ namespace MyToolkit.Networking
 
 			ThreadPool.QueueUserWorkItem(o =>
 			{
+				//var types = 
 				var interfaces = new NetworkInterfaceList();
 				lock (internalLock)
 				{
+					var types = new List<NetworkInterfaceType>();
 					foreach (var i in interfaces)
-						UpdateNetworkState(i.InterfaceType, 
-							i.InterfaceState == ConnectState.Connected);
+					{
+						if (!types.Contains(i.InterfaceType))
+							UpdateNetworkState(i.InterfaceType, i.InterfaceState == ConnectState.Connected);
+						types.Add(i.InterfaceType);
+					}
 				}
 			});
 		}
