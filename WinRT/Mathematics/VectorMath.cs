@@ -12,8 +12,12 @@ namespace MyToolkit.Mathematics
 
 		public static Point Normalize(double x, double y)
 		{
-			if (x == 0.0 || y == 0.0)
-				return new Point(x, y);
+			if (x == 0.0 && y == 0.0)
+				return new Point(1, 0); // TODO better than NaN
+			if (x == 0.0)
+				return new Point(0, 1);
+			if (y == 0.0)
+				return new Point(1, 0);
 
 			var length = Math.Sqrt(x * x + y * y);
 			return new Point(x / length, y / length);
