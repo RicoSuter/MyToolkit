@@ -79,13 +79,65 @@ namespace MyToolkit.Utilities
 			if (language == null)
 				language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 
-			var lines = input.Split(';');
-			foreach (var line in lines.Select(l => l.Trim(' ')))
+			var mapping = new Dictionary<string, string>();
+			var position = 0;
+			string key = null; 
+			while (true)
 			{
-				if (line.StartsWith(language + ":"))
-					return line.Substring(3).Trim(' ');
+				if (key == null) // find language
+				{
+					var index = input.IndexOf(':', position);
+					if (index == -1)
+						break;
+
+					key = input.Substring(position, index - position).Trim();
+					position = index + 1; 
+				}
+				else
+				{
+					var semiIndex = input.IndexOf(';', position);
+					var startQuoteIndex = input.IndexOf('"', position);
+
+					if (startQuoteIndex != -1 && (semiIndex == -1 || startQuoteIndex < semiIndex))
+					{
+						position = startQuoteIndex + 1; 
+						while (true)
+						{
+							position = input.IndexOf('"', position);
+							if (position == -1)
+								return "wrong_quoting";
+
+							position++;
+							if (input[position - 2] != '\\')
+								break;
+						}
+
+						if (position == -1)
+							break;
+
+						mapping.Add(key, input.Substring(startQuoteIndex + 1, position - startQuoteIndex - 2).Replace("\\\"", "\"").Trim());
+						position = input.IndexOf(';', position);
+
+						if (position == -1)
+							break;
+						position++; 
+					}
+					else
+					{
+						if (semiIndex == -1)
+						{
+							mapping.Add(key, input.Substring(position).Trim());
+							break; 
+						}
+						mapping.Add(key, input.Substring(position, semiIndex - position).Trim());
+						position = semiIndex + 1;
+					}
+
+					key = null; 
+				}
 			}
-			return input.Contains(":") ? lines[0].Substring(3).Trim(' ') : input;
+
+			return mapping.Count > 0 ? (mapping.ContainsKey(language) ? mapping[language] : mapping.First().Value) : input; 
 		}
 	}
 }
