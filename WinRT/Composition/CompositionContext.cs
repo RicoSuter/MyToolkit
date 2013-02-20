@@ -41,6 +41,22 @@ namespace MyToolkit.Composition
 			parts.Clear();
 		}
 
+#if WPF
+		public int AddPartsFromAssembly(Assembly assembly)
+		{
+			var count = 0; 
+			foreach (var type in assembly.GetExportedTypes())
+			{
+				var attr = (ExportAttribute)type.GetCustomAttributes(typeof(ExportAttribute), true).FirstOrDefault();
+				if (attr != null)
+				{
+					AddPart(attr.Type, attr.Name, null, type);
+					count++;
+				}
+			}
+			return count; 
+		}
+#else
 		public int AddPartsFromAssembly(Assembly assembly)
 		{
 			var count = 0; 
@@ -55,6 +71,7 @@ namespace MyToolkit.Composition
 			}
 			return count; 
 		}
+#endif
 
 		public bool AddPart<T>(T part)
 		{
@@ -151,7 +168,11 @@ namespace MyToolkit.Composition
 					var attribute = (ImportAttribute)pair.Value;
 					var part = GetPart(attribute.Type, attribute.Name);
 					if (part != null)
+#if WPF
+						property.SetValue(obj, part, null);
+#else
 						property.SetValue(obj, part);
+#endif
 					else
 						Debug.WriteLine("CompositionContext (Import): Part for property = " + property.Name + " not found!");
 				}
@@ -160,13 +181,39 @@ namespace MyToolkit.Composition
 					var manyAttribute = (ImportManyAttribute)pair.Value;
 					var parts = GetParts(manyAttribute.Type);
 					if (parts != null)
+#if WPF
+						property.SetValue(obj, parts, null);
+#else
 						property.SetValue(obj, parts);
+#endif
 					else
 						Debug.WriteLine("CompositionContext (ImportMany): Part for property = " + property.Name + " not found!");
 				}
 			}
 		}
 
+#if WPF
+		public void BuildCache(Type type)
+		{
+			if (!typeMapping.ContainsKey(type))
+			{
+				var list = new Dictionary<PropertyInfo, Attribute>();
+				foreach (var p in type.GetProperties())
+				{
+					var importAttribute = (ImportAttribute)p.GetCustomAttributes(typeof(ImportAttribute), false).FirstOrDefault();
+					if (importAttribute != null)
+						list[p] = importAttribute;
+					else
+					{
+						var importManyAttribute = (ImportManyAttribute)p.GetCustomAttributes(typeof(ImportManyAttribute), false).FirstOrDefault();
+						if (importManyAttribute != null)
+							list[p] = importManyAttribute;
+					}
+				}
+				typeMapping[type] = list;
+			}
+		}
+#else
 		public void BuildCache(Type type)
 		{
 			if (!typeMapping.ContainsKey(type))
@@ -187,5 +234,6 @@ namespace MyToolkit.Composition
 				typeMapping[type] = list;
 			}
 		}
+#endif
 	}
 }
