@@ -61,7 +61,9 @@ namespace MyToolkit.Converters
         public object ConvertBack(object value, Type typeName, object parameter, string language)
 #endif
 		{
-			throw new NotSupportedException();
+			if (value is bool && targetType == typeof(bool))
+				return !((bool) value);
+			throw new NotImplementedException();
 		}
 	}
 }

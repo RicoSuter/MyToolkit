@@ -22,11 +22,14 @@ namespace MyToolkit.Converters
         public object Convert(object value, Type typeName, object parameter, string language)
 #endif
 		{
-			var type = parameter.ToString();
+			var type = parameter.ToString().ToLower().Split(',');
 			if (value is IEnumerable)
 			{
 				var list = (IEnumerable) value;
-				return list.OfType<object>().Count(i => i.GetType().Name == type);
+				var count = list.OfType<object>().Count(i => type.Contains(i.GetType().Name.ToLower()));
+				if (targetType == typeof (Visibility))
+					return count > 0 ? Visibility.Visible : Visibility.Collapsed;
+				return count;
 			}
 			return null; 
 		}
