@@ -60,6 +60,9 @@
     <Compile Include="..\Phone\Controls\ExtendedListBox.cs">
       <Link>Controls\ExtendedListBox.cs</Link>
     </Compile>
+    <Compile Include="..\Phone\Storage\ApplicationSettings.cs">
+      <Link>Storage\ApplicationSettings.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Collections\ExtendedNotifyCollectionChangedEventArgs.cs">
       <Link>Collections\ExtendedNotifyCollectionChangedEventArgs.cs</Link>
     </Compile>
