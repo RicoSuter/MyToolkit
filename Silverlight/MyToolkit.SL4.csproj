@@ -63,6 +63,9 @@
     <Compile Include="..\Phone\Storage\ApplicationSettings.cs">
       <Link>Storage\ApplicationSettings.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Caching\CacheManager.cs">
+      <Link>Caching\CacheManager.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Collections\ExtendedNotifyCollectionChangedEventArgs.cs">
       <Link>Collections\ExtendedNotifyCollectionChangedEventArgs.cs</Link>
     </Compile>
@@ -235,6 +238,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
