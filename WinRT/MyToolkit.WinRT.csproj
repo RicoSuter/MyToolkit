@@ -60,9 +60,6 @@
     <Compile Include="..\Shared\Controls\FixedHtmlTextBlock.cs">
       <Link>Controls\FixedHtmlTextBlock.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlock.cs">
-      <Link>Controls\HtmlTextBlock.cs</Link>
-    </Compile>
     <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\EmGenerator.cs">
       <Link>Controls\HtmlTextBlockImplementation\Generators\EmGenerator.cs</Link>
     </Compile>

@@ -48,15 +48,16 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 #if !WINRT
 				var tb = new RichTextBox();
 				tb.Background = textBlock.Background;
+				tb.Margin = new Thickness(-12, textBlock.ParagraphMargin, -12, textBlock.ParagraphMargin);
 #else
 				var tb = new RichTextBlock();
 				tb.IsTextSelectionEnabled = false;
+				tb.Margin = new Thickness(0, textBlock.ParagraphMargin, 0, textBlock.ParagraphMargin);
 #endif
 				tb.Blocks.Add(p);
 				tb.Foreground = textBlock.Foreground;
 				tb.FontSize = textBlock.FontSize;
 				tb.FontFamily = textBlock.FontFamily;
-				tb.Margin = new Thickness(-12, textBlock.ParagraphMargin, -12, textBlock.ParagraphMargin);
 				
 				list.Add(tb);
 				current.Clear();

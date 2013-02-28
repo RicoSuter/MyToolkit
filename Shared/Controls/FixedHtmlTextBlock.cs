@@ -14,6 +14,15 @@ using System.Windows.Controls;
 
 namespace MyToolkit.Controls
 {
+#if WINRT
+	// used as dummy class until HtmlTextBlock is implemented => currently we have to use FixedHtmlTextBlock in a ScrollViewer
+	internal class HtmlTextBlock
+	{
+		public void UpdateHeader() {}
+		public void UpdateFooter() {}
+	}
+#endif
+
 	public class FixedHtmlTextBlock : ItemsControl, IHtmlTextBlock
 	{
 		public IDictionary<string, IControlGenerator> Generators { get { return generators; } }
