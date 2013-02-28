@@ -84,6 +84,9 @@
     <Compile Include="..\Shared\Controls\WatermarkedTextBox.cs">
       <Link>Controls\WatermarkedTextBox.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Converters\ByteArrayToImageConverter.cs">
+      <Link>Converters\ByteArrayToImageConverter.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
     </Compile>
