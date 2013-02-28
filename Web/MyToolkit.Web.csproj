@@ -92,6 +92,7 @@
       <Link>Utilities\Xml.cs</Link>
     </Compile>
     <Compile Include="Behaviors\ApplyDataContractResolverAttribute.cs" />
+    <Compile Include="Behaviors\NullEntityCollectionSerializationServiceBehaviorAttribute.cs" />
     <Compile Include="Notifications\PhonePushNotificationService.cs" />
     <Compile Include="Notifications\PushNotificationPriority.cs" />
     <Compile Include="Notifications\PushNotificationService.cs" />
