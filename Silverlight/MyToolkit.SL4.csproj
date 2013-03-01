@@ -72,6 +72,9 @@
     <Compile Include="..\Shared\Collections\ExtendedObservableCollection.cs">
       <Link>Collections\ExtendedObservableCollection.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Collections\ObservableCollectionObserver.cs">
+      <Link>Collections\ObservableCollectionObserver.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Collections\ObservableView.cs">
       <Link>Collections\ObservableView.cs</Link>
     </Compile>

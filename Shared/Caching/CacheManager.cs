@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -76,10 +77,11 @@ namespace MyNamespace
 									var ofType = typeof(Enumerable).GetMethod("OfType");
 									ofType = ofType.MakeGenericMethod(listItemType);
 
-									value = Activator.CreateInstance(listType, ofType.Invoke(null, new object[]
-									{
-										SetCachableItems((IEnumerable<ICacheable>) value, mergedObjects)
-									}));
+									value = Activator.CreateInstance(listType, ofType.Invoke(null, 
+										((IEnumerable<ICacheable>)value)
+											.Select(i => SetItem(i, mergedObjects, !mergedObjects.Contains(i)))
+											.OfType<object>()
+											.ToArray()));
 								}
 							}
 						}
@@ -102,28 +104,17 @@ namespace MyNamespace
 			return currentItem;
 		}
 
-		public List<T> SetCachableItems<T>(IEnumerable<T> items) where T : ICacheable
+		public IList<T> SetItems<T>(IEnumerable<T> items) where T : class
 		{
-			return SetCachableItems(items.OfType<ICacheable>(), new List<ICacheable>()).OfType<T>().ToList();
-		}
-
-		private List<ICacheable> SetCachableItems(IEnumerable<ICacheable> items, List<ICacheable> mergedObjects)
-		{
-			return items.Select(i => SetItem(i, mergedObjects, !mergedObjects.Contains(i))).ToList();
-		}
-
-		public List<object> SetItems(IEnumerable<object> items)
-		{
-			var list = new List<object>();
+			var list = new List<T>();
 			foreach (var item in items)
 			{
 				if (item is ICacheable)
-					list.Add(SetItem((ICacheable)item));
+					list.Add((T)SetItem((ICacheable)item));
 				else
 					list.Add(item);
 			}
 			return list;
 		}
 	}
-
 }
