@@ -94,7 +94,7 @@ namespace MyToolkit.Messaging
 		}
 
 #else
-#if !WP7
+#if !WP7 && !WP8
 		public static Action<TextMessage> GetAction()
 		{
 			return message =>
