@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace MyNamespace
+namespace MyToolkit.Caching
 {
 	public interface ICacheable
 	{
