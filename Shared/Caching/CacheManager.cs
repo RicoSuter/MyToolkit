@@ -78,10 +78,13 @@ namespace MyNamespace
 									ofType = ofType.MakeGenericMethod(listItemType);
 
 									value = Activator.CreateInstance(listType, ofType.Invoke(null, 
-										((IEnumerable<ICacheable>)value)
-											.Select(i => SetItem(i, mergedObjects, !mergedObjects.Contains(i)))
-											.OfType<object>()
-											.ToArray()));
+										new object[] {
+											((IEnumerable<ICacheable>)value)
+												.Select(i => SetItem(i, mergedObjects, !mergedObjects.Contains(i)))
+												.OfType<object>()
+												.ToArray()
+										})
+									);
 								}
 							}
 						}
