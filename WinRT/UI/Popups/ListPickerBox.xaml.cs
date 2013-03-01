@@ -11,9 +11,9 @@ namespace MyToolkit.UI.Popups
 	{
 		#region Static methods
 
-		public static async Task<ListPickerBox> ShowAsync(IList items, IList selectedItems, bool minOneSelected = true)
+		public static async Task<ListPickerBox> ShowAsync(string header, IList items, IList selectedItems, bool minOneSelected = true)
 		{
-			var popup = new ListPickerBox(items, selectedItems, minOneSelected);
+			var popup = new ListPickerBox(header, items ?? new List<object>(), selectedItems ?? new List<object>(), minOneSelected);
 			await PopupHelper.ShowDialogAsync(popup, false, false);
 			return popup; 
 		}
@@ -38,11 +38,13 @@ namespace MyToolkit.UI.Popups
 			}
 		}
 
-		protected ListPickerBox(IList items, IList selectedItems, bool minOneSelected)
+		protected ListPickerBox(string header, IList items, IList selectedItems, bool minOneSelected)
 		{
 			InitializeComponent();
 
-			this.minOneSelected = minOneSelected; 
+			this.header.Text = header; 
+			this.minOneSelected = minOneSelected;
+
 			AllItems = items; 
 			OriginalSelectedItems = selectedItems; 
 			Loaded += OnLoaded;

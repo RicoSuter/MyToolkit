@@ -914,7 +914,7 @@
 						<Border Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}" 
 								Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InnerMargin}">
 							<Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Source}" 
-								  Stretch="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Stretch}" 
+								   Stretch="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Stretch}" 
 								   x:Name="image">
 							</Image>
 						</Border>

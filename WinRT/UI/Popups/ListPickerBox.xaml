@@ -7,11 +7,14 @@
 	<Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}" BorderThickness="1,0,1,0" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
 		<Grid Width="500" Margin="0,40,0,40">
 			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
 				<RowDefinition Height="*" />
 				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
 
-			<ScrollViewer VerticalScrollBarVisibility="Auto">
+			<TextBlock x:Name="header" Style="{StaticResource SubheaderTextStyle}" Margin="80,0,80,40" />
+
+			<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
 				<ItemsControl x:Name="list">
 					<ItemsControl.ItemTemplate>
 						<DataTemplate>
@@ -21,7 +24,7 @@
 				</ItemsControl>
 			</ScrollViewer>
 			
-			<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="80,0,80,0">
+			<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="80,0,80,0">
 				<Controls1:TextButton Click="OnCancel" Content="&#xE10A;" Margin="0,0,20,0" />
 				<Controls1:TextButton Click="OnAccept" Content="&#xE10B;" x:Name="acceptButton" />
 			</StackPanel>

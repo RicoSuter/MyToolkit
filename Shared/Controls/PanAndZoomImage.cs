@@ -17,8 +17,6 @@ namespace MyToolkit.Controls
 {
 	public class PanAndZoomImage : PanAndZoomViewer
 	{
-		public event EventHandler ImageLoaded;
-
 		private Image image;
 		public PanAndZoomImage()
 		{
@@ -26,29 +24,13 @@ namespace MyToolkit.Controls
 		}
 
 #if WINRT
-		public event RoutedEventHandler ImageOpened
-		{
-			add { image.ImageOpened += value; }
-			remove { image.ImageOpened += value; }
-		}
 
-		public event ExceptionRoutedEventHandler ImageFailed
-		{
-			add { image.ImageFailed += value; }
-			remove { image.ImageFailed += value; }
-		}
+		public event RoutedEventHandler ImageOpened;
+		public event ExceptionRoutedEventHandler ImageFailed;
 #else
-		public event EventHandler<RoutedEventArgs> ImageOpened
-		{
-			add { image.ImageOpened += value; }
-			remove { image.ImageOpened += value; }
-		}
+		public event EventHandler<RoutedEventArgs> ImageOpened;
+		public event EventHandler<ExceptionRoutedEventArgs> ImageFailed;
 
-		public event EventHandler<ExceptionRoutedEventArgs> ImageFailed
-		{
-			add { image.ImageFailed += value; }
-			remove { image.ImageFailed += value; }
-		}
 #endif
 
 #if WINRT
@@ -61,26 +43,36 @@ namespace MyToolkit.Controls
 
 			image = (Image)GetTemplateChild("image");
 			image.IsHitTestVisible = false;
+			image.ImageOpened += OnImageOpened;
+			image.ImageFailed += OnImageFailed;
 
-			DependencyPropertyChangedEvent.Register(image, Image.SourceProperty, OnSourcePropertyChanged);
 			SizeChanged += delegate { UpdateMaxZoomFactor(); };
 		}
 
-		private void OnSourcePropertyChanged(object arg1, object arg2)
+		private void OnImageOpened(object sender, RoutedEventArgs routedEventArgs)
 		{
-			UpdateMaxZoomFactor();
-
-			var copy = ImageLoaded;
+			var copy = ImageOpened;
 			if (copy != null)
-				copy(this, new EventArgs());
+				copy(this, new RoutedEventArgs());
+
+			UpdateMaxZoomFactor();
 		}
 		
+		private void OnImageFailed(object sender, ExceptionRoutedEventArgs exceptionRoutedEventArgs)
+		{
+			var copy = ImageFailed;
+			if (copy != null)
+				copy(this, null);
+
+			UpdateMaxZoomFactor();
+		}
+
 		private void UpdateMaxZoomFactor()
 		{
 			if (AutomaticZoomFactor && ActualHeight > 0 && ActualWidth > 0)
 			{
 				var bitmap = image.Source as BitmapImage;
-				if (bitmap != null)
+				if (bitmap != null && bitmap.PixelWidth > 0 && bitmap.PixelHeight > 0)
 					CalculateMaxZoomFactor(bitmap.PixelWidth, bitmap.PixelHeight);
 			}
 		}
