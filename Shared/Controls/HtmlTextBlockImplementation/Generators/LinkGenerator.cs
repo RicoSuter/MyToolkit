@@ -4,12 +4,8 @@ using MyToolkit.MVVM;
 
 #if WINRT
 using Windows.System;
-using Windows.UI;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
-using Windows.UI.Xaml.Media;
-
 #else
 using System.Windows;
 using System.Windows.Documents;
@@ -29,19 +25,19 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 				var link = node.Attributes["href"];
 				var label = node.Children[0].Value;
 
-				var linkElement = new InlineUIContainer();
-				var tb = new TextBlock();
-				tb.Foreground = new SolidColorBrush(Colors.Blue);
+				var hr = new Underline();
+				hr.Inlines.Add(new Run { Text = label });
 
-				var underline = new Underline();
-				underline.Inlines.Add(new Run { Text = label });
-				tb.Inlines.Add(underline);
+				//var action = CreateLinkAction(hr, link, textBlock);
+				//var origAction = action;
+				//action = delegate
+				//{
+				//	if (NavigationState.TryBeginNavigating())
+				//		origAction();
+				//};
 
-				var action = CreateLinkAction(tb, link, textBlock);
-				tb.Tapped += delegate { action(); };
-
-				linkElement.Child = tb;
-				return linkElement;
+				//hr.Command = new RelayCommand(action);	
+				return hr;
 			}
 			catch
 			{
@@ -49,9 +45,9 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 			}
 		}
 
-		protected virtual Action CreateLinkAction(TextBlock hyperlink, string link, IHtmlTextBlock textBlock)
+		protected virtual Action CreateLinkAction(Underline hyperlink, string link, IHtmlTextBlock textBlock)
 		{
-			return () => Launcher.LaunchUriAsync(new Uri(link)).AsTask().RunSynchronously();
+			return () => Launcher.LaunchUriAsync(new Uri(link));
 		}
 #else
 		public override DependencyObject GenerateSingle(HtmlNode node, IHtmlTextBlock textBlock)
