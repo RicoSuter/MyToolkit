@@ -12,7 +12,12 @@ using System.Windows.Media;
 
 namespace MyToolkit.Collections
 {
-	public class Group<T> : ObservableCollection<T>
+	public interface IGroup
+	{
+		string Title { get; }
+	}
+
+	public class Group<T> : ObservableCollection<T>, IGroup
 	{
 		public Group(string title) : this(title, new List<T>()) { }
 		public Group(string title, IEnumerable<T> items)
