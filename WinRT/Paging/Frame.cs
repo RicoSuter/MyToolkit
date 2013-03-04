@@ -14,11 +14,12 @@ namespace MyToolkit.Paging
 	{
 		public event NavigatedEventHandler Navigated;
 
-		private int currentIndex = -1; 
 		private List<PageDescription> pages = new List<PageDescription>();
+		private int currentIndex = -1;
 
-		public PageDescription CurrentPage { get { return pages.Count > 0 ? pages[currentIndex] : null; } }
 		public PageDescription PreviousPage { get { return currentIndex > 0 ? pages[currentIndex - 1] : null; } }
+		public PageDescription CurrentPage { get { return pages.Count > 0 ? pages[currentIndex] : null; } }		
+		public PageDescription NextPage { get { return currentIndex < pages.Count - 1 ? pages[currentIndex + 1] : null; } }
 
 		public Frame()
 		{
