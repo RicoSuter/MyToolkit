@@ -17,8 +17,8 @@ namespace MyToolkit.Paging
 		private int currentIndex = -1; 
 		private List<PageDescription> pages = new List<PageDescription>();
 
-		private PageDescription Current { get { return pages.Count > 0 ? pages[currentIndex] : null; } }
-		public Page CurrentPage { get { return Current != null ? Current.GetPage(this) : null; } }
+		public PageDescription CurrentPageDescription { get { return pages.Count > 0 ? pages[currentIndex] : null; } }
+		public Page CurrentPage { get { return CurrentPageDescription != null ? CurrentPageDescription.GetPage(this) : null; } }
 		
 		public Type PreviousPageType {get { return currentIndex > 0 ? pages[currentIndex - 1].Type : null; }}
 
@@ -33,8 +33,8 @@ namespace MyToolkit.Paging
 
 		private void OnVisibilityChanged(object sender, VisibilityChangedEventArgs args)
 		{
-			if (Current != null)
-				Current.GetPage(this).OnVisibilityChanged(args);
+			if (CurrentPageDescription != null)
+				CurrentPageDescription.GetPage(this).OnVisibilityChanged(args);
 		}
 
 		public bool CanGoForward { get { return currentIndex < pages.Count - 1; } }
@@ -42,7 +42,7 @@ namespace MyToolkit.Paging
 		/// <returns>Returns true if navigating forward, false if cancelled</returns>
 		public async Task<bool> GoForwardAsync()
 		{
-			if (await CallOnNavigatingFrom(Current, NavigationMode.Forward))
+			if (await CallOnNavigatingFrom(CurrentPageDescription, NavigationMode.Forward))
 				return false;
 
 			GoForwardOrBack(NavigationMode.Forward);
@@ -50,6 +50,43 @@ namespace MyToolkit.Paging
 		}
 
 		public bool CanGoBack { get { return currentIndex > 0; } }
+
+		public IReadOnlyList<PageDescription> Pages { get { return pages; } }
+
+		public PageDescription GetNearestPageOfTypeInBackStack(Type pageType)
+		{
+			var index = currentIndex;
+			while (index >= 0)
+			{
+				if (pages[index].Type == pageType)
+					return pages[index];
+				index--;
+			}
+			return null; 
+		}
+
+		public async Task<bool> GoBackToAsync(PageDescription page)
+		{
+			var index = pages.IndexOf(page);
+			return await GoBackToAsync(index);
+		}
+
+		public async Task<bool> GoBackToAsync(int newIndex)
+		{
+			if (newIndex == currentIndex)
+				return true;
+
+			if (newIndex < 0 || newIndex > currentIndex)
+				return false; 
+				
+			while (currentIndex != newIndex)
+			{
+				if (!await GoBackAsync())
+					return false;
+			}
+
+			return true; 
+		}
 
 		public async Task<bool> GoHomeAsync()
 		{
@@ -64,7 +101,7 @@ namespace MyToolkit.Paging
 		/// <returns>Returns true if navigating back, false if cancelled</returns>
 		public async Task<bool> GoBackAsync()
 		{
-			if (await CallOnNavigatingFrom(Current, NavigationMode.Back))
+			if (await CallOnNavigatingFrom(CurrentPageDescription, NavigationMode.Back))
 				return false;
 
 			GoForwardOrBack(NavigationMode.Back);
@@ -75,9 +112,9 @@ namespace MyToolkit.Paging
 		{
 			if (mode == NavigationMode.Forward ? CanGoForward : CanGoBack)
 			{
-				var oldPage = Current;
+				var oldPage = CurrentPageDescription;
 				currentIndex += mode == NavigationMode.Forward ? 1 : -1;
-				var newPage = Current;
+				var newPage = CurrentPageDescription;
 
 				Content = newPage.GetPage(this);
 				CallOnNavigatedFrom(oldPage, mode);
@@ -101,7 +138,7 @@ namespace MyToolkit.Paging
 
 		public async Task<bool> NavigateAsync(Type type, object parameter)
 		{
-			if (Current != null && await CallOnNavigatingFrom(Current, NavigationMode.Forward))
+			if (CurrentPageDescription != null && await CallOnNavigatingFrom(CurrentPageDescription, NavigationMode.Forward))
 				return false;
 			
 			NavigateInternal(type, parameter);
@@ -119,7 +156,7 @@ namespace MyToolkit.Paging
 
 		private void NavigateInternal(Type type, object parameter)
 		{
-			var oldPage = Current;
+			var oldPage = CurrentPageDescription;
 			RemoveAllAfterCurrent(); 
 
 			var newPage = new PageDescription(type, parameter);
@@ -185,15 +222,15 @@ namespace MyToolkit.Paging
 
 			if (currentIndex != -1)
 			{
-				Content = Current.GetPage(this);
-				CallOnNavigatedTo(Current, NavigationMode.Refresh);
+				Content = CurrentPageDescription.GetPage(this);
+				CallOnNavigatedTo(CurrentPageDescription, NavigationMode.Refresh);
 			}
 		}
 
 		public string GetNavigationState()
 		{
-			CallOnNavigatingFrom(Current, NavigationMode.Forward);
-			CallOnNavigatedFrom(Current, NavigationMode.Forward);
+			CallOnNavigatingFrom(CurrentPageDescription, NavigationMode.Forward);
+			CallOnNavigatedFrom(CurrentPageDescription, NavigationMode.Forward);
 
 			// remove pages which do not support tombstoning
 			var pagesToSerialize = pages;

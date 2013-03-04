@@ -32,15 +32,21 @@ namespace MyToolkit.Paging
 			set { Parameter = value; }
 		}
 
-		private Page page;
-		public Page GetPage(Frame frame)
+		public bool IsInstanciated
 		{
-			if (page == null)
+			get { return Page != null; }
+		}
+
+		public Page Page { get; private set; }
+
+		internal Page GetPage(Frame frame)
+		{
+			if (Page == null)
 			{
-				page = (Page)Activator.CreateInstance(Type);
-				page.Frame = frame;
+				Page = (Page)Activator.CreateInstance(Type);
+				Page.Frame = frame;
 			}
-			return page;
+			return Page;
 		}
 
 		private Type type;
