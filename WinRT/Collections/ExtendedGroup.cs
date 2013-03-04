@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -78,21 +76,6 @@ namespace MyToolkit.Collections
 			var copy = PropertyChanged;
 			if (copy != null)
 				copy(this, new PropertyChangedEventArgs(propertyName));
-		}
-	}
-
-	public class ObservableGroups<T> : ObservableCollection<ExtendedGroup<T>>
-	{
-		public ExtendedGroup<T> AddGroup(string title, int topItemsCount = -1)
-		{
-			return AddGroup(title, new List<T>(), topItemsCount);
-		}
-
-		public ExtendedGroup<T> AddGroup(string title, IEnumerable<T> items, int topItemsCount = -1)
-		{
-			var group = new ExtendedGroup<T>(title, items, topItemsCount);
-			Add(group);
-			return group;
 		}
 	}
 }

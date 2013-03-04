@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace MyToolkit.Controls
 {
-	public sealed class DataGrid : Control
+	public class DataGrid : Control
 	{
 		private bool loaded = false; 
 		public DataGrid()

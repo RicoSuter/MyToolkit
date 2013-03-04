@@ -54,9 +54,6 @@
     <Compile Include="..\Shared\Collections\ObservableView.cs">
       <Link>Collections\ObservableView.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\DataTemplateSelector.cs">
-      <Link>Controls\DataTemplateSelector.cs</Link>
-    </Compile>
     <Compile Include="..\Shared\Controls\FixedHtmlTextBlock.cs">
       <Link>Controls\FixedHtmlTextBlock.cs</Link>
     </Compile>
@@ -257,8 +254,9 @@
     </Compile>
     <Compile Include="Animations\Fading.cs" />
     <Compile Include="Animations\Flipping.cs" />
+    <Compile Include="Collections\ExtendedGroup.cs" />
     <Compile Include="Collections\ObservableDictionary.cs" />
-    <Compile Include="Collections\ObservableGroups.cs" />
+    <Compile Include="Collections\ObservableGroupCollection.cs" />
     <Compile Include="Controls\AppBarButton.cs" />
     <Compile Include="Controls\AppBarToggleButton.cs" />
     <Compile Include="Controls\ColorChooser.cs" />

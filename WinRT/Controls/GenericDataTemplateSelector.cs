@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 
 namespace MyToolkit.Controls
@@ -26,7 +27,7 @@ namespace MyToolkit.Controls
 			Templates = new List<TypeDataTemplate>();
 		}
 
-		public override DataTemplate SelectTemplate(object item, DependencyObject container)
+		protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
 		{
 			var tpl = Templates.SingleOrDefault(t => t.Type == item.GetType().Name);
 			if (tpl != null)
