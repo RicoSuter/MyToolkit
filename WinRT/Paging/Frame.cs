@@ -10,17 +10,15 @@ using Windows.UI.Xaml.Controls;
 namespace MyToolkit.Paging
 {
 	public delegate void NavigatedEventHandler(object sender, NavigationEventArgs e);
-	public class Frame : ContentControl//, INavigate
+	public class Frame : ContentControl
 	{
 		public event NavigatedEventHandler Navigated;
 
 		private int currentIndex = -1; 
 		private List<PageDescription> pages = new List<PageDescription>();
 
-		public PageDescription CurrentPageDescription { get { return pages.Count > 0 ? pages[currentIndex] : null; } }
-		public Page CurrentPage { get { return CurrentPageDescription != null ? CurrentPageDescription.GetPage(this) : null; } }
-		
-		public Type PreviousPageType {get { return currentIndex > 0 ? pages[currentIndex - 1].Type : null; }}
+		public PageDescription CurrentPage { get { return pages.Count > 0 ? pages[currentIndex] : null; } }
+		public PageDescription PreviousPage { get { return currentIndex > 0 ? pages[currentIndex - 1] : null; } }
 
 		public Frame()
 		{
@@ -33,8 +31,8 @@ namespace MyToolkit.Paging
 
 		private void OnVisibilityChanged(object sender, VisibilityChangedEventArgs args)
 		{
-			if (CurrentPageDescription != null)
-				CurrentPageDescription.GetPage(this).OnVisibilityChanged(args);
+			if (CurrentPage != null)
+				CurrentPage.GetPage(this).OnVisibilityChanged(args);
 		}
 
 		public bool CanGoForward { get { return currentIndex < pages.Count - 1; } }
@@ -42,7 +40,7 @@ namespace MyToolkit.Paging
 		/// <returns>Returns true if navigating forward, false if cancelled</returns>
 		public async Task<bool> GoForwardAsync()
 		{
-			if (await CallOnNavigatingFrom(CurrentPageDescription, NavigationMode.Forward))
+			if (await CallOnNavigatingFrom(CurrentPage, NavigationMode.Forward))
 				return false;
 
 			GoForwardOrBack(NavigationMode.Forward);
@@ -101,7 +99,7 @@ namespace MyToolkit.Paging
 		/// <returns>Returns true if navigating back, false if cancelled</returns>
 		public async Task<bool> GoBackAsync()
 		{
-			if (await CallOnNavigatingFrom(CurrentPageDescription, NavigationMode.Back))
+			if (await CallOnNavigatingFrom(CurrentPage, NavigationMode.Back))
 				return false;
 
 			GoForwardOrBack(NavigationMode.Back);
@@ -112,9 +110,9 @@ namespace MyToolkit.Paging
 		{
 			if (mode == NavigationMode.Forward ? CanGoForward : CanGoBack)
 			{
-				var oldPage = CurrentPageDescription;
+				var oldPage = CurrentPage;
 				currentIndex += mode == NavigationMode.Forward ? 1 : -1;
-				var newPage = CurrentPageDescription;
+				var newPage = CurrentPage;
 
 				Content = newPage.GetPage(this);
 				CallOnNavigatedFrom(oldPage, mode);
@@ -138,7 +136,7 @@ namespace MyToolkit.Paging
 
 		public async Task<bool> NavigateAsync(Type type, object parameter)
 		{
-			if (CurrentPageDescription != null && await CallOnNavigatingFrom(CurrentPageDescription, NavigationMode.Forward))
+			if (CurrentPage != null && await CallOnNavigatingFrom(CurrentPage, NavigationMode.Forward))
 				return false;
 			
 			NavigateInternal(type, parameter);
@@ -156,7 +154,7 @@ namespace MyToolkit.Paging
 
 		private void NavigateInternal(Type type, object parameter)
 		{
-			var oldPage = CurrentPageDescription;
+			var oldPage = CurrentPage;
 			RemoveAllAfterCurrent(); 
 
 			var newPage = new PageDescription(type, parameter);
@@ -222,15 +220,15 @@ namespace MyToolkit.Paging
 
 			if (currentIndex != -1)
 			{
-				Content = CurrentPageDescription.GetPage(this);
-				CallOnNavigatedTo(CurrentPageDescription, NavigationMode.Refresh);
+				Content = CurrentPage.GetPage(this);
+				CallOnNavigatedTo(CurrentPage, NavigationMode.Refresh);
 			}
 		}
 
 		public string GetNavigationState()
 		{
-			CallOnNavigatingFrom(CurrentPageDescription, NavigationMode.Forward);
-			CallOnNavigatedFrom(CurrentPageDescription, NavigationMode.Forward);
+			CallOnNavigatingFrom(CurrentPage, NavigationMode.Forward);
+			CallOnNavigatedFrom(CurrentPage, NavigationMode.Forward);
 
 			// remove pages which do not support tombstoning
 			var pagesToSerialize = pages;
