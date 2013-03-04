@@ -98,7 +98,7 @@ namespace MyToolkit.Paging
 			OnNavigatedFrom(e);
 		}
 
-		#region Event handlers
+		#region Predefined event handlers
 
 		protected void GoHome(object sender, RoutedEventArgs e)
 		{
