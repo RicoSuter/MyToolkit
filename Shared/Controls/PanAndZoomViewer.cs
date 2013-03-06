@@ -67,6 +67,7 @@ namespace MyToolkit.Controls
 			base.OnApplyTemplate();
 			
 			ManipulationMode = ManipulationModes.All;
+			PointerWheelChanged += OnPointerWheelChanged;
 #else
 		public override void OnApplyTemplate()
 		{
@@ -99,6 +100,24 @@ namespace MyToolkit.Controls
 
 #if WINRT
 	
+		private void OnPointerWheelChanged(object sender, PointerRoutedEventArgs args)
+		{
+			var pt = args.GetCurrentPoint(this);
+			var delta = pt.Properties.MouseWheelDelta / 120;
+			var diff = MaxZoomFactor/20*delta;
+			
+			currentScale = currentScale + diff;
+			if (currentScale < 1.0)
+				currentScale = 1.0;
+			if (currentScale > MaxZoomFactor)
+				currentScale = MaxZoomFactor;
+
+			currentPosition = CalculatePositionByPoint(pt.Position, currentScale);
+
+			ApplyScaleAndPosition(false);
+		}
+
+
 		protected override void OnManipulationStarted(ManipulationStartedRoutedEventArgs e)
 		{
 			e.Handled = true;
@@ -269,21 +288,7 @@ namespace MyToolkit.Controls
 			{
 				var point = e.GetPosition(this);
 				currentScale = MaxZoomFactor;
-
-				var width = point.X * MaxZoomFactor;
-				if (width > content.ActualWidth * MaxZoomFactor - ActualWidth / 2)
-					width = content.ActualWidth * MaxZoomFactor - ActualWidth / 2;
-				if (width < ActualHeight / 2)
-					width = ActualWidth / 2;
-
-				var height = point.Y * MaxZoomFactor;
-				if (height > content.ActualHeight * MaxZoomFactor - ActualHeight / 2)
-					height = content.ActualHeight * MaxZoomFactor - ActualHeight / 2;
-				if (height < ActualHeight / 2)
-					height = ActualHeight / 2;
-
-				currentPosition = new Point((width - ActualWidth / 2) * -1, (height - ActualHeight / 2) * -1);
-
+				currentPosition = CalculatePositionByPoint(point, currentScale);
 				ApplyScaleAndPosition(true);
 			}
 			else
@@ -294,6 +299,23 @@ namespace MyToolkit.Controls
 #else
 			base.OnDoubleTap(e);
 #endif
+		}
+
+		private Point CalculatePositionByPoint(Point point, double scale)
+		{
+			var width = point.X * scale;
+			if (width > content.ActualWidth * scale - ActualWidth / 2)
+				width = content.ActualWidth * scale - ActualWidth / 2;
+			if (width < ActualHeight/2)
+				width = ActualWidth/2;
+
+			var height = point.Y * scale;
+			if (height > content.ActualHeight * scale - ActualHeight / 2)
+				height = content.ActualHeight * scale - ActualHeight / 2;
+			if (height < ActualHeight/2)
+				height = ActualHeight/2;
+
+			return new Point((width - ActualWidth/2)*-1, (height - ActualHeight/2)*-1);
 		}
 
 		private void ApplyScaleAndPosition(bool animate)
