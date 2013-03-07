@@ -14,7 +14,7 @@
 
 			<TextBlock x:Name="header" Style="{StaticResource SubheaderTextStyle}" Margin="80,0,80,40" />
 
-			<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1">
+			<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" ZoomMode="Disabled">
 				<ItemsControl x:Name="list">
 					<ItemsControl.ItemTemplate>
 						<DataTemplate>
