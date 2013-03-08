@@ -43,16 +43,19 @@ namespace MyToolkit.Caching
 		{
 			mergedObjects.Add(item); // used to avoid recursions
 
+			var isMerging = false;
 			var currentItem = GetItem(item.GetType(), item.Id);
 			if (currentItem == null)
 			{
 				Debug.WriteLine("CacheManager: Adding item " + item.GetType().Name + "." + item.Id);
-
+				currentItem = item;
 				list.Add(item);
-				return item;
 			}
-
-			Debug.WriteLine("CacheManager: Merging item " + item.GetType().Name + "." + item.Id);
+			else
+			{
+				Debug.WriteLine("CacheManager: Merging item " + item.GetType().Name + "." + item.Id);
+				isMerging = true;
+			}
 
 			// copy new values into old object
 			if (mergeFields)
@@ -64,13 +67,18 @@ namespace MyToolkit.Caching
 					if (attr != null)
 					{
 						var isList = false;
+						var isCacheableProperty = false;
+
 						var value = property.GetValue(item, null);
 						if (value != null)
 						{
 							isList = value.GetType().Name.StartsWith("ObservableCollection");
 
 							if (value is ICacheable)
+							{
 								value = SetItem((ICacheable)value, mergedObjects, !mergedObjects.Contains((ICacheable)value));
+								isCacheableProperty = true;
+							}
 
 							if (isList)
 							{
@@ -82,30 +90,34 @@ namespace MyToolkit.Caching
 									var ofType = typeof(Enumerable).GetMethod("OfType");
 									ofType = ofType.MakeGenericMethod(listItemType);
 
-									value = Activator.CreateInstance(listType, ofType.Invoke(null, 
+									isCacheableProperty = true;
+									value = Activator.CreateInstance(listType, ofType.Invoke(null,
 										new object[] {
-											((IEnumerable<ICacheable>)value)
-												.Select(i => SetItem(i, mergedObjects, !mergedObjects.Contains(i)))
-												.OfType<object>()
-												.ToArray()
-										})
+										    ((IEnumerable<ICacheable>)value)
+										    .Select(i => SetItem(i, mergedObjects, !mergedObjects.Contains(i)))
+										    .OfType<object>()
+										    .ToArray()
+									    })
 									);
 								}
 							}
 						}
 
-						if (value == null)
+						if (isMerging || isCacheableProperty)
 						{
-							var idProperty = type.GetProperty(property.Name + "Id");
-							if (idProperty != null) // check if value is null or not loaded
+							if (value == null)
 							{
-								var id = (int?)idProperty.GetValue(item, null);
-								if (!id.HasValue) // if property changed to null => set null in current cached object
-									property.SetValue(currentItem, null, null);
+								var idProperty = type.GetProperty(property.Name + "Id");
+								if (idProperty != null) // check if value is null or not loaded
+								{
+									var id = (int?)idProperty.GetValue(item, null);
+									if (!id.HasValue) // if property changed to null => set null in current cached object
+										property.SetValue(currentItem, null, null);
+								}
 							}
+							else
+								property.SetValue(currentItem, value, null);
 						}
-						else
-							property.SetValue(currentItem, value, null);
 					}
 				}
 			}
