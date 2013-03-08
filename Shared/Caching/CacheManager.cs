@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -45,9 +46,13 @@ namespace MyToolkit.Caching
 			var currentItem = GetItem(item.GetType(), item.Id);
 			if (currentItem == null)
 			{
+				Debug.WriteLine("CacheManager: Adding item " + item.GetType().Name + "." + item.Id);
+
 				list.Add(item);
 				return item;
 			}
+
+			Debug.WriteLine("CacheManager: Merging item " + item.GetType().Name + "." + item.Id);
 
 			// copy new values into old object
 			if (mergeFields)
