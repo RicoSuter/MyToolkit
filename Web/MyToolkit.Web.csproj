@@ -99,9 +99,16 @@
     <Compile Include="Notifications\PushNotificationType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
+    <Compile Include="Translations\CompiledExpression.cs" />
+    <Compile Include="Translations\DefaultTranslationOf.cs" />
+    <Compile Include="Translations\ExpressiveExtensions.cs" />
+    <Compile Include="Translations\TranslationMap.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Translations\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
