@@ -263,6 +263,7 @@
     <Compile Include="Controls\DataGridBoundColumn.cs" />
     <Compile Include="Controls\DataGridTemplatedCell.cs" />
     <Compile Include="Controls\DataGridTemplatedColumn.cs" />
+    <Compile Include="Controls\ExtendedGridView.cs" />
     <Compile Include="Controls\GenericDataTemplateSelector.cs" />
     <Compile Include="Controls\HorizontalHtmlGenerator.cs" />
     <Compile Include="Controls\ExtendedItemsControl.cs" />
