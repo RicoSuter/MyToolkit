@@ -136,11 +136,9 @@ namespace MyToolkit.Controls
 
 		#region scroll to end
 
-		// THIS IS A BETA FEATURE!!
-
 		public bool TriggerScrolledToEndEvents { get; set; }
 
-		public event EventHandler<ScrolledToEndEventArgs> scrolledToEnd;
+		private event EventHandler<ScrolledToEndEventArgs> scrolledToEnd;
 		public event EventHandler<ScrolledToEndEventArgs> ScrolledToEnd
 		{
 			add 
@@ -172,14 +170,14 @@ namespace MyToolkit.Controls
 			}
 		}
 
-		private static readonly DependencyProperty ListVerticalOffsetProperty = DependencyProperty.Register(
-			"ListVerticalOffset", typeof(double), typeof(ExtendedListBox),
-			new PropertyMetadata(OnListVerticalOffsetChanged));
+		private static readonly DependencyProperty InternalOffsetProperty = DependencyProperty.Register(
+			"InternalOffset", typeof(double), typeof(ExtendedListBox),
+			new PropertyMetadata(default(double), OnListVerticalOffsetChanged));
 
-		private bool verticalOffsetBindingCreated = false;
+		private bool bindingCreated = false;
 		private void RegisterScrollOffset()
 		{
-			if (scrollViewer == null || verticalOffsetBindingCreated || scrolledToEnd == null)
+			if (scrollViewer == null || bindingCreated || scrolledToEnd == null)
 				return;
 
 			TriggerScrolledToEndEvents = true;
@@ -188,9 +186,9 @@ namespace MyToolkit.Controls
 			binding.Source = scrollViewer;
 			binding.Path = new PropertyPath("VerticalOffset");
 			binding.Mode = BindingMode.OneWay;
-			SetBinding(ListVerticalOffsetProperty, binding);
+			SetBinding(InternalOffsetProperty, binding);
 		
-			verticalOffsetBindingCreated = true;
+			bindingCreated = true;
 		}
 
 		#endregion
@@ -268,8 +266,9 @@ namespace MyToolkit.Controls
 		public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
 		protected void OnPrepareContainerForItem(PrepareContainerForItemEventArgs args)
 		{
-			if (PrepareContainerForItem != null)
-				PrepareContainerForItem(this, args);
+			var copy = PrepareContainerForItem;
+			if (copy != null)
+				copy(this, args);
 		}
 
 		#endregion
