@@ -115,6 +115,8 @@ namespace MyToolkit.Controls
 			currentPosition = CalculatePositionByPoint(pt.Position, currentScale);
 
 			ApplyScaleAndPosition(false);
+
+			args.Handled = true; 
 		}
 
 
