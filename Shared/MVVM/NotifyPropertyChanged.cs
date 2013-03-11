@@ -37,6 +37,14 @@ namespace MyToolkit.MVVM
 		}
 	}
 
+	public static class ExpressionHelper
+	{
+		public static string GetName<TClass, TProp>(Expression<Func<TClass, TProp>> expression)
+		{
+			return ((MemberExpression) expression.Body).Member.Name; 
+		}
+	}
+
 	[DataContract]
     public class NotifyPropertyChanged : INotifyPropertyChanged
 	{
