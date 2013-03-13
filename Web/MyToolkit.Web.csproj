@@ -34,13 +34,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
@@ -93,6 +93,7 @@
     </Compile>
     <Compile Include="Behaviors\ApplyDataContractResolverAttribute.cs" />
     <Compile Include="Behaviors\NullEntityCollectionSerializerAttribute.cs" />
+    <Compile Include="Entities\ExtendedDataContext.cs" />
     <Compile Include="Notifications\PhonePushNotificationService.cs" />
     <Compile Include="Notifications\PushNotificationPriority.cs" />
     <Compile Include="Notifications\PushNotificationService.cs" />
@@ -109,6 +110,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Translations\Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

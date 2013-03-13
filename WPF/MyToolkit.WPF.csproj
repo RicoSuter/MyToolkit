@@ -97,6 +97,9 @@
     <Compile Include="..\Shared\Messaging\TextMessage.cs">
       <Link>Messaging\TextMessage.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\MVVM\BaseViewModel.cs">
+      <Link>MVVM\BaseViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\MVVM\NotifyPropertyChanged.cs">
       <Link>MVVM\NotifyPropertyChanged.cs</Link>
     </Compile>

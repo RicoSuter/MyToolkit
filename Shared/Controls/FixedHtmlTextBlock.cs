@@ -5,6 +5,8 @@ using MyToolkit.Controls.HtmlTextBlockImplementation;
 #if WINRT
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+
 #else
 using System.Windows.Media;
 using System.Windows;
@@ -36,6 +38,10 @@ namespace MyToolkit.Controls
 			FontSize = (double)Resources["PhoneFontSizeNormal"];
 			Foreground = (Brush)Resources["PhoneForegroundBrush"];
 			Margin = new Thickness(12, 0, 12, 0);
+
+#else
+			FontSize = (double)Resources["ControlContentThemeFontSize"];
+			Foreground = (Brush)Resources["ApplicationForegroundThemeBrush"];
 #endif
 
 			SizeChanged += OnSizeChanged;
