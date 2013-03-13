@@ -4,9 +4,12 @@ using MyToolkit.MVVM;
 
 #if WINRT
 using Windows.System;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Media;
+
 #else
 using System.Windows;
 using System.Windows.Documents;
@@ -27,8 +30,11 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 				var label = node.Children[0].Value;
 
 				var block = new TextBlock();
+				block.Foreground = new SolidColorBrush(Colors.Blue);
+
 				var element = new InlineUIContainer();
 				element.Child = block;
+
 				var underline = new Underline();
 				underline.Inlines.Add(new Run { Text = label });
 				block.Inlines.Add(underline);
