@@ -5,6 +5,7 @@ using MyToolkit.MVVM;
 #if WINRT
 using Windows.System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
 #else
 using System.Windows;
@@ -25,19 +26,16 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 				var link = node.Attributes["href"];
 				var label = node.Children[0].Value;
 
-				var hr = new Underline();
-				hr.Inlines.Add(new Run { Text = label });
+				var block = new TextBlock();
+				var element = new InlineUIContainer();
+				element.Child = block;
+				var underline = new Underline();
+				underline.Inlines.Add(new Run { Text = label });
+				block.Inlines.Add(underline);
 
-				//var action = CreateLinkAction(hr, link, textBlock);
-				//var origAction = action;
-				//action = delegate
-				//{
-				//	if (NavigationState.TryBeginNavigating())
-				//		origAction();
-				//};
-
-				//hr.Command = new RelayCommand(action);	
-				return hr;
+				var action = CreateLinkAction(block, link, textBlock);
+				block.Tapped += delegate { action(); };
+				return element;
 			}
 			catch
 			{
@@ -45,7 +43,7 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 			}
 		}
 
-		protected virtual Action CreateLinkAction(Underline hyperlink, string link, IHtmlTextBlock textBlock)
+		protected virtual Action CreateLinkAction(TextBlock hyperlink, string link, IHtmlTextBlock textBlock)
 		{
 			return () => Launcher.LaunchUriAsync(new Uri(link));
 		}
