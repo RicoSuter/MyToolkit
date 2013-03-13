@@ -16,7 +16,7 @@ namespace MyToolkit.UI
 		{
 			get { return Windows.ApplicationModel.DesignMode.DesignModeEnabled; }
 		}
-#elif SL4
+#elif SL4 || SL5
 		public static bool IsInDesignMode
 		{
 			get { return DesignerProperties.IsInDesignTool; }

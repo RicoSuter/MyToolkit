@@ -26,7 +26,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\- Output\WinPRT\</OutputPath>
+    <OutputPath>Bin\Debug\WinPRT.Extended\</OutputPath>
     <DefineConstants>TRACE;DEBUG;WP8;USE_GZIP</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
@@ -37,7 +37,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\- Output\WinPRT\</OutputPath>
+    <OutputPath>..\- Output\WinPRT.Extended\</OutputPath>
     <DefineConstants>WP8;USE_GZIP</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>

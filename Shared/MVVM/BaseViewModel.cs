@@ -1,5 +1,3 @@
-using MyToolkit.MVVM;
-
 namespace MyToolkit.MVVM
 {
 	public class BaseViewModel<T> : NotifyPropertyChanged<T> where T : BaseViewModel<T>

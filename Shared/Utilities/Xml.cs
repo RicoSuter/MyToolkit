@@ -53,7 +53,7 @@ namespace MyToolkit.Utilities
             node.InnerText = escaped;
             return node.InnerText;
         }
-#elif !SL4 && !WP7 && !WP8
+#elif !SL4 && !WP7 && !WP8 && !SL5
 		public static string XmlEscape(string unescaped)
 		{
 			var doc = new XmlDocument();

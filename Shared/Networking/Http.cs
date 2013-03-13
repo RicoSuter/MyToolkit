@@ -7,10 +7,13 @@ using System.Text;
 using System.Linq;
 using MyToolkit.Utilities;
 
-#if SL4
+#if SL4 || SL5
 using Ionic.Zlib;
 using System.Windows.Threading;
 using System.IO.IsolatedStorage;
+#if SL5
+using System.Threading.Tasks;
+#endif
 #elif WP7
 using Ionic.Zlib;
 using System.Windows.Threading;
@@ -118,7 +121,7 @@ namespace MyToolkit.Networking
 
 		#region WinRT Async
 
-#if WINRT || WP8
+#if WINRT || WP8 || SL5
 		public static Task<HttpResponse> GetAsync(string url)
 		{
 			var task = new TaskCompletionSource<HttpResponse>();
@@ -403,7 +406,7 @@ namespace MyToolkit.Networking
 					fileStream = operation.GetResults().AsStreamForRead();
 				}
 #else
-#if SL4 || WP7 || WP8
+#if SL4 || SL5 || WP7 || WP8
 				if (fileStream == null)
 				{
 					var isf = IsolatedStorageFile.GetUserStoreForApplication();
@@ -500,7 +503,7 @@ namespace MyToolkit.Networking
 #if WINRT || WP8
 				if (response.Headers["Content-Encoding"] == "gzip")
 					stream = new GZipStream(stream, CompressionMode.Decompress);
-#elif SL4 || WP7
+#elif SL4 || SL5 || WP7
 				if (response.Headers[HttpRequestHeader.ContentEncoding] == "gzip")
 					stream = new GZipStream(stream, CompressionMode.Decompress);
 #else
@@ -581,7 +584,7 @@ namespace MyToolkit.Networking
 
 #endif
 
-#if SL4 || WINRT || WP8
+#if SL4 || SL5 || WINRT || WP8
 
 		public override long ContentLength
 		{

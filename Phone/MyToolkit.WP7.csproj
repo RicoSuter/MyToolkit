@@ -23,7 +23,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\- Output\Phone\</OutputPath>
+    <OutputPath>Bin\Debug\WP7\</OutputPath>
     <DefineConstants>TRACE;DEBUG;WP7;USE_GZIP;LIGHT</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
@@ -33,7 +33,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\- Output\Phone\</OutputPath>
+    <OutputPath>..\- Output\WP7\</OutputPath>
     <DefineConstants>WP7;USE_GZIP;LIGHT</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>

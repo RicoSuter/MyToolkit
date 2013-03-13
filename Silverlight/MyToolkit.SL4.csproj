@@ -28,7 +28,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Bin\Debug\Silverlight\</OutputPath>
+    <OutputPath>Bin\Debug\SL4\</OutputPath>
     <DefineConstants>TRACE;DEBUG;SL4;USE_GZIP</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
@@ -38,7 +38,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\- Output\Silverlight\</OutputPath>
+    <OutputPath>..\- Output\SL4\</OutputPath>
     <DefineConstants>TRACE;SL4;USE_GZIP</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>

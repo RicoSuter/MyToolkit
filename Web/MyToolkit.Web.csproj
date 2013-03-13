@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\- Output\Web\</OutputPath>
+    <OutputPath>Bin\Debug\Web\</OutputPath>
     <DefineConstants>TRACE;DEBUG;WEB;USE_GZIP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>

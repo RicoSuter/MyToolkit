@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.WPF", "WPF\MyTool
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.MachineLearning.WinRT", "WinRT\MyToolkit.MachineLearning.WinRT.csproj", "{813FC109-BB5B-4A5A-941B-A873CBE805D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.SL5", "Silverlight\MyToolkit.SL5.csproj", "{A8E0CE72-B287-49C2-B275-DE473E80F10B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,16 @@ Global
 		{813FC109-BB5B-4A5A-941B-A873CBE805D1}.Release|x64.Build.0 = Release|x64
 		{813FC109-BB5B-4A5A-941B-A873CBE805D1}.Release|x86.ActiveCfg = Release|x86
 		{813FC109-BB5B-4A5A-941B-A873CBE805D1}.Release|x86.Build.0 = Release|x86
+		{A8E0CE72-B287-49C2-B275-DE473E80F10B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8E0CE72-B287-49C2-B275-DE473E80F10B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8E0CE72-B287-49C2-B275-DE473E80F10B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A8E0CE72-B287-49C2-B275-DE473E80F10B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A8E0CE72-B287-49C2-B275-DE473E80F10B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A8E0CE72-B287-49C2-B275-DE473E80F10B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8E0CE72-B287-49C2-B275-DE473E80F10B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8E0CE72-B287-49C2-B275-DE473E80F10B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A8E0CE72-B287-49C2-B275-DE473E80F10B}.Release|x64.ActiveCfg = Release|Any CPU
+		{A8E0CE72-B287-49C2-B275-DE473E80F10B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

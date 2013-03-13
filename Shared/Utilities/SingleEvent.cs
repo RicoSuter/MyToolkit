@@ -2,8 +2,11 @@
 using System.Net;
 using System.Windows;
 
-#if WINRT
+#if WP8 || SL5 || WINRT
 using System.Threading.Tasks;
+#endif
+
+#if WINRT
 using Windows.UI.Xaml;
 #endif
 
@@ -79,7 +82,7 @@ namespace MyToolkit.Utilities
 			register(sender, wrapper.Handler);
 		}
 
-#if WINRT
+#if WINRT || WP8 || SL5
 		public static Task<T> WaitForEventAsync<TObj, T>(TObj sender, Action<TObj, EventHandler<T>> register,
 			Action<TObj, EventHandler<T>> unregister) where T : EventArgs
 		{

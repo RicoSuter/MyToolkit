@@ -1,6 +1,6 @@
 using System;
 
-#if SL4 || WP7 || WP8
+#if SL4 || SL5 || WP7 || WP8
 using System.Windows;
 using System.Windows.Controls;
 #endif
