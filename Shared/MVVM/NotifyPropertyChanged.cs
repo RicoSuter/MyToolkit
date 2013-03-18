@@ -27,13 +27,17 @@ namespace MyToolkit.MVVM
 
 	public static class DependencyPropertyHelper
 	{
-		public static PropertyChangedCallback BindToViewModel<TViewModel>(Expression<Func<TViewModel, object>> vmProp)
+		public static PropertyChangedCallback BindToViewModel<TViewModel>(Expression<Func<TViewModel, object>> property)
+		{
+			return BindToViewModel(ExpressionHelper.GetName(property));
+		}
+
+		public static PropertyChangedCallback BindToViewModel(string propertyName)
 		{
 			return (obj, args) =>
 			{
 				var vm = obj.GetType().GetProperty("Model").GetValue(obj, null);
-				var vmPropName = ExpressionHelper.GetName(vmProp);
-				vm.GetType().GetProperty(vmPropName).SetValue(vm, args.NewValue, null);
+				vm.GetType().GetProperty(propertyName).SetValue(vm, args.NewValue, null);
 			};
 		}
 	}
