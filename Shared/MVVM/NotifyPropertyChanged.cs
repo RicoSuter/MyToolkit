@@ -12,10 +12,32 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 #else
 using System.ComponentModel;
+using System.Windows;
 #endif
 
 namespace MyToolkit.MVVM
 {
+	public static class ExpressionHelper
+	{
+		public static string GetName<TClass, TProp>(Expression<Func<TClass, TProp>> expression)
+		{
+			return ((MemberExpression)expression.Body).Member.Name;
+		}
+	}
+
+	public static class DependencyPropertyHelper
+	{
+		public static PropertyChangedCallback BindToViewModel<TViewModel>(Expression<Func<TViewModel, object>> vmProp)
+		{
+			return (obj, args) =>
+			{
+				var vm = obj.GetType().GetProperty("Model").GetValue(obj, null);
+				var vmPropName = ExpressionHelper.GetName(vmProp);
+				vm.GetType().GetProperty(vmPropName).SetValue(vm, args.NewValue, null);
+			};
+		}
+	}
+
 	[DataContract]
 	public class NotifyPropertyChanged<TClass> : NotifyPropertyChanged
 	{
@@ -34,14 +56,6 @@ namespace MyToolkit.MVVM
 		{
 			SetDependency(((MemberExpression)propertyName.Body).Member.Name, 
 				((MemberExpression)dependentPropertyName.Body).Member.Name);
-		}
-	}
-
-	public static class ExpressionHelper
-	{
-		public static string GetName<TClass, TProp>(Expression<Func<TClass, TProp>> expression)
-		{
-			return ((MemberExpression) expression.Body).Member.Name; 
 		}
 	}
 
