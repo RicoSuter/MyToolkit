@@ -43,7 +43,7 @@ namespace MyToolkit.Caching
 		{
 			mergedObjects.Add(item); // used to avoid recursions
 
-			var isMerging = false;
+			var isMerging = false; 
 			var currentItem = GetItem(item.GetType(), item.Id);
 			if (currentItem == null)
 			{
@@ -54,7 +54,7 @@ namespace MyToolkit.Caching
 			else
 			{
 				Debug.WriteLine("CacheManager: Merging item " + item.GetType().Name + "." + item.Id);
-				isMerging = true;
+				isMerging = true; 
 			}
 
 			// copy new values into old object
@@ -67,17 +67,17 @@ namespace MyToolkit.Caching
 					if (attr != null)
 					{
 						var isList = false;
-						var isCacheableProperty = false;
+						var isCacheableProperty = false; 
 
 						var value = property.GetValue(item, null);
 						if (value != null)
 						{
 							isList = value.GetType().Name.StartsWith("ObservableCollection");
-
+							
 							if (value is ICacheable)
 							{
 								value = SetItem((ICacheable)value, mergedObjects, !mergedObjects.Contains((ICacheable)value));
-								isCacheableProperty = true;
+								isCacheableProperty = true; 
 							}
 
 							if (isList)
@@ -92,7 +92,7 @@ namespace MyToolkit.Caching
 
 									isCacheableProperty = true;
 									value = Activator.CreateInstance(listType, ofType.Invoke(null,
-										new object[] {
+									    new object[] {
 										    ((IEnumerable<ICacheable>)value)
 										    .Select(i => SetItem(i, mergedObjects, !mergedObjects.Contains(i)))
 										    .OfType<object>()
