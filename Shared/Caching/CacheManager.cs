@@ -23,11 +23,23 @@ namespace MyToolkit.Caching
 
 		public T GetItem<T>(T item) where T : ICacheable
 		{
-			return (T)GetItem(typeof(T), item.Id);
+			return (T)GetItem(item.GetType(), item.Id);
+		}
+
+		private void AddItem(ICacheable item)
+		{
+			var type = GetBaseType(item.GetType());
+			if (!list.ContainsKey(type))
+			{
+				var group = new Dictionary<int, ICacheable>();
+				list[type] = @group;
+			}
+			list[type][item.Id] = item;
 		}
 
 		public ICacheable GetItem(Type type, int id)
 		{
+			type = GetBaseType(type);
 			if (list.ContainsKey(type))
 			{
 				var group = list[type];
@@ -49,13 +61,7 @@ namespace MyToolkit.Caching
 			if (currentItem == null)
 			{
 				currentItem = item;
-				var type = item.GetType();
-				if (!list.ContainsKey(type))
-				{
-					var group = new Dictionary<int, ICacheable>();
-					list[type] = group;
-				}
-				list[type][item.Id] = item; 
+				AddItem(item);
 			}
 			else
 				isMerging = true; 
@@ -115,7 +121,7 @@ namespace MyToolkit.Caching
 							}
 						}
 
-						if (isMerging || isCacheableProperty)
+						if ((isMerging || isCacheableProperty) && property.CanWrite)
 						{
 							if (value == null)
 							{
@@ -134,6 +140,13 @@ namespace MyToolkit.Caching
 				}
 			}
 			return currentItem;
+		}
+
+		private Type GetBaseType(Type type)
+		{
+			if (type.BaseType.Name == "EntityObject")
+				return type;
+			return GetBaseType(type.BaseType);
 		}
 
 		public IList<T> SetItems<T>(IEnumerable<T> items) where T : class
