@@ -21,6 +21,11 @@ namespace MyToolkit.Caching
 			return (T)GetItem(typeof(T), id);
 		}
 
+		public T GetItem<T>(T item) where T : ICacheable
+		{
+			return (T)GetItem(typeof(T), item.Id);
+		}
+
 		public ICacheable GetItem(Type type, int id)
 		{
 			if (list.ContainsKey(type))
@@ -31,15 +36,7 @@ namespace MyToolkit.Caching
 			}
 			return null; 
 		}
-
-		//public T GetItem<T>(T item) where T : ICacheable
-		//{
-		//	var currentItem = GetItem(typeof(T), item.Id);
-		//	if (currentItem == null)
-		//		return item;
-		//	return (T)currentItem;
-		//}
-
+		
 		public T SetItem<T>(T item) where T : ICacheable
 		{
 			return (T)SetItem(item, new HashSet<ICacheable>(), true);
