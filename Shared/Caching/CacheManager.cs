@@ -14,16 +14,22 @@ namespace MyToolkit.Caching
 
 	public class CacheManager
 	{
-		public HashSet<ICacheable> list = new HashSet<ICacheable>();
+		public Dictionary<Type, Dictionary<int, ICacheable>> list = new Dictionary<Type, Dictionary<int, ICacheable>>();
 
 		public T GetItem<T>(int id) where T : ICacheable
 		{
-			return list.OfType<T>().SingleOrDefault(i => i.Id == id);
+			return (T)GetItem(typeof(T), id);
 		}
 
 		public ICacheable GetItem(Type type, int id)
 		{
-			return list.SingleOrDefault(i => i.GetType() == type && i.Id == id);
+			if (list.ContainsKey(type))
+			{
+				var group = list[type];
+				if (group.ContainsKey(id))
+					return group[id];
+			}
+			return null; 
 		}
 
 		//public T GetItem<T>(T item) where T : ICacheable
@@ -36,26 +42,35 @@ namespace MyToolkit.Caching
 
 		public T SetItem<T>(T item) where T : ICacheable
 		{
-			return (T)SetItem(item, new List<ICacheable>(), true);
+			return (T)SetItem(item, new HashSet<ICacheable>(), true);
 		}
 
-		private ICacheable SetItem(ICacheable item, List<ICacheable> mergedObjects, bool mergeFields)
+		private ICacheable SetItem(ICacheable item, HashSet<ICacheable> mergedObjects, bool mergeFields)
 		{
-			mergedObjects.Add(item); // used to avoid recursions
-
 			var isMerging = false; 
-			var currentItem = GetItem(item.GetType(), item.Id);
+			var currentItem = GetItem(item.GetType(), item.Id);			
 			if (currentItem == null)
 			{
-				Debug.WriteLine("CacheManager: Adding item " + item.GetType().Name + "." + item.Id);
 				currentItem = item;
-				list.Add(item);
+				var type = item.GetType();
+				if (!list.ContainsKey(type))
+				{
+					var group = new Dictionary<int, ICacheable>();
+					list[type] = group;
+				}
+				list[type][item.Id] = item; 
 			}
 			else
-			{
-				Debug.WriteLine("CacheManager: Merging item " + item.GetType().Name + "." + item.Id);
 				isMerging = true; 
-			}
+
+			if (mergedObjects.Contains(currentItem))
+				return currentItem;
+			mergedObjects.Add(currentItem); // used to avoid recursions
+
+			if (isMerging)
+				Debug.WriteLine("CacheManager: Merging item " + item.GetType().Name + "." + item.Id);
+			else
+				Debug.WriteLine("CacheManager: Adding item " + item.GetType().Name + "." + item.Id);
 
 			// copy new values into old object
 			if (mergeFields)
@@ -127,10 +142,11 @@ namespace MyToolkit.Caching
 		public IList<T> SetItems<T>(IEnumerable<T> items) where T : class
 		{
 			var list = new List<T>();
+			var mergedObjects = new HashSet<ICacheable>();
 			foreach (var item in items)
 			{
 				if (item is ICacheable)
-					list.Add((T)SetItem((ICacheable)item));
+					list.Add((T)SetItem((ICacheable)item, mergedObjects, true));
 				else
 					list.Add(item);
 			}
