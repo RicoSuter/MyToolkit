@@ -217,7 +217,7 @@
         <Setter Property="Template">
             <Setter.Value>
 				<ControlTemplate TargetType="controls:Pivot">
-					<Grid>
+					<Grid Background="Transparent">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto" />
 							<RowDefinition Height="*" />
@@ -229,7 +229,7 @@
 							
 							<controls:ExtendedListBox.ItemsPanel>
 								<ItemsPanelTemplate>
-									<VirtualizingStackPanel Orientation="Horizontal" />
+									<VirtualizingStackPanel Orientation="Horizontal" Background="Transparent" />
 								</ItemsPanelTemplate>
 							</controls:ExtendedListBox.ItemsPanel>
 							
@@ -353,7 +353,7 @@
 							</controls:ExtendedListBox.ItemContainerStyle>
 						</controls:ExtendedListBox>
 						<ContentControl x:Name="Content" Grid.Row="1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
-										VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+										VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent">
 							<ContentControl.ContentTransitions>
 								<TransitionCollection>
 									<EntranceThemeTransition />
