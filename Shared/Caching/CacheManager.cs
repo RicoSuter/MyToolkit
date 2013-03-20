@@ -37,6 +37,14 @@ namespace MyToolkit.Caching
 			list[type][item.Id] = item;
 		}
 
+		public ICacheable GetItem(string type, int id)
+		{
+			var netType = list.Single(p => p.Key.Name == type);
+			if (netType.Key != null)
+				return GetItem(netType.Key, id);
+			return null; 
+		}
+
 		public ICacheable GetItem(Type type, int id)
 		{
 			type = GetBaseType(type);
