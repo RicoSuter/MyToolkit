@@ -33,11 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -45,9 +44,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -57,9 +54,6 @@
     </Compile>
     <Compile Include="..\Shared\Encryption\SimpleEncryption.cs">
       <Link>Encryption\SimpleEncryption.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\ColorUtility.cs">
-      <Link>Utilities\ColorUtility.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\DateTimeExtensions.cs">
       <Link>Utilities\DateTimeExtensions.cs</Link>

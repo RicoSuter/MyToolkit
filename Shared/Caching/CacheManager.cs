@@ -26,13 +26,13 @@ namespace MyToolkit.Caching
 			return list.SingleOrDefault(i => i.GetType() == type && i.Id == id);
 		}
 
-		public T GetItem<T>(T item) where T : ICacheable
-		{
-			var currentItem = GetItem(typeof(T), item.Id);
-			if (currentItem == null)
-				return item;
-			return (T)currentItem;
-		}
+		//public T GetItem<T>(T item) where T : ICacheable
+		//{
+		//	var currentItem = GetItem(typeof(T), item.Id);
+		//	if (currentItem == null)
+		//		return item;
+		//	return (T)currentItem;
+		//}
 
 		public T SetItem<T>(T item) where T : ICacheable
 		{

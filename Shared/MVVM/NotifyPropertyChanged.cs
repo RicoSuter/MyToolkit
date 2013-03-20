@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 
 #if WINRT
 using MyToolkit.Utilities;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data; 
 using System.Reflection;
 using System.ComponentModel;
@@ -36,8 +37,12 @@ namespace MyToolkit.MVVM
 		{
 			return (obj, args) =>
 			{
-				var vm = obj.GetType().GetProperty("Model").GetValue(obj, null);
+				var vm = ((FrameworkElement)obj).Resources["viewModel"];
+#if WINRT
+				vm.GetType().GetTypeInfo().GetProperty(propertyName).SetValue(vm, args.NewValue, null);
+#else
 				vm.GetType().GetProperty(propertyName).SetValue(vm, args.NewValue, null);
+#endif
 			};
 		}
 	}
