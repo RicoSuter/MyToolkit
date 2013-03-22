@@ -25,6 +25,31 @@ namespace MyToolkit.UI
     /// </summary>
     public class TextBinding
     {
+		public static void ForceTextUpdate(object sender)
+		{
+			var type = sender.GetType();
+            if (type == typeof (TextBox))
+            {
+				var textBox = sender as TextBox;
+				if (textBox != null)
+				{
+					var bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+					if (bindingExpression != null)
+						bindingExpression.UpdateSource();
+				}
+			}
+            else
+			{
+				var textBox = sender as PasswordBox;
+				if (textBox != null)
+				{
+					var bindingExpression = textBox.GetBindingExpression(PasswordBox.PasswordProperty);
+					if (bindingExpression != null)
+						bindingExpression.UpdateSource();
+				}
+            }
+		}
+
 		public static bool GetUpdateSourceOnChange(DependencyObject obj)
         {
             return (bool)obj.GetValue(UpdateSourceOnChangeProperty);
