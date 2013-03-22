@@ -28,6 +28,11 @@ namespace MyToolkit.MVVM
 
 	public static class DependencyPropertyHelper
 	{
+		public static PropertyChangedCallback CallMethod<TView>(Action<TView> method) where TView : DependencyObject
+		{
+			return (obj, args) => method((TView)obj);
+		}
+
 		public static PropertyChangedCallback BindToViewModel<TViewModel>(Expression<Func<TViewModel, object>> property)
 		{
 			return BindToViewModel(ExpressionHelper.GetName(property));
