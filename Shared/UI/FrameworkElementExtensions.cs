@@ -21,12 +21,17 @@ namespace MyToolkit.UI
 {
 	public static class FrameworkElementExtensions
 	{
-		public static object FindParentDataContext(this FrameworkElement elem)
+		public static object FindParentDataContext(this DependencyObject elem)
 		{
-			if (elem.DataContext != null)
-				return elem.DataContext;
-			if (elem.Parent != null && elem.Parent is FrameworkElement)
-				return FindParentDataContext((FrameworkElement)elem.Parent);
+			if (elem is FrameworkElement)
+			{
+				if (((FrameworkElement)elem).DataContext != null)
+					return ((FrameworkElement)elem).DataContext;
+			}
+
+			var parent = VisualTreeHelper.GetParent(elem);
+			if (parent != null)
+				return FindParentDataContext(parent);
 			return null;
 		}
 

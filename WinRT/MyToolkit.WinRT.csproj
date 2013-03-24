@@ -302,6 +302,7 @@
     <Compile Include="Controls\ImageButton.cs" />
     <Compile Include="Controls\NavigationList.cs" />
     <Compile Include="Controls\RolloverButton.cs" />
+    <Compile Include="Controls\ValidatedTextBox.cs" />
     <Compile Include="Controls\WrapPanel.cs" />
     <Compile Include="Converters\ChainedConverter.cs" />
     <Compile Include="Composition\Composition.cs" />
@@ -349,6 +350,8 @@
     <Compile Include="Utilities\Thread.cs" />
     <Compile Include="Utilities\ToastNotificationHelper.cs" />
     <Compile Include="Utilities\VisualTreeHelper.cs" />
+    <Compile Include="Validation\IValidationControl.cs" />
+    <Compile Include="Validation\ValidationContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

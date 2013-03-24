@@ -1036,5 +1036,23 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="controls:ValidatedTextBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:ValidatedTextBox">
+                    <StackPanel>
+						<TextBlock Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header, Converter={StaticResource vc}}" 
+								   Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header}"
+								   Style="{StaticResource BasicTextStyle}" Margin="0,0,0,5" FontWeight="Bold" />
+						<controls:ExtendedTextBox Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, Mode=TwoWay}" />
+						<TextBlock Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ValidationException, Converter={StaticResource vc}}" 
+								   Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ValidationException.Message}"
+								   Foreground="Red" Style="{StaticResource BasicTextStyle}" Margin="0,5,0,0" />
+					</StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
   
