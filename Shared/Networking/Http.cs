@@ -27,6 +27,7 @@ using System.IO.IsolatedStorage;
 #elif WPF
 using System.IO.Compression;
 using System.Windows.Threading;
+using System.Threading.Tasks;
 #elif WINRT
 using System.IO.Compression;
 using Windows.Storage;
@@ -121,7 +122,7 @@ namespace MyToolkit.Networking
 
 		#region WinRT Async
 
-#if WINRT || WP8 || SL5
+#if WINRT || WP8 || SL5 || WPF
 		public static Task<HttpResponse> GetAsync(string url)
 		{
 			var task = new TaskCompletionSource<HttpResponse>();

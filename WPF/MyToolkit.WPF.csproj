@@ -97,6 +97,12 @@
     <Compile Include="..\Shared\Messaging\TextMessage.cs">
       <Link>Messaging\TextMessage.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Multimedia\YouTube.cs">
+      <Link>Multimedia\YouTube.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Multimedia\YouTubeQuality.cs">
+      <Link>Multimedia\YouTubeQuality.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\MVVM\BaseViewModel.cs">
       <Link>MVVM\BaseViewModel.cs</Link>
     </Compile>
