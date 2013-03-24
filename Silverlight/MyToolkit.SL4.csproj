@@ -159,6 +159,9 @@
     <Compile Include="..\Shared\MVVM\BaseViewModel.cs">
       <Link>MVVM\BaseViewModel.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\MVVM\DependencyPropertyHelper.cs">
+      <Link>MVVM\DependencyPropertyHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\MVVM\NotifyPropertyChanged.cs">
       <Link>MVVM\NotifyPropertyChanged.cs</Link>
     </Compile>
@@ -203,6 +206,9 @@
     </Compile>
     <Compile Include="..\Shared\Utilities\EnumerableExtensions.cs">
       <Link>Utilities\EnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\ExpressionHelper.cs">
+      <Link>Utilities\ExpressionHelper.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\HttpUtilityExtensions.cs">
       <Link>Utilities\HttpUtilityExtensions.cs</Link>

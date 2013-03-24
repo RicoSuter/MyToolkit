@@ -64,6 +64,9 @@
     <Compile Include="..\Shared\Utilities\EnumerableExtensions.cs">
       <Link>Utilities\EnumerableExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Utilities\ExpressionHelper.cs">
+      <Link>Utilities\ExpressionHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Utilities\HttpUtilityExtensions.cs">
       <Link>Utilities\HttpUtilityExtensions.cs</Link>
     </Compile>
