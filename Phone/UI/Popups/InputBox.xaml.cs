@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace MyToolkit.UI.Popups
 {
@@ -50,6 +51,12 @@ namespace MyToolkit.UI.Popups
 		{
 			Text = box.Text; 
 			Close();
+		}
+
+		private void Box_OnKeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Enter)
+				Close(sender, e);
 		}
 	}
 }

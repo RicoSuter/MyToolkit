@@ -29,7 +29,7 @@
 					   Style="{StaticResource PhoneTextNormalStyle}" FontSize="33" FontWeight="Medium"></TextBlock>
 				<TextBlock x:Name="message" Grid.Row="1" Grid.ColumnSpan="3" Margin="12,0,12,4" TextWrapping="Wrap"
 					   Style="{StaticResource PhoneTextNormalStyle}" FontSize="{StaticResource PhoneFontSizeMedium}"></TextBlock>
-				<TextBox Grid.Row="2" Grid.ColumnSpan="3" x:Name="box"></TextBox>
+				<TextBox Grid.Row="2" Grid.ColumnSpan="3" x:Name="box" KeyUp="Box_OnKeyUp"></TextBox>
 
 				<Button Content="ok" Grid.Row="3" Grid.Column="0" Click="Close"></Button>
 				<Button Content="cancel" Grid.Row="3" Grid.Column="2" Click="Cancel" x:Name="cancel"></Button>
