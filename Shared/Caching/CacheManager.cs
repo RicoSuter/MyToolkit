@@ -14,7 +14,7 @@ namespace MyToolkit.Caching
 
 	public class CacheManager
 	{
-		public Dictionary<Type, Dictionary<int, ICacheable>> list = new Dictionary<Type, Dictionary<int, ICacheable>>();
+		protected Dictionary<Type, Dictionary<int, ICacheable>> list = new Dictionary<Type, Dictionary<int, ICacheable>>();
 
 		public T GetItem<T>(int id) where T : ICacheable
 		{
@@ -150,7 +150,7 @@ namespace MyToolkit.Caching
 			return currentItem;
 		}
 
-		private Type GetBaseType(Type type)
+		protected Type GetBaseType(Type type)
 		{
 			if (type.BaseType.Name == "EntityObject")
 				return type;
