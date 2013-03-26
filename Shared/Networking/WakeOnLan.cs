@@ -114,7 +114,7 @@ namespace MyToolkit.Networking
 					case SocketAsyncOperation.Connect:
 						e.SetBuffer(packet.ToArray(), 0, packet.Count);
 						if (!socket.SendAsync(e))
-							Deployment.Current.Dispatcher.BeginInvoke(sentAction);
+							Deployment.Current.Dispatcher.BeginInvoke(failureAction);
 						break;
 					case SocketAsyncOperation.Send:
 						Deployment.Current.Dispatcher.BeginInvoke(sentAction);
