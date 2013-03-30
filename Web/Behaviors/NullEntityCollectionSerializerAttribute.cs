@@ -43,10 +43,8 @@ namespace MyToolkit.Behaviors
 
 		public override bool TryResolveType(Type dataContractType, Type declaredType, DataContractResolver knownTypeResolver, out XmlDictionaryString typeName, out XmlDictionaryString typeNamespace)
 		{
-			var result = knownTypeResolver.TryResolveType(dataContractType, declaredType, knownTypeResolver, out typeName, out typeNamespace);
-			if (!result)
-				return true; 
-			return result; 
+			knownTypeResolver.TryResolveType(dataContractType, declaredType, knownTypeResolver, out typeName, out typeNamespace);
+			return true; 
 		}
 	}
 

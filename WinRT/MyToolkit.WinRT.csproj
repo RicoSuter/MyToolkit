@@ -42,6 +42,12 @@
     <Compile Include="..\Phone\Utilities\EntityContainer.cs">
       <Link>Utilities\EntityContainer.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Caching\CacheManager.cs">
+      <Link>Caching\CacheManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Caching\DataManagerBase.cs">
+      <Link>Caching\DataManagerBase.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Collections\ExtendedNotifyCollectionChangedEventArgs.cs">
       <Link>Collections\ExtendedNotifyCollectionChangedEventArgs.cs</Link>
     </Compile>
@@ -352,6 +358,7 @@
     <Compile Include="Utilities\VisualTreeHelper.cs" />
     <Compile Include="Validation\IValidationControl.cs" />
     <Compile Include="Validation\ValidationContainer.cs" />
+    <Compile Include="Validation\ValidatedNotifyPropertyChanged.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

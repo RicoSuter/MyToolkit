@@ -7,6 +7,42 @@ namespace MyToolkit.Utilities
 {
 	public static class ReflectionExtensions
 	{
+#if WINRT
+		public static IEnumerable<PropertyInfo> GetProperties(this Type type)
+		{
+			return type.GetTypeInfo().DeclaredProperties;
+		}
+
+		public static PropertyInfo GetProperty(this Type type, string name)
+		{
+			return type.GetTypeInfo().GetDeclaredProperty(name);
+		}
+
+		public static MethodInfo GetMethod(this Type type, string name)
+		{
+			return type.GetTypeInfo().GetDeclaredMethod(name);
+		}
+
+		public static Type GetBaseType(this Type type)
+		{
+			return type.GetTypeInfo().BaseType;
+		}
+
+		public static IList<Type> GetGenericArguments(this Type type)
+		{
+			return type.GetTypeInfo().GenericTypeArguments;
+		}
+
+		public static IEnumerable<Type> GetInterfaces(this Type type)
+		{
+			return type.GetTypeInfo().ImplementedInterfaces;
+		}
+#else
+		public static Type GetTypeInfo(this Type type)
+		{
+			return type;
+		}
+#endif
 		public static string GetName(this Type type)
 		{
 			var fullName = type.FullName;

@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
+using MyToolkit.Utilities;
 
 namespace MyToolkit.Caching
 {
@@ -14,62 +17,69 @@ namespace MyToolkit.Caching
 
 	public class CacheManager
 	{
-		protected Dictionary<Type, Dictionary<int, ICacheable>> list = new Dictionary<Type, Dictionary<int, ICacheable>>();
-
-		public T GetItem<T>(int id) where T : ICacheable
+		protected Dictionary<string, Dictionary<int, ICacheable>> list = new Dictionary<string, Dictionary<int, ICacheable>>();
+		
+		protected T GetItem<T>(int id) where T : ICacheable
 		{
 			return (T)GetItem(typeof(T), id);
 		}
 
-		public T GetItem<T>(T item) where T : ICacheable
+		protected ICacheable GetItem(Type type, int id)
 		{
-			return (T)GetItem(item.GetType(), item.Id);
+			return GetItem(GetBaseType(type).Name, id);
 		}
 
-		private void AddItem(ICacheable item)
+		protected ICacheable GetItem(string type, int id)
 		{
-			var type = GetBaseType(item.GetType());
-			if (!list.ContainsKey(type))
-			{
-				var group = new Dictionary<int, ICacheable>();
-				list[type] = @group;
-			}
-			list[type][item.Id] = item;
-		}
-
-		public ICacheable GetItem(string type, int id)
-		{
-			var netType = list.SingleOrDefault(p => p.Key.Name == type);
-			if (netType.Key != null)
-				return GetItem(netType.Key, id);
-			return null; 
-		}
-
-		public ICacheable GetItem(Type type, int id)
-		{
-			type = GetBaseType(type);
 			if (list.ContainsKey(type))
 			{
 				var group = list[type];
 				if (group.ContainsKey(id))
 					return group[id];
 			}
-			return null; 
-		}
-		
-		public T SetItem<T>(T item) where T : ICacheable
-		{
-			return (T)SetItem(item, new HashSet<ICacheable>(), true);
+			return null;
 		}
 
-		private ICacheable SetItem(ICacheable item, HashSet<ICacheable> mergedObjects, bool mergeFields)
+		protected IList<T> AddItems<T>(IEnumerable<T> items) where T : class
+		{
+			var list = new List<T>();
+			var mergedObjects = new HashSet<ICacheable>();
+			foreach (var item in items)
+			{
+				if (item is ICacheable)
+					list.Add((T)AddItem((ICacheable)item, mergedObjects, true));
+				else
+					list.Add(item);
+			}
+			return list;
+		}
+
+		protected T AddItem<T>(T item) where T : ICacheable
+		{
+			return (T)AddItem(item, new HashSet<ICacheable>(), true);
+		}
+
+		protected ICacheable AddItem(ICacheable item)
+		{
+			return AddItem(item, new HashSet<ICacheable>(), true);
+		}
+
+		private ICacheable AddItem(ICacheable item, HashSet<ICacheable> mergedObjects, bool mergeFields)
 		{
 			var isMerging = false; 
 			var currentItem = GetItem(item.GetType(), item.Id);			
 			if (currentItem == null)
 			{
 				currentItem = item;
-				AddItem(item);
+
+				// add item to list
+				var type = GetBaseType(item.GetType());
+				if (!list.ContainsKey(type.Name))
+				{
+					var group = new Dictionary<int, ICacheable>();
+					list[type.Name] = @group;
+				}
+				list[type.Name][item.Id] = item;
 			}
 			else
 				isMerging = true; 
@@ -92,39 +102,38 @@ namespace MyToolkit.Caching
 					var attr = property.GetCustomAttributes(typeof(DataMemberAttribute), true).FirstOrDefault();
 					if (attr != null)
 					{
-						var isList = false;
 						var isCacheableProperty = false; 
 
 						var value = property.GetValue(item, null);
 						if (value != null)
 						{
-							isList = value.GetType().Name.StartsWith("ObservableCollection");
-							
 							if (value is ICacheable)
 							{
-								value = SetItem((ICacheable)value, mergedObjects, !mergedObjects.Contains((ICacheable)value));
+								value = AddItem((ICacheable)value, mergedObjects, !mergedObjects.Contains((ICacheable)value));
 								isCacheableProperty = true; 
 							}
-
-							if (isList)
+							else if (value is IList)
 							{
 								var listType = value.GetType();
-								var listItemType = listType.GetGenericArguments()[0];
-
-								if (listItemType.GetInterfaces().Contains(typeof(ICacheable)))
+								var genericArguments = listType.GetGenericArguments();
+								if (genericArguments.Count() == 1)
 								{
-									var ofType = typeof(Enumerable).GetMethod("OfType");
-									ofType = ofType.MakeGenericMethod(listItemType);
+									var listItemType = genericArguments[0];
+									if (listItemType.GetInterfaces().Contains(typeof(ICacheable)))
+									{
+										var ofType = typeof(Enumerable).GetMethod("OfType");
+										ofType = ofType.MakeGenericMethod(listItemType);
 
-									isCacheableProperty = true;
-									value = Activator.CreateInstance(listType, ofType.Invoke(null,
-									    new object[] {
-										    ((IEnumerable<ICacheable>)value)
-										    .Select(i => SetItem(i, mergedObjects, !mergedObjects.Contains(i)))
-										    .OfType<object>()
-										    .ToArray()
-									    })
-									);
+										isCacheableProperty = true;
+										value = Activator.CreateInstance(listType, ofType.Invoke(null,
+											new object[] {
+												((IEnumerable<ICacheable>)value)
+												.Select(i => AddItem(i, mergedObjects, !mergedObjects.Contains(i)))
+												.OfType<object>()
+												.ToArray()
+											})
+										);
+									}
 								}
 							}
 						}
@@ -152,23 +161,15 @@ namespace MyToolkit.Caching
 
 		protected Type GetBaseType(Type type)
 		{
+#if WINRT
+			if (type.GetBaseType().Name == "EntityObject")
+				return type;
+			return GetBaseType(type.GetBaseType());
+#else
 			if (type.BaseType.Name == "EntityObject")
 				return type;
 			return GetBaseType(type.BaseType);
-		}
-
-		public IList<T> SetItems<T>(IEnumerable<T> items) where T : class
-		{
-			var list = new List<T>();
-			var mergedObjects = new HashSet<ICacheable>();
-			foreach (var item in items)
-			{
-				if (item is ICacheable)
-					list.Add((T)SetItem((ICacheable)item, mergedObjects, true));
-				else
-					list.Add(item);
-			}
-			return list;
+#endif
 		}
 	}
 }
