@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><ItemProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Properties><Property><Name>svn:ignore</Name><Value>Bin
+﻿<?xml version="1.0" encoding="utf-8"?><ItemProperties xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><Properties><Property><Name>svn:ignore</Name><Value>Bin
 obj
 MyToolkit.Phone.csproj.user
 MyToolkit.PhoneLight.csproj.user
@@ -25,4 +25,16 @@ MyToolkit.Phone.Light.csproj.user
 MyToolkit.Phone.Extended.csproj.user
 MyToolkit.Phone.Extended.WinPRT.csproj.user
 MyToolkit.Phone.WinPRT.csproj.user
+</Value></Property><Property><Name>svn:ignore</Name><Value>Bin
+obj
+MyToolkit.Phone.csproj.user
+MyToolkit.PhoneLight.csproj.user
+Service References
+MyToolkit.Phone.Light.csproj.user
+MyToolkit.Phone.Extended.csproj.user
+MyToolkit.Phone.Extended.WinPRT.csproj.user
+MyToolkit.Phone.WinPRT.csproj.user
+MyToolkit.WP7.csproj.user
+MyToolkit.WP8.csproj.user
+MyToolkit.WP8.Extended.csproj.user
 </Value></Property></Properties></ItemProperties>
