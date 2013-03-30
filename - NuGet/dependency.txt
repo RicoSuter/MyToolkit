@@ -1,0 +1,15 @@
+MyToolkit
+	SL5
+		Microsoft.Bcl.Async
+	WP7
+		Microsoft.Bcl.Async
+		WPtoolkit
+		
+	WP8
+		WPtoolkit
+		
+MyToolkit.Extended
+	WP7
+		MyToolkit
+	WP8
+		MyToolkit
