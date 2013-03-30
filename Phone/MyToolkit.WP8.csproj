@@ -98,6 +98,12 @@
     <Compile Include="..\shared\animation\Flipping.cs">
       <Link>Animation\Flipping.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Caching\CacheManager.cs">
+      <Link>Caching\CacheManager.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Caching\DataManagerBase.cs">
+      <Link>Caching\DataManagerBase.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Collections\ExtendedNotifyCollectionChangedEventArgs.cs">
       <Link>Collections\ExtendedNotifyCollectionChangedEventArgs.cs</Link>
     </Compile>

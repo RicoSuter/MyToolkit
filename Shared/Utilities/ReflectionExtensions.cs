@@ -37,11 +37,13 @@ namespace MyToolkit.Utilities
 		{
 			return type.GetTypeInfo().ImplementedInterfaces;
 		}
-#else
+#else 
+#if !WP8
 		public static Type GetTypeInfo(this Type type)
 		{
 			return type;
 		}
+#endif
 #endif
 		public static string GetName(this Type type)
 		{
