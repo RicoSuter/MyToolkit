@@ -1,8 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?><ItemProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Properties><Property><Name>svn:ignore</Name><Value>Bin
+﻿<?xml version="1.0" encoding="utf-8"?><ItemProperties xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><Properties><Property><Name>svn:ignore</Name><Value>Bin
 obj
 MyToolkit.Silverlight.csproj.user
 </Value></Property><Property><Name>svn:ignore</Name><Value>Bin
 obj
 MyToolkit.Silverlight.csproj.user
 Multimedia
+</Value></Property><Property><Name>svn:ignore</Name><Value>Bin
+obj
+MyToolkit.Silverlight.csproj.user
+Multimedia
+MyToolkit.SL5.csproj.user
 </Value></Property></Properties></ItemProperties>
