@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 #if !WINRT
 using System.Windows;
@@ -16,7 +17,12 @@ namespace MyToolkit.Converters
 #if !WINRT
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			return value.GetType().Name == (string)parameter ? Visibility.Visible : Visibility.Collapsed; 
+			
+			var type = parameter.ToString().ToLower().Split(',');
+			var isOfType = value != null && type.Contains(value.GetType().Name.ToLower());
+			if (targetType == typeof (bool))
+				return isOfType; 
+			return isOfType ? Visibility.Visible : Visibility.Collapsed; 
 		}
 #else
         public object Convert(object value, Type typeName, object parameter, string language)

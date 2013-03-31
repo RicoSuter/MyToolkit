@@ -113,6 +113,9 @@
     <Compile Include="..\Shared\Converters\TruncateConverter.cs">
       <Link>Converters\TruncateConverter.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Converters\TypeCountConverter.cs">
+      <Link>Converters\TypeCountConverter.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Converters\TypeVisibilityConverter.cs">
       <Link>Converters\TypeVisibilityConverter.cs</Link>
     </Compile>
