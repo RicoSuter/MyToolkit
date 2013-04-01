@@ -10,6 +10,13 @@ using MyToolkit.Utilities;
 
 namespace MyToolkit.Caching
 {
+#if WP7
+	internal class HashSet<T> : List<T> // TODO implement real hashset
+	{
+		
+	}
+#endif
+
 	public abstract class DataManagerBase : CacheManager
 	{
 		protected abstract Task<object> GetItemAsync(string type, int id, string[] included);
@@ -64,7 +71,6 @@ namespace MyToolkit.Caching
 
 		private readonly HashSet<string> fullLoadedTypes = new HashSet<string>();
 		private readonly HashSet<string> fullLoadingTypes = new HashSet<string>();
-
 		private async Task<IEnumerable<ICacheable>> GetAllItemsAsync(string type, string[] included, bool reload)
 		{
 			if (!reload && fullLoadedTypes.Contains(type))
