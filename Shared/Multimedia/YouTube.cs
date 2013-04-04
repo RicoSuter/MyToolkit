@@ -6,10 +6,9 @@ using System.Threading;
 using System.Windows;
 using MyToolkit.Multimedia;
 using MyToolkit.Networking;
-
-#if WINRT || WPF
 using System.Threading.Tasks;
-#elif WP7 || WP8
+
+#if WP7 || WP8
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using MyToolkit.Paging;
@@ -24,7 +23,7 @@ namespace MyToolkit.Multimedia
 	public static class YouTube
 	{
 
-#if WINRT || WPF
+#if WINRT || WPF || WP8 || WP7 || SL5
 		public static Task<YouTubeUri> GetVideoUriAsync(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P)
 		{
 			var task = new TaskCompletionSource<YouTubeUri>();
@@ -40,7 +39,7 @@ namespace MyToolkit.Multimedia
 			return task.Task;
 		}
 #endif
-#if WINRT
+#if WINRT || WP8 || WP7 || SL5
 		public static async Task<string> GetVideoTitleAsync(string youTubeId) // should be improved
 		{
 			var response = await Http.GetAsync("http://www.youtube.com/watch?v=" + youTubeId + "&nomobile=1");

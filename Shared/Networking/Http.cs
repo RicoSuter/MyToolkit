@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using Ionic.Zlib;
 using System.Windows.Threading;
 using System.IO.IsolatedStorage;
+using System.Threading.Tasks;
 #elif WP8
 using Ionic.Zlib;
 using System.Windows.Threading;
@@ -122,7 +123,7 @@ namespace MyToolkit.Networking
 
 		#region WinRT Async
 
-#if WINRT || WP8 || SL5 || WPF
+#if WINRT || WP8 || SL5 || WPF || WP7
 		public static Task<HttpResponse> GetAsync(string url)
 		{
 			var task = new TaskCompletionSource<HttpResponse>();
