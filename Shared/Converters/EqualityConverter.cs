@@ -18,11 +18,12 @@ namespace MyToolkit.Converters
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 #else
         public object Convert(object value, Type typeName, object parameter, string language)
-#endif		
+#endif
 		{
-			if (value != null && value == parameter)
-				return Visibility.Visible;
-			return Visibility.Collapsed;
+			var matches = value != null && value.ToString() == parameter.ToString(); 
+			if (targetType == typeof(Visibility))
+				return matches ? Visibility.Visible : Visibility.Collapsed;
+			return matches;
 		}
 
 #if !WINRT
