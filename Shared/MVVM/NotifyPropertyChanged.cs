@@ -13,7 +13,10 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 #else
 using System.ComponentModel;
+#endif
 
+#if WPF
+using System.Runtime.CompilerServices;
 #endif
 
 namespace MyToolkit.MVVM
@@ -83,7 +86,7 @@ namespace MyToolkit.MVVM
 			RaisePropertyChanged(((MemberExpression)expression.Body).Member.Name);
 		}
 
-#if WINRT
+#if WINRT || WPF
 		public bool SetProperty<T>(ref T oldValue, T newValue, [CallerMemberName] String propertyName = null)
 		{
 			return SetProperty(propertyName, ref oldValue, newValue); 

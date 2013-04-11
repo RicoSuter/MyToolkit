@@ -65,6 +65,8 @@ namespace MyToolkit.Utilities
 
 		public static IList<T> TakeRandom<T>(this IList<T> source, int amount)
 		{
+			source = new List<T>(source);
+
             var count = source.Count;
 			var output = new List<T>();
 			var rand = new Random((int)DateTime.Now.Ticks);

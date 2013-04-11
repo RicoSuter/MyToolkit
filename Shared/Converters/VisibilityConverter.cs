@@ -10,7 +10,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml;
 #endif
 
-
 namespace MyToolkit.Converters
 {
 	public class VisibilityConverter : IValueConverter
@@ -19,48 +18,57 @@ namespace MyToolkit.Converters
 		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 #else
         public object Convert(object value, Type typeName, object parameter, string language)
-#endif		
+#endif
 		{
+			var isVisible = value != null;
+
 			if (value is bool)
-				return (bool)value ? Visibility.Visible : Visibility.Collapsed;
+				isVisible = (bool)value;
 			if (value is string)
-				return !String.IsNullOrEmpty((string)value)  ? Visibility.Visible : Visibility.Collapsed;
+				isVisible = !String.IsNullOrEmpty((string)value);
 			if (value is IList)
 			{
 				var list = (IList)value;
 				if (list.Count == 0)
-					return Visibility.Collapsed;
-
-				if (parameter is string)
+					isVisible = false;
+				else
 				{
-					var p = parameter.ToString();
-					if (p.StartsWith("CheckAll:"))
+					isVisible = true; 
+					if (parameter is string)
 					{
-						p = p.Substring(9);
-						foreach (var item in list)
+						var p = parameter.ToString();
+						if (p.StartsWith("CheckAll:"))
 						{
-#if WINRT
-							var property = item.GetType().GetTypeInfo().GetDeclaredProperty(p);
-#else
-							var property = item.GetType().GetProperty(p);
-#endif
-							if (property != null)
+							p = p.Substring(9);
+							foreach (var item in list)
 							{
-								var val = property.GetValue(item, null);
-								if ((Visibility)Convert(val, typeof(Visibility), null, null) == Visibility.Visible)
-									return Visibility.Collapsed;
+#if WINRT
+								var property = item.GetType().GetTypeInfo().GetDeclaredProperty(p);
+#else
+								var property = item.GetType().GetProperty(p);
+#endif
+								if (property != null)
+								{
+									var val = property.GetValue(item, null);
+									if (!(bool)Convert(val, typeof(bool), null, null))
+									{
+										isVisible = false;
+										break;
+									}
+								}
 							}
 						}
 					}
 				}
-				return Visibility.Visible;
 			}
 			if (value is int)
-				return (int)value > 0 ? Visibility.Visible : Visibility.Collapsed;
+				isVisible = (int)value > 0;
 			if (value is Visibility)
-				return value;
+				isVisible = (Visibility)value == Visibility.Visible;
 
-			return value != null ? Visibility.Visible : Visibility.Collapsed; 
+			if (targetType == typeof(Visibility))
+				return isVisible ? Visibility.Visible : Visibility.Collapsed;
+			return isVisible; 
 		}
 
 #if !WINRT
