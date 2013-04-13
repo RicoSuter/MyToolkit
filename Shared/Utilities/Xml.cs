@@ -19,7 +19,7 @@ namespace MyToolkit.Utilities
 	{
 		public static string Serialize(object obj, Type[] extraTypes = null)
 		{
-			using (var sw = new StringWriter())
+			using (var sw = new Utf8StringWriter())
 			{
 				var type = obj.GetType();
 				var serializer = extraTypes == null ? new XmlSerializer(type) : new XmlSerializer(type, extraTypes);
