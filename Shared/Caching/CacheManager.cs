@@ -159,7 +159,7 @@ namespace MyToolkit.Caching
 			return currentItem;
 		}
 
-		protected Type GetBaseType(Type type)
+		protected virtual Type GetBaseType(Type type)
 		{
 #if WINRT
 			if (type.GetBaseType().Name == "EntityObject")
