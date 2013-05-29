@@ -34,7 +34,13 @@ namespace MyToolkit.Animation.Transitions
 			ForwardInAnimationOnFirstPageEnabled = false; 
 	        TransitionAnimationsEnabled = true;
 			isForwardNavigation = true;
-		}
+	       
+			Loaded += delegate
+		    {
+			    if (AnimationContext == null)
+				    AnimationContext = (FrameworkElement) Content;
+		    };
+        }
 
         protected virtual void AnimationsComplete(AnimationType animationType)
         {

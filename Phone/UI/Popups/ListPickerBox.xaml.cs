@@ -13,7 +13,13 @@ namespace MyToolkit.UI.Popups
 
 		public static void Show(IList items, IList selectedItems, Action<ListPickerBox> completed)
 		{
-			var popup = new ListPickerBox(items, selectedItems);
+			var popup = new ListPickerBox(items, selectedItems, false);
+			Show(popup, true, true, x => completed((ListPickerBox)x));
+		}
+
+		public static void Show(IList items, IList selectedItems, bool singleSelection, Action<ListPickerBox> completed)
+		{
+			var popup = new ListPickerBox(items, selectedItems, singleSelection);
 			Show(popup, true, true, x => completed((ListPickerBox)x));
 		}
 
@@ -34,10 +40,11 @@ namespace MyToolkit.UI.Popups
 			}
 		}
 
-		protected ListPickerBox(IList items, IList selectedItems)
+		protected ListPickerBox(IList items, IList selectedItems, bool singleSelection)
 		{
 			InitializeComponent();
 
+			list.ItemTemplate = (DataTemplate) (singleSelection ? Resources["singleTemplate"] : Resources["multipleTemplate"]);
 			OriginalSelectedItems = selectedItems; 
 			Dispatcher.BeginInvoke(delegate
 			{

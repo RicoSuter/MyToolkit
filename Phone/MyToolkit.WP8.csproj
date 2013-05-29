@@ -128,6 +128,9 @@
     <Compile Include="..\Shared\Converters\NotConverter.cs">
       <Link>Converters\NotConverter.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Converters\NumberConverter.cs">
+      <Link>Converters\NumberConverter.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Converters\RemoveColorAlphaConverter.cs">
       <Link>Converters\RemoveColorAlphaConverter.cs</Link>
     </Compile>

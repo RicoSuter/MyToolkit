@@ -15,7 +15,7 @@ namespace MyToolkit.Utilities
 {
 	public interface IEntity
 	{
-		int ID { get; }
+		int Id { get; }
 	}
 
 	public class EntityContainer<T>
@@ -27,12 +27,12 @@ namespace MyToolkit.Utilities
 		public T Get(string idAsString)
 		{
 			var id = int.Parse(idAsString);
-			return collection.SingleOrDefault(n => n.ID == id);
+			return collection.SingleOrDefault(n => n.Id == id);
 		}
 
 		public T Get(long id)
 		{
-			return collection.SingleOrDefault(n => n.ID == id);
+			return collection.SingleOrDefault(n => n.Id == id);
 		}
 
 		public void Initialize(IEnumerable<T> items)
@@ -49,7 +49,7 @@ namespace MyToolkit.Utilities
 		{
 			foreach (var item in items)
 			{
-				var c = Get(item.ID);
+				var c = Get(item.Id);
 				if (c != null)
 					collection.Remove(c);
 			}
@@ -58,7 +58,7 @@ namespace MyToolkit.Utilities
 
 		public void Add(T item)
 		{
-			var c = Get(item.ID);
+			var c = Get(item.Id);
 			if (c != null)
 				collection.Remove(c);
 			collection.Add(item);
@@ -66,7 +66,7 @@ namespace MyToolkit.Utilities
 
 		public void Remove(T item)
 		{
-			var c = Get(item.ID);
+			var c = Get(item.Id);
 			if (c != null)
 			{
 				if (c is IDisposable)
@@ -93,7 +93,7 @@ namespace MyToolkit.Utilities
 		public virtual int GenerateIdentity()
 		{
 			lock (this)
-				return IdentityGenerator.Generate(i => collection.Any(c => c.ID == i));
+				return IdentityGenerator.Generate(i => collection.Any(c => c.Id == i));
 		}
 
 #if WP7

@@ -19,7 +19,7 @@ namespace MyToolkit.Paging
         public BindableApplicationBar()
         {
 			internalApplicationBar = new ApplicationBar();
-
+			
 			buttons = new BindableApplicationBarIconButtonCollection(internalApplicationBar);
 			menuItems = new BindableApplicationBarMenuItemCollection(internalApplicationBar);
 

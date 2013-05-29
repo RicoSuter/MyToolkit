@@ -46,8 +46,8 @@ namespace MyToolkit.Paging
 			{
 				OnItemAdded(internalApplicationBar);
 				isAttached = true;
-				if (Command != null)
-					IsEnabled = Command.CanExecute(CommandParameter);
+				//if (Command != null)
+				//	IsEnabled = Command.CanExecute(CommandParameter);
 			}
 		}
 
@@ -56,7 +56,7 @@ namespace MyToolkit.Paging
 			if (Command != null)
 			{
 				var canExecute = Command.CanExecute(CommandParameter);
-				IsEnabled = canExecute;
+				//IsEnabled = canExecute;
 
 				if (canExecute)
 					Command.Execute(CommandParameter);
@@ -136,7 +136,8 @@ namespace MyToolkit.Paging
 
         private void OnCanExecuteChanged(object sender, EventArgs e)
         {
-			IsEnabled = ((ICommand)sender).CanExecute(CommandParameter);
+			// TODO overwrites binding!!
+			//IsEnabled = ((ICommand)sender).CanExecute(CommandParameter);
         }
 
 		public object CommandParameter
