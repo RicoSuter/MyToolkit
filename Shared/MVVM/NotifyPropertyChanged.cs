@@ -14,6 +14,9 @@ using System.Runtime.CompilerServices;
 #else
 using System.ComponentModel;
 #endif
+#if WP8
+using System.Runtime.CompilerServices;
+#endif
 
 #if WPF
 using System.Runtime.CompilerServices;
@@ -86,7 +89,7 @@ namespace MyToolkit.MVVM
 			RaisePropertyChanged(((MemberExpression)expression.Body).Member.Name);
 		}
 
-#if WINRT || WPF
+#if WINRT || WPF || WP8
 		public bool SetProperty<T>(ref T oldValue, T newValue, [CallerMemberName] String propertyName = null)
 		{
 			return SetProperty(propertyName, ref oldValue, newValue); 

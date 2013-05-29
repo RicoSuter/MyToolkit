@@ -874,7 +874,7 @@ namespace Ionic.Zlib
             int bufferLength = 10 + cbLength + fnLength;
             byte[] header = new byte[bufferLength];
             int i = 0;
-            // ID
+            // Id
             header[i++] = 0x1F;
             header[i++] = 0x8B;
 
