@@ -28,6 +28,8 @@ namespace MyToolkit.Converters
 				parameter.ToString().ToLower().Split(',').Select(p => p.Trim(' ')).ToArray() : 
 				new string[] {};
 
+			var showSeconds = parameters.Contains("seconds");
+
 			if (parameters.Contains("days"))
 			{
 				if (!parameters.Contains("plain"))
@@ -50,7 +52,9 @@ namespace MyToolkit.Converters
 				return (hours == 0 ? "" : (hours + " " + (hours != 1 ? Strings.Hours : Strings.Hour))) +
 					(minutes == 0 ? "" : ((hours == 0 ? "" : " ") + minutes + " " + (minutes != 1 ? Strings.Minutes : Strings.Minute)));
 			}
-			return ((int)span.TotalHours).ToString("D2") + ":" + Math.Abs(span.Minutes).ToString("D2");
+
+			return ((int)span.TotalHours).ToString("D2") + ":" + Math.Abs(span.Minutes).ToString("D2") + 
+				(showSeconds ? ":" + Math.Abs(span.Seconds).ToString("D2") : "");
 		}
 
 

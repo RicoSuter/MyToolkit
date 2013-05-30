@@ -28,7 +28,7 @@ namespace MyToolkit.Paging
 			if (args.NewItems != null)
 			{
 				foreach (var item in args.NewItems.OfType<BindableApplicationBarMenuItem>())
-					item.AddItem(ApplicationBar);
+					item.AddItem(ApplicationBar, this);
 			}
 		}
 

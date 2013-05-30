@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Phone.Shell;
@@ -9,6 +11,8 @@ namespace MyToolkit.Paging
     {
 		private readonly IApplicationBarMenuItem internalItem;
 		private bool isAttached;
+	    private IApplicationBar applicationBar;
+		private int position = 0; 
 
 		public BindableApplicationBarMenuItem()
 		{
@@ -40,14 +44,19 @@ namespace MyToolkit.Paging
 			}
 		}
 
-		internal void AddItem(IApplicationBar internalApplicationBar)
+		internal void AddItem(IApplicationBar internalApplicationBar, IList list)
 		{
 			if (!isAttached)
 			{
 				OnItemAdded(internalApplicationBar);
-				isAttached = true;
+
+				applicationBar = internalApplicationBar;
+				position = list.IndexOf(this);
+
 				//if (Command != null)
 				//	IsEnabled = Command.CanExecute(CommandParameter);
+
+				isAttached = true;
 			}
 		}
 
@@ -63,9 +72,6 @@ namespace MyToolkit.Paging
 			}
 		}
 
-
-
-
 		internal bool IsAttached
 		{
 			get { return isAttached; }
@@ -76,15 +82,51 @@ namespace MyToolkit.Paging
 			get { return internalItem; }
 		}
 
-
-
 		public event EventHandler Click
 		{
 			add { internalItem.Click += value; }
 			remove { internalItem.Click -= value; }
 		}
 
+		//public static readonly DependencyProperty IsVisibleProperty =
+		//	DependencyProperty.Register("IsVisible", typeof(bool), typeof(BindableApplicationBarMenuItem), 
+		//	new PropertyMetadata(true, (d, e) => ((BindableApplicationBarMenuItem)d).IsVisibleChanged()));
 
+		//public bool IsVisible
+		//{
+		//	get { return (bool) GetValue(IsVisibleProperty); }
+		//	set { SetValue(IsVisibleProperty, value); }
+		//}
+
+		//private void IsVisibleChanged()
+		//{
+		//	if (IsVisible)
+		//	{
+		//		if (this is BindableApplicationBarIconButton)
+		//		{
+		//			if (!applicationBar.Buttons.Contains(internalItem))
+		//				applicationBar.Buttons.Insert(position, internalItem);
+		//		}
+		//		else
+		//		{
+		//			if (!applicationBar.MenuItems.Contains(internalItem))
+		//				applicationBar.MenuItems.Insert(position, internalItem); // TODO calculated correct position
+		//		}
+		//	}
+		//	else
+		//	{
+		//		if (this is BindableApplicationBarIconButton)
+		//		{
+		//			if (applicationBar.Buttons.Contains(internalItem))
+		//				applicationBar.Buttons.Remove(internalItem);
+		//		}
+		//		else
+		//		{
+		//			if (applicationBar.MenuItems.Contains(internalItem))
+		//				applicationBar.MenuItems.Remove(internalItem);
+		//		}
+		//	}
+		//}
 
 		public bool IsEnabled
         {
