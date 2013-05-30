@@ -53,7 +53,7 @@ namespace MyToolkit.UI.Popups
 
 			control.Popup = popup;
 
-			if (SystemTray.IsVisible)
+			if (SystemTray.IsVisible && !(SystemTray.Opacity < 1.0))
 				heightSub += 32; 
 
 			if (showFullScreen)
