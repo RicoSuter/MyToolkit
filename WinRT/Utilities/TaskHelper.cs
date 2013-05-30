@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+
+#if WP8 || WP7
+using System.Windows;
+#endif
 
 namespace MyToolkit.Utilities
 {
@@ -91,5 +92,26 @@ namespace MyToolkit.Utilities
 			func(a, b, c, d, e, task.SetResult);
 			return task.Task;
 		}
+
+#if WP8 || WP7
+
+		public static Task RunOnDispatcherAsync(Action completed)
+		{
+			var task = new TaskCompletionSource<object>();
+			Deployment.Current.Dispatcher.BeginInvoke(delegate
+			{
+				try
+				{
+					completed();
+				}
+				finally
+				{
+					task.SetResult(null);
+				}
+			});
+			return task.Task;
+		} 
+
+#endif
 	}
 }

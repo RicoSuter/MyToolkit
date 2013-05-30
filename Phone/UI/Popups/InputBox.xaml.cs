@@ -1,12 +1,29 @@
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using MyToolkit.Utilities;
 
 namespace MyToolkit.UI.Popups
 {
 	public partial class InputBox
 	{
 		#region Static methods
+
+		public static Task<string> ShowAsync(String message, String title, string input, bool showCancel)
+		{
+			return TaskHelper.RunCallbackMethod<string, string, string, bool, string>(Show, message, title, input, showCancel);
+		}
+
+		public static Task<string> ShowAsync(String message, String title, bool showCancel)
+		{
+			return TaskHelper.RunCallbackMethod<string, string, string, bool, string>(Show, message, title, string.Empty, showCancel);
+		}
+
+		public static void Show(String message, String title, string input, bool showCancel, Action<string> completed)
+		{
+			Show(message, title, input, showCancel, (o, s) => completed(s));
+		}
 
 		public static void Show(String message, String title, string input, bool showCancel, Action<object, string> completed)
 		{
