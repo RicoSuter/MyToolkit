@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using MyToolkit.Utilities; 
 
@@ -11,15 +12,25 @@ namespace MyToolkit.UI.Popups
 	{
 		#region Static methods
 
+		public static Task<ListPickerBox> ShowAsync(IList items, IList selectedItems)
+		{
+			return TaskHelper.RunCallbackMethod<IList, IList, ListPickerBox>(Show, items, selectedItems);
+		}
+
+		public static Task<ListPickerBox> ShowSingleAsync(IList items, object selectedItem)
+		{
+			return TaskHelper.RunCallbackMethod<IList, object, ListPickerBox>(ShowSingle, items, selectedItem);
+		}
+
 		public static void Show(IList items, IList selectedItems, Action<ListPickerBox> completed)
 		{
 			var popup = new ListPickerBox(items, selectedItems, false);
 			Show(popup, true, true, x => completed((ListPickerBox)x));
 		}
 
-		public static void Show(IList items, IList selectedItems, bool singleSelection, Action<ListPickerBox> completed)
+		public static void ShowSingle(IList items, object selectedItem, Action<ListPickerBox> completed)
 		{
-			var popup = new ListPickerBox(items, selectedItems, singleSelection);
+			var popup = new ListPickerBox(items, selectedItem != null ? new List<object> { selectedItem } : null, true);
 			Show(popup, true, true, x => completed((ListPickerBox)x));
 		}
 
@@ -59,6 +70,7 @@ namespace MyToolkit.UI.Popups
 
 		public override void GoBack()
 		{
+			Canceled = true;
 			OnAccept(null, null);
 		}
 

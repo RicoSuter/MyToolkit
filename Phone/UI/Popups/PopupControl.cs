@@ -53,6 +53,9 @@ namespace MyToolkit.UI.Popups
 
 			control.Popup = popup;
 
+			if (SystemTray.IsVisible)
+				heightSub += 32; 
+
 			if (showFullScreen)
 				popup.Height = page.ActualHeight + heightSub;
 			popup.Width = page.ActualWidth;
