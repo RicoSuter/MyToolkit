@@ -84,9 +84,12 @@ namespace MyToolkit.MVVM
 				((MemberExpression)dependentPropertyName.Body).Member.Name);
 		}
 
-		public void RaisePropertyChanged<TClass, TProp>(Expression<Func<TClass, TProp>> expression)
+		public void RaisePropertyChanged<TClass>(Expression<Func<TClass, object>> expression)
 		{
-			RaisePropertyChanged(((MemberExpression)expression.Body).Member.Name);
+			if (expression.Body is UnaryExpression)
+				RaisePropertyChanged(((MemberExpression)(((UnaryExpression)expression.Body).Operand)).Member.Name);
+ 			else
+				RaisePropertyChanged(((MemberExpression)expression.Body).Member.Name);
 		}
 
 #if WINRT || WPF || WP8
