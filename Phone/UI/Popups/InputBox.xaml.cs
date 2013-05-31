@@ -31,6 +31,7 @@ namespace MyToolkit.UI.Popups
 			control.title.Text = title;
 			control.message.Text = message;
 			control.box.Text = input;
+			control.box.SelectionStart = input.Length;
 			control.cancel.Visibility = showCancel ?
 				Visibility.Visible : Visibility.Collapsed;
 
