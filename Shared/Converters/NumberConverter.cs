@@ -17,7 +17,10 @@ namespace MyToolkit.Converters
         public object Convert(object value, Type typeName, object parameter, string language)
 #endif
 		{
-			return string.Format("{0:F" + parameter + "}", double.Parse(value.ToString()));
+			var number = double.Parse(value.ToString());
+			if (double.IsNaN(number) || double.IsInfinity(number))
+				return "0";
+			return string.Format("{0:F" + parameter + "}", number);
 		}
 
 		#if !WINRT
