@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Net;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -10,15 +11,33 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Notification;
+using MyToolkit.Utilities;
 
 namespace MyToolkit.Notifications
 {
 	public static class PushNotifications
 	{
+		public static Task<Tuple<HttpNotificationChannel, bool>> RegisterAsync(string channelName)
+		{
+			var task = new TaskCompletionSource<Tuple<HttpNotificationChannel, bool>>();
+			Register(channelName, (channel, created) => task.SetResult(new Tuple<HttpNotificationChannel, bool>(channel, created)));
+			return task.Task;
+		}
+
 		public static HttpNotificationChannel Register(string channelName, 
 			Action<HttpNotificationChannel, bool> completed)
 		{
 			return Register(channelName, null, true, true, null, completed);
+		}
+
+		public static Task<Tuple<HttpNotificationChannel, bool>> RegisterAsync(string channelName,
+			Collection<Uri> baseUris, bool bindToShellTile, bool bindToShellToast,
+			EventHandler<NotificationChannelErrorEventArgs> errorHandler)
+		{
+			var task = new TaskCompletionSource<Tuple<HttpNotificationChannel, bool>>();
+			Register(channelName, baseUris, bindToShellTile, bindToShellToast, errorHandler, 
+				(channel, created) => task.SetResult(new Tuple<HttpNotificationChannel, bool>(channel, created)));
+			return task.Task;
 		}
 
 		public static HttpNotificationChannel Register(string channelName, 
