@@ -9,14 +9,14 @@ using MyToolkit.Utilities;
 
 namespace MyToolkit.Notifications
 {
-	public static class PhonePushNotificationService
+	public class PhonePushNotificationService
 	{
-		public static void SendRawNotification(string url, string message, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		public void SendRawNotification(string url, string message, PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
 			SendNotification(url, message, PushNotificationType.Raw, priority);
 		}
 
-		public static void SendToastNotification(string url, string line1, string line2, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		public void SendToastNotification(string url, string line1, string line2, PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
 			var msg =
 				"<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
@@ -30,7 +30,7 @@ namespace MyToolkit.Notifications
 			SendNotification(url, msg, PushNotificationType.Toast, priority);
 		}
 
-		public static void SendMainTileUpdate(
+		public void SendMainTileUpdate(
 			string url, 
 			string title, int count, string image, 
 			string backTitle, string backContent, string backImage,
@@ -39,7 +39,7 @@ namespace MyToolkit.Notifications
 			SendTileUpdate(url, null, title, count, image, backTitle, backContent, backImage, priority);
 		}
 
-		public static void SendMainTileCountUpdate(
+		public void SendMainTileCountUpdate(
 			string url, int count, 
 			PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
@@ -54,7 +54,7 @@ namespace MyToolkit.Notifications
 			SendNotification(url, msg, PushNotificationType.Tile, priority);
 		}
 
-		public static void SendTileUpdate(
+		public void SendTileUpdate(
 			string url, 
 			string navigationUri, 
 			string title, int count, string image, 
@@ -106,7 +106,8 @@ namespace MyToolkit.Notifications
 			SendNotification(url, msg, PushNotificationType.Tile, priority);
 		}
 
-		public static void SendNotification(string url, string xml, PushNotificationType target, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		// TODO return type => if still subscribed
+		public void SendNotification(string url, string xml, PushNotificationType target, PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
 			var message = new UTF8Encoding().GetBytes(xml);
 
@@ -137,7 +138,7 @@ namespace MyToolkit.Notifications
 			}
 		}
 
-		private static string GetClassNumber(PushNotificationType target, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		private string GetClassNumber(PushNotificationType target, PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
 			if (target == PushNotificationType.Tile)
 			{
