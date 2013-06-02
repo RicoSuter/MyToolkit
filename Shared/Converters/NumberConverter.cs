@@ -19,7 +19,7 @@ namespace MyToolkit.Converters
 		{
 			var number = double.Parse(value.ToString());
 			if (double.IsNaN(number) || double.IsInfinity(number))
-				return "0";
+				number = 0; 
 			return string.Format("{0:F" + parameter + "}", number);
 		}
 
