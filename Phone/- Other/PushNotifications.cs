@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Net;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Microsoft.Phone.Notification;
-using MyToolkit.Utilities;
 
 namespace MyToolkit.Notifications
 {
@@ -45,40 +36,54 @@ namespace MyToolkit.Notifications
 			EventHandler<NotificationChannelErrorEventArgs> errorHandler, 
 			Action<HttpNotificationChannel, bool> completed)
 		{
-			var channel = HttpNotificationChannel.Find(channelName);
-			if (channel == null)
+			try
 			{
-				channel = new HttpNotificationChannel(channelName);
-				channel.ChannelUriUpdated += (s, e) =>
+				var channel = HttpNotificationChannel.Find(channelName);
+				if (channel == null)
 				{
-					if (!channel.IsShellTileBound && bindToShellTile)
+					channel = new HttpNotificationChannel(channelName);
+					channel.ChannelUriUpdated += (s, e) =>
 					{
-						if (baseUris != null)
-							channel.BindToShellTile(baseUris);
-						else
-							channel.BindToShellTile();
+						if (!channel.IsShellTileBound && bindToShellTile)
+						{
+							if (baseUris != null)
+								channel.BindToShellTile(baseUris);
+							else
+								channel.BindToShellTile();
+						}
+
+						if (!channel.IsShellToastBound && bindToShellToast)
+							channel.BindToShellToast();
+
+						completed(channel, true);
+					};
+					channel.ErrorOccurred += (sender, args) => completed(null, false);
+
+					if (errorHandler != null)
+						channel.ErrorOccurred += errorHandler;
+
+					channel.Open();
+				}
+				else
+				{
+					if (errorHandler != null)
+					{
+						channel.ErrorOccurred -= errorHandler;
+						channel.ErrorOccurred += errorHandler;
 					}
 
-					if (!channel.IsShellToastBound && bindToShellToast)
-						channel.BindToShellToast();
-
-					completed(channel, true);
-				};
-				if (errorHandler != null)
-					channel.ErrorOccurred += errorHandler;
-				channel.Open();
-			}
-			else
-			{
-				if (errorHandler != null)
-				{
-					channel.ErrorOccurred -= errorHandler;
-					channel.ErrorOccurred += errorHandler;
+					completed(channel, false);
 				}
-
-				completed(channel, false);
+				return channel;
 			}
-			return channel;
+			catch (Exception ex)
+			{
+				if (Debugger.IsAttached)
+					Debugger.Break();
+
+				completed(null, false);
+				return null; 
+			}
 		}
 	}
 }
