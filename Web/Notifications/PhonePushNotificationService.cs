@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 using MyToolkit.Utilities;
@@ -11,6 +8,11 @@ namespace MyToolkit.Notifications
 {
 	public class PhonePushNotificationService
 	{
+		public void SendRawNotification(string url, byte[] message, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		{
+			SendNotification(url, message, PushNotificationType.Raw, priority);
+		}
+
 		public void SendRawNotification(string url, string message, PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
 			SendNotification(url, message, PushNotificationType.Raw, priority);
@@ -106,11 +108,16 @@ namespace MyToolkit.Notifications
 			SendNotification(url, msg, PushNotificationType.Tile, priority);
 		}
 
-		// TODO return type => if still subscribed
-		public void SendNotification(string url, string xml, PushNotificationType target, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		public void SendNotification(string url, string text, PushNotificationType target, 
+			PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
-			var message = new UTF8Encoding().GetBytes(xml);
+			SendNotification(url, Encoding.UTF8.GetBytes(text), target, priority);
+		}
 
+		// TODO return type => if still subscribed
+		public void SendNotification(string url, byte[] message, PushNotificationType target, 
+			PushNotificationPriority priority = PushNotificationPriority.Regular)
+		{
 			var request = (HttpWebRequest)WebRequest.Create(url);
 			request.Method = WebRequestMethods.Http.Post;
 
@@ -132,9 +139,9 @@ namespace MyToolkit.Notifications
 				var subscriptionStatus = response.Headers["X-SubscriptionStatus"];
 				var deviceConnectionStatus = response.Headers["X-DeviceConnectionStatus"];
 
-				Debug.WriteLine(string.Format("Device Connection Status: {0}", deviceConnectionStatus));
-				Debug.WriteLine(string.Format("Notification Status: {0}", notificationStatus));
-				Debug.WriteLine(string.Format("Subscription Status: {0}", subscriptionStatus));
+				Debug.WriteLine("Device Connection Status: {0}", deviceConnectionStatus);
+				Debug.WriteLine("Notification Status: {0}", notificationStatus);
+				Debug.WriteLine("Subscription Status: {0}", subscriptionStatus);
 			}
 		}
 
