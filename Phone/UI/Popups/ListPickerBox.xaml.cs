@@ -55,6 +55,9 @@ namespace MyToolkit.UI.Popups
 		{
 			InitializeComponent();
 
+			if (selectedItems == null)
+				selectedItems = new List<object>(); 
+
 			list.ItemTemplate = (DataTemplate) (singleSelection ? Resources["singleTemplate"] : Resources["multipleTemplate"]);
 			OriginalSelectedItems = selectedItems; 
 			Dispatcher.BeginInvoke(delegate
