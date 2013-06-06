@@ -10,6 +10,21 @@ namespace MyToolkit.Utilities
 {
 	public static class StringExtensions
 	{
+		public static string EscapeUriString(this string value)
+		{
+			const int limit = 32768;
+			var sb = new StringBuilder();
+			var loops = value.Length / limit;
+			for (int i = 0; i <= loops; i++)
+			{
+				if (i < loops)
+					sb.Append(Uri.EscapeDataString(value.Substring(limit * i, limit)));
+				else
+					sb.Append(Uri.EscapeDataString(value.Substring(limit * i)));
+			}
+			return sb.ToString();
+		}
+
 		public static Dictionary<string, string> GetConverterParameters(this string text)
 		{
 			var output = new Dictionary<string, string>();

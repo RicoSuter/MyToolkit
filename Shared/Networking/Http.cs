@@ -545,7 +545,7 @@ namespace MyToolkit.Networking
 		{
 			var queryString = "";
 			foreach (var p in query)
-				queryString += Uri.EscapeDataString(p.Key) + "=" + (p.Value == null ? "" : Uri.EscapeDataString(p.Value)) + "&";
+				queryString += Uri.EscapeDataString(p.Key) + "=" + (p.Value == null ? "" : p.Value.EscapeUriString()) + "&";
 			return queryString.Trim('&');
 		}
 	}
