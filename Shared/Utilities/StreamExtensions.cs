@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net;
 
-#if WINRT
+#if WINRT || WP8
 using Windows.Storage.Streams;
 #endif
 
@@ -32,7 +32,7 @@ namespace MyToolkit.Utilities
 			return stream;
 		}
 
-#if WINRT
+#if WINRT || WP8
 		public static IRandomAccessStream AsRandomAccessStream(this byte[] bytes)
 		{
 			return new MemoryRandomAccessStream(bytes);
@@ -47,7 +47,7 @@ namespace MyToolkit.Utilities
 	}
 
 
-#if WINRT
+#if WINRT || WP8
 	internal class MemoryRandomAccessStream : IRandomAccessStream
 	{
 		private readonly Stream internalStream;
