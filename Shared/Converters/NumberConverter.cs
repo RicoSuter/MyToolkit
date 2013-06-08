@@ -17,6 +17,9 @@ namespace MyToolkit.Converters
         public object Convert(object value, Type typeName, object parameter, string language)
 #endif
 		{
+			if (value == null)
+				return ""; 
+
 			var number = double.Parse(value.ToString());
 			if (double.IsNaN(number) || double.IsInfinity(number))
 				number = 0; 
