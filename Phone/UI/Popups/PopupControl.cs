@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -15,11 +16,33 @@ namespace MyToolkit.UI.Popups
 	{
 		#region Static
 
+		public void Show()
+		{
+			Show(this);
+		}
+
 		public static Popup Show(PopupControl control)
 		{
 			return Show(control, false, false, null);
 		}
 
+		public Task ShowAsync()
+		{
+			return ShowAsync(this, false, false);
+		}
+
+		public Task ShowAsync(bool hideApplicationBar, bool showFullScreen)
+		{
+			return ShowAsync(this, hideApplicationBar, showFullScreen);
+		}
+
+		public static Task ShowAsync(PopupControl control, bool hideApplicationBar, bool showFullScreen)
+		{
+			return TaskHelper.RunCallbackMethod<PopupControl, bool, bool, PopupControl>(
+				(a, b, c, d) => Show(a, b, c, d), 
+				control, hideApplicationBar, showFullScreen);
+		}
+		
 		public static Popup Show(PopupControl control, bool hideApplicationBar, bool showFullScreen, Action<PopupControl> completed)
 		{
 			var oldState = new PageDeactivator();
@@ -128,11 +151,6 @@ namespace MyToolkit.UI.Popups
 			var copy = Closed;
 			if (copy != null)
 				Closed(this);
-		}
-
-		public void Show()
-		{
-			Show(this);
 		}
 	}
 }
