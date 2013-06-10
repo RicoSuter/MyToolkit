@@ -12,25 +12,25 @@ namespace MyToolkit.UI.Popups
 	{
 		#region Static methods
 
-		public static Task<ListPickerBox> ShowAsync(IList items, IList selectedItems)
+		public static Task<ListPickerBox> ShowAsync(IList items, IList selectedItems, string title = null)
 		{
-			return TaskHelper.RunCallbackMethod<IList, IList, ListPickerBox>(Show, items, selectedItems);
+			return TaskHelper.RunCallbackMethod<IList, IList, string, ListPickerBox>(Show, items, selectedItems, title);
 		}
 
-		public static Task<ListPickerBox> ShowSingleAsync(IList items, object selectedItem)
+		public static Task<ListPickerBox> ShowSingleAsync(IList items, object selectedItem, string title = null)
 		{
-			return TaskHelper.RunCallbackMethod<IList, object, ListPickerBox>(ShowSingle, items, selectedItem);
+			return TaskHelper.RunCallbackMethod<IList, object, string, ListPickerBox>(ShowSingle, items, selectedItem, title);
 		}
 
-		public static void Show(IList items, IList selectedItems, Action<ListPickerBox> completed)
+		public static void Show(IList items, IList selectedItems, string title, Action<ListPickerBox> completed)
 		{
-			var popup = new ListPickerBox(items, selectedItems, false);
+			var popup = new ListPickerBox(items, selectedItems, false, title);
 			Show(popup, true, true, x => completed((ListPickerBox)x));
 		}
 
-		public static void ShowSingle(IList items, object selectedItem, Action<ListPickerBox> completed)
+		public static void ShowSingle(IList items, object selectedItem, string title, Action<ListPickerBox> completed)
 		{
-			var popup = new ListPickerBox(items, selectedItem != null ? new List<object> { selectedItem } : null, true);
+			var popup = new ListPickerBox(items, selectedItem != null ? new List<object> { selectedItem } : null, true, title);
 			Show(popup, true, true, x => completed((ListPickerBox)x));
 		}
 
@@ -51,9 +51,14 @@ namespace MyToolkit.UI.Popups
 			}
 		}
 
-		protected ListPickerBox(IList items, IList selectedItems, bool singleSelection)
+		protected ListPickerBox(IList items, IList selectedItems, bool singleSelection, string _title)
 		{
 			InitializeComponent();
+
+			if (string.IsNullOrEmpty(_title))
+				title.Visibility = Visibility.Collapsed;
+			else
+				title.Text = _title; 
 
 			if (selectedItems == null)
 				selectedItems = new List<object>(); 
