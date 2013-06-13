@@ -35,6 +35,9 @@ namespace MyToolkit.Messaging
 #if !WINRT
 		public static void ShowTextMessage(TextMessage message)
 		{
+			if (message.Button == TextMessage.MessageButton.YesNo || message.Button == TextMessage.MessageButton.YesNoCancel)
+				throw new NotImplementedException("button type not supported");
+
 			if (message.Button == TextMessage.MessageButton.OK)
 				MessageBox.Show(message.Text, message.Title, MessageBoxButton.OK);
 			else if(message.Button == TextMessage.MessageButton.OKCancel)
