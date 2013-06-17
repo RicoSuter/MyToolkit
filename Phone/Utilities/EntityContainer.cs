@@ -56,6 +56,14 @@ namespace MyToolkit.Utilities
 			collection.AddRange(items);
 		}
 
+		public void Insert(int i, T item)
+		{
+			var c = Get(item.Id);
+			if (c != null)
+				collection.Remove(c);
+			collection.Insert(i, item);
+		}
+
 		public void Add(T item)
 		{
 			var c = Get(item.Id);
@@ -83,10 +91,13 @@ namespace MyToolkit.Utilities
 			ApplicationSettings.SetSetting(key, collection.ToList());
 		}
 
-		public void LoadFromSettings(string key)
+		public void LoadFromSettings(string key, List<T> initialList = null)
 		{
+			if (initialList == null)
+				initialList = new List<T>();
+
 			collection.Clear();
-			foreach (var a in ApplicationSettings.GetSetting(key, new List<T>()))
+			foreach (var a in ApplicationSettings.GetSetting(key, initialList))
 				collection.Add(a);
 		}
 

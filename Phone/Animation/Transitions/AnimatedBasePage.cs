@@ -34,12 +34,6 @@ namespace MyToolkit.Animation.Transitions
 			ForwardInAnimationOnFirstPageEnabled = false; 
 	        TransitionAnimationsEnabled = true;
 			isForwardNavigation = true;
-	       
-			Loaded += delegate
-		    {
-			    if (AnimationContext == null)
-				    AnimationContext = (FrameworkElement) Content;
-		    };
         }
 
         protected virtual void AnimationsComplete(AnimationType animationType)
@@ -74,7 +68,10 @@ namespace MyToolkit.Animation.Transitions
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-	        isNavigating = false; 
+			if (AnimationContext == null)
+				AnimationContext = (FrameworkElement)Content;
+			
+			isNavigating = false; 
 
 	        var isFirstForwardIn = e.NavigationMode == NavigationMode.New && !NavigationService.CanGoBack;
 			if ((e.IsNavigationInitiator || isFirstForwardIn) && // <- show transition only if not navigating from other app except if first launch
