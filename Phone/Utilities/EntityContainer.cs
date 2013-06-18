@@ -95,10 +95,7 @@ namespace MyToolkit.Utilities
 		{
 			if (initialList == null)
 				initialList = new List<T>();
-
-			collection.Clear();
-			foreach (var a in ApplicationSettings.GetSetting(key, initialList))
-				collection.Add(a);
+			collection.Initialize(ApplicationSettings.GetSetting(key, initialList));
 		}
 
 		public virtual int GenerateIdentity()
