@@ -49,7 +49,7 @@ namespace MyToolkit.UI.Popups
 			var page = PhonePage.CurrentPage;
 
 			var heightSub = 0.0;
-			if (hideApplicationBar && page.ApplicationBar.IsVisible)
+			if (hideApplicationBar && page.ApplicationBar != null && page.ApplicationBar.IsVisible)
 			{
 				page.ApplicationBar.IsVisible = false;
 				heightSub = page.ApplicationBar.Mode == ApplicationBarMode.Minimized
@@ -111,7 +111,7 @@ namespace MyToolkit.UI.Popups
 				if (showFullScreen)
 					content.Visibility = Visibility.Visible;
 
-				if (hideApplicationBar)
+				if (hideApplicationBar && page.ApplicationBar != null)
 					page.ApplicationBar.IsVisible = true;
 
 				content.IsHitTestVisible = true;
