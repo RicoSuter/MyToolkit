@@ -68,26 +68,29 @@ namespace MyToolkit.Animation.Transitions
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-			if (AnimationContext == null)
-				AnimationContext = (FrameworkElement)Content;
-			
-			isNavigating = false; 
+	        if (e.NavigationMode != NavigationMode.Reset)
+	        {
+				if (AnimationContext == null)
+					AnimationContext = (FrameworkElement)Content;
 
-	        var isFirstForwardIn = e.NavigationMode == NavigationMode.New && !NavigationService.CanGoBack;
-			if ((e.IsNavigationInitiator || isFirstForwardIn) && // <- show transition only if not navigating from other app except if first launch
-				TransitionAnimationsEnabled && (ForwardInAnimationOnFirstPageEnabled || !isFirstForwardIn))
-			{
-				Loaded += OnPageLoaded;
-				if (AnimationContext != null)
-					AnimationContext.Opacity = 0;
+				isNavigating = false;
+
+				var isFirstForwardIn = e.NavigationMode == NavigationMode.New && !NavigationService.CanGoBack;
+				if ((e.IsNavigationInitiator || isFirstForwardIn) && // <- show transition only if not navigating from other app except if first launch
+					TransitionAnimationsEnabled && (ForwardInAnimationOnFirstPageEnabled || !isFirstForwardIn))
+				{
+					Loaded += OnPageLoaded;
+					if (AnimationContext != null)
+						AnimationContext.Opacity = 0;
+				}
+				else
+				{
+					if (AnimationContext != null)
+						AnimationContext.Opacity = 1;
+					if (isForwardNavigation)
+						isForwardNavigation = false;
+				}
 			}
-			else
-			{
-				if (AnimationContext != null)
-					AnimationContext.Opacity = 1;
-				if (isForwardNavigation)
-					isForwardNavigation = false;
-			} 
 		
 			base.OnNavigatedTo(e);
 		}
