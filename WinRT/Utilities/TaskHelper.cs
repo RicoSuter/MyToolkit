@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+
+#if !WP7
 using Windows.Foundation;
+#endif
 
 #if WP8 || WP7
 using System.Windows;
@@ -10,12 +13,15 @@ namespace MyToolkit.Utilities
 {
 	public static class TaskHelper
 	{
+
+#if !WP7
 		public static T RunSynchronouslyWithResult<T>(this IAsyncOperation<T> op)
 		{
 			var task = op.AsTask();
 			task.RunSynchronously();
 			return task.Result;
 		}
+#endif
 
 		public static T RunSynchronouslyWithResult<T>(this Task<T> task)
 		{
@@ -79,6 +85,8 @@ namespace MyToolkit.Utilities
 			return task.Task;
 		}
 
+#if !WP7
+
 		public static Task<TResult> RunCallbackMethod<T1, T2, T3, T4, TResult>(Action<T1, T2, T3, T4, Action<TResult>> func, T1 a, T2 b, T3 c, T4 d)
 		{
 			var task = new TaskCompletionSource<TResult>();
@@ -92,6 +100,8 @@ namespace MyToolkit.Utilities
 			func(a, b, c, d, e, task.SetResult);
 			return task.Task;
 		}
+
+#endif
 
 #if WP8 || WP7
 

@@ -1,5 +1,4 @@
 using System;
-using MyToolkit.Utilities;
 
 #if WINRT
 using Windows.UI.Xaml;

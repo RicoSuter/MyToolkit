@@ -10,6 +10,8 @@ namespace MyToolkit.UI.Popups
 	{
 		#region Static methods
 
+#if !WP7
+
 		public static Task<string> ShowAsync(String message, String title, string input, bool showCancel)
 		{
 			return TaskHelper.RunCallbackMethod<string, string, string, bool, string>(Show, message, title, input, showCancel);
@@ -19,6 +21,8 @@ namespace MyToolkit.UI.Popups
 		{
 			return TaskHelper.RunCallbackMethod<string, string, string, bool, string>(Show, message, title, string.Empty, showCancel);
 		}
+
+#endif
 
 		public static void Show(String message, String title, string input, bool showCancel, Action<string> completed)
 		{

@@ -245,6 +245,9 @@
     <Compile Include="..\Shared\Utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
+    <Compile Include="..\WinRT\Utilities\TaskHelper.cs">
+      <Link>Utilities\TaskHelper.cs</Link>
+    </Compile>
     <Compile Include="Collections\AlphaGroups.cs" />
     <Compile Include="Collections\Group.cs" />
     <Compile Include="Environment\Marketplace.cs" />
