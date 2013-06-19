@@ -69,8 +69,14 @@ namespace MyToolkit.Networking
 		public object Tag { get; set; }
 		public ICredentials Credentials { get; set; }
 
-		#if USE_GZIP
+		public string UserAgent
+		{
+			get { return Headers.ContainsKey("User-Agent") ? Headers["User-Agent"] : null; }
+			set { Headers["User-Agent"] = value; }
+		}
+		
+#if USE_GZIP
 		public bool RequestGzip { get; set; }
-		#endif
+#endif
 	}
 }

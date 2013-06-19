@@ -97,8 +97,9 @@ namespace MyToolkit.Multimedia
 		public static HttpResponse GetVideoUri(string youTubeId, YouTubeQuality minQuality, YouTubeQuality maxQuality, 
 			Action<YouTubeUri, Exception> completed)
 		{
-			return Http.Get("https://www.youtube.com/watch?v=" + youTubeId + "&nomobile=1", 
-				r => OnHtmlDownloaded(r, minQuality, maxQuality, completed));
+			var request = new HttpGetRequest("https://www.youtube.com/watch?v=" + youTubeId + "&nomobile=1");
+			request.UserAgent  = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
+			return Http.Get(request, r => OnHtmlDownloaded(r, minQuality, maxQuality, completed));
 		}
 
 		private static void OnHtmlDownloaded(HttpResponse response, YouTubeQuality minQuality, YouTubeQuality maxQuality, Action<YouTubeUri, Exception> completed)
