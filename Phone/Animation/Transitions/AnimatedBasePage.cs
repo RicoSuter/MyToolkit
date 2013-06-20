@@ -66,9 +66,34 @@ namespace MyToolkit.Animation.Transitions
             return animation;
         }
 
+		private void OnPageLoaded(object sender, RoutedEventArgs e)
+		{
+			Loaded -= OnPageLoaded;
+
+			if (isForwardNavigation)
+				currentAnimationType = AnimationType.NavigateForwardIn;
+			else
+				currentAnimationType = AnimationType.NavigateBackwardIn;
+
+			if (CanAnimate())
+				RunAnimation(null);
+			else
+			{
+				if (AnimationContext != null)
+					AnimationContext.Opacity = 1;
+				OnTransitionAnimationCompleted(null);
+			}
+
+			if (isForwardNavigation)
+				isForwardNavigation = false;
+		}
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-	        if (e.NavigationMode != NavigationMode.Reset)
+	        if (State.ContainsKey("AnimatedBasePageNavigatedToLibraryPage"))
+		        navigatedToLibraryPage = (bool) State["AnimatedBasePageNavigatedToLibraryPage"];
+
+			if (e.NavigationMode != NavigationMode.Reset && e.NavigationMode != NavigationMode.Refresh && !navigatedToLibraryPage) // see explanation below
 	        {
 				if (AnimationContext == null)
 					AnimationContext = (FrameworkElement)Content;
@@ -95,33 +120,17 @@ namespace MyToolkit.Animation.Transitions
 			base.OnNavigatedTo(e);
 		}
 
-		private void OnPageLoaded(object sender, RoutedEventArgs e)
-        {
-			Loaded -= OnPageLoaded;
-
-			if (isForwardNavigation)
-				currentAnimationType = AnimationType.NavigateForwardIn;
-			else
-				currentAnimationType = AnimationType.NavigateBackwardIn;
-
-			if (CanAnimate())
-				RunAnimation(null);
-			else
-			{
-				if (AnimationContext != null)
-					AnimationContext.Opacity = 1;
-				OnTransitionAnimationCompleted(null);
-			}
-
-			if (isForwardNavigation)
-				isForwardNavigation = false;
-        }
-
+	    private bool navigatedToLibraryPage = false; 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             base.OnNavigatingFrom(e);
 
-			if (!isNavigating && e.Uri != ExternalUri)
+			navigatedToLibraryPage = e.Uri.ToString().Contains(";component/");
+	        State["AnimatedBasePageNavigatedToLibraryPage"] = navigatedToLibraryPage;
+
+			// only for app pages (no external and library pages)
+			// needed for correctly working phone toolkit (eg date picker)
+			if (!isNavigating && e.Uri != ExternalUri && !navigatedToLibraryPage)
 			{
 				isNavigating = true;
 				nextUri = e.Uri;
