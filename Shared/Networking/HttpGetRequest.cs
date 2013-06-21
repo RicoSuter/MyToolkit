@@ -74,6 +74,12 @@ namespace MyToolkit.Networking
 			get { return Headers.ContainsKey("User-Agent") ? Headers["User-Agent"] : null; }
 			set { Headers["User-Agent"] = value; }
 		}
+
+		public void SetBasicAuthenticationHeader(String username, String password)
+		{
+			var auth = Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password));
+			Headers["Authorization"] = "Basic " + auth;
+		}
 		
 #if USE_GZIP
 		public bool RequestGzip { get; set; }
