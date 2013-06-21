@@ -9,7 +9,7 @@ namespace SamplePhoneApp.Domain
 	{
 		public Person()
 		{
-			ID = App.Persons.GenerateIdentity();
+			Id = App.Persons.GenerateIdentity();
 		}
 
 		public bool IsValid
@@ -23,7 +23,7 @@ namespace SamplePhoneApp.Domain
 		}
 
 		[DataMember]
-		public int ID { get; set; }
+		public int Id { get; set; }
 
 		private string firstName;
 		[DataMember]

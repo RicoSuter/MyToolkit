@@ -36,7 +36,7 @@ namespace SamplePhoneApp.Views
 
 		private void OnEditPerson(object sender, NavigationListEventArgs e)
 		{
-			NavigationService.Navigate(new Uri("/Views/DetailsPage.xaml?SelectedItem=" + e.GetItem<Person>().ID, UriKind.Relative));
+			NavigationService.Navigate(new Uri("/Views/DetailsPage.xaml?SelectedItem=" + e.GetItem<Person>().Id, UriKind.Relative));
 		}
 	}
 }
