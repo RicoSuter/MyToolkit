@@ -8,17 +8,17 @@ namespace MyToolkit.Notifications
 {
 	public class PhonePushNotificationService
 	{
-		public void SendRawNotification(string url, byte[] message, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		public bool SendRawNotification(string url, byte[] message, PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
-			SendNotification(url, message, PushNotificationType.Raw, priority);
+			return SendNotification(url, message, PushNotificationType.Raw, priority);
 		}
 
-		public void SendRawNotification(string url, string message, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		public bool SendRawNotification(string url, string message, PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
-			SendNotification(url, message, PushNotificationType.Raw, priority);
+			return SendNotification(url, message, PushNotificationType.Raw, priority);
 		}
 
-		public void SendToastNotification(string url, string line1, string line2, PushNotificationPriority priority = PushNotificationPriority.Regular)
+		public bool SendToastNotification(string url, string line1, string line2, PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
 			var msg =
 				"<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
@@ -29,7 +29,7 @@ namespace MyToolkit.Notifications
 				   "</ltwp:Toast>" +
 				"</wp:Notification>";
 
-			SendNotification(url, msg, PushNotificationType.Toast, priority);
+			return SendNotification(url, msg, PushNotificationType.Toast, priority);
 		}
 
 		public void SendMainTileUpdate(
@@ -41,7 +41,7 @@ namespace MyToolkit.Notifications
 			SendTileUpdate(url, null, title, count, image, backTitle, backContent, backImage, priority);
 		}
 
-		public void SendMainTileCountUpdate(
+		public bool SendMainTileCountUpdate(
 			string url, int count, 
 			PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
@@ -53,7 +53,7 @@ namespace MyToolkit.Notifications
 				msg += "<wp:Count Action=\"Clear\"></wp:Count>";
 			msg += "</wp:Tile></wp:Notification>";
 
-			SendNotification(url, msg, PushNotificationType.Tile, priority);
+			return SendNotification(url, msg, PushNotificationType.Tile, priority);
 		}
 
 		public void SendTileUpdate(
@@ -108,14 +108,13 @@ namespace MyToolkit.Notifications
 			SendNotification(url, msg, PushNotificationType.Tile, priority);
 		}
 
-		public void SendNotification(string url, string text, PushNotificationType target, 
+		public bool SendNotification(string url, string text, PushNotificationType target, 
 			PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
-			SendNotification(url, Encoding.UTF8.GetBytes(text), target, priority);
+			return SendNotification(url, Encoding.UTF8.GetBytes(text), target, priority);
 		}
 
-		// TODO return type => if still subscribed
-		public void SendNotification(string url, byte[] message, PushNotificationType target, 
+		public bool SendNotification(string url, byte[] message, PushNotificationType target, 
 			PushNotificationPriority priority = PushNotificationPriority.Regular)
 		{
 			var request = (HttpWebRequest)WebRequest.Create(url);
@@ -139,9 +138,11 @@ namespace MyToolkit.Notifications
 				var subscriptionStatus = response.Headers["X-SubscriptionStatus"];
 				var deviceConnectionStatus = response.Headers["X-DeviceConnectionStatus"];
 
-				Debug.WriteLine("Device Connection Status: {0}", deviceConnectionStatus);
-				Debug.WriteLine("Notification Status: {0}", notificationStatus);
-				Debug.WriteLine("Subscription Status: {0}", subscriptionStatus);
+				Debug.WriteLine(string.Format("Device Connection Status: {0}", deviceConnectionStatus));
+				Debug.WriteLine(string.Format("Notification Status: {0}", notificationStatus));
+				Debug.WriteLine(string.Format("Subscription Status: {0}", subscriptionStatus));
+
+				return subscriptionStatus != null && subscriptionStatus.ToLower() == "active";
 			}
 		}
 
