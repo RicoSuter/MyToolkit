@@ -93,8 +93,12 @@ namespace MyToolkit.Animation.Transitions
 	        if (State.ContainsKey("AnimatedBasePageNavigatedToLibraryPage"))
 		        navigatedToLibraryPage = (bool) State["AnimatedBasePageNavigatedToLibraryPage"];
 
+#if WP7
+			if (e.NavigationMode != NavigationMode.Refresh && !navigatedToLibraryPage) // see explanation below
+#else 
 			if (e.NavigationMode != NavigationMode.Reset && e.NavigationMode != NavigationMode.Refresh && !navigatedToLibraryPage) // see explanation below
-	        {
+#endif
+			{
 				if (AnimationContext == null)
 					AnimationContext = (FrameworkElement)Content;
 
