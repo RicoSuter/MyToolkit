@@ -219,7 +219,12 @@ namespace MyToolkit.Networking
 				if (req.Headers.Count > 0)
 				{
 					foreach (var item in req.Headers)
-						request.Headers[item.Key] = item.Value;
+					{
+#if WINRT
+						if (item.Key != "User-Agent") // TODO fix this => cannot set UserAgent in WinRT
+#endif
+							request.Headers[item.Key] = item.Value;
+					}
 				}
 
 #if USE_GZIP
