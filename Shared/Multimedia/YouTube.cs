@@ -105,20 +105,23 @@ namespace MyToolkit.Multimedia
 
 		public static async Task<YouTubeUri> GetVideoUriAsync(string youTubeId, YouTubeQuality minQuality, YouTubeQuality maxQuality)
 		{
-			var client = new HttpClient();
-			client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
-			var response = await client.GetAsync("https://www.youtube.com/watch?v=" + youTubeId + "&nomobile=1");
-
-			var task = new TaskCompletionSource<YouTubeUri>();
-			OnHtmlDownloaded(await response.Content.ReadAsStringAsync(), minQuality, maxQuality, (u, e) => {
-				if (u != null)
-					task.SetResult(u);
-				else if (e == null)
-					task.SetCanceled();
-				else
-					task.SetException(e);
-			});
-			return await task.Task; 
+			using (var client = new HttpClient())
+			{
+				client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
+				var response = await client.GetAsync("https://www.youtube.com/watch?v=" + youTubeId + "&nomobile=1");
+				
+				var task = new TaskCompletionSource<YouTubeUri>();
+				OnHtmlDownloaded(await response.Content.ReadAsStringAsync(), minQuality, maxQuality, (u, e) =>
+				{
+					if (u != null)
+						task.SetResult(u);
+					else if (e == null)
+						task.SetCanceled();
+					else
+						task.SetException(e);
+				});
+				return await task.Task;
+			}
 		}
 #else
 		public static HttpResponse GetVideoUri(string youTubeId, YouTubeQuality maxQuality, Action<YouTubeUri, Exception> completed)
