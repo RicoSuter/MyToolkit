@@ -69,6 +69,7 @@ namespace MyToolkit.Networking
 		public object Tag { get; set; }
 		public ICredentials Credentials { get; set; }
 
+#if !WINRT
 		public string UserAgent
 		{
 			get { return Headers.ContainsKey("User-Agent") ? Headers["User-Agent"] : null; }
@@ -80,6 +81,7 @@ namespace MyToolkit.Networking
 			var auth = Convert.ToBase64String(Encoding.UTF8.GetBytes(username + ":" + password));
 			Headers["Authorization"] = "Basic " + auth;
 		}
+#endif
 		
 #if USE_GZIP
 		public bool RequestGzip { get; set; }

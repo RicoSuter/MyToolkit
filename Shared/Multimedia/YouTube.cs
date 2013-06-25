@@ -14,6 +14,10 @@ using Microsoft.Phone.Tasks;
 using MyToolkit.Paging;
 using MyToolkit.UI;
 #endif
+#if WINRT
+using System.Net.Http.Headers;
+using System.Net.Http;
+#endif
 
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
 // this code only works with windows phone mango (video urls with query don't work in previous versions)
@@ -22,23 +26,6 @@ namespace MyToolkit.Multimedia
 {
 	public static class YouTube
 	{
-
-#if WINRT || WPF || WP8 || WP7 || SL5
-		public static Task<YouTubeUri> GetVideoUriAsync(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P)
-		{
-			var task = new TaskCompletionSource<YouTubeUri>();
-			GetVideoUri(youTubeId, maxQuality, (u, e) =>
-			{
-				if (u != null)
-					task.SetResult(u);
-				else if (e == null)
-					task.SetCanceled();
-				else
-					task.SetException(e);
-			});
-			return task.Task;
-		}
-#endif
 #if WINRT || WP8 || WP7 || SL5
 		public static async Task<string> GetVideoTitleAsync(string youTubeId) // should be improved
 		{
@@ -89,6 +76,51 @@ namespace MyToolkit.Multimedia
 			throw new ArgumentException("maxQuality");
 		}
 
+#if WPF || WP8 || WP7 || SL5
+		public static Task<YouTubeUri> GetVideoUriAsync(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P)
+		{
+			return GetVideoUriAsync(youTubeId, YouTubeQuality.Quality480P, maxQuality);
+		}
+
+		public static Task<YouTubeUri> GetVideoUriAsync(string youTubeId, YouTubeQuality minQuality, YouTubeQuality maxQuality)
+		{
+			var task = new TaskCompletionSource<YouTubeUri>();
+			GetVideoUri(youTubeId, minQuality, maxQuality, (u, e) =>
+			{
+				if (u != null)
+					task.SetResult(u);
+				else if (e == null)
+					task.SetCanceled();
+				else
+					task.SetException(e);
+			});
+			return task.Task;
+		}
+#endif
+#if WINRT
+		public static Task<YouTubeUri> GetVideoUriAsync(string youTubeId, YouTubeQuality maxQuality = YouTubeQuality.Quality480P)
+		{
+			return GetVideoUriAsync(youTubeId, YouTubeQuality.Quality480P, maxQuality);
+		}
+
+		public static async Task<YouTubeUri> GetVideoUriAsync(string youTubeId, YouTubeQuality minQuality, YouTubeQuality maxQuality)
+		{
+			var client = new HttpClient();
+			client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
+			var response = await client.GetAsync("https://www.youtube.com/watch?v=" + youTubeId + "&nomobile=1");
+
+			var task = new TaskCompletionSource<YouTubeUri>();
+			OnHtmlDownloaded(await response.Content.ReadAsStringAsync(), minQuality, maxQuality, (u, e) => {
+				if (u != null)
+					task.SetResult(u);
+				else if (e == null)
+					task.SetCanceled();
+				else
+					task.SetException(e);
+			});
+			return await task.Task; 
+		}
+#else
 		public static HttpResponse GetVideoUri(string youTubeId, YouTubeQuality maxQuality, Action<YouTubeUri, Exception> completed)
 		{
 			return GetVideoUri(youTubeId, YouTubeQuality.Quality480P, maxQuality, completed);
@@ -99,75 +131,77 @@ namespace MyToolkit.Multimedia
 		{
 			var request = new HttpGetRequest("https://www.youtube.com/watch?v=" + youTubeId + "&nomobile=1");
 			request.UserAgent  = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
-			return Http.Get(request, r => OnHtmlDownloaded(r, minQuality, maxQuality, completed));
-		}
-
-		private static void OnHtmlDownloaded(HttpResponse response, YouTubeQuality minQuality, YouTubeQuality maxQuality, Action<YouTubeUri, Exception> completed)
-		{
-			if (response.Successful)
+			return Http.Get(request, r =>
 			{
-				var urls = new List<YouTubeUri>();
-				try
+				if (r.Successful)
+					OnHtmlDownloaded(r.Response, minQuality, maxQuality, completed);
+				else if (completed != null)
+					completed(null, r.Exception);
+			});
+		}
+#endif
+
+		private static void OnHtmlDownloaded(string response, YouTubeQuality minQuality, YouTubeQuality maxQuality, Action<YouTubeUri, Exception> completed)
+		{
+			var urls = new List<YouTubeUri>();
+			try
+			{
+				var match = Regex.Match(response, "url_encoded_fmt_stream_map\": \"(.*?)\"");
+				var data = Uri.UnescapeDataString(match.Groups[1].Value);
+
+				var arr = Regex.Split(data, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"); // split by comma but outside quotes
+				foreach (var d in arr)
 				{
-					var match = Regex.Match(response.Response, "url_encoded_fmt_stream_map\": \"(.*?)\"");
-					var data = Uri.UnescapeDataString(match.Groups[1].Value);
-
-					var arr = Regex.Split(data, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"); // split by comma but outside quotes
-					foreach (var d in arr)
+					var url = "";
+					var signature = "";
+					var tuple = new YouTubeUri();
+					foreach (var p in d.Replace("\\u0026", "\t").Split('\t'))
 					{
-						var url = "";
-						var signature = "";
-						var tuple = new YouTubeUri();
-						foreach (var p in d.Replace("\\u0026", "\t").Split('\t'))
+						var index = p.IndexOf('=');
+						if (index != -1 && index < p.Length)
 						{
-							var index = p.IndexOf('=');
-							if (index != -1 && index < p.Length)
+							try
 							{
-								try
-								{
-									var key = p.Substring(0, index);
-									var value = Uri.UnescapeDataString(p.Substring(index + 1));
-									if (key == "url")
-										url = value;
-									else if (key == "itag")
-										tuple.Itag = int.Parse(value);
-									else if (key == "type" && value.Contains("video/mp4"))
-										tuple.Type = value;
-									else if (key == "sig")
-										signature = value;
-								}
-								catch { }
+								var key = p.Substring(0, index);
+								var value = Uri.UnescapeDataString(p.Substring(index + 1));
+								if (key == "url")
+									url = value;
+								else if (key == "itag")
+									tuple.Itag = int.Parse(value);
+								else if (key == "type" && value.Contains("video/mp4"))
+									tuple.Type = value;
+								else if (key == "sig")
+									signature = value;
 							}
+							catch { }
 						}
-
-						tuple.url = url + "&signature=" + signature;
-						if (tuple.IsValid)
-							urls.Add(tuple);
 					}
 
-					var minTag = GetQualityIdentifier(minQuality);
-					var maxTag = GetQualityIdentifier(maxQuality);
-					foreach (var u in urls.Where(u => u.Itag < minTag || u.Itag > maxTag).ToArray())
-					    urls.Remove(u);
-				}
-				catch (Exception ex)
-				{
-					if (completed != null)
-						completed(null, ex);
-					return; 
+					tuple.url = url + "&signature=" + signature;
+					if (tuple.IsValid)
+						urls.Add(tuple);
 				}
 
-				var entry = urls.OrderByDescending(u => u.Itag).FirstOrDefault();
-				if (entry != null)
-				{
-					if (completed != null)
-						completed(entry, null);
-				}
-				else if (completed != null)
-					completed(null, new Exception("no_video_urls_found"));
+				var minTag = GetQualityIdentifier(minQuality);
+				var maxTag = GetQualityIdentifier(maxQuality);
+				foreach (var u in urls.Where(u => u.Itag < minTag || u.Itag > maxTag).ToArray())
+					urls.Remove(u);
+			}
+			catch (Exception ex)
+			{
+				if (completed != null)
+					completed(null, ex);
+				return; 
+			}
+
+			var entry = urls.OrderByDescending(u => u.Itag).FirstOrDefault();
+			if (entry != null)
+			{
+				if (completed != null)
+					completed(entry, null);
 			}
 			else if (completed != null)
-				completed(null, response.Exception);
+				completed(null, new Exception("no_video_urls_found"));
 		}
 
 		public class YouTubeUri
