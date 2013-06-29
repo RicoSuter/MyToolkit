@@ -224,9 +224,13 @@
 						</Grid.RowDefinitions>
 						
 						<controls:ExtendedListBox Background="Transparent" BorderThickness="0" Grid.Row="0" ItemTemplate="{TemplateBinding HeaderTemplate}"
-												 HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-												 Margin="0" x:Name="List" Style="{StaticResource TransparentListBox}">
-							
+												  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+												  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+												  ScrollViewer.HorizontalScrollMode="Auto"
+												  ScrollViewer.VerticalScrollMode="Disabled"
+												  ScrollViewer.VerticalScrollBarVisibility="Disabled"
+												  Margin="0" x:Name="List" Style="{StaticResource TransparentListBox}">
+
 							<controls:ExtendedListBox.ItemsPanel>
 								<ItemsPanelTemplate>
 									<VirtualizingStackPanel Orientation="Horizontal" Background="Transparent" />
