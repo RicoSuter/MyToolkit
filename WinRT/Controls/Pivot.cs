@@ -89,8 +89,7 @@ namespace MyToolkit.Controls
 			get { return (DataTemplate) GetValue(HeaderTemplateProperty); }
 			set { SetValue(HeaderTemplateProperty, value); }
 		}
-
-
+		
 		public static readonly DependencyProperty SelectedItemProperty =
 			DependencyProperty.Register("SelectedItem", typeof(object), typeof(Pivot), new PropertyMetadata(default(object), 
 				(o, args) =>
