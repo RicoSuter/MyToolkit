@@ -59,7 +59,7 @@ namespace MyToolkit.Controls
 		private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
 		{
 			var item = (PivotItem)list.SelectedItem;
-			content.Content = item.Content;
+			content.Content = item != null ? item.Content : null;
 
 			SelectedIndex = list.SelectedIndex;
 			SelectedItem = list.SelectedItem;
