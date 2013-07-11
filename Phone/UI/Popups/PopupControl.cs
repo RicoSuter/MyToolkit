@@ -62,11 +62,6 @@ namespace MyToolkit.UI.Popups
 			var content = page.Content;
 			content.IsHitTestVisible = false;
 
-			if (showFullScreen && content.Visibility == Visibility.Visible)
-				content.Visibility = Visibility.Collapsed;
-			else
-				showFullScreen = false; 
-
 			var popup = new Popup
 			{
 				Child = control,
@@ -86,6 +81,11 @@ namespace MyToolkit.UI.Popups
 			if (showFullScreen)
 				control.Height = page.ActualHeight + heightSub;
 			control.Width = page.ActualWidth;
+
+			if (showFullScreen && content.Visibility == Visibility.Visible)
+				content.Visibility = Visibility.Collapsed;
+			else
+				showFullScreen = false; 
 
 			var color = ColorUtility.RemoveAlpha(
 				PhoneApplication.IsDarkTheme ? ColorUtility.FromHex("#22FFFFFF") :
