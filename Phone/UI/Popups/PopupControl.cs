@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -43,8 +44,12 @@ namespace MyToolkit.UI.Popups
 				control, hideApplicationBar, showFullScreen);
 		}
 		
+		private static Stack<PopupControl> popupStack; 
 		public static Popup Show(PopupControl control, bool hideApplicationBar, bool showFullScreen, Action<PopupControl> completed)
 		{
+			if (popupStack == null)
+				popupStack = new Stack<PopupControl>();
+
 			var oldState = new PageDeactivator();
 			var page = PhonePage.CurrentPage;
 
@@ -53,8 +58,8 @@ namespace MyToolkit.UI.Popups
 			{
 				page.ApplicationBar.IsVisible = false;
 				heightSub = page.ApplicationBar.Mode == ApplicationBarMode.Minimized
-								? page.ApplicationBar.MiniSize
-								: page.ApplicationBar.DefaultSize;
+					? page.ApplicationBar.MiniSize
+					: page.ApplicationBar.DefaultSize;
 			}
 			else
 				hideApplicationBar = false;
@@ -74,38 +79,51 @@ namespace MyToolkit.UI.Popups
 			if (SystemTray.IsVisible && !(SystemTray.Opacity < 1.0))
 				heightSub += 32; 
 
+			// set popup size
 			if (showFullScreen)
 				popup.Height = page.ActualHeight + heightSub;
 			popup.Width = page.ActualWidth;
 
+			// set control size
 			if (showFullScreen)
 				control.Height = page.ActualHeight + heightSub;
 			control.Width = page.ActualWidth;
 
+			// hide underlying page
 			if (showFullScreen && content.Visibility == Visibility.Visible)
 				content.Visibility = Visibility.Collapsed;
 			else
 				showFullScreen = false; 
 
+			// deactivate page
 			var color = ColorUtility.RemoveAlpha(
 				PhoneApplication.IsDarkTheme ? ColorUtility.FromHex("#22FFFFFF") :
 				ColorUtility.FromHex("#DDFFFFFF"), Colors.Black);
-
 			var oldColor = SystemTray.BackgroundColor;
 
 			control.SetBackgroundColor(color);
 			oldState.DoIt(false);
 
+			// register back key event
 			var del = new EventHandler<CancelEventArgs>(delegate(object sender, CancelEventArgs args)
 			{
-				args.Cancel = true;
-				control.GoBack();
+				if (popupStack.Peek() == control)
+				{
+					args.Cancel = true;
+					control.GoBack();
+				}
 			});
 			page.BackKeyPress += del;
 
 			SystemTray.BackgroundColor = color;
 
 			popup.IsOpen = true;
+
+			// hide underlying popups
+			foreach (var p in popupStack)
+				p.Visibility = Visibility.Collapsed;
+			popupStack.Push(control);
+
 			control.Closed += delegate
 			{
 				if (showFullScreen)
@@ -117,6 +135,11 @@ namespace MyToolkit.UI.Popups
 				content.IsHitTestVisible = true;
 
 				popup.IsOpen = false;
+
+				popupStack.Pop();
+				if (popupStack.Count > 0)
+					popupStack.Peek().Visibility = Visibility.Visible; 
+
 				oldState.Revert();
 
 				page.BackKeyPress -= del;
