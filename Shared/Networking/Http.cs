@@ -222,8 +222,15 @@ namespace MyToolkit.Networking
 					{
 #if WINRT
 						if (item.Key != "User-Agent") // TODO fix this => cannot set UserAgent in WinRT
-#endif
 							request.Headers[item.Key] = item.Value;
+#elif WPF
+						if (item.Key != "User-Agent")
+							request.Headers[item.Key] = item.Value;
+						else
+							request.UserAgent = item.Value; 
+#else
+						request.Headers[item.Key] = item.Value;
+#endif
 					}
 				}
 
