@@ -6,7 +6,6 @@ namespace MyToolkit.Utilities
 {
 	public static class EnumerableExtensions
 	{
-#if !WP7
 		/// <summary>
 		/// Instead of OrderBy(...).ThenBy(...) this method calls ThenBy only if necessary
 		/// </summary>
@@ -30,15 +29,9 @@ namespace MyToolkit.Utilities
 
 		public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
 		{
-			var keys = new HashSet<TKey>();
-			foreach (var element in source)
-			{
-				if (keys.Add(keySelector(element)))
-					yield return element;
-			}
+			return source.GroupBy(keySelector).Select(g => g.First());
 		}
-#endif
-
+		
 		public static bool IsCopyOf<T>(this IList<T> list1, IList<T> list2)
 		{
 			if (list1 == null && list2 == null)

@@ -222,6 +222,9 @@
     <Compile Include="UI\Popups\InputBox.xaml.cs">
       <DependentUpon>InputBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Popups\MultiButtonPopup.xaml.cs">
+      <DependentUpon>MultiButtonPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Popups\PopupControl.cs" />
     <Compile Include="UI\Popups\ListPickerBox.xaml.cs">
       <DependentUpon>ListPickerBox.xaml</DependentUpon>
@@ -285,6 +288,10 @@
     <Page Include="UI\Popups\ListPickerBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Popups\MultiButtonPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\Popups\ShareBox.xaml">
       <Generator>MSBuild:Compile</Generator>
