@@ -20,10 +20,19 @@ namespace MyToolkit.Converters
 		public object Convert(object value, Type targetType, object parameter, string language)
 #endif
 		{
+			var inverse = false;
+			if (parameter != null && parameter.ToString().StartsWith("!"))
+			{
+				inverse = true; 
+				parameter = parameter.ToString().Substring(1);
+			}
+
 			var matches = value != null && value.ToString() == parameter.ToString(); 
 			if (targetType == typeof(Visibility))
-				return matches ? Visibility.Visible : Visibility.Collapsed;
-			return matches;
+				return !inverse ? 
+					(matches ? Visibility.Visible : Visibility.Collapsed) : 
+					(matches ? Visibility.Collapsed : Visibility.Visible);
+			return !inverse ? matches : !matches;
 		}
 
 #if !WINRT
