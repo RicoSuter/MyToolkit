@@ -61,7 +61,7 @@ namespace MyToolkit.Networking
 			get { return exception; }
 			set
 			{
-				if (exception != null && exception is TimeoutException)
+				if (exception is TimeoutException)
 					return; // already set
 
 				if (value is WebException && ((WebException)value).Status == WebExceptionStatus.RequestCanceled)
