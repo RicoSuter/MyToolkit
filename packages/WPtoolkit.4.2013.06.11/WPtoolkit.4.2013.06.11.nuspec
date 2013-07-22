@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>WPtoolkit</id>
+    <version>4.2013.06.11</version>
+    <title>Windows Phone Toolkit</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>http://phone.codeplex.com/license</licenseUrl>
+    <projectUrl>http://phone.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Windows Phone toolkit provides a collection of controls, extension methods and page animations to help create beautiful and consistent Windows Phone user interfaces and make common progamming tasks easier. Documentation and source are on CodePlex at http://phone.codeplex.com.</description>
+    <releaseNotes>Release notes - https://phone.codeplex.com/releases/view/106971
+
+What's New
+
+Localization Update
+
+WPToolkit controls are now completely localized to support all the cultures that are natively supported by Windows Phone 8.0. This was done with the help of the Multilingual App Toolkit for Visual Studio 2012.
+
+The following localizations are available:
+
+Windows Phone 8.0
+ar-SA;az-Latn-AZ;be-BY;bg-BG;ca-ES;cs-CZ;da-DK;de-DE;el-GR;en-GB;en-US;es-ES;es-MX;et-EE;fa-IR;fi-FI;fil-PH;fr-FR;fr-CA;he-IL;hi-IN;hr-HR;hu-HU;id-ID;it-IT;ja-JP;kk-KZ;ko-KR;lt-LT;lv-LV;mk-MK;ms-MY;nb-NO;nl-NL;pl-PL;pt-BR;pt-PT;ro-RO;ru-RU;sk-SK;sl-SI;sq-AL;sr-Latn-CS;sv-SE;th-TH;tr-TR;uk-UA;uz-Latn-UZ;vi-VN;zh-CN;zh-TW;
+
+Windows Phone 7.5
+Same as before but with a some changes in the names of the cultures supported
+cs-cz;da-dk;de-de;el-gr;en-US;en-gb;es-es;fi-FI;fr-fr;hu-HU;it-IT;ja-JP;ko-KR;nb-NO;nl-NL;pl-PL;pt-BR;pt-PT;ru-RU;sv-SE;zh-CN;zh-TW
+
+The specific changes for WP75 are:
+cs -&gt; cs-cz
+el -&gt; el-GR
+da -&gt; da-DK
+fi -&gt; fi-FI
+hu -&gt; hu-HU
+ja -&gt; ja-JP
+ko -&gt; ko-KR
+pl -&gt; pl-PL
+ru -&gt; ru-RU
+
+Gesture Listener Sample
+The gesture listener sample has been updated show how Windows Phone 8.0 apps can avoid a dependency on the XNA assemblies.
+
+SpeechTextbox
+A new sample control which shows how to create a speech-enabled TextBox by extending the PhoneTextbox to use speech recognition on WP8.
+
+Bug Fixes
+As always there are some great bugs fixes in this release.
+
+Top five bug fixes
+10602 HubTile disappears when region is not en-us
+10575 Navigation from CustomMessageBox Dismissed event causes NullReferenceException
+10572 SlideInEffect &amp; TurnstileFeatherEffect not working for LongListSelector in WP8 Toolkit
+10582 System.Tuple conflicts with Microsoft.Bcl nuget package
+10583 Localized resources not being included in NuGet package
+
+Samples
+There is a full featured sample application that is checked in that shows the usage of all the Windows Phone Toolkit controls. It's highly recommended that you download the latest source and run the sample app to find examples of using the controls.</releaseNotes>
+    <copyright>http://phone.codeplex.com/license</copyright>
+    <language>en-US</language>
+    <tags>wptoolkit toolkit windowsphone wp7 wp7dev phone tk wp7tk controls mango wp8 apollo</tags>
+  </metadata>
+</package>
