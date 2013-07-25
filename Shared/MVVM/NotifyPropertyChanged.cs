@@ -13,6 +13,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 #else
 using System.ComponentModel;
+using MyToolkit.Utilities;
+
 #endif
 #if WP8
 using System.Runtime.CompilerServices;
@@ -86,10 +88,7 @@ namespace MyToolkit.MVVM
 
 		public void RaisePropertyChanged<TClass>(Expression<Func<TClass, object>> expression)
 		{
-			if (expression.Body is UnaryExpression)
-				RaisePropertyChanged(((MemberExpression)(((UnaryExpression)expression.Body).Operand)).Member.Name);
- 			else
-				RaisePropertyChanged(((MemberExpression)expression.Body).Member.Name);
+			RaisePropertyChanged(ExpressionHelper.GetName(expression));
 		}
 
 #if WINRT || WPF || WP8
