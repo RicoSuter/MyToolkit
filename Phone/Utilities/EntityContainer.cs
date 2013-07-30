@@ -15,7 +15,7 @@ namespace MyToolkit.Utilities
 {
 	public interface IEntity
 	{
-		int Id { get; }
+		string Id { get; }
 	}
 
 	public class EntityContainer<T>
@@ -24,13 +24,7 @@ namespace MyToolkit.Utilities
 		private readonly ExtendedObservableCollection<T> collection = new ExtendedObservableCollection<T>();
 		public ExtendedObservableCollection<T> Collection { get { return collection; } }
 
-		public T Get(string idAsString)
-		{
-			var id = int.Parse(idAsString);
-			return collection.SingleOrDefault(n => n.Id == id);
-		}
-
-		public T Get(long id)
+		public T Get(string id)
 		{
 			return collection.SingleOrDefault(n => n.Id == id);
 		}
@@ -98,10 +92,9 @@ namespace MyToolkit.Utilities
 			collection.Initialize(ApplicationSettings.GetSetting(key, initialList));
 		}
 
-		public virtual int GenerateIdentity()
+		public string GenerateIdentity()
 		{
-			lock (this)
-				return IdentityGenerator.Generate(i => collection.Any(c => c.Id == i));
+			return new Guid().ToString();
 		}
 
 #if WP7
