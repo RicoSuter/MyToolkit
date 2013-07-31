@@ -94,7 +94,7 @@ namespace MyToolkit.Utilities
 
 		public string GenerateIdentity()
 		{
-			return new Guid().ToString();
+			return Guid.NewGuid().ToString();
 		}
 
 #if WP7
