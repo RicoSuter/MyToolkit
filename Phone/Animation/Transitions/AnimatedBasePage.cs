@@ -134,7 +134,13 @@ namespace MyToolkit.Animation.Transitions
 
 			// only for app pages (no external and library pages)
 			// needed for correctly working phone toolkit (eg date picker)
-			if (!isNavigating && e.Uri != ExternalUri && !navigatedToLibraryPage)
+#if WP7
+			if (!isNavigating && e.Uri != ExternalUri && !navigatedToLibraryPage && 
+				e.NavigationMode != NavigationMode.Refresh)
+#else
+			if (!isNavigating && e.Uri != ExternalUri && !navigatedToLibraryPage &&
+				e.NavigationMode != NavigationMode.Reset && e.NavigationMode != NavigationMode.Refresh)
+#endif
 			{
 				isNavigating = true;
 				nextUri = e.Uri;

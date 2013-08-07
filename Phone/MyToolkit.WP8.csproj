@@ -288,6 +288,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Storage\ApplicationSettings.cs" />
+    <Compile Include="Utilities\CommandProcessor.cs" />
     <Compile Include="Utilities\EntityContainer.cs" />
   </ItemGroup>
   <ItemGroup>
