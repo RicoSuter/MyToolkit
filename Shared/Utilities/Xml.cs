@@ -1,11 +1,16 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 
 #if WINRT
 using Windows.Data.Xml.Dom;
+#endif
+
+#if !SL4
+using System.Threading.Tasks;
 #endif
 
 namespace MyToolkit.Utilities
@@ -37,7 +42,46 @@ namespace MyToolkit.Utilities
 			}
 		}
 
+#if !SL4
+
+		public static Task<string> SerializeAsync(object obj, Type[] extraTypes = null)
+		{
+			var source = new TaskCompletionSource<string>();
+			Task.Factory.StartNew(() =>
+			{
+				try
+				{
+					source.SetResult(Serialize(obj, extraTypes));
+				}
+				catch (Exception ex)
+				{
+					source.SetException(ex);
+				}
+			}, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
+			return source.Task; 
+		}
+
+		public static Task<T> DeserializeAsync<T>(string xml, Type[] extraTypes = null)
+		{
+			var source = new TaskCompletionSource<T>();
+			Task.Factory.StartNew(() =>
+			{
+				try
+				{
+					source.SetResult(Deserialize<T>(xml, extraTypes));
+				}
+				catch (Exception ex)
+				{
+					source.SetException(ex);
+				}
+			}, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
+			return source.Task;
+		}
+
+#endif
+
 #if WINRT
+
         public static string XmlEscape(string unescaped)
         {
             var doc = new XmlDocument();
@@ -53,7 +97,9 @@ namespace MyToolkit.Utilities
             node.InnerText = escaped;
             return node.InnerText;
         }
+
 #elif !SL4 && !WP7 && !WP8 && !SL5
+
 		public static string XmlEscape(string unescaped)
 		{
 			var doc = new XmlDocument();
@@ -69,6 +115,7 @@ namespace MyToolkit.Utilities
 			node.InnerXml = escaped;
 			return node.InnerText;
 		}
+
 #endif
 	}
 }

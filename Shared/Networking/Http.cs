@@ -107,6 +107,15 @@ namespace MyToolkit.Networking
 			}
 		}
 
+		public static int PendingRequestCount
+		{
+			get
+			{
+				lock (pendingRequests)
+					return pendingRequests.Count;
+			}
+		}
+
 		private static HttpWebRequest CreateRequest(HttpGetRequest req)
 		{
 			var queryString = GetQueryString(req.Query);
