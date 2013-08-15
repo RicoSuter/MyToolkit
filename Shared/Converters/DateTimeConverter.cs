@@ -39,6 +39,9 @@ namespace MyToolkit.Converters
 
 			switch (parameter.ToString().ToLower())
 			{
+				case "dayabbreviated":
+				case "dayabb": return new DateTimeFormatter(YearFormat.None, MonthFormat.None, DayFormat.None, DayOfWeekFormat.Abbreviated).Format(((DateTime)value));
+				case "day": return new DateTimeFormatter(YearFormat.None, MonthFormat.None, DayFormat.None, DayOfWeekFormat.Default).Format(((DateTime)value));
 				case "date": return new DateTimeFormatter(YearFormat.Default, MonthFormat.Numeric, DayFormat.Default, DayOfWeekFormat.None).Format(((DateTime)value));
 				case "time": return new DateTimeFormatter(HourFormat.Default, MinuteFormat.Default, SecondFormat.Default).Format(((DateTime)value));
 				case "timewithoutseconds": return new DateTimeFormatter(HourFormat.Default, MinuteFormat.Default, SecondFormat.None).Format(((DateTime)value));
