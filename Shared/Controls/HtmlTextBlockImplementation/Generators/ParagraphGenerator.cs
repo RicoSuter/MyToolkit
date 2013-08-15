@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 
 #if WINRT
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Media;
 
 #else
 using System.Windows;
@@ -15,6 +17,16 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 {
 	public class ParagraphGenerator : IControlGenerator
 	{
+		public double FontSize { get; set; }
+		public FontFamily FontFamily { get; set; }
+		public Brush Foreground { get; set; }
+		public FontStyle FontStyle { get; set; }
+
+		public ParagraphGenerator()
+		{
+			FontStyle = FontStyle.Normal;
+		}
+
 		public DependencyObject[] Generate(HtmlNode node, IHtmlTextBlock textBlock)
 		{
 			var list = new List<DependencyObject>();
@@ -37,7 +49,7 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 			return list.ToArray();
 		}
 
-		private static void CreateTextBox(List<DependencyObject> list, List<Inline> current, IHtmlTextBlock textBlock)
+		private void CreateTextBox(List<DependencyObject> list, List<Inline> current, IHtmlTextBlock textBlock)
 		{
 			if (current.Count > 0)
 			{
@@ -55,9 +67,10 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 				tb.Margin = new Thickness(0, textBlock.ParagraphMargin, 0, textBlock.ParagraphMargin);
 #endif
 				tb.Blocks.Add(p);
-				tb.Foreground = textBlock.Foreground;
-				tb.FontSize = textBlock.FontSize;
-				tb.FontFamily = textBlock.FontFamily;
+				tb.Foreground = Foreground ?? textBlock.Foreground;
+				tb.FontSize = FontSize == 0 ? textBlock.FontSize : FontSize;
+				tb.FontFamily = FontFamily ?? textBlock.FontFamily;
+				tb.FontStyle = FontStyle;
 				
 				list.Add(tb);
 				current.Clear();

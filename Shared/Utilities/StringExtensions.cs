@@ -6,6 +6,10 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 
+#if SL4 || SL5
+using System.Windows.Browser;
+#endif
+
 namespace MyToolkit.Utilities
 {
 	public static class StringExtensions
@@ -54,6 +58,22 @@ namespace MyToolkit.Utilities
 			return text.
 				Replace("\u008B", "‹").
 				Replace("\u009B", "›");
+		}
+
+		public static string RemoveHtmlWhitespaces(this string html)
+		{
+			html = new Regex(@">\s+<").Replace(html, "><");
+			html =  new Regex(@"\n\s+").Replace(html, string.Empty);
+			return html; 
+		}
+
+		public static string ConvertHtmlCharacters(this string html)
+		{
+#if SL4 || SL5 || WP7
+			return HttpUtility.HtmlDecode(html);
+#else
+			return WebUtility.HtmlDecode(html);
+#endif
 		}
 
 		public static string TruncateWithoutChopping(this string text, int length)

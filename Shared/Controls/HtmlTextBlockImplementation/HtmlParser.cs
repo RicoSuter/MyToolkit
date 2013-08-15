@@ -12,6 +12,9 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation
 		{
 			var list = new Dictionary<string, IControlGenerator>();
 			list.Add("p", new ParagraphGenerator());
+			list.Add("h1", new ParagraphGenerator());
+			list.Add("h2", new ParagraphGenerator());
+			list.Add("h3", new ParagraphGenerator());
 			list.Add("html", new HtmlGenerator());
 			list.Add("strong", new StrongGenerator());
 			list.Add("b", list["strong"]);
@@ -30,11 +33,13 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation
 			if (html == null)
 				html = "";
 
+			html = html.RemoveHtmlWhitespaces();
 			html = html.ConvertUTF8Characters();
+			html = html.ConvertHtmlCharacters();
 			html = html.Replace("\r", "").Replace("\n", "").Replace("\t", "");
 			html = html.Replace("<br>", "\n").Replace("<br />", "\n").Replace("<br/>", "\n");
 			html = html.Replace("<BR>", "\n").Replace("<BR />", "\n").Replace("<BR/>", "\n");
-			html = html.Replace("&nbsp;", " ");
+			html = html.Trim('\n', '\r', ' ');
 			html = "<p>" + html + "</p>";
 
 			var matches = Regex.Matches(html, "<(.*?)>|</(.*?)>|<(.*?)/>|([^<>]*)");
