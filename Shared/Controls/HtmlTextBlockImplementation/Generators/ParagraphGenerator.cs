@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
 #endif
 
 namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
@@ -24,7 +25,11 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 
 		public ParagraphGenerator()
 		{
+#if WINRT
 			FontStyle = FontStyle.Normal;
+#else
+			FontStyle = FontStyles.Normal;
+#endif
 		}
 
 		public DependencyObject[] Generate(HtmlNode node, IHtmlTextBlock textBlock)
