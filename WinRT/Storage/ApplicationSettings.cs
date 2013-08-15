@@ -14,7 +14,7 @@ namespace MyToolkit.Storage
 			settings.Values[key] = value;
 		}
 
-		public static T GetSetting<T>(string key, bool roaming = true)
+		public static T GetSetting<T>(string key, bool roaming = false)
 		{
 			return GetSetting(key, default(T), roaming);
 		}
