@@ -1,0 +1,469 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{165D7BF6-152C-427F-97AE-F09A69F646AB}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyToolkit</RootNamespace>
+    <AssemblyName>MyToolkit.Extended</AssemblyName>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <SilverlightVersion>
+    </SilverlightVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WP8;USE_GZIP</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\- Output\MyToolkit.Extended.Wp8\</OutputPath>
+    <DefineConstants>WP8;USE_GZIP</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>..\- Output\MyToolkit.Extended.Wp8\MyToolkit.Extended.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Bin\x86\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;USE_GZIP;WP8</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>
+    </PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>Bin\x86\Release</OutputPath>
+    <DefineConstants>SILVERLIGHT;WINDOWS_PHONE;USE_GZIP;WP8</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>
+    </PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>Bin\ARM\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;USE_GZIP;WP8</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>
+    </PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <OutputPath>Bin\ARM\Release</OutputPath>
+    <DefineConstants>SILVERLIGHT;WINDOWS_PHONE;USE_GZIP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>
+    </PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\MyToolkit.Extended.WinRT\Media\ImageHelper.cs">
+      <Link>Media\ImageHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\animation\Fading.cs">
+      <Link>Animation\Fading.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\animation\Flipping.cs">
+      <Link>Animation\Flipping.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\ExtendedListBox.cs">
+      <Link>Controls\ExtendedListBox.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\FixedHtmlTextBlock.cs">
+      <Link>Controls\FixedHtmlTextBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlock.cs">
+      <Link>Controls\HtmlTextBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\EmGenerator.cs">
+      <Link>Controls\HtmlTextBlockImplementation\Generators\EmGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\EmptyGenerator.cs">
+      <Link>Controls\HtmlTextBlockImplementation\Generators\EmptyGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\HtmlGenerator.cs">
+      <Link>Controls\HtmlTextBlockImplementation\Generators\HtmlGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\ImageBlock.cs">
+      <Link>Controls\HtmlTextBlockImplementation\Generators\ImageBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\ImageGenerator.cs">
+      <Link>Controls\HtmlTextBlockImplementation\Generators\ImageGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\LinkGenerator.cs">
+      <Link>Controls\HtmlTextBlockImplementation\Generators\LinkGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\ParagraphGenerator.cs">
+      <Link>Controls\HtmlTextBlockImplementation\Generators\ParagraphGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\StrongGenerator.cs">
+      <Link>Controls\HtmlTextBlockImplementation\Generators\StrongGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\TextGenerator.cs">
+      <Link>Controls\HtmlTextBlockImplementation\Generators\TextGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\UlGenerator.cs">
+      <Link>Controls\HtmlTextBlockImplementation\Generators\UlGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\HtmlNode.cs">
+      <Link>Controls\HtmlTextBlockImplementation\HtmlNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\HtmlParser.cs">
+      <Link>Controls\HtmlTextBlockImplementation\HtmlParser.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\HtmlTextBlockHelper.cs">
+      <Link>Controls\HtmlTextBlockImplementation\HtmlTextBlockHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\IControlGenerator.cs">
+      <Link>Controls\HtmlTextBlockImplementation\IControlGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\IHtmlTextBlock.cs">
+      <Link>Controls\HtmlTextBlockImplementation\IHtmlTextBlock.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\ISizeDependentControl.cs">
+      <Link>Controls\HtmlTextBlockImplementation\ISizeDependentControl.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\SingleControlGenerator.cs">
+      <Link>Controls\HtmlTextBlockImplementation\SingleControlGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\NavigationListEventArgs.cs">
+      <Link>Controls\NavigationListEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\PanAndZoomImage.cs">
+      <Link>Controls\PanAndZoomImage.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\PanAndZoomViewer.cs">
+      <Link>Controls\PanAndZoomViewer.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
+      <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\UniformGrid.cs">
+      <Link>Controls\UniformGrid.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\WatermarkedTextBox.cs">
+      <Link>Controls\WatermarkedTextBox.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\converters\ControlClippingConverter.cs">
+      <Link>Converters\ControlClippingConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\converters\DateTimeConverter.cs">
+      <Link>Converters\DateTimeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\converters\ImageBackgroundColorConverter.cs">
+      <Link>Converters\ImageBackgroundColorConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\converters\JoinConverter.cs">
+      <Link>Converters\JoinConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\converters\NotConverter.cs">
+      <Link>Converters\NotConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\converters\NumberConverter.cs">
+      <Link>Converters\NumberConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\converters\RemoveColorAlphaConverter.cs">
+      <Link>Converters\RemoveColorAlphaConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\converters\TimeSpanConverter.cs">
+      <Link>Converters\TimeSpanConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\converters\TruncateConverter.cs">
+      <Link>Converters\TruncateConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\converters\TypeVisibilityConverter.cs">
+      <Link>Converters\TypeVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\converters\UpperTextConverter.cs">
+      <Link>Converters\UpperTextConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\converters\VisibilityConverter.cs">
+      <Link>Converters\VisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Mathematics\GeometryMath.cs">
+      <Link>Mathematics\GeometryMath.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Mathematics\Matrix.cs">
+      <Link>Mathematics\Matrix.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Mathematics\MatrixMath.cs">
+      <Link>Mathematics\MatrixMath.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Mathematics\TrigonometryMath.cs">
+      <Link>Mathematics\TrigonometryMath.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Mathematics\VectorMath.cs">
+      <Link>Mathematics\VectorMath.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\messaging\DefaultActions.cs">
+      <Link>Messaging\DefaultActions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Multimedia\YouTube.cs">
+      <Link>Multimedia\YouTube.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\Shared\Multimedia\YouTubeQuality.cs">
+      <Link>Multimedia\YouTubeQuality.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\shared\mvvm\DependencyPropertyHelper.cs">
+      <Link>MVVM\DependencyPropertyHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Networking\NetworkState.cs">
+      <Link>Networking\NetworkState.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Networking\NetworkStateTracker.cs">
+      <Link>Networking\NetworkStateTracker.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\networking\WakeOnLan.cs">
+      <Link>Networking\WakeOnLan.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Performance\MemoryDiagnosticsHelper.cs">
+      <Link>Performance\MemoryDiagnosticsHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Serialization\DataContractSerialization.cs">
+      <Link>Serialization\DataContractSerialization.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Storage\FileUtilities.cs">
+      <Link>Storage\FileUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\UI\Designer.cs">
+      <Link>UI\Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\UI\FrameworkElementExtensions.cs">
+      <Link>UI\FrameworkElementExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\UI\TextBinding.cs">
+      <Link>UI\TextBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\AdditionalStreamExtensions.cs">
+      <Link>Utilities\AdditionalStreamExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\utilities\ColorUtility.cs">
+      <Link>Utilities\ColorUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\utilities\DependencyPropertyChangedEvent.cs">
+      <Link>Utilities\DependencyPropertyChangedEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\EntityContainer.cs">
+      <Link>Utilities\EntityContainer.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\utilities\SingleEvent.cs">
+      <Link>Utilities\SingleEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\utilities\Xml.cs">
+      <Link>Utilities\Xml.cs</Link>
+    </Compile>
+    <Compile Include="Animation\Transitions\AnimatedPage.cs" />
+    <Compile Include="Animation\Transitions\AnimatorHelperBase.cs" />
+    <Compile Include="Animation\Transitions\ContinuumAnimator.cs" />
+    <Compile Include="Animation\Transitions\ContinuumBackwardInAnimator.cs" />
+    <Compile Include="Animation\Transitions\ContinuumBackwardOutAnimator.cs" />
+    <Compile Include="Animation\Transitions\ContinuumForwardInAnimator.cs" />
+    <Compile Include="Animation\Transitions\ContinuumForwardOutAnimator.cs" />
+    <Compile Include="Animation\Transitions\DefaultPageAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateIn180ClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateIn180CounterClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateIn90ClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateIn90CounterClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateOut180ClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateOut180CounterClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateOut90ClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\RotateOut90CounterClockwiseAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideDownAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideLeftFadeInAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideLeftFadeOutAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideRightFadeInAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideRightFadeOutAnimator.cs" />
+    <Compile Include="Animation\Transitions\SlideUpAnimator.cs" />
+    <Compile Include="Animation\Transitions\Storyboards.cs" />
+    <Compile Include="Animation\Transitions\SwivelAnimator.cs" />
+    <Compile Include="Animation\Transitions\TurnstileAnimator.cs" />
+    <Compile Include="Animation\Transitions\TurnstileBackwardInAnimator.cs" />
+    <Compile Include="Animation\Transitions\TurnstileBackwardOutAnimator.cs" />
+    <Compile Include="Animation\Transitions\TurnstileForwardInAnimator.cs" />
+    <Compile Include="Animation\Transitions\TurnstileForwardOutAnimator.cs" />
+    <Compile Include="Controls\ExtendedListPicker.cs" />
+    <Compile Include="Controls\ScrollableItemsControl.cs" />
+    <Compile Include="Converters\LongListSelectorHasItemsConverter.cs" />
+    <Compile Include="Environment\PhoneApplication.cs" />
+    <Compile Include="Environment\PhoneManifest.cs" />
+    <Compile Include="Environment\Resources.cs" />
+    <Compile Include="Paging\ExtendedPage.cs" />
+    <Compile Include="Resources\Strings.Designer.cs">
+      <DependentUpon>Strings.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="UI\PerformanceProgressBar.cs" />
+    <Compile Include="Controls\TranslatedToggleSwitch.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\VideoButton.xaml.cs">
+      <DependentUpon>VideoButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NativeLongListSelector.cs" />
+    <Compile Include="Paging\BindableApplicationBar.cs" />
+    <Compile Include="Paging\BindableApplicationBarIconButton.cs" />
+    <Compile Include="Paging\BindableApplicationBarItemCollection.cs" />
+    <Compile Include="Paging\BindableApplicationBarMenuItem.cs" />
+    <Compile Include="Paging\IExtendedPage.cs" />
+    <Compile Include="Paging\PhoneApplicationPageExtensions.cs" />
+    <Compile Include="UI\Popups\InputBox.xaml.cs">
+      <DependentUpon>InputBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Popups\MultiButtonPopup.xaml.cs">
+      <DependentUpon>MultiButtonPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Popups\PopupControl.cs" />
+    <Compile Include="UI\Popups\ListPickerBox.xaml.cs">
+      <DependentUpon>ListPickerBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Popups\ShareBox.xaml.cs">
+      <DependentUpon>ShareBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Popups\BaseViewModel.cs" />
+    <Compile Include="UI\Thombstone.cs" />
+    <Compile Include="Controls\YouTubeButton.xaml.cs">
+      <DependentUpon>YouTubeButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\DataTemplateSelector.cs" />
+    <Compile Include="Controls\ExtendedImage.xaml.cs">
+      <DependentUpon>ExtendedImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FixedNavigationList.cs" />
+    <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="UI\PageDeactivator.cs" />
+    <Compile Include="UI\PasswordBoxBinding.cs" />
+    <Compile Include="Controls\ExtendedItemsControl.cs" />
+    <Compile Include="Controls\NavigationList.cs" />
+    <Compile Include="UI\ProgressIndicatorProxy.cs" />
+    <Compile Include="Controls\UnstyledButton.cs" />
+    <Compile Include="Utilities\TaskHelperEx.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\PlayIcon.png" />
+    <Resource Include="Images\PlayIconLight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\VideoButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\YouTubeButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.WP8.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ExtendedImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Popups\InputBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Popups\ListPickerBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Popups\MultiButtonPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Popups\ShareBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Strings.de.resx" />
+    <EmbeddedResource Include="Resources\Strings.fr.resx" />
+    <EmbeddedResource Include="Resources\Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyToolkit\MyToolkit.csproj">
+      <Project>{f01f49c0-5da2-4757-b4e0-02ec7a187ded}</Project>
+      <Name>MyToolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=8.0.1.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
+  <ProjectExtensions />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

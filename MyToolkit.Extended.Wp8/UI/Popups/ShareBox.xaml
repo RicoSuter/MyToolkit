@@ -1,0 +1,27 @@
+<Popups:PopupControl x:Class="MyToolkit.UI.Popups.ShareBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:Controls="clr-namespace:MyToolkit.Controls" xmlns:Popups="clr-namespace:MyToolkit.UI.Popups"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}">
+    
+    <Grid x:Name="LayoutRoot">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0" x:Name="popup">
+			<StackPanel Margin="12,12,12,36">
+				<Controls:UnstyledButton toolkit:TiltEffect.IsTiltEnabled="True" Click="AsMessageClick" Margin="0,0,0,12">
+					<TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="Message"></TextBlock>
+				</Controls:UnstyledButton>
+				<Controls:UnstyledButton toolkit:TiltEffect.IsTiltEnabled="True" Click="AsEmailClick" Margin="0,0,0,12">
+					<TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="E-Mail"></TextBlock>
+				</Controls:UnstyledButton>
+			</StackPanel>
+		</StackPanel>		
+		<Border Grid.Row="1" Background="Transparent" />
+    </Grid>
+</Popups:PopupControl>

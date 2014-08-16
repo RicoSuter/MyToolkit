@@ -1,0 +1,26 @@
+﻿<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>MyToolkit</id>
+        <version>2.3.6.0</version>
+        <title>MyToolkit</title>
+		<authors>Rico Suter</authors>
+		<owners>Rico Suter</owners>
+		<projectUrl>https://mytoolkit.codeplex.com</projectUrl>
+		<licenseUrl>https://mytoolkit.codeplex.com/license</licenseUrl>
+		<description>MyToolkit is a collection of useful classes for the .NET Framework. </description>
+		<releaseNotes/>
+        <dependencies>
+            <group targetFramework="portable-sl5+wp71">
+                <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+            </group>
+        </dependencies>
+    </metadata>
+	<files>
+        <file src="..\- Output\MyToolkit\MyToolkit.dll" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.dll" />
+        <file src="..\- Output\MyToolkit\MyToolkit.xml" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.xml" />
+
+        <file src="..\- Output\MyToolkit.Legacy\MyToolkit.dll" target="lib\portable-sl5+wp71\MyToolkit.dll" />
+        <file src="..\- Output\MyToolkit.Legacy\MyToolkit.xml" target="lib\portable-sl5+wp71\MyToolkit.xml" />
+    </files>
+</package>

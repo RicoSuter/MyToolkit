@@ -1,0 +1,52 @@
+﻿<paging:MtPage x:Name="PageRoot"
+                     x:Class="SampleWindowsStoreApp.Views.MvvmSamplePage"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:paging="using:MyToolkit.Paging"
+                     xmlns:viewModels="using:SampleWindowsStoreApp.ViewModels"
+                     mc:Ignorable="d">
+
+    <paging:MtPage.Resources>
+        <viewModels:MvvmSamplePageModel x:Key="ViewModel" />
+    </paging:MtPage.Resources>
+
+    <Grid DataContext="{StaticResource ViewModel}" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Margin="39,59,39,0" Command="{Binding Frame.GoBackCommand, ElementName=PageRoot}"
+                    Style="{StaticResource NavigationBackButtonNormalStyle}" VerticalAlignment="Top"
+                    AutomationProperties.Name="Back" AutomationProperties.AutomationId="BackButton" 
+                    AutomationProperties.ItemType="Navigation Button"/>
+
+            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Windows 8 and MyToolkit Sample App" Margin="0,50,0,10" Grid.Column="1" />
+            <TextBlock Text="MVVM Sample Page" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+                       TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,100,0,0"/>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Margin="120,60,40,40">
+            <TextBlock Text="Text" Style="{StaticResource BasicTextStyle}" FontWeight="Bold" Margin="0,0,0,10" />
+            <TextBox Text="{Binding SampleProperty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,20" />
+
+            <TextBlock Text="Dependent Text" Style="{StaticResource BasicTextStyle}" FontWeight="Bold" Margin="0,0,0,10" />
+            <TextBlock Text="{Binding DependentProperty}" Margin="0,0,0,20" />
+
+            <Button Content="Run Sample" Command="{Binding RunSampleCommand}" Margin="0,0,20,0" />
+        </StackPanel>
+    </Grid>
+</paging:MtPage>

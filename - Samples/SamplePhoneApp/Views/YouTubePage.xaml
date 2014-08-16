@@ -1,0 +1,48 @@
+﻿<transitions:AnimatedPage 
+    x:Class="SamplePhoneApp.Views.YouTubePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:SamplePhoneApp.ViewModels"
+    xmlns:Controls="clr-namespace:MyToolkit.Controls;assembly=MyToolkit.Extended"
+    xmlns:UI="clr-namespace:MyToolkit.UI;assembly=MyToolkit.Extended"
+    xmlns:transitions="clr-namespace:MyToolkit.Animation.Transitions;assembly=MyToolkit.Extended"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    Style="{StaticResource Transition}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.Resources>
+        <viewModels:YouTubePageViewModel x:Key="ViewModel" />
+    </phone:PhoneApplicationPage.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="Transparent" DataContext="{StaticResource ViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <UI:ProgressIndicatorProxy IsVisible="{Binding IsLoading}" IsIndeterminate="True" />
+
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="MYTOOLKIT SAMPLE APP" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="youtube" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <StackPanel Margin="12,0,12,0" Grid.Row="1">
+            <TextBlock Text="YouTube ID" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBox Text="{Binding YouTubeId, Mode=TwoWay}" UI:TextBinding.UpdateSourceOnChange="True" Margin="0,0,0,12" />
+
+            <Controls:YouTubeButton Click="OnPlay" YouTubeID="{Binding YouTubeId}"
+                                        VerticalAlignment="Top" Margin="12,0,12,0" />
+
+            <Button Content="Launch URI in browser" Click="OnLaunchUriInBrowser" Margin="0,12,0,0" />
+        </StackPanel>
+    </Grid>
+</transitions:AnimatedPage>

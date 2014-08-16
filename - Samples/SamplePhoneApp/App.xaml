@@ -1,0 +1,44 @@
+﻿<Application 
+    x:Class="SamplePhoneApp.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit">
+
+	<Application.Resources>
+		<Style x:Key="Transition" TargetType="phone:PhoneApplicationPage">
+			<Setter Property="toolkit:TransitionService.NavigationInTransition">
+				<Setter.Value>
+					<toolkit:NavigationInTransition>
+						<toolkit:NavigationInTransition.Backward>
+							<toolkit:TurnstileTransition Mode="BackwardIn"/>
+						</toolkit:NavigationInTransition.Backward>
+						<toolkit:NavigationInTransition.Forward>
+							<toolkit:TurnstileTransition Mode="ForwardIn"/>
+						</toolkit:NavigationInTransition.Forward>
+					</toolkit:NavigationInTransition>
+				</Setter.Value>
+			</Setter>
+			<Setter Property="toolkit:TransitionService.NavigationOutTransition">
+				<Setter.Value>
+					<toolkit:NavigationOutTransition>
+						<toolkit:NavigationOutTransition.Backward>
+							<toolkit:TurnstileTransition Mode="BackwardOut"/>
+						</toolkit:NavigationOutTransition.Backward>
+						<toolkit:NavigationOutTransition.Forward>
+							<toolkit:TurnstileTransition Mode="ForwardOut"/>
+						</toolkit:NavigationOutTransition.Forward>
+					</toolkit:NavigationOutTransition>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Application.Resources>
+
+    <Application.ApplicationLifetimeObjects>
+        <shell:PhoneApplicationService 
+            Launching="Application_Launching" Closing="Application_Closing" 
+            Activated="Application_Activated" Deactivated="Application_Deactivated"/>
+    </Application.ApplicationLifetimeObjects>
+
+</Application>

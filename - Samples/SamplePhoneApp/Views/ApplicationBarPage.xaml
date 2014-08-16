@@ -1,0 +1,53 @@
+﻿<transitions:AnimatedPage 
+    x:Class="SamplePhoneApp.Views.ApplicationBarPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:SamplePhoneApp.ViewModels" 
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:Controls="clr-namespace:MyToolkit.Controls;assembly=MyToolkit.Extended"
+    xmlns:Paging="clr-namespace:MyToolkit.Paging;assembly=MyToolkit.Extended"
+    xmlns:transitions="clr-namespace:MyToolkit.Animation.Transitions;assembly=MyToolkit.Extended"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+	Style="{StaticResource Transition}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+	<Grid x:Name="LayoutRoot" Background="Transparent">
+        <ScrollViewer>
+            <StackPanel>
+                <Button Content="Hide/show first button" Click="OnHideFirstButton" />
+                <Button Content="Hide/show second button" Click="OnHideSecondButton" />
+
+                <Button Content="Enable/disable second button" Click="OnDisableSecondButton" />
+                <Button Content="Enable/disable third button" Click="OnDisableThirdButton" />
+                
+                <Button Content="Hide/show first menu" Click="OnHideFirstMenu" />
+                <Button Content="Hide/show second menu" Click="OnHideSecondMenu" />
+
+                <Button Content="Enable/disable second menu" Click="OnDisableSecondMenu" />
+                <Button Content="Enable/disable third menu" Click="OnDisableThirdMenu" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+
+	<Paging:BindableApplicationBar.ApplicationBar>
+		<Paging:BindableApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <Paging:BindableApplicationBarIconButton IconUri="/Images/AppbarNew.png" Text="A" />
+            <Paging:BindableApplicationBarIconButton IconUri="/Images/AppbarNew.png" Text="B" />
+            <Paging:BindableApplicationBarIconButton IconUri="/Images/AppbarNew.png" Text="C" />
+            
+            <Paging:BindableApplicationBar.MenuItems>
+                <Paging:BindableApplicationBarMenuItem Text="A" />
+                <Paging:BindableApplicationBarMenuItem Text="B" />
+                <Paging:BindableApplicationBarMenuItem Text="C" />
+            </Paging:BindableApplicationBar.MenuItems>
+        </Paging:BindableApplicationBar>
+    </Paging:BindableApplicationBar.ApplicationBar>
+</transitions:AnimatedPage>

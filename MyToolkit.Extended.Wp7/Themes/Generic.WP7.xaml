@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                    xmlns:converters="clr-namespace:MyToolkit.Converters">
+
+    <converters:LongListSelectorHasItemsConverter x:Key="LongListSelectorHasItemsConverter" />
+
+	<ItemsPanelTemplate x:Key="LongListSelectorDefaultGroupItemsPanel">
+		<toolkit:WrapPanel Margin="0,-5,0,0" />
+	</ItemsPanelTemplate>
+
+	<DataTemplate x:Key="LongListSelectorDefaultGroupItemTemplate">
+		<Border Background="{Binding HasItems, Converter={StaticResource LongListSelectorHasItemsConverter}}" 
+				Width="99" Height="99" Margin="6,12,6,0" IsHitTestVisible="{Binding HasItems}" 
+                toolkit:TiltEffect.IsTiltEnabled="True">
+			<Border.Resources>
+			</Border.Resources>
+			<TextBlock Text="{Binding Title}" FontFamily="{StaticResource PhoneFontFamilySemiBold}" 
+					   Foreground="White" Margin="8,0,0,0" FontSize="48" HorizontalAlignment="Left" 
+					   VerticalAlignment="Bottom"/>
+		</Border>
+	</DataTemplate>
+
+	<DataTemplate x:Key="LongListSelectorDefaultGroupHeaderTemplate">
+		<Grid Margin="12,0,0,12" toolkit:TiltEffect.IsTiltEnabled="True">
+			<Grid Width="62" Height="62" HorizontalAlignment="Left" Background="{StaticResource PhoneAccentBrush}">
+				<TextBlock Margin="8,0,1,2" TextWrapping="Wrap" Foreground="White" FontSize="44" 
+						   FontFamily="{StaticResource PhoneFontFamilySemiLight}"
+						   Text="{Binding Title}" VerticalAlignment="Bottom"/>
+			</Grid>
+		</Grid>
+	</DataTemplate>
+</ResourceDictionary>
+  

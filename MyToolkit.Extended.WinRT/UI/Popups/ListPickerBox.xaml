@@ -1,0 +1,36 @@
+﻿<UI:PopupBase x:Class="MyToolkit.UI.Popups.ListPickerBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			  xmlns:Controls1="using:MyToolkit.Controls"
+			  xmlns:UI="using:MyToolkit.UI">
+
+	<Border BorderBrush="{StaticResource ApplicationForegroundThemeBrush}" BorderThickness="1,0,1,0" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+		<Grid Width="500" Margin="0,40,0,40">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+
+			<TextBlock x:Name="header" Style="{StaticResource SubheaderTextStyle}" Margin="80,0,80,40" />
+			<Button x:Name="SelectAllButton" Margin="80,0,0,20" Grid.Row="1" Click="OnSelectAll" />
+
+			<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="2" ZoomMode="Disabled">
+				<ItemsControl x:Name="list">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate>
+							<CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" Content="{Binding Item}" 
+									  Margin="80,10,80,10" Click="CheckBox_Click_1" />
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</ScrollViewer>
+			
+			<StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="80,0,80,0">
+				<Controls1:TextButton Click="OnCancel" Content="&#xE10A;" Margin="0,0,20,0" />
+				<Controls1:TextButton Click="OnAccept" Content="&#xE10B;" x:Name="acceptButton" />
+			</StackPanel>
+		</Grid>
+	</Border>
+</UI:PopupBase>

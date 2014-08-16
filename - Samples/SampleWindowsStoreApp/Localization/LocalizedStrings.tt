@@ -1,0 +1,66 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Microsoft.CSharp" #>
+<#@ output extension=".cs" #>
+<#
+    // For more information, see http://blog.rsuter.com/?p=439
+
+	var reswPath = @"Resources.lang-en.resw";
+ 
+	var provider = new CSharpCodeProvider();
+	var className = provider.CreateEscapedIdentifier(
+		Path.GetFileNameWithoutExtension(Host.TemplateFile));
+ 
+	Directory.SetCurrentDirectory(Host.ResolvePath(""));
+	if (File.Exists(reswPath))
+	{ 
+#>
+using Windows.ApplicationModel.Resources; 
+ 
+namespace <#= GetNamespace() #> 
+{
+	public static class <#= className #> 
+	{
+		private static readonly ResourceLoader resourceLoader; 
+ 
+		static <#= className #>() 
+		{
+			resourceLoader = new ResourceLoader();
+		}
+<#
+		foreach (string name in GetResourceKeys(reswPath).Where(n => !n.Contains(".")))
+		{
+#>
+ 
+		public static string <#= provider.CreateEscapedIdentifier(name) #> 
+		{
+			get { return resourceLoader.GetString("<#= name #>"); }
+		}
+<#
+		}
+#>
+	}
+}
+<#
+	}
+	else
+		throw new FileNotFoundException(); 
+#>
+<#+
+	private string GetNamespace()
+	{
+		return Host.ResolveParameterValue("directiveId", "namespaceDirectiveProcessor", "namespaceHint");
+	}
+ 
+	private static IEnumerable<string> GetResourceKeys(string filePath)
+	{
+		var doc = XDocument.Load(filePath);
+		return doc.Root.Elements("data").Select(e => e.Attribute("name").Value);
+	}
+#>

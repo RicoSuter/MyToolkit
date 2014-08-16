@@ -1,0 +1,13 @@
+﻿<Window x:Class="SampleWpfApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <StackPanel Margin="8">
+            <TextBlock Text="WNS Channel URI: " FontWeight="Bold" Margin="0,0,0,4" />
+            <TextBox x:Name="ChannelUriTextBox" TextWrapping="Wrap" Margin="0,0,0,16" Height="100" />
+
+            <Button Content="Send Push Notification" Click="OnSendPushNotification" Padding="8,4,8,4" />
+        </StackPanel>
+    </Grid>
+</Window>

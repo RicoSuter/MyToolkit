@@ -1,0 +1,22 @@
+﻿<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>MyToolkit.Web</id>
+        <version>2.3.6.0</version>
+        <title>MyToolkit.Web</title>
+		<authors>Rico Suter</authors>
+		<owners>Rico Suter</owners>
+		<projectUrl>https://mytoolkit.codeplex.com</projectUrl>
+		<licenseUrl>https://mytoolkit.codeplex.com/license</licenseUrl>
+		<description>MyToolkit is a collection of useful classes for the .NET Framework. </description>
+		<releaseNotes/>
+        <dependencies>
+            <group>
+                <dependency id="MyToolkit" version="2.3.6.0" />
+            </group>
+        </dependencies>
+    </metadata>
+	<files>
+		<file src="..\- Output\MyToolkit.Web\MyToolkit.Web.dll" target="lib\net45\MyToolkit.Web.dll" />
+	</files>
+</package>

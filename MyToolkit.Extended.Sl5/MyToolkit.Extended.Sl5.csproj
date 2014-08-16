@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A8E0CE72-B287-49C2-B275-DE473E80F10B}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyToolkit</RootNamespace>
+    <AssemblyName>MyToolkit.Extended</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SL5;USE_GZIP</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\- Output\MyToolkit.Extended.Sl5\</OutputPath>
+    <DefineConstants>TRACE;SL5;USE_GZIP</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>..\- Output\MyToolkit.Extended.Sl5\MyToolkit.Extended.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Default.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Silverlight, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4\Microsoft.Threading.Tasks.Extensions.Silverlight.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.IO, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\sl5\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\sl5\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel.DomainServices.Client, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Threading.Tasks, Version=2.6.9.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\sl5\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="System.Xml.Serialization, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files (x86)\Microsoft SDKs\Silverlight\v5.0\Libraries\Client\System.Xml.Serialization.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Shared\Controls\DataTemplateSelector.cs">
+      <Link>Controls\DataTemplateSelector.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\ExtendedListBox.cs">
+      <Link>Controls\ExtendedListBox.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
+      <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\UniformGrid.cs">
+      <Link>Controls\UniformGrid.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\WatermarkedTextBox.cs">
+      <Link>Controls\WatermarkedTextBox.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\ByteArrayToImageConverter.cs">
+      <Link>Converters\ByteArrayToImageConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
+      <Link>Converters\DateTimeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\NotConverter.cs">
+      <Link>Converters\NotConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\TruncateConverter.cs">
+      <Link>Converters\TruncateConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\TypeCountConverter.cs">
+      <Link>Converters\TypeCountConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\TypeVisibilityConverter.cs">
+      <Link>Converters\TypeVisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\UpperTextConverter.cs">
+      <Link>Converters\UpperTextConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Converters\VisibilityConverter.cs">
+      <Link>Converters\VisibilityConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Messaging\DefaultActions.cs">
+      <Link>Messaging\DefaultActions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\MVVM\DependencyPropertyHelper.cs">
+      <Link>MVVM\DependencyPropertyHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Networking\WakeOnLan.cs">
+      <Link>Networking\WakeOnLan.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Serialization\DataContractSerialization.cs">
+      <Link>Serialization\DataContractSerialization.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\UI\Designer.cs">
+      <Link>UI\Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\UI\Element.cs">
+      <Link>UI\Element.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\UI\FrameworkElementExtensions.cs">
+      <Link>UI\FrameworkElementExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\UI\TextBinding.cs">
+      <Link>UI\TextBinding.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\ColorUtility.cs">
+      <Link>Utilities\ColorUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\EntityContainer.cs">
+      <Link>Utilities\EntityContainer.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\SingleEvent.cs">
+      <Link>Utilities\SingleEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\shared\utilities\Xml.cs">
+      <Link>Utilities\Xml.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Default.snk" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyToolkit\MyToolkit.Legacy.csproj">
+      <Project>{f3e1a71d-891a-4a7c-8627-ad60ea8e4483}</Project>
+      <Name>MyToolkit.Legacy</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
