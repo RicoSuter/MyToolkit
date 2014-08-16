@@ -23,3 +23,11 @@
 /- Samples/SampleWpfApplication/obj
 /MyToolkit.Tests.WinRT/obj
 /svn
+/packages
+/- Samples/SamplePhoneApp/bin
+/- Samples/SampleUniversalPhoneApp/bin
+/- Samples/SampleWindowsStoreApp/bin
+/- Samples/SampleWindowsStoreApp.BackgroundTask/bin
+/- Samples/SampleWpfApplication/bin
+/MyToolkit.Tests.Wp8/bin
+*.suo
