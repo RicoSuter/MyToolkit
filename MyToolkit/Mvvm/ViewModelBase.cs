@@ -71,10 +71,11 @@ namespace MyToolkit.Mvvm
             return token;
         }
 
-        /// <summary>Runs a task with changing the <see cref="IsLoading"/> property changes, 
-        /// exception handling in the <see cref="HandleException"/> method 
-        /// and automatic cancellation token source creation. </summary>
-        /// <param name="task">The task to perform. </param>
+        /// <summary>Runs a task 
+        /// and correctly updates the <see cref="IsLoading"/> property, 
+        /// handles exceptions in the <see cref="HandleException"/> method 
+        /// and automatically creates and registers a cancellation token source. </summary>
+        /// <param name="task">The task to run. </param>
         /// <returns>The awaitable task. </returns>
         public async Task RunTaskAsync(Func<CancellationToken, Task> task)
         {
@@ -97,11 +98,25 @@ namespace MyToolkit.Mvvm
             UnregisterCancellationTokenSource(tokenSource);
         }
 
+        /// <summary>Asynchronously runs an action 
+        /// and correctly updates the <see cref="IsLoading"/> property, 
+        /// handles exceptions in the <see cref="HandleException"/> method 
+        /// and automatically creates and registers a cancellation token source. </summary>
+        /// <param name="action">The action to run. </param>
+        /// <returns>The awaitable task. </returns>
+        public async Task RunTaskAsync(Action action)
+        {
+            await RunTaskAsync(async token =>
+            {
+                await Task.Run(action, token);
+            });
+        }
+
         /// <summary>Handles an exception which occured in the <see cref="RunTaskAsync"/> method. </summary>
         /// <param name="exception">The exception. </param>
         public virtual void HandleException(Exception exception)
         {
-            // Must be empty
+            throw new Exception("An exception occured in RunTaskAsync. Override ViewModelBase.HandleException to handle this exception. ", exception);
         }
 
         /// <summary>Disposes and unregisters a <see cref="CancellationTokenSource"/>. 
