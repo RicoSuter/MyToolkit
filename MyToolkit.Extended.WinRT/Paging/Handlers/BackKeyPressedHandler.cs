@@ -8,21 +8,13 @@ namespace MyToolkit.Paging.Handlers
     /// <summary>Registers for the hardware back key button on Windows Phone and calls the registered methods when the event occurs. </summary>
     public class BackKeyPressedHandler
     {
-        private static readonly Type HardwareButtonsType;
-        private static readonly EventInfo BackPressedEvent;
+        private Type _hardwareButtonsType = null;
+        private EventInfo _backPressedEvent = null;
 
         private readonly List<Tuple<MtPage, Func<object, bool>>> _handlers;
-        private bool _isRegistered = false;
-        private Delegate _backPressedDelegate;
+        private object _registrationToken;
 
-        static BackKeyPressedHandler()
-        {
-            BackPressedEvent = HardwareButtonsType.GetRuntimeEvent("BackPressed");
-            HardwareButtonsType = Type.GetType(
-                "Windows.Phone.UI.Input.HardwareButtons, " +
-                "Windows, Version=255.255.255.255, Culture=neutral, " +
-                "PublicKeyToken=null, ContentType=WindowsRuntime");
-        }
+        private bool _isEventRegistered = false;
 
         public BackKeyPressedHandler()
         {
@@ -34,15 +26,24 @@ namespace MyToolkit.Paging.Handlers
         /// <param name="handler">The handler. </param>
         public void Add(MtPage page, Func<object, bool> handler)
         {
-            if (!_isRegistered)
+            if (!_isEventRegistered)
             {
+                if (_hardwareButtonsType == null)
+                {
+                    _hardwareButtonsType = Type.GetType(
+                        "Windows.Phone.UI.Input.HardwareButtons, " +
+                        "Windows, Version=255.255.255.255, Culture=neutral, " +
+                        "PublicKeyToken=null, ContentType=WindowsRuntime");
+
+                    _backPressedEvent = _hardwareButtonsType.GetRuntimeEvent("BackPressed");
+                }
+
                 Action<object, object> callback = OnBackKeyPressed;
-
                 var callbackMethodInfo = callback.GetMethodInfo();
-                _backPressedDelegate = callbackMethodInfo.CreateDelegate(BackPressedEvent.EventHandlerType, this);
+                var backPressedDelegate = callbackMethodInfo.CreateDelegate(_backPressedEvent.EventHandlerType, this);
 
-                BackPressedEvent.AddMethod.Invoke(null, new object[] { _backPressedDelegate });
-                _isRegistered = true;
+                _registrationToken = _backPressedEvent.AddMethod.Invoke(null, new object[] { backPressedDelegate });
+                _isEventRegistered = true;
             }
 
             _handlers.Insert(0, new Tuple<MtPage, Func<object, bool>>(page, handler));
@@ -55,7 +56,10 @@ namespace MyToolkit.Paging.Handlers
             _handlers.Remove(_handlers.Single(h => h.Item1 == page));
 
             if (_handlers.Count == 0)
-                BackPressedEvent.RemoveMethod.Invoke(null, new object[] { _backPressedDelegate });
+            {
+                _backPressedEvent.RemoveMethod.Invoke(null, new[] { _registrationToken });
+                _isEventRegistered = false; 
+            }
         }
 
         private void OnBackKeyPressed(object sender, dynamic args)
