@@ -108,7 +108,11 @@ namespace MyToolkit.Mvvm
         {
             await RunTaskAsync(async token =>
             {
+#if LEGACY
+                await Task.Factory.StartNew(action, token);
+#else
                 await Task.Run(action, token);
+#endif
             });
         }
 

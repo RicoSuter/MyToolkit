@@ -31,3 +31,5 @@
 /- Samples/SampleWpfApplication/bin
 /MyToolkit.Tests.Wp8/bin
 *.suo
+/- Samples/SamplePhone7App/bin
+/- Samples/SamplePhone7App/obj
