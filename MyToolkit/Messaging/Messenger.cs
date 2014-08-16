@@ -13,9 +13,7 @@ using System.Threading.Tasks;
 
 namespace MyToolkit.Messaging
 {
-    /// <summary>
-    /// An instance of the messenger. 
-    /// </summary>
+    /// <summary>An instance of the messenger. </summary>
 	public class Messenger : IMessenger
     {
 		private readonly List<MessageRegistration> _actions = new List<MessageRegistration>();
