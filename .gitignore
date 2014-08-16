@@ -16,3 +16,10 @@
 /MyToolkit.Tests.Wp8/obj
 /MyToolkit.Web/bin
 /MyToolkit.Web/obj
+/- Samples/SamplePhoneApp/obj
+/- Samples/SampleUniversalPhoneApp/obj
+/- Samples/SampleWindowsStoreApp.BackgroundTask/obj
+/- Samples/SampleWindowsStoreApp/obj
+/- Samples/SampleWpfApplication/obj
+/MyToolkit.Tests.WinRT/obj
+/svn
