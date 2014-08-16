@@ -1,3 +1,11 @@
+//-----------------------------------------------------------------------
+// <copyright file="DependencyPropertyHelper.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -26,7 +34,7 @@ namespace MyToolkit.Mvvm
         {
             return (obj, args) =>
             {
-                var vm = ((FrameworkElement)obj).Resources["viewModel"];
+                var vm = ((FrameworkElement)obj).Resources["ViewModel"];
 #if WINRT
                 vm.GetType().GetRuntimeProperty(propertyName).SetValue(vm, args.NewValue, null);
 #else

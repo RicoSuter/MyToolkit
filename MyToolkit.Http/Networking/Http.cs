@@ -1,4 +1,12 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Http.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,30 +26,20 @@ using System.IO.Compression;
 
 namespace MyToolkit.Networking
 {
-    /// <summary>
-    /// Provides the download progress of a HTTP request. 
-    /// </summary>
+    /// <summary>Provides the download progress of a HTTP request. </summary>
     public class HttpProgress
     {
-        /// <summary>
-        /// Gets the number of read bytes. 
-        /// </summary>
+        /// <summary>Gets the number of read bytes. </summary>
         public long ReadBytes { get; internal set; }
 
-        /// <summary>
-        /// Gets the number of total bytes. 
-        /// </summary>
+        /// <summary>Gets the number of total bytes. </summary>
         public long TotalBytes { get; internal set; }
     }
 
-    /// <summary>
-    /// Provides static methods to run HTTP requests. 
-    /// </summary>
+    /// <summary>Provides static methods to run HTTP requests. </summary>
     public static class Http
     {
-        /// <summary>
-        /// Performs a HTTP GET request. 
-        /// </summary>
+        /// <summary>Performs a HTTP GET request. </summary>
         /// <param name="uri">The URI. </param>
         /// <returns>The <see cref="HttpResponse"/>. </returns>
         public static Task<HttpResponse> GetAsync(string uri)
@@ -49,9 +47,7 @@ namespace MyToolkit.Networking
             return GetAsync(uri, CancellationToken.None);
         }
 
-        /// <summary>
-        /// Performs a HTTP GET request. 
-        /// </summary>
+        /// <summary>Performs a HTTP GET request. </summary>
         /// <param name="uri">The URI. </param>
         /// <param name="token">The <see cref="CancellationToken"/>. </param>
         /// <returns>The <see cref="HttpResponse"/>. </returns>
@@ -60,9 +56,7 @@ namespace MyToolkit.Networking
             return GetAsync(new HttpGetRequest(uri), token);
         }
 
-        /// <summary>
-        /// Performs a HTTP GET request. 
-        /// </summary>
+        /// <summary>Performs a HTTP GET request. </summary>
         /// <param name="uri">The URI. </param>
         /// <returns>The <see cref="HttpResponse"/>. </returns>
         public static Task<HttpResponse> GetAsync(Uri uri)
@@ -70,9 +64,7 @@ namespace MyToolkit.Networking
             return GetAsync(uri, CancellationToken.None);
         }
 
-        /// <summary>
-        /// Performs a HTTP GET request. 
-        /// </summary>
+        /// <summary>Performs a HTTP GET request. </summary>
         /// <param name="uri">The URI. </param>
         /// <param name="token">The <see cref="CancellationToken"/>. </param>
         /// <returns>The <see cref="HttpResponse"/>. </returns>
@@ -81,9 +73,7 @@ namespace MyToolkit.Networking
             return GetAsync(new HttpGetRequest(uri), token);
         }
 
-        /// <summary>
-        /// Performs a HTTP GET request. 
-        /// </summary>
+        /// <summary>Performs a HTTP GET request. </summary>
         /// <param name="uri">The URI. </param>
         /// <param name="token">The <see cref="CancellationToken"/>. </param>
         /// <param name="progress">The <see cref="IProgress{T}"/>. </param>
@@ -93,9 +83,7 @@ namespace MyToolkit.Networking
             return GetAsync(new HttpGetRequest(uri), token, progress);
         }
 
-        /// <summary>
-        /// Performs a HTTP GET request. 
-        /// </summary>
+        /// <summary>Performs a HTTP GET request. </summary>
         /// <param name="request">The <see cref="HttpGetRequest"/>. </param>
         /// <returns>The <see cref="HttpResponse"/>. </returns>
         public static Task<HttpResponse> GetAsync(HttpGetRequest request)
@@ -103,9 +91,7 @@ namespace MyToolkit.Networking
             return GetAsync(request, CancellationToken.None);
         }
 
-        /// <summary>
-        /// Performs a HTTP GET request. 
-        /// </summary>
+        /// <summary>Performs a HTTP GET request. </summary>
         /// <param name="request">The <see cref="HttpGetRequest"/>. </param>
         /// <param name="token">The <see cref="CancellationToken"/>. </param>
         /// <param name="progress">The <see cref="IProgress{T}"/>. </param>
@@ -154,9 +140,7 @@ namespace MyToolkit.Networking
             }
         }
 
-        /// <summary>
-        /// Performs a HTTP POST request. 
-        /// </summary>
+        /// <summary>Performs a HTTP POST request. </summary>
         /// <param name="uri">The URI. </param>
         /// <returns>The <see cref="HttpResponse"/>. </returns>
         public static Task<HttpResponse> PostAsync(string uri)
@@ -164,9 +148,7 @@ namespace MyToolkit.Networking
             return PostAsync(uri, CancellationToken.None);
         }
 
-        /// <summary>
-        /// Performs a HTTP POST request. 
-        /// </summary>
+        /// <summary>Performs a HTTP POST request. </summary>
         /// <param name="uri">The URI. </param>
         /// <param name="token">The <see cref="CancellationToken"/>. </param>
         /// <returns>The <see cref="HttpResponse"/>. </returns>

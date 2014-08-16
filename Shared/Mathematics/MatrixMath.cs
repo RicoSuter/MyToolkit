@@ -1,4 +1,12 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="MatrixMath.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using System.Linq;
 
 namespace MyToolkit.Mathematics
@@ -72,7 +80,7 @@ namespace MyToolkit.Mathematics
 			return new Matrix(result, false);
         }
 
-        public static double DotProduct(Matrix a, Matrix b)
+        public static double DotProduct(this Matrix a, Matrix b)
         {
 			if (!a.IsVector || !b.IsVector)
 				throw new ArgumentException("two vectors expected");
@@ -166,7 +174,7 @@ namespace MyToolkit.Mathematics
 			return new Matrix(result, false);
         }
 
-        public static Matrix Transpose(Matrix input)
+        public static Matrix Transpose(this Matrix input)
         {
             var inverseMatrix = new double[input.Columns, input.Rows];
             for (var r = 0; r < input.Rows; r++)
