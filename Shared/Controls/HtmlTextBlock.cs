@@ -93,10 +93,15 @@ namespace MyToolkit.Controls
 
 		public event EventHandler<EventArgs> HtmlLoaded;
 
+#if !WINRT
 		public static readonly DependencyProperty ParagraphMarginProperty =
 			DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(HtmlTextBlock), new PropertyMetadata(6));
+#else
+        public static readonly DependencyProperty ParagraphMarginProperty =
+            DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(HtmlTextBlock), new PropertyMetadata(10));
+#endif
 
-		public int ParagraphMargin
+        public int ParagraphMargin
 		{
 			get { return (int)GetValue(ParagraphMarginProperty); }
 			set { SetValue(ParagraphMarginProperty, value); }

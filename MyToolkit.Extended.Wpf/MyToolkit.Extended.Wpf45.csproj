@@ -135,6 +135,7 @@
     <Compile Include="Utilities\FileOpenEventArgs.cs" />
     <Compile Include="Utilities\FileOpenHandler.cs" />
     <Compile Include="Utilities\NamedPipeServerStreamExtensions.cs" />
+    <Compile Include="Utilities\ProjectDependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
