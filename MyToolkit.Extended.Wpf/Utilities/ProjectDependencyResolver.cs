@@ -28,7 +28,7 @@ namespace MyToolkit.Utilities
             var order = new List<string>();
             var projects = projectPaths.Select(p => new VisualStudioProject
             {
-                Path = p, 
+                Path = p,
                 ProjectReferences = GetProjectReferences(p).ToList()
             }).ToList();
 
