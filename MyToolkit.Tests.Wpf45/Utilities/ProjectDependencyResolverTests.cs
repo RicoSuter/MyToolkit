@@ -44,9 +44,8 @@ namespace MyToolkit.Tests.Wpf45.Utilities
             var projects = VisualStudioProject.LoadAllFromDirectory(path);
 
             //// Assert
-            Assert.IsTrue(projects.Count() > 0);
+            Assert.IsTrue(projects.Any());
         }
-
 
         [TestMethod]
         public void When_generating_build_order_then_project_with_no_references_should_be_first()
