@@ -83,10 +83,11 @@ namespace MyToolkit.Media
             try
             {
 #if WINRT
-                var client = new HttpClient(new HttpClientHandler());
+                var handler = new HttpClientHandler();
                 if (uri is AuthenticatedUri)
-                    client.Credentials = ((AuthenticatedUri)uri).Credentials
+                    handler.Credentials = ((AuthenticatedUri) uri).Credentials;
 
+                var client = new HttpClient(handler);
                 var stream = await client.GetStreamAsync(uri);
 
                 var source = new BitmapImage();
