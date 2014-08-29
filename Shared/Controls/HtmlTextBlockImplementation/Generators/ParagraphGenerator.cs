@@ -79,9 +79,9 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 						var split = splits[i];
 						current.Add(new Run { Text = split });
 						if (i < splits.Length - 1) // dont create for last
-							CreateTextBox(list, current, textBlock, i == 0, false);
+							CreateTextBox(list, current, textBlock, i == 0 && addTopMargin, false);
 					}
-					addTopMargin = false; 
+                    addTopMargin = list.Count == 0; 
 				} else if (c is Inline)
 					current.Add((Inline)c);
 				else
@@ -113,8 +113,8 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 				tb.Margin = new Thickness(-12, addTopMargin ? textBlock.ParagraphMargin : 0, -12, addBottomMargin ? textBlock.ParagraphMargin : 0);
 #else
 				var tb = new RichTextBlock();
-				tb.IsTextSelectionEnabled = false;
-				tb.Margin = new Thickness(0, addTopMargin ? textBlock.ParagraphMargin : 0, 0, addBottomMargin ? textBlock.ParagraphMargin : 0);
+				tb.IsTextSelectionEnabled = false; // TODO: when to add topmargin
+				tb.Margin = new Thickness(0, /*addTopMargin ? textBlock.ParagraphMargin :*/ 0, 0, addBottomMargin ? textBlock.ParagraphMargin : 0);
 #endif
 				tb.Blocks.Add(p);
 				tb.Foreground = Foreground ?? textBlock.Foreground;

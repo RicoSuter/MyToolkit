@@ -17,17 +17,17 @@ namespace MyToolkit.Controls
 {
 	public class HtmlTextBlock : ScrollableItemsControl, IHtmlTextBlock
 	{
+        private readonly IDictionary<string, IControlGenerator> _generators = HtmlParser.GetDefaultGenerators();
+
         /// <summary>
         /// Gets the list of HTML generators. 
         /// </summary>
-		public IDictionary<string, IControlGenerator> Generators { get { return generators; } }
+		public IDictionary<string, IControlGenerator> Generators { get { return _generators; } }
 
         /// <summary>
         /// Gets the list of size dependent controls. 
         /// </summary>
 		public List<ISizeDependentControl> SizeDependentControls { get; private set; }
-
-		private readonly IDictionary<string, IControlGenerator> generators = HtmlParser.GetDefaultGenerators();
 
 		public HtmlTextBlock()
 		{

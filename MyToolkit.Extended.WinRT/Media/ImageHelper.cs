@@ -74,51 +74,57 @@ namespace MyToolkit.Media
 
         private static async void LoadImage(Image image, Uri uri)
         {
-            if (uri is AuthenticatedUri)
+            if (uri == null)
             {
-                try
-                {
-#if WINRT
-                    var client = new HttpClient(new HttpClientHandler { Credentials = ((AuthenticatedUri)uri).Credentials });
-                    var stream = await client.GetStreamAsync(uri);
-
-                    var source = new BitmapImage();
-                    image.Source = source;
-                    using (var memoryStream = new MemoryStream(stream.ReadToEnd()))
-                        source.SetSourceAsync(memoryStream.AsRandomAccessStream());
-#else
-                    var request = WebRequest.CreateHttp(uri);
-                    request.Credentials = ((AuthenticatedUri)uri).Credentials;
-                    request.AllowReadStreamBuffering = true;
-                    request.BeginGetResponse(asyncResult =>
-                    {
-                        try
-                        {
-                            var response = (HttpWebResponse)request.EndGetResponse(asyncResult);
-                            image.Dispatcher.BeginInvoke(delegate
-                            {
-                                var source = new BitmapImage();
-                                source.SetSource(response.GetResponseStream());
-                                image.Source = source;
-                            });
-                        }
-                        catch
-                        {
-                            image.Dispatcher.BeginInvoke(delegate
-                            {
-                                image.Source = new BitmapImage(new Uri("http://0.0.0.0")); // Trigger ImageFailed event
-                            });
-                        }
-                    }, null);
-#endif
-                }
-                catch
-                {
-                    image.Source = new BitmapImage(new Uri("http://0.0.0.0")); // Trigger ImageFailed event
-                }
+                image.Source = null; 
+                return;
             }
-            else
-                image.Source = new BitmapImage(uri);
+
+            try
+            {
+#if WINRT
+                var client = new HttpClient(new HttpClientHandler());
+                if (uri is AuthenticatedUri)
+                    client.Credentials = ((AuthenticatedUri)uri).Credentials
+
+                var stream = await client.GetStreamAsync(uri);
+
+                var source = new BitmapImage();
+                image.Source = source;
+                using (var memoryStream = new MemoryStream(stream.ReadToEnd()))
+                    source.SetSourceAsync(memoryStream.AsRandomAccessStream());
+#else
+                var request = WebRequest.CreateHttp(uri);
+                if (uri is AuthenticatedUri)
+                    request.Credentials = ((AuthenticatedUri) uri).Credentials;
+    
+                request.AllowReadStreamBuffering = true;
+                request.BeginGetResponse(asyncResult =>
+                {
+                    try
+                    {
+                        var response = (HttpWebResponse) request.EndGetResponse(asyncResult);
+                        image.Dispatcher.BeginInvoke(delegate
+                        {
+                            var source = new BitmapImage();
+                            source.SetSource(response.GetResponseStream());
+                            image.Source = source;
+                        });
+                    }
+                    catch
+                    {
+                        image.Dispatcher.BeginInvoke(delegate
+                        {
+                            image.Source = new BitmapImage(new Uri("http://0.0.0.0")); // Trigger ImageFailed event
+                        });
+                    }
+                }, null);
+#endif
+            }
+            catch
+            {
+                image.Source = new BitmapImage(new Uri("http://0.0.0.0")); // Trigger ImageFailed event
+            }
         }
     }
 }
