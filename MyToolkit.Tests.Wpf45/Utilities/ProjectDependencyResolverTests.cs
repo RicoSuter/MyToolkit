@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MyToolkit.Utilities;
+using MyToolkit.Build;
 
 namespace MyToolkit.Tests.Wpf45.Utilities
 {
@@ -18,6 +18,20 @@ namespace MyToolkit.Tests.Wpf45.Utilities
 
             //// Assert
             Assert.AreEqual(1, projects.Count());
+        }
+
+        [TestMethod]
+        public void When_loading_references_then_nuget_references_must_be_correct()
+        {
+            //// Arrange
+            var path = "../../../MyToolkit.Extended.Wp8/MyToolkit.Extended.Wp8.csproj";
+
+            //// Act
+            var project = VisualStudioProject.FromFilePath(path);
+
+            //// Assert
+            Assert.AreEqual(1, project.NuGetReferences.Count());
+            Assert.IsTrue(project.NuGetReferences.Any(r => r.Name == "WPtoolkit"));
         }
 
         [TestMethod]

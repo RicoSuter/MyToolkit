@@ -126,6 +126,10 @@
     <Compile Include="..\shared\utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
+    <Compile Include="Build\BuildOrderException.cs" />
+    <Compile Include="Build\NuGetPackage.cs" />
+    <Compile Include="Build\VisualStudioProject.cs" />
+    <Compile Include="Build\VisualStudioProjectEnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\XsdGenerator.cs" />
     <Compile Include="UI\ShortcutManager.cs" />
@@ -135,10 +139,7 @@
     <Compile Include="Utilities\FileOpenEventArgs.cs" />
     <Compile Include="Utilities\FileOpenHandler.cs" />
     <Compile Include="Utilities\NamedPipeServerStreamExtensions.cs" />
-    <Compile Include="Utilities\ProjectDependencyResolver.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <Compile Include="Build\ProjectDependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyToolkit\MyToolkit.csproj">
