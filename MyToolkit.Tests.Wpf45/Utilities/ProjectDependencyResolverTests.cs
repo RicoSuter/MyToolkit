@@ -35,6 +35,20 @@ namespace MyToolkit.Tests.Wpf45.Utilities
         }
 
         [TestMethod]
+        public void When_loading_all_projects_then_correct_list_must_be_returned()
+        {
+            //// Arrange
+            var path = "../../../";
+
+            //// Act
+            var projects = VisualStudioProject.LoadAllFromDirectory(path);
+
+            //// Assert
+            Assert.IsTrue(projects.Count() > 0);
+        }
+
+
+        [TestMethod]
         public void When_generating_build_order_then_project_with_no_references_should_be_first()
         {
             //// Arrange
