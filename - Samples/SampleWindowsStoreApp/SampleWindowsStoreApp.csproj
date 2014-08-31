@@ -146,8 +146,8 @@
     <Compile Include="Views\BackgroundTaskPage.xaml.cs">
       <DependentUpon>BackgroundTaskPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ExtendedListBoxPage.xaml.cs">
-      <DependentUpon>ExtendedListBoxPage.xaml</DependentUpon>
+    <Compile Include="Views\MtListBoxPage.xaml.cs">
+      <DependentUpon>MtListBoxPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PushNotificationPage.xaml.cs">
       <DependentUpon>PushNotificationPage.xaml</DependentUpon>
@@ -155,8 +155,8 @@
     <Compile Include="Views\RssReaderPage.xaml.cs">
       <DependentUpon>RssReaderPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PivotPage.xaml.cs">
-      <DependentUpon>PivotPage.xaml</DependentUpon>
+    <Compile Include="Views\MtPivotPage.xaml.cs">
+      <DependentUpon>MtPivotPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DataGridPage.xaml.cs">
       <DependentUpon>DataGridPage.xaml</DependentUpon>
@@ -242,7 +242,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ExtendedListBoxPage.xaml">
+    <Page Include="Views\MtListBoxPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -254,7 +254,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\PivotPage.xaml">
+    <Page Include="Views\MtPivotPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

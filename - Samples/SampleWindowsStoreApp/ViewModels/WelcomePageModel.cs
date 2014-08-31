@@ -26,10 +26,10 @@ namespace SampleWindowsStoreApp.ViewModels
                 new NavigationItem {Title = "Model-View-ViewModel (MVVM)", Subtitle = "MvvmSamplePage", PageType = typeof(MvvmSamplePage)},
                 new NavigationItem {Title = "YouTube Player and PlayTo", Subtitle = "YouTubePlayerPage", PageType = typeof(YouTubePlayerPage)},
                 new NavigationItem {Title = "DataGrid Control", Subtitle = "DataGridPage", PageType = typeof(DataGridPage)},
-                new NavigationItem {Title = "Pivot Control", Subtitle = "PivotPage", PageType = typeof(PivotPage)},
+                new NavigationItem {Title = "MtPivot Control", Subtitle = "MtPivotPage", PageType = typeof(MtPivotPage)},
                 new NavigationItem {Title = "Various Samples", Subtitle = "VariousSamplesPage", PageType = typeof(VariousSamplesPage)},
                 new NavigationItem {Title = "RSS Loader", Subtitle = "RssReaderPage", PageType = typeof(RssReaderPage)},
-                new NavigationItem {Title = "MtListBox", Subtitle = "ExtendedListBoxPage", PageType = typeof(ExtendedListBoxPage)},
+                new NavigationItem {Title = "MtListBox", Subtitle = "MtListBoxPage", PageType = typeof(MtListBoxPage)},
             }));
 
             Groups.Add(new ExtendedGroup<NavigationItem>("Windows 8", new List<NavigationItem>

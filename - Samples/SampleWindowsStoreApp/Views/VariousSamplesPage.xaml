@@ -22,7 +22,7 @@
 			
 			<TextBlock Style="{StaticResource SubheaderTextStyle}" Text="MyToolkit Samples" Margin="0,0,0,20" />
 
-			<controls:Pivot Grid.Row="1">
+			<controls:MtPivot Grid.Row="1">
 				<!--<controls:PivotItem Header="Validation">
 					<StackPanel>
 						<validation:ValidationContainer x:Name="val">
@@ -52,13 +52,13 @@
 					</StackPanel>
 				</controls:PivotItem>-->
                 
-				<controls:PivotItem Header="HtmlTextBlock">
+				<controls:MtPivotItem Header="HtmlTextBlock">
 					<ScrollViewer Margin="0,0,-40,0">
 						<controls:FixedHtmlTextBlock Html="{Binding Html}" Margin="0,0,40,0" />
 					</ScrollViewer>
-				</controls:PivotItem>
+				</controls:MtPivotItem>
                 
-				<controls:PivotItem Header="Other">
+				<controls:MtPivotItem Header="Other">
 					<StackPanel>
 						<Button Content="ListPickerBox test" Click="OnListPickerBoxTest"/>
 
@@ -72,8 +72,8 @@
                             <controls:TextButton Content="&#xE112;" Margin="0,0,20,0"/>
                         </StackPanel>
                     </StackPanel>
-				</controls:PivotItem>
-			</controls:Pivot>
+				</controls:MtPivotItem>
+			</controls:MtPivot>
 		</Grid>
 
         <Button Margin="39,59,39,0" Command="{Binding Frame.GoBackCommand, ElementName=PageRoot}"

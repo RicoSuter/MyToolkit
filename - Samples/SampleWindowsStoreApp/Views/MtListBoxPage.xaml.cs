@@ -5,11 +5,11 @@ using MyToolkit.Controls;
 
 namespace SampleWindowsStoreApp.Views
 {
-    public sealed partial class ExtendedListBoxPage
+    public sealed partial class MtListBoxPage
     {
         private readonly ObservableCollection<string> _list;
 
-        public ExtendedListBoxPage()
+        public MtListBoxPage()
         {
             InitializeComponent();
 
@@ -17,18 +17,18 @@ namespace SampleWindowsStoreApp.Views
             for (var i = 1; i <= 100; i++)
                 _list.Add("Item " + i);
 
-            ExtendedListBox.ItemsSource = _list; 
+            MtListBox.ItemsSource = _list; 
         }
 
         private async void OnScrolledToEnd(object sender, ScrolledToEndEventArgs e)
         {
-            ExtendedListBox.TriggerScrolledToEndEvents = false;
+            MtListBox.TriggerScrolledToEndEvents = false;
            
             await Task.Delay(2000); // Simulate network
             for (var i = 1; i <= 100; i++)
                 _list.Add("Item " + i);
 
-            ExtendedListBox.TriggerScrolledToEndEvents = true;
+            MtListBox.TriggerScrolledToEndEvents = true;
         }
     }
 }

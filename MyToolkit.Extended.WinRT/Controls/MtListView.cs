@@ -26,7 +26,7 @@ namespace MyToolkit.Controls
 		}
 	}
 
-    /// <summary>A <see cref="ItemsControl"/> with additional features. </summary>
+    /// <summary>A <see cref="ListView"/> with additional features. </summary>
     [Obsolete("Use MtListView instead. 8/31/2014")]
     public class ExtendedListView : MtListView
     {

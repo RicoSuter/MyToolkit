@@ -1,8 +1,8 @@
 ﻿namespace SampleWindowsStoreApp.Views
 {
-    public sealed partial class PivotPage
+    public sealed partial class MtPivotPage
     {
-        public PivotPage()
+        public MtPivotPage()
         {
             InitializeComponent();
         }

@@ -242,8 +242,8 @@
     <Compile Include="Controls\NavigationGridView.cs" />
     <Compile Include="Controls\NavigationListView.cs" />
     <Compile Include="Controls\OrientedSize.cs" />
-    <Compile Include="Controls\Pivot.cs" />
-    <Compile Include="Controls\PivotItem.cs" />
+    <Compile Include="Controls\MtPivot.cs" />
+    <Compile Include="Controls\MtPivotItem.cs" />
     <Compile Include="Controls\SuppressTappedPresenter.cs" />
     <Compile Include="Controls\TextButton.cs" />
     <Compile Include="Controls\TimePicker.xaml.cs">

@@ -1,5 +1,5 @@
 ﻿<paging:MtPage x:Name="PageRoot"
-               x:Class="SampleWindowsStoreApp.Views.ExtendedListBoxPage"
+               x:Class="SampleWindowsStoreApp.Views.MtListBoxPage"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -39,8 +39,8 @@
         </Grid>
 
         <Grid Grid.Row="1" Margin="120,0,40,40">
-            <controls:MtListBox x:Name="ExtendedListBox" ScrolledToEnd="OnScrolledToEnd" 
-                                      InnerMargin="40" BorderThickness="1" BorderBrush="Red">
+            <controls:MtListBox x:Name="MtListBox" ScrolledToEnd="OnScrolledToEnd" 
+                                InnerMargin="40" BorderThickness="1" BorderBrush="Red">
                 <controls:MtListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" Foreground="White" />
