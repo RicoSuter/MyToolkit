@@ -1,4 +1,12 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="IHtmlTextBlock.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 
 #if WINRT
@@ -9,22 +17,37 @@ using System.Windows.Media;
 
 namespace MyToolkit.Controls.HtmlTextBlockImplementation
 {
+    /// <summary>Describes the interface of a HTML rendering control. </summary>
 	public interface IHtmlTextBlock
 	{
-		string Html { get; }
-		void CallLoadedEvent();
+        /// <summary>Gets or sets the HTML content to display. </summary>
+        string Html { get; }
 
-		IDictionary<string, IControlGenerator> Generators { get; }
-		List<ISizeDependentControl> SizeDependentControls { get; }
+        /// <summary>Gets the list of HTML element generators. </summary>
+        IDictionary<string, IControlGenerator> Generators { get; }
 
-		Uri BaseUri { get; }
-		int ParagraphMargin { get; }
+        /// <summary>Gets the list of size dependent controls. </summary>
+        List<ISizeDependentControl> SizeDependentControls { get; }
 
+        /// <summary>Gets or sets the base URI which is used to resolve relative URIs. </summary>
+        Uri HtmlBaseUri { get; }
+
+        /// <summary>Gets or sets the margin for paragraphs (added at the bottom of the element). </summary>
+        int ParagraphMargin { get; }
+
+        /// <summary>Gets or sets a brush that describes the foreground color. </summary>
 		Brush Foreground { get; }
+
+        /// <summary>Gets or sets a brush that describes the background of a control. </summary>
 		Brush Background { get; }
+
+        /// <summary>Gets or sets the font size. </summary>
 		double FontSize { get; }
+
+        /// <summary>Gets or sets the font family of the control. </summary>
 		FontFamily FontFamily { get; }
 
+        /// <summary>Gets the rendered width of this element. </summary>
 		double ActualWidth { get; }
 	}
 }

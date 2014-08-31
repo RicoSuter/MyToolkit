@@ -206,9 +206,7 @@ namespace MyToolkit.Controls
 
         #region Inner margin
 
-        /// <summary>
-        /// Gets or sets the inner margin. 
-        /// </summary>
+        /// <summary>Gets or sets the inner margin. </summary>
         public Thickness InnerMargin
         {
             get { return (Thickness)GetValue(InnerMarginProperty); }

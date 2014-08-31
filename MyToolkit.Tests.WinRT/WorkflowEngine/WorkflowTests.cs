@@ -232,6 +232,29 @@ namespace MyToolkit.Tests.WorkflowEngine
             return workflow;
         }
 
+        private static WorkflowDefinition Given_a_workflow_with_invalid_fork_and_join()
+        {
+            var workflow = new WorkflowDefinition();
+            workflow.Parameters = new MockParameters();
+            workflow.Activities = new List<WorkflowActivityBase>
+            {
+                new ForkActivity { Id = "1" },
+                new MockActivity { Id = "2" },
+                new MockActivity { Id = "3" },
+                new JoinActivity { Id = "4" },
+            };
+            workflow.StartActivity = workflow.Activities.First();
+            workflow.Transitions = new List<WorkflowTransition>
+            {
+                new WorkflowTransition { From = "1", To = "2" },
+                new WorkflowTransition { From = "1", To = "3" },
+                new WorkflowTransition { From = "2", To = "3" },
+                new WorkflowTransition { From = "2", To = "4" },
+                new WorkflowTransition { From = "3", To = "4" },
+            };
+            return workflow;
+        }
+
         [XmlType("MockActivity")]
         public class MockActivity : WorkflowActivityBase
         {

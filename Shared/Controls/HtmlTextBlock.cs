@@ -1,4 +1,12 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="HtmlTextBlock.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using MyToolkit.Controls.HtmlTextBlockImplementation;
 
@@ -15,22 +23,20 @@ using MyToolkit.UI;
 
 namespace MyToolkit.Controls
 {
-	public class HtmlTextBlock : ScrollableItemsControl, IHtmlTextBlock
-	{
+    /// <summary>Renders HTML using native XAML controls in a scrollbar; use the control 
+    /// <see cref="FixedHtmlTextBlock"/> to render the HTML content without a <see cref="ScrollViewer"/>. </summary>
+    public class HtmlTextBlock : ScrollableItemsControl, IHtmlTextBlock
+    {
+        private bool _isLoaded = false;
+
+        private ContentPresenter _headerPresenter;
+        private ContentPresenter _footerPresenter;
+
         private readonly IDictionary<string, IControlGenerator> _generators = HtmlParser.GetDefaultGenerators();
 
-        /// <summary>
-        /// Gets the list of HTML generators. 
-        /// </summary>
-		public IDictionary<string, IControlGenerator> Generators { get { return _generators; } }
-
-        /// <summary>
-        /// Gets the list of size dependent controls. 
-        /// </summary>
-		public List<ISizeDependentControl> SizeDependentControls { get; private set; }
-
-		public HtmlTextBlock()
-		{
+        /// <summary>Initializes a new instance of the <see cref="HtmlTextBlock"/> class. </summary>
+        public HtmlTextBlock()
+        {
 #if !WINRT
 			InnerMargin = new Thickness(24, 0, 24, 0);
 			if (Resources.Contains("PhoneFontSizeNormal"))
@@ -41,57 +47,34 @@ namespace MyToolkit.Controls
                 FontSize = (double)Resources["TextStyleLargeFontSize"];
 #endif
 
-			Margin = new Thickness(0);
+            Margin = new Thickness(0);
 
-			SizeChanged += OnSizeChanged;
-			SizeDependentControls = new List<ISizeDependentControl>();
-		}
+            SizeChanged += OnSizeChanged;
+            SizeDependentControls = new List<ISizeDependentControl>();
+        }
 
-		private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
-		{
-			foreach (var ctrl in SizeDependentControls)
-				ctrl.Update(ActualWidth);
-		}
+        /// <summary>Gets the list of HTML element generators. </summary>
+        public IDictionary<string, IControlGenerator> Generators
+        {
+            get { return _generators; }
+        }
 
-		private static void OnHtmlChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
-		{
-			var box = (HtmlTextBlock)obj;
-			box.Generate();
-		}
+        /// <summary>Gets the list of size dependent controls. </summary>
+        public List<ISizeDependentControl> SizeDependentControls { get; private set; }
 
-		public void CallLoadedEvent()
-		{
-			var copy = HtmlLoaded;
-			if (copy != null)
-				copy(this, new EventArgs());
-		}
+        /// <summary>Occurs when the HTML content has been loaded. </summary>
+        public event EventHandler<EventArgs> HtmlLoaded;
 
-		private bool loaded = false;
-#if !WINRT
-		public override void OnApplyTemplate()
-#else
-		protected override void OnApplyTemplate()
-#endif
-		{
-			base.OnApplyTemplate();
+        public static readonly DependencyProperty HtmlProperty =
+            DependencyProperty.Register("Html", typeof(String), typeof(HtmlTextBlock), new PropertyMetadata(default(String), 
+                (obj, e) => ((HtmlTextBlock)obj).Generate()));
 
-			loaded = true; 
-			UpdateHeader();
-			UpdateFooter();
-		}
-
-		#region dependency properties
-
-		public static readonly DependencyProperty HtmlProperty =
-			DependencyProperty.Register("Html", typeof(String), typeof(HtmlTextBlock), new PropertyMetadata(default(String), OnHtmlChanged));
-
-		public String Html
-		{
-			get { return (String)GetValue(HtmlProperty); }
-			set { SetValue(HtmlProperty, value); }
-		}
-
-		public event EventHandler<EventArgs> HtmlLoaded;
+        /// <summary>Gets or sets the HTML content to display. </summary>
+        public String Html
+        {
+            get { return (String)GetValue(HtmlProperty); }
+            set { SetValue(HtmlProperty, value); }
+        }
 
 #if !WINRT
 		public static readonly DependencyProperty ParagraphMarginProperty =
@@ -101,150 +84,165 @@ namespace MyToolkit.Controls
             DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(HtmlTextBlock), new PropertyMetadata(10));
 #endif
 
+        /// <summary>Gets or sets the margin for paragraphs (added at the bottom of the element). </summary>
         public int ParagraphMargin
-		{
-			get { return (int)GetValue(ParagraphMarginProperty); }
-			set { SetValue(ParagraphMarginProperty, value); }
-		}
+        {
+            get { return (int)GetValue(ParagraphMarginProperty); }
+            set { SetValue(ParagraphMarginProperty, value); }
+        }
 
-		public static readonly DependencyProperty BaseUriProperty =
-			DependencyProperty.Register("BaseUri", typeof(Uri), typeof(HtmlTextBlock), new PropertyMetadata(default(Uri)));
+        public static readonly DependencyProperty HtmlBaseUriProperty =
+            DependencyProperty.Register("HtmlBaseUri", typeof(Uri), typeof(HtmlTextBlock), new PropertyMetadata(default(Uri)));
 
-		public Uri BaseUri
-		{
-			get { return (Uri)GetValue(BaseUriProperty); }
-			set { SetValue(BaseUriProperty, value); }
-		}
+        /// <summary>Gets or sets the base URI which is used to resolve relative URIs. </summary>
+        public Uri HtmlBaseUri
+        {
+            get { return (Uri)GetValue(HtmlBaseUriProperty); }
+            set { SetValue(HtmlBaseUriProperty, value); }
+        }
 
-		#endregion
+        public static readonly DependencyProperty HeaderTemplateProperty =
+            DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(HtmlTextBlock), new PropertyMetadata(default(DataTemplate), 
+                (d, e) => ((HtmlTextBlock)d).UpdateHeader()));
 
-		#region Templates
+        /// <summary>Gets or sets the header template. </summary>
+        public DataTemplate HeaderTemplate
+        {
+            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
+            set { SetValue(HeaderTemplateProperty, value); }
+        }
 
-		private ContentPresenter headerPresenter;
+        public static readonly DependencyProperty ShowHeaderProperty =
+            DependencyProperty.Register("ShowHeader", typeof(bool), typeof(HtmlTextBlock), 
+            new PropertyMetadata(true, (d, e) => ((HtmlTextBlock)d).UpdateShowHeader()));
 
-		public static readonly DependencyProperty HeaderTemplateProperty =
-			DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(HtmlTextBlock), new PropertyMetadata(default(DataTemplate), UpdateHeader));
+        /// <summary>Gets or sets a value indicating whether the header should be shown. </summary>
+        public bool ShowHeader
+        {
+            get { return (bool)GetValue(ShowHeaderProperty); }
+            set { SetValue(ShowHeaderProperty, value); }
+        }
 
-		public DataTemplate HeaderTemplate
-		{
-			get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
-			set { SetValue(HeaderTemplateProperty, value); }
-		}
+        public static readonly DependencyProperty FooterTemplateProperty =
+            DependencyProperty.Register("FooterTemplate", typeof(DataTemplate), typeof(HtmlTextBlock), 
+            new PropertyMetadata(default(DataTemplate), (d, e) => ((HtmlTextBlock)d).UpdateFooter()));
 
-		public static readonly DependencyProperty ShowHeaderProperty =
-			DependencyProperty.Register("ShowHeader", typeof (bool), typeof (HtmlTextBlock), new PropertyMetadata(default(bool), UpdateShowHeader));
+        /// <summary>Gets or sets the footer template. </summary>
+        public DataTemplate FooterTemplate
+        {
+            get { return (DataTemplate)GetValue(FooterTemplateProperty); }
+            set { SetValue(FooterTemplateProperty, value); }
+        }
 
-		private static void UpdateShowHeader(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = (HtmlTextBlock)d;
-			if (ctrl.headerPresenter != null)
-				ctrl.headerPresenter.Visibility = ctrl.ShowHeader ? Visibility.Visible : Visibility.Collapsed;
-		}
+        public static readonly DependencyProperty ShowFooterProperty =
+            DependencyProperty.Register("ShowFooter", typeof(bool), typeof(HtmlTextBlock),
+            new PropertyMetadata(true, (d, e) => ((HtmlTextBlock)d).UpdateShowFooter()));
 
-		public bool ShowHeader
-		{
-			get { return (bool) GetValue(ShowHeaderProperty); }
-			set { SetValue(ShowHeaderProperty, value); }
-		}
+        /// <summary>Gets or sets a value indicating whether the footer should be shown. </summary>
+        public bool ShowFooter
+        {
+            get { return (bool)GetValue(ShowFooterProperty); }
+            set { SetValue(ShowFooterProperty, value); }
+        }
 
-		private static void UpdateHeader(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = (HtmlTextBlock)d;
-			ctrl.UpdateHeader();
-		}
+#if !WINRT
+		public override void OnApplyTemplate()
+#else
+        protected override void OnApplyTemplate()
+#endif
+        {
+            base.OnApplyTemplate();
 
-		internal void UpdateHeader()
-		{
-			if (!loaded)
-				return; 
+            _isLoaded = true;
 
-			if (HeaderTemplate == null)
-			{
-				if (headerPresenter != null)
-				{
-					if (Items.Contains(headerPresenter))
-						Items.Remove(headerPresenter);
-					headerPresenter = null;
-				}
-			}
-			else
-			{
-				if (headerPresenter == null)
-				{
-					headerPresenter = new ContentPresenter();
-					headerPresenter.Content = this.FindParentDataContext();
-					headerPresenter.Visibility = ShowHeader ? Visibility.Visible : Visibility.Collapsed;
-				}
+            UpdateHeader();
+            UpdateFooter();
+        }
 
-				if (!Items.Contains(headerPresenter))
-					Items.Insert(0, headerPresenter);
+        internal void UpdateHeader()
+        {
+            if (!_isLoaded)
+                return;
 
-				headerPresenter.ContentTemplate = HeaderTemplate;
-			}
-		}
+            if (HeaderTemplate == null)
+            {
+                if (_headerPresenter != null)
+                {
+                    if (Items != null && Items.Contains(_headerPresenter))
+                        Items.Remove(_headerPresenter);
 
-		private ContentPresenter footerPresenter;
-		public static readonly DependencyProperty FooterTemplateProperty =
-			DependencyProperty.Register("FooterTemplate", typeof(DataTemplate), typeof(HtmlTextBlock), new PropertyMetadata(default(DataTemplate), UpdateFooter));
+                    _headerPresenter = null;
+                }
+            }
+            else
+            {
+                if (_headerPresenter == null)
+                {
+                    _headerPresenter = new ContentPresenter();
+                    _headerPresenter.Content = this.FindParentDataContext();
+                    _headerPresenter.Visibility = ShowHeader ? Visibility.Visible : Visibility.Collapsed;
+                }
 
-		public DataTemplate FooterTemplate
-		{
-			get { return (DataTemplate)GetValue(FooterTemplateProperty); }
-			set { SetValue(FooterTemplateProperty, value); }
-		}
+                if (Items != null && !Items.Contains(_headerPresenter))
+                    Items.Insert(0, _headerPresenter);
 
-		public static readonly DependencyProperty ShowFooterProperty =
-			DependencyProperty.Register("ShowFooter", typeof (bool), typeof (HtmlTextBlock), new PropertyMetadata(default(bool), UpdateShowFooter));
+                _headerPresenter.ContentTemplate = HeaderTemplate;
+            }
+        }
 
-		private static void UpdateShowFooter(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = (HtmlTextBlock)d;
-			if (ctrl.footerPresenter != null)
-				ctrl.footerPresenter.Visibility = ctrl.ShowFooter ? Visibility.Visible : Visibility.Collapsed;
-		}
+        internal void UpdateFooter()
+        {
+            if (!_isLoaded)
+                return;
 
-		public bool ShowFooter
-		{
-			get { return (bool) GetValue(ShowFooterProperty); }
-			set { SetValue(ShowFooterProperty, value); }
-		}
+            if (FooterTemplate == null)
+            {
+                if (_footerPresenter != null)
+                {
+                    if (Items != null && Items.Contains(_footerPresenter))
+                        Items.Remove(_footerPresenter);
+                    _footerPresenter = null;
+                }
+            }
+            else
+            {
+                if (_footerPresenter == null)
+                {
+                    _footerPresenter = new ContentPresenter();
+                    _headerPresenter.Content = this.FindParentDataContext();
+                    _footerPresenter.Visibility = ShowFooter ? Visibility.Visible : Visibility.Collapsed;
+                }
 
-		private static void UpdateFooter(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = (HtmlTextBlock)d;
-			ctrl.UpdateFooter();
-		}
+                if (Items != null && !Items.Contains(_footerPresenter))
+                    Items.Add(_footerPresenter);
 
-		internal void UpdateFooter()
-		{
-			if (!loaded)
-				return; 
+                _footerPresenter.ContentTemplate = FooterTemplate;
+            }
+        }
 
-			if (FooterTemplate == null)
-			{
-				if (footerPresenter != null)
-				{
-					if (Items.Contains(footerPresenter))
-						Items.Remove(footerPresenter);
-					footerPresenter = null;
-				}
-			}
-			else
-			{
-				if (footerPresenter == null)
-				{
-					footerPresenter = new ContentPresenter();
-					headerPresenter.Content = this.FindParentDataContext();
-					footerPresenter.Visibility = ShowFooter ? Visibility.Visible : Visibility.Collapsed;
-				}
+        private void UpdateShowHeader()
+        {
+            if (_headerPresenter != null)
+                _headerPresenter.Visibility = ShowHeader && HeaderTemplate != null ? Visibility.Visible : Visibility.Collapsed;
+        }
 
-				if (!Items.Contains(footerPresenter))
-					Items.Add(footerPresenter);
+        private void UpdateShowFooter()
+        {
+            if (_footerPresenter != null)
+                _footerPresenter.Visibility = ShowFooter && FooterTemplate != null ? Visibility.Visible : Visibility.Collapsed;
+        }
 
-				footerPresenter.ContentTemplate = FooterTemplate;
-			}
-		}
+        internal void CallHtmlLoaded()
+        {
+            var copy = HtmlLoaded;
+            if (copy != null)
+                copy(this, new EventArgs());
+        }
 
-		#endregion
-	}
+        private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
+        {
+            foreach (var control in SizeDependentControls)
+                control.Update(ActualWidth);
+        }
+    }
 }

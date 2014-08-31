@@ -1,3 +1,11 @@
+//-----------------------------------------------------------------------
+// <copyright file="FixedHtmlTextBlock.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
 using System;
 using System.Collections.Generic;
 using MyToolkit.Controls.HtmlTextBlockImplementation;
@@ -6,33 +14,22 @@ using MyToolkit.Controls.HtmlTextBlockImplementation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-
 #else
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Controls;
 #endif
 
-
 namespace MyToolkit.Controls
 {
-//#if WINRT
-//    // used as dummy class until HtmlTextBlock is implemented => currently we have to use FixedHtmlTextBlock in a ScrollViewer
-//    internal class HtmlTextBlock
-//    {
-//        public void UpdateHeader() {}
-//        public void UpdateFooter() {}
-//    }
-//#endif
-
+    /// <summary>Renders HTML using native XAML controls without a scrollbar; use the control 
+    /// <see cref="HtmlTextBlock"/> to render the HTML content in a <see cref="ScrollViewer"/>. </summary>
 	public class FixedHtmlTextBlock : ItemsControl, IHtmlTextBlock
 	{
-		public IDictionary<string, IControlGenerator> Generators { get { return generators; } }
-		public List<ISizeDependentControl> SizeDependentControls { get; private set; }
+        private readonly IDictionary<string, IControlGenerator> _generators = HtmlParser.GetDefaultGenerators();
 
-		private readonly IDictionary<string, IControlGenerator> generators = HtmlParser.GetDefaultGenerators();
-		
-		public FixedHtmlTextBlock()
+        /// <summary>Initializes a new instance of the <see cref="FixedHtmlTextBlock"/> class. </summary>
+        public FixedHtmlTextBlock()
 		{
 #if !WINRT
 			if (Resources.Contains("PhoneFontSizeNormal"))
@@ -42,7 +39,6 @@ namespace MyToolkit.Controls
 				Foreground = (Brush)Resources["PhoneForegroundBrush"];
 
 			Margin = new Thickness(12, 0, 12, 0);
-
 #else
 			FontSize = (double)Resources["ControlContentThemeFontSize"];
 			Foreground = (Brush)Resources["ApplicationForegroundThemeBrush"];
@@ -52,41 +48,35 @@ namespace MyToolkit.Controls
 			SizeDependentControls = new List<ISizeDependentControl>();
 		}
 
-		private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
-		{
-			foreach (var ctrl in SizeDependentControls)
-				ctrl.Update(ActualWidth);
-		}
+        /// <summary>Gets the list of HTML element generators. </summary>
+        public IDictionary<string, IControlGenerator> Generators { get { return _generators; } }
 
-		private static void OnHtmlChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
-		{
-			var box = (FixedHtmlTextBlock)obj;
-			box.Generate();
-		}
-
-		public void CallLoadedEvent()
-		{
-			var copy = HtmlLoaded;
-			if (copy != null)
-				copy(this, new EventArgs());
-		}
-
-		#region dependency properties
+        /// <summary>Gets the list of size dependent controls. </summary>
+        public List<ISizeDependentControl> SizeDependentControls { get; private set; }
 
 		public static readonly DependencyProperty HtmlProperty =
-			DependencyProperty.Register("Html", typeof(String), typeof(FixedHtmlTextBlock), new PropertyMetadata(default(String), OnHtmlChanged));
+			DependencyProperty.Register("Html", typeof(String), typeof(FixedHtmlTextBlock), new PropertyMetadata(default(String), 
+                (obj, e) => ((FixedHtmlTextBlock) obj).Generate()));
 
-		public String Html
+        /// <summary>Gets or sets the HTML content to display. </summary>
+        public String Html
 		{
 			get { return (String)GetValue(HtmlProperty); }
 			set { SetValue(HtmlProperty, value); }
 		}
 
+        /// <summary>Occurs when the HTML content has been loaded. </summary>
 		public event EventHandler<EventArgs> HtmlLoaded;
 
+#if !WINRT
 		public static readonly DependencyProperty ParagraphMarginProperty =
 			DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(FixedHtmlTextBlock), new PropertyMetadata(6));
+#else
+        public static readonly DependencyProperty ParagraphMarginProperty =
+            DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(FixedHtmlTextBlock), new PropertyMetadata(10));
+#endif
 
+        /// <summary>Gets or sets the margin for paragraphs (added at the bottom of the element). </summary>
 		public int ParagraphMargin
 		{
 			get { return (int)GetValue(ParagraphMarginProperty); }
@@ -94,14 +84,27 @@ namespace MyToolkit.Controls
 		}
 
 		public static readonly DependencyProperty BaseUriProperty =
-			DependencyProperty.Register("BaseUri", typeof(Uri), typeof(FixedHtmlTextBlock), new PropertyMetadata(default(Uri)));
+			DependencyProperty.Register("HtmlBaseUri", typeof(Uri), typeof(FixedHtmlTextBlock), new PropertyMetadata(default(Uri)));
 
-		public Uri BaseUri
+        /// <summary>Gets or sets the base URI which is used to resolve relative URIs. </summary>
+		public Uri HtmlBaseUri
 		{
 			get { return (Uri)GetValue(BaseUriProperty); }
 			set { SetValue(BaseUriProperty, value); }
 		}
 
-		#endregion
+        /// <summary>Calls the <see cref="HtmlLoaded"/> event. </summary>
+        internal void CallHtmlLoaded()
+        {
+            var copy = HtmlLoaded;
+            if (copy != null)
+                copy(this, new EventArgs());
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
+        {
+            foreach (var ctrl in SizeDependentControls)
+                ctrl.Update(ActualWidth);
+        }
 	}
 }

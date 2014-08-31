@@ -128,7 +128,7 @@ namespace MyToolkit.Controls.HtmlTextBlockImplementation.Generators
 			try
 			{
 				var uri = link.StartsWith("http://") || link.StartsWith("https://") ?
-					new Uri(link, UriKind.Absolute) : new Uri(textBlock.BaseUri, link);
+					new Uri(link, UriKind.Absolute) : new Uri(textBlock.HtmlBaseUri, link);
 				return () => new WebBrowserTask { Uri = uri }.Show();
 			}
 			catch (Exception)
