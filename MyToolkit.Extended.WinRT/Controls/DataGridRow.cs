@@ -1,13 +1,19 @@
-﻿using System.Collections.Generic;
+﻿//-----------------------------------------------------------------------
+// <copyright file="DataGridRow.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace MyToolkit.Controls
 {
-    /// <summary>
-    /// A <see cref="DataGrid"/> row. 
-    /// </summary>
+    /// <summary>A <see cref="DataGrid"/> row. </summary>
 	public class DataGridRow : Grid
 	{
         private ContentControl _detailsControl = null;

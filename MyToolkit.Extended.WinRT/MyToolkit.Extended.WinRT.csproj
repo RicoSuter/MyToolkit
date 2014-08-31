@@ -228,12 +228,12 @@
     <Compile Include="Controls\DataGridBoundColumn.cs" />
     <Compile Include="Controls\DataGridTemplatedCell.cs" />
     <Compile Include="Controls\DataGridTemplatedColumn.cs" />
-    <Compile Include="Controls\ExtendedGridView.cs" />
+    <Compile Include="Controls\DefaultDataGridCell.cs" />
+    <Compile Include="Controls\MtGridView.cs" />
     <Compile Include="Controls\GenericDataTemplateSelector.cs" />
     <Compile Include="Controls\HorizontalHtmlGenerator.cs" />
-    <Compile Include="Controls\ExtendedItemsControl.cs" />
-    <Compile Include="Controls\ExtendedListView.cs" />
-    <Compile Include="Controls\ExtendedTextBox.cs" />
+    <Compile Include="Controls\MtItemsControl.cs" />
+    <Compile Include="Controls\MtListView.cs" />
     <Compile Include="Controls\FadingImage.cs" />
     <Compile Include="Controls\GridControl.cs" />
     <Compile Include="Controls\LongListSelector.cs" />

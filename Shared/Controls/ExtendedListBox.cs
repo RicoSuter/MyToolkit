@@ -19,15 +19,13 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Markup;
 #endif
-
 #if WP7 || WP8
 using Microsoft.Phone.Controls;
 #endif
-
 #if WINRT
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Markup;
 #endif
 
@@ -38,8 +36,8 @@ using Windows.UI.Xaml.Markup;
 namespace MyToolkit.Controls
 {
     /// <summary>A <see cref="ListBox"/> with additional features. </summary>
-	public class MtListBox : ListBox
-	{
+    public class MtListBox : ListBox
+    {
         private event EventHandler<ScrolledToEndEventArgs> _scrolledToEnd;
         private ScrollViewer _scrollViewer;
         private double _lastExtentHeight = 0;
@@ -51,8 +49,8 @@ namespace MyToolkit.Controls
 
         /// <summary>Initializes a new instance of the <see cref="MtListBox"/> class. </summary>
         public MtListBox()
-		{
-			LayoutUpdated += RegisterScrollEvent;
+        {
+            LayoutUpdated += RegisterScrollEvent;
 
 #if WINRT
             DefaultStyleKey = typeof(MtListBox);
@@ -68,48 +66,48 @@ namespace MyToolkit.Controls
 					</Setter>
 				</Style>");
 #endif
-		}
+        }
 
         /// <summary>Gets the <see cref="ListBoxItem"/> for a given item. </summary>
         /// <param name="item">The item. </param>
         /// <returns>The <see cref="ListBoxItem"/>. </returns>
-		public ListBoxItem GetListBoxItemFromItem(object item)
-		{
-			return (ListBoxItem)ItemContainerGenerator.ContainerFromItem(item);
-		}
+        public ListBoxItem GetListBoxItemFromItem(object item)
+        {
+            return (ListBoxItem)ItemContainerGenerator.ContainerFromItem(item);
+        }
 
         /// <summary>Gets the view's <see cref="ScrollViewer"/>. </summary>
-		public ScrollViewer ScrollViewer
-		{
-			get { return _scrollViewer; }
-		}
+        public ScrollViewer ScrollViewer
+        {
+            get { return _scrollViewer; }
+        }
 
         /// <summary>Scrolls to the given offset. </summary>
         /// <param name="offset">The offset. </param>
         /// <returns>Returns false if the <see cref="ScrollViewer"/> was not loaded. </returns>
-		public bool ScrollToVerticalOffset(double offset)
-		{
-			if (_scrollViewer != null)
-			{
-				_scrollViewer.InvalidateScrollInfo();
-				_scrollViewer.ScrollToVerticalOffset(offset);
-				return true; 
-			}
-			return false;
-		}
+        public bool ScrollToVerticalOffset(double offset)
+        {
+            if (_scrollViewer != null)
+            {
+                _scrollViewer.InvalidateScrollInfo();
+                _scrollViewer.ScrollToVerticalOffset(offset);
+                return true;
+            }
+            return false;
+        }
 
         /// <summary>Stops the current scrolling. </summary>
         /// <returns>Returns false if the <see cref="ScrollViewer"/> was not loaded. </returns>
         public bool StopScrolling()
-		{
-			if (_scrollViewer != null)
-			{
-				_scrollViewer.InvalidateScrollInfo();
-				_scrollViewer.ScrollToVerticalOffset(_scrollViewer.VerticalOffset);
-				return true;
-			}
-			return false;
-		}
+        {
+            if (_scrollViewer != null)
+            {
+                _scrollViewer.InvalidateScrollInfo();
+                _scrollViewer.ScrollToVerticalOffset(_scrollViewer.VerticalOffset);
+                return true;
+            }
+            return false;
+        }
 
 #if WINRT
         protected override void OnApplyTemplate()
@@ -124,7 +122,7 @@ namespace MyToolkit.Controls
             RegisterVerticalOffsetChangedHandler();
         }
 
-		#region Scroll jumping fix
+        #region Scroll jumping fix
 
 #if WP8 || WP7
 
@@ -151,83 +149,83 @@ namespace MyToolkit.Controls
 
 #endif
 
-		#endregion
+        #endregion
 
-		#region Scroll to end
+        #region Scroll to end
 
         /// <summary>Gets or sets a value indicating whether scrolled to end events should be triggered. </summary>
-		public bool TriggerScrolledToEndEvents { get; set; }
+        public bool TriggerScrolledToEndEvents { get; set; }
 
         /// <summary>Occurs when the user scrolled to the end of the view. </summary>
-		public event EventHandler<ScrolledToEndEventArgs> ScrolledToEnd
-		{
-			add 
-			{ 
-				_scrolledToEnd += value;
-				RegisterVerticalOffsetChangedHandler();
-			}
-			remove { _scrolledToEnd -= value; }
-		}
+        public event EventHandler<ScrolledToEndEventArgs> ScrolledToEnd
+        {
+            add
+            {
+                _scrolledToEnd += value;
+                RegisterVerticalOffsetChangedHandler();
+            }
+            remove { _scrolledToEnd -= value; }
+        }
 
-		private static void OnVerticalOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = (MtListBox) d;
-			if (!ctrl.TriggerScrolledToEndEvents || ctrl._scrolledToEnd == null)
-				return;
+        private static void OnVerticalOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var ctrl = (MtListBox)d;
+            if (!ctrl.TriggerScrolledToEndEvents || ctrl._scrolledToEnd == null)
+                return;
 
-			var viewer = ctrl._scrollViewer;
-			if (viewer != null)
-			{
-				var triggered = ctrl._lastExtentHeight == viewer.ExtentHeight;
-				if (!triggered && viewer.VerticalOffset >= viewer.ScrollableHeight - viewer.ViewportHeight - viewer.ViewportHeight / 2)
-				{
+            var viewer = ctrl._scrollViewer;
+            if (viewer != null)
+            {
+                var triggered = ctrl._lastExtentHeight == viewer.ExtentHeight;
+                if (!triggered && viewer.VerticalOffset >= viewer.ScrollableHeight - viewer.ViewportHeight - viewer.ViewportHeight / 2)
+                {
                     ctrl._lastExtentHeight = viewer.ExtentHeight;
-					var handler = ctrl._scrolledToEnd;
-					if (handler != null)
-						handler(ctrl, new ScrolledToEndEventArgs(viewer));
-				}
-			}
-		}
+                    var handler = ctrl._scrolledToEnd;
+                    if (handler != null)
+                        handler(ctrl, new ScrolledToEndEventArgs(viewer));
+                }
+            }
+        }
 
-		private static readonly DependencyProperty InternalOffsetProperty = DependencyProperty.Register(
-			"InternalOffset", typeof(double), typeof(MtListBox),
-			new PropertyMetadata(default(double), OnVerticalOffsetChanged));
+        private static readonly DependencyProperty InternalOffsetProperty = DependencyProperty.Register(
+            "InternalOffset", typeof(double), typeof(MtListBox),
+            new PropertyMetadata(default(double), OnVerticalOffsetChanged));
 
-		private void RegisterVerticalOffsetChangedHandler()
-		{
-			if (_scrollViewer == null || _bindingCreated || _scrolledToEnd == null)
-				return;
+        private void RegisterVerticalOffsetChangedHandler()
+        {
+            if (_scrollViewer == null || _bindingCreated || _scrolledToEnd == null)
+                return;
 
-			TriggerScrolledToEndEvents = true;
+            TriggerScrolledToEndEvents = true;
 
-			var binding = new Binding();
-			binding.Source = _scrollViewer;
-			binding.Path = new PropertyPath("VerticalOffset");
-			binding.Mode = BindingMode.OneWay;
-			SetBinding(InternalOffsetProperty, binding);
-		
-			_bindingCreated = true;
-		}
+            var binding = new Binding();
+            binding.Source = _scrollViewer;
+            binding.Path = new PropertyPath("VerticalOffset");
+            binding.Mode = BindingMode.OneWay;
+            SetBinding(InternalOffsetProperty, binding);
 
-		#endregion
+            _bindingCreated = true;
+        }
 
-		#region Inner margin
+        #endregion
+
+        #region Inner margin
 
         /// <summary>Gets or sets the inner margin. </summary>
-		public Thickness InnerMargin
-		{
-			get { return (Thickness)GetValue(InnerMarginProperty); }
-			set { SetValue(InnerMarginProperty, value); }
-		}
+        public Thickness InnerMargin
+        {
+            get { return (Thickness)GetValue(InnerMarginProperty); }
+            set { SetValue(InnerMarginProperty, value); }
+        }
 
-		public static readonly DependencyProperty InnerMarginProperty =
-			DependencyProperty.Register("InnerMargin", typeof(Thickness),
-			typeof(MtListBox), new PropertyMetadata(new Thickness(), InnerMarginChanged));
+        public static readonly DependencyProperty InnerMarginProperty =
+            DependencyProperty.Register("InnerMargin", typeof(Thickness),
+                typeof(MtListBox), new PropertyMetadata(new Thickness(), InnerMarginChanged));
 
-		private static void InnerMarginChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-		{
+        private static void InnerMarginChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
             ((MtListBox)obj).UpdateInnerMargin();
-		}
+        }
 
 #if WINRT
 
@@ -339,85 +337,85 @@ namespace MyToolkit.Controls
         #region Prepare container for item event
 
         /// <summary>Occurs when a new container control gets created. </summary>
-		public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
+        public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
 
-		private void OnPrepareContainerForItem(PrepareContainerForItemEventArgs args)
-		{
-			var copy = PrepareContainerForItem;
-			if (copy != null)
-				copy(this, args);
-		}
+        private void OnPrepareContainerForItem(PrepareContainerForItemEventArgs args)
+        {
+            var copy = PrepareContainerForItem;
+            if (copy != null)
+                copy(this, args);
+        }
 
-		#endregion
+        #endregion
 
-		#region Scrolling
+        #region Scrolling
 
         /// <summary>Occurs when the scrolling state changed. </summary>
-		public event EventHandler<ScrollingStateChangedEventArgs> ScrollingStateChanged;
+        public event EventHandler<ScrollingStateChangedEventArgs> ScrollingStateChanged;
 
-		public static readonly DependencyProperty IsScrollingProperty = 
-			DependencyProperty.Register("IsScrolling", typeof(bool),
-			typeof(MtListBox), new PropertyMetadata(false, IsScrollingPropertyChanged));
+        public static readonly DependencyProperty IsScrollingProperty =
+            DependencyProperty.Register("IsScrolling", typeof(bool),
+                typeof(MtListBox), new PropertyMetadata(false, IsScrollingPropertyChanged));
 
         /// <summary>Gets a value indicating whether the user is currently scrolling the view. </summary>
-		public bool IsScrolling
-		{
-			get { return (bool) GetValue(IsScrollingProperty); }
-			internal set
-			{
-				// "Unlock" the ability to set the property
-				_allowIsScrollingChanges = true;
-				SetValue(IsScrollingProperty, value);
-				_allowIsScrollingChanges = false;
-			}
-		}
+        public bool IsScrolling
+        {
+            get { return (bool)GetValue(IsScrollingProperty); }
+            internal set
+            {
+                // "Unlock" the ability to set the property
+                _allowIsScrollingChanges = true;
+                SetValue(IsScrollingProperty, value);
+                _allowIsScrollingChanges = false;
+            }
+        }
 
-	    protected virtual void OnScrollingStateChanged(ScrollingStateChangedEventArgs e)
-	    {
-	        // Must be empty
-	    }
+        protected virtual void OnScrollingStateChanged(ScrollingStateChangedEventArgs e)
+        {
+            // Must be empty
+        }
 
-		internal static void IsScrollingPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
-		{
-			var listbox = (MtListBox) source;
-			if (listbox._allowIsScrollingChanges != true)
-				throw new InvalidOperationException("IsScrolling property is read-only");
+        internal static void IsScrollingPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        {
+            var listbox = (MtListBox)source;
+            if (listbox._allowIsScrollingChanges != true)
+                throw new InvalidOperationException("IsScrolling property is read-only");
 
-			var args = new ScrollingStateChangedEventArgs((bool)e.OldValue, (bool)e.NewValue);
-			listbox.OnScrollingStateChanged(args);
-			if (listbox.ScrollingStateChanged != null)
-				listbox.ScrollingStateChanged(listbox, args);
-		}
+            var args = new ScrollingStateChangedEventArgs((bool)e.OldValue, (bool)e.NewValue);
+            listbox.OnScrollingStateChanged(args);
+            if (listbox.ScrollingStateChanged != null)
+                listbox.ScrollingStateChanged(listbox, args);
+        }
 
-		private void ScrollingStateChanging(object sender, VisualStateChangedEventArgs e)
-		{
-			IsScrolling = e.NewState.Name == "Scrolling";
-		}
+        private void ScrollingStateChanging(object sender, VisualStateChangedEventArgs e)
+        {
+            IsScrolling = e.NewState.Name == "Scrolling";
+        }
 
 #if WINRT
-		private void RegisterScrollEvent(object s, object o)
+        private void RegisterScrollEvent(object s, object o)
 #else
 		private void RegisterScrollEvent(object s, EventArgs eventArgs)
 #endif
         {
-			if (_eventRegistred)
-				return; 
+            if (_eventRegistred)
+                return;
 
-			if (_scrollViewer != null)
-			{
-				var child = _scrollViewer.GetVisualChild(0);
-				var group = child.GetVisualStateGroup("ScrollStates");
-				if (group != null)
-				{
-					group.CurrentStateChanging -= ScrollingStateChanging;
-					group.CurrentStateChanging += ScrollingStateChanging;
-					_eventRegistred = true; 
-				}
-			}
-		}
+            if (_scrollViewer != null)
+            {
+                var child = _scrollViewer.GetVisualChild(0);
+                var group = child.GetVisualStateGroup("ScrollStates");
+                if (group != null)
+                {
+                    group.CurrentStateChanging -= ScrollingStateChanging;
+                    group.CurrentStateChanging += ScrollingStateChanging;
+                    _eventRegistred = true;
+                }
+            }
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 
     /// <summary>A <see cref="ListBox"/> with additional features. </summary>
     [Obsolete("Use MtListBox instead. 8/31/2014")]
@@ -442,8 +440,6 @@ namespace MyToolkit.Controls
         }
     }
 
-#if WP7 || WP8 || SL5
-
     /// <summary>Contains information for the scrolled to end event. </summary>
     public class ScrolledToEndEventArgs : EventArgs
     {
@@ -456,6 +452,4 @@ namespace MyToolkit.Controls
             ScrollViewer = viewer;
         }
     }
-
-#endif
 }

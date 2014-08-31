@@ -1,3 +1,11 @@
+//-----------------------------------------------------------------------
+// <copyright file="DataGridTemplatedColumn.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -9,18 +17,14 @@ namespace MyToolkit.Controls
 		private DataTemplate _cellTemplate;
         private Binding _order;
         
-        /// <summary>
-        /// Gets or sets the cell data template. 
-        /// </summary>
+        /// <summary>Gets or sets the cell data template. </summary>
         public DataTemplate CellTemplate
 		{
 			get { return _cellTemplate; }
 			set { _cellTemplate = value; }
 		}
 
-        /// <summary>
-        /// Gets or sets the binding which is used for sorting. 
-        /// </summary>
+        /// <summary>Gets or sets the binding which is used for sorting. </summary>
 		public Binding Order
 		{
 			get { return _order; }
@@ -32,7 +36,8 @@ namespace MyToolkit.Controls
 			get { return _order.Path; }
 		}
 
-		public bool OnlyVisibleOnSelection { get; set; }
+        /// <summary>Gets or sets a value indicating whether the column is only visible when the column is selected.  </summary>
+        public bool OnlyVisibleOnSelection { get; set; }
 
 		public override DataGridCell GenerateElement(object dataItem)
 		{
@@ -44,6 +49,7 @@ namespace MyToolkit.Controls
 
 			if (OnlyVisibleOnSelection)
 				control.Visibility = IsSelected ? Visibility.Visible : Visibility.Collapsed; 
+
 			return new DataGridTemplatedCell(control, OnlyVisibleOnSelection);
 		}
 	}

@@ -25,7 +25,7 @@ namespace MyToolkit.Controls
 		{
 			base.OnApplyTemplate();
 
-			var items = (ExtendedItemsControl)GetTemplateChild("items");
+			var items = (MtItemsControl)GetTemplateChild("items");
 			items.PrepareContainerForItem += ItemsOnPrepareContainerForItem;
 		}
 

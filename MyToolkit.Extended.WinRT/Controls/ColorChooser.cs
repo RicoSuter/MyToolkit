@@ -1,7 +1,14 @@
-﻿using Windows.UI;
+﻿//-----------------------------------------------------------------------
+// <copyright file="ColorChooser.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 
 namespace MyToolkit.Controls
 {
@@ -32,9 +39,7 @@ namespace MyToolkit.Controls
         public static readonly DependencyProperty SelectedColorProperty =
             DependencyProperty.Register("SelectedColor", typeof(Color), typeof(ColorChooser), new PropertyMetadata(default(Color)));
 
-        /// <summary>
-        /// Gets or sets the selected color. 
-        /// </summary>
+        /// <summary>Gets or sets the selected color. </summary>
         public Color SelectedColor
         {
             get { return (Color)GetValue(SelectedColorProperty); }
@@ -44,9 +49,7 @@ namespace MyToolkit.Controls
         public static readonly DependencyProperty ColorsProperty =
             DependencyProperty.Register("Colors", typeof(Color[]), typeof(ColorChooser), new PropertyMetadata(DefaultColors));
 
-        /// <summary>
-        /// Gets or sets the available colors in the chooser. 
-        /// </summary>
+        /// <summary>Gets or sets the available colors in the chooser. </summary>
         public Color[] Colors
         {
             get { return (Color[])GetValue(ColorsProperty); }

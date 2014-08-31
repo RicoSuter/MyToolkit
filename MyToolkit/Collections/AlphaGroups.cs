@@ -26,14 +26,10 @@ namespace MyToolkit.Collections
 			Initialize(new List<T>());
 		}
 
-        /// <summary>
-        /// Occurs when the collection changes.
-        /// </summary>
+        /// <summary>Occurs when the collection changes.</summary>
         public event NotifyCollectionChangedEventHandler CollectionChanged;
         
-        /// <summary>
-        /// Initializes the group with a list of items. 
-        /// </summary>
+        /// <summary>Initializes the group with a list of items. </summary>
         /// <param name="items">The items. </param>
         public void Initialize(IEnumerable<T> items)
 		{
@@ -60,9 +56,7 @@ namespace MyToolkit.Collections
 				CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 		}
 
-        /// <summary>
-        /// Adds multiple items to the group. 
-        /// </summary>
+        /// <summary>Adds multiple items to the group. </summary>
         /// <param name="items">The items. </param>
 		public void AddRange(IEnumerable<T> items)
 		{
@@ -79,9 +73,7 @@ namespace MyToolkit.Collections
 				RaiseGroupChanged(group);
 		}
 
-        /// <summary>
-        /// Adds an item to the group. 
-        /// </summary>
+        /// <summary>Adds an item to the group. </summary>
         /// <param name="item">The item. </param>
 		public void Add(T item)
 		{

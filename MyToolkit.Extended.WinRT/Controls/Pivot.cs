@@ -1,4 +1,12 @@
-﻿using System.Collections.ObjectModel;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Pivot.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using Windows.UI.Xaml;
@@ -7,23 +15,25 @@ using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 
+// TODO: Rename to MtPivot to avoid name problems with WP pivot
+
 namespace MyToolkit.Controls
 {
 	[ContentProperty(Name = "Items")]
 	public sealed class Pivot : Control
 	{
-		public Pivot()
+        private MtListBox _list;
+        private Grid _grid;
+        private Storyboard _story;
+        private TranslateTransform _translate;
+
+        private int _initialIndex = 0;
+        private object _initialItem;
+        
+        public Pivot()
 		{
 			DefaultStyleKey = typeof(Pivot);
 		}
-
-		private MtListBox _list;
-		private Grid _grid;
-		private Storyboard _story;
-		private TranslateTransform _translate; 
-
-		private int _initialIndex = 0;
-		private object _initialItem;
 
 		protected override void OnApplyTemplate()
 		{

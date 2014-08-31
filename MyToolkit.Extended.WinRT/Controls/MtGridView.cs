@@ -1,38 +1,38 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="MtGridView.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 
 namespace MyToolkit.Controls
 {
-	public class ExtendedGridView : GridView
+    /// <summary>A <see cref="GridView"/> with additional features. </summary>
+    public class MtGridView : GridView
 	{
         private event EventHandler<ScrolledToEndEventArgs> _scrolledToEnd;
-        private ScrollViewer _scrollViewer;
         private double _lastExtentWidth = 0;
         private bool _bindingCreated = false;
 
-		public ExtendedGridView()
+        /// <summary>Initializes a new instance of the <see cref="MtGridView"/> class. </summary>
+        public MtGridView()
 		{
 			Loaded += OnLoaded;
 		}
 
-        /// <summary>
-        /// Gets the view's <see cref="ScrollViewer"/>. 
-        /// </summary>
-        public ScrollViewer ScrollViewer
-        {
-            get { return _scrollViewer; }
-        }
+        /// <summary>Gets the view's <see cref="ScrollViewer"/>. </summary>
+        public ScrollViewer ScrollViewer { get; private set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether scrolled to end events should be triggered. 
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether scrolled to end events should be triggered. </summary>
         public bool TriggerScrolledToEndEvents { get; set; }
 
-        /// <summary>
-        /// Occurs when the user scrolled to the end of the view. 
-        /// </summary>
+        /// <summary>Occurs when the user scrolled to the end of the view. </summary>
         public event EventHandler<ScrolledToEndEventArgs> ScrolledToEnd
         {
             add
@@ -43,9 +43,7 @@ namespace MyToolkit.Controls
             remove { _scrolledToEnd -= value; }
         }
 
-        /// <summary>
-        /// Occurs when a new container control gets created. 
-        /// </summary>
+        /// <summary>Occurs when a new container control gets created. </summary>
         public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
         
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
@@ -63,21 +61,21 @@ namespace MyToolkit.Controls
 
 		private void OnLoaded(object sender, RoutedEventArgs e)
 		{
-			_scrollViewer = (ScrollViewer)GetTemplateChild("ScrollViewer");
+			ScrollViewer = (ScrollViewer)GetTemplateChild("ScrollViewer");
 			RegisterHorizontalOffsetChangedHandler();
 		}
 
         private static readonly DependencyProperty InternalOffsetProperty = DependencyProperty.Register(
-            "InternalOffset", typeof(double), typeof(ExtendedGridView),
+            "InternalOffset", typeof(double), typeof(MtGridView),
             new PropertyMetadata(default(double), OnHorizontalOffsetChanged));
         
         private static void OnHorizontalOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var ctrl = (ExtendedGridView)d;
+			var ctrl = (MtGridView)d;
 			if (!ctrl.TriggerScrolledToEndEvents || ctrl._scrolledToEnd == null)
 				return;
 
-			var viewer = ctrl._scrollViewer;
+			var viewer = ctrl.ScrollViewer;
 			if (viewer != null)
 			{
 				var triggered = ctrl._lastExtentWidth == viewer.ExtentWidth;
@@ -93,13 +91,13 @@ namespace MyToolkit.Controls
 
 		private void RegisterHorizontalOffsetChangedHandler()
 		{
-			if (_scrollViewer == null || _bindingCreated || _scrolledToEnd == null)
+			if (ScrollViewer == null || _bindingCreated || _scrolledToEnd == null)
 				return;
 
 			TriggerScrolledToEndEvents = true;
 
 			var binding = new Binding();
-			binding.Source = _scrollViewer;
+			binding.Source = ScrollViewer;
 			binding.Path = new PropertyPath("HorizontalOffset");
 			binding.Mode = BindingMode.OneWay;
 			SetBinding(InternalOffsetProperty, binding);
@@ -108,12 +106,9 @@ namespace MyToolkit.Controls
 		}
 	}
 
-    public class ScrolledToEndEventArgs : EventArgs
+    /// <summary>A <see cref="GridView"/> with additional features. </summary>
+    [Obsolete("Use MtGridView instead. 8/31/2014")]
+    public class ExtendedGridView : MtGridView
     {
-        public ScrollViewer ScrollViewer { get; set; }
-        public ScrolledToEndEventArgs(ScrollViewer viewer)
-        {
-            ScrollViewer = viewer;
-        }
     }
 }

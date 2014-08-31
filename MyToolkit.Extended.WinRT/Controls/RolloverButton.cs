@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿//-----------------------------------------------------------------------
+// <copyright file="RolloverButton.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
 using System.Windows.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
-using Windows.UI.Xaml.Media;
 
 namespace MyToolkit.Controls
 {
@@ -37,8 +39,10 @@ namespace MyToolkit.Controls
 
 		private void OnTapped(object sender, TappedRoutedEventArgs e)
 		{
-			if (Click != null)
-				Click(sender, e);
+		    var copy = Click;
+            if (copy != null)
+                copy(sender, e);
+
 			if (Command != null && Command.CanExecute(sender))
 				Command.Execute(sender);
 		}

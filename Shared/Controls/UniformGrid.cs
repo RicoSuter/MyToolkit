@@ -1,3 +1,11 @@
+//-----------------------------------------------------------------------
+// <copyright file="UniformGrid.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
 using System;
 
 #if SL4 || SL5 || WP7 || WP8
@@ -12,9 +20,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace MyToolkit.Controls
 {
-	/// <summary>
-	/// Panel which arranges children in a grid with all equal cell sizes.
-	/// </summary>
+	/// <summary>Panel which arranges children in a grid with all equal cell sizes. </summary>
 	public class UniformGrid : Panel
 	{
 		private int ComputedRows { get; set; }

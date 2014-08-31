@@ -78,7 +78,7 @@
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:WatermarkedTextBox">
-					<controls:ExtendedTextBox x:Name="textBox" />
+					<TextBox x:Name="textBox" />
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>

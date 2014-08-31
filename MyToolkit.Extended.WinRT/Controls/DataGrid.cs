@@ -1,4 +1,12 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="DataGrid.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -13,9 +21,7 @@ using MyToolkit.Utilities;
 
 namespace MyToolkit.Controls
 {
-    /// <summary>
-    /// A data grid control. 
-    /// </summary>
+    /// <summary>A data grid control. </summary>
     public class DataGrid : Control
     {
         private Grid _titleRowControl;
