@@ -17,7 +17,7 @@ namespace MyToolkit.Controls
 			DefaultStyleKey = typeof(Pivot);
 		}
 
-		private ExtendedListBox _list;
+		private MtListBox _list;
 		private Grid _grid;
 		private Storyboard _story;
 		private TranslateTransform _translate; 
@@ -29,7 +29,7 @@ namespace MyToolkit.Controls
 		{
 			base.OnApplyTemplate();
 
-			_list = (ExtendedListBox)GetTemplateChild("List");
+			_list = (MtListBox)GetTemplateChild("List");
 			_grid = (Grid)GetTemplateChild("Grid");
 
 			_translate = (TranslateTransform)GetTemplateChild("Translate");

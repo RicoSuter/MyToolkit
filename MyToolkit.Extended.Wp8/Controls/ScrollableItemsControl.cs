@@ -33,6 +33,7 @@ using Windows.UI.Xaml.Markup;
 
 namespace MyToolkit.Controls
 {
+    /// <summary>A list of items in a <see cref="ScrollViewer"/> with no selection support. </summary>
     public class ScrollableItemsControl : ItemsControl
     {
         private event EventHandler<ScrolledToEndEventArgs> _scrolledToEnd;
@@ -42,16 +43,15 @@ namespace MyToolkit.Controls
         private FrameworkElement _lastElement = null;
         private Thickness _lastElementMargin;
         private bool _allowIsScrollingChanges;
-        private bool _eventRegistred = false; 
+        private bool _eventRegistred = false;
 
+        /// <summary>Initializes a new instance of the <see cref="ScrollableItemsControl"/> class. </summary>
         public ScrollableItemsControl()
         {
             DefaultStyleKey = typeof (ScrollableItemsControl);
         }
 
-        /// <summary>
-        /// Gets the <see cref="ListBoxItem"/> for a given item. 
-        /// </summary>
+        /// <summary>Gets the <see cref="ListBoxItem"/> for a given item. </summary>
         /// <param name="item">The item. </param>
         /// <returns>The <see cref="ListBoxItem"/>. </returns>
         public ListBoxItem GetListBoxItemFromItem(object item)
@@ -59,17 +59,13 @@ namespace MyToolkit.Controls
             return (ListBoxItem)ItemContainerGenerator.ContainerFromItem(item);
         }
 
-        /// <summary>
-        /// Gets the view's <see cref="ScrollViewer"/>. 
-        /// </summary>
+        /// <summary>Gets the view's <see cref="ScrollViewer"/>. </summary>
         public ScrollViewer ScrollViewer
         {
             get { return _scrollViewer; }
         }
 
-        /// <summary>
-        /// Scrolls to the given offset. 
-        /// </summary>
+        /// <summary>Scrolls to the given offset. </summary>
         /// <param name="offset">The offset. </param>
         /// <returns>Returns false if the <see cref="ScrollViewer"/> was not loaded. </returns>
         public bool ScrollToVerticalOffset(double offset)
@@ -83,9 +79,7 @@ namespace MyToolkit.Controls
             return false;
         }
 
-        /// <summary>
-        /// Stops the current scrolling. 
-        /// </summary>
+        /// <summary>Stops the current scrolling. </summary>
         /// <returns>Returns false if the <see cref="ScrollViewer"/> was not loaded. </returns>
         public bool StopScrolling()
         {
@@ -118,9 +112,7 @@ namespace MyToolkit.Controls
         public static readonly DependencyProperty UseScrollFixProperty =
             DependencyProperty.Register("UseScrollFix", typeof(bool), typeof(ScrollableItemsControl), new PropertyMetadata(false));
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the scroll fix sould be applied. 
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether the scroll fix sould be applied. </summary>
         public bool UseScrollFix
         {
             get { return (bool)GetValue(UseScrollFixProperty); }
@@ -144,14 +136,10 @@ namespace MyToolkit.Controls
 
         #region Scroll to end
 
-        /// <summary>
-        /// Gets or sets a value indicating whether scrolled to end events should be triggered. 
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether scrolled to end events should be triggered. </summary>
         public bool TriggerScrolledToEndEvents { get; set; }
 
-        /// <summary>
-        /// Occurs when the user scrolled to the end of the view. 
-        /// </summary>
+        /// <summary>Occurs when the user scrolled to the end of the view. </summary>
         public event EventHandler<ScrolledToEndEventArgs> ScrolledToEnd
         {
             add
@@ -331,9 +319,7 @@ namespace MyToolkit.Controls
 
         #region Prepare container for item event
 
-        /// <summary>
-        /// Occurs when a new container control gets created. 
-        /// </summary>
+        /// <summary>Occurs when a new container control gets created. </summary>
         public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
 
         private void OnPrepareContainerForItem(PrepareContainerForItemEventArgs args)
@@ -347,18 +333,14 @@ namespace MyToolkit.Controls
 
         #region Scrolling
 
-        /// <summary>
-        /// Occurs when the scrolling state changed. 
-        /// </summary>
+        /// <summary>Occurs when the scrolling state changed. </summary>
         public event EventHandler<ScrollingStateChangedEventArgs> ScrollingStateChanged;
 
         public static readonly DependencyProperty IsScrollingProperty =
             DependencyProperty.Register("IsScrolling", typeof(bool),
             typeof(ScrollableItemsControl), new PropertyMetadata(false, IsScrollingPropertyChanged));
 
-        /// <summary>
-        /// Gets a value indicating whether the user is currently scrolling the view. 
-        /// </summary>
+        /// <summary>Gets a value indicating whether the user is currently scrolling the view. </summary>
         public bool IsScrolling
         {
             get { return (bool)GetValue(IsScrollingProperty); }
@@ -384,6 +366,7 @@ namespace MyToolkit.Controls
 
             var args = new ScrollingStateChangedEventArgs((bool)e.OldValue, (bool)e.NewValue);
             listbox.OnScrollingStateChanged(args);
+
             if (listbox.ScrollingStateChanged != null)
                 listbox.ScrollingStateChanged(listbox, args);
         }

@@ -39,14 +39,14 @@
         </Grid>
 
         <Grid Grid.Row="1" Margin="120,0,40,40">
-            <controls:ExtendedListBox x:Name="ExtendedListBox" ScrolledToEnd="OnScrolledToEnd" 
+            <controls:MtListBox x:Name="ExtendedListBox" ScrolledToEnd="OnScrolledToEnd" 
                                       InnerMargin="40" BorderThickness="1" BorderBrush="Red">
-                <controls:ExtendedListBox.ItemTemplate>
+                <controls:MtListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}" Foreground="White" />
                     </DataTemplate>
-                </controls:ExtendedListBox.ItemTemplate>
-            </controls:ExtendedListBox>
+                </controls:MtListBox.ItemTemplate>
+            </controls:MtListBox>
         </Grid>
     </Grid>
 </paging:MtPage>

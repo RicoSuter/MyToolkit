@@ -36,7 +36,7 @@
                     AutomationProperties.ItemType="Navigation Button"/>
 
             <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Windows 8 and MyToolkit Sample App" Margin="0,50,0,10" Grid.Column="1" />
-            <TextBlock Text="ExtendedListBox" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
+            <TextBlock Text="MtListBox" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                        TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,100,0,0"/>
         </Grid>
 

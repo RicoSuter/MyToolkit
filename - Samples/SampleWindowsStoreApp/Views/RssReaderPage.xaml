@@ -44,8 +44,8 @@
             <Button Content="Load RSS Feed" Click="OnLoadRssFeed" Margin="0,0,20,0" />
         </StackPanel>
 
-        <controls:ExtendedListBox Grid.Row="2" Margin="120,0,40,0" x:Name="RssFeedListBox" HorizontalContentAlignment="Stretch">
-            <controls:ExtendedListBox.ItemTemplate>
+        <controls:MtListBox Grid.Row="2" Margin="120,0,40,0" x:Name="RssFeedListBox" HorizontalContentAlignment="Stretch">
+            <controls:MtListBox.ItemTemplate>
                 <DataTemplate>
                     <Border d:DataContext="{d:DesignInstance Type=views:RssItem}" Margin="-5,10,0,10"
                             Background="{ThemeResource ListViewItemOverlayBackgroundThemeBrush}">
@@ -55,7 +55,7 @@
                         </StackPanel>
                     </Border>
                 </DataTemplate>
-            </controls:ExtendedListBox.ItemTemplate>
-        </controls:ExtendedListBox>
+            </controls:MtListBox.ItemTemplate>
+        </controls:MtListBox>
     </Grid>
 </paging:MtPage>

@@ -120,9 +120,9 @@
                                 <controls:DataGridTextColumn />
                             </ContentPresenter>
                         </Grid>
-                        <controls:ExtendedListBox BorderThickness="0" Grid.Row="1" ItemContainerStyle="{TemplateBinding RowStyle}"
-												  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-												  Style="{StaticResource TransparentListBox}" Margin="0" x:Name="Rows" />
+                        <controls:MtListBox BorderThickness="0" Grid.Row="1" ItemContainerStyle="{TemplateBinding RowStyle}"
+											HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+											Style="{StaticResource TransparentListBox}" Margin="0" x:Name="Rows" />
 					</Grid>
 				</ControlTemplate>
 			</Setter.Value>
@@ -236,7 +236,7 @@
 		</Setter>
 	</Style>
 
-	<Style TargetType="controls:ExtendedListBox">
+	<Style TargetType="controls:MtListBox">
 		<Setter Property="Foreground" Value="{StaticResource ListBoxForegroundThemeBrush}"/>
 		<Setter Property="Background" Value="Transparent"/>
 		<Setter Property="BorderBrush" Value="{StaticResource ListBoxBorderThemeBrush}"/>
@@ -261,7 +261,7 @@
 		</Setter>
 		<Setter Property="Template">
 			<Setter.Value>
-				<ControlTemplate TargetType="controls:ExtendedListBox">
+				<ControlTemplate TargetType="controls:MtListBox">
 					<Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" 
 							BorderThickness="{TemplateBinding BorderThickness}" 
 							Background="{TemplateBinding Background}">
@@ -317,21 +317,21 @@
 							<RowDefinition Height="*" />
 						</Grid.RowDefinitions>
 						
-						<controls:ExtendedListBox BorderThickness="0" Grid.Row="0" ItemTemplate="{TemplateBinding HeaderTemplate}"
-												  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-												  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-												  ScrollViewer.HorizontalScrollMode="Auto"
-												  ScrollViewer.VerticalScrollMode="Disabled"
-												  ScrollViewer.VerticalScrollBarVisibility="Disabled"
-												  Margin="0" x:Name="List" Style="{StaticResource TransparentListBox}">
+						<controls:MtListBox BorderThickness="0" Grid.Row="0" ItemTemplate="{TemplateBinding HeaderTemplate}"
+											HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+											ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+											ScrollViewer.HorizontalScrollMode="Auto"
+											ScrollViewer.VerticalScrollMode="Disabled"
+											ScrollViewer.VerticalScrollBarVisibility="Disabled"
+											Margin="0" x:Name="List" Style="{StaticResource TransparentListBox}">
 
-							<controls:ExtendedListBox.ItemsPanel>
+                            <controls:MtListBox.ItemsPanel>
 								<ItemsPanelTemplate>
 									<VirtualizingStackPanel Orientation="Horizontal" Background="Transparent" />
 								</ItemsPanelTemplate>
-							</controls:ExtendedListBox.ItemsPanel>
-							
-							<controls:ExtendedListBox.ItemContainerStyle>
+							</controls:MtListBox.ItemsPanel>
+
+                            <controls:MtListBox.ItemContainerStyle>
 								<Style TargetType="ListBoxItem">
 									<Setter Property="Background" Value="Transparent"/>
 									<Setter Property="TabNavigation" Value="Local"/>
@@ -449,10 +449,10 @@
 										</Setter.Value>
 									</Setter>
 								</Style>
-							</controls:ExtendedListBox.ItemContainerStyle>
-						</controls:ExtendedListBox>
+							</controls:MtListBox.ItemContainerStyle>
+						</controls:MtListBox>
 						<Grid x:Name="Grid" VerticalAlignment="Stretch" Grid.Row="1"
-								HorizontalAlignment="Stretch" Background="Transparent">
+						      HorizontalAlignment="Stretch" Background="Transparent">
 							<Grid.Resources>
 								<Storyboard x:Name="Story">
 									<DoubleAnimation From="30" To="0" Storyboard.TargetName="Translate" 

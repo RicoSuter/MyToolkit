@@ -20,7 +20,7 @@ namespace MyToolkit.Controls
     {
         private Grid _titleRowControl;
         private DataGridColumn _selectdColumn;
-        private ExtendedListBox _listControl;
+        private MtListBox _listControl;
         private bool _initialized = false;
         private object _initialSelectedItem;
 
@@ -240,7 +240,7 @@ namespace MyToolkit.Controls
 
             _titleRowControl = (Grid)GetTemplateChild("ColumnHeaders");
 
-            _listControl = (ExtendedListBox)GetTemplateChild("Rows");
+            _listControl = (MtListBox)GetTemplateChild("Rows");
             _listControl.PrepareContainerForItem += OnPrepareContainerForItem;
             _listControl.SelectionChanged += OnSelectionChanged;
 

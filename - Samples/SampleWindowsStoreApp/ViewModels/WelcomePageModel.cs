@@ -29,7 +29,7 @@ namespace SampleWindowsStoreApp.ViewModels
                 new NavigationItem {Title = "Pivot Control", Subtitle = "PivotPage", PageType = typeof(PivotPage)},
                 new NavigationItem {Title = "Various Samples", Subtitle = "VariousSamplesPage", PageType = typeof(VariousSamplesPage)},
                 new NavigationItem {Title = "RSS Loader", Subtitle = "RssReaderPage", PageType = typeof(RssReaderPage)},
-                new NavigationItem {Title = "ExtendedListBox", Subtitle = "ExtendedListBoxPage", PageType = typeof(ExtendedListBoxPage)},
+                new NavigationItem {Title = "MtListBox", Subtitle = "ExtendedListBoxPage", PageType = typeof(ExtendedListBoxPage)},
             }));
 
             Groups.Add(new ExtendedGroup<NavigationItem>("Windows 8", new List<NavigationItem>
