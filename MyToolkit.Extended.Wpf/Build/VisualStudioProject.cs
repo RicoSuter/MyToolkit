@@ -6,10 +6,13 @@
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
+using MyToolkit.Utilities;
 
 namespace MyToolkit.Build
 {
@@ -17,7 +20,7 @@ namespace MyToolkit.Build
     public class VisualStudioProject
     {
         private List<VisualStudioProject> _projectReferences;
-        private List<string> _assemblyReferences;
+        private List<AssemblyReference> _assemblyReferences;
         private List<NuGetPackage> _nuGetReferences;
 
         private const string XmlNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
@@ -27,6 +30,12 @@ namespace MyToolkit.Build
 
         /// <summary>Gets the path of the project file. </summary>
         public string Path { get; internal set; }
+
+        /// <summary>Gets the file name of the project. </summary>
+        public string FileName
+        {
+            get { return System.IO.Path.GetFileName(Path); }
+        }
 
         /// <summary>Gets the list of referenced projects. </summary>
         public List<VisualStudioProject> ProjectReferences
@@ -40,7 +49,7 @@ namespace MyToolkit.Build
         }
 
         /// <summary>Gets the list of referenced assemblies (DLLs). </summary>
-        public List<string> AssemblyReferences
+        public List<AssemblyReference> AssemblyReferences
         {
             get
             {
@@ -76,21 +85,49 @@ namespace MyToolkit.Build
 
         /// <summary>Recursively loads all Visual Studio projects from the given directory. </summary>
         /// <param name="path">The directory path. </param>
+        /// <param name="ignoreExceptions">Specifies whether to ignore exceptions (projects with exceptions are not returned). </param>
         /// <returns>The projects. </returns>
-        public static List<VisualStudioProject> LoadAllFromDirectory(string path)
+        public static Task<List<VisualStudioProject>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions)
         {
-            var projects = new List<VisualStudioProject>();
-            foreach (var file in Directory.GetFiles(path))
+            return Task.Run(async () =>
             {
-                var extension = System.IO.Path.GetExtension(file);
-                if (extension != null && extension.ToLower() == ".csproj")
-                    projects.Add(FromFilePath(file));
-            }
+                var tasks = new List<Task>();
+                var projects = new List<VisualStudioProject>();
 
-            foreach (var directoy in Directory.GetDirectories(path))
-                projects.AddRange(LoadAllFromDirectory(directoy));
+                foreach (var directoy in Directory.GetDirectories(path))
+                    tasks.Add(LoadAllFromDirectoryAsync(directoy, ignoreExceptions));
 
-            return projects;
+                foreach (var file in Directory.GetFiles(path))
+                {
+                    var extension = System.IO.Path.GetExtension(file);
+                    if (extension != null && extension.ToLower() == ".csproj")
+                    {
+                        var lfile = file;
+                        tasks.Add(Task.Run(() =>
+                        {
+                            try
+                            {
+                                return FromFilePath(lfile);
+                            }
+                            catch (Exception)
+                            {
+                                if (!ignoreExceptions)
+                                    throw;
+                            }
+                            return null;
+                        }));
+                    }
+                }
+
+                await Task.WhenAll(tasks);
+
+                foreach (var task in tasks.OfType<Task<VisualStudioProject>>().Where(t => t.Result != null))
+                    projects.Add(task.Result);
+                foreach (var task in tasks.OfType<Task<List<VisualStudioProject>>>())
+                    projects.AddRange(task.Result);
+
+                return projects;
+            });
         }
 
         /// <summary>Loads the project's referenced assemblies, projects and NuGet packages. </summary>
@@ -130,19 +167,19 @@ namespace MyToolkit.Build
                         System.IO.Path.GetDirectoryName(Path), element.Attribute("Include").Value))
                 });
             }
-            _projectReferences = references;
+            _projectReferences = references.OrderBy(r => r.Name).ToList(); 
         }
 
         private void LoadAssemblyReferences()
         {
             var document = XDocument.Load(Path);
-            var references = new List<string>();
+            var references = new List<AssemblyReference>();
             foreach (var element in document.Descendants(XName.Get("Reference", XmlNamespace)))
             {
                 var include = element.Attribute("Include").Value;
-                references.Add(include);
+                references.Add(new AssemblyReference(include));
             }
-            _assemblyReferences = references; 
+            _assemblyReferences = references.OrderByThenBy(r => r.Name, r => r.Version).ToList(); 
         }
 
         private void LoadNuGetReferences()
@@ -161,7 +198,7 @@ namespace MyToolkit.Build
                     });
                 }
             }
-            _nuGetReferences = references; 
+            _nuGetReferences = references.OrderBy(r => r.Name).ToList(); 
         }
     }
 }

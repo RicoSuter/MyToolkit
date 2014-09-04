@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MyToolkit.Build;
 
@@ -35,13 +36,13 @@ namespace MyToolkit.Tests.Wpf45.Utilities
         }
 
         [TestMethod]
-        public void When_loading_all_projects_then_correct_list_must_be_returned()
+        public async Task When_loading_all_projects_then_correct_list_must_be_returned()
         {
             //// Arrange
             var path = "../../../";
 
             //// Act
-            var projects = VisualStudioProject.LoadAllFromDirectory(path);
+            var projects = await VisualStudioProject.LoadAllFromDirectoryAsync(path, false);
 
             //// Assert
             Assert.IsTrue(projects.Any());

@@ -35,7 +35,7 @@ namespace MyToolkit.Controls
         /// <summary>Initializes a new instance of the <see cref="MtPivot"/> class. </summary>
         public MtPivot()
 		{
-			DefaultStyleKey = typeof(MtPivot);
+            DefaultStyleKey = typeof(MtPivot);
 		}
 
         /// <summary>Occurs when the selected pivot changed. </summary>
@@ -74,6 +74,24 @@ namespace MyToolkit.Controls
         {
             get { return (int)GetValue(SelectedIndexProperty); }
             set { SetValue(SelectedIndexProperty, value); }
+        }
+
+        public static readonly DependencyProperty SelectedBrushProperty = DependencyProperty.Register(
+            "SelectedBrush", typeof(Brush), typeof(MtPivot), new PropertyMetadata(default(Brush)));
+
+        public Brush SelectedBrush
+        {
+            get { return (Brush)GetValue(SelectedBrushProperty); }
+            set { SetValue(SelectedBrushProperty, value); }
+        }
+
+        public static readonly DependencyProperty UnselectedBrushProperty = DependencyProperty.Register(
+            "UnselectedBrush", typeof(Brush), typeof(MtPivot), new PropertyMetadata(default(Brush)));
+
+        public Brush UnselectedBrush
+        {
+            get { return (Brush)GetValue(UnselectedBrushProperty); }
+            set { SetValue(UnselectedBrushProperty, value); }
         }
 
         private FrameworkElement CurrentPrivotElement
@@ -172,6 +190,10 @@ namespace MyToolkit.Controls
 
     [Obsolete("Use MtPivot instead. 8/31/2014")]
     public class Pivot : MtPivot
+    {
+    }
+
+    public class ProxyElement : FrameworkElement
     {
     }
 }

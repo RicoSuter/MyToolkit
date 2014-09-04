@@ -50,7 +50,7 @@ namespace MyToolkit.Mvvm
 
         /// <summary>Gets a value indicating whether the view model has been loaded. </summary>
         [XmlIgnore]
-        public bool IsLoaded { get; private set; }
+        public bool IsViewLoaded { get; private set; }
 
         /// <summary>Registers a <see cref="CancellationTokenSource"/> which will be cancelled when cleaning up the view model. </summary>
         /// <param name="cancellationTokenSource"></param>
@@ -77,13 +77,29 @@ namespace MyToolkit.Mvvm
         /// and automatically creates and registers a cancellation token source. </summary>
         /// <param name="task">The task to run. </param>
         /// <returns>The awaitable task. </returns>
-        public async Task RunTaskAsync(Func<CancellationToken, Task> task)
+        public Task RunTaskAsync(Func<CancellationToken, Task> task)
         {
+            return RunTaskAsync(async token =>
+            {
+                await task(token);
+                return (object)null;
+            });
+        }
+
+        /// <summary>Runs a task 
+        /// and correctly updates the <see cref="IsLoading"/> property, 
+        /// handles exceptions in the <see cref="HandleException"/> method 
+        /// and automatically creates and registers a cancellation token source. </summary>
+        /// <param name="task">The task to run. </param>
+        /// <returns>The awaitable task. </returns>
+        public async Task<TResult> RunTaskAsync<TResult>(Func<CancellationToken, Task<TResult>> task)
+        {
+            TResult result = default(TResult);
             var tokenSource = CreateCancellationTokenSource();
             try
             {
                 IsLoading = true;
-                await task(tokenSource.Token);
+                result = await task(tokenSource.Token);
                 IsLoading = false;
             }
             catch (OperationCanceledException)
@@ -96,6 +112,34 @@ namespace MyToolkit.Mvvm
                 HandleException(exception);
             }
             UnregisterCancellationTokenSource(tokenSource);
+            return result;
+        }
+
+        /// <summary>Runs a task 
+        /// and correctly updates the <see cref="IsLoading"/> property, 
+        /// handles exceptions in the <see cref="HandleException"/> method 
+        /// and automatically creates and registers a cancellation token source. </summary>
+        /// <param name="task">The task to run. </param>
+        /// <returns>The awaitable task. </returns>
+        public async Task<TResult> RunTaskAsync<TResult>(Task<TResult> task)
+        {
+            TResult result = default(TResult);
+            try
+            {
+                IsLoading = true;
+                result = await task;
+                IsLoading = false;
+            }
+            catch (OperationCanceledException)
+            {
+                IsLoading = false;
+            }
+            catch (Exception exception)
+            {
+                IsLoading = false;
+                HandleException(exception);
+            }
+            return result;
         }
 
         /// <summary>Asynchronously runs an action 
@@ -104,16 +148,45 @@ namespace MyToolkit.Mvvm
         /// and automatically creates and registers a cancellation token source. </summary>
         /// <param name="action">The action to run. </param>
         /// <returns>The awaitable task. </returns>
-        public async Task RunTaskAsync(Action action)
+        public Task RunTaskAsync(Action action)
         {
-            await RunTaskAsync(async token =>
+            return RunTaskAsync(() =>
             {
-#if LEGACY
-                await Task.Factory.StartNew(action, token);
-#else
-                await Task.Run(action, token);
-#endif
+                action();
+                return (object)null;
             });
+        }
+
+        /// <summary>Asynchronously runs an action 
+        /// and correctly updates the <see cref="IsLoading"/> property, 
+        /// handles exceptions in the <see cref="HandleException"/> method 
+        /// and automatically creates and registers a cancellation token source. </summary>
+        /// <param name="task">The task to run. </param>
+        /// <returns>The awaitable task. </returns>
+        public Task RunTaskAsync(Task task)
+        {
+            return RunTaskAsync(async () =>
+            {
+                await task;
+                return (object)null;
+            });
+        }
+
+        /// <summary>Asynchronously runs an action 
+        /// and correctly updates the <see cref="IsLoading"/> property, 
+        /// handles exceptions in the <see cref="HandleException"/> method 
+        /// and automatically creates and registers a cancellation token source. </summary>
+        /// <param name="action">The action to run. </param>
+        /// <returns>The awaitable task. </returns>
+        public async Task<T> RunTaskAsync<T>(Func<T> action)
+        {
+            return await RunTaskAsync(
+#if LEGACY
+                Task.Factory.StartNew(action);
+#else
+                Task.Run(action)
+#endif
+            );
         }
 
         /// <summary>Handles an exception which occured in the <see cref="RunTaskAsync"/> method. </summary>
@@ -140,20 +213,20 @@ namespace MyToolkit.Mvvm
         /// <summary>Initializes the view model (should be called in the view's Loaded event). </summary>
         public void CallOnLoaded()
 		{
-			if (!IsLoaded)
+			if (!IsViewLoaded)
 			{
 			    OnLoaded();
-				IsLoaded = true; 
+				IsViewLoaded = true; 
 			}
 		}
 
         /// <summary>Cleans up the view model (should be called in the view's Unloaded event). </summary>
         public void CallOnUnloaded()
         {
-            if (IsLoaded)
+            if (IsViewLoaded)
             {
                 OnUnloaded();
-                IsLoaded = false;
+                IsViewLoaded = false;
             }
 
             CancelAllRunningTasks();

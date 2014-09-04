@@ -126,6 +126,7 @@
     <Compile Include="..\shared\utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
+    <Compile Include="Build\AssemblyReference.cs" />
     <Compile Include="Build\BuildOrderException.cs" />
     <Compile Include="Build\NuGetPackage.cs" />
     <Compile Include="Build\VisualStudioProject.cs" />

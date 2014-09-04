@@ -44,7 +44,7 @@
                     <TextBlock Text="Pivot 1 Content" Style="{StaticResource BasicTextStyle}" />
                 </controls:MtPivotItem>
                 <controls:MtPivotItem Header="Pivot 2">
-                    <controls:MtPivot>
+                    <controls:MtPivot SelectedBrush="Blue" UnselectedBrush="Chartreuse">
                         <controls:MtPivot.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Header}" FontSize="36" FontWeight="Light" Margin="0,-10,20,20" />
