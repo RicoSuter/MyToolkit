@@ -136,6 +136,7 @@
     <Compile Include="UI\ShortcutManager.cs" />
     <Compile Include="UI\UiDispatcher.cs" />
     <Compile Include="UI\UndoRedoCommandManager.cs" />
+    <Compile Include="Utilities\ApplicationUpdater.cs" />
     <Compile Include="Utilities\AssemblyExtensions.cs" />
     <Compile Include="Utilities\FileOpenEventArgs.cs" />
     <Compile Include="Utilities\FileOpenHandler.cs" />
