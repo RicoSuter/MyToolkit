@@ -43,9 +43,9 @@ namespace MyToolkit.WorkflowEngine.Activities
         /// The method may be called multiple times when there are multiple incoming transitions. </summary>
         /// <param name="instance">The workflow instance. </param>
         /// <returns>True when the activity should be automatically and immediately executed (with no args). </returns>
-        public virtual Task<bool> PrepareAsync(WorkflowInstance instance)
+        public virtual async Task<bool> PrepareAsync(WorkflowInstance instance)
         {
-            return Task.FromResult(false);
+            return false;
         }
 
         /// <summary>Completes the activity. </summary>
@@ -54,9 +54,9 @@ namespace MyToolkit.WorkflowEngine.Activities
         /// <param name="args">The execution args. </param>
         /// <param name="cancellationToken">The cancellation token. </param>
         /// <returns>True when the activity has been completed. </returns>
-        public virtual Task<WorkflowActivityResult> CompleteAsync(WorkflowInstance instance, WorkflowDefinition definition, WorkflowActivityArguments args, CancellationToken cancellationToken)
+        public virtual async Task<WorkflowActivityResult> CompleteAsync(WorkflowInstance instance, WorkflowDefinition definition, WorkflowActivityArguments args, CancellationToken cancellationToken)
         {
-            return Task.FromResult(new WorkflowActivityResult(true));
+            return new WorkflowActivityResult(true);
         }
     }
 }

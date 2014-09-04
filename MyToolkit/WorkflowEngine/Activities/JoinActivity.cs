@@ -16,9 +16,9 @@ namespace MyToolkit.WorkflowEngine.Activities
     [XmlType("Join")]
     public class JoinActivity : AutomaticWorkflowActivityBase
     {
-        public override Task<bool> PrepareAsync(WorkflowInstance instance)
+        public override async Task<bool> PrepareAsync(WorkflowInstance instance)
         {
-            return Task.FromResult(!HasCurrentActivityBeforeActivity(instance, this, new List<WorkflowTransition>()));
+            return !HasCurrentActivityBeforeActivity(instance, this, new List<WorkflowTransition>());
         }
 
         private bool HasCurrentActivityBeforeActivity(WorkflowInstance instance, WorkflowActivityBase activity, List<WorkflowTransition> checkedTransitions)

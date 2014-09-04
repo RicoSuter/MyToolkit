@@ -10,9 +10,9 @@ namespace MyToolkit.WorkflowEngine.Activities
         /// The method may be called multiple times when there are multiple incoming transitions. </summary>
         /// <param name="instance">The workflow instance. </param>
         /// <returns>True when the activity should be automatically and immediately executed (with no args). </returns>
-        public override Task<bool> PrepareAsync(WorkflowInstance instance)
+        public override async Task<bool> PrepareAsync(WorkflowInstance instance)
         {
-            return Task.FromResult(true);
+            return true;
         }
     }
 }

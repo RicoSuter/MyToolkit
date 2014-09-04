@@ -182,7 +182,7 @@ namespace MyToolkit.Mvvm
         {
             return await RunTaskAsync(
 #if LEGACY
-                Task.Factory.StartNew(action);
+                Task.Factory.StartNew(action)
 #else
                 Task.Run(action)
 #endif
