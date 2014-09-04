@@ -40,10 +40,11 @@ namespace MyToolkit.Controls
         private ScrollViewer _scrollViewer;
         private double _lastExtentHeight = 0;
         private bool _bindingCreated = false;
-        private FrameworkElement _lastElement = null;
-        private Thickness _lastElementMargin;
         private bool _allowIsScrollingChanges;
         private bool _eventRegistred = false;
+
+        private FrameworkElement _lastElement = null;
+        private Thickness _lastElementMargin;
 
         /// <summary>Initializes a new instance of the <see cref="ScrollableItemsControl"/> class. </summary>
         public ScrollableItemsControl()

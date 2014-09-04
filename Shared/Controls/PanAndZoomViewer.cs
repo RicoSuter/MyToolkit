@@ -8,17 +8,15 @@
 
 using System;
 using MyToolkit.Mathematics;
+
 #if WINRT
-using MyToolkit.Mathematics;
 using Windows.Foundation;
-using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-
 #else
 using System.Threading;
 using System.Windows;
