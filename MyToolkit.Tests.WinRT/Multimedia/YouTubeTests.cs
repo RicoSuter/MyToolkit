@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,7 +37,6 @@ namespace MyToolkit.Tests.Multimedia
         [DataRow("JF8BRvqGCNs")]
         [DataRow("kYQ8w7kxdDk")]
         [DataRow("J3UjJ4wKLkg")]
-        [DataRow("93GuC1dMkxc")]
         [DataRow("O-zpOMYRi0w")]
         [DataRow("kPsd2XaBKzc")]
         [DataRow("Otx7FEINUds")]
@@ -52,6 +52,7 @@ namespace MyToolkit.Tests.Multimedia
         public async Task When_loading_video_then_uri_it_should_be_available(string youTubeId)
         {
             //// Act
+            Debug.WriteLine(youTubeId);
             var uri = await YouTube.GetVideoUriAsync(youTubeId, YouTubeQuality.Quality360P, YouTubeQuality.Quality2160P);
 
             try
