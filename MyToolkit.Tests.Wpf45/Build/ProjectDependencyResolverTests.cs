@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MyToolkit.Build;
 
-namespace MyToolkit.Tests.Wpf45.Utilities
+namespace MyToolkit.Tests.Wpf45.Build
 {
     [TestClass]
     public class ProjectDependencyResolverTests
