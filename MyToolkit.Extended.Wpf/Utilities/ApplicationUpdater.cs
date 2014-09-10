@@ -41,7 +41,7 @@ namespace MyToolkit.Utilities
 
         /// <summary>Checks for update and asks user if application should be updated 
         /// (this is currently beta: not localized and opens browser for download). </summary>
-        public async Task CheckForUpdate()
+        public async Task CheckForUpdate(Window mainWindow)
         {
             try
             {
@@ -61,7 +61,10 @@ namespace MyToolkit.Utilities
                         "Do you want to download the new version?";
 
                     if (MessageBox.Show(message, title, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
                         Process.Start(downloadLink);
+                        mainWindow.Close();
+                    }
                 }
             }
             catch (Exception exception)
