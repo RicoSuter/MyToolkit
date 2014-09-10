@@ -88,6 +88,31 @@ namespace MyToolkit.Serialization
             }
         }
 
+        /// <summary>Serializes a dictionary to a XML string. </summary>
+        /// <typeparam name="TKey">The dictionary key type. </typeparam>
+        /// <typeparam name="TValue">The dictionary value type. </typeparam>
+        /// <param name="dictionary">The dictionary to serialize. </param>
+        /// <param name="extraTypes">The additional types. </param>
+        /// <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+        /// <returns>The XML string. </returns>
+        public static string SerializeDictionary<TKey, TValue>(Dictionary<TKey, TValue> dictionary, Type[] extraTypes = null, bool useSerializerCache = true)
+        {
+            return Serialize(dictionary.Select(p => new KeyValuePair<TKey, TValue>(p.Key, p.Value)).ToList());
+        }
+
+        /// <summary>Deserializes a dictionary from a XML string. </summary>
+        /// <typeparam name="TKey">The dictionary key type. </typeparam>
+        /// <typeparam name="TValue">The dictionary value type. </typeparam>
+        /// <param name="xml">The XML string. </param>
+        /// <param name="extraTypes">The addional types. </param>
+        /// <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+        /// <returns>The deserialized object. </returns>
+        public static Dictionary<TKey, TValue> DeserializeDictionary<TKey, TValue>(string xml, Type[] extraTypes = null, bool useSerializerCache = true)
+        {
+            return Deserialize<List<KeyValuePair<TKey, TValue>>>(xml, extraTypes, useSerializerCache)
+                .ToDictionary(p => p.Key, p => p.Value);
+        }
+
         /// <summary>Asynchronously serializes an object to a XML string. </summary>
         /// <typeparam name="T">The type of the object to serialize. </typeparam>
         /// <param name="obj">The object to serialize. </param>
@@ -132,6 +157,67 @@ namespace MyToolkit.Serialization
                 }
             }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
             return source.Task;
+        }
+
+        /// <summary>Asynchronously serializes an object to a XML string. </summary>
+        /// <typeparam name="TKey">The dictionary key type. </typeparam>
+        /// <typeparam name="TValue">The dictionary value type. </typeparam>
+        /// <param name="obj">The object to serialize. </param>
+        /// <param name="extraTypes">The additional types. </param>
+        /// <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+        /// <returns>The XML string. </returns>
+        public static Task<string> SerializeDictionaryAsync<TKey, TValue>(Dictionary<TKey, TValue> obj, Type[] extraTypes = null, bool useSerializerCache = true)
+        {
+            var source = new TaskCompletionSource<string>();
+            Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    source.SetResult(SerializeDictionary(obj, extraTypes, useSerializerCache));
+                }
+                catch (Exception ex)
+                {
+                    source.SetException(ex);
+                }
+            }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
+            return source.Task;
+        }
+
+        /// <summary>Asynchronously deserializes an object from a XML string. </summary>
+        /// <typeparam name="TKey">The dictionary key type. </typeparam>
+        /// <typeparam name="TValue">The dictionary value type. </typeparam>
+        /// <param name="xml">The XML string. </param>
+        /// <param name="extraTypes">The addional types. </param>
+        /// <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+        /// <returns>The deserialized object. </returns>
+        public static Task<Dictionary<TKey, TValue>> DeserializeDictionaryAsync<TKey, TValue>(string xml, Type[] extraTypes = null, bool useSerializerCache = true)
+        {
+            var source = new TaskCompletionSource<Dictionary<TKey, TValue>>();
+            Task.Factory.StartNew(() =>
+            {
+                try
+                {
+                    source.SetResult(DeserializeDictionary<TKey, TValue>(xml, extraTypes, useSerializerCache));
+                }
+                catch (Exception ex)
+                {
+                    source.SetException(ex);
+                }
+            }, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default);
+            return source.Task;
+        }
+
+        public class KeyValuePair<TKey, TValue>
+        {
+            public KeyValuePair() { }
+            public KeyValuePair(TKey key, TValue value)
+            {
+                Key = key;
+                Value = value;
+            }
+
+            public TKey Key { get; set; }
+            public TValue Value { get; set; }
         }
     }
 }

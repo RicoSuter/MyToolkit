@@ -52,11 +52,16 @@
   <ItemGroup>
     <Compile Include="Build\ProjectDependencyResolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Storage\ApplicationSettingsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyToolkit.Extended.Wpf\MyToolkit.Extended.Wpf45.csproj">
       <Project>{0D8F527D-868F-4DE3-8559-EA3597D9D079}</Project>
       <Name>MyToolkit.Extended.Wpf45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyToolkit\MyToolkit.csproj">
+      <Project>{f01f49c0-5da2-4757-b4e0-02ec7a187ded}</Project>
+      <Name>MyToolkit</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

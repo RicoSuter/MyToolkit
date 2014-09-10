@@ -42,7 +42,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>Bin\x86\Release</OutputPath>
-    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;WP8</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -86,6 +86,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Storage\ApplicationSettingsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
@@ -126,6 +127,10 @@
     <ProjectReference Include="..\MyToolkit.Http\MyToolkit.Http.csproj">
       <Project>{1A7DAA49-EA7E-4F25-8E4D-40DC11376B74}</Project>
       <Name>MyToolkit.Http</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyToolkit\MyToolkit.csproj">
+      <Project>{F01F49C0-5DA2-4757-B4E0-02EC7A187DED}</Project>
+      <Name>MyToolkit</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
