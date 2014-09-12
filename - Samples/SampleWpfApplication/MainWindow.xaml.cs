@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 using MyToolkit.Command;
@@ -8,7 +6,6 @@ using MyToolkit.Multimedia;
 using MyToolkit.Networking;
 using MyToolkit.Notifications;
 using MyToolkit.Utilities;
-using MyToolkit.WorkflowEngine.Activities;
 
 namespace SampleWpfApplication
 {

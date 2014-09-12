@@ -29,6 +29,12 @@ namespace MyToolkit.Storage
                 _applicationSettings = new ApplicationSettingsWinRt();
         }
 
+        /// <summary>Gets a value indicating whether the settings can be roamed (synced across various devices). </summary>
+        public static bool CanRoam
+        {
+            get { return _applicationSettings.CanRoam; }
+        }
+
         /// <summary>Sets a setting in the isolated storage. </summary>
         /// <typeparam name="T">The type of the setting. </typeparam>
         /// <param name="key">The key of the setting. </param>
@@ -84,7 +90,7 @@ namespace MyToolkit.Storage
         /// <param name="roaming">True if the setting is roamed to other devices. </param>
         /// <param name="save">True if the removal should be written to the isolated storage. </param>
         /// <returns>Returns true if the setting has successfully removed. If setting is not present, false is returned. </returns>
-        public static bool RemoveSetting(string key, bool roaming = false, bool save = true)
+        public static bool RemoveSetting(string key, bool roaming = false, bool save = false)
         {
             if (_applicationSettings == null)
                 throw new NotImplementedException();

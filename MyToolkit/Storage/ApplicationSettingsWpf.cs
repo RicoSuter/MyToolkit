@@ -12,6 +12,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using MyToolkit.Serialization;
+using MyToolkit.Utilities;
 
 namespace MyToolkit.Storage
 {
@@ -19,6 +20,10 @@ namespace MyToolkit.Storage
     {
         private static readonly Type DirectoryType;
         private static readonly Type FileType;
+
+        private bool _eventRegistered = false;
+        private Dictionary<string, object> _configuration = null;
+        private bool _isDirty = false; 
 
         static ApplicationSettingsWpf()
         {
@@ -35,14 +40,102 @@ namespace MyToolkit.Storage
             }
         }
 
+        private Dictionary<string, object> Configuration
+        {
+            get
+            {
+                if (_configuration == null)
+                    _configuration = ReadConfiguration();
+                return _configuration;
+            }
+        }
+
+        public void SetSetting<T>(string key, T value, bool roaming, bool save)
+        {
+            lock (this)
+            {
+                Configuration[key] = value;
+                _isDirty = true;
+
+                if (save)
+                    WriteConfiguration();
+                else
+                    RegisterExitEvent();
+            }
+        }
+
+        public T GetSetting<T>(string key)
+        {
+            return GetSetting(key, default(T), false);
+        }
+
+        public T GetSetting<T>(string key, T defaultValue, bool roaming)
+        {
+            lock (this)
+            {
+                if (Configuration.ContainsKey(key))
+                    return (T)Configuration[key];
+                return defaultValue;
+            }
+        }
+
+        public bool HasSetting<T>(string key, bool roaming)
+        {
+            lock (this)
+                return Configuration.ContainsKey(key);
+        }
+
+        public bool RemoveSetting(string key, bool roaming, bool save)
+        {
+            lock (this)
+            {
+                var removed = Configuration.ContainsKey(key);
+
+                if (Configuration.ContainsKey(key))
+                {
+                    Configuration.Remove(key);
+                    _isDirty = true;
+                }
+
+                if (save)
+                    WriteConfiguration();
+                else
+                    RegisterExitEvent();
+
+                return removed;
+            }
+        }
+
+        public bool CanRoam
+        {
+            get { return false; }
+        }
+
+        private void RegisterExitEvent()
+        {
+            if (!_eventRegistered)
+            {
+                var property = Type.GetType("System.AppDomain").GetRuntimeProperty("CurrentDomain");
+                var currentDomain = property.GetValue(null);
+
+                EventHelper.RegisterEvent(currentDomain, "ProcessExit", (sender, args) => WriteConfiguration());
+
+                _eventRegistered = true;
+            }
+        }
+
         private string GetConfigurationPath()
         {
             var enumType = typeof(Environment).GetTypeInfo().GetDeclaredNestedType("SpecialFolder").AsType();
             var appDataDirectory = (string)typeof(Environment).GetRuntimeMethod("GetFolderPath", new[] { enumType }).Invoke(
                 null, new object[] { Enum.Parse(enumType, "ApplicationData") });
 
-            var assembly = (Assembly)typeof(Assembly).GetRuntimeMethod("GetEntryAssembly", new Type[] { }).Invoke(null, null) ??
-                           (Assembly)typeof(Assembly).GetRuntimeMethod("GetExecutingAssembly", new Type[] { }).Invoke(null, null);
+            var assembly = (Assembly)typeof(Assembly).GetRuntimeMethod("GetEntryAssembly", new Type[] { }).Invoke(null, null);
+
+#if DEBUG
+            if (assembly == null)
+                assembly = (Assembly)typeof(Assembly).GetRuntimeMethod("GetExecutingAssembly", new Type[] { }).Invoke(null, null);
+#endif
 
             var executableName = Path.GetFileNameWithoutExtension((string)assembly.GetType().GetRuntimeProperty("CodeBase").GetValue(assembly));
             var filePath = Path.Combine(appDataDirectory, executableName + "/MtConfig.xml");
@@ -54,7 +147,7 @@ namespace MyToolkit.Storage
             return filePath;
         }
 
-        private Dictionary<string, object> GetConfiguration()
+        private Dictionary<string, object> ReadConfiguration()
         {
             var path = GetConfigurationPath();
             if (!(bool)FileType.GetRuntimeMethod("Exists", new Type[] { typeof(string) }).Invoke(null, new object[] { path }))
@@ -62,52 +155,21 @@ namespace MyToolkit.Storage
 
             var data = (string)FileType.GetRuntimeMethod("ReadAllText", new[] { typeof(string), typeof(Encoding) })
                 .Invoke(null, new object[] { path, Encoding.UTF8 });
+
             return XmlSerialization.DeserializeDictionary<string, object>(data);
         }
 
-        private void SetConfiguration(Dictionary<string, object> config)
+        private void WriteConfiguration()
         {
-            var data = XmlSerialization.SerializeDictionary(config);
-            FileType.GetRuntimeMethod("WriteAllText", new[] { typeof(string), typeof(string), typeof(Encoding) })
-                .Invoke(null, new object[] { GetConfigurationPath(), data, Encoding.UTF8 });
-        }
+            if (_isDirty)
+            {
+                var data = XmlSerialization.SerializeDictionary(Configuration);
 
-        public void SetSetting<T>(string key, T value, bool roaming, bool save)
-        {
-            var config = GetConfiguration();
-            config[key] = value;
-            SetConfiguration(config);
-        }
+                FileType.GetRuntimeMethod("WriteAllText", new[] { typeof(string), typeof(string), typeof(Encoding) })
+                    .Invoke(null, new object[] { GetConfigurationPath(), data, Encoding.UTF8 });
 
-        public T GetSetting<T>(string key)
-        {
-            return GetSetting(key, default(T), false);
+                _isDirty = false;
+            }
         }
-
-        public T GetSetting<T>(string key, T defaultValue, bool roaming)
-        {
-            var config = GetConfiguration();
-            if (config.ContainsKey(key))
-                return (T)config[key];
-            return defaultValue;
-        }
-
-        public bool HasSetting<T>(string key, bool roaming)
-        {
-            var config = GetConfiguration();
-            return config.ContainsKey(key);
-        }
-
-        public bool RemoveSetting(string key, bool roaming, bool save)
-        {
-            var config = GetConfiguration();
-            var removed = config.ContainsKey(key);
-            if (config.ContainsKey(key))
-                config.Remove(key);
-            SetConfiguration(config);
-            return removed;
-        }
-
-        public bool CanRoam { get { return false; } }
     }
 }

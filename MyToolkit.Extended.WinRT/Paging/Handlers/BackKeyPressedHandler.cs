@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MyToolkit.Utilities;
 
 namespace MyToolkit.Paging.Handlers
 {
@@ -9,7 +10,6 @@ namespace MyToolkit.Paging.Handlers
     public class BackKeyPressedHandler
     {
         private Type _hardwareButtonsType = null;
-        private EventInfo _backPressedEvent = null;
 
         private readonly List<Tuple<MtPage, Func<object, bool>>> _handlers;
         private object _registrationToken;
@@ -34,15 +34,9 @@ namespace MyToolkit.Paging.Handlers
                         "Windows.Phone.UI.Input.HardwareButtons, " +
                         "Windows, Version=255.255.255.255, Culture=neutral, " +
                         "PublicKeyToken=null, ContentType=WindowsRuntime");
-
-                    _backPressedEvent = _hardwareButtonsType.GetRuntimeEvent("BackPressed");
                 }
 
-                Action<object, object> callback = OnBackKeyPressed;
-                var callbackMethodInfo = callback.GetMethodInfo();
-                var backPressedDelegate = callbackMethodInfo.CreateDelegate(_backPressedEvent.EventHandlerType, this);
-
-                _registrationToken = _backPressedEvent.AddMethod.Invoke(null, new object[] { backPressedDelegate });
+                _registrationToken = EventHelper.RegisterStaticEvent(_hardwareButtonsType, "BackPressed", OnBackKeyPressed);
                 _isEventRegistered = true;
             }
 
@@ -57,7 +51,7 @@ namespace MyToolkit.Paging.Handlers
 
             if (_handlers.Count == 0)
             {
-                _backPressedEvent.RemoveMethod.Invoke(null, new[] { _registrationToken });
+                EventHelper.UnregisterStaticEvent(_hardwareButtonsType, "BackPressed", _registrationToken);
                 _isEventRegistered = false; 
             }
         }

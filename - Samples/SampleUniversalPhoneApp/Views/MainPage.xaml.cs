@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.Media.Playback;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
@@ -36,9 +37,13 @@ namespace SampleUniversalPhoneApp.Views
                 if (uri != null)
                 {
                     // @"MICROSOFTVIDEO://www.example.com/myFile.wmv";
-                    var options = new LauncherOptions();
-                    options.ContentType = "video/mp4";
-                    await Launcher.LaunchUriAsync(uri.Uri, options);
+                    //var options = new LauncherOptions();
+                    //options.ContentType = "video/mp4";
+                    //await Launcher.LaunchUriAsync(uri.Uri, options);
+
+                    var player = BackgroundMediaPlayer.Current;
+                    player.SetUriSource(uri.Uri);
+                    player.Play();
                 }
                 else
                     throw new Exception("no_video_urls_found");
