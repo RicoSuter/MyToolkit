@@ -68,6 +68,7 @@ namespace MyToolkit.Build
             project.Path = System.IO.Path.GetFullPath(filePath);
             project.Name = document.Descendants(XName.Get("AssemblyName", XmlNamespace)).First().Value;
             project.LoadReferences();
+
             return project;
         }
 
