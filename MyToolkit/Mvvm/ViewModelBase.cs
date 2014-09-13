@@ -70,22 +70,7 @@ namespace MyToolkit.Mvvm
                 RegisterCancellationTokenSource(token);
             return token;
         }
-
-        /// <summary>Runs a task 
-        /// and correctly updates the <see cref="IsLoading"/> property, 
-        /// handles exceptions in the <see cref="HandleException"/> method 
-        /// and automatically creates and registers a cancellation token source. </summary>
-        /// <param name="task">The task to run. </param>
-        /// <returns>The awaitable task. </returns>
-        public Task RunTaskAsync(Func<CancellationToken, Task> task)
-        {
-            return RunTaskAsync(async token =>
-            {
-                await task(token);
-                return (object)null;
-            });
-        }
-
+        
         /// <summary>Runs a task 
         /// and correctly updates the <see cref="IsLoading"/> property, 
         /// handles exceptions in the <see cref="HandleException"/> method 
@@ -121,6 +106,47 @@ namespace MyToolkit.Mvvm
         /// and automatically creates and registers a cancellation token source. </summary>
         /// <param name="task">The task to run. </param>
         /// <returns>The awaitable task. </returns>
+        public Task RunTaskAsync(Func<CancellationToken, Task> task)
+        {
+            return RunTaskAsync(async token =>
+            {
+                await task(token);
+                return (object)null;
+            });
+        }
+
+        /// <summary>Runs a task 
+        /// and correctly updates the <see cref="IsLoading"/> property, 
+        /// handles exceptions in the <see cref="HandleException"/> method 
+        /// and automatically creates and registers a cancellation token source. </summary>
+        /// <param name="task">The task to run. </param>
+        /// <returns>The awaitable task. </returns>
+        public Task RunTaskAsync(Func<Task> task)
+        {
+            return RunTaskAsync(async token =>
+            {
+                await task();
+                return (object)null;
+            });
+        }
+
+        /// <summary>Runs a task 
+        /// and correctly updates the <see cref="IsLoading"/> property, 
+        /// handles exceptions in the <see cref="HandleException"/> method 
+        /// and automatically creates and registers a cancellation token source. </summary>
+        /// <param name="task">The task to run. </param>
+        /// <returns>The awaitable task. </returns>
+        public Task<TResult> RunTaskAsync<TResult>(Func<Task<TResult>> task)
+        {
+            return RunTaskAsync(async token => await task());
+        }
+
+        /// <summary>Runs a task 
+        /// and correctly updates the <see cref="IsLoading"/> property, 
+        /// handles exceptions in the <see cref="HandleException"/> method 
+        /// and automatically creates and registers a cancellation token source. </summary>
+        /// <param name="task">The task to run. </param>
+        /// <returns>The awaitable task. </returns>
         public async Task<TResult> RunTaskAsync<TResult>(Task<TResult> task)
         {
             TResult result = default(TResult);
@@ -146,21 +172,6 @@ namespace MyToolkit.Mvvm
         /// and correctly updates the <see cref="IsLoading"/> property, 
         /// handles exceptions in the <see cref="HandleException"/> method 
         /// and automatically creates and registers a cancellation token source. </summary>
-        /// <param name="action">The action to run. </param>
-        /// <returns>The awaitable task. </returns>
-        public Task RunTaskAsync(Action action)
-        {
-            return RunTaskAsync(() =>
-            {
-                action();
-                return (object)null;
-            });
-        }
-
-        /// <summary>Asynchronously runs an action 
-        /// and correctly updates the <see cref="IsLoading"/> property, 
-        /// handles exceptions in the <see cref="HandleException"/> method 
-        /// and automatically creates and registers a cancellation token source. </summary>
         /// <param name="task">The task to run. </param>
         /// <returns>The awaitable task. </returns>
         public Task RunTaskAsync(Task task)
@@ -170,6 +181,23 @@ namespace MyToolkit.Mvvm
                 await task;
                 return (object)null;
             });
+        }
+
+        /// <summary>Asynchronously runs an action 
+        /// and correctly updates the <see cref="IsLoading"/> property, 
+        /// handles exceptions in the <see cref="HandleException"/> method 
+        /// and automatically creates and registers a cancellation token source. </summary>
+        /// <param name="action">The action to run. </param>
+        /// <returns>The awaitable task. </returns>
+        public Task RunTaskAsync(Action action)
+        {
+            return RunTaskAsync(
+#if LEGACY
+                Task.Factory.StartNew(action)
+#else
+                Task.Run(action)
+#endif
+            );
         }
 
         /// <summary>Asynchronously runs an action 

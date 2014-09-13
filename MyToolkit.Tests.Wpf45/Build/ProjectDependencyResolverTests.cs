@@ -22,6 +22,19 @@ namespace MyToolkit.Tests.Wpf45.Build
         }
 
         [TestMethod]
+        public void When_loading_solution_then_correct_projects_must_be_loaded()
+        {
+            //// Arrange
+            var path = "../../../MyToolkit.sln";
+
+            //// Act
+            var solution = VisualStudioSolution.FromFilePath(path);
+
+            //// Assert
+            Assert.IsTrue(solution.Projects.Any(p => p.Path.EndsWith("\\MyToolkit.csproj")));
+        }
+
+        [TestMethod]
         public void When_loading_references_then_nuget_references_must_be_correct()
         {
             //// Arrange

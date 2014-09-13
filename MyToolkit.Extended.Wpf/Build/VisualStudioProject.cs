@@ -17,25 +17,13 @@ using MyToolkit.Utilities;
 namespace MyToolkit.Build
 {
     /// <summary>Describes a Visual Studio project. </summary>
-    public class VisualStudioProject
+    public class VisualStudioProject : VisualStudioObject
     {
         private List<VisualStudioProject> _projectReferences;
         private List<AssemblyReference> _assemblyReferences;
         private List<NuGetPackage> _nuGetReferences;
 
         private const string XmlNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
-
-        /// <summary>Gets the name of the project. </summary>
-        public string Name { get; internal set; }
-
-        /// <summary>Gets the path of the project file. </summary>
-        public string Path { get; internal set; }
-
-        /// <summary>Gets the file name of the project. </summary>
-        public string FileName
-        {
-            get { return System.IO.Path.GetFileName(Path); }
-        }
 
         /// <summary>Gets the list of referenced projects. </summary>
         public List<VisualStudioProject> ProjectReferences
@@ -89,45 +77,7 @@ namespace MyToolkit.Build
         /// <returns>The projects. </returns>
         public static Task<List<VisualStudioProject>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions)
         {
-            return Task.Run(async () =>
-            {
-                var tasks = new List<Task>();
-                var projects = new List<VisualStudioProject>();
-
-                foreach (var directoy in Directory.GetDirectories(path))
-                    tasks.Add(LoadAllFromDirectoryAsync(directoy, ignoreExceptions));
-
-                foreach (var file in Directory.GetFiles(path))
-                {
-                    var extension = System.IO.Path.GetExtension(file);
-                    if (extension != null && extension.ToLower() == ".csproj")
-                    {
-                        var lfile = file;
-                        tasks.Add(Task.Run(() =>
-                        {
-                            try
-                            {
-                                return FromFilePath(lfile);
-                            }
-                            catch (Exception)
-                            {
-                                if (!ignoreExceptions)
-                                    throw;
-                            }
-                            return null;
-                        }));
-                    }
-                }
-
-                await Task.WhenAll(tasks);
-
-                foreach (var task in tasks.OfType<Task<VisualStudioProject>>().Where(t => t.Result != null))
-                    projects.Add(task.Result);
-                foreach (var task in tasks.OfType<Task<List<VisualStudioProject>>>())
-                    projects.AddRange(task.Result);
-
-                return projects;
-            });
+            return LoadAllFromDirectoryAsync(path, ignoreExceptions, ".csproj", FromFilePath);
         }
 
         /// <summary>Loads the project's referenced assemblies, projects and NuGet packages. </summary>
