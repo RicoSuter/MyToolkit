@@ -18,10 +18,10 @@ namespace MyToolkit.Utilities
     public static class EnumerableExtensions
     {
         /// <summary>Provides ordering by two expressions. Use this method instaed of OrderBy(...).ThenBy(...) as it calls ThenBy only if necessary. </summary>
-        public static IEnumerable<TSource> OrderByThenBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> orderBy, Func<TSource, TKey> thenBy)
+        public static IEnumerable<TSource> OrderByThenBy<TSource, TKey1, TKey2>(this IEnumerable<TSource> source, Func<TSource, TKey1> orderBy, Func<TSource, TKey2> thenBy)
         {
             var sorted = source
-                .Select(s => new Tuple<TSource, TKey>(s, orderBy(s)))
+                .Select(s => new Tuple<TSource, TKey1>(s, orderBy(s)))
                 .OrderBy(s => s.Item2)
                 .GroupBy(s => s.Item2);
 
