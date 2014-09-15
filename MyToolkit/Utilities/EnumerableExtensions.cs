@@ -17,9 +17,7 @@ namespace MyToolkit.Utilities
     /// </summary>
     public static class EnumerableExtensions
     {
-        /// <summary>
-        /// Provides ordering by two expressions. Use this method instaed of OrderBy(...).ThenBy(...) as it calls ThenBy only if necessary!
-        /// </summary>
+        /// <summary>Provides ordering by two expressions. Use this method instaed of OrderBy(...).ThenBy(...) as it calls ThenBy only if necessary. </summary>
         public static IEnumerable<TSource> OrderByThenBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> orderBy, Func<TSource, TKey> thenBy)
         {
             var sorted = source
@@ -38,9 +36,7 @@ namespace MyToolkit.Utilities
             return result;
         }
 
-        /// <summary>
-        /// Removes equal objects by specifing the comparing key. 
-        /// </summary>
+        /// <summary>Removes equal objects by specifing the comparing key. </summary>
         /// <typeparam name="TSource">The type of an item. </typeparam>
         /// <typeparam name="TKey">The type of the key. </typeparam>
         /// <param name="source">The source enumerable. </param>
@@ -51,16 +47,16 @@ namespace MyToolkit.Utilities
             return source.GroupBy(keySelector).Select(g => g.First());
         }
         
-        /// <summary>
-        /// Returns true if the second list contains exactly the same items in the same order or is reference equal. 
-        /// </summary>
+        /// <summary>Returns true if the second list contains exactly the same items in the same order or is equal. </summary>
         /// <typeparam name="T">The item type. </typeparam>
         /// <param name="list1">The first list. </param>
         /// <param name="list2">The second list. </param>
         /// <returns></returns>
         public static bool IsCopyOf<T>(this IList<T> list1, IList<T> list2)
         {
-            if (list1 == list2)
+            if (list1 == null && list2 == null)
+                return true;
+            if (Equals(list1, list2))
                 return true;
 
             if (list1 == null)
@@ -69,8 +65,16 @@ namespace MyToolkit.Utilities
                 return false;
 
             if (list1.Count != list2.Count)
-                return false; 
+                return false;
+            
+            // Has same order
+            for (int i = 0; i < list1.Count; i++)
+            {
+                if (!Equals(list1[i], list2[i]))
+                    return false;
+            }
 
+            // Has same elements
             if (list1.Any(a => !list2.Contains(a)))
                 return false;
             if (list2.Any(a => !list1.Contains(a)))
@@ -79,9 +83,36 @@ namespace MyToolkit.Utilities
             return true; 
         }
 
-        /// <summary>
-        /// Returns a shuffled list. 
-        /// </summary>
+        /// <summary>Returns true if the second list contains exactly the same items or is equal. </summary>
+        /// <typeparam name="T">The item type. </typeparam>
+        /// <param name="list1">The first collection. </param>
+        /// <param name="list2">The second collection. </param>
+        /// <returns></returns>
+        public static bool IsCopyOf<T>(this ICollection<T> list1, ICollection<T> list2)
+        {
+            if (list1 == null && list2 == null)
+                return true;
+            if (Equals(list1, list2))
+                return true;
+
+            if (list1 == null)
+                return false;
+            if (list2 == null)
+                return false;
+
+            if (list1.Count != list2.Count)
+                return false;
+
+            // Has same elements
+            if (list1.Any(a => !list2.Contains(a)))
+                return false;
+            if (list2.Any(a => !list1.Contains(a)))
+                return false;
+
+            return true;
+        }
+
+        /// <summary>Returns a shuffled list. </summary>
         /// <typeparam name="T">The item type. </typeparam>
         /// <param name="source">The list to shuffle. </param>
         /// <returns>The shuffled list. </returns>
