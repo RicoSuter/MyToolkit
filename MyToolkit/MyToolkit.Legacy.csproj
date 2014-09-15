@@ -99,6 +99,7 @@
     <Compile Include="Utilities\DictionaryExtensions.cs" />
     <Compile Include="Utilities\EntityContainer.cs" />
     <Compile Include="Utilities\EnumerableExtensions.cs" />
+    <Compile Include="Utilities\EventHelper.cs" />
     <Compile Include="Utilities\ExpressionHelper.cs" />
     <Compile Include="Utilities\GeolocationUtilities.cs" />
     <Compile Include="Utilities\HttpUtilityExtensions.cs" />

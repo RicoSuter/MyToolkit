@@ -13,6 +13,7 @@ namespace MyToolkit.Utilities
 {
     public static class EventHelper
     {
+#if !LEGACY
         public static object RegisterEvent(object target, string eventName, Action<object, object> callback)
         {
             var callbackMethodInfo = callback.GetMethodInfo();
@@ -40,6 +41,7 @@ namespace MyToolkit.Utilities
             var eventInfo = type.GetRuntimeEvent(eventName);
             eventInfo.RemoveMethod.Invoke(null, new object[] { token });
         }
+#endif
 
         /// <summary>Registers a weak event handler which is automatically deregistered after the subscriber 
         /// has been garbage collected (checked on each event call). </summary>
