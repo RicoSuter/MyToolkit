@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Build\ProjectDependencyResolverTests.cs" />
+    <Compile Include="Collections\ObservableCollectionViewTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\ApplicationSettingsTests.cs" />
   </ItemGroup>
