@@ -45,21 +45,5 @@ namespace MyToolkit.Build
 
         /// <summary>Gets the assembly version. </summary>
         public string Version { get; private set; }
-
-        /// <summary>Gets a native <see cref="Version"/> object. </summary>
-        public Version NativeVersion
-        {
-            get
-            {
-                try
-                {
-                    return !string.IsNullOrEmpty(Version) ? new Version(Version.Split('-')[0]) : new Version();
-                }
-                catch (Exception)
-                {
-                    return new Version();
-                }
-            }
-        }
     }
 }
