@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>MyToolkit.Extended</id>
-		<version>2.3.10.0</version>
+		<version>2.3.11.0</version>
 		<title>MyToolkit.Extended</title>
 		<authors>Rico Suter</authors>
 		<owners>Rico Suter</owners>
@@ -12,24 +12,24 @@
 		<releaseNotes/>
 		<dependencies>
 			<group>
-				<dependency id="MyToolkit" version="2.3.10.0" />
+				<dependency id="MyToolkit" version="2.3.11.0" />
 			</group>
             <group targetFramework="sl50">
-                <dependency id="MyToolkit" version="2.3.10.0" />
+                <dependency id="MyToolkit" version="2.3.11.0" />
             </group>
 			<group targetFramework="sl4-wp71">
-				<dependency id="MyToolkit" version="2.3.10.0" />
+				<dependency id="MyToolkit" version="2.3.11.0" />
 				<dependency id="WPtoolkit" version="4.2013.08.16" />
 			</group>
             <group targetFramework="wp80">
-                <dependency id="MyToolkit" version="2.3.10.0" />
+                <dependency id="MyToolkit" version="2.3.11.0" />
                 <dependency id="WPtoolkit" version="4.2013.08.16" />
             </group>
             <group targetFramework="net40">
                 <dependency id="AsyncBridge" version="0.1.1" />
             </group>
             <group targetFramework="net45">
-                <dependency id="MyToolkit" version="2.3.10.0" />
+                <dependency id="MyToolkit" version="2.3.11.0" />
             </group>
         </dependencies>
 	</metadata>

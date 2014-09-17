@@ -1,4 +1,4 @@
-﻿using MyToolkit.Tests.Resources;
+﻿using MyToolkit.Tests.Wp8.Resources;
 
 namespace MyToolkit.Tests.Wp8
 {

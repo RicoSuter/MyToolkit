@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.WorkflowEngine;
 using MyToolkit.WorkflowEngine.Activities;
 
-namespace MyToolkit.Tests.WorkflowEngine
+namespace MyToolkit.Tests.WinRT.WorkflowEngine
 {
     [TestClass]
     public class WorkflowTests

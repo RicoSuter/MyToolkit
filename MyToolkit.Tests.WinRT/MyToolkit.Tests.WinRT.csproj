@@ -9,8 +9,8 @@
     <ProjectGuid>{A1BE9F3D-65B8-4CD8-A3A9-724D9B243E47}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MyToolkit.Tests</RootNamespace>
-    <AssemblyName>MyToolkit.Tests</AssemblyName>
+    <RootNamespace>MyToolkit.Tests.WinRT</RootNamespace>
+    <AssemblyName>MyToolkit.Tests.WinRT</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\ExtendedObservableCollectionTests.cs" />
+    <Compile Include="Collections\ObservableCollectionViewTests.cs" />
     <Compile Include="Composition\CompositionContextTests.cs" />
     <Compile Include="Composition\ServiceLocatorTests.cs" />
     <Compile Include="Multimedia\YouTubeTests.cs" />

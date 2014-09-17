@@ -6,7 +6,7 @@ using System.Windows.Markup;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using MyToolkit.Tests.Resources;
+using MyToolkit.Tests.Wp8.Resources;
 
 namespace MyToolkit.Tests.Wp8
 {

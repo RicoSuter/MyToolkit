@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.Model;
 
-namespace MyToolkit.Tests.Model
+namespace MyToolkit.Tests.WinRT.Model
 {
     [TestClass]
     public class ObservableObjectTests

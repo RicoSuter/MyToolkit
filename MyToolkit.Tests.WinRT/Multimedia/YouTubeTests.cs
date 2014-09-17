@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.Multimedia;
 using MyToolkit.Networking;
 
-namespace MyToolkit.Tests.Multimedia
+namespace MyToolkit.Tests.WinRT.Multimedia
 {
     [TestClass]
     public class YouTubeTests

@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.Utilities;
 
-namespace MyToolkit.Tests.Utilities
+namespace MyToolkit.Tests.WinRT.Utilities
 {
     [TestClass]
     public class DateTimeUtilitiesTests

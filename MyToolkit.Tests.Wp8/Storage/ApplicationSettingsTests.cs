@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.Storage;
 
-namespace MyToolkit.Tests.Storage
+namespace MyToolkit.Tests.Wp8.Storage
 {
     [TestClass]
     public class ApplicationSettingsTests

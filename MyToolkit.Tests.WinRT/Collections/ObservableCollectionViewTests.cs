@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.Collections;
 
-namespace MyToolkit.Tests.Wpf45.Collections
+namespace MyToolkit.Tests.WinRT.Collections
 {
     [TestClass]
     public class ObservableCollectionViewTests

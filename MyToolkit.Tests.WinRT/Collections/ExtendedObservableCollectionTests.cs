@@ -4,9 +4,9 @@ using System.Linq;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.Collections;
 using MyToolkit.Model;
-using MyToolkit.Tests.Model;
+using MyToolkit.Tests.WinRT.Model;
 
-namespace MyToolkit.Tests.Collections
+namespace MyToolkit.Tests.WinRT.Collections
 {
     [TestClass]
     public class ExtendedObservableCollectionTests

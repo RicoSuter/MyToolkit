@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.Messaging;
 using MyToolkit.Utilities;
 
-namespace MyToolkit.Tests.Utilities
+namespace MyToolkit.Tests.WinRT.Utilities
 {
     [TestClass]
     public class ExpressionHelperTests

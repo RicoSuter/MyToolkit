@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.Command;
 
-namespace MyToolkit.Tests.Command
+namespace MyToolkit.Tests.WinRT.Command
 {
     [TestClass]
     public class AsyncRelayCommandTests

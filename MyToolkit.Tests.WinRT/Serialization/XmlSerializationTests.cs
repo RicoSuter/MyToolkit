@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.Serialization;
-using MyToolkit.Tests.Model;
+using MyToolkit.Tests.WinRT.Model;
 
-namespace MyToolkit.Tests.Serialization
+namespace MyToolkit.Tests.WinRT.Serialization
 {
     [TestClass]
     public class XmlSerializationTests

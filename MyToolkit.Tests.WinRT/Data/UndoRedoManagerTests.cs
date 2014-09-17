@@ -3,9 +3,9 @@ using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.Data;
 using MyToolkit.Model;
 using MyToolkit.Mvvm;
-using MyToolkit.Tests.Model;
+using MyToolkit.Tests.WinRT.Model;
 
-namespace MyToolkit.Tests.Data
+namespace MyToolkit.Tests.WinRT.Data
 {
     [TestClass]
     public class UndoRedoManagerTests

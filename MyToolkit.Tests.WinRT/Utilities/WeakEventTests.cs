@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using MyToolkit.Tests.Model;
+using MyToolkit.Tests.WinRT.Model;
 using MyToolkit.Utilities;
 
-namespace MyToolkit.Tests.Utilities
+namespace MyToolkit.Tests.WinRT.Utilities
 {
     [TestClass]
     public class WeakEventTests

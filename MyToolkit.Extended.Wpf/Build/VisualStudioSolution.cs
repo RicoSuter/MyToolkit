@@ -49,7 +49,7 @@ namespace MyToolkit.Build
             var content = File.ReadAllText(Path);
 
             var projects = new List<VisualStudioProject>();
-            foreach (Match match in Regex.Matches(content.Replace("\r", ""), @"\nProject.*?""([^""]*?.csproj)"".*?\nEndProject"))
+            foreach (Match match in Regex.Matches(content.Replace("\r", ""), @"\nProject.*?""([^""]*?.csproj)""(.|\n)*?\nEndProject"))
             {
                 var projectPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Path), match.Groups[1].Value));
 
