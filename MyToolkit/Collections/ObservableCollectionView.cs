@@ -468,7 +468,7 @@ namespace MyToolkit.Collections
 
         public bool IsReadOnly
         {
-            get { return false; }
+            get { return true; }
         }
 
         public bool Contains(object value)
