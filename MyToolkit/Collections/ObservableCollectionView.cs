@@ -51,6 +51,8 @@ namespace MyToolkit.Collections
         private bool _trackItemChanges;
         private bool _trackCollectionChanges = false;
 
+        private readonly object _syncRoot = new object();
+
         public ObservableView() : this(new ObservableCollection<T>(), null) { }
         public ObservableView(IList<T> items) : this(items, null) { }
         public ObservableView(IList<T> items, Func<T, bool> filter = null,
@@ -272,22 +274,26 @@ namespace MyToolkit.Collections
 
                 if (TrackItemChanges)
                 {
-                    if (e.NewItems != null)
-                    {
-                        foreach (var i in e.NewItems.OfType<INotifyPropertyChanged>())
-                            RegisterEvent(i);
-                    }
-
-                    if (e.OldItems != null)
-                    {
-                        foreach (var i in e.OldItems.OfType<INotifyPropertyChanged>())
-                            UnregisterEvent(i);
-                    }
-
                     if (e.Action == NotifyCollectionChangedAction.Reset)
                     {
-                        foreach (var item in _events.Select(p => p.Key).ToArray())
+                        foreach (var item in _events.Keys.ToArray())
                             UnregisterEvent(item);
+
+                        TrackAllItems();
+                    }
+                    else
+                    {
+                        if (e.NewItems != null)
+                        {
+                            foreach (var item in e.NewItems.OfType<INotifyPropertyChanged>())
+                                RegisterEvent(item);
+                        }
+
+                        if (e.OldItems != null)
+                        {
+                            foreach (var item in e.OldItems.OfType<INotifyPropertyChanged>())
+                                UnregisterEvent(item);
+                        }
                     }
                 }
             }
@@ -498,7 +504,7 @@ namespace MyToolkit.Collections
 
         public object SyncRoot
         {
-            get { return Items; }
+            get { return _syncRoot; }
         }
 
         public void Insert(int index, T item)
