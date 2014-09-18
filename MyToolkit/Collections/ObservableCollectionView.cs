@@ -396,6 +396,7 @@ namespace MyToolkit.Collections
         #region Interfaces
 
         public event NotifyCollectionChangedEventHandler CollectionChanged;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnInternalCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -446,7 +447,7 @@ namespace MyToolkit.Collections
                 lock (SyncRoot)
                     return _internalList[index];
             }
-            set { throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead."); }
+            set { throw new NotSupportedException("Use ObservableCollectionView.Items[] instead."); }
         }
 
         object IList.this[int index]
@@ -456,7 +457,7 @@ namespace MyToolkit.Collections
                 lock (SyncRoot)
                     return _internalList[index];
             }
-            set { throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead."); }
+            set { throw new NotSupportedException("Use ObservableCollectionView.Items[] instead."); }
         }
 
         public bool Contains(T item)
@@ -502,40 +503,42 @@ namespace MyToolkit.Collections
 
         public void Insert(int index, T item)
         {
-            throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead.");
+            throw new NotSupportedException("Use ObservableCollectionView.Insert() instead.");
         }
 
         public void Insert(int index, object value)
         {
-            throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead.");
+            throw new NotSupportedException("Use ObservableCollectionView.Insert() instead.");
         }
 
         public void RemoveAt(int index)
         {
-            throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead.");
+            throw new NotSupportedException("Use ObservableCollectionView.Insert() instead.");
         }
 
         int IList.Add(object value)
         {
-            throw new Exception("Method with index not allowed (list may be filtered). Use Items property instead.");
+            throw new NotSupportedException("Use ObservableCollectionView.Add() instead.");
         }
 
         public void Add(T item)
         {
-            lock (SyncRoot)
-                Items.Add(item);
+            throw new NotSupportedException("Use ObservableCollectionView.Add() instead.");
         }
 
         public void Clear()
         {
-            lock (SyncRoot)
-                Items.Clear();
+            throw new NotSupportedException("Use ObservableCollectionView.Clear() instead.");
         }
 
-        public void CopyTo(T[] array, int arrayIndex)
+        public bool Remove(T item)
         {
-            lock (SyncRoot)
-                Items.CopyTo(array, arrayIndex);
+            throw new NotSupportedException("Use ObservableCollectionView.Remove() instead.");
+        }
+
+        public void Remove(object value)
+        {
+            throw new NotSupportedException("Use ObservableCollectionView.Remove() instead.");
         }
 
         public void CopyTo(Array array, int index)
@@ -543,15 +546,10 @@ namespace MyToolkit.Collections
             CopyTo((T[])array, index);
         }
 
-        public bool Remove(T item)
+        public void CopyTo(T[] array, int arrayIndex)
         {
             lock (SyncRoot)
-                return Items.Remove(item);
-        }
-
-        public void Remove(object value)
-        {
-            Remove((T)value);
+                _internalList.CopyTo(array, arrayIndex);
         }
 
         #endregion
