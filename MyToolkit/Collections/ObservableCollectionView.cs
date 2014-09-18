@@ -36,7 +36,7 @@ namespace MyToolkit.Collections
     public class ObservableView<T> : IList<T>, IObservableCollectionView, IDisposable
     {
         private NotifyCollectionChangedEventHandler _itemsChangedHandler;
-        private ExtendedObservableCollection<T> _internalList = new ExtendedObservableCollection<T>();
+        private ExtendedObservableCollection<T> _internalCollection = new ExtendedObservableCollection<T>();
         private readonly Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler> _events =
             new Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler>();
 
@@ -69,8 +69,8 @@ namespace MyToolkit.Collections
             if (TrackItemChanges)
                 TrackAllItems();
 
-            _internalList.CollectionChanged += OnInternalCollectionChanged;
-            _internalList.PropertyChanged += OnInternalPropertyChanged;
+            _internalCollection.CollectionChanged += OnInternalCollectionChanged;
+            _internalCollection.PropertyChanged += OnInternalPropertyChanged;
 
             _isTracking = true;
             UpdateList();
@@ -251,7 +251,7 @@ namespace MyToolkit.Collections
             TrackCollectionChanges = false;
             TrackItemChanges = false;
 
-            _internalList = null;
+            _internalCollection = null;
             Items = null;
         }
 
@@ -388,8 +388,8 @@ namespace MyToolkit.Collections
                 if (Limit > 0 || Offset > 0)
                     list = list.Skip(Offset).Take(Limit).ToList();
 
-                if (!_internalList.IsCopyOf(list))
-                    _internalList.Initialize(list);
+                if (!_internalCollection.IsCopyOf(list))
+                    _internalCollection.Initialize(list);
             }
         }
 
@@ -418,26 +418,26 @@ namespace MyToolkit.Collections
             get
             {
                 lock (SyncRoot)
-                    return _internalList.Count;
+                    return _internalCollection.Count;
             }
         }
 
         public IEnumerator<T> GetEnumerator()
         {
             lock (SyncRoot)
-                return _internalList.GetEnumerator();
+                return _internalCollection.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             lock (SyncRoot)
-                return _internalList.GetEnumerator();
+                return _internalCollection.GetEnumerator();
         }
 
         public int IndexOf(T item)
         {
             lock (SyncRoot)
-                return _internalList.IndexOf(item);
+                return _internalCollection.IndexOf(item);
         }
 
         public T this[int index]
@@ -445,7 +445,7 @@ namespace MyToolkit.Collections
             get
             {
                 lock (SyncRoot)
-                    return _internalList[index];
+                    return _internalCollection[index];
             }
             set { throw new NotSupportedException("Use ObservableCollectionView.Items[] instead."); }
         }
@@ -455,7 +455,7 @@ namespace MyToolkit.Collections
             get
             {
                 lock (SyncRoot)
-                    return _internalList[index];
+                    return _internalCollection[index];
             }
             set { throw new NotSupportedException("Use ObservableCollectionView.Items[] instead."); }
         }
@@ -463,7 +463,7 @@ namespace MyToolkit.Collections
         public bool Contains(T item)
         {
             lock (SyncRoot)
-                return _internalList.Contains(item);
+                return _internalCollection.Contains(item);
         }
 
         public bool IsReadOnly
@@ -474,7 +474,7 @@ namespace MyToolkit.Collections
         public bool Contains(object value)
         {
             lock (SyncRoot)
-                return value is T && _internalList.Contains((T)value);
+                return value is T && _internalCollection.Contains((T)value);
         }
 
         public int IndexOf(object value)
@@ -483,7 +483,7 @@ namespace MyToolkit.Collections
                 return -1;
 
             lock (SyncRoot)
-                return _internalList.IndexOf((T)value);
+                return _internalCollection.IndexOf((T)value);
         }
 
         public bool IsFixedSize
@@ -549,7 +549,7 @@ namespace MyToolkit.Collections
         public void CopyTo(T[] array, int arrayIndex)
         {
             lock (SyncRoot)
-                _internalList.CopyTo(array, arrayIndex);
+                _internalCollection.CopyTo(array, arrayIndex);
         }
 
         #endregion
