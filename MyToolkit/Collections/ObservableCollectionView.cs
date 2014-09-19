@@ -276,9 +276,7 @@ namespace MyToolkit.Collections
                 {
                     if (e.Action == NotifyCollectionChangedAction.Reset)
                     {
-                        foreach (var item in _events.Keys.ToArray())
-                            UnregisterEvent(item);
-
+                        UntrackAllItems();
                         TrackAllItems();
                     }
                     else
@@ -355,8 +353,8 @@ namespace MyToolkit.Collections
 
         private void UntrackAllItems()
         {
-            foreach (var i in Items.OfType<INotifyPropertyChanged>())
-                UnregisterEvent(i);
+            foreach (var item in _events.Keys.ToArray())
+                UnregisterEvent(item);
         }
 
         /// <summary>
