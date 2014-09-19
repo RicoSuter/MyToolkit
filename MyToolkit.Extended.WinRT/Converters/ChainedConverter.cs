@@ -6,7 +6,9 @@ using Windows.UI.Xaml.Markup;
 
 namespace MyToolkit.Converters
 {
-    /// <summary>Used to compose multiple converters. </summary>
+    /// <summary>
+    /// Used to compose multiple converters. 
+    /// </summary>
 	[ContentProperty(Name = "Converters")]
 	public class ChainedConverter : DependencyObject, IValueConverter
 	{
