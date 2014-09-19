@@ -14,6 +14,7 @@ namespace MyToolkit.Composition
 	public class ExportAttribute : Attribute
 	{
 		public Type Type;
+
 		public string Name;
 
 		public ExportAttribute(Type type)

@@ -12,9 +12,7 @@ using System.Linq;
 
 namespace MyToolkit.Collections
 {
-	/// <summary>
-	/// Groups a set of objects alphabetically (using the ToString() method). 
-	/// </summary>
+	/// <summary>Groups a set of objects alphabetically (using the ToString() method). </summary>
 	/// <typeparam name="T"></typeparam>
 	public class AlphaGroups<T> : List<Group<T>>, INotifyCollectionChanged
 	{

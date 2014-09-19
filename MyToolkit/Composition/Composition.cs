@@ -16,9 +16,7 @@ namespace MyToolkit.Composition
     {
         private static ICompositionContext _default;
 
-        /// <summary>
-        /// Gets or sets the default context. 
-        /// </summary>
+        /// <summary>Gets or sets the default context. </summary>
         public static ICompositionContext Default
         {
             get

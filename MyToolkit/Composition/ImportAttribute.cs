@@ -14,6 +14,7 @@ namespace MyToolkit.Composition
 	public class ImportAttribute : Attribute
 	{
 		public Type Type;
+
 		public string Name;
 
 		public ImportAttribute(Type type)

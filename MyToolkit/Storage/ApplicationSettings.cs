@@ -101,8 +101,6 @@ namespace MyToolkit.Storage
 
 #else
 
-    //// TODO: Remove unused code => only SL5 and WP7.5 needed
-
     /// <summary>Provides methods to access and write settings to the isolated storage (works only for WP and WinRT). </summary>
     public static class ApplicationSettings
     {

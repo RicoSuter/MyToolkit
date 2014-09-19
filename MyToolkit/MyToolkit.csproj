@@ -108,6 +108,7 @@
     <Compile Include="Utilities\GeolocationUtilities.cs" />
     <Compile Include="Utilities\HttpUtilityExtensions.cs" />
     <Compile Include="Utilities\IEntity.cs" />
+    <Compile Include="Utilities\LinqMathExtensions.cs" />
     <Compile Include="Utilities\ReflectionExtensions.cs" />
     <Compile Include="Utilities\StreamExtensions.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />

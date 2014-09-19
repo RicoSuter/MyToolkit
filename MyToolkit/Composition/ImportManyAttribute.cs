@@ -14,6 +14,7 @@ namespace MyToolkit.Composition
 	public class ImportManyAttribute : Attribute
 	{
 		public Type Type;
+
 		public ImportManyAttribute(Type type)
 		{
 			Type = type; 

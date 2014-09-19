@@ -11,9 +11,16 @@ using System.Reflection;
 
 namespace MyToolkit.Utilities
 {
+    /// <summary>Provides methods for event management. </summary>
     public static class EventHelper
     {
 #if !LEGACY
+
+        /// <summary>Registers an event on the given target object. </summary>
+        /// <param name="target">The target object. </param>
+        /// <param name="eventName">The event name. </param>
+        /// <param name="callback">The callback. </param>
+        /// <returns>The registration token to unregister the event. </returns>
         public static object RegisterEvent(object target, string eventName, Action<object, object> callback)
         {
             var callbackMethodInfo = callback.GetMethodInfo();
@@ -22,6 +29,11 @@ namespace MyToolkit.Utilities
             return eventInfo.AddMethod.Invoke(target, new object[] { callbackDelegate });
         }
 
+        /// <summary>Registers a static event on the given target object. </summary>
+        /// <param name="type">The target type. </param>
+        /// <param name="eventName">The event name. </param>
+        /// <param name="callback">The callback. </param>
+        /// <returns>The registration token to unregister the event. </returns>
         public static object RegisterStaticEvent(Type type, string eventName, Action<object, object> callback)
         {
             var callbackMethodInfo = callback.GetMethodInfo();
@@ -30,17 +42,26 @@ namespace MyToolkit.Utilities
             return eventInfo.AddMethod.Invoke(null, new object[] { callbackDelegate });
         }
 
+        /// <summary>Unregisters an event from the target object. </summary>
+        /// <param name="target">The target object. </param>
+        /// <param name="eventName">The event name. </param>
+        /// <param name="token">The registration token. </param>
         public static void UnregisterEvent(object target, string eventName, object token)
         {
             var eventInfo = target.GetType().GetRuntimeEvent(eventName);
             eventInfo.RemoveMethod.Invoke(target, new object[] { token });
         }
 
+        /// <summary>Unregisters a static event from the target type. </summary>
+        /// <param name="type">The target type. </param>
+        /// <param name="eventName">The event name. </param>
+        /// <param name="token">The registration token. </param>
         public static void UnregisterStaticEvent(Type type, string eventName, object token)
         {
             var eventInfo = type.GetRuntimeEvent(eventName);
             eventInfo.RemoveMethod.Invoke(null, new object[] { token });
         }
+
 #endif
 
         /// <summary>Registers a weak event handler which is automatically deregistered after the subscriber 

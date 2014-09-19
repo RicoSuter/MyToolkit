@@ -13,9 +13,7 @@ using System.Linq;
 
 namespace MyToolkit.Collections
 {
-    /// <summary>
-    /// An extended group implementation with a list of items but showing only a given number of them. 
-    /// </summary>
+    /// <summary>An extended group implementation with a list of items but showing only a given number of them. </summary>
     /// <typeparam name="T">The type of an item. </typeparam>
 	public class ExtendedGroup<T> : Group<T>
 	{
@@ -36,9 +34,7 @@ namespace MyToolkit.Collections
 			UpdateTopItems();
 		}
 
-        /// <summary>
-        /// Gets or sets the number of items to show in the group. 
-        /// </summary>
+        /// <summary>Gets or sets the number of items to show in the group. </summary>
         public int TopItemsCount
         {
             get { return _topItemsCount; }
@@ -53,14 +49,10 @@ namespace MyToolkit.Collections
             }
         }
 
-        /// <summary>
-        /// Gets the items to show in the group. 
-        /// </summary>
+        /// <summary>Gets the items to show in the group. </summary>
         public ExtendedObservableCollection<T> TopItems { get; private set; }
 
-        /// <summary>
-        /// Initializes the group with a list of items. 
-        /// </summary>
+        /// <summary>Initializes the group with a list of items. </summary>
         /// <param name="items">The items. </param>
         public void Initialize(IEnumerable<T> items)
         {
@@ -74,9 +66,7 @@ namespace MyToolkit.Collections
             _updateLock = false;
         }
 
-        /// <summary>
-        /// Called when the items collection changed. 
-        /// </summary>
+        /// <summary>Called when the items collection changed. </summary>
         /// <param name="e">The arguments. </param>
         protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
 		{

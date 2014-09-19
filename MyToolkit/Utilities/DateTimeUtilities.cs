@@ -10,14 +10,10 @@ using System;
 
 namespace MyToolkit.Utilities
 {
-    /// <summary>
-    /// Provides date time utility methods. 
-    /// </summary>
+    /// <summary>Provides date time utility methods. </summary>
     public static class DateTimeUtilities
     {
-        /// <summary>
-        /// Converts a unix timestamp to a DateTime. 
-        /// </summary>
+        /// <summary>Converts a unix timestamp to a DateTime. </summary>
         /// <param name="unixTimeStamp">The unix timestamp. </param>
         /// <param name="kind">The kind of the unit timestamp and return value. </param>
         /// <returns>The date time. </returns>
@@ -28,9 +24,7 @@ namespace MyToolkit.Utilities
             return dtDateTime;
         }
 
-        /// <summary>
-        /// Converts a DateTime to an unix timestamp. 
-        /// </summary>
+        /// <summary>Converts a DateTime to an unix timestamp. </summary>
         /// <param name="dateTime">The date time. </param>
         /// <param name="kind">The kind of the date time and return value. </param>
         /// <returns>The unix timestamp. </returns>
@@ -40,9 +34,7 @@ namespace MyToolkit.Utilities
             return (dateTime - new DateTime(1970, 1, 1, 0, 0, 0, kind)).TotalSeconds;
         }
 
-        /// <summary>
-        /// Changes only the time part of the DateTime. 
-        /// </summary>
+        /// <summary>Changes only the time part of the DateTime. </summary>
         /// <param name="date">The date. </param>
         /// <param name="hour">The hour. </param>
         /// <param name="minute">The minute. </param>

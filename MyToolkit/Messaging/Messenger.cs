@@ -19,9 +19,7 @@ namespace MyToolkit.Messaging
 		private readonly List<MessageRegistration> _actions = new List<MessageRegistration>();
         private static IMessenger _defaultMessenger; 
 
-        /// <summary>
-        /// Gets or sets the default messenger. 
-        /// </summary>
+        /// <summary>Gets or sets the default messenger. </summary>
         public static IMessenger Default
 	    {
 	        get
@@ -39,38 +37,30 @@ namespace MyToolkit.Messaging
 	        set { _defaultMessenger = value;  }
 	    }
 		
-		/// <summary>
-		/// Registers an action for the given receiver. WARNING: You have to unregister the action to avoid memory leaks!
-		/// </summary>
-		/// <typeparam name="T">Type of the message</typeparam>
-		/// <param name="receiver">Receiver to use as identifier</param>
-		/// <param name="action">Action to register</param>
+		/// <summary>Registers an action for the given receiver. WARNING: You have to unregister the action to avoid memory leaks! </summary>
+		/// <typeparam name="T">Type of the message. </typeparam>
+		/// <param name="receiver">Receiver to use as identifier. </param>
+		/// <param name="action">Action to register. </param>
 		public void Register<T>(object receiver, Action<T> action)
 		{
 			_actions.Add(new MessageRegistration { Receiver = receiver, Type = typeof(T), Action = action});
 		}
 
-		/// <summary>
-		/// Registers an action for no receiver. 
-		/// </summary>
-		/// <typeparam name="T">Type of the message</typeparam>
-		/// <param name="action">Action to register</param>
+		/// <summary>Registers an action for no receiver. </summary>
+		/// <typeparam name="T">Type of the message. </typeparam>
+		/// <param name="action">Action to register. </param>
 		public void Register<T>(Action<T> action)
 		{
 			Register(null, action);
 		}
 
-		/// <summary>
-		/// Unregisters all actions with no receiver. 
-		/// </summary>
+		/// <summary>Unregisters all actions with no receiver. </summary>
 		public void Unregister()
 		{
 			Unregister(null);
 		}
 
-		/// <summary>
-		/// Unregisters all actions with the given receiver
-		/// </summary>
+		/// <summary>Unregisters all actions with the given receiver. </summary>
 		/// <param name="receiver"></param>
 		public void Unregister(object receiver)
 		{
@@ -78,20 +68,16 @@ namespace MyToolkit.Messaging
 				_actions.Remove(a);
 		}
 
-		/// <summary>
-		/// Unregisters the specified action
-		/// </summary>
-		/// <typeparam name="T">Type of the message</typeparam>
-		/// <param name="action">Action to unregister</param>
+		/// <summary>Unregisters the specified action. </summary>
+		/// <typeparam name="T">Type of the message. </typeparam>
+		/// <param name="action">Action to unregister. </param>
 		public void Unregister<T>(Action<T> action)
 		{
 			foreach (var a in _actions.Where(a => (Action<T>)a.Action == action).ToArray())
 				_actions.Remove(a);
 		}
 
-		/// <summary>
-		/// Unregisters the specified action
-		/// </summary>
+		/// <summary>Unregisters the specified action. </summary>
 		/// <typeparam name="T">Type of the message</typeparam>
 		public void Unregister<T>()
 		{
@@ -99,9 +85,7 @@ namespace MyToolkit.Messaging
 				_actions.Remove(a);
 		}
 
-		/// <summary>
-		/// Unregisters the specified action
-		/// </summary>
+		/// <summary>Unregisters the specified action. </summary>
 		/// <param name="receiver"></param>
 		/// <typeparam name="T">Type of the message</typeparam>
 		public void Unregister<T>(object receiver)
@@ -110,23 +94,19 @@ namespace MyToolkit.Messaging
 				_actions.Remove(a);
 		}
 
-		/// <summary>
-		/// Unregisters an action for the specified receiver. 
-		/// </summary>
-		/// <typeparam name="T">Type of the message</typeparam>
-		/// <param name="receiver"></param>
-		/// <param name="action"></param>
+		/// <summary>Unregisters an action for the specified receiver. </summary>
+		/// <typeparam name="T">Type of the message. </typeparam>
+		/// <param name="receiver">The receiver object. </param>
+		/// <param name="action">The action to unregister on the receiver. </param>
 		public void Unregister<T>(object receiver, Action<T> action)
 		{
 			foreach (var a in _actions.Where(a => a.Receiver == receiver && (Action<T>)a.Action == action).ToArray())
 				_actions.Remove(a);
 		}
 
-        /// <summary>
-        /// Sends a message to the registered receivers. 
-        /// </summary>
-        /// <typeparam name="T">Type of the message</typeparam>
-        /// <param name="message"></param>
+        /// <summary>Sends a message to the registered receivers. </summary>
+        /// <typeparam name="T">Type of the message. </typeparam>
+        /// <param name="message">The message to send. </param>
         public virtual T Send<T>(T message)
 	    {
             var type = message.GetType();
@@ -135,51 +115,43 @@ namespace MyToolkit.Messaging
             return message;
 	    }
 
-        /// <summary>
-        /// Sends a message to the registered receivers. 
+        /// <summary>Sends a message to the registered receivers. 
         /// Usage: new TextMessage("Test").Send();
-        /// Returns the input message for chaining. 
-        /// </summary>
-        /// <param name="msg">The message to send. </param>
-        public Task SendAsync(CallbackMessage msg)
+        /// Returns the input message for chaining. </summary>
+        /// <param name="message">The message to send. </param>
+        public Task SendAsync(CallbackMessage message)
         {
-            Send(msg);
-            return msg.Task;
+            Send(message);
+            return message.Task;
         }
 
-        /// <summary>
-        /// Usage: new TextMessage("Test").Send();
-        /// Returns the input message for chaining. 
-        /// </summary>
-        /// <param name="msg">The message to send. </param>
-        public Task<CallbackMessageResult<T>> SendAsync<T>(CallbackMessage<T> msg)
+        /// <summary>Usage: new TextMessage("Test").Send();
+        /// Returns the input message for chaining. </summary>
+        /// <param name="message">The message to send. </param>
+        public Task<CallbackMessageResult<T>> SendAsync<T>(CallbackMessage<T> message)
         {
-            Send(msg);
-            return msg.Task;
+            Send(message);
+            return message.Task;
         }
 
-        /// <summary>
-        /// Sends a message to the registered receivers. 
+        /// <summary>Sends a message to the registered receivers. 
         /// Usage: new TextMessage("Test").Send();
-        /// Returns the input message for chaining. 
-        /// </summary>
-        /// <param name="msg">The message to send. </param>
-        public Task<CallbackMessageResult<TFirst, TSecond>> SendAsync<TFirst, TSecond>(CallbackMessage<TFirst, TSecond> msg)
+        /// Returns the input message for chaining. </summary>
+        /// <param name="message">The message to send. </param>
+        public Task<CallbackMessageResult<TFirst, TSecond>> SendAsync<TFirst, TSecond>(CallbackMessage<TFirst, TSecond> message)
         {
-            Send(msg);
-            return msg.Task;
+            Send(message);
+            return message.Task;
         }
 
-        /// <summary>
-        /// Sends a message to the registered receivers. 
+        /// <summary>Sends a message to the registered receivers. 
         /// Usage: new TextMessage("Test").Send();
-        /// Returns the input message for chaining. 
-        /// </summary>
-        /// <param name="msg">The message to send. </param>
-        public Task<CallbackMessageResult<TFirst, TSecond, TThird>> SendAsync<TFirst, TSecond, TThird>(CallbackMessage<TFirst, TSecond, TThird> msg)
+        /// Returns the input message for chaining. </summary>
+        /// <param name="message">The message to send. </param>
+        public Task<CallbackMessageResult<TFirst, TSecond, TThird>> SendAsync<TFirst, TSecond, TThird>(CallbackMessage<TFirst, TSecond, TThird> message)
         {
-            Send(msg);
-            return msg.Task;
+            Send(message);
+            return message.Task;
         }
 	}
 

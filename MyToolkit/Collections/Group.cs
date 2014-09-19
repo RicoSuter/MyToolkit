@@ -12,31 +12,26 @@ using System.ComponentModel;
 
 namespace MyToolkit.Collections
 {
-    /// <summary>
-    /// The interface of a group. 
-    /// </summary>
+    /// <summary>The interface of a group. </summary>
 	public interface IGroup
 	{
 		string Title { get; }
 	}
 
-    /// <summary>
-    /// An group implementation with a title and a list of items. 
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <summary>An group implementation with a title and a list of items. </summary>
+    /// <typeparam name="T">The item type. </typeparam>
 	public class Group<T> : ObservableCollection<T>, IGroup
 	{
         private string _title;
         
         public Group(string title) : this(title, new List<T>()) { }
+
 		public Group(string title, IEnumerable<T> items) : base(items)
 		{
 			Title = title;
 		}
 
-        /// <summary>
-        /// Gets or sets the title of the group. 
-        /// </summary>
+        /// <summary>Gets or sets the title of the group. </summary>
 		public string Title
 		{
 			get { return _title; }
@@ -59,9 +54,7 @@ namespace MyToolkit.Collections
 				OnPropertyChanged(new PropertyChangedEventArgs("HasItems"));
 		}
 
-        /// <summary>
-        /// Gets a value indicating whether the group has items. 
-        /// </summary>
+        /// <summary>Gets a value indicating whether the group has items. </summary>
 		public bool HasItems
 		{
 			get { return Items.Count > 0; }

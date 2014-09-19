@@ -25,9 +25,7 @@ namespace MyToolkit.Composition
             _parts = new List<PartDescription>();
         }
 
-        /// <summary>
-        /// Adds parts from a given assembly. 
-        /// </summary>
+        /// <summary>Adds parts from a given assembly. </summary>
         /// <param name="assembly">The assembly. </param>
         /// <returns>The number of added parts. </returns>
         public int AddPartsFromAssembly(Assembly assembly)
@@ -63,9 +61,7 @@ namespace MyToolkit.Composition
 #endif
         }
 
-        /// <summary>
-        /// Adds a part and automatically resolves are imports. 
-        /// </summary>
+        /// <summary>Adds a part and automatically resolves are imports. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
         /// <typeparam name="TImplementation">The instance type of the part. </typeparam>
         /// <param name="part">The part. </param>
@@ -75,9 +71,7 @@ namespace MyToolkit.Composition
             return AddPart(typeof(TInterface), typeof(TImplementation), null, part);
         }
 
-        /// <summary>
-        /// Adds a part and automatically resolves are imports. 
-        /// </summary>
+        /// <summary>Adds a part and automatically resolves are imports. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
         /// <typeparam name="TImplementation">The instance type of the part. </typeparam>
         /// <param name="name">The name of the part. </param>
@@ -88,9 +82,7 @@ namespace MyToolkit.Composition
             return AddPart(typeof(TInterface), part.GetType(), name, part);
         }
 
-        /// <summary>
-        /// Adds a lazy instantiated part. The imports are resolved when the part is instantiated. 
-        /// </summary>
+        /// <summary>Adds a lazy instantiated part. The imports are resolved when the part is instantiated. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
         /// <typeparam name="TImplementation">The instance type of the part. </typeparam>
         /// <returns>True if the part has been added. </returns>
@@ -99,9 +91,7 @@ namespace MyToolkit.Composition
             return AddPart(typeof(TInterface), typeof(TImplementation), null, null);
         }
 
-        /// <summary>
-        /// Adds a lazy instantiated part. The imports are resolved when the part is instantiated. 
-        /// </summary>
+        /// <summary>Adds a lazy instantiated part. The imports are resolved when the part is instantiated. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
         /// <typeparam name="TImplementation">The instance type of the part. </typeparam>
         /// <param name="name">The name of the part. </param>
@@ -111,9 +101,7 @@ namespace MyToolkit.Composition
             return AddPart(typeof(TInterface), typeof(TImplementation), name, null);
         }
 
-        /// <summary>
-        /// Adds a part and automatically resolves are imports. 
-        /// </summary>
+        /// <summary>Adds a part and automatically resolves are imports. </summary>
         /// <param name="interfaceType">The type of the part. </param>
         /// <param name="name">The name of the part. </param>
         /// <param name="part"></param>
@@ -136,18 +124,14 @@ namespace MyToolkit.Composition
             return true;
         }
 
-        /// <summary>
-        /// Removes a part. 
-        /// </summary>
+        /// <summary>Removes a part. </summary>
         /// <typeparam name="TInterface">The type of the part. </typeparam>
         public void RemovePart<TInterface>()
         {
             RemovePart(typeof(TInterface), null);
         }
 
-        /// <summary>
-        /// Removes a part. 
-        /// </summary>
+        /// <summary>Removes a part. </summary>
         /// <typeparam name="TInterface">The type of the part. </typeparam>
         /// <param name="name">The name of the part. </param>
         public void RemovePart<TInterface>(string name)
@@ -155,9 +139,7 @@ namespace MyToolkit.Composition
             RemovePart(typeof(TInterface), name);
         }
 
-        /// <summary>
-        /// Removes a part. 
-        /// </summary>
+        /// <summary>Removes a part. </summary>
         /// <param name="interfaceType">The interface type of the part. </param>
         /// <param name="name">The name of the part. </param>
         protected void RemovePart(Type interfaceType, string name)
@@ -167,9 +149,7 @@ namespace MyToolkit.Composition
                 _parts.Remove(oldPart);
         }
 
-        /// <summary>
-        /// Gets a single part. 
-        /// </summary>
+        /// <summary>Gets a single part. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
         /// <exception cref="Exception">Multiple parts found. </exception>
         /// <returns>The part. </returns>
@@ -178,9 +158,7 @@ namespace MyToolkit.Composition
             return (TInterface)GetPart(typeof(TInterface), null);
         }
 
-        /// <summary>
-        /// Gets a single part. 
-        /// </summary>
+        /// <summary>Gets a single part. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
         /// <param name="name">The name of the part. </param>
         /// <exception cref="Exception">Multiple parts found. </exception>
@@ -190,9 +168,7 @@ namespace MyToolkit.Composition
             return (TInterface)GetPart(typeof(TInterface), name);
         }
 
-        /// <summary>
-        /// Gets a single part. 
-        /// </summary>
+        /// <summary>Gets a single part. </summary>
         /// <param name="interfaceType">The type of the part. </param>
         /// <param name="name">The name of the part. </param>
         /// <exception cref="Exception">Multiple parts found. </exception>
@@ -205,9 +181,7 @@ namespace MyToolkit.Composition
             return null;
         }
 
-        /// <summary>
-        /// Gets multiple parts of a given type. 
-        /// </summary>
+        /// <summary>Gets multiple parts of a given type. </summary>
         /// <param name="interfaceType">The interface type of the part. </param>
         /// <returns>The list of parts. </returns>
         public IList GetParts(Type interfaceType)
@@ -222,9 +196,7 @@ namespace MyToolkit.Composition
             return list;
         }
 
-        /// <summary>
-        /// Gets multiple parts of a given interface type. 
-        /// </summary>
+        /// <summary>Gets multiple parts of a given interface type. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
         /// <returns>The list of parts. </returns>
         public IList<TInterface> GetParts<TInterface>()
@@ -235,9 +207,7 @@ namespace MyToolkit.Composition
                 .ToList();
         }
 
-        /// <summary>
-        /// Resolves all property injection annotations for the given object. 
-        /// </summary>
+        /// <summary>Resolves all property injection annotations for the given object. </summary>
         /// <param name="obj">The object. </param>
         public void SatisfyImports<T>(T obj)
         {
@@ -270,9 +240,7 @@ namespace MyToolkit.Composition
             }
         }
 
-        /// <summary>
-        /// Builds the resolving cache for the given type. 
-        /// </summary>
+        /// <summary>Builds the resolving cache for the given type. </summary>
         public void BuildCache<T>()
         {
             var type = typeof(T);
@@ -300,9 +268,7 @@ namespace MyToolkit.Composition
             }
         }
 
-        /// <summary>
-        /// Removes all parts. 
-        /// </summary>
+        /// <summary>Removes all parts. </summary>
         public void Clear()
         {
             _parts.Clear();

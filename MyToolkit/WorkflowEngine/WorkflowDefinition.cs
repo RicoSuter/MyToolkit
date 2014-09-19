@@ -17,9 +17,7 @@ using MyToolkit.WorkflowEngine.Activities;
 
 namespace MyToolkit.WorkflowEngine
 {
-    /// <summary>
-    /// Describes a workflow using activities and transitions. 
-    /// </summary>
+    /// <summary>Describes a workflow using activities and transitions. </summary>
     public class WorkflowDefinition
     {
         /// <summary>Gets or sets the workflow parameters. </summary>

@@ -291,6 +291,7 @@ namespace MyToolkit.Mvvm
 
 namespace MyToolkit.MVVM
 {
+    /// <summary>Provides a base implementation of a view model. </summary>
     [Obsolete("Use MyToolkit.Mvvm.ViewModelBase instead. 5/17/2014")]
     public class BaseViewModel : ViewModelBase
     {

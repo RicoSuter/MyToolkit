@@ -11,11 +11,7 @@ using System.Reflection;
 
 namespace MyToolkit.Utilities
 {
-    // TODO: Move to MyToolkit.IO?
-
-    /// <summary>
-    /// Provides additional reflection methods. 
-    /// </summary>
+    /// <summary>Provides additional reflection methods. </summary>
 	public static class ReflectionExtensions
 	{
         /// <summary>Gets the name of the type (without namespace or assembly version). </summary>
@@ -41,9 +37,7 @@ namespace MyToolkit.Utilities
 			return Activator.CreateInstance(specificType, args);
 		}
 
-        /// <summary>
-        /// Merges a given source object into a target object (no deep copy!). 
-        /// </summary>
+        /// <summary>Merges a given source object into a target object (no deep copy!). </summary>
         /// <param name="source">The source object. </param>
         /// <param name="target">The target object. </param>
 		public static void Merge<T>(this T source, T target)

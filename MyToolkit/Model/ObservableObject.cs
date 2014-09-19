@@ -16,9 +16,7 @@ using MyToolkit.Utilities;
 
 namespace MyToolkit.Model
 {
-    /// <summary>
-    /// Provides an implementation of the <see cref="INotifyPropertyChanged"/> interface. 
-    /// </summary>
+    /// <summary>Provides an implementation of the <see cref="INotifyPropertyChanged"/> interface. </summary>
     [DataContract]
     public class ObservableObject : INotifyPropertyChanged
     {
@@ -167,9 +165,7 @@ namespace MyToolkit.Model
 
 namespace MyToolkit.MVVM
 {
-    /// <summary>
-    /// Provides an implementation of the <see cref="INotifyPropertyChanged"/> interface. 
-    /// </summary>
+    /// <summary>Provides an implementation of the <see cref="INotifyPropertyChanged"/> interface. </summary>
     [Obsolete("Use MyToolkit.Mvvm.ObservableObject instead. 5/17/2014")]
     [DataContract]
     public class NotifyPropertyChanged : ObservableObject

@@ -207,6 +207,7 @@ namespace MyToolkit.Serialization
             return source.Task;
         }
 
+        /// <summary>Used only for serialization</summary>
         public class KeyValuePair<TKey, TValue>
         {
             public KeyValuePair() { }

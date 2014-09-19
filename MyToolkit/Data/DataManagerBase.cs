@@ -20,10 +20,11 @@ using MyToolkit.Utilities;
 namespace MyToolkit.Data
 {
 #if WP7
+
     internal class HashSet<T> : List<T> // TODO implement real hashset
     {
-        
     }
+
 #endif
 
     /// <summary>Provides an abstract CacheManager implementation with the ability to use a WCF service to load cachable entities. </summary>
@@ -57,9 +58,7 @@ namespace MyToolkit.Data
         protected abstract Task<IEnumerable<object>> GetCollectionPropertyForItemAsync(
             string type, TIdentity id, string propertyName, string[] included);
 
-        /// <summary>
-        /// Loads a single item. 
-        /// </summary>
+        /// <summary>Loads a single item. </summary>
         /// <typeparam name="T">The type of the item. </typeparam>
         /// <param name="id">The ID of the item. </param>
         /// <param name="reload">Specifies whether to use the cached version (if available) or always reload the item. </param>

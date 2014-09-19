@@ -12,12 +12,11 @@ namespace MyToolkit.Utilities
 {
 	// see http://stackoverflow.com/questions/1747235/weak-event-handler-model-for-use-with-lambdas
 
-	public static class WeakEvent
+    [Obsolete("Use EventHelper instead. 9/12/2014")]
+    public static class WeakEvent
 	{
-	    /// <summary>
-	    /// Registers a weak event handler which is automatically deregistered after the subscriber 
-	    /// has been garbage collected (checked on each event call). 
-	    /// </summary>
+	    /// <summary>Registers a weak event handler which is automatically deregistered after the subscriber 
+	    /// has been garbage collected (checked on each event call). </summary>
 	    /// <param name="subscriber"></param>
 	    /// <param name="add"></param>
 	    /// <param name="remove"></param>
@@ -37,10 +36,8 @@ namespace MyToolkit.Utilities
 	        return EventHelper.RegisterWeakEvent(subscriber, add, remove, converter, action);
 	    }
         
-        /// <summary>
-        /// Registers a weak event handler which is automatically deregistered after the subscriber 
-        /// has been garbage collected (checked on each event call). 
-        /// </summary>
+        /// <summary>Registers a weak event handler which is automatically deregistered after the subscriber 
+        /// has been garbage collected (checked on each event call). </summary>
         [Obsolete("Use EventHelper.RegisterWeakEvent instead. 9/12/2014")]
         public static EventHandler<TArgs> Register<TSubscriber, TArgs>(
             TSubscriber subscriber, 

@@ -104,10 +104,12 @@
     <Compile Include="Utilities\GeolocationUtilities.cs" />
     <Compile Include="Utilities\HttpUtilityExtensions.cs" />
     <Compile Include="Utilities\IEntity.cs" />
+    <Compile Include="Utilities\LinqMathExtensions.cs" />
     <Compile Include="Utilities\ReflectionExtensions.cs" />
     <Compile Include="Utilities\StreamExtensions.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="Utilities\TaskHelper.cs" />
+    <Compile Include="Utilities\VersionHelper.cs" />
     <Compile Include="Utilities\WeakEvent.cs" />
     <Compile Include="WorkflowEngine\Activities\AutomaticWorkflowActivityBase.cs" />
     <Compile Include="WorkflowEngine\Activities\EmptyActivity.cs" />

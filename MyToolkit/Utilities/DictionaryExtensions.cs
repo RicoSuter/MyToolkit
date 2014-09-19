@@ -13,14 +13,10 @@ using MyToolkit.Collections;
 
 namespace MyToolkit.Utilities
 {
-    /// <summary>
-    /// Provides extension methods for dictionaries. 
-    /// </summary>
+    /// <summary>Provides extension methods for dictionaries. </summary>
     public static class DictionaryExtensions
     {
-        /// <summary>
-        /// Recursively copies a dictionary. 
-        /// </summary>
+        /// <summary>Recursively copies a dictionary. </summary>
         /// <param name="dictionary">The dictionary to copy. </param>
         /// <returns>The copied dictionary. </returns>
         public static Dictionary<string, object> DeepCopy(this Dictionary<string, object> dictionary) 
@@ -41,9 +37,7 @@ namespace MyToolkit.Utilities
             return output;
         }
 
-        /// <summary>
-        /// Recursively copies an observable dictionary. 
-        /// </summary>
+        /// <summary>Recursively copies an observable dictionary. </summary>
         /// <param name="dictionary">The observable dictionary to copy. </param>
         /// <returns>The copied observable dictionary. </returns>
         public static ObservableDictionary<string, object> DeepCopy(this ObservableDictionary<string, object> dictionary)

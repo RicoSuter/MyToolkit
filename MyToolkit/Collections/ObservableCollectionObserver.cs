@@ -15,37 +15,29 @@ using System.Linq;
 
 namespace MyToolkit.Collections
 {
-	/// <summary>
-	/// Provides events to react on changes of an ObservableCollection and its elements
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <summary>Provides events to react on changes of an ObservableCollection and its elements. </summary>
+	/// <typeparam name="T">The item type. </typeparam>
 	public class ObservableCollectionObserver<T> where T : INotifyPropertyChanged
 	{
         private ObservableCollection<T> _list;
         private readonly List<T> _registeredItems = new List<T>();
         
-        /// <summary>
-		/// Occurs when the collection changes
-		/// </summary>
+        /// <summary>Occurs when the collection changes. </summary>
 		public event EventHandler<ExtendedNotifyCollectionChangedEventArgs<T>> CollectionChanged;
 
-		/// <summary>
-		/// Occurs when an element of the collection changes
-		/// </summary>
+		/// <summary>Occurs when an element of the collection changes. </summary>
 		public event PropertyChangedEventHandler ItemChanged;
 
 		public ObservableCollectionObserver(ObservableCollection<T> list = null)
 		{
-			Reset(list);
+			Initialize(list);
 		}
 
-		/// <summary>
-		/// Sets the observed collection
-		/// </summary>
-		/// <param name="newList"></param>
-		public void Reset(ObservableCollection<T> newList)
+		/// <summary>Sets the observed collection. </summary>
+		/// <param name="collection">The collection. </param>
+		public void Initialize(ObservableCollection<T> collection)
 		{
-			if (newList == _list)
+			if (collection == _list)
 				return;
 
 			// unregister all events from old list
@@ -58,7 +50,7 @@ namespace MyToolkit.Collections
 			}
 
 			// register new events
-			_list = newList;
+			_list = collection;
 			if (_list != null)
 			{
 				_list.CollectionChanged += OnCollectionChanged;

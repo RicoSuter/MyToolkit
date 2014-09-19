@@ -12,9 +12,7 @@ using System.Linq;
 
 namespace MyToolkit.Utilities
 {
-    /// <summary>
-    /// Provides extension methods for enumerations. 
-    /// </summary>
+    /// <summary>Provides extension methods for enumerations. </summary>
     public static class EnumerableExtensions
     {
         /// <summary>Provides ordering by two expressions. Use this method instaed of OrderBy(...).ThenBy(...) as it calls ThenBy only if necessary. </summary>
@@ -123,9 +121,7 @@ namespace MyToolkit.Utilities
                 OrderBy(pair => pair.Key).Select(pair => pair.Value).ToList();
         }
 
-        /// <summary>
-        /// Takes random items from the given list. 
-        /// </summary>
+        /// <summary>Takes random items from the given list. </summary>
         /// <typeparam name="T">The item type. </typeparam>
         /// <param name="source">The list to take the items from. </param>
         /// <param name="amount">The amount of items to take. </param>
@@ -148,9 +144,7 @@ namespace MyToolkit.Utilities
             return output;
         }
 
-        /// <summary>
-        /// Takes the minimal object from a list. 
-        /// </summary>
+        /// <summary>Takes the minimal object from a list. </summary>
         /// <typeparam name="T">The item type. </typeparam>
         /// <typeparam name="U">The compared type. </typeparam>
         /// <param name="list">The list to search in. </param>
@@ -174,9 +168,7 @@ namespace MyToolkit.Utilities
             return result;
         }
 
-        /// <summary>
-        /// Takes the maximum object from a list. 
-        /// </summary>
+        /// <summary>Takes the maximum object from a list. </summary>
         /// <typeparam name="T">The item type. </typeparam>
         /// <typeparam name="TProperty">The compared type. </typeparam>
         /// <param name="list">The list to search in. </param>
@@ -200,9 +192,7 @@ namespace MyToolkit.Utilities
             return result;
         }
 
-        /// <summary>
-        /// Gets a specified amount of items in the middle of a list. 
-        /// </summary>
+        /// <summary>Gets a specified amount of items in the middle of a list. </summary>
         /// <typeparam name="T">The item type. </typeparam>
         /// <param name="list">The list. </param>
         /// <param name="count">The amount of items to retrieve. </param>

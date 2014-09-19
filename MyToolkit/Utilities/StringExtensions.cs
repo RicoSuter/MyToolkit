@@ -54,9 +54,7 @@ namespace MyToolkit.Utilities
 			return output; 
 		}
 
-        /// <summary>
-        /// Removes all HTML tags from the given string. 
-        /// </summary>
+        /// <summary>Removes all HTML tags from the given string. </summary>
         /// <param name="html">The HTML string to remove the HTML tags from. </param>
         /// <returns>The cleaned string. </returns>
 		public static string RemoveHtmlTags(this string html)
@@ -170,9 +168,7 @@ namespace MyToolkit.Utilities
 			return string.Format("{0}...", text.Substring(0, (index > 0) ? index : text.Length).Trim());
 		}
 
-        /// <summary>
-        /// Trims a string from the start of the input string. 
-        /// </summary>
+        /// <summary>Trims a string from the start of the input string. </summary>
         /// <param name="input">The input string. </param>
         /// <param name="trimString">The string to trim. </param>
         /// <returns>The trimmed string. </returns>

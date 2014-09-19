@@ -1,16 +1,12 @@
 ﻿namespace MyToolkit.Composition
 {
-    /// <summary>
-    /// A simple service locator implementation. 
-    /// </summary>
+    /// <summary>A service locator implementation. </summary>
     public class ServiceLocator : IServiceLocator
     {
         private static IServiceLocator _default;
         private readonly CompositionContext _context = new CompositionContext();
 
-        /// <summary>
-        /// Gets or sets the default service locator. 
-        /// </summary>
+        /// <summary>Gets or sets the default service locator. </summary>
         public static IServiceLocator Default
         {
             get
@@ -28,9 +24,7 @@
             set { _default = value; }
         }
 
-        /// <summary>
-        /// Registers a singleton service in the service locator where the service is lazily instantiated. 
-        /// </summary>
+        /// <summary>Registers a singleton service in the service locator where the service is lazily instantiated. </summary>
         /// <typeparam name="TInterface">The interface type of the service. </typeparam>
         /// <typeparam name="TImplementation">The implementation type of the service. </typeparam>
         public void RegisterSingleton<TInterface, TImplementation>()
@@ -38,9 +32,7 @@
             _context.AddPart<TInterface, TImplementation>();
         }
 
-        /// <summary>
-        /// Registers a singleton service in the service locator. 
-        /// </summary>
+        /// <summary>Registers a singleton service in the service locator. </summary>
         /// <typeparam name="TInterface">The interface type of the service. </typeparam>
         /// <typeparam name="TImplementation">The implementation type of the service. </typeparam>
         /// <param name="service">The service object. </param>
@@ -49,9 +41,7 @@
             _context.AddPart<TInterface, TImplementation>(service);
         }
 
-        /// <summary>
-        /// Returns a service object. 
-        /// </summary>
+        /// <summary>Returns a service object. </summary>
         /// <typeparam name="TInterface">The interface type of the service. </typeparam>
         /// <returns>The service object. </returns>
         public TInterface Resolve<TInterface>()

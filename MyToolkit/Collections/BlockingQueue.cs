@@ -11,9 +11,7 @@ using System.Threading;
 
 namespace MyToolkit.Collections
 {
-	/// <summary>
-	/// Thread-safe blocking queue. 
-	/// </summary>
+	/// <summary>Thread-safe blocking queue. </summary>
 	/// <typeparam name="T">The type of an item. </typeparam>
 	public class BlockingQueue<T>
 	{
@@ -28,18 +26,14 @@ namespace MyToolkit.Collections
 			_queue = new Queue<T>(queueSize);
 		}
 
-        /// <summary>
-        /// Restarts the blocking queue. 
-        /// </summary>
+        /// <summary>Restarts the blocking queue. </summary>
         public void Restart()
 		{
 			lock (_lock)
 				_stop = false;
 		}
 
-        /// <summary>
-        /// Stops all waits in the Enqueue or Dequeue methods. 
-        /// </summary>
+        /// <summary>Stops all waits in the Enqueue or Dequeue methods. </summary>
         public void Stop()
         {
             lock (_lock)
@@ -48,7 +42,12 @@ namespace MyToolkit.Collections
                 Monitor.PulseAll(_lock);
             }
         }
-        
+
+        /// <summary>Enqueues an item in the queue. </summary>
+        /// <param name="item">The item to enqueue. </param>
+        /// <param name="maximumWaitTime">The maximum wait time until free slot is available, 
+        /// if exceeded then item is not added and false is returned. </param>
+        /// <returns>True if successful. </returns>
         public bool Enqueue(T item, int maximumWaitTime = -1)
 		{
 			lock (_lock)
@@ -68,9 +67,7 @@ namespace MyToolkit.Collections
 			return true;
 		}
 
-        /// <summary>
-        /// Tries do dequeue an item. 
-        /// </summary>
+        /// <summary>Tries do dequeue an item. </summary>
         /// <param name="item">The dequeued item. </param>
         /// <param name="maximumWaitTime">The maximum wait time to wait until an item is 
         /// available if the queue is empty. Default is -1 (indefinitely). </param>

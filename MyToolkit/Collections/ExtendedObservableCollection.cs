@@ -15,9 +15,8 @@ using System.Linq;
 
 namespace MyToolkit.Collections
 {
-    /// <summary>
-    /// Provides a safe collection changed event which always provides the added and removed items, some more events and more range methods. 
-    /// </summary>
+    /// <summary>Provides a safe collection changed event which always provides the added 
+    /// and removed items, some more events and more range methods. </summary>
     /// <typeparam name="T"></typeparam>
     public class ExtendedObservableCollection<T> : ObservableCollection<T>
     {
@@ -28,16 +27,12 @@ namespace MyToolkit.Collections
 
         public ExtendedObservableCollection(IEnumerable<T> collection) : base(collection) { }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether to provide the previous collection in the extended collection changed event. 
-        /// Enabling this feature may have a performance impact as for each collection changed event a copy of the collection gets created. 
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether to provide the previous collection in the extended collection changed event. 
+        /// Enabling this feature may have a performance impact as for each collection changed event a copy of the collection gets created. </summary>
         public bool ProvideOldCollection { get; set; }
 
-        /// <summary>
-        /// Occurs when a property value changes. 
-        /// This is the same event as on the <see cref="ObservableCollection{T}"/> except that it is public. 
-        /// </summary>
+        /// <summary>Occurs when a property value changes. 
+        /// This is the same event as on the <see cref="ObservableCollection{T}"/> except that it is public. </summary>
         public new event PropertyChangedEventHandler PropertyChanged
         {
             add { base.PropertyChanged += value; }
@@ -58,9 +53,7 @@ namespace MyToolkit.Collections
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
-        /// <summary>
-        /// Removes multiple items from the collection. 
-        /// </summary>
+        /// <summary>Removes multiple items from the collection. </summary>
         /// <param name="collection">The items to remove. </param>
         public void RemoveRange(IEnumerable<T> collection)
         {
@@ -74,10 +67,8 @@ namespace MyToolkit.Collections
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
-        /// <summary>
-        /// Resets the whole collection with a given list. 
-        /// </summary>
-        /// <param name="collection"></param>
+        /// <summary>Resets the whole collection with a given list. </summary>
+        /// <param name="collection">The collection. </param>
         public void Initialize(IEnumerable<T> collection)
         {
             if (collection == null) 

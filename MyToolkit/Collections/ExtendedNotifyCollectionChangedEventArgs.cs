@@ -23,19 +23,13 @@ namespace MyToolkit.Collections
             OldCollection = oldCollection; 
         }
 
-        /// <summary>
-        /// Gets or sets the list of added items. 
-        /// </summary>
+        /// <summary>Gets or sets the list of added items. </summary>
         public IReadOnlyList<T> AddedItems { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the list of removed items. 
-        /// </summary>
+        /// <summary>Gets or sets the list of removed items. </summary>
         public IReadOnlyList<T> RemovedItems { get; private set; }
 
-        /// <summary>
-        /// Gets the previous collection (only provided when enabled in the <see cref="ExtendedObservableCollection{T}"/> object). 
-        /// </summary>
+        /// <summary>Gets the previous collection (only provided when enabled in the <see cref="ExtendedObservableCollection{T}"/> object). </summary>
         public IReadOnlyList<T> OldCollection { get; private set; }
 
 #else
@@ -82,19 +76,13 @@ namespace MyToolkit.Collections
 
     public interface IExtendedNotifyCollectionChangedEventArgs
     {
-        /// <summary>
-        /// Gets the list of added items. 
-        /// </summary>
+        /// <summary>Gets the list of added items. </summary>
         IEnumerable AddedItems { get; }
 
-        /// <summary>
-        /// Gets the list of removed items. 
-        /// </summary>
+        /// <summary>Gets the list of removed items. </summary>
         IEnumerable RemovedItems { get; }
 
-        /// <summary>
-        /// Gets the previous collection (only provided when enabled in the <see cref="ExtendedObservableCollection{T}"/> object). 
-        /// </summary>
+        /// <summary>Gets the previous collection (only provided when enabled in the <see cref="ExtendedObservableCollection{T}"/> object). </summary>
         IEnumerable OldCollection { get; }
     }
 }

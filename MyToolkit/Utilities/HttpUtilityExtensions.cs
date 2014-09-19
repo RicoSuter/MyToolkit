@@ -14,9 +14,7 @@ namespace MyToolkit.Utilities
     /// <summary>Provides HTTP utility methods. </summary>
 	public static class HttpUtilityExtensions
 	{
-        /// <summary>
-        /// Parses a given HTTP query string into key-value pairs. 
-        /// </summary>
+        /// <summary>Parses a given HTTP query string into key-value pairs. </summary>
         /// <param name="queryString">The query string to parse. </param>
         /// <returns>The key-value pairs. </returns>
 		public static Dictionary<string, string> ParseQueryString(string queryString)

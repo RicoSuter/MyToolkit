@@ -20,9 +20,7 @@ namespace MyToolkit.Utilities
 	}
 #endif
 
-    /// <summary>
-    /// Provides methods to handle streams. 
-    /// </summary>
+    /// <summary>Provides methods to handle streams. </summary>
 	public static class StreamExtensions
 	{
         /// <summary>
@@ -42,9 +40,7 @@ namespace MyToolkit.Utilities
 			}
 		}
 
-        /// <summary>
-        /// Asynchronously reads all available bytes from the stream. 
-        /// </summary>
+        /// <summary>Asynchronously reads all available bytes from the stream. </summary>
         /// <param name="stream">The stream to read from. </param>
         /// <returns>The read byte array. </returns>
         public static Task<byte[]> ReadToEndAsync(this Stream stream)
@@ -52,9 +48,7 @@ namespace MyToolkit.Utilities
 			return stream.ReadToEndAsync(CancellationToken.None);
 		}
 
-	    /// <summary>
-	    /// Asynchronously reads all available bytes from the stream. 
-	    /// </summary>
+	    /// <summary>Asynchronously reads all available bytes from the stream. </summary>
 	    /// <param name="stream">The stream to read from. </param>
 	    /// <param name="token">The cancellation token. </param>
 	    /// <param name="progress">The progress. </param>
@@ -90,9 +84,7 @@ namespace MyToolkit.Utilities
 			return source.Task;
 		}
 
-        /// <summary>
-        /// Converts a string to a memory stream. 
-        /// </summary>
+        /// <summary>Converts a string to a memory stream. </summary>
         /// <param name="str">The string to convert. </param>
         /// <returns>The converted string. </returns>
 		public static Stream ToStream(this string str)

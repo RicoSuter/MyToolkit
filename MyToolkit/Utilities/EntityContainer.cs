@@ -6,6 +6,8 @@ using MyToolkit.Storage;
 
 namespace MyToolkit.Utilities
 {
+    // TODO: Improve this class
+
     public class EntityContainer<TEntity, TIdentity> where TEntity : class, IEntity<TIdentity>
 	{
 		private readonly ExtendedObservableCollection<TEntity> _collection = new ExtendedObservableCollection<TEntity>();

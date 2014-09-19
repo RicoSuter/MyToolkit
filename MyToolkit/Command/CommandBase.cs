@@ -13,9 +13,7 @@ using MyToolkit.Model;
 
 namespace MyToolkit.Command
 {
-    /// <summary>
-    /// Provides a base implementation of the <see cref="ICommand"/> interface. 
-    /// </summary>
+    /// <summary>Provides a base implementation of the <see cref="ICommand"/> interface. </summary>
     public abstract class CommandBase : ObservableObject, ICommand
     {
         bool ICommand.CanExecute(object parameter)
@@ -23,19 +21,14 @@ namespace MyToolkit.Command
             return CanExecute;
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the command can execute in its current state.
-        /// </summary>
+        /// <summary>Gets a value indicating whether the command can execute in its current state. </summary>
         public abstract bool CanExecute { get; }
 
-        /// <summary>
-        /// Defines the method to be called when the command is invoked.
-        /// </summary>
+        /// <summary>Defines the method to be called when the command is invoked. </summary>
         protected abstract void Execute();
 
-        /// <summary>
-        /// Tries to execute the command by checking the <see cref="CanExecute"/> property and executes the command only when it can be executed. 
-        /// </summary>
+        /// <summary>Tries to execute the command by checking the <see cref="CanExecute"/> property 
+        /// and executes the command only when it can be executed. </summary>
         /// <returns>True if command has been executed; false otherwise. </returns>
         public bool TryExecute()
         {
@@ -50,9 +43,7 @@ namespace MyToolkit.Command
             Execute();
         }
 
-        /// <summary>
-        /// Triggers the CanExecuteChanged event and a property changed event on the CanExecute property. 
-        /// </summary>
+        /// <summary>Triggers the CanExecuteChanged event and a property changed event on the CanExecute property. </summary>
         public virtual void RaiseCanExecuteChanged()
         {
             RaisePropertyChanged("CanExecute");
@@ -62,15 +53,11 @@ namespace MyToolkit.Command
                 copy(this, new EventArgs());
         }
 
-        /// <summary>
-        /// Occurs when changes occur that affect whether or not the command should execute.
-        /// </summary>
+        /// <summary>Occurs when changes occur that affect whether or not the command should execute. </summary>
         public event EventHandler CanExecuteChanged;
     }
 
-    /// <summary>
-    /// Provides an implementation of the <see cref="ICommand"/> interface. 
-    /// </summary>
+    /// <summary>Provides an implementation of the <see cref="ICommand"/> interface. </summary>
     /// <typeparam name="T">The type of the command parameter. </typeparam>
     public abstract class CommandBase<T> : ICommand
     {
@@ -80,9 +67,7 @@ namespace MyToolkit.Command
             return CanExecute((T)parameter);
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the command can execute in its current state.
-        /// </summary>
+        /// <summary>Gets a value indicating whether the command can execute in its current state. </summary>
         [DebuggerStepThrough]
         public abstract bool CanExecute(T parameter);
 
@@ -91,9 +76,8 @@ namespace MyToolkit.Command
         /// </summary>
         protected abstract void Execute(T parameter);
 
-        /// <summary>
-        /// Tries to execute the command by calling the <see cref="CanExecute"/> method and executes the command only when it can be executed. 
-        /// </summary>
+        /// <summary>Tries to execute the command by calling the <see cref="CanExecute"/> method 
+        /// and executes the command only when it can be executed. </summary>
         /// <returns>True if command has been executed; false otherwise. </returns>
         public bool TryExecute(T parameter)
         {
@@ -109,9 +93,7 @@ namespace MyToolkit.Command
             Execute((T)parameter);
         }
 
-        /// <summary>
-        /// Triggers the CanExecuteChanged event. 
-        /// </summary>
+        /// <summary>Triggers the CanExecuteChanged event. </summary>
         public virtual void RaiseCanExecuteChanged()
         {
             var copy = CanExecuteChanged;
@@ -119,9 +101,7 @@ namespace MyToolkit.Command
                 copy(this, new EventArgs());
         }
 
-        /// <summary>
-        /// Occurs when changes occur that affect whether or not the command should execute.
-        /// </summary>
+        /// <summary>Occurs when changes occur that affect whether or not the command should execute. </summary>
         public event EventHandler CanExecuteChanged;
     } 
 }

@@ -15,9 +15,7 @@ using System.Linq;
 
 namespace MyToolkit.Collections
 {
-    /// <summary>
-    /// An implementation of an observable dictionary
-    /// </summary>
+    /// <summary>An implementation of an observable dictionary. </summary>
     /// <typeparam name="TKey">The type of the key. </typeparam>
     /// <typeparam name="TValue">The type of the value. </typeparam>
     public class ObservableDictionary<TKey, TValue> :
@@ -59,17 +57,13 @@ namespace MyToolkit.Collections
             _dictionary = new Dictionary<TKey, TValue>(capacity, comparer);
         }
 
-        /// <summary>
-        /// Gets the underlying dictonary. 
-        /// </summary>
+        /// <summary>Gets the underlying dictonary. </summary>
         protected IDictionary<TKey, TValue> Dictionary
         {
             get { return _dictionary; }
         }
 
-        /// <summary>
-        /// Adds multiple key-value pairs the the dictionary. 
-        /// </summary>
+        /// <summary>Adds multiple key-value pairs the the dictionary. </summary>
         /// <param name="items">The key-value pairs. </param>
         public void AddRange(IDictionary<TKey, TValue> items)
         {
@@ -93,9 +87,7 @@ namespace MyToolkit.Collections
             }
         }
 
-        /// <summary>
-        /// Inserts a key-value pair into the dictionary. 
-        /// </summary>
+        /// <summary>Inserts a key-value pair into the dictionary. </summary>
         /// <param name="key">The key. </param>
         /// <param name="value">The value. </param>
         /// <param name="add">If true and key already exists then an exception is thrown. </param>

@@ -13,10 +13,8 @@ using System.Windows.Input;
 
 namespace MyToolkit.Command
 {
-    /// <summary>
-    /// Provides an async implementation of the <see cref="ICommand"/> interface. 
-    /// The command is inactive when the command's task is running. 
-    /// </summary>
+    /// <summary>Provides an async implementation of the <see cref="ICommand"/> interface. 
+    /// The command is inactive when the command's task is running. </summary>
     public class AsyncRelayCommand : CommandBase
     {
         private readonly Func<Task> _execute;
@@ -35,9 +33,7 @@ namespace MyToolkit.Command
             _canExecute = canExecute;
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the command is currently running. 
-        /// </summary>
+        /// <summary>Gets a value indicating whether the command is currently running. </summary>
         public bool IsRunning
         {
             get { return _isRunning; }
@@ -48,9 +44,7 @@ namespace MyToolkit.Command
             }
         }
 
-        /// <summary>
-        /// Defines the method to be called when the command is invoked.
-        /// </summary>
+        /// <summary>Defines the method to be called when the command is invoked. </summary>
         protected override async void Execute()
         {
             var task = _execute();
@@ -62,18 +56,14 @@ namespace MyToolkit.Command
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the command can execute in its current state.
-        /// </summary>
+        /// <summary>Gets a value indicating whether the command can execute in its current state. </summary>
         public override bool CanExecute 
         {
             get { return !IsRunning && (_canExecute == null || _canExecute()); }
         }
     }
 
-    /// <summary>
-    /// Provides an implementation of the <see cref="ICommand"/> interface. 
-    /// </summary>
+    /// <summary>Provides an implementation of the <see cref="ICommand"/> interface. </summary>
     /// <typeparam name="T">The type of the command parameter. </typeparam>
     public class AsyncRelayCommand<T> : CommandBase<T>
     {
@@ -95,9 +85,7 @@ namespace MyToolkit.Command
             _canExecute = canExecute;
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the command is currently running. 
-        /// </summary>
+        /// <summary>Gets a value indicating whether the command is currently running. </summary>
         public bool IsRunning
         {
             get { return _isRunning; }
@@ -108,18 +96,14 @@ namespace MyToolkit.Command
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the command can execute in its current state.
-        /// </summary>
+        /// <summary>Gets a value indicating whether the command can execute in its current state. </summary>
         [DebuggerStepThrough]
         public override bool CanExecute(T parameter)
         {
             return !IsRunning && (_canExecute == null || _canExecute(parameter));
         }
 
-        /// <summary>
-        /// Defines the method to be called when the command is invoked.
-        /// </summary>
+        /// <summary>Defines the method to be called when the command is invoked. </summary>
         protected override async void Execute(T parameter)
         {
             var task = _execute(parameter);
