@@ -13,7 +13,7 @@ using System.Linq;
 namespace MyToolkit.Collections
 {
 	/// <summary>Groups a set of objects alphabetically (using the ToString() method). </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="T">The item type. </typeparam>
 	public class AlphaGroups<T> : List<Group<T>>, INotifyCollectionChanged
 	{
 		private const string Characters = "#abcdefghijklmnopqrstuvwxyz";
@@ -32,18 +32,22 @@ namespace MyToolkit.Collections
         public void Initialize(IEnumerable<T> items)
 		{
 			Clear();
-
+            
 			_groups = new Dictionary<string, Group<T>>();
 
-			var itemGroups = items.OrderBy(i => i.ToString()).
+			var itemGroups = items
+                .OrderBy(i => i.ToString()).
 				GroupBy(i => GetFirstCharacter(i.ToString())).
 				ToDictionary(g => g.Key);
 
 			foreach (var alpha in Characters)
 			{
 				var title = alpha.ToString();
-				var group = itemGroups.ContainsKey(title) ? 
-					new Group<T>(title, itemGroups[title]) : new Group<T>(title);
+
+				var group = itemGroups.ContainsKey(title) 
+                    ? new Group<T>(title, itemGroups[title]) 
+                    : new Group<T>(title);
+
 				_groups.Add(title, group);
 			}
 

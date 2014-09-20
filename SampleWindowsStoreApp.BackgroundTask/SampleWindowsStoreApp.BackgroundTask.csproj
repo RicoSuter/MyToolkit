@@ -35,11 +35,11 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\..\MyToolkit.Extended.WinRT\MyToolkit.Extended.WinRT.csproj">
+    <ProjectReference Include="..\MyToolkit.Extended.WinRT\MyToolkit.Extended.WinRT.csproj">
       <Project>{c5ff4b9f-18cb-4a29-91ac-c0eafda2ec8e}</Project>
       <Name>MyToolkit.Extended.WinRT</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MyToolkit\MyToolkit.csproj">
+    <ProjectReference Include="..\MyToolkit\MyToolkit.csproj">
       <Project>{f01f49c0-5da2-4757-b4e0-02ec7a187ded}</Project>
       <Name>MyToolkit</Name>
     </ProjectReference>

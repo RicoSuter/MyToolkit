@@ -17,9 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Extended.Wp8", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Extended.Wpf45", "MyToolkit.Extended.Wpf\MyToolkit.Extended.Wpf45.csproj", "{0D8F527D-868F-4DE3-8559-EA3597D9D079}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamplePhoneApp", "- Samples\SamplePhoneApp\SamplePhoneApp.csproj", "{AFE49CB8-BFF4-45D9-808B-E08FD412D8D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamplePhoneApp", "SamplePhoneApp\SamplePhoneApp.csproj", "{AFE49CB8-BFF4-45D9-808B-E08FD412D8D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWindowsStoreApp", "- Samples\SampleWindowsStoreApp\SampleWindowsStoreApp.csproj", "{965160CF-072F-4F1D-B0F5-68A8E603B4F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWindowsStoreApp", "SampleWindowsStoreApp\SampleWindowsStoreApp.csproj", "{965160CF-072F-4F1D-B0F5-68A8E603B4F2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Http", "MyToolkit.Http\MyToolkit.Http.csproj", "{1A7DAA49-EA7E-4F25-8E4D-40DC11376B74}"
 EndProject
@@ -38,13 +38,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9EA343
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.MachineLearning.WinRT", "MyToolkit.Extended.WinRT\MyToolkit.MachineLearning.WinRT.csproj", "{85D42DE9-8D73-4876-9940-CDAE4E9EA4CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleUniversalPhoneApp", "- Samples\SampleUniversalPhoneApp\SampleUniversalPhoneApp.csproj", "{9E285F9C-3BE5-454E-AD2B-1BBBD833F91B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleUniversalPhoneApp", "SampleUniversalPhoneApp\SampleUniversalPhoneApp.csproj", "{9E285F9C-3BE5-454E-AD2B-1BBBD833F91B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWpfApplication", "- Samples\SampleWpfApplication\SampleWpfApplication.csproj", "{0137729E-D2E5-41DD-851C-E878D24083C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWpfApplication", "SampleWpfApplication\SampleWpfApplication.csproj", "{0137729E-D2E5-41DD-851C-E878D24083C0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{E4FCC2B9-B4C4-4490-A8D1-1FBF58C46ADF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWindowsStoreApp.BackgroundTask", "- Samples\SampleWindowsStoreApp.BackgroundTask\SampleWindowsStoreApp.BackgroundTask.csproj", "{D219F086-226D-4526-A06E-B2655CAE19B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWindowsStoreApp.BackgroundTask", "SampleWindowsStoreApp.BackgroundTask\SampleWindowsStoreApp.BackgroundTask.csproj", "{D219F086-226D-4526-A06E-B2655CAE19B9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{FE43777F-253C-4927-97CC-43ECDFA2D440}"
 EndProject

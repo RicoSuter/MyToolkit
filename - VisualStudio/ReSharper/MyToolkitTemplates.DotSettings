@@ -1,0 +1,60 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Shortcut/@EntryValue">obprop</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Description/@EntryValue">Inserts an observable property</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Text/@EntryValue">private $TYPE$ _$FIELD$;&#xD;
+&#xD;
+/// &lt;summary&gt;Gets or sets the $NAME$. &lt;/summary&gt;&#xD;
+public $TYPE$ $PROPERTY$&#xD;
+{&#xD;
+    get { return _$FIELD$; }&#xD;
+    set { Set(ref _$FIELD$, value); }&#xD;
+}</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Categories/=Imported_002008_002E08_002E2014/@EntryIndexedValue">Imported 08.08.2014</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Scope/=C3001E7C0DA78E4487072B7E050D86C5/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Field/=TYPE/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Field/=TYPE/Expression/@EntryValue">constant("object")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Field/=TYPE/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Field/=PROPERTY/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Field/=PROPERTY/Expression/@EntryValue">constant("Property")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Field/=PROPERTY/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Field/=FIELD/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Field/=FIELD/Expression/@EntryValue">decapitalize(PROPERTY)</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Field/=FIELD/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Field/=FIELD/Order/@EntryValue">2</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Field/=NAME/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Field/=NAME/Expression/@EntryValue">decapitalize(PROPERTY)</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A8C2A644D5BCA042BCBCA5CA5D03D6F0/Field/=NAME/Order/@EntryValue">3</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Shortcut/@EntryValue">obboolprop</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Description/@EntryValue">Inserts a boolean observable property. </s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Text/@EntryValue">private bool _$FIELD$;&#xD;
+&#xD;
+/// &lt;summary&gt;Gets or sets a value indicating whether $DOCUMENTATION$. &lt;/summary&gt;&#xD;
+public bool $PROPERTY$&#xD;
+{&#xD;
+    get { return _$FIELD$; }&#xD;
+    set { Set(ref _$FIELD$, value); }&#xD;
+}</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Categories/=Imported_002008_002E08_002E2014/@EntryIndexedValue">Imported 08.08.2014</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Scope/=C3001E7C0DA78E4487072B7E050D86C5/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">2.0</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Field/=PROPERTY/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Field/=PROPERTY/Expression/@EntryValue">constant("Property")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Field/=PROPERTY/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Field/=FIELD/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Field/=FIELD/Expression/@EntryValue">decapitalize(PROPERTY)</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Field/=FIELD/InitialRange/@EntryValue">-1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Field/=FIELD/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Field/=DOCUMENTATION/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Field/=DOCUMENTATION/Expression/@EntryValue">constant("TODO")</s:String>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=A9C2A644D5BCA042BCBCB5CA5D03A6F0/Field/=DOCUMENTATION/Order/@EntryValue">2</s:Int64></wpf:ResourceDictionary>

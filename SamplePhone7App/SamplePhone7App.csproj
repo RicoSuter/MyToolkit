@@ -117,15 +117,15 @@
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MyToolkit.Extended.Wp7\MyToolkit.Extended.Wp7.csproj">
+    <ProjectReference Include="..\MyToolkit.Extended.Wp7\MyToolkit.Extended.Wp7.csproj">
       <Project>{65A7577A-196F-4DB7-BC7B-0C2A4170E8D4}</Project>
       <Name>MyToolkit.Extended.Wp7</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MyToolkit.Http\MyToolkit.Http.Legacy.csproj">
+    <ProjectReference Include="..\MyToolkit.Http\MyToolkit.Http.Legacy.csproj">
       <Project>{E28B4A3C-8D5A-4C5A-A96C-67669721B810}</Project>
       <Name>MyToolkit.Http.Legacy</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MyToolkit\MyToolkit.Legacy.csproj">
+    <ProjectReference Include="..\MyToolkit\MyToolkit.Legacy.csproj">
       <Project>{F3E1A71D-891A-4A7C-8627-AD60EA8E4483}</Project>
       <Name>MyToolkit.Legacy</Name>
     </ProjectReference>

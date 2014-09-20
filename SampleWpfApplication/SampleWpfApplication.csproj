@@ -94,19 +94,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MyToolkit.Extended.Wpf\MyToolkit.Extended.Wpf45.csproj">
+    <ProjectReference Include="..\MyToolkit.Extended.Wpf\MyToolkit.Extended.Wpf45.csproj">
       <Project>{0d8f527d-868f-4de3-8559-ea3597d9d079}</Project>
       <Name>MyToolkit.Extended.Wpf45</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MyToolkit.Http\MyToolkit.Http.csproj">
+    <ProjectReference Include="..\MyToolkit.Http\MyToolkit.Http.csproj">
       <Project>{1a7daa49-ea7e-4f25-8e4d-40dc11376b74}</Project>
       <Name>MyToolkit.Http</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MyToolkit.Web\MyToolkit.Web.csproj">
+    <ProjectReference Include="..\MyToolkit.Web\MyToolkit.Web.csproj">
       <Project>{7D4E4419-4B4D-42C6-AD7A-9DEAAD90B3EF}</Project>
       <Name>MyToolkit.Web</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MyToolkit\MyToolkit.csproj">
+    <ProjectReference Include="..\MyToolkit\MyToolkit.csproj">
       <Project>{f01f49c0-5da2-4757-b4e0-02ec7a187ded}</Project>
       <Name>MyToolkit</Name>
     </ProjectReference>
