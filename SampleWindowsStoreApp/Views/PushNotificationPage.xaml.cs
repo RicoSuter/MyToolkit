@@ -23,7 +23,7 @@ namespace SampleWindowsStoreApp.Views
         public PushNotificationPage()
         {
             InitializeComponent();
-            ChannelUriTextBox.Text = ApplicationSettings.GetSetting<string>(PushNotificationChannelSettingKey, null);
+            ChannelUriTextBox.Text = ApplicationSettings.GetSetting(PushNotificationChannelSettingKey, string.Empty);
         }
 
         public static async void OnLoadApplication()
