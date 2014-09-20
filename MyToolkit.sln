@@ -29,13 +29,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Extended.Wpf40", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Extended.WinRT", "MyToolkit.Extended.WinRT\MyToolkit.Extended.WinRT.csproj", "{C5FF4B9F-18CB-4A29-91AC-C0EAFDA2EC8E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9EA343D4-CBDC-4B1F-9277-3F410D9378D4}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.MachineLearning.WinRT", "MyToolkit.Extended.WinRT\MyToolkit.MachineLearning.WinRT.csproj", "{85D42DE9-8D73-4876-9940-CDAE4E9EA4CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleUniversalPhoneApp", "SampleUniversalPhoneApp\SampleUniversalPhoneApp.csproj", "{9E285F9C-3BE5-454E-AD2B-1BBBD833F91B}"
