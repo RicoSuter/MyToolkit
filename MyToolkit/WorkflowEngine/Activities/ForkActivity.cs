@@ -14,6 +14,5 @@ namespace MyToolkit.WorkflowEngine.Activities
     [XmlType("Fork")]
     public class ForkActivity : AutomaticWorkflowActivityBase
     {
-
     }
 }

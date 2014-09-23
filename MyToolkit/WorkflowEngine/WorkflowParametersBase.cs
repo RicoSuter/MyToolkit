@@ -8,8 +8,8 @@
 
 namespace MyToolkit.WorkflowEngine
 {
+    /// <summary>Base class for workflow parameters. </summary>
     public abstract class WorkflowParametersBase
     {
-        
     }
 }

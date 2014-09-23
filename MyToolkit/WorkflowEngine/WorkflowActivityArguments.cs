@@ -8,10 +8,12 @@
 
 namespace MyToolkit.WorkflowEngine
 {
+    /// <summary>A container for accessing typed activity arguments. </summary>
     public class WorkflowActivityArguments
     {
         private readonly object[] _args;
 
+        /// <summary>Initializes a new instance of the <see cref="WorkflowActivityArguments"/> class. </summary>
         public WorkflowActivityArguments(object[] args)
         {
             _args = args; 

@@ -13,29 +13,36 @@ using System.Xml.Serialization;
 
 namespace MyToolkit.WorkflowEngine.Activities
 {
+    /// <summary>The base workflow activity class. </summary>
     [XmlInclude(typeof(EmptyActivity))]
     [XmlInclude(typeof(ForkActivity))]
     [XmlInclude(typeof(JoinActivity))]
     [XmlInclude(typeof(AutomaticWorkflowActivityBase))]
     public abstract class WorkflowActivityBase
     {
+        /// <summary>Initializes a new instance of the <see cref="WorkflowActivityBase"/> class. </summary>
         protected WorkflowActivityBase()
         {
             Id = Guid.NewGuid().ToString();
         }
 
+        /// <summary>Gets or sets the id of the activity. </summary>
         [XmlAttribute]
         public string Id { get; set; }
 
+        /// <summary>Gets or sets the description. </summary>
         [XmlElement]
         public string Description { get; set; }
 
+        /// <summary>Gets or sets the used data group. </summary>
         [XmlAttribute]
         public string Group { get; set; }
 
+        /// <summary>Gets or sets the x position in the designer. </summary>
         [XmlAttribute]
         public double PositionX { get; set; }
 
+        /// <summary>Gets or sets the y position in the designer. </summary>
         [XmlAttribute]
         public double PositionY { get; set; }
 

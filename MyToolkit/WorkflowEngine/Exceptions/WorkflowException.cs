@@ -10,8 +10,10 @@ using System;
 
 namespace MyToolkit.WorkflowEngine.Exceptions
 {
+    /// <summary>The workflow exception. </summary>
     public class WorkflowException : Exception
     {
+        /// <summary>Initializes a new instance of the <see cref="WorkflowException"/> class. </summary>
         public WorkflowException(string message) : base(message) { }
     }
 }

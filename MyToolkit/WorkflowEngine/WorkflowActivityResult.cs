@@ -12,6 +12,7 @@ using MyToolkit.WorkflowEngine.Exceptions;
 
 namespace MyToolkit.WorkflowEngine
 {
+    /// <summary>Represents a result of an activity's execution. </summary>
     public class WorkflowActivityResult
     {
         /// <summary>Gets a value indicating whether the processing of the activity was successful. </summary>
@@ -23,23 +24,27 @@ namespace MyToolkit.WorkflowEngine
         /// <summary>Gets or sets the result object (only used to pass data to the caller of the <see cref="WorkflowInstance" /> object's CompleteAsync method). </summary>
         public object Result { get; private set; }
 
+        /// <summary>Initializes a new instance of the <see cref="WorkflowActivityResult"/> class. </summary>
         public WorkflowActivityResult(bool successfull)
         {
             Successful = successfull;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="WorkflowActivityResult"/> class. </summary>
         public WorkflowActivityResult(bool successfull, object result)
         {
             Successful = successfull;
             Result = result;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="WorkflowActivityResult"/> class. </summary>
         public WorkflowActivityResult(bool successfull, WorkflowActivityBase[] nextActivities)
         {
             Successful = successfull;
             NextActivities = nextActivities;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="WorkflowActivityResult"/> class. </summary>
         public WorkflowActivityResult(bool successfull, object result, WorkflowActivityBase[] nextActivities)
         {
             Successful = successfull;

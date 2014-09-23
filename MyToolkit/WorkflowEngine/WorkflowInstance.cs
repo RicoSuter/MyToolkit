@@ -20,13 +20,13 @@ using MyToolkit.WorkflowEngine.Exceptions;
 
 namespace MyToolkit.WorkflowEngine
 {
+    /// <summary>Represents an instance of a <see cref="WorkflowDefinition"/>. </summary>
     public class WorkflowInstance : ObservableObject
     {
+        private bool _isRunning;
         private string[] _lastCurrentActivityIds = null;
 
-        /// <summary>
-        /// Deserializes a workflow instance from XML. 
-        /// </summary>
+        /// <summary>Deserializes a workflow instance from XML. </summary>
         /// <param name="xml">The XML as string. </param>
         /// <param name="workflowDefinition">The instance's workflow description. </param>
         /// <param name="dataTypes">All possible data container types. </param>
@@ -50,29 +50,19 @@ namespace MyToolkit.WorkflowEngine
         {
         }
 
-        /// <summary>
-        /// Gets the instance's workflow description. 
-        /// </summary>
+        /// <summary>Gets the instance's workflow description. </summary>
         [XmlIgnore]
         public WorkflowDefinition WorkflowDefinition { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the data provider of the workflow instance. 
-        /// </summary>
+        /// <summary>Gets or sets the data provider of the workflow instance. </summary>
         public WorkflowDataProvider Data { get; set; }
 
-        /// <summary>
-        /// Occurs when the current activities of the workflow instance changed. 
-        /// </summary>
+        /// <summary>Occurs when the current activities of the workflow instance changed. </summary>
         public event EventHandler<CurrentActivitiesChangedEventArgs> CurrentActivitiesChanged;
 
-        /// <summary>
-        /// Gets or sets the current activity IDs. 
-        /// </summary>
+        /// <summary>Gets or sets the current activity IDs. </summary>
         [XmlArray("Current"), XmlArrayItem("Activity")]
         public List<string> CurrentActivityIds { get; set; }
-
-        private bool _isRunning;
 
         /// <summary>Gets or sets a value indicating whether an activity of the instance is currently running. </summary>
         [XmlIgnore]
@@ -82,9 +72,7 @@ namespace MyToolkit.WorkflowEngine
             private set { Set(ref _isRunning, value); }
         }
 
-        /// <summary>
-        /// Gets the list of current activities. 
-        /// </summary>
+        /// <summary>Gets the list of current activities. </summary>
         [XmlIgnore]
         public WorkflowActivityBase[] CurrentActivities
         {
@@ -96,17 +84,13 @@ namespace MyToolkit.WorkflowEngine
             }
         }
 
-        /// <summary>
-        /// Gets the first activity of the current activities or null of there are no more activities. 
-        /// </summary>
+        /// <summary>Gets the first activity of the current activities or null of there are no more activities. </summary>
         public WorkflowActivityBase NextActivity
         {
             get { return CurrentActivities.FirstOrDefault(); }
         }
 
-        /// <summary>
-        /// Serializes the workflow instance to XML. 
-        /// </summary>
+        /// <summary>Serializes the workflow instance to XML. </summary>
         /// <returns>The XML. </returns>
         public string ToXml()
         {

@@ -13,11 +13,10 @@ using MyToolkit.WorkflowEngine.Activities;
 
 namespace MyToolkit.WorkflowEngine
 {
-    /// <summary>
-    /// Provides data objects for a workflow instance. 
-    /// </summary>
+    /// <summary>Provides data objects for a workflow instance. </summary>
     public class WorkflowDataProvider
     {
+        /// <summary>Initializes a new instance of the <see cref="WorkflowDataProvider"/> class. </summary>
         public WorkflowDataProvider()
         {
             Data = new List<ActivityDataBase>();
