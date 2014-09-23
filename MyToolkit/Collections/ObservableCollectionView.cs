@@ -78,23 +78,17 @@ namespace MyToolkit.Collections
             UpdateList();
         }
 
-        /// <summary>
-        /// Gets the original items source. 
-        /// </summary>
+        /// <summary>Gets the original items source. </summary>
         public IList<T> Items { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the filter (a Func{TItem, bool} object). 
-        /// </summary>
+        /// <summary>Gets or sets the filter (a Func{TItem, bool} object). </summary>
         object IObservableView.Filter
         {
             get { return Filter; }
             set { Filter = (Func<T, bool>)value; }
         }
 
-        /// <summary>
-        /// Gets or sets the filter. 
-        /// </summary>
+        /// <summary>Gets or sets the filter. </summary>
         public Func<T, bool> Filter
         {
             get { return _filter; }
@@ -105,18 +99,14 @@ namespace MyToolkit.Collections
             }
         }
 
-        /// <summary>
-        /// Gets or sets the order. 
-        /// </summary>
+        /// <summary>Gets or sets the order. </summary>
         object IObservableView.Order
         {
             get { return Order; }
             set { Order = (Func<T, object>)value; }
         }
 
-        /// <summary>
-        /// Gets or sets the sorting/order function
-        /// </summary>
+        /// <summary>Gets or sets the sorting/order function. </summary>
         public Func<T, object> Order
         {
             get { return _order; }
@@ -127,9 +117,7 @@ namespace MyToolkit.Collections
             }
         }
 
-        /// <summary>
-        /// Gets or sets the maximum number of items in the view. 
-        /// </summary>
+        /// <summary>Gets or sets the maximum number of items in the view. </summary>
         public int Limit
         {
             get { return _limit; }
@@ -140,9 +128,7 @@ namespace MyToolkit.Collections
             }
         }
 
-        /// <summary>
-        /// Gets or sets the offset from where the results a selected. 
-        /// </summary>
+        /// <summary>Gets or sets the offset from where the results a selected. </summary>
         public int Offset
         {
             get { return _offset; }
@@ -153,9 +139,7 @@ namespace MyToolkit.Collections
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the sorting should be ascending; otherwise descending. 
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether the sorting should be ascending; otherwise descending. </summary>
         public bool Ascending
         {
             get { return _ascending; }
@@ -166,11 +150,9 @@ namespace MyToolkit.Collections
             }
         }
 
-        /// <summary>
-        /// Gets or sets a flag whether the view should automatically be updated when needed. 
+        /// <summary>Gets or sets a flag whether the view should automatically be updated when needed. 
         /// Disable this flag when doing multiple of operations on the underlying collection. 
-        /// Enabling this flag automatically updates the view if needed. 
-        /// </summary>
+        /// Enabling this flag automatically updates the view if needed. </summary>
         public bool IsTracking
         {
             get { return _isTracking; }
@@ -182,10 +164,8 @@ namespace MyToolkit.Collections
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the view should listen for collection 
-        /// changed events on the underlying collection (default: true). 
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether the view should listen for collection 
+        /// changed events on the underlying collection (default: true). </summary>
         public bool TrackCollectionChanges
         {
             get { return _trackCollectionChanges; }
@@ -203,11 +183,9 @@ namespace MyToolkit.Collections
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the items in the collection should be tracked for property changes. 
+        /// <summary>Gets or sets a value indicating whether the items in the collection should be tracked for property changes. 
         /// The items must implement INotifyPropertyChanged to support item tracking. 
-        /// Enable this property if your items are mutable and the list has to be restored if an item property changes. 
-        /// </summary>
+        /// Enable this property if your items are mutable and the list has to be restored if an item property changes. </summary>
         public bool TrackItemChanges
         {
             get { return _trackItemChanges; }
@@ -225,29 +203,26 @@ namespace MyToolkit.Collections
             }
         }
 
-        /// <summary>
-        /// Adds a multiple elements to the underlying collection. 
-        /// </summary>
-        /// <param name="collection"></param>
-        public void AddRange(IEnumerable<T> collection)
+        /// <summary>Adds a multiple elements to the underlying collection. </summary>
+        /// <param name="items">The items to add. </param>
+        [Obsolete("Use methods on Items property instead. 9/20/2014")]
+        public void AddRange(IEnumerable<T> items)
         {
             var old = TrackCollectionChanges;
             TrackCollectionChanges = false;
 
             if (Items is ExtendedObservableCollection<T>)
-                ((ExtendedObservableCollection<T>)Items).AddRange(collection);
+                ((ExtendedObservableCollection<T>)Items).AddRange(items);
             else
             {
-                foreach (var i in collection)
+                foreach (var i in items)
                     Add(i);
             }
 
             TrackCollectionChanges = old;
         }
 
-        /// <summary>
-        /// Releases all used resources and deregisters all events on the items and the underlying collection. 
-        /// </summary>
+        /// <summary>Releases all used resources and deregisters all events on the items and the underlying collection. </summary>
         public void Dispose()
         {
             TrackCollectionChanges = false;
@@ -257,13 +232,17 @@ namespace MyToolkit.Collections
             Items = null;
         }
 
-        /// <summary>
-        /// Releases all used resources and deregisters all events on the items and the underlying collection. 
-        /// </summary>
+        /// <summary>Releases all used resources and deregisters all events on the items and the underlying collection. </summary>
         [Obsolete("Use Dispose instead. 5/17/2014")]
         public void Close()
         {
             Dispose();
+        }
+
+        /// <summary>Updates the view. </summary>
+        public void Update()
+        {
+            UpdateList();
         }
 
         private void OnOriginalCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -355,14 +334,6 @@ namespace MyToolkit.Collections
         {
             foreach (var item in _events.Keys.ToArray())
                 UnregisterEvent(item);
-        }
-
-        /// <summary>
-        /// Updates the view. 
-        /// </summary>
-        public void Update()
-        {
-            UpdateList();
         }
 
         private void UpdateList()
@@ -505,46 +476,6 @@ namespace MyToolkit.Collections
             get { return _syncRoot; }
         }
 
-        public void Insert(int index, T item)
-        {
-            throw new NotSupportedException("Use ObservableCollectionView.Insert() instead.");
-        }
-
-        public void Insert(int index, object value)
-        {
-            throw new NotSupportedException("Use ObservableCollectionView.Insert() instead.");
-        }
-
-        public void RemoveAt(int index)
-        {
-            throw new NotSupportedException("Use ObservableCollectionView.Insert() instead.");
-        }
-
-        int IList.Add(object value)
-        {
-            throw new NotSupportedException("Use ObservableCollectionView.Add() instead.");
-        }
-
-        public void Add(T item)
-        {
-            throw new NotSupportedException("Use ObservableCollectionView.Add() instead.");
-        }
-
-        public void Clear()
-        {
-            throw new NotSupportedException("Use ObservableCollectionView.Clear() instead.");
-        }
-
-        public bool Remove(T item)
-        {
-            throw new NotSupportedException("Use ObservableCollectionView.Remove() instead.");
-        }
-
-        public void Remove(object value)
-        {
-            throw new NotSupportedException("Use ObservableCollectionView.Remove() instead.");
-        }
-
         public void CopyTo(Array array, int index)
         {
             CopyTo((T[])array, index);
@@ -554,6 +485,82 @@ namespace MyToolkit.Collections
         {
             lock (SyncRoot)
                 _internalCollection.CopyTo(array, arrayIndex);
+        }
+        
+        //int IList.Add(object value)
+        //{
+        //    throw new NotSupportedException("Use ObservableCollectionView.Add() instead.");
+        //}
+
+        //public void Add(T item)
+        //{
+        //    throw new NotSupportedException("Use ObservableCollectionView.Add() instead.");
+        //}
+
+        //public void Clear()
+        //{
+        //    throw new NotSupportedException("Use ObservableCollectionView.Clear() instead.");
+        //}
+
+        //public bool Remove(T item)
+        //{
+        //    throw new NotSupportedException("Use ObservableCollectionView.Remove() instead.");
+        //}
+
+        //public void Remove(object value)
+        //{
+        //    throw new NotSupportedException("Use ObservableCollectionView.Remove() instead.");
+        //}
+
+        [Obsolete("Use methods on Items property instead. 9/20/2014")]
+        int IList.Add(object value)
+        {
+            return ((IList)Items).Add(value);
+        }
+
+        [Obsolete("Use methods on Items property instead. 9/20/2014")]
+        public void Add(T item)
+        {
+            Items.Add(item);
+        }
+
+        [Obsolete("Use methods on Items property instead. 9/20/2014")]
+        public void Clear()
+        {
+            Items.Clear();
+        }
+
+        [Obsolete("Use methods on Items property instead. 9/20/2014")]
+        public bool Remove(T item)
+        {
+            return Items.Remove(item);
+        }
+
+        [Obsolete("Use methods on Items property instead. 9/20/2014")]
+        public void Remove(object value)
+        {
+            ((IList)Items).Remove(value);
+        }
+
+
+
+
+        [Obsolete("Use methods on Items property instead. 9/20/2014")]
+        public void Insert(int index, T item)
+        {
+            throw new NotSupportedException("Use ObservableCollectionView.Insert() instead.");
+        }
+
+        [Obsolete("Use methods on Items property instead. 9/20/2014")]
+        public void Insert(int index, object value)
+        {
+            throw new NotSupportedException("Use ObservableCollectionView.Insert() instead.");
+        }
+
+        [Obsolete("Use methods on Items property instead. 9/20/2014")]
+        public void RemoveAt(int index)
+        {
+            throw new NotSupportedException("Use ObservableCollectionView.Insert() instead.");
         }
 
         #endregion

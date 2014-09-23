@@ -9,7 +9,7 @@ using MyToolkit.Networking;
 
 namespace MyToolkit.Tests.WinRT.Multimedia
 {
-    [TestClass]
+    //[TestClass]
     public class YouTubeTests
     {
         [TestMethod]

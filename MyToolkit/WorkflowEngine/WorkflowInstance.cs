@@ -72,6 +72,16 @@ namespace MyToolkit.WorkflowEngine
         [XmlArray("Current"), XmlArrayItem("Activity")]
         public List<string> CurrentActivityIds { get; set; }
 
+        private bool _isRunning;
+
+        /// <summary>Gets or sets a value indicating whether an activity of the instance is currently running. </summary>
+        [XmlIgnore]
+        public bool IsRunning
+        {
+            get { return _isRunning; }
+            private set { Set(ref _isRunning, value); }
+        }
+
         /// <summary>
         /// Gets the list of current activities. 
         /// </summary>
@@ -125,28 +135,37 @@ namespace MyToolkit.WorkflowEngine
         /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
         public Task<WorkflowActivityResult> CompleteAsync(WorkflowActivityBase activity, params object[] args)
         {
-            return CompleteInternalAsync(activity.Id, CancellationToken.None, args);
+            return CompleteAsync(activity.Id, CancellationToken.None, args);
         }
 
         /// <summary>Executes the given activity with the given arguments. </summary>
         /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
         public Task<WorkflowActivityResult> CompleteAsync(WorkflowActivityBase activity, CancellationToken cancellationToken, params object[] args)
         {
-            return CompleteInternalAsync(activity.Id, cancellationToken, args);
+            return CompleteAsync(activity.Id, cancellationToken, args);
         }
 
         /// <summary>Executes the given activity with the given arguments. </summary>
         /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
         public Task<WorkflowActivityResult> CompleteAsync(string activityId, params object[] args)
         {
-            return CompleteInternalAsync(activityId, CancellationToken.None, args);
+            return CompleteAsync(activityId, CancellationToken.None, args);
         }
 
         /// <summary>Executes the given activity with the given arguments. </summary>
         /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
-        public Task<WorkflowActivityResult> CompleteAsync(string activityId, CancellationToken cancellationToken, params object[] args)
+        public async Task<WorkflowActivityResult> CompleteAsync(string activityId, CancellationToken cancellationToken, params object[] args)
         {
-            return CompleteInternalAsync(activityId, cancellationToken, args);
+            try
+            {
+                IsRunning = true;
+                return await CompleteInternalAsync(activityId, cancellationToken, args);
+            }
+            finally
+            {
+                IsRunning = false;
+                RaiseCurrentActivitiesChanged();
+            }
         }
 
         private async Task<WorkflowActivityResult> CompleteInternalAsync(string activityId, CancellationToken cancellationToken, object[] args)
@@ -163,7 +182,7 @@ namespace MyToolkit.WorkflowEngine
                     var nextActivities = result.NextActivities;
                     if (nextActivities == null)
                         nextActivities = GetDefaultNextActivities(activity);
-                    
+
                     if (!(activity is ForkActivity) && nextActivities.Length > 1)
                     {
                         throw new WorkflowException(string.Format("Activity ({0}) has multiple next activities ({1}) " +
@@ -174,25 +193,27 @@ namespace MyToolkit.WorkflowEngine
                     CurrentActivityIds.Remove(activityId);
 
                     await AddNextActivitiesAsync(activityId, nextActivities, allowedTransitions);
-
-                    var currentActivitiesHasChanged = !CurrentActivityIds.IsCopyOf(_lastCurrentActivityIds);
-                    if (currentActivitiesHasChanged)
-                    {
-                        _lastCurrentActivityIds = CurrentActivityIds.ToArray();
-
-                        var copy = CurrentActivitiesChanged;
-                        if (copy != null)
-                            copy(this, new CurrentActivitiesChangedEventArgs());
-
-                        RaisePropertyChanged(() => CurrentActivities);
-                        RaisePropertyChanged(() => NextActivity);
-                    }
-
                     return result;
                 }
             }
 
             return new WorkflowActivityResult(false);
+        }
+
+        private void RaiseCurrentActivitiesChanged()
+        {
+            var currentActivitiesHasChanged = !CurrentActivityIds.IsCopyOf(_lastCurrentActivityIds);
+            if (currentActivitiesHasChanged)
+            {
+                _lastCurrentActivityIds = CurrentActivityIds.ToArray();
+
+                var copy = CurrentActivitiesChanged;
+                if (copy != null)
+                    copy(this, new CurrentActivitiesChangedEventArgs());
+
+                RaisePropertyChanged(() => CurrentActivities);
+                RaisePropertyChanged(() => NextActivity);
+            }
         }
 
         private WorkflowActivityBase[] GetDefaultNextActivities(WorkflowActivityBase activity)
@@ -223,14 +244,15 @@ namespace MyToolkit.WorkflowEngine
         {
             foreach (var nextActivity in nextActivities)
             {
-                var immediatelyExecuteActivity = await nextActivity.PrepareAsync(this);
-
                 var nextActivityId = nextActivity.Id;
                 if (!CurrentActivityIds.Contains(nextActivityId))
                     CurrentActivityIds.Add(nextActivityId);
 
+                RaiseCurrentActivitiesChanged();
+
+                var immediatelyExecuteActivity = await nextActivity.PrepareAsync(this);
                 if (immediatelyExecuteActivity)
-                    await CompleteAsync(nextActivity.Id, false, CancellationToken.None);
+                    await CompleteInternalAsync(nextActivityId, CancellationToken.None, new object[] { });
             }
         }
     }
