@@ -130,7 +130,7 @@ namespace MyToolkit.Build
                 var include = element.Attribute("Include").Value;
                 references.Add(new AssemblyReference(include));
             }
-            _assemblyReferences = references.OrderByThenBy(r => r.Name, r => VersionHelper.FromString(r.Version)).ToList(); 
+            _assemblyReferences = references.OrderByThenBy(r => r.Name, r => VersionUtilities.FromString(r.Version)).ToList(); 
         }
 
         private void LoadNuGetReferences()

@@ -39,7 +39,7 @@ namespace MyToolkit.UI.Popups
 
 		public static Task ShowAsync(PopupControl control, bool hideApplicationBar, bool showFullScreen)
 		{
-			return TaskHelper.RunCallbackMethod<PopupControl, bool, bool, PopupControl>(
+			return TaskUtilities.RunCallbackMethodAsync<PopupControl, bool, bool, PopupControl>(
 				(a, b, c, d) => Show(a, b, c, d), 
 				control, hideApplicationBar, showFullScreen);
 		}

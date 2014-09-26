@@ -10,8 +10,8 @@ namespace MyToolkit.Tests.WinRT.Utilities
         [TestMethod]
         public void When_getting_name_then_no_exception_should_be_thrown()
         {
-            Assert.AreEqual("Text", ExpressionHelper.GetName<TextMessage, string>(i => i.Text));
-            Assert.AreEqual("Text", ExpressionHelper.GetName<TextMessage>(i => i.Text));
+            Assert.AreEqual("Text", ExpressionUtilities.GetName<TextMessage, string>(i => i.Text));
+            Assert.AreEqual("Text", ExpressionUtilities.GetName<TextMessage>(i => i.Text));
         }
     }
 }

@@ -12,7 +12,7 @@ namespace MyToolkit.Utilities
 {
 	// see http://stackoverflow.com/questions/1747235/weak-event-handler-model-for-use-with-lambdas
 
-    [Obsolete("Use EventHelper instead. 9/12/2014")]
+    [Obsolete("Use EventUtilities instead. 9/12/2014")]
     public static class WeakEvent
 	{
 	    /// <summary>Registers a weak event handler which is automatically deregistered after the subscriber 
@@ -22,7 +22,7 @@ namespace MyToolkit.Utilities
 	    /// <param name="remove"></param>
 	    /// <param name="converter">The converter: h => (o, e) => h(o, e)</param>
 	    /// <param name="action"></param>
-        [Obsolete("Use EventHelper.RegisterWeakEvent instead. 9/12/2014")]
+        [Obsolete("Use EventUtilities.RegisterWeakEvent instead. 9/12/2014")]
         public static TDelegate Register<TSubscriber, TDelegate, TArgs>(
             TSubscriber subscriber, 
             Action<TDelegate> add, 
@@ -33,12 +33,12 @@ namespace MyToolkit.Utilities
 			where TDelegate : class
             where TSubscriber : class
 	    {
-	        return EventHelper.RegisterWeakEvent(subscriber, add, remove, converter, action);
+	        return EventUtilities.RegisterWeakEvent(subscriber, add, remove, converter, action);
 	    }
         
         /// <summary>Registers a weak event handler which is automatically deregistered after the subscriber 
         /// has been garbage collected (checked on each event call). </summary>
-        [Obsolete("Use EventHelper.RegisterWeakEvent instead. 9/12/2014")]
+        [Obsolete("Use EventUtilities.RegisterWeakEvent instead. 9/12/2014")]
         public static EventHandler<TArgs> Register<TSubscriber, TArgs>(
             TSubscriber subscriber, 
             Action<EventHandler<TArgs>> add, 
@@ -46,8 +46,8 @@ namespace MyToolkit.Utilities
             Action<TSubscriber, object, TArgs> action)
 			where TArgs : EventArgs
             where TSubscriber : class
-		{
-            return EventHelper.RegisterWeakEvent(subscriber, add, remove, h => h, action);
-		}
+        {
+            return EventUtilities.RegisterWeakEvent(subscriber, add, remove, action);
+        }
 	}
 }

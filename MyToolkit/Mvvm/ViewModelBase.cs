@@ -96,7 +96,7 @@ namespace MyToolkit.Mvvm
                 IsLoading = false;
                 HandleException(exception);
             }
-            UnregisterCancellationTokenSource(tokenSource);
+            DeregisterCancellationTokenSource(tokenSource);
             return result;
         }
 
@@ -224,10 +224,10 @@ namespace MyToolkit.Mvvm
             throw new Exception("An exception occured in RunTaskAsync. Override ViewModelBase.HandleException to handle this exception. ", exception);
         }
 
-        /// <summary>Disposes and unregisters a <see cref="CancellationTokenSource"/>. 
+        /// <summary>Disposes and deregisters a <see cref="CancellationTokenSource"/>. 
         /// Should be called when the task has finished cleaning up the view model. </summary>
         /// <param name="cancellationTokenSource"></param>
-        public void UnregisterCancellationTokenSource(CancellationTokenSource cancellationTokenSource)
+        public void DeregisterCancellationTokenSource(CancellationTokenSource cancellationTokenSource)
         {
             try             
             {
@@ -265,7 +265,7 @@ namespace MyToolkit.Mvvm
             if (_cancellationTokenSources != null)
             {
                 foreach (var cancellationTokenSource in _cancellationTokenSources.ToArray())
-                    UnregisterCancellationTokenSource(cancellationTokenSource);
+                    DeregisterCancellationTokenSource(cancellationTokenSource);
             }
         }
 

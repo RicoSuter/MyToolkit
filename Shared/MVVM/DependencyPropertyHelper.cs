@@ -27,7 +27,7 @@ namespace MyToolkit.Mvvm
 
         public static PropertyChangedCallback BindToViewModel<TViewModel>(Expression<Func<TViewModel, object>> property)
         {
-            return BindToViewModel(ExpressionHelper.GetName(property));
+            return BindToViewModel(ExpressionUtilities.GetName(property));
         }
 
         public static PropertyChangedCallback BindToViewModel(string propertyName)

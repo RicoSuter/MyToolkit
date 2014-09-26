@@ -56,7 +56,7 @@ namespace MyToolkit.UI
         /// </summary>
         public static Task<Popup> ShowHorizontalDialogAsync(FrameworkElement control, bool isLightDismissEnabled = false)
         {
-            return TaskHelper.RunCallbackMethod<FrameworkElement, Popup>((x, y) => ShowDialog(x, isLightDismissEnabled, true, y), control);
+            return TaskUtilities.RunCallbackMethodAsync<FrameworkElement, Popup>((x, y) => ShowDialog(x, isLightDismissEnabled, true, y), control);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace MyToolkit.UI
         /// </summary>
         public static Task<Popup> ShowVerticalDialogAsync(FrameworkElement control, bool isLightDismissEnabled = false)
         {
-            return TaskHelper.RunCallbackMethod<FrameworkElement, Popup>((x, y) => ShowDialog(x, isLightDismissEnabled, false, y), control);
+            return TaskUtilities.RunCallbackMethodAsync<FrameworkElement, Popup>((x, y) => ShowDialog(x, isLightDismissEnabled, false, y), control);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace MyToolkit.UI
         /// </summary>
         public static Task<Popup> ShowPaneAsync(FrameworkElement control, bool showLeft = true)
         {
-            return TaskHelper.RunCallbackMethod<FrameworkElement, Popup>((x, y) => ShowPane(x, showLeft, y), control);
+            return TaskUtilities.RunCallbackMethodAsync<FrameworkElement, Popup>((x, y) => ShowPane(x, showLeft, y), control);
         }
 
         /// <summary>

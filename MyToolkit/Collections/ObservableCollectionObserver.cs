@@ -40,7 +40,7 @@ namespace MyToolkit.Collections
 			if (collection == _list)
 				return;
 
-			// unregister all events from old list
+			// deregister all events from old list
 			if (_list != null)
 			{
 				_list.CollectionChanged -= OnCollectionChanged;

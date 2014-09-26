@@ -36,7 +36,7 @@ namespace MyToolkit.Paging.Handlers
                         "PublicKeyToken=null, ContentType=WindowsRuntime");
                 }
 
-                _registrationToken = EventHelper.RegisterStaticEvent(_hardwareButtonsType, "BackPressed", OnBackKeyPressed);
+                _registrationToken = EventUtilities.RegisterStaticEvent(_hardwareButtonsType, "BackPressed", OnBackKeyPressed);
                 _isEventRegistered = true;
             }
 
@@ -51,7 +51,7 @@ namespace MyToolkit.Paging.Handlers
 
             if (_handlers.Count == 0)
             {
-                EventHelper.UnregisterStaticEvent(_hardwareButtonsType, "BackPressed", _registrationToken);
+                EventUtilities.DeregisterStaticEvent(_hardwareButtonsType, "BackPressed", _registrationToken);
                 _isEventRegistered = false; 
             }
         }

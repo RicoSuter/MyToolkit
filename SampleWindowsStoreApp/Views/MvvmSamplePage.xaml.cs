@@ -33,7 +33,7 @@ namespace SampleWindowsStoreApp.Views
 
         protected override void OnNavigatedFrom(MtNavigationEventArgs e)
         {
-            Messenger.Default.Unregister(this);
+            Messenger.Default.Deregister(this);
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)

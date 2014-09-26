@@ -470,7 +470,7 @@ namespace MyToolkit.UI
 		/// <summary>
 		/// Gets the VisualStateGroup with the given name, looking up the visual tree
 		/// </summary>
-		/// <param name="root">Element to start from</param>
+		/// <param name="root">AssociatedObject to start from</param>
 		/// <param name="groupName">Name of the group to look for</param>
 		/// <returns>The group, if found, or null</returns>
 		public static VisualStateGroup GetVisualStateGroup(this FrameworkElement root, string groupName)

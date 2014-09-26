@@ -28,7 +28,7 @@ namespace SampleWindowsStoreApp.Views
             builder.Register();
         }
 
-        private void OnUnregisterBackgroundTask(object sender, RoutedEventArgs e)
+        private void OnDeregisterBackgroundTask(object sender, RoutedEventArgs e)
         {
             var task = BackgroundTaskRegistration.AllTasks.Values.SingleOrDefault(t => t.Name == "MyBackgroundTask");
             if (task != null)

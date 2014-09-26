@@ -24,7 +24,7 @@ namespace MyToolkit.Animations
         /// <returns>Returns a task. </returns>
 		async public static Task FadeInAsync(UIElement obj, TimeSpan duration, double endOpacity = 1.0)
 		{
-			await TaskHelper.RunCallbackMethod(FadeIn, obj, duration, endOpacity);
+			await TaskUtilities.RunCallbackMethodAsync(FadeIn, obj, duration, endOpacity);
 		}
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace MyToolkit.Animations
         /// <returns>Returns a task. </returns>
         async public static Task FadeOutAsync(UIElement obj, TimeSpan duration, double endOpacity = 0.0)
 		{
-			await TaskHelper.RunCallbackMethod(FadeOut, obj, duration, endOpacity);
+			await TaskUtilities.RunCallbackMethodAsync(FadeOut, obj, duration, endOpacity);
 		}
 #endif
 

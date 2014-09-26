@@ -103,8 +103,8 @@
     <Compile Include="Utilities\DictionaryExtensions.cs" />
     <Compile Include="Utilities\EntityContainer.cs" />
     <Compile Include="Utilities\EnumerableExtensions.cs" />
-    <Compile Include="Utilities\EventHelper.cs" />
-    <Compile Include="Utilities\ExpressionHelper.cs" />
+    <Compile Include="Utilities\EventUtilities.cs" />
+    <Compile Include="Utilities\ExpressionUtilities.cs" />
     <Compile Include="Utilities\GeolocationUtilities.cs" />
     <Compile Include="Utilities\HttpUtilityExtensions.cs" />
     <Compile Include="Utilities\IEntity.cs" />
@@ -112,8 +112,8 @@
     <Compile Include="Utilities\ReflectionExtensions.cs" />
     <Compile Include="Utilities\StreamExtensions.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
-    <Compile Include="Utilities\TaskHelper.cs" />
-    <Compile Include="Utilities\VersionHelper.cs" />
+    <Compile Include="Utilities\TaskUtilities.cs" />
+    <Compile Include="Utilities\VersionUtilities.cs" />
     <Compile Include="Utilities\WeakEvent.cs" />
     <Compile Include="WorkflowEngine\WorkflowActivityResult.cs" />
     <Compile Include="WorkflowEngine\Activities\AutomaticWorkflowActivityBase.cs" />

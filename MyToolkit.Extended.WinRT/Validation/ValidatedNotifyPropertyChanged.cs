@@ -18,7 +18,7 @@ namespace MyToolkit.Validation
 		
 		public void ClearError<T>(Expression<Func<TClass, T>> property)
 		{
-			ClearError(ExpressionHelper.GetName(property));
+			ClearError(ExpressionUtilities.GetName(property));
 		}
 
 		public void ClearError(string propertyName)
@@ -28,7 +28,7 @@ namespace MyToolkit.Validation
 
 		public void SetError<T>(Expression<Func<TClass, T>> property, object error)
 		{
-			SetError(ExpressionHelper.GetName(property), error);
+			SetError(ExpressionUtilities.GetName(property), error);
 		}
 
 		public void SetError(string propertyName, object error)
@@ -57,7 +57,7 @@ namespace MyToolkit.Validation
 
 		public IEnumerable<ValidationResult> GetErrors<T>(Expression<Func<TClass, T>> property)
 		{
-			return (IEnumerable<ValidationResult>) GetErrors(ExpressionHelper.GetName(property));
+			return (IEnumerable<ValidationResult>) GetErrors(ExpressionUtilities.GetName(property));
 		}
 
 		public IEnumerable GetErrors(string propertyName)

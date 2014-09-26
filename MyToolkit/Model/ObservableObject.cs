@@ -41,7 +41,7 @@ namespace MyToolkit.Model
         /// <returns>True if the property has changed. </returns>
         public bool Set<T>(Expression<Func<T>> propertyNameExpression, ref T oldValue, T newValue)
         {
-            return Set(ExpressionHelper.GetName(propertyNameExpression), ref oldValue, newValue);
+            return Set(ExpressionUtilities.GetName(propertyNameExpression), ref oldValue, newValue);
         }
 
         /// <summary>Updates the property and raises the changed event, but only if the new value does not equal the old value. </summary>
@@ -54,7 +54,7 @@ namespace MyToolkit.Model
         public bool Set<TClass, TProp>(Expression<Func<TClass, TProp>> propertyNameExpression, ref TProp oldValue,
             TProp newValue)
         {
-            return Set(ExpressionHelper.GetName(propertyNameExpression), ref oldValue, newValue);
+            return Set(ExpressionUtilities.GetName(propertyNameExpression), ref oldValue, newValue);
         }
 
         /// <summary>Updates the property and raises the changed event, but only if the new value does not equal the old value. </summary>
@@ -83,7 +83,7 @@ namespace MyToolkit.Model
         /// <param name="propertyNameExpression">The property name as lambda. </param>
         public void RaisePropertyChanged(Expression<Func<object>> propertyNameExpression)
         {
-            RaisePropertyChanged(new PropertyChangedEventArgs(ExpressionHelper.GetName(propertyNameExpression)));
+            RaisePropertyChanged(new PropertyChangedEventArgs(ExpressionUtilities.GetName(propertyNameExpression)));
         }
 
         /// <summary>Raises the property changed event. </summary>
@@ -91,7 +91,7 @@ namespace MyToolkit.Model
         /// <param name="propertyNameExpression">The property name as lambda. </param>
         public void RaisePropertyChanged<TClass>(Expression<Func<TClass, object>> propertyNameExpression)
         {
-            RaisePropertyChanged(new PropertyChangedEventArgs(ExpressionHelper.GetName(propertyNameExpression)));
+            RaisePropertyChanged(new PropertyChangedEventArgs(ExpressionUtilities.GetName(propertyNameExpression)));
         }
 
         /// <summary>Raises the property changed event. </summary>
@@ -120,7 +120,7 @@ namespace MyToolkit.Model
         [Obsolete("Use Set method without lambda instead. 5/17/2014")]
         public bool SetProperty<T>(Expression<Func<T>> propertyNameExpression, ref T oldValue, T newValue)
         {
-            return Set(ExpressionHelper.GetName(propertyNameExpression), ref oldValue, newValue);
+            return Set(ExpressionUtilities.GetName(propertyNameExpression), ref oldValue, newValue);
         }
 
         /// <summary>If the new value does not equal the old value, then updates the property and raises the changed event. </summary>
@@ -134,7 +134,7 @@ namespace MyToolkit.Model
         public bool SetProperty<TClass, TProp>(Expression<Func<TClass, TProp>> propertyNameExpression,
             ref TProp oldValue, TProp newValue)
         {
-            return Set(ExpressionHelper.GetName(propertyNameExpression), ref oldValue, newValue);
+            return Set(ExpressionUtilities.GetName(propertyNameExpression), ref oldValue, newValue);
         }
 
         /// <summary>If the new value does not equal the old value, then updates the property and raises the changed event. </summary>

@@ -120,6 +120,7 @@
     <Compile Include="Collections\ObservableCollectionViewTests.cs" />
     <Compile Include="Composition\CompositionContextTests.cs" />
     <Compile Include="Composition\ServiceLocatorTests.cs" />
+    <Compile Include="Model\MyObject.cs" />
     <Compile Include="Multimedia\YouTubeTests.cs" />
     <Compile Include="Model\ObservableObjectTests.cs" />
     <Compile Include="Command\AsyncRelayCommandTests.cs" />
@@ -159,6 +160,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MyToolkit.Tests.WinRT_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mocks\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>

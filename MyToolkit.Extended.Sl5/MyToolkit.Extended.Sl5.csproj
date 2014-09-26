@@ -96,6 +96,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Shared\Behaviors\Behavior.cs">
+      <Link>Behaviors\Behavior.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Behaviors\BehaviorCollection.cs">
+      <Link>Behaviors\BehaviorCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Behaviors\BehaviorOfT.cs">
+      <Link>Behaviors\BehaviorOfT.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Behaviors\CommandToEvent.cs">
+      <Link>Behaviors\CommandToEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Behaviors\Interaction.cs">
+      <Link>Behaviors\Interaction.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Controls\DataTemplateSelector.cs">
       <Link>Controls\DataTemplateSelector.cs</Link>
     </Compile>

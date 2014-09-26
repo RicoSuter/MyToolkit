@@ -37,7 +37,7 @@ namespace MyToolkit.Messaging
 	        set { _defaultMessenger = value;  }
 	    }
 		
-		/// <summary>Registers an action for the given receiver. WARNING: You have to unregister the action to avoid memory leaks! </summary>
+		/// <summary>Registers an action for the given receiver. WARNING: You have to deregister the action to avoid memory leaks! </summary>
 		/// <typeparam name="T">Type of the message. </typeparam>
 		/// <param name="receiver">Receiver to use as identifier. </param>
 		/// <param name="action">Action to register. </param>
@@ -54,51 +54,51 @@ namespace MyToolkit.Messaging
 			Register(null, action);
 		}
 
-		/// <summary>Unregisters all actions with no receiver. </summary>
-		public void Unregister()
+		/// <summary>Deregisters all actions with no receiver. </summary>
+		public void Deregister()
 		{
-			Unregister(null);
+			Deregister(null);
 		}
 
-		/// <summary>Unregisters all actions with the given receiver. </summary>
+		/// <summary>Deregisters all actions with the given receiver. </summary>
 		/// <param name="receiver"></param>
-		public void Unregister(object receiver)
+		public void Deregister(object receiver)
 		{
 			foreach (var a in _actions.Where(a => a.Receiver == receiver).ToArray())
 				_actions.Remove(a);
 		}
 
-		/// <summary>Unregisters the specified action. </summary>
+		/// <summary>Deregisters the specified action. </summary>
 		/// <typeparam name="T">Type of the message. </typeparam>
-		/// <param name="action">Action to unregister. </param>
-		public void Unregister<T>(Action<T> action)
+		/// <param name="action">Action to deregister. </param>
+		public void Deregister<T>(Action<T> action)
 		{
 			foreach (var a in _actions.Where(a => (Action<T>)a.Action == action).ToArray())
 				_actions.Remove(a);
 		}
 
-		/// <summary>Unregisters the specified action. </summary>
+		/// <summary>Deregisters the specified action. </summary>
 		/// <typeparam name="T">Type of the message</typeparam>
-		public void Unregister<T>()
+		public void Deregister<T>()
 		{
 			foreach (var a in _actions.Where(a => a.Type == typeof(T)).ToArray())
 				_actions.Remove(a);
 		}
 
-		/// <summary>Unregisters the specified action. </summary>
+		/// <summary>Deregisters the specified action. </summary>
 		/// <param name="receiver"></param>
 		/// <typeparam name="T">Type of the message</typeparam>
-		public void Unregister<T>(object receiver)
+		public void Deregister<T>(object receiver)
 		{
 			foreach (var a in _actions.Where(a => a.Receiver == receiver && a.Type == typeof(T)).ToArray())
 				_actions.Remove(a);
 		}
 
-		/// <summary>Unregisters an action for the specified receiver. </summary>
+		/// <summary>Deregisters an action for the specified receiver. </summary>
 		/// <typeparam name="T">Type of the message. </typeparam>
 		/// <param name="receiver">The receiver object. </param>
-		/// <param name="action">The action to unregister on the receiver. </param>
-		public void Unregister<T>(object receiver, Action<T> action)
+		/// <param name="action">The action to deregister on the receiver. </param>
+		public void Deregister<T>(object receiver, Action<T> action)
 		{
 			foreach (var a in _actions.Where(a => a.Receiver == receiver && (Action<T>)a.Action == action).ToArray())
 				_actions.Remove(a);

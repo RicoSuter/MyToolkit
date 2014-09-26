@@ -37,7 +37,7 @@
         <StackPanel Grid.Row="1" Margin="120,60,40,40">
             <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                 <Button Content="Register background task" Click="OnRegisterBackgroundTask" Margin="0,0,20,0" />
-                <Button Content="Unregister background task" Click="OnUnregisterBackgroundTask" Margin="0,0,20,0" />
+                <Button Content="Deregister background task" Click="OnDeregisterBackgroundTask" Margin="0,0,20,0" />
             </StackPanel>
             
             <TextBlock Text="Change the network state to run the background task (e.g. disable WiFi). " 

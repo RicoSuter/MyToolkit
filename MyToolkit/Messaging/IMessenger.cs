@@ -14,7 +14,7 @@ namespace MyToolkit.Messaging
     /// <summary>The interface of the messenger. </summary>
     public interface IMessenger
     {
-        /// <summary>Registers an action for the given receiver. WARNING: You have to unregister the action to avoid memory leaks! </summary>
+        /// <summary>Registers an action for the given receiver. WARNING: You have to deregister the action to avoid memory leaks! </summary>
         /// <typeparam name="T">Type of the message</typeparam>
         /// <param name="receiver">Receiver to use as identifier</param>
         /// <param name="action">Action to register</param>
@@ -25,32 +25,32 @@ namespace MyToolkit.Messaging
         /// <param name="action">Action to register</param>
         void Register<T>(Action<T> action);
 
-        /// <summary>Unregisters all actions with no receiver. </summary>
-        void Unregister();
+        /// <summary>Deregisters all actions with no receiver. </summary>
+        void Deregister();
 
-        /// <summary>Unregisters all actions with the given receiver. </summary>
+        /// <summary>Deregisters all actions with the given receiver. </summary>
         /// <param name="receiver"></param>
-        void Unregister(object receiver);
+        void Deregister(object receiver);
 
-        /// <summary>Unregisters the specified action. </summary>
+        /// <summary>Deregisters the specified action. </summary>
         /// <typeparam name="T">Type of the message</typeparam>
-        /// <param name="action">Action to unregister</param>
-        void Unregister<T>(Action<T> action);
+        /// <param name="action">Action to deregister</param>
+        void Deregister<T>(Action<T> action);
 
-        /// <summary>Unregisters the specified action. </summary>
+        /// <summary>Deregisters the specified action. </summary>
         /// <typeparam name="T">Type of the message</typeparam>
-        void Unregister<T>();
+        void Deregister<T>();
 
-        /// <summary>Unregisters the specified action. </summary>
+        /// <summary>Deregisters the specified action. </summary>
         /// <param name="receiver"></param>
         /// <typeparam name="T">Type of the message</typeparam>
-        void Unregister<T>(object receiver);
+        void Deregister<T>(object receiver);
 
-        /// <summary>Unregisters an action for the specified receiver. </summary>
+        /// <summary>Deregisters an action for the specified receiver. </summary>
         /// <typeparam name="T">Type of the message</typeparam>
         /// <param name="receiver"></param>
         /// <param name="action"></param>
-        void Unregister<T>(object receiver, Action<T> action);
+        void Deregister<T>(object receiver, Action<T> action);
 
         /// <summary>Sends a message to the registered receivers. </summary>
         /// <typeparam name="T">Type of the message</typeparam>

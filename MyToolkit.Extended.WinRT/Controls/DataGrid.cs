@@ -377,7 +377,7 @@ namespace MyToolkit.Controls
             var columnIndex = 0;
             var hasStar = false;
 
-            // Unregister old events
+            // Deregister old events
             foreach (var c in _titleRowControl.Children)
                 c.Tapped -= OnColumnTapped;
 

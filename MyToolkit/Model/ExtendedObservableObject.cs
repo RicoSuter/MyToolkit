@@ -49,7 +49,7 @@ namespace MyToolkit.Model
             if (Equals(oldValue, newValue))
                 return false;
 
-            UnregisterChild(oldValue);
+            DeregisterChild(oldValue);
             RegisterChild(newValue);
             
             var args = new ExtendedPropertyChangedEventArgs(propertyName, oldValue, newValue);
@@ -74,7 +74,7 @@ namespace MyToolkit.Model
         /// <param name="propertyNameExpression">The property name as lambda. </param>
         public void RaisePropertyChanged(Expression<Func<object>> propertyNameExpression, object oldValue, object newValue)
         {
-            RaisePropertyChanged(new ExtendedPropertyChangedEventArgs(ExpressionHelper.GetName(propertyNameExpression), oldValue, newValue));
+            RaisePropertyChanged(new ExtendedPropertyChangedEventArgs(ExpressionUtilities.GetName(propertyNameExpression), oldValue, newValue));
         }
 
         /// <summary>Raises the property changed event with <see cref="ExtendedPropertyChangedEventArgs"/> arguments. </summary>
@@ -84,7 +84,7 @@ namespace MyToolkit.Model
         /// <param name="propertyNameExpression">The property name as lambda. </param>
         public void RaisePropertyChanged<TClass>(Expression<Func<TClass, object>> propertyNameExpression, object oldValue, object newValue)
         {
-            RaisePropertyChanged(new ExtendedPropertyChangedEventArgs(ExpressionHelper.GetName(propertyNameExpression), oldValue, newValue));
+            RaisePropertyChanged(new ExtendedPropertyChangedEventArgs(ExpressionUtilities.GetName(propertyNameExpression), oldValue, newValue));
         }
 
         /// <summary>Registers a child to receive property changes. </summary>
@@ -139,9 +139,9 @@ namespace MyToolkit.Model
             }
         }
 
-        /// <summary>Unregisters a child. </summary>
+        /// <summary>Deregisters a child. </summary>
         /// <param name="child">The child object. </param>
-        protected void UnregisterChild(object child)
+        protected void DeregisterChild(object child)
         {
             if (child == null || !_registeredChilds.Contains(child))
                 return;
@@ -160,7 +160,7 @@ namespace MyToolkit.Model
                 {
                     var list = child as ICollection;
                     foreach (var item in list)
-                        UnregisterChild(item);
+                        DeregisterChild(item);
 
                     if (child is INotifyCollectionChanged)
                     {
@@ -177,7 +177,7 @@ namespace MyToolkit.Model
 #else
                 var value = child.GetType().GetRuntimeProperty("Value").GetValue(child); 
 #endif
-                UnregisterChild(value);
+                DeregisterChild(value);
             }
         }
 
@@ -222,7 +222,7 @@ namespace MyToolkit.Model
             {
                 removedItems.Add(item);
                 oldCollection.Remove(item);
-                UnregisterChild(item);
+                DeregisterChild(item);
             }
 
             RaiseGraphPropertyChanged(sender, new ExtendedNotifyCollectionChangedEventArgs<object>(addedItems, removedItems, oldCollectionCopy));

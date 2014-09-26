@@ -51,6 +51,21 @@
     <Compile Include="..\MyToolkit.Extended.Wp8\Controls\ScrollableItemsControl.cs">
       <Link>Controls\ScrollableItemsControl.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Behaviors\Behavior.cs">
+      <Link>Behaviors\Behavior.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Behaviors\BehaviorCollection.cs">
+      <Link>Behaviors\BehaviorCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Behaviors\BehaviorOfT.cs">
+      <Link>Behaviors\BehaviorOfT.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Behaviors\CommandToEvent.cs">
+      <Link>Behaviors\CommandToEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Behaviors\Interaction.cs">
+      <Link>Behaviors\Interaction.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Controls\ExtendedListBox.cs">
       <Link>Controls\ExtendedListBox.cs</Link>
     </Compile>
@@ -270,8 +285,8 @@
     <Compile Include="Environment\Machine.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Media\ImageHelper.cs" />
-    <Compile Include="MVVM\IStateHandlingViewModel.cs" />
-    <Compile Include="MVVM\ViewModelHelper.cs" />
+    <Compile Include="Mvvm\IStateHandlingViewModel.cs" />
+    <Compile Include="Mvvm\ViewModelHelper.cs" />
     <Compile Include="Paging\Handlers\BackKeyPressedHandler.cs" />
     <Compile Include="Paging\Handlers\NavigationKeyHandler.cs" />
     <Compile Include="Paging\Handlers\PageStateHandler.cs" />

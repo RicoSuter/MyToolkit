@@ -269,7 +269,7 @@ namespace MyToolkit.Collections
                         if (e.OldItems != null)
                         {
                             foreach (var item in e.OldItems.OfType<INotifyPropertyChanged>())
-                                UnregisterEvent(item);
+                                DeregisterEvent(item);
                         }
                     }
                 }
@@ -291,7 +291,7 @@ namespace MyToolkit.Collections
             _events.Add(item, handler);
         }
 
-        private void UnregisterEvent(INotifyPropertyChanged item)
+        private void DeregisterEvent(INotifyPropertyChanged item)
         {
             if (!_events.ContainsKey(item))
                 return;
@@ -333,7 +333,7 @@ namespace MyToolkit.Collections
         private void UntrackAllItems()
         {
             foreach (var item in _events.Keys.ToArray())
-                UnregisterEvent(item);
+                DeregisterEvent(item);
         }
 
         private void UpdateList()

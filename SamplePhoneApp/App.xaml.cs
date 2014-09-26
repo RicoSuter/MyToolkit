@@ -38,7 +38,7 @@ namespace SamplePhoneApp
 
 		private void SaveData()
 		{
-            Messenger.Default.Unregister();
+            Messenger.Default.Deregister();
 			Persons.SaveToFile("Persons");
 		}
 

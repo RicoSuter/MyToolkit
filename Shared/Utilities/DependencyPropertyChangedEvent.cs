@@ -61,7 +61,7 @@ namespace MyToolkit.Utilities
 			helpers.Add(helper);
 		}
 
-		public static void Unregister(FrameworkElement obj, DependencyProperty property, Action<object, object> changed)
+		public static void Deregister(FrameworkElement obj, DependencyProperty property, Action<object, object> changed)
 		{
 			var helper = helpers.Single(h => h.obj == obj && h.property == property && h.changed == changed);
 			helper.changed = null; 

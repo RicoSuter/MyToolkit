@@ -9,62 +9,49 @@ namespace MyToolkit.Tests.WinRT.Utilities
     [TestClass]
     public class WeakEventTests
     {
-        [TestMethod]
-        public void When_register_weak_event_then_it_should_get_correctly_called()
+        public class MyTargetClass
         {
-            //// Arrange
-            var obj = new MyObject();
-            var eventCalled = false;
-            var correctObject = false; 
+            public Action Action { get; set; }
 
-            WeakEvent.Register<WeakEventTests, PropertyChangedEventHandler, PropertyChangedEventArgs>(
-                this,
-                h => obj.PropertyChanged += h,
-                h => obj.PropertyChanged -= h,
-                h => (o, e) => h(o, e),
-                (subscriber, sender, args) =>
-                {
-                    correctObject = sender == obj;
-                    eventCalled = true;
-                });
+            public MyTargetClass(Action action)
+            {
+                Action = action; 
+            }
 
-            //// Act
-            obj.Name = "test";
-
-            //// Assert
-            Assert.IsTrue(eventCalled);
-            Assert.IsTrue(correctObject);
+            public void Callback(object sender, PropertyChangedEventArgs args)
+            {
+                Action();
+            }
         }
 
         [TestMethod]
         public void When_gc_collects_then_event_should_be_deregistered_before_event_call()
         {
             //// Arrange
-            var subs = new WeakEventTests();
+            var eventCalled = false; 
+            var target = new MyTargetClass(() =>
+            {
+                eventCalled = true; 
+            });
             var obj = new MyObject();
-            var eventCalled = false;
 
-            WeakEvent.Register<WeakEventTests, PropertyChangedEventHandler, PropertyChangedEventArgs>(
-                subs,
-                h => obj.PropertyChanged += h,
-                h => obj.PropertyChanged -= h,
-                h => (o, e) => h(o, e),
-                (subscriber, sender, args) => { eventCalled = true; });
+            EventUtilities.RegisterWeakEvent<MyObject, PropertyChangedEventArgs>(obj, "PropertyChanged", target.Callback);
 
             //// Act
             obj.Name = "test1";
             Assert.IsTrue(eventCalled);
-            subs = null;
+            target = null;
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
-
-            eventCalled = false;
-            obj.Name = "test2"; 
+            
+            eventCalled = false; 
+            obj.Name = "test2";
 
             //// Assert
             Assert.IsFalse(eventCalled);
         }
+
     }
 }

@@ -156,7 +156,7 @@ namespace MyToolkit.Paging
         /// from <see cref="SessionState"/>.  Any navigation state previously captured will be removed.
         /// </summary>
         /// <param name="frame">An instance whose navigation history should no longer be managed.</param>
-        public static void UnregisterFrame(MtFrame frame)
+        public static void DeregisterFrame(MtFrame frame)
         {
             // Remove session state and remove the frame from the list of frames whose navigation
             // state will be saved (along with any weak references that are no longer reachable)

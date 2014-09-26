@@ -99,7 +99,7 @@ namespace SampleWindowsStoreApp.Views
 
         protected override void OnNavigatedFrom(MtNavigationEventArgs e)
         {
-            Messenger.Default.Unregister(this);
+            Messenger.Default.Deregister(this);
         }
 
         #endregion

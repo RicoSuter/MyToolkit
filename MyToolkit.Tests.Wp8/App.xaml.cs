@@ -148,7 +148,7 @@ namespace MyToolkit.Tests.Wp8
 
         private void ClearBackStackAfterReset(object sender, NavigationEventArgs e)
         {
-            // Unregister the event so it doesn't get called again
+            // Deregister the event so it doesn't get called again
             RootFrame.Navigated -= ClearBackStackAfterReset;
 
             // Only clear the stack for 'new' (forward) and 'refresh' navigations

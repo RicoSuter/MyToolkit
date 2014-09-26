@@ -118,7 +118,7 @@ namespace MyToolkit.Storage
                 var property = Type.GetType("System.AppDomain").GetRuntimeProperty("CurrentDomain");
                 var currentDomain = property.GetValue(null);
 
-                EventHelper.RegisterEvent(currentDomain, "ProcessExit", (sender, args) => WriteConfiguration());
+                EventUtilities.RegisterEvent(currentDomain, "ProcessExit", (sender, args) => WriteConfiguration());
 
                 _eventRegistered = true;
             }

@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="ExpressionHelper.cs" company="MyToolkit">
+// <copyright file="ExpressionUtilities.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
 // <license>http://mytoolkit.codeplex.com/license</license>
@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 namespace MyToolkit.Utilities
 {
     /// <summary>Provides methods to handle lambda expressions. </summary>
-	public static class ExpressionHelper
+	public class ExpressionUtilities
 	{
         /// <summary>Returns the property name of the property specified in the given lambda (e.g. GetName(i => i.MyProperty)). </summary>
         /// <typeparam name="TClass">The type of the class with the property. </typeparam>
@@ -58,4 +58,10 @@ namespace MyToolkit.Utilities
             return ((MemberExpression)expression.Body).Member.Name;
         }
 	}
+
+    [Obsolete("Use ExpressionUtilities instead. 9/25/2014")]
+    public class ExpressionHelper : ExpressionUtilities
+    {
+        // TODO: Make ExpressionUtilities class static
+    }
 }
