@@ -17,7 +17,7 @@ namespace MyToolkit.Converters
 			if (value is Color)
 				color = (Color)value;
 			else if (value is String)
-				color = ColorUtility.FromString((string)value);
+				color = ColorUtilities.FromString((string)value);
 			else if (value is SolidColorBrush)
 				color = ((SolidColorBrush) value).Color;
 
@@ -25,7 +25,7 @@ namespace MyToolkit.Converters
 			{
 				var parameters = parameter.ToString().GetConverterParameters();
 				if (parameters.ContainsKey("alpha"))
-					color = ColorUtility.ChangeAlpha(color, parameters["alpha"]);
+					color = ColorUtilities.ChangeAlpha(color, parameters["alpha"]);
 			}
 
 			if (targetType == typeof(Brush))
@@ -33,7 +33,7 @@ namespace MyToolkit.Converters
 			if (targetType == typeof(Color))
 				return color; 
 			if (targetType == typeof(string))
-				return ColorUtility.ToHex(color, true);
+				return ColorUtilities.ToHex(color, true);
 			return null; 
 		}
 		

@@ -1,9 +1,18 @@
-﻿using Windows.Data.Xml.Dom;
+﻿//-----------------------------------------------------------------------
+// <copyright file="ToastNotificationUtilities.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
 namespace MyToolkit.Utilities
 {
-	public static class ToastNotificationHelper
+    /// <summary>Provides helper methods to show toast notifications. </summary>
+	public static class ToastNotificationUtilities
 	{
 		/// <summary>Shows a toast message with the given message. </summary>
 		/// <param name="message">The message to show. </param>

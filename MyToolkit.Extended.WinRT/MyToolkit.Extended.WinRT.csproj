@@ -213,9 +213,6 @@
     <Compile Include="..\Shared\UI\FrameworkElementExtensions.cs">
       <Link>UI\FrameworkElementExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Utilities\AdditionalStreamExtensions.cs">
-      <Link>Utilities\AdditionalStreamExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Shared\Utilities\ColorUtility.cs">
       <Link>Utilities\ColorUtility.cs</Link>
     </Compile>
@@ -316,9 +313,9 @@
     <Compile Include="UI\TemplatedVisualTreeExtensions.cs" />
     <Compile Include="UI\TiltEffect.cs" />
     <Compile Include="Utilities\PageUtilities.cs" />
-    <Compile Include="Utilities\Thread.cs" />
-    <Compile Include="Utilities\ToastNotificationHelper.cs" />
-    <Compile Include="Utilities\VisualTreeHelper.cs" />
+    <Compile Include="Utilities\ThreadUtilities.cs" />
+    <Compile Include="Utilities\ToastNotificationUtilities.cs" />
+    <Compile Include="Utilities\DependencyObjectExtensions.cs" />
     <Compile Include="Validation\IValidationControl.cs" />
     <Compile Include="Validation\ValidationContainer.cs" />
     <Compile Include="Validation\ValidatedNotifyPropertyChanged.cs" />

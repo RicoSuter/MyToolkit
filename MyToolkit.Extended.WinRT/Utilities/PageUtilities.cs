@@ -1,8 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//-----------------------------------------------------------------------
+// <copyright file="PageUtilities.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using MyToolkit.UI;
 using Windows.Foundation;
 using Windows.System;
@@ -13,11 +17,11 @@ using Windows.UI.Xaml.Input;
 
 namespace MyToolkit.Utilities
 {
+    /// <summary>Provides utility methods for page handling. </summary>
 	public static class PageUtilities
 	{
-		/// <summary>
-		/// Call this method in Loaded event as the event will be automatically deregistred when the FrameworkElement has been unloaded
-		/// </summary>
+		/// <summary>Call this method in Loaded event as the event will be automatically 
+		/// deregistered when the FrameworkElement has been unloaded. </summary>
 		public static void RegisterBackKey(Page page)
 		{
 			var callback = new TypedEventHandler<CoreDispatcher, AcceleratorKeyEventArgs>(
@@ -44,55 +48,54 @@ namespace MyToolkit.Utilities
 
 			page.Dispatcher.AcceleratorKeyActivated += callback;
 
-			SingleEvent.Register(page,
+			SingleEvent.RegisterEvent(page,
 				(p, h) => p.Unloaded += h,
 				(p, h) => p.Unloaded -= h,
 				(o, a) => { page.Dispatcher.AcceleratorKeyActivated -= callback; });
 		}
 
-		/// <summary>
-		/// Call this method in Loaded event as the event will be automatically deregistred when the FrameworkElement has been unloaded
-		/// </summary>
-		/// <param name="page"></param>
-		/// <param name="handler"></param>
+		/// <summary>Call this method in Loaded event as the event will be automatically 
+		/// deregistered when the FrameworkElement has been unloaded. </summary>
+		/// <param name="page">The page. </param>
+		/// <param name="handler">The event handler. </param>
 		public static void RegisterAcceleratorKeyActivated(FrameworkElement page, TypedEventHandler<CoreDispatcher, AcceleratorKeyEventArgs> handler)
 		{
 			page.Dispatcher.AcceleratorKeyActivated += handler;
-			SingleEvent.Register(page, (p, h) => p.Unloaded += h, (p, h) => p.Unloaded -= h, (o, a) =>
+			SingleEvent.RegisterEvent(page, (p, h) => p.Unloaded += h, (p, h) => p.Unloaded -= h, (o, a) =>
 			{
 				page.Dispatcher.AcceleratorKeyActivated -= handler;
 			});
 		}
 
-		private class SearchKeyContainer
-		{
-			private readonly Action searchKeyPressed;
-			public SearchKeyContainer(Action searchKeyPressed)
-			{
-				this.searchKeyPressed = searchKeyPressed;
-			}
-
-			private bool ctrlDown = false;
-			public void AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs args)
-			{
-				if (args.VirtualKey == VirtualKey.Control)
-					ctrlDown = args.EventType == CoreAcceleratorKeyEventType.KeyDown;
-
-				if (args.VirtualKey == VirtualKey.F3 || (args.VirtualKey == VirtualKey.F && ctrlDown))
-				{
-					searchKeyPressed();
-					args.Handled = true;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Call this method in Loaded event as the event will be automatically deregistred when the FrameworkElement has been unloaded
-		/// </summary>
+		/// <summary>Call this method in Loaded event as the event will be automatically 
+		/// deregistered when the FrameworkElement has been unloaded. </summary>
 		public static void RegisterSearchPressed(FrameworkElement page, Action searchKeyPressed)
 		{
 			var c = new SearchKeyContainer(searchKeyPressed);
 			RegisterAcceleratorKeyActivated(page, c.AcceleratorKeyActivated);
 		}
+
+        internal class SearchKeyContainer
+        {
+            private readonly Action _searchKeyPressed;
+            private bool _controlDown = false;
+
+            public SearchKeyContainer(Action searchKeyPressed)
+            {
+                _searchKeyPressed = searchKeyPressed;
+            }
+
+            public void AcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs args)
+            {
+                if (args.VirtualKey == VirtualKey.Control)
+                    _controlDown = args.EventType == CoreAcceleratorKeyEventType.KeyDown;
+
+                if (args.VirtualKey == VirtualKey.F3 || (args.VirtualKey == VirtualKey.F && _controlDown))
+                {
+                    _searchKeyPressed();
+                    args.Handled = true;
+                }
+            }
+        }
 	}
 }

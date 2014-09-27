@@ -2,16 +2,16 @@ using System;
 using System.Collections.ObjectModel;
 using MyToolkit.Model;
 
-namespace MyToolkit.Tests.WinRT.Model
+namespace MyToolkit.Tests.WinRT.Mocks
 {
-    public class MyObject : ExtendedObservableObject
+    public class MockObservableObject : ExtendedObservableObject
     {
         private string _name;
-        private MyObject _child;
+        private MockObservableObject _child;
 
-        public MyObject()
+        public MockObservableObject()
         {
-            List = new ObservableCollection<MyObject>();
+            List = new ObservableCollection<MockObservableObject>();
             RegisterChild(List);
         }
 
@@ -25,13 +25,13 @@ namespace MyToolkit.Tests.WinRT.Model
             }
         }
 
-        public MyObject Child
+        public MockObservableObject Child
         {
             get { return _child; }
             set { Set(ref _child, value); }
         }
 
-        public ObservableCollection<MyObject> List { get; private set; } 
+        public ObservableCollection<MockObservableObject> List { get; private set; } 
 
         public string FullName
         {

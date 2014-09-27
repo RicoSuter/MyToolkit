@@ -65,7 +65,7 @@ namespace MyToolkit.UI
 			oldEnabledMenus = new List<ApplicationBarMenuItem>();
 			if(page.ApplicationBar != null)
 			{
-				page.ApplicationBar.BackgroundColor = ColorUtility.Mix(oldBarBgColor, 0.325, Environment.Resources.PhoneBackgroundColor);
+                page.ApplicationBar.BackgroundColor = ColorUtilities.Mix(oldBarBgColor, 0.325, Environment.Resources.PhoneBackgroundColor);
 				page.ApplicationBar.IsMenuEnabled = false;
 				foreach(var b in page.ApplicationBar.Buttons.
 					OfType<ApplicationBarIconButton>().Where(i => i.IsEnabled))

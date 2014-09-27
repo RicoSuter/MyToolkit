@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using MyToolkit.Tests.WinRT.Mocks;
 
 namespace MyToolkit.Tests.WinRT.Model
 {
@@ -11,7 +12,7 @@ namespace MyToolkit.Tests.WinRT.Model
         {
             //// Arrange
             var list = new List<string>();
-            var obj = new MyObject();
+            var obj = new MockObservableObject();
             obj.PropertyChanged += (sender, args) => list.Add(args.PropertyName);
 
             //// Act
@@ -28,11 +29,11 @@ namespace MyToolkit.Tests.WinRT.Model
         {
             //// Arrange
             var list = new List<string>();
-            var obj = new MyObject();
+            var obj = new MockObservableObject();
             obj.PropertyChanged += (sender, args) => list.Add(args.PropertyName);
 
             //// Act
-            obj.RaisePropertyChanged<MyObject>(i => i.Name);
+            obj.RaisePropertyChanged<MockObservableObject>(i => i.Name);
 
             //// Assert
             Assert.AreEqual(1, list.Count);

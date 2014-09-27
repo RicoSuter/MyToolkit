@@ -120,7 +120,7 @@
     <Compile Include="Collections\ObservableCollectionViewTests.cs" />
     <Compile Include="Composition\CompositionContextTests.cs" />
     <Compile Include="Composition\ServiceLocatorTests.cs" />
-    <Compile Include="Model\MyObject.cs" />
+    <Compile Include="Mocks\MockObservableObject.cs" />
     <Compile Include="Multimedia\YouTubeTests.cs" />
     <Compile Include="Model\ObservableObjectTests.cs" />
     <Compile Include="Command\AsyncRelayCommandTests.cs" />
@@ -130,7 +130,8 @@
     <Compile Include="Storage\ApplicationSettingsTests.cs" />
     <Compile Include="Utilities\DateTimeUtilitiesTests.cs" />
     <Compile Include="Utilities\ExpressionHelperTests.cs" />
-    <Compile Include="Utilities\WeakEventTests.cs" />
+    <Compile Include="Utilities\EventUtilitiesTests.cs" />
+    <Compile Include="Mocks\MockEventTargetClass.cs" />
     <Compile Include="WorkflowEngine\WorkflowTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -161,9 +162,7 @@
   <ItemGroup>
     <None Include="MyToolkit.Tests.WinRT_TemporaryKey.pfx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mocks\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>

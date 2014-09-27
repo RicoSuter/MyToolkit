@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.Collections;
 using MyToolkit.Model;
+using MyToolkit.Tests.WinRT.Mocks;
 using MyToolkit.Tests.WinRT.Model;
 
 namespace MyToolkit.Tests.WinRT.Collections
@@ -70,8 +71,8 @@ namespace MyToolkit.Tests.WinRT.Collections
             //// Arrange
             var list = new List<string>();
 
-            var child = new MyObject();
-            var obj = new MyObject();
+            var child = new MockObservableObject();
+            var obj = new MockObservableObject();
             obj.List.Add(child);
             obj.GraphPropertyChanged += (sender, args) => list.Add(args.PropertyName);
 
@@ -90,8 +91,8 @@ namespace MyToolkit.Tests.WinRT.Collections
             //// Arrange
             var list = new List<PropertyChangedEventArgs>();
 
-            var child = new MyObject();
-            var obj = new MyObject();
+            var child = new MockObservableObject();
+            var obj = new MockObservableObject();
             obj.List.Add(child);
             obj.GraphPropertyChanged += (sender, args) => list.Add(args);
 
@@ -108,8 +109,8 @@ namespace MyToolkit.Tests.WinRT.Collections
             //// Arrange
             var list = new List<string>();
 
-            var child = new MyObject();
-            var obj = new MyObject();
+            var child = new MockObservableObject();
+            var obj = new MockObservableObject();
             obj.Child = child;
             obj.GraphPropertyChanged += (sender, args) => list.Add(args.PropertyName);
 
@@ -128,7 +129,7 @@ namespace MyToolkit.Tests.WinRT.Collections
             //// Arrange
             var list = new List<PropertyChangedEventArgs>();
 
-            var obj = new MyObject();
+            var obj = new MockObservableObject();
             obj.Name = "A";
             obj.GraphPropertyChanged += (sender, args) => list.Add(args);
 
@@ -147,10 +148,10 @@ namespace MyToolkit.Tests.WinRT.Collections
             //// Arrange
             var list = new List<PropertyChangedEventArgs>();
 
-            var objA = new MyObject();
+            var objA = new MockObservableObject();
             objA.Name = "A";
 
-            var objB = new MyObject();
+            var objB = new MockObservableObject();
             objB.Name = "B";
             objB.Child = objA;
             objA.Child = objB;

@@ -8,7 +8,7 @@ namespace SampleWindowsStoreApp.BackgroundTask
         public void Run(IBackgroundTaskInstance taskInstance)
         {
             var deferral = taskInstance.GetDeferral();
-            ToastNotificationHelper.ShowMessage("Hello from the background task. ");
+            ToastNotificationUtilities.ShowMessage("Hello from the background task. ");
             deferral.Complete();
         }
     }

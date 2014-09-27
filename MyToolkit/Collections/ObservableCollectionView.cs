@@ -281,7 +281,7 @@ namespace MyToolkit.Collections
             if (_events.ContainsKey(item))
                 return;
 
-            var handler = WeakEvent.Register<ObservableView<T>, PropertyChangedEventHandler, PropertyChangedEventArgs>(
+            var handler = WeakEvent.RegisterEvent<ObservableView<T>, PropertyChangedEventHandler, PropertyChangedEventArgs>(
                 this,
                 h => item.PropertyChanged += h,
                 h => item.PropertyChanged -= h,
@@ -306,7 +306,7 @@ namespace MyToolkit.Collections
             if (Items is ObservableCollection<T>)
             {
                 var collection = (ObservableCollection<T>)Items;
-                _itemsChangedHandler = WeakEvent.Register<ObservableView<T>, NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
+                _itemsChangedHandler = WeakEvent.RegisterEvent<ObservableView<T>, NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
                     this,
                     h => collection.CollectionChanged += h,
                     h => collection.CollectionChanged -= h,

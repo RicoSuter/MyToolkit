@@ -52,7 +52,7 @@ namespace SampleWpfApplication
             var command = new RelayCommand(() => { });
             Debug.WriteLine(command.CanExecute);
 
-            var color = ColorUtility.ToHex(Colors.Green);
+            var color = ColorUtilities.ToHex(Colors.Green);
             Debug.WriteLine(color);
 
             var uri = await YouTube.GetVideoUriAsync("pYVQxKZ6-6Y", YouTubeQuality.Quality720P);

@@ -25,7 +25,7 @@ namespace SampleWindowsStoreApp.Views
             // Important: Enable toast notifications in Package.appxmanifest!
 
             // Copy code from MyToolkit library if you don't want to use the library
-            ToastNotificationHelper.ShowMessage("Hello world!"); 
+            ToastNotificationUtilities.ShowMessage("Hello world!"); 
         }
 
         #endregion

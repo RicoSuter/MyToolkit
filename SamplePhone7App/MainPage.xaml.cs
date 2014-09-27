@@ -35,7 +35,7 @@ namespace SamplePhone7App
             ApplicationSettings.SetSetting("Test", "600", true, true);
             Debug.WriteLine(ApplicationSettings.GetSetting("Test", "300", true));
 
-            var color = ColorUtility.ToHex(Colors.Green);
+            var color = ColorUtilities.ToHex(Colors.Green);
             Debug.WriteLine(color);
 
             var uri = await YouTube.GetVideoUriAsync("pYVQxKZ6-6Y", YouTubeQuality.Quality720P);

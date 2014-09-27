@@ -219,7 +219,7 @@ namespace MyToolkit.UI
 				var element = FocusManager.GetFocusedElement() as FrameworkElement;
 				if (element != null)
 				{
-					SingleEvent.Register(element,
+					SingleEvent.RegisterEvent(element,
 						(e, h) => e.LostFocus += h,
 						(e, h) => e.LostFocus -= h,
 						delegate { UpdateElementLocation(popup); });

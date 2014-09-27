@@ -41,7 +41,7 @@ namespace MyToolkit.UI
             }
             else
             {
-                var textBox = DependencyObjectHelper.FindVisualChild<TextBox>(element);
+                var textBox = element.FindVisualChild<TextBox>();
                 if (textBox != null)
                     Disable(textBox);
             }

@@ -18,7 +18,7 @@ namespace MyToolkit.Converters
 				colors = new Dictionary<Color, Color>();
 
 			if (!colors.ContainsKey(color))
-				colors[color] = ColorUtility.RemoveAlpha(color, (Color)Application.Current.Resources["PhoneBackgroundColor"]);
+				colors[color] = ColorUtilities.RemoveAlpha(color, (Color)Application.Current.Resources["PhoneBackgroundColor"]);
 			return targetType == typeof(Color) ? (object)colors[color] : new SolidColorBrush(colors[color]);
 		}
 

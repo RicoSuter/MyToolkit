@@ -96,9 +96,9 @@ namespace MyToolkit.UI.Popups
 				showFullScreen = false; 
 
 			// deactivate page
-			var color = ColorUtility.RemoveAlpha(
-				PhoneApplication.IsDarkTheme ? ColorUtility.FromHex("#22FFFFFF") :
-				ColorUtility.FromHex("#DDFFFFFF"), Colors.Black);
+            var color = ColorUtilities.RemoveAlpha(
+                PhoneApplication.IsDarkTheme ? ColorUtilities.FromHex("#22FFFFFF") :
+                ColorUtilities.FromHex("#DDFFFFFF"), Colors.Black);
 			var oldColor = SystemTray.BackgroundColor;
 
 			control.SetBackgroundColor(color);

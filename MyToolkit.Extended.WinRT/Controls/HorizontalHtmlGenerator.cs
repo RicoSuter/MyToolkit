@@ -108,7 +108,7 @@ for (var i = 0; i < document.links.length; i++) {
 							margin: 0; padding: 0;
 							font-family: 'Segoe UI'; -ms-font-feature-settings: 'ss01' 1;
 							font-size: 11pt;
-							background-color: " + ColorUtility.ToHex(Background) + @";
+							background-color: " + ColorUtilities.ToHex(Background) + @";
 						}
 					</style>
 					<meta name=""viewport"" content=""initial-scale=1, maximum-scale=1, user-scalable=0""/>" +
@@ -122,7 +122,7 @@ for (var i = 0; i < document.links.length; i++) {
 							"<div style='position: absolute; column-width: " + ColumnWidth + "px; column-fill: auto; " +
 								//"column-rule-width: " + RuleWidth + "px; " +
 								"height:" + (webView.ActualHeight - Padding.Bottom) + "px; " +
-								"color:" + ColorUtility.ToHex(Foreground) + "; margin-left:" + Padding.Left + "px; " +
+								"color:" + ColorUtilities.ToHex(Foreground) + "; margin-left:" + Padding.Left + "px; " +
 								"margin-right:" + Padding.Right + "px'>" +
 									"<div style='margin-right:" + RuleWidth + "px'" +
 									bodyHtml +
@@ -146,7 +146,7 @@ for (var i = 0; i < document.links.length; i++) {
 								"<div style='position: absolute; column-width: " + ColumnWidth + "px; top:" + Padding.Top + "px; column-fill: auto; " +
 									//"column-rule-width: " + RuleWidth + "px; " +
 									"height:" + (webView.ActualHeight - Padding.Bottom - Padding.Top) + "px; " +
-									"color:" + ColorUtility.ToHex(Foreground) + "; " +
+									"color:" + ColorUtilities.ToHex(Foreground) + "; " +
 									"margin-left:" + RuleWidth + "px'>" +
 										"<div style='margin-right:" + RuleWidth + "px; " +
 											"'>" +

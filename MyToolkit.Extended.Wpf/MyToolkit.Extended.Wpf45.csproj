@@ -66,8 +66,8 @@
     <Compile Include="..\MyToolkit.Extended.WinRT\MVVM\ViewModelHelper.cs">
       <Link>MVVM\ViewModelHelper.cs</Link>
     </Compile>
-    <Compile Include="..\MyToolkit.Extended.WinRT\Utilities\VisualTreeHelper.cs">
-      <Link>Utilities\VisualTreeHelper.cs</Link>
+    <Compile Include="..\MyToolkit.Extended.WinRT\Utilities\DependencyObjectExtensions.cs">
+      <Link>Utilities\DependencyObjectExtensions.cs</Link>
     </Compile>
     <Compile Include="..\shared\behaviors\Behavior.cs">
       <Link>Behaviors\Behavior.cs</Link>

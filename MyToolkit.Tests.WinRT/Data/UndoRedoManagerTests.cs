@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.Data;
 using MyToolkit.Model;
 using MyToolkit.Mvvm;
+using MyToolkit.Tests.WinRT.Mocks;
 using MyToolkit.Tests.WinRT.Model;
 
 namespace MyToolkit.Tests.WinRT.Data
@@ -14,7 +15,7 @@ namespace MyToolkit.Tests.WinRT.Data
         public void When_changing_scalar_property_then_undo_should_work()
         {
             //// Arrange
-            var obj = new MyObject();
+            var obj = new MockObservableObject();
             obj.Name = "A";
             var undoRedoManager = new UndoRedoManager(obj, new MockDispatcher());
 
@@ -37,7 +38,7 @@ namespace MyToolkit.Tests.WinRT.Data
         public void When_undo_a_scalar_property_then_redo_should_work()
         {
             //// Arrange
-            var obj = new MyObject();
+            var obj = new MockObservableObject();
             obj.Name = "A";
             var undoRedoManager = new UndoRedoManager(obj, new MockDispatcher());
 
@@ -60,7 +61,7 @@ namespace MyToolkit.Tests.WinRT.Data
         public void When_changing_a_scalar_property_then_redo_should_not_work()
         {
             //// Arrange
-            var obj = new MyObject();
+            var obj = new MockObservableObject();
             obj.Name = "A";
             var undoRedoManager = new UndoRedoManager(obj, new MockDispatcher());
 
@@ -82,15 +83,15 @@ namespace MyToolkit.Tests.WinRT.Data
         public void When_adding_object_to_list_then_undo_should_work()
         {
             //// Arrange
-            var obj = new MyObject();
-            obj.List.Add(new MyObject());
+            var obj = new MockObservableObject();
+            obj.List.Add(new MockObservableObject());
 
             var undoRedoManager = new UndoRedoManager(obj, new MockDispatcher());
             Assert.IsFalse(undoRedoManager.CanUndo);
             Assert.AreEqual(1, obj.List.Count);
 
             //// Act
-            obj.List.Add(new MyObject());
+            obj.List.Add(new MockObservableObject());
 
             Assert.AreEqual(2, obj.List.Count);
             Assert.IsTrue(undoRedoManager.CanUndo);
@@ -105,9 +106,9 @@ namespace MyToolkit.Tests.WinRT.Data
         public void When_removing_object_from_list_then_undo_should_work()
         {
             //// Arrange
-            var obj = new MyObject();
-            obj.List.Add(new MyObject());
-            obj.List.Add(new MyObject());
+            var obj = new MockObservableObject();
+            obj.List.Add(new MockObservableObject());
+            obj.List.Add(new MockObservableObject());
 
             var undoRedoManager = new UndoRedoManager(obj, new MockDispatcher());
             Assert.IsFalse(undoRedoManager.CanUndo);
@@ -129,9 +130,9 @@ namespace MyToolkit.Tests.WinRT.Data
         public void When_clearing_a_list_then_undo_should_work()
         {
             //// Arrange
-            var obj = new MyObject();
-            obj.List.Add(new MyObject());
-            obj.List.Add(new MyObject());
+            var obj = new MockObservableObject();
+            obj.List.Add(new MockObservableObject());
+            obj.List.Add(new MockObservableObject());
 
             var undoRedoManager = new UndoRedoManager(obj, new MockDispatcher());
             Assert.IsFalse(undoRedoManager.CanUndo);
@@ -153,9 +154,9 @@ namespace MyToolkit.Tests.WinRT.Data
         public void When_changing_property_of_excluded_child_type_then_undo_should_not_work()
         {
             //// Arrange
-            var obj = new MyObject();
+            var obj = new MockObservableObject();
             obj.AddExcludedChildType(typeof(ObservableObject));
-            obj.Child = new MyObject { Name = "A" };
+            obj.Child = new MockObservableObject { Name = "A" };
 
             var undoRedoManager = new UndoRedoManager(obj, new MockDispatcher());
             Assert.IsFalse(undoRedoManager.CanUndo);

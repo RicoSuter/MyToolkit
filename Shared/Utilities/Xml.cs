@@ -23,8 +23,10 @@ using System.Threading.Tasks;
 
 namespace MyToolkit.Utilities
 {
+    /// <summary>Provides utility methods for handling XML. </summary>
     public static class Xml
     {
+
 #if WINRT
 
         public static string XmlEscape(string unescaped)

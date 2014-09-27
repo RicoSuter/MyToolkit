@@ -1,14 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//-----------------------------------------------------------------------
+// <copyright file="PropertyPathHelper.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using MyToolkit.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
 
 namespace MyToolkit.Utilities
 {
+    /// <summary>Provides helper methods for handling property paths. </summary>
 	public static class PropertyPathHelper
 	{
 		private static readonly DependencyProperty DummyProperty =

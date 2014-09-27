@@ -1,5 +1,14 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="ColorUtilities.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using System.Globalization;
+
 #if !WINRT
 using System.Windows.Media;
 #else
@@ -9,14 +18,10 @@ using Windows.UI;
 
 namespace MyToolkit.Utilities
 {
-    /// <summary>
-    /// Provides methods to manipulate <see cref="Color"/> objects. 
-    /// </summary>
-    public static class ColorUtility
+    /// <summary>Provides methods to manipulate <see cref="Color"/> objects. </summary>
+    public class ColorUtilities
     {
-        /// <summary>
-        /// Blends the given foreground color with the background using the given alpha value. 
-        /// </summary>
+        /// <summary>Blends the given foreground color with the background using the given alpha value. </summary>
         /// <param name="foreground">The foreground <see cref="Color"/>. </param>
         /// <param name="alpha">The alpha value. </param>
         /// <param name="background">The background <see cref="Color"/>. </param>
@@ -31,9 +36,7 @@ namespace MyToolkit.Utilities
             return color; 
         }
 
-        /// <summary>
-        /// Removes the transparency from the foreground color using the given background color. 
-        /// </summary>
+        /// <summary>Removes the transparency from the foreground color using the given background color. </summary>
         /// <param name="foreground">The foreground <see cref="Color"/>. </param>
         /// <param name="background">The background <see cref="Color"/>. </param>
         /// <returns>The color without transparency. </returns>
@@ -50,9 +53,7 @@ namespace MyToolkit.Utilities
                 (byte)(foreground.B * alpha + background.B * diff));
         }
 
-        /// <summary>
-        /// Changes the alpha channel of the <see cref="Color"/>. 
-        /// </summary>
+        /// <summary>Changes the alpha channel of the <see cref="Color"/>. </summary>
         /// <param name="color">The <see cref="Color"/>. </param>
         /// <param name="alpha">The new alpha value. </param>
         /// <returns>The new <see cref="Color"/>. </returns>
@@ -61,9 +62,7 @@ namespace MyToolkit.Utilities
             return Color.FromArgb(alpha, color.R, color.G, color.B);
         }
 
-        /// <summary>
-        /// Changes the alpha channel of the <see cref="Color"/>. 
-        /// </summary>
+        /// <summary>Changes the alpha channel of the <see cref="Color"/>. </summary>
         /// <param name="color">The <see cref="Color"/>. </param>
         /// <param name="alpha">The new alpha value. </param>
         /// <returns>The new <see cref="Color"/>. </returns>
@@ -73,9 +72,7 @@ namespace MyToolkit.Utilities
             return ChangeAlpha(color, (byte)(value & 0xff));
         }
 
-        /// <summary>
-        /// Converts a <see cref="Color"/> to HEX string. 
-        /// </summary>
+        /// <summary>Converts a <see cref="Color"/> to HEX string. </summary>
         /// <param name="color">The <see cref="Color"/>. </param>
         /// <param name="includeAlpha">If false then #RRGGBB, true then #AARRGGBB. </param>
         /// <returns>The HEX string. </returns>
@@ -94,9 +91,7 @@ namespace MyToolkit.Utilities
                 Convert.ToInt32(color.B).ToString("X2");
         }
 
-        /// <summary>
-        /// Creates a <see cref="Color"/> from a HEX value. 
-        /// </summary>
+        /// <summary>Creates a <see cref="Color"/> from a HEX value. </summary>
         /// <param name="colorCode">The HEX in the form #RRGGBB or #AARRGGBB. </param>
         /// <returns>The <see cref="Color"/>. </returns>
         public static Color FromHex(string colorCode)
@@ -107,9 +102,7 @@ namespace MyToolkit.Utilities
             return FromHex(UInt32.Parse(colorCode, NumberStyles.HexNumber));
         }
 
-        /// <summary>
-        /// Creates a <see cref="Color"/> from a HEX value. 
-        /// </summary>
+        /// <summary>Creates a <see cref="Color"/> from a HEX value. </summary>
         /// <param name="argb">The HEX value. </param>
         /// <returns>The <see cref="Color"/>. </returns>
         public static Color FromHex(uint argb)
@@ -122,9 +115,7 @@ namespace MyToolkit.Utilities
 
 #if WINRT
 
-        /// <summary>
-        /// Creates a <see cref="Color"/> from a <see cref="Colors"/> enum string. 
-        /// </summary>
+        /// <summary>Creates a <see cref="Color"/> from a <see cref="Colors"/> enum string. </summary>
         /// <param name="value">The color string. </param>
         /// <returns>The <see cref="Color"/>. </returns>
         public static Color FromString(string value)
@@ -132,9 +123,14 @@ namespace MyToolkit.Utilities
             var property = typeof(Colors).GetRuntimeProperty(value);
             if (property != null)
                 return (Color)property.GetValue(null);
-            return ColorUtility.FromHex(value);
+            return ColorUtilities.FromHex(value);
         }
 
 #endif
+    }
+
+    [Obsolete("Use ColorUtilities class instead. 9/27/2014")]
+    public class ColorUtility : ColorUtilities
+    {
     }
 }
