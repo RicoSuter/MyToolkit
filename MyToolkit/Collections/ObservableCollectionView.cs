@@ -19,30 +19,30 @@ using MyToolkit.Utilities;
 namespace MyToolkit.Collections
 {
     /// <summary>Provides a view for an <see cref="ObservableCollection{T}"/> with automatic sorting and filtering. </summary>
-    /// <typeparam name="T">The type of an item. </typeparam>
-    public class ObservableCollectionView<T> : ObservableView<T>
+    /// <typeparam name="TItem">The type of an item. </typeparam>
+    public class ObservableCollectionView<TItem> : ObservableView<TItem>
     {
-        public ObservableCollectionView() : this(new ObservableCollection<T>(), null) { }
-        public ObservableCollectionView(IList<T> items) : this(items, null) { }
-        public ObservableCollectionView(IList<T> items, Func<T, bool> filter = null,
-            Func<T, object> orderBy = null, bool ascending = true, int limit = 0, bool trackItemChanges = false)
+        public ObservableCollectionView() : this(new ObservableCollection<TItem>(), null) { }
+        public ObservableCollectionView(IList<TItem> items) : this(items, null) { }
+        public ObservableCollectionView(IList<TItem> items, Func<TItem, bool> filter = null,
+            Func<TItem, object> orderBy = null, bool ascending = true, int limit = 0, bool trackItemChanges = false)
             : base(items, filter, orderBy, ascending, limit, trackItemChanges)
         {
         }
     }
 
     /// <summary>Provides a view for an <see cref="ObservableCollection{T}"/> with automatic sorting and filtering. </summary>
-    /// <typeparam name="T">The type of an item. </typeparam>
+    /// <typeparam name="TItem">The type of an item. </typeparam>
     [Obsolete("Use ObservableCollectionView instead. 5/19/2014")]
-    public class ObservableView<T> : IList<T>, IObservableCollectionView, IDisposable
+    public class ObservableView<TItem> : IList<TItem>, IObservableCollectionView, IDisposable
     {
         private NotifyCollectionChangedEventHandler _itemsChangedHandler;
-        private ExtendedObservableCollection<T> _internalCollection = new ExtendedObservableCollection<T>();
+        private ExtendedObservableCollection<TItem> _internalCollection = new ExtendedObservableCollection<TItem>();
         private readonly Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler> _events =
             new Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler>();
 
-        private Func<T, bool> _filter;
-        private Func<T, object> _order;
+        private Func<TItem, bool> _filter;
+        private Func<TItem, object> _order;
 
         private int _offset;
         private int _limit;
@@ -54,10 +54,10 @@ namespace MyToolkit.Collections
 
         private readonly object _syncRoot = new object();
 
-        public ObservableView() : this(new ObservableCollection<T>(), null) { }
-        public ObservableView(IList<T> items) : this(items, null) { }
-        public ObservableView(IList<T> items, Func<T, bool> filter = null,
-            Func<T, object> orderBy = null, bool ascending = true, int limit = 0, bool trackItemChanges = false)
+        public ObservableView() : this(new ObservableCollection<TItem>(), null) { }
+        public ObservableView(IList<TItem> items) : this(items, null) { }
+        public ObservableView(IList<TItem> items, Func<TItem, bool> filter = null,
+            Func<TItem, object> orderBy = null, bool ascending = true, int limit = 0, bool trackItemChanges = false)
         {
             Items = items;
 
@@ -80,17 +80,17 @@ namespace MyToolkit.Collections
         }
 
         /// <summary>Gets the original items source. </summary>
-        public IList<T> Items { get; private set; }
+        public IList<TItem> Items { get; private set; }
 
         /// <summary>Gets or sets the filter (a Func{TItem, bool} object). </summary>
         object IObservableView.Filter
         {
             get { return Filter; }
-            set { Filter = (Func<T, bool>)value; }
+            set { Filter = (Func<TItem, bool>)value; }
         }
 
         /// <summary>Gets or sets the filter. </summary>
-        public Func<T, bool> Filter
+        public Func<TItem, bool> Filter
         {
             get { return _filter; }
             set
@@ -104,11 +104,11 @@ namespace MyToolkit.Collections
         object IObservableView.Order
         {
             get { return Order; }
-            set { Order = (Func<T, object>)value; }
+            set { Order = (Func<TItem, object>)value; }
         }
 
         /// <summary>Gets or sets the sorting/order function. </summary>
-        public Func<T, object> Order
+        public Func<TItem, object> Order
         {
             get { return _order; }
             set
@@ -207,13 +207,13 @@ namespace MyToolkit.Collections
         /// <summary>Adds a multiple elements to the underlying collection. </summary>
         /// <param name="items">The items to add. </param>
         [Obsolete("Use methods on Items property instead. 9/20/2014")]
-        public void AddRange(IEnumerable<T> items)
+        public void AddRange(IEnumerable<TItem> items)
         {
             var old = TrackCollectionChanges;
             TrackCollectionChanges = false;
 
-            if (Items is ExtendedObservableCollection<T>)
-                ((ExtendedObservableCollection<T>)Items).AddRange(items);
+            if (Items is ExtendedObservableCollection<TItem>)
+                ((ExtendedObservableCollection<TItem>)Items).AddRange(items);
             else
             {
                 foreach (var i in items)
@@ -282,7 +282,7 @@ namespace MyToolkit.Collections
             if (_events.ContainsKey(item))
                 return;
 
-            var handler = WeakEvent.RegisterEvent<ObservableView<T>, PropertyChangedEventHandler, PropertyChangedEventArgs>(
+            var handler = WeakEvent.RegisterEvent<ObservableView<TItem>, PropertyChangedEventHandler, PropertyChangedEventArgs>(
                 this,
                 h => item.PropertyChanged += h,
                 h => item.PropertyChanged -= h,
@@ -304,10 +304,10 @@ namespace MyToolkit.Collections
 
         private void TrackCollection()
         {
-            if (Items is ObservableCollection<T>)
+            if (Items is ObservableCollection<TItem>)
             {
-                var collection = (ObservableCollection<T>)Items;
-                _itemsChangedHandler = WeakEvent.RegisterEvent<ObservableView<T>, NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
+                var collection = (ObservableCollection<TItem>)Items;
+                _itemsChangedHandler = WeakEvent.RegisterEvent<ObservableView<TItem>, NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
                     this,
                     h => collection.CollectionChanged += h,
                     h => collection.CollectionChanged -= h,
@@ -320,7 +320,7 @@ namespace MyToolkit.Collections
         {
             if (_itemsChangedHandler != null)
             {
-                ((ObservableCollection<T>)Items).CollectionChanged -= _itemsChangedHandler;
+                ((ObservableCollection<TItem>)Items).CollectionChanged -= _itemsChangedHandler;
                 _itemsChangedHandler = null;
             }
         }
@@ -344,7 +344,7 @@ namespace MyToolkit.Collections
 
             lock (SyncRoot)
             {
-                List<T> list;
+                List<TItem> list;
 
                 if (Filter != null && Order != null && Ascending)
                     list = Items.Where(Filter).OrderBy(Order).ToList();
@@ -398,7 +398,7 @@ namespace MyToolkit.Collections
             }
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator<TItem> GetEnumerator()
         {
             lock (SyncRoot)
                 return _internalCollection.GetEnumerator();
@@ -410,13 +410,13 @@ namespace MyToolkit.Collections
                 return _internalCollection.GetEnumerator();
         }
 
-        public int IndexOf(T item)
+        public int IndexOf(TItem item)
         {
             lock (SyncRoot)
                 return _internalCollection.IndexOf(item);
         }
 
-        public T this[int index]
+        public TItem this[int index]
         {
             get
             {
@@ -436,7 +436,7 @@ namespace MyToolkit.Collections
             set { throw new NotSupportedException("Use ObservableCollectionView.Items[] instead."); }
         }
 
-        public bool Contains(T item)
+        public bool Contains(TItem item)
         {
             lock (SyncRoot)
                 return _internalCollection.Contains(item);
@@ -450,16 +450,16 @@ namespace MyToolkit.Collections
         public bool Contains(object value)
         {
             lock (SyncRoot)
-                return value is T && _internalCollection.Contains((T)value);
+                return value is TItem && _internalCollection.Contains((TItem)value);
         }
 
         public int IndexOf(object value)
         {
-            if (!(value is T))
+            if (!(value is TItem))
                 return -1;
 
             lock (SyncRoot)
-                return _internalCollection.IndexOf((T)value);
+                return _internalCollection.IndexOf((TItem)value);
         }
 
         public bool IsFixedSize
@@ -479,10 +479,10 @@ namespace MyToolkit.Collections
 
         public void CopyTo(Array array, int index)
         {
-            CopyTo((T[])array, index);
+            CopyTo((TItem[])array, index);
         }
 
-        public void CopyTo(T[] array, int arrayIndex)
+        public void CopyTo(TItem[] array, int arrayIndex)
         {
             lock (SyncRoot)
                 _internalCollection.CopyTo(array, arrayIndex);
@@ -520,7 +520,7 @@ namespace MyToolkit.Collections
         }
 
         [Obsolete("Use methods on Items property instead. 9/20/2014")]
-        public void Add(T item)
+        public void Add(TItem item)
         {
             Items.Add(item);
         }
@@ -532,7 +532,7 @@ namespace MyToolkit.Collections
         }
 
         [Obsolete("Use methods on Items property instead. 9/20/2014")]
-        public bool Remove(T item)
+        public bool Remove(TItem item)
         {
             return Items.Remove(item);
         }
@@ -547,7 +547,7 @@ namespace MyToolkit.Collections
 
 
         [Obsolete("Use methods on Items property instead. 9/20/2014")]
-        public void Insert(int index, T item)
+        public void Insert(int index, TItem item)
         {
             throw new NotSupportedException("Use ObservableCollectionView.Insert() instead.");
         }
@@ -567,13 +567,14 @@ namespace MyToolkit.Collections
         #endregion
     }
 
+    /// <summary>Provides a view for an <see cref="ObservableCollection{T}"/> with automatic sorting and filtering. </summary>
     public interface IObservableCollectionView : IObservableView
     {
     }
 
+    /// <summary>Provides a view for an <see cref="ObservableCollection{T}"/> with automatic sorting and filtering. </summary>
     [Obsolete("Use IObservableCollectionView instead. 5/19/2014")]
-    public interface IObservableView
-        : IList, INotifyCollectionChanged, INotifyPropertyChanged
+    public interface IObservableView : IList, INotifyCollectionChanged, INotifyPropertyChanged
     {
         /// <summary>
         /// Gets or sets a value indicating whether the view should automatically be updated when needed. 

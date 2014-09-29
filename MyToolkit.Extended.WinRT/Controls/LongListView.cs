@@ -13,24 +13,25 @@ namespace MyToolkit.Controls
 {
 	public class LongListView : ListView
 	{
-		public LongListView()
+        private NotifyCollectionChangedEventHandler _collectionChangedHandler = null;
+
+        public LongListView()
 		{
 			SelectionChanged += OnSelectionChanged;
 
 			// prevent memory leaks
 			Loaded += delegate
 			{
-				if (collectionChangedHandler != null)
-					((INotifyCollectionChanged)ItemsSource).CollectionChanged += collectionChangedHandler;
+				if (_collectionChangedHandler != null)
+					((INotifyCollectionChanged)ItemsSource).CollectionChanged += _collectionChangedHandler;
 			};
 			Unloaded += delegate
 			{
-				if (collectionChangedHandler != null)
-					((INotifyCollectionChanged)ItemsSource).CollectionChanged -= collectionChangedHandler;
+				if (_collectionChangedHandler != null)
+					((INotifyCollectionChanged)ItemsSource).CollectionChanged -= _collectionChangedHandler;
 			};
 		}
-
-
+        
 		public static readonly DependencyProperty ItemsSourceProperty =
 			DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(LongListView), new PropertyMetadata(default(object), OnItemsSourceChanged));
 
@@ -42,26 +43,22 @@ namespace MyToolkit.Controls
 
 		private static void OnItemsSourceChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
 		{
-			var ctrl = (LongListView)obj;
-			ctrl.UpdateList();
+			var control = (LongListView)obj;
+			control.UpdateList();
 
-			if (ctrl.collectionChangedHandler != null) // prevent memory leaks
+			if (control._collectionChangedHandler != null) // prevent memory leaks
 			{
-				((INotifyCollectionChanged) args.OldValue).CollectionChanged -= ctrl.collectionChangedHandler;
-				ctrl.collectionChangedHandler = null; 
+				((INotifyCollectionChanged) args.OldValue).CollectionChanged -= control._collectionChangedHandler;
+				control._collectionChangedHandler = null; 
 			}
 
-			var collection = ctrl.ItemsSource as INotifyCollectionChanged;
+			var collection = control.ItemsSource as INotifyCollectionChanged;
 			if (collection != null)
 			{
-				ctrl.collectionChangedHandler = (sender, e) => ctrl.UpdateList();
-				collection.CollectionChanged += ctrl.collectionChangedHandler;
+				control._collectionChangedHandler = (sender, e) => control.UpdateList();
+				collection.CollectionChanged += control._collectionChangedHandler;
 			}
 		}
-
-		private NotifyCollectionChangedEventHandler collectionChangedHandler = null; 
-
-
 
 		public static readonly DependencyProperty GroupHeaderTemplateProperty =
 			DependencyProperty.Register("GroupHeaderTemplate", typeof (DataTemplate), typeof (LongListView), new PropertyMetadata(default(DataTemplate)));

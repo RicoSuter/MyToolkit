@@ -8,6 +8,7 @@
 
 using System;
 using System.Reflection;
+
 #if WINRT
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Data;
@@ -18,41 +19,43 @@ using System.Windows.Data;
 
 namespace MyToolkit.Behaviors
 {
+    /// <summary>A typed XAML behavior. </summary>
+    /// <typeparam name="T">The type of the attached object. </typeparam>
     public abstract class Behavior<T> : Behavior where T : DependencyObject
     {
         protected Behavior()
         {
-            _associatedType = typeof(T);
+            AssociatedType = typeof(T);
         }
 
         public new T Element
         {
-            get { return (T)_associatedObject; }
-            internal set { _associatedObject = value; }
+            get { return (T)AssociatedObject; }
+            internal set { AssociatedObject = value; }
         }
     }
 
+    /// <summary>A XAML behavior. </summary>
+    /// <typeparam name="T">The type of the attached object. </typeparam>
     public abstract class Behavior : FrameworkElement
     {
-        protected internal DependencyObject _associatedObject;
-        protected internal Type _associatedType = typeof(object);
-
-        protected DependencyObject AssociatedObject
+        protected Behavior()
         {
-            get { return _associatedObject; }
+            AssociatedType = typeof(object);
         }
 
-        protected Type AssociatedType
-        {
-            get { return _associatedType; }
-        }
+        /// <summary>Gets or sets the associated object. </summary>
+        protected internal DependencyObject AssociatedObject { get; set; }
+
+        /// <summary>Gets or sets the type of the associated object. </summary>
+        protected internal Type AssociatedType { get; set; }
 
         public void Attach(DependencyObject dependencyObject)
         {
             if (AssociatedObject != null)
                 throw new InvalidOperationException("The Behavior is already hosted on a different element.");
 
-            _associatedObject = dependencyObject;
+            AssociatedObject = dependencyObject;
             if (dependencyObject != null)
             {
 #if SL5 || WP7
@@ -87,7 +90,7 @@ namespace MyToolkit.Behaviors
                     frameworkElement.Unloaded -= AssociatedObjectUnloaded;
                 }
 
-                _associatedObject = null;
+                AssociatedObject = null;
             }
         }
 
@@ -112,7 +115,7 @@ namespace MyToolkit.Behaviors
             var binding = new Binding
             {
                 Path = new PropertyPath("DataContext"),
-                Source = _associatedObject
+                Source = AssociatedObject
             };
 
             SetBinding(DataContextProperty, binding);

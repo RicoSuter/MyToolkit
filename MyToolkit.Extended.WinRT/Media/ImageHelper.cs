@@ -80,7 +80,11 @@ namespace MyToolkit.Media
                 _pendingUpdates[image] = uri; 
         }
 
+#if WINRT
         private static async void LoadImage(Image image, Uri uri)
+#else
+        private static void LoadImage(Image image, Uri uri)
+#endif
         {
             if (uri == null)
             {
