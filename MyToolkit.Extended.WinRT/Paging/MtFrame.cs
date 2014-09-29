@@ -25,30 +25,32 @@ namespace MyToolkit.Paging
 {
     public delegate void NavigatedEventHandler(object sender, MtNavigationEventArgs e);
 
+    /// <summary>Navigation container for pages. </summary>
     public class MtFrame : Control, INavigate
     {
         private int _currentIndex = -1;
         private IPageAnimation _pageAnimation;
         private List<MtPageDescription> _pages = new List<MtPageDescription>();
 
-        /// <summary>
-        /// Gets the current <see cref="MtFrame"/>. 
-        /// </summary>
+        /// <summary>Gets the current <see cref="MtFrame"/>. </summary>
         public static MtFrame Current
         {
             get { return Window.Current.Content as MtFrame; }
         }
 
+        /// <summary>Gets the current page index. </summary>
         public int CurrentIndex
         {
             get { return _currentIndex; }
         }
 
+        /// <summary>Gets a value indicating whether the first/root page is visible. </summary>
         public bool IsFirstPage
         {
             get { return _currentIndex == 0; }
         }
 
+        /// <summary>Initializes a new instance of the <see cref="MtFrame"/> class. </summary>
         public MtFrame()
         {
             HorizontalContentAlignment = HorizontalAlignment.Stretch;
@@ -63,9 +65,14 @@ namespace MyToolkit.Paging
             GoBackCommand = new RelayCommand(() => GoBackAsync(), () => CanGoBack);
 
             DefaultStyleKey = typeof(MtFrame);
-            
+
             if (NavigationKeyHandler.IsRunningOnPhone)
+            {
+                DisableForwardStack = true;
                 _pageAnimation = new TurnstilePageAnimation();
+            }
+            else
+                DisableForwardStack = false; 
         }
 
         public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
@@ -94,9 +101,7 @@ namespace MyToolkit.Paging
         public static readonly DependencyProperty ContentTransitionsProperty = DependencyProperty.Register(
             "ContentTransitions", typeof(TransitionCollection), typeof(MtFrame), new PropertyMetadata(default(TransitionCollection)));
 
-        /// <summary>
-        /// Gets or sets the content transitions of the <see cref="MtFrame"/>. 
-        /// </summary>
+        /// <summary>Gets or sets the content transitions of the <see cref="MtFrame"/>. </summary>
         public TransitionCollection ContentTransitions
         {
             get { return (TransitionCollection)GetValue(ContentTransitionsProperty); }
@@ -109,23 +114,21 @@ namespace MyToolkit.Paging
         /// <summary>Gets a command to navigate to the previous page. </summary>
         public ICommand GoBackCommand { get; private set; }
 
+        /// <summary>Gets or sets a value indicating whether the forward stack is disabled 
+        /// (default: disabled on Windows Phone, enabled on Windows). </summary>
+        public bool DisableForwardStack { get; set; }
+
         /// <summary>Gets or sets a value indicating whether the cache is fully 
         /// deactivated (should be used only for testing). Default: false. </summary>
         public bool DisableCache { get; set; }
 
-        /// <summary>
-        /// Gets the page before the current page in the page stack or null if not available. 
-        /// </summary>
+        /// <summary>Gets the page before the current page in the page stack or null if not available. </summary>
         public MtPageDescription PreviousPage { get { return _currentIndex > 0 ? _pages[_currentIndex - 1] : null; } }
 
-        /// <summary>
-        /// Gets the current page. 
-        /// </summary>
+        /// <summary>Gets the current page. </summary>
         public MtPageDescription CurrentPage { get { return _pages.Count > 0 ? _pages[_currentIndex] : null; } }
 
-        /// <summary>
-        /// Gets the page after the current page in the page stack or null if not available. 
-        /// </summary>
+        /// <summary>Gets the page after the current page in the page stack or null if not available. </summary>
         public MtPageDescription NextPage { get { return _currentIndex < _pages.Count - 1 ? _pages[_currentIndex + 1] : null; } }
 
         /// <summary>Gets the current page animation. Only available when ContentTransitions is null. </summary>
@@ -138,19 +141,13 @@ namespace MyToolkit.Paging
         /// <summary>Gets or sets a value indicating whether to show the animation when launching, leaving or switching to the app. Default: false. </summary>
         public bool ShowNavigationOnAppInAndOut { get; set; }
 
-        /// <summary>
-        /// Gets the underlying WinRT frame object. 
-        /// </summary>
+        /// <summary>Gets the underlying WinRT frame object. </summary>
         public Frame InternalFrame { get; private set; }
 
-        /// <summary>
-        /// Gets a value indicating whether it is possible to navigate forward. 
-        /// </summary>
+        /// <summary>Gets a value indicating whether it is possible to navigate forward. </summary>
         public bool CanGoForward { get { return _currentIndex < _pages.Count - 1; } }
 
-        /// <summary>
-        /// Tries to navigate forward to the next page. 
-        /// </summary>
+        /// <summary>Tries to navigate forward to the next page. </summary>
         /// <returns>Returns true if navigating forward, false if cancelled</returns>
         public async Task<bool> GoForwardAsync()
         {
@@ -161,19 +158,13 @@ namespace MyToolkit.Paging
             return true;
         }
 
-        /// <summary>
-        /// Gets a value indicating whether it is possible to navigate back. 
-        /// </summary>
+        /// <summary>Gets a value indicating whether it is possible to navigate back. </summary>
         public bool CanGoBack { get { return _currentIndex > 0; } }
 
-        /// <summary>
-        /// Gets a list of the pages in the page stack. 
-        /// </summary>
+        /// <summary>Gets a list of the pages in the page stack. </summary>
         public IReadOnlyList<MtPageDescription> Pages { get { return _pages; } }
 
-        /// <summary>
-        /// Gets the first page of the specified type in the page back stack or null if no page of the type is available. 
-        /// </summary>
+        /// <summary>Gets the first page of the specified type in the page back stack or null if no page of the type is available. </summary>
         /// <param name="pageType">The page type. </param>
         /// <returns>The page or null if not found. </returns>
         public MtPageDescription GetNearestPageOfTypeInBackStack(Type pageType)
@@ -188,9 +179,7 @@ namespace MyToolkit.Paging
             return null;
         }
 
-        /// <summary>
-        /// Navigates back to the given page. 
-        /// </summary>
+        /// <summary>Navigates back to the given page. </summary>
         /// <param name="page">The page to navigate to. </param>
         /// <returns>True if the navigation could be performed. </returns>
         public async Task<bool> GoBackToAsync(MtPageDescription page)
@@ -199,9 +188,7 @@ namespace MyToolkit.Paging
             return await GoBackToAsync(index);
         }
 
-        /// <summary>
-        /// Navigates back to the given index. 
-        /// </summary>
+        /// <summary>Navigates back to the given index. </summary>
         /// <param name="newIndex">The page index. </param>
         /// <returns>True if the navigation could be performed. </returns>
         public async Task<bool> GoBackToAsync(int newIndex)
@@ -221,9 +208,7 @@ namespace MyToolkit.Paging
             return true;
         }
 
-        /// <summary>
-        /// Navigates back to the first page in the page stack. 
-        /// </summary>
+        /// <summary>Navigates back to the first page in the page stack. </summary>
         /// <returns>True if the navigation could be performed. </returns>
         public async Task<bool> GoHomeAsync()
         {
@@ -257,6 +242,9 @@ namespace MyToolkit.Paging
                 _currentIndex += mode == NavigationMode.Forward ? 1 : -1;
                 var newPage = CurrentPage;
 
+                if (mode == NavigationMode.Back && DisableForwardStack)
+                    RemoveAllPagesAfterCurrent();
+
                 Content = newPage.GetPage(this).InternalPage;
 
                 CallOnNavigatedFrom(oldPage, mode);
@@ -268,9 +256,7 @@ namespace MyToolkit.Paging
                 throw new Exception("cannot go forward or back");
         }
 
-        /// <summary>
-        /// Initializes the frame and navigates to the given first page. 
-        /// </summary>
+        /// <summary>Initializes the frame and navigates to the given first page. </summary>
         /// <param name="homePageType">The type of the home page. </param>
         /// <param name="parameter">The parameter for the page. </param>
         /// <returns>Always true. </returns>
@@ -280,9 +266,7 @@ namespace MyToolkit.Paging
             return true;
         }
 
-        /// <summary>
-        /// Navigates forward to a new instance of the given page type. 
-        /// </summary>
+        /// <summary>Navigates forward to a new instance of the given page type. </summary>
         /// <param name="pageType">The page type. </param>
         /// <returns>Returns true if the navigation process has not been cancelled. </returns>
         public Task<bool> NavigateAsync(Type pageType)
@@ -290,9 +274,7 @@ namespace MyToolkit.Paging
             return NavigateAsync(pageType, null);
         }
 
-        /// <summary>
-        /// Navigates forward to a new instance of the given page type. 
-        /// </summary>
+        /// <summary>Navigates forward to a new instance of the given page type. </summary>
         /// <param name="pageType">The page type. </param>
         /// <param name="parameter">The page parameter. </param>
         /// <returns>Returns true if the navigation process has not been cancelled. </returns>
@@ -305,6 +287,8 @@ namespace MyToolkit.Paging
             return true;
         }
 
+        /// <summary>Navigates to the page of the given type. </summary>
+        /// <param name="sourcePageType">The page type. </param>
         public bool Navigate(Type sourcePageType)
         {
             NavigateAsync(sourcePageType);
@@ -403,9 +387,7 @@ namespace MyToolkit.Paging
                 OnPageCreated(this, page);
         }
 
-        /// <summary>
-        /// Called when a new page has been created. 
-        /// </summary>
+        /// <summary>Called when a new page has been created. </summary>
         /// <param name="sender">The frame. </param>
         /// <param name="page">The created page. </param>
         protected virtual void OnPageCreated(object sender, object page)
@@ -413,23 +395,19 @@ namespace MyToolkit.Paging
             // Must be empty. 
         }
 
-        /// <summary>
-        /// Called when navigated to another page. 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected virtual void OnNavigated(object sender, MtNavigationEventArgs e)
+        /// <summary>Called when navigated to another page. </summary>
+        /// <param name="sender">The sender. </param>
+        /// <param name="args">The args. </param>
+        protected virtual void OnNavigated(object sender, MtNavigationEventArgs args)
         {
             // Must be empty. 
         }
 
-        /// <summary>
-        /// Used set the serialized the current page stack (used in the SuspensionManager). 
-        /// </summary>
-        /// <param name="s"></param>
-        public void SetNavigationState(string s)
+        /// <summary>Used set the serialized the current page stack (used in the SuspensionManager). </summary>
+        /// <param name="data">The data. </param>
+        public void SetNavigationState(string data)
         {
-            var tuple = DataContractSerialization.Deserialize<MtFrameDescription>(s, MtSuspensionManager.KnownTypes.ToArray());
+            var tuple = DataContractSerialization.Deserialize<MtFrameDescription>(data, MtSuspensionManager.KnownTypes.ToArray());
             _pages = tuple.PageStack;
             _currentIndex = tuple.PageIndex;
 
@@ -440,9 +418,8 @@ namespace MyToolkit.Paging
             }
         }
 
-        /// <summary>
-        /// Used to serialize the current page stack (used in the SuspensionManager). 
-        /// </summary>
+        /// <summary>Used to serialize the current page stack (used in the SuspensionManager). </summary>
+        /// <returns>The data. </returns>
         public string GetNavigationState()
         {
             //CallOnNavigatingFromAsync(CurrentPage, NavigationMode.Forward);
@@ -471,9 +448,7 @@ namespace MyToolkit.Paging
             return output;
         }
 
-        /// <summary>
-        /// Gets the number of pages in the page back stack. 
-        /// </summary>
+        /// <summary>Gets the number of pages in the page back stack. </summary>
         public int BackStackDepth
         {
             get { return _currentIndex + 1; }

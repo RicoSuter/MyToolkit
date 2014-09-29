@@ -163,7 +163,7 @@ namespace MyToolkit.Events
 
         internal class WeakEventRegistration
         {
-            private static readonly MethodInfo _onEventCalledInfo =
+            private static readonly MethodInfo OnEventCalledInfo =
               typeof(WeakEventRegistration).GetTypeInfo().GetDeclaredMethod("OnEventCalled");
 
             private EventInfo _eventInfo;
@@ -230,7 +230,7 @@ namespace MyToolkit.Events
                   .GetDeclaredMethod("Invoke")
                   .GetParameters();
 
-                return _onEventCalledInfo
+                return OnEventCalledInfo
                   .MakeGenericMethod(parameters[1].ParameterType)
                   .CreateDelegate(eventType, this);
             }

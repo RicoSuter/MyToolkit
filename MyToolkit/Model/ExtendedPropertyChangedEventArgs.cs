@@ -10,8 +10,10 @@ using System.ComponentModel;
 
 namespace MyToolkit.Model
 {
+    /// <summary>The argument of the ExtendedPropertyChanged event. </summary>
     public class ExtendedPropertyChangedEventArgs : PropertyChangedEventArgs
     {
+        /// <summary>Initializes a new instance of the <see cref="ExtendedPropertyChangedEventArgs"/> class. </summary>
         public ExtendedPropertyChangedEventArgs(string propertyName, object oldValue, object newValue) : base(propertyName)
         {
             OldValue = oldValue;

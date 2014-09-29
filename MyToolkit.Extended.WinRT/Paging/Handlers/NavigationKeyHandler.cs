@@ -194,14 +194,19 @@ namespace MyToolkit.Paging.Handlers
 
         private async void TryGoForwardAsync()
         {
-            await _page.Frame.GoForwardAsync();
+            if (_page.Frame.CanGoForward)
+                await _page.Frame.GoForwardAsync();
         }
 
         private bool TryGoBackAsync()
         {
-            var args = new CancelEventArgs();
-            CallGoBackActions(args, _goBackActions);
-            return _page.Frame.CanGoBack || args.Cancel;
+            if (_page.Frame.CanGoBack)
+            {
+                var args = new CancelEventArgs();
+                CallGoBackActions(args, _goBackActions);
+                return _page.Frame.CanGoBack || args.Cancel;
+            }
+            return false;
         }
 
         private void CallGoBackActions(CancelEventArgs e, List<Func<CancelEventArgs, Task>> actions)

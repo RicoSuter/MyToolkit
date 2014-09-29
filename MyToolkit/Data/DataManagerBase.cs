@@ -27,7 +27,7 @@ namespace MyToolkit.Data
 
 #endif
 
-    /// <summary>Provides an abstract CacheManager implementation with the ability to use a WCF service to load cachable entities. </summary>
+    /// <summary>Provides an abstract CacheManager implementation with the ability to use a WCF service to load cacheable entities. </summary>
     public abstract class DataManagerBase<TIdentity> : CacheManager<TIdentity> // TODO: Rename to something similar to CacheManager
     {
         private readonly List<Tuple<string, TIdentity>> _loadingItems = new List<Tuple<string, TIdentity>>();
