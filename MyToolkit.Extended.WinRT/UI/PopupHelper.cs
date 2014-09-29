@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using MyToolkit.Events;
 using MyToolkit.Utilities;
 using Windows.Foundation;
 using Windows.UI.Core;

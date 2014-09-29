@@ -74,7 +74,7 @@ namespace MyToolkit.Model
         /// <param name="propertyNameExpression">The property name as lambda. </param>
         public void RaisePropertyChanged(Expression<Func<object>> propertyNameExpression, object oldValue, object newValue)
         {
-            RaisePropertyChanged(new ExtendedPropertyChangedEventArgs(ExpressionUtilities.GetName(propertyNameExpression), oldValue, newValue));
+            RaisePropertyChanged(new ExtendedPropertyChangedEventArgs(ExpressionUtilities.GetPropertyName(propertyNameExpression), oldValue, newValue));
         }
 
         /// <summary>Raises the property changed event with <see cref="ExtendedPropertyChangedEventArgs"/> arguments. </summary>
@@ -84,7 +84,7 @@ namespace MyToolkit.Model
         /// <param name="propertyNameExpression">The property name as lambda. </param>
         public void RaisePropertyChanged<TClass>(Expression<Func<TClass, object>> propertyNameExpression, object oldValue, object newValue)
         {
-            RaisePropertyChanged(new ExtendedPropertyChangedEventArgs(ExpressionUtilities.GetName(propertyNameExpression), oldValue, newValue));
+            RaisePropertyChanged(new ExtendedPropertyChangedEventArgs(ExpressionUtilities.GetPropertyName(propertyNameExpression), oldValue, newValue));
         }
 
         /// <summary>Registers a child to receive property changes. </summary>

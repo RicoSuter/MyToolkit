@@ -25,11 +25,12 @@ namespace MyToolkit.Controls
     public class DataGrid : Control
     {
         private Grid _titleRowControl;
-        private DataGridColumn _selectdColumn;
+        private DataGridColumn _selectedColumn;
         private MtListBox _listControl;
         private bool _initialized = false;
         private object _initialSelectedItem;
 
+        /// <summary>Initializes a new instance of the <see cref="DataGrid"/> class. </summary>
         public DataGrid()
         {
             DefaultStyleKey = typeof(DataGrid);
@@ -39,14 +40,10 @@ namespace MyToolkit.Controls
                 Loaded += OnLoaded;
         }
 
-        /// <summary>
-        /// Occurs when the selected item (row) has changed. 
-        /// </summary>
+        /// <summary>Occurs when the selected item (row) has changed. </summary>
         public event SelectionChangedEventHandler SelectionChanged;
 
-        /// <summary>
-        /// Occurs when the user clicked on an item and wants to navigate to its detail page. 
-        /// </summary>
+        /// <summary>Occurs when the user clicked on an item and wants to navigate to its detail page. </summary>
         public event EventHandler<NavigationListEventArgs> Navigate;
 
         #region Dependency properties
@@ -149,17 +146,13 @@ namespace MyToolkit.Controls
 
         #endregion
 
-        /// <summary>
-        /// Gets a value indicating whether the item details are shown. 
-        /// </summary>
+        /// <summary>Gets a value indicating whether the item details are shown. </summary>
         public bool ShowItemDetails
         {
             get { return true; }
         }
 
-        /// <summary>
-        /// Gets the currently displayed items. 
-        /// </summary>
+        /// <summary>Gets the currently displayed items. </summary>
         public IObservableCollectionView Items
         {
             get { return _listControl == null ? null : _listControl.ItemsSource as IObservableCollectionView; }
@@ -169,38 +162,30 @@ namespace MyToolkit.Controls
               typeof(ObservableCollection<DataGridColumn>), typeof(DataGrid),
               new PropertyMetadata(null, OnColumnsPropertyChanged));
 
-        /// <summary>
-        /// Gets the column description of the <see cref="DataGrid"/>. 
-        /// </summary>
+        /// <summary>Gets the column description of the <see cref="DataGrid"/>. </summary>
         public ObservableCollection<DataGridColumn> Columns
         {
             get { return (ObservableCollection<DataGridColumn>)GetValue(ColumnsProperty); }
             set { SetValue(ColumnsProperty, value); }
         }
 
-        /// <summary>
-        /// Gets the selected column. 
-        /// </summary>
+        /// <summary>Gets the selected column. </summary>
         public DataGridColumn SelectedColumn
         {
-            get { return _selectdColumn; }
+            get { return _selectedColumn; }
         }
 
-        /// <summary>
-        /// Selects a column for ordering. 
+        /// <summary>Selects a column for ordering. 
         /// If the column is not selected the the default ordering is used (IsAscendingDefault property). 
-        /// If the column is already selected then the ordering direction will be inverted. 
-        /// </summary>
+        /// If the column is already selected then the ordering direction will be inverted. </summary>
         /// <param name="column">The column. </param>
         /// <returns>Returns true if column could be changed. </returns>
         public bool SelectColumn(DataGridColumn column)
         {
-            return SelectColumn(column, column == _selectdColumn ? !column.IsAscending : column.IsAscendingDefault);
+            return SelectColumn(column, column == _selectedColumn ? !column.IsAscending : column.IsAscendingDefault);
         }
 
-        /// <summary>
-        /// Selects a column for ordering. 
-        /// </summary>
+        /// <summary>Selects a column for ordering. </summary>
         /// <param name="column">The column. </param>
         /// <param name="ascending">The value indicating whether to sort the column ascending; otherwise descending. </param>
         /// <returns>Returns true if column could be changed. </returns>
@@ -208,13 +193,13 @@ namespace MyToolkit.Controls
         {
             if (column.CanSort)
             {
-                var oldColumn = _selectdColumn;
+                var oldColumn = _selectedColumn;
                 if (oldColumn != null)
                     oldColumn.IsSelected = false;
 
-                _selectdColumn = column;
-                _selectdColumn.IsSelected = true;
-                _selectdColumn.IsAscending = ascending;
+                _selectedColumn = column;
+                _selectedColumn.IsSelected = true;
+                _selectedColumn.IsAscending = ascending;
 
                 UpdateOrder();
                 return true;
@@ -222,9 +207,7 @@ namespace MyToolkit.Controls
             return false;
         }
 
-        /// <summary>
-        /// Sets the filter on the items source. 
-        /// </summary>
+        /// <summary>Sets the filter on the items source. </summary>
         /// <typeparam name="TItem"></typeparam>
         /// <param name="filter"></param>
         public void SetFilter<TItem>(Func<TItem, bool> filter)
@@ -232,9 +215,7 @@ namespace MyToolkit.Controls
             Items.Filter = filter; 
         }
 
-        /// <summary>
-        /// Removes the current filter. 
-        /// </summary>
+        /// <summary>Removes the current filter. </summary>
         public void RemoveFilter()
         {
             Items.Filter = null; 
@@ -405,14 +386,14 @@ namespace MyToolkit.Controls
                 _titleRowControl.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
             // Update selected column
-            if (_selectdColumn == null || !Columns.Contains(_selectdColumn))
+            if (_selectedColumn == null || !Columns.Contains(_selectedColumn))
             {
                 if (Columns.Count > DefaultOrderIndex)
                     SelectColumn(Columns[DefaultOrderIndex]);
                 else if (Columns.Any(c => c.CanSort))
                     SelectColumn(Columns.First(c => c.CanSort));
                 else
-                    _selectdColumn = null;
+                    _selectedColumn = null;
             }
         }
 
@@ -430,8 +411,8 @@ namespace MyToolkit.Controls
                 var selectedItem = SelectedItem;
 
                 Items.IsTracking = false;
-                Items.Order = new Func<object, object>(o => PropertyPathHelper.Evaluate(o, _selectdColumn.OrderPropertyPath));
-                Items.Ascending = _selectdColumn.IsAscending;
+                Items.Order = new Func<object, object>(o => PropertyPathHelper.Evaluate(o, _selectedColumn.OrderPropertyPath));
+                Items.Ascending = _selectedColumn.IsAscending;
                 Items.IsTracking = true;
 
                 SelectedItem = selectedItem;

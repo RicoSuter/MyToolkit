@@ -18,9 +18,14 @@ namespace MyToolkit.Command
         private readonly Action _execute;
 		private readonly Func<bool> _canExecute;
 
+        /// <summary>Initializes a new instance of the <see cref="RelayCommand"/> class. </summary>
+        /// <param name="execute">The action to execute. </param>
         public RelayCommand(Action execute)
 			: this(execute, null) { }
 
+        /// <summary>Initializes a new instance of the <see cref="RelayCommand"/> class. </summary>
+        /// <param name="execute">The action to execute. </param>
+        /// <param name="canExecute">The predicate to check whether the function can be executed. </param>
         public RelayCommand(Action execute, Func<bool> canExecute)
 		{
 			if (execute == null)
@@ -50,11 +55,16 @@ namespace MyToolkit.Command
 		private readonly Action<T> _execute;
 		private readonly Predicate<T> _canExecute;
 
-		public RelayCommand(Action<T> execute)
+        /// <summary>Initializes a new instance of the <see cref="RelayCommand"/> class. </summary>
+        /// <param name="execute">The action to execute. </param>
+        public RelayCommand(Action<T> execute)
 			: this(execute, null)
 		{
 		}
 
+        /// <summary>Initializes a new instance of the <see cref="RelayCommand"/> class. </summary>
+        /// <param name="execute">The action to execute. </param>
+        /// <param name="canExecute">The predicate to check whether the function can be executed. </param>
         public RelayCommand(Action<T> execute, Predicate<T> canExecute)
         {
             if (execute == null)

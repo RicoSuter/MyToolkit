@@ -20,7 +20,8 @@ namespace MyToolkit.Collections
 		private readonly Queue<T> _queue;
 		private readonly object _lock = new object();
 
-		public BlockingQueue(int queueSize)
+        /// <summary>Initializes a new instance of the <see cref="BlockingQueue{T}"/> class. </summary>
+        public BlockingQueue(int queueSize)
 		{
 			_queueSize = queueSize;
 			_queue = new Queue<T>(queueSize);

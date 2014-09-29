@@ -15,11 +15,13 @@ using System.Reflection;
 
 namespace MyToolkit.Composition
 {
+    /// <summary>Provides the ability to store, retrieve and assemble parts. </summary>
     public class CompositionContext : ICompositionContext
     {
         private readonly List<PartDescription> _parts;
-        private Dictionary<Type, Dictionary<PropertyInfo, Attribute>> _typeMapping = null; // used for caching
+        private Dictionary<Type, Dictionary<PropertyInfo, Attribute>> _typeMappingCache = null; 
 
+        /// <summary>Initializes a new instance of the <see cref="CompositionContext"/> class. </summary>
         public CompositionContext()
         {
             _parts = new List<PartDescription>();
@@ -211,12 +213,12 @@ namespace MyToolkit.Composition
         /// <param name="obj">The object. </param>
         public void SatisfyImports<T>(T obj)
         {
-            if (_typeMapping == null)
-                _typeMapping = new Dictionary<Type, Dictionary<PropertyInfo, Attribute>>();
+            if (_typeMappingCache == null)
+                _typeMappingCache = new Dictionary<Type, Dictionary<PropertyInfo, Attribute>>();
 
             BuildCache<T>();
 
-            foreach (var pair in _typeMapping[typeof(T)])
+            foreach (var pair in _typeMappingCache[typeof(T)])
             {
                 var property = pair.Key;
                 if (pair.Value is ImportAttribute)
@@ -244,7 +246,7 @@ namespace MyToolkit.Composition
         public void BuildCache<T>()
         {
             var type = typeof(T);
-            if (!_typeMapping.ContainsKey(type))
+            if (!_typeMappingCache.ContainsKey(type))
             {
                 var list = new Dictionary<PropertyInfo, Attribute>();
 #if !LEGACY
@@ -264,7 +266,7 @@ namespace MyToolkit.Composition
                     }
                 }
 
-                _typeMapping[type] = list;
+                _typeMappingCache[type] = list;
             }
         }
 

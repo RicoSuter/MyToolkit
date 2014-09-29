@@ -10,12 +10,16 @@ using System;
 
 namespace MyToolkit.Composition
 {
-	[AttributeUsage(AttributeTargets.Property)]
+    /// <summary>Marks a collection property to import objects. </summary>
+    [AttributeUsage(AttributeTargets.Property)]
 	public class ImportManyAttribute : Attribute
 	{
-		public Type Type;
+        /// <summary>Gets or sets the interface type to import. </summary>
+        public Type Type;
 
-		public ImportManyAttribute(Type type)
+        /// <summary>Initializes a new instance of the <see cref="ImportManyAttribute"/> class. </summary>
+        /// <param name="type">The interface type to import. </param>
+        public ImportManyAttribute(Type type)
 		{
 			Type = type; 
 		}

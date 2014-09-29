@@ -1,4 +1,12 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="BehaviorCollection.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 #if WINRT

@@ -1,4 +1,12 @@
-﻿namespace MyToolkit.Composition
+﻿//-----------------------------------------------------------------------
+// <copyright file="IServiceLocator.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+namespace MyToolkit.Composition
 {
     /// <summary>The interface for a service locator. </summary>
     public interface IServiceLocator

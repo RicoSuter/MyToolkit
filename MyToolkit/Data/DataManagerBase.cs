@@ -66,7 +66,7 @@ namespace MyToolkit.Data
         /// <returns>The item. </returns>
         public Task<T> GetItemAsync<T>(TIdentity id, bool reload = true, params Expression<Func<T, object>>[] included)
         {
-            return GetItemAsync<T>(id, reload, included.Select(ExpressionUtilities.GetName).ToArray());
+            return GetItemAsync<T>(id, reload, included.Select(ExpressionUtilities.GetPropertyName).ToArray());
         }
 
         /// <summary>Loads a single item. </summary>
@@ -135,7 +135,7 @@ namespace MyToolkit.Data
         /// <returns>The loaded items. </returns>
         public Task<IEnumerable<T>> GetAllItemsAsync<T>(bool reload = true, params Expression<Func<T, object>>[] included)
         {
-            return GetAllItemsAsync<T>(reload, included.Select(ExpressionUtilities.GetName).ToArray());
+            return GetAllItemsAsync<T>(reload, included.Select(ExpressionUtilities.GetPropertyName).ToArray());
         }
 
         /// <summary>Loads all items of a given type. </summary>
@@ -198,7 +198,7 @@ namespace MyToolkit.Data
             where T : IEntity<TIdentity>
             where TProperty : IEntity<TIdentity>
         {
-            return LoadPropertyForItemAsync<T, TProperty>(item, ExpressionUtilities.GetName(propertyName), reload, included);
+            return LoadPropertyForItemAsync<T, TProperty>(item, ExpressionUtilities.GetPropertyName(propertyName), reload, included);
         }
 
         /// <summary>Loads a property for a given item. </summary>

@@ -12,9 +12,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace MyToolkit.Controls
 {
-    /// <summary>
-    /// Provides a simple color chooser. 
-    /// </summary>
+    /// <summary>Provides a simple color chooser. </summary>
     public sealed class ColorChooser : Control
     {
         public static Color[] DefaultColors

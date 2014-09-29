@@ -18,19 +18,21 @@ namespace MyToolkit.Collections
 	public class ExtendedGroup<T> : Group<T>
 	{
 		private int _topItemsCount = -1;
-        private bool _updateLock = false; 
+        private bool _updateLock = false;
 
-		public ExtendedGroup(string title, int topItemsCount = -1)
+        /// <summary>Initializes a new instance of the <see cref="ExtendedGroup{T}"/> class. </summary>
+        public ExtendedGroup(string title, int topItemsCount = -1)
 			: base(title)
 		{
-			this._topItemsCount = topItemsCount;
+			_topItemsCount = topItemsCount;
 			UpdateTopItems();
 		}
 
-		public ExtendedGroup(string title, IEnumerable<T> items, int topItemsCount = -1)
+        /// <summary>Initializes a new instance of the <see cref="ExtendedGroup{T}"/> class. </summary>
+        public ExtendedGroup(string title, IEnumerable<T> items, int topItemsCount = -1)
 			: base(title, items)
 		{
-			this._topItemsCount = topItemsCount;
+			_topItemsCount = topItemsCount;
 			UpdateTopItems();
 		}
 

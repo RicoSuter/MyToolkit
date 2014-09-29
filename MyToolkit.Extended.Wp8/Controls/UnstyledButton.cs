@@ -31,9 +31,9 @@ namespace MyToolkit.Controls
 			get { return (object) GetValue(CommandParameterProperty); }
 			set { SetValue(CommandParameterProperty, value); }
 		}
-
-
+        
 		public event RoutedEventHandler Click;
+
 		public UnstyledButton()
 		{
 			DefaultStyleKey = typeof(UnstyledButton);

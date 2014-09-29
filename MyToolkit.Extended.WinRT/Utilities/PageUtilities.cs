@@ -7,6 +7,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using MyToolkit.Events;
 using MyToolkit.UI;
 using Windows.Foundation;
 using Windows.System;

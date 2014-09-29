@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using MyToolkit.Events;
 using MyToolkit.Tests.WinRT.Mocks;
 using MyToolkit.Utilities;
 

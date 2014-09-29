@@ -16,11 +16,6 @@ namespace MyToolkit.Command
     /// <summary>Provides a base implementation of the <see cref="ICommand"/> interface. </summary>
     public abstract class CommandBase : ObservableObject, ICommand
     {
-        bool ICommand.CanExecute(object parameter)
-        {
-            return CanExecute;
-        }
-
         /// <summary>Gets a value indicating whether the command can execute in its current state. </summary>
         public abstract bool CanExecute { get; }
 
@@ -38,11 +33,6 @@ namespace MyToolkit.Command
             return true;
         }
 
-        void ICommand.Execute(object parameter)
-        {
-            Execute();
-        }
-
         /// <summary>Triggers the CanExecuteChanged event and a property changed event on the CanExecute property. </summary>
         public virtual void RaiseCanExecuteChanged()
         {
@@ -55,6 +45,16 @@ namespace MyToolkit.Command
 
         /// <summary>Occurs when changes occur that affect whether or not the command should execute. </summary>
         public event EventHandler CanExecuteChanged;
+
+        void ICommand.Execute(object parameter)
+        {
+            Execute();
+        }
+
+        bool ICommand.CanExecute(object parameter)
+        {
+            return CanExecute;
+        }
     }
 
     /// <summary>Provides an implementation of the <see cref="ICommand"/> interface. </summary>

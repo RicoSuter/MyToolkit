@@ -110,9 +110,6 @@
     <Compile Include="..\shared\behaviors\BehaviorCollection.cs">
       <Link>Behaviors\BehaviorCollection.cs</Link>
     </Compile>
-    <Compile Include="..\shared\behaviors\BehaviorOfT.cs">
-      <Link>Behaviors\BehaviorOfT.cs</Link>
-    </Compile>
     <Compile Include="..\shared\behaviors\CommandToEvent.cs">
       <Link>Behaviors\CommandToEvent.cs</Link>
     </Compile>
@@ -233,6 +230,9 @@
     <Compile Include="..\shared\converters\VisibilityConverter.cs">
       <Link>Converters\VisibilityConverter.cs</Link>
     </Compile>
+    <Compile Include="..\shared\events\SingleEvent.cs">
+      <Link>Events\SingleEvent.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Mathematics\GeometryMath.cs">
       <Link>Mathematics\GeometryMath.cs</Link>
     </Compile>
@@ -300,9 +300,6 @@
     </Compile>
     <Compile Include="..\Shared\Utilities\EntityContainer.cs">
       <Link>Utilities\EntityContainer.cs</Link>
-    </Compile>
-    <Compile Include="..\shared\utilities\SingleEvent.cs">
-      <Link>Utilities\SingleEvent.cs</Link>
     </Compile>
     <Compile Include="..\shared\utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
@@ -400,9 +397,6 @@
   <ItemGroup>
     <Resource Include="Images\PlayIcon.png" />
     <Resource Include="Images\PlayIconLight.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\VideoButton.xaml">

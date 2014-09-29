@@ -9,7 +9,7 @@
 using System;
 using System.Reflection;
 
-namespace MyToolkit.Utilities
+namespace MyToolkit.Events
 {
     /// <summary>Provides methods for event management. </summary>
     public class EventUtilities

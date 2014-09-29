@@ -129,7 +129,7 @@
     <Compile Include="Serialization\XmlSerializationTests.cs" />
     <Compile Include="Storage\ApplicationSettingsTests.cs" />
     <Compile Include="Utilities\DateTimeUtilitiesTests.cs" />
-    <Compile Include="Utilities\ExpressionHelperTests.cs" />
+    <Compile Include="Utilities\ExpressionUtilitiesTests.cs" />
     <Compile Include="Utilities\EventUtilitiesTests.cs" />
     <Compile Include="Mocks\MockEventTargetClass.cs" />
     <Compile Include="WorkflowEngine\WorkflowTests.cs" />

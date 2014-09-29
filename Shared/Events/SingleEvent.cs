@@ -14,7 +14,7 @@ using Windows.UI.Xaml;
 using System.Windows;
 #endif
 
-namespace MyToolkit.Utilities
+namespace MyToolkit.Events
 {
     /// <summary>Provides methods to register self-deregistering event callbacks. </summary>
     public class SingleEvent

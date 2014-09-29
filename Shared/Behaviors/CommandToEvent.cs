@@ -1,4 +1,13 @@
-﻿using System.Windows.Input;
+﻿//-----------------------------------------------------------------------
+// <copyright file="CommandToEvent.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System.Windows.Input;
+using MyToolkit.Events;
 using MyToolkit.Utilities;
 #if WINRT
 using Windows.UI.Xaml;

@@ -19,6 +19,7 @@ namespace MyToolkit.Collections
 		private const string Characters = "#abcdefghijklmnopqrstuvwxyz";
 		private Dictionary<string, Group<T>> _groups; // used for faster group access
         
+        /// <summary>Initializes a new instance of the <see cref="AlphaGroups{T}"/> class. </summary>
         public AlphaGroups()
 		{
 			Initialize(new List<T>());

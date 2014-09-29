@@ -12,6 +12,7 @@ using System.Reflection;
 
 namespace MyToolkit.Composition
 {
+    /// <summary>Provides the ability to store, retrieve and assemble parts. </summary>
     public interface ICompositionContext
     {
         /// <summary>Adds parts from a given assembly. </summary>

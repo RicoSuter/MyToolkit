@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using MyToolkit.Events;
 using MyToolkit.Utilities;
 
 namespace MyToolkit.Collections

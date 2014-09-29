@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace MyToolkit.Utilities
+namespace MyToolkit.Events
 {
     /// <summary>Provides methods to register and deregister weak events. </summary>
     public static class WeakEvent

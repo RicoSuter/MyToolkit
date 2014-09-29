@@ -10,14 +10,19 @@ using System;
 
 namespace MyToolkit.Composition
 {
-	[AttributeUsage(AttributeTargets.Property)]
+    /// <summary>Marks a property to import another object. </summary>
+    [AttributeUsage(AttributeTargets.Property)]
 	public class ImportAttribute : Attribute
 	{
-		public Type Type;
+        /// <summary>Gets or sets the interface type to import. </summary>
+        public Type Type;
 
-		public string Name;
+        /// <summary>Gets or sets the name of the imported part. </summary>
+        public string Name;
 
-		public ImportAttribute(Type type)
+        /// <summary>Initializes a new instance of the <see cref="ImportAttribute"/> class. </summary>
+        /// <param name="type">The interface type to import. </param>
+        public ImportAttribute(Type type)
 		{
 			Type = type; 
 		}

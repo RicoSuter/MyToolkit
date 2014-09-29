@@ -1,4 +1,12 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Behavior.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using System.Reflection;
 #if WINRT
 using Windows.UI.Xaml;
@@ -10,6 +18,20 @@ using System.Windows.Data;
 
 namespace MyToolkit.Behaviors
 {
+    public abstract class Behavior<T> : Behavior where T : DependencyObject
+    {
+        protected Behavior()
+        {
+            _associatedType = typeof(T);
+        }
+
+        public new T Element
+        {
+            get { return (T)_associatedObject; }
+            internal set { _associatedObject = value; }
+        }
+    }
+
     public abstract class Behavior : FrameworkElement
     {
         protected internal DependencyObject _associatedObject;

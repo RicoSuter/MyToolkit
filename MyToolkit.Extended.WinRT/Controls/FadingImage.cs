@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyToolkit.Animations;
+using MyToolkit.Events;
 using MyToolkit.Media;
 using MyToolkit.Utilities;
 using Windows.UI.Xaml;
@@ -16,17 +17,19 @@ namespace MyToolkit.Controls
 {
 	public class FadingImage : Control
 	{
-		public FadingImage()
+        private Uri _lastSource = null;
+        private bool _isAnimating = false;
+        private Grid _canvas;
+        
+        public FadingImage()
 		{
 			DefaultStyleKey = typeof(FadingImage);
 		}
 
-		private Grid canvas;
 		protected override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
-
-			canvas = (Grid)GetTemplateChild("canvas");
+            _canvas = (Grid)GetTemplateChild("canvas");
 			UpdateSource();
 		}
 
@@ -89,23 +92,22 @@ namespace MyToolkit.Controls
 
 		#endregion
 
-		private Uri lastSource = null; 
-		private bool animating = false; 
-		async private void UpdateSource()
+        private async void UpdateSource()
 		{
-			if (canvas == null || animating || lastSource == Source) // is animating or no change
+			if (_canvas == null || _isAnimating || _lastSource == Source) // is animating or no change
 				return;
 
-			animating = true;
+			_isAnimating = true;
 			var currentSource = Source;
-			if (lastSource == null)
+			if (_lastSource == null)
 			{
 				ForegroundImage.Opacity = 0.0;
 
 				var success = SingleEvent.WaitForEventAsync(ForegroundImage, 
 					(image, handler) => image.ImageOpened += handler, 
 					(image, handler) => image.ImageOpened -= handler);
-				var failure = SingleEvent.WaitForEventAsync(ForegroundImage,
+
+                var failure = SingleEvent.WaitForEventAsync(ForegroundImage,
 					(image, handler) => image.ImageFailed += handler,
 					(image, handler) => image.ImageFailed -= handler);
 
@@ -115,7 +117,7 @@ namespace MyToolkit.Controls
 				if (task == success)
 					await Fading.FadeInAsync(ForegroundImage, FadingDuration, FadingOpacity);
 
-				// TODO deregister not called event
+				// TODO Deregister not called event
 			}
 			else if (currentSource != null) // exchange images
 			{
@@ -124,6 +126,7 @@ namespace MyToolkit.Controls
 				var success = SingleEvent.WaitForEventAsync(BackgroundImage,
 					(image, handler) => image.ImageOpened += handler,
 					(image, handler) => image.ImageOpened -= handler);
+
 				var failure = SingleEvent.WaitForEventAsync(BackgroundImage,
 					(image, handler) => image.ImageFailed += handler,
 					(image, handler) => image.ImageFailed -= handler);
@@ -150,9 +153,9 @@ namespace MyToolkit.Controls
 					// reverse image order
 					var fore = ForegroundImage;
 					var back = BackgroundImage;
-					canvas.Children.Clear();
-					canvas.Children.Add(fore);
-					canvas.Children.Add(back);
+					_canvas.Children.Clear();
+					_canvas.Children.Add(fore);
+					_canvas.Children.Add(back);
 				}
 				else
 					await Fading.FadeOutAsync(ForegroundImage, FadingDuration);
@@ -163,19 +166,19 @@ namespace MyToolkit.Controls
 				await Fading.FadeOutAsync(ForegroundImage, FadingDuration);
 			}
 
-			animating = false;
-			lastSource = currentSource;
+			_isAnimating = false;
+			_lastSource = currentSource;
 			UpdateSource();
 		}
 
 		private Image ForegroundImage
 		{
-			get { return (Image)canvas.Children.Last(); }
+			get { return (Image)_canvas.Children.Last(); }
 		}
 
 		private Image BackgroundImage
 		{
-			get { return (Image)canvas.Children.First(); }
+			get { return (Image)_canvas.Children.First(); }
 		}
 	}
 }
