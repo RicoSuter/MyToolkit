@@ -344,7 +344,7 @@
     <ProjectReference Include="..\MyToolkit\MyToolkit.csproj">
       <Project>{f01f49c0-5da2-4757-b4e0-02ec7a187ded}</Project>
       <Name>MyToolkit</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
