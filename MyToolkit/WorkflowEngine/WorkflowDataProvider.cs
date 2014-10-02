@@ -6,6 +6,7 @@
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
@@ -14,6 +15,7 @@ using MyToolkit.WorkflowEngine.Activities;
 namespace MyToolkit.WorkflowEngine
 {
     /// <summary>Provides data objects for a workflow instance. </summary>
+    [XmlType("WorkflowInstance")]
     public class WorkflowDataProvider
     {
         /// <summary>Initializes a new instance of the <see cref="WorkflowDataProvider"/> class. </summary>
@@ -22,6 +24,7 @@ namespace MyToolkit.WorkflowEngine
             Data = new List<ActivityDataBase>();
         }
 
+        /// <summary>Gets or sets the data. </summary>
         [XmlElement("ActivityData")]
         public List<ActivityDataBase> Data { get; set; }
 
@@ -40,6 +43,21 @@ namespace MyToolkit.WorkflowEngine
         /// <returns>The data object. </returns>
         public T Resolve<T>(string group) where T : ActivityDataBase, new()
         {
+            if (typeof(T) == typeof(WorkflowInstanceData))
+                throw new NotSupportedException("Accessing WorkflowInstanceData is not allowed. ");
+
+            return ResolveInternal<T>(group);
+        }
+
+        /// <summary>Resolves the instance data. </summary>
+        /// <returns>The instance data object. </returns>
+        internal WorkflowInstanceData ResolveInstanceData()
+        {
+            return ResolveInternal<WorkflowInstanceData>(null);
+        }
+
+        private T ResolveInternal<T>(string group) where T : ActivityDataBase, new()
+        {
             var data = Data.SingleOrDefault(d => d.Group == group && d.GetType() == typeof(T));
             if (data == null)
             {
@@ -49,7 +67,7 @@ namespace MyToolkit.WorkflowEngine
                 Data.Add(data);
             }
 
-            return (T)data; 
+            return (T)data;
         }
     }
 }

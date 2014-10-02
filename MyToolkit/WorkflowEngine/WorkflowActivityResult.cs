@@ -56,13 +56,13 @@ namespace MyToolkit.WorkflowEngine
         /// The method searches for outbound transitions of the given activities with the given condition. </summary>
         /// <param name="transitionCondition">The condition of the transition to the next activity or activities 
         /// (multiple activities are only allowed when activity is a <see cref="ForkActivity"/>). </param>
-        /// <param name="instance">The workflow instance. </param>
+        /// <param name="definition">The workflow definition. </param>
         /// <param name="activity">The current workflow activity. </param>
         /// <param name="successfull">The value indicating whether the processing was successful. </param>
         public static WorkflowActivityResult CreateByTransitionCondition(bool successfull,
-            string transitionCondition, WorkflowInstance instance, WorkflowActivityBase activity)
+            string transitionCondition, WorkflowDefinition definition, WorkflowActivityBase activity)
         {
-            return CreateByTransitionCondition(successfull, null, transitionCondition, instance, activity);
+            return CreateByTransitionCondition(successfull, null, transitionCondition, definition, activity);
         }
 
         /// <summary>Creates a new result and sets the next activities based on a condition. 
@@ -70,15 +70,15 @@ namespace MyToolkit.WorkflowEngine
         /// <param name="result">The result object. </param>
         /// <param name="transitionCondition">The condition of the transition to the next activity or activities 
         /// (multiple activities are only allowed when activity is a <see cref="ForkActivity"/>). </param>
-        /// <param name="instance">The workflow instance. </param>
+        /// <param name="definition">The workflow definition. </param>
         /// <param name="activity">The current workflow activity. </param>
         /// <param name="successfull">The value indicating whether the processing was successful. </param>
-        public static WorkflowActivityResult CreateByTransitionCondition(bool successfull, object result, 
-            string transitionCondition, WorkflowInstance instance, WorkflowActivityBase activity)
+        public static WorkflowActivityResult CreateByTransitionCondition(bool successfull, object result,
+            string transitionCondition, WorkflowDefinition definition, WorkflowActivityBase activity)
         {
-            var nextActivitites = instance.WorkflowDefinition.GetOutboundTransitions(activity)
+            var nextActivitites = definition.GetOutboundTransitions(activity)
                 .Where(t => t.Condition == transitionCondition)
-                .Select(t => instance.WorkflowDefinition.GetActivityById(t.To))
+                .Select(t => definition.GetActivityById(t.To))
                 .ToArray();
 
             if (nextActivitites.Length == 0)

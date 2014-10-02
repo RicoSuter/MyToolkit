@@ -6,6 +6,7 @@
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,23 +20,26 @@ namespace MyToolkit.WorkflowEngine.Activities
     {
         /// <summary>Called when the previous activity has been executed. 
         /// The method may be called multiple times when there are multiple incoming transitions. </summary>
-        /// <param name="instance">The workflow instance. </param>
+        /// <param name="data">The workflow instance's data provider. </param>
+        /// <param name="definition">The workflow definition. </param>
         /// <returns>True when the activity should be automatically and immediately executed (with no args). </returns>
-        public override async Task<bool> PrepareAsync(WorkflowInstance instance)
+        public override async Task<bool> PrepareAsync(WorkflowDataProvider data, WorkflowDefinition definition)
         {
-            return !HasCurrentActivityBeforeActivity(instance, this, new List<WorkflowTransition>());
+            return !HasCurrentActivityBeforeActivity(data, definition, this, new List<WorkflowTransition>());
         }
 
-        private bool HasCurrentActivityBeforeActivity(WorkflowInstance instance, WorkflowActivityBase activity, List<WorkflowTransition> checkedTransitions)
+        private bool HasCurrentActivityBeforeActivity(WorkflowDataProvider data, WorkflowDefinition definition, WorkflowActivityBase activity, List<WorkflowTransition> checkedTransitions)
         {
-            var inboundTransitions = instance.WorkflowDefinition.GetInboundTransitions(activity);
-            if (inboundTransitions.Any(t => instance.CurrentActivityIds.Contains(t.From)))
+            var instanceData = data.ResolveInstanceData(); 
+
+            var inboundTransitions = definition.GetInboundTransitions(activity);
+            if (inboundTransitions.Any(t => instanceData.CurrentActivityIds.Contains(t.From)))
                 return true;
 
             checkedTransitions.AddRange(inboundTransitions);
             foreach (var transition in inboundTransitions)
             {
-                if (HasCurrentActivityBeforeActivity(instance, instance.WorkflowDefinition.GetActivityById(transition.From), checkedTransitions))
+                if (HasCurrentActivityBeforeActivity(data, definition, definition.GetActivityById(transition.From), checkedTransitions))
                     return true;
             }
 

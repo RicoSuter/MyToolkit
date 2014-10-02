@@ -81,7 +81,10 @@ namespace MyToolkit.WorkflowEngine
         /// <returns>The <see cref="WorkflowInstance"/>. </returns>
         public WorkflowInstance CreateInstance()
         {
-            return new WorkflowInstance(this, new WorkflowDataProvider());
+            var data = new WorkflowDataProvider();
+            data.ResolveInstanceData().CurrentActivityIds.Add(StartActivity.Id);
+
+            return new WorkflowInstance(this, data);
         }
 
         /// <summary>Gets an activity by ID. </summary>

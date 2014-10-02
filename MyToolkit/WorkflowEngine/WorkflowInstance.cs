@@ -33,16 +33,21 @@ namespace MyToolkit.WorkflowEngine
         /// <returns>The workflow instance. </returns>
         public static WorkflowInstance FromXml(string xml, WorkflowDefinition workflowDefinition, Type[] dataTypes)
         {
-            var instance = XmlSerialization.Deserialize<WorkflowInstance>(xml, dataTypes);
+            dataTypes = dataTypes.Union(new[] {typeof (WorkflowInstanceData)}).ToArray();
+
+            var instance = new WorkflowInstance();
+            instance.Data = XmlSerialization.Deserialize<WorkflowDataProvider>(xml, dataTypes);
             instance.WorkflowDefinition = workflowDefinition;
             return instance;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="WorkflowInstance"/> class. </summary>
+        /// <param name="workflowDefinition">The workflow definition. </param>
+        /// <param name="dataProvider">The data provider. </param>
         public WorkflowInstance(WorkflowDefinition workflowDefinition, WorkflowDataProvider dataProvider)
         {
             Data = dataProvider;
             WorkflowDefinition = workflowDefinition;
-            CurrentActivityIds = new List<string> { workflowDefinition.StartActivity.Id };
         }
 
         /// <summary>Used only for serialization. </summary>
@@ -51,7 +56,6 @@ namespace MyToolkit.WorkflowEngine
         }
 
         /// <summary>Gets the instance's workflow description. </summary>
-        [XmlIgnore]
         public WorkflowDefinition WorkflowDefinition { get; private set; }
 
         /// <summary>Gets or sets the data provider of the workflow instance. </summary>
@@ -60,12 +64,7 @@ namespace MyToolkit.WorkflowEngine
         /// <summary>Occurs when the current activities of the workflow instance changed. </summary>
         public event EventHandler<CurrentActivitiesChangedEventArgs> CurrentActivitiesChanged;
 
-        /// <summary>Gets or sets the current activity IDs. </summary>
-        [XmlArray("Current"), XmlArrayItem("Activity")]
-        public List<string> CurrentActivityIds { get; set; }
-
         /// <summary>Gets or sets a value indicating whether an activity of the instance is currently running. </summary>
-        [XmlIgnore]
         public bool IsRunning
         {
             get { return _isRunning; }
@@ -73,7 +72,6 @@ namespace MyToolkit.WorkflowEngine
         }
 
         /// <summary>Gets the list of current activities. </summary>
-        [XmlIgnore]
         public WorkflowActivityBase[] CurrentActivities
         {
             get
@@ -90,11 +88,17 @@ namespace MyToolkit.WorkflowEngine
             get { return CurrentActivities.FirstOrDefault(); }
         }
 
+        /// <summary>Gets the list of current activity ids. </summary>
+        internal List<string> CurrentActivityIds
+        {
+            get { return Data.ResolveInstanceData().CurrentActivityIds; }
+        }
+
         /// <summary>Serializes the workflow instance to XML. </summary>
         /// <returns>The XML. </returns>
         public string ToXml()
         {
-            return XmlSerialization.Serialize(this, Data.Data.Select(d => d.GetType()).Distinct().ToArray());
+            return XmlSerialization.Serialize(Data, Data.Data.Select(d => d.GetType()).Distinct().ToArray());
         }
 
         /// <summary>Resolves the requested data object. </summary>
@@ -160,7 +164,7 @@ namespace MyToolkit.WorkflowEngine
                 var allowedTransitions = WorkflowDefinition.GetOutboundTransitions(activity);
 
                 var argsContainer = new WorkflowActivityArguments(args);
-                var result = await activity.CompleteAsync(this, WorkflowDefinition, argsContainer, cancellationToken);
+                var result = await activity.CompleteAsync(Data, WorkflowDefinition, argsContainer, cancellationToken);
                 if (result.Successful)
                 {
                     var nextActivities = result.NextActivities;
@@ -234,7 +238,7 @@ namespace MyToolkit.WorkflowEngine
 
                 RaiseCurrentActivitiesChanged();
 
-                var immediatelyExecuteActivity = await nextActivity.PrepareAsync(this);
+                var immediatelyExecuteActivity = await nextActivity.PrepareAsync(Data, WorkflowDefinition);
                 if (immediatelyExecuteActivity)
                     await CompleteInternalAsync(nextActivityId, CancellationToken.None, new object[] { });
             }

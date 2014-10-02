@@ -33,7 +33,7 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
         }
 
         [TestMethod]
-        public async Task When_serializing_workfow_instance_then_deserialization_should_work()
+        public async Task When_serializing_workflow_instance_then_deserialization_should_work()
         {
             //// Arrange
             var workflow = Given_a_workflow_with_three_serial_empty_activities();
@@ -258,14 +258,14 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
         [XmlType("MockActivity")]
         public class MockActivity : WorkflowActivityBase
         {
-            public override Task<WorkflowActivityResult> CompleteAsync(WorkflowInstance instance, WorkflowDefinition definition, WorkflowActivityArguments args, CancellationToken cancellationToken)
+            public override Task<WorkflowActivityResult> CompleteAsync(WorkflowDataProvider data, WorkflowDefinition definition, WorkflowActivityArguments args, CancellationToken cancellationToken)
             {
                 var argument = args.GetArgument<string>(0);
                 var parameters = definition.GetParameters<MockParameters>();
                 
-                var data = instance.ResolveData<MockData>(this);
-                data.Test1 = argument;
-                data.Test2 = parameters.Test1;
+                var mockData = data.Resolve<MockData>(this);
+                mockData.Test1 = argument;
+                mockData.Test2 = parameters.Test1;
 
                 return Task.FromResult(new WorkflowActivityResult(true));
             }
