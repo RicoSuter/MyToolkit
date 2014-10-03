@@ -19,10 +19,7 @@ namespace MyToolkit.WorkflowEngine
 {
     /// <summary>Describes a workflow using activities and transitions. </summary>
     public class WorkflowDefinition
-    {
-        /// <summary>Gets or sets the workflow parameters. </summary>
-        public WorkflowParametersBase Parameters { get; set; }
-            
+    {           
         /// <summary>Gets or sets the ID of the first activity. </summary>
         [XmlElement("StartActivity")]
         public string StartActivityId { get; set; }
@@ -61,20 +58,8 @@ namespace MyToolkit.WorkflowEngine
         /// <returns>The XML. </returns>
         public string ToXml()
         {
-            var extraTypes = Parameters != null
-                ? Activities.Select(a => a.GetType())
-                    .Union(new[] {Parameters.GetType()})
-                : Activities.Select(a => a.GetType());
-
+            var extraTypes = Activities.Select(a => a.GetType());
             return XmlSerialization.Serialize(this, extraTypes.Distinct().ToArray());
-        }
-
-        /// <summary>Gets the parameters in a typed way. </summary>
-        /// <typeparam name="T">The type of the parameters object. </typeparam>
-        /// <returns>The parameters. </returns>
-        public T GetParameters<T>() where T : WorkflowParametersBase
-        {
-            return (T) Parameters;
         }
 
         /// <summary>Creates an workflow instance based on this workflow definition. </summary>

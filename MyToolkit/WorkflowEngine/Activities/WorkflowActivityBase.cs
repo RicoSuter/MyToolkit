@@ -49,23 +49,30 @@ namespace MyToolkit.WorkflowEngine.Activities
         /// <summary>Called when the previous activity has been executed. 
         /// The method may be called multiple times when there are multiple incoming transitions. </summary>
         /// <param name="data">The workflow instance's data provider. </param>
-        /// <param name="definition">The workflow definition. </param>
         /// <returns>True when the activity should be automatically and immediately executed (with no args). </returns>
-        public virtual async Task<bool> PrepareAsync(WorkflowDataProvider data, WorkflowDefinition definition)
+        public virtual async Task<bool> PrepareAsync(WorkflowDataProvider data)
         {
             return false;
         }
 
         /// <summary>Completes the activity. </summary>
         /// <param name="data">The workflow instance's data provider. </param>
-        /// <param name="definition">The workflow definition. </param>
         /// <param name="args">The execution args. </param>
         /// <param name="cancellationToken">The cancellation token. </param>
         /// <returns>True when the activity has been completed. </returns>
-        public virtual async Task<WorkflowActivityResult> CompleteAsync(WorkflowDataProvider data, 
-            WorkflowDefinition definition, WorkflowActivityArguments args, CancellationToken cancellationToken)
+        public virtual async Task<WorkflowActivityResult> CompleteAsync(WorkflowDataProvider data, WorkflowActivityArguments args, CancellationToken cancellationToken)
         {
             return new WorkflowActivityResult(true);
+        }
+
+        /// <summary>Called when the previous activity has been executed. 
+        /// The method may be called multiple times when there are multiple incoming transitions. </summary>
+        /// <param name="data">The workflow instance's data provider. </param>
+        /// <param name="definition">The workflow definition. </param>
+        /// <returns>True when the activity should be automatically and immediately executed (with no args). </returns>
+        internal virtual Task<bool> PrepareAsync(WorkflowDataProvider data, WorkflowDefinition definition)
+        {
+            return PrepareAsync(data); 
         }
     }
 }

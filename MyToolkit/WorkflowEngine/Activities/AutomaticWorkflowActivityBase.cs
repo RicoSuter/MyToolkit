@@ -17,9 +17,8 @@ namespace MyToolkit.WorkflowEngine.Activities
         /// <summary>Called when the previous activity has been executed. 
         /// The method may be called multiple times when there are multiple incoming transitions. </summary>
         /// <param name="data">The workflow instance's data provider. </param>
-        /// <param name="definition">The workflow definition. </param>
         /// <returns>True when the activity should be automatically and immediately executed (with no args). </returns>
-        public override async Task<bool> PrepareAsync(WorkflowDataProvider data, WorkflowDefinition definition)
+        public override async Task<bool> PrepareAsync(WorkflowDataProvider data)
         {
             return true;
         }

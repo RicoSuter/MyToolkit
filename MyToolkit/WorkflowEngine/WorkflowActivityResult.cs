@@ -18,8 +18,8 @@ namespace MyToolkit.WorkflowEngine
         /// <summary>Gets a value indicating whether the processing of the activity was successful. </summary>
         public bool Successful { get; private set; }
 
-        /// <summary>Gets the next activities (if null then the default ones are loaded, meaning all transitions without condition). </summary>
-        public WorkflowActivityBase[] NextActivities { get; private set; }
+        /// <summary>Gets the condition for the next activities (null if using the default activities from the workflow). </summary>
+        public string NextActivitiesCondition { get; private set; }
 
         /// <summary>Gets or sets the result object (only used to pass data to the caller of the <see cref="WorkflowInstance" /> object's CompleteAsync method). </summary>
         public object Result { get; private set; }
@@ -37,60 +37,30 @@ namespace MyToolkit.WorkflowEngine
             Result = result;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="WorkflowActivityResult"/> class. </summary>
-        public WorkflowActivityResult(bool successfull, WorkflowActivityBase[] nextActivities)
-        {
-            Successful = successfull;
-            NextActivities = nextActivities;
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="WorkflowActivityResult"/> class. </summary>
-        public WorkflowActivityResult(bool successfull, object result, WorkflowActivityBase[] nextActivities)
-        {
-            Successful = successfull;
-            Result = result;
-            NextActivities = nextActivities;
-        }
-
-        /// <summary>Creates a new result and sets the next activities based on a condition. 
-        /// The method searches for outbound transitions of the given activities with the given condition. </summary>
-        /// <param name="transitionCondition">The condition of the transition to the next activity or activities 
-        /// (multiple activities are only allowed when activity is a <see cref="ForkActivity"/>). </param>
-        /// <param name="definition">The workflow definition. </param>
+        /// <summary>Gets the next activities or null when no condition is available. </summary>
         /// <param name="activity">The current workflow activity. </param>
-        /// <param name="successfull">The value indicating whether the processing was successful. </param>
-        public static WorkflowActivityResult CreateByTransitionCondition(bool successfull,
-            string transitionCondition, WorkflowDefinition definition, WorkflowActivityBase activity)
-        {
-            return CreateByTransitionCondition(successfull, null, transitionCondition, definition, activity);
-        }
-
-        /// <summary>Creates a new result and sets the next activities based on a condition. 
-        /// The method searches for outbound transitions of the given activities with the given condition. </summary>
-        /// <param name="result">The result object. </param>
-        /// <param name="transitionCondition">The condition of the transition to the next activity or activities 
-        /// (multiple activities are only allowed when activity is a <see cref="ForkActivity"/>). </param>
         /// <param name="definition">The workflow definition. </param>
-        /// <param name="activity">The current workflow activity. </param>
-        /// <param name="successfull">The value indicating whether the processing was successful. </param>
-        public static WorkflowActivityResult CreateByTransitionCondition(bool successfull, object result,
-            string transitionCondition, WorkflowDefinition definition, WorkflowActivityBase activity)
+        /// <returns>The next activities. </returns>
+        public WorkflowActivityBase[] GetNextActivities(WorkflowActivityBase activity, WorkflowDefinition definition)
         {
+            if (string.IsNullOrEmpty(NextActivitiesCondition))
+                return null; 
+            
             var nextActivitites = definition.GetOutboundTransitions(activity)
-                .Where(t => t.Condition == transitionCondition)
+                .Where(t => t.Condition == NextActivitiesCondition)
                 .Select(t => definition.GetActivityById(t.To))
                 .ToArray();
 
             if (nextActivitites.Length == 0)
                 throw new WorkflowException(
-                    string.Format("No next activities could be found based on the given condition '{0}'. ", transitionCondition));
+                    string.Format("No next activities could be found based on the given condition '{0}'. ", NextActivitiesCondition));
 
             if (nextActivitites.Length > 1 && !(activity is ForkActivity))
                 throw new WorkflowException(
                     string.Format("More then one activity found for condition '{0}' " +
-                                  "but activity is not a ForkActivity. ", transitionCondition));
+                                  "but activity is not a ForkActivity. ", NextActivitiesCondition));
 
-            return new WorkflowActivityResult(successfull, result, nextActivitites);
+            return nextActivitites;
         }
 
         /// <summary>Gets the typed result (simply casts and returns the <see cref="Result"/> property). </summary>

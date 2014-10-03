@@ -149,25 +149,6 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
         }
 
         [TestMethod]
-        public async Task When_setting_data_from_workflow_paramter_then_they_should_be_written()
-        {
-            //// Arrange
-            var workflow = Given_a_workflow_with_three_serial_empty_activities();
-            workflow.GetParameters<MockParameters>().Test1 = "ParameterTest";
-            
-            var instance = workflow.CreateInstance();
-
-            //// Act
-            var activity = instance.CurrentActivities.First();
-            await instance.CompleteAsync(activity, "Test");
-
-            //// Assert
-            activity = instance.CurrentActivities.First();
-
-            Assert.AreEqual("ParameterTest", instance.Data.Resolve<MockData>(activity).Test2);
-        }
-
-        [TestMethod]
         public async Task When_joining_activities_then_join_is_automatically_completed_when_everything_inbound_is_complete()
         {
             //// Arrange
@@ -194,7 +175,6 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
         private static WorkflowDefinition Given_a_workflow_with_three_serial_empty_activities()
         {
             var workflow = new WorkflowDefinition();
-            workflow.Parameters = new MockParameters();
             workflow.Activities = new List<WorkflowActivityBase>
             {
                 new MockActivity { Id = "1" },
@@ -213,7 +193,6 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
         private static WorkflowDefinition Given_a_workflow_with_fork_and_join()
         {
             var workflow = new WorkflowDefinition();
-            workflow.Parameters = new MockParameters();
             workflow.Activities = new List<WorkflowActivityBase>
             {
                 new ForkActivity { Id = "1" },
@@ -235,7 +214,6 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
         private static WorkflowDefinition Given_a_workflow_with_invalid_fork_and_join()
         {
             var workflow = new WorkflowDefinition();
-            workflow.Parameters = new MockParameters();
             workflow.Activities = new List<WorkflowActivityBase>
             {
                 new ForkActivity { Id = "1" },
@@ -258,14 +236,12 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
         [XmlType("MockActivity")]
         public class MockActivity : WorkflowActivityBase
         {
-            public override Task<WorkflowActivityResult> CompleteAsync(WorkflowDataProvider data, WorkflowDefinition definition, WorkflowActivityArguments args, CancellationToken cancellationToken)
+            public override Task<WorkflowActivityResult> CompleteAsync(WorkflowDataProvider data, WorkflowActivityArguments args, CancellationToken cancellationToken)
             {
-                var argument = args.GetArgument<string>(0);
-                var parameters = definition.GetParameters<MockParameters>();
-                
+                var argument = args.GetArgument<string>(0);  
+              
                 var mockData = data.Resolve<MockData>(this);
                 mockData.Test1 = argument;
-                mockData.Test2 = parameters.Test1;
 
                 return Task.FromResult(new WorkflowActivityResult(true));
             }

@@ -73,10 +73,12 @@
     <Compile Include="Messaging\CallbackMessage.cs" />
     <Compile Include="Messaging\GoBackMessage.cs" />
     <Compile Include="Messaging\IMessenger.cs" />
+    <Compile Include="Messaging\IViewModelToViewMapper.cs" />
     <Compile Include="Messaging\LoadingMessage.cs" />
     <Compile Include="Messaging\Messenger.cs" />
     <Compile Include="Messaging\MessengerExtensions.cs" />
     <Compile Include="Messaging\NavigateMessage.cs" />
+    <Compile Include="Messaging\RegexViewModelToViewMapper.cs" />
     <Compile Include="Messaging\TextMessage.cs" />
     <Compile Include="Command\AsyncRelayCommand.cs" />
     <Compile Include="Command\CommandBase.cs" />

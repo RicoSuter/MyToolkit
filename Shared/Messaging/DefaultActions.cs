@@ -13,33 +13,49 @@ using System.Windows;
 using MyToolkit.Environment;
 using MyToolkit.Paging;
 #endif
-
 #if WINRT
 using MyToolkit.Paging;
 using System.Threading.Tasks;
 using MyToolkit.Resources;
 using Windows.UI.Popups;
+using Windows.UI.Xaml.Controls;
 #endif
 
 namespace MyToolkit.Messaging
 {
-    /// <summary>
-    /// Provides default actions for some message lcasses to use with the <see cref="Messenger"/>. 
-    /// </summary>
+    /// <summary>Provides default actions for some message lcasses to use with the <see cref="Messenger"/>. </summary>
     public static class DefaultActions
     {
 #if WINRT
 
+        /// <summary>Gets the default handling action of <see cref="GoBackMessage"/> objects. </summary>
+        /// <param name="frame">The frame to call the navigation methods on. </param>
+        /// <returns>The message action. </returns>
         public static Action<GoBackMessage> GetGoBackMessageAction(MtFrame frame)
         {
             return m => frame.GoBackAsync();
         }
 
-        public static Action<NavigateMessage> GetNavigateMessageAction(MtFrame frame)
+        /// <summary>Gets the default handling action of <see cref="NavigateMessage"/> objects. </summary>
+        /// <param name="mapper">The mapper which maps view model types to view types. </param>
+        /// <param name="frame">The frame. </param>
+        /// <returns>The message action. </returns>
+        public static Action<NavigateMessage> GetNavigateMessageAction(IViewModelToViewMapper mapper, MtFrame frame)
         {
-            return m => frame.NavigateAsync(m.Page, m.Parameter);
+            return async message => await frame.NavigateAsync(mapper.Map(message.ViewModelType), message.Parameter);
         }
 
+        /// <summary>Gets the default handling action of <see cref="NavigateMessage"/> objects. </summary>
+        /// <param name="mapper">The mapper which maps view model types to view types. </param>
+        /// <param name="frame">The frame. </param>
+        /// <returns>The message action. </returns>
+        public static Action<NavigateMessage> GetNavigateMessageAction(IViewModelToViewMapper mapper, Frame frame)
+        {
+            return message => frame.Navigate(mapper.Map(message.ViewModelType), message.Parameter);
+        }
+
+        /// <summary>Gets the default handling action of <see cref="TextMessage"/> objects. </summary>
+        /// <returns>The message action. </returns>
         public static Action<TextMessage> GetTextMessageAction()
         {
             return message => GetTextMessageImplementation(message);

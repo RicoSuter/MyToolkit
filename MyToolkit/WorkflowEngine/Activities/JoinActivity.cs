@@ -23,7 +23,7 @@ namespace MyToolkit.WorkflowEngine.Activities
         /// <param name="data">The workflow instance's data provider. </param>
         /// <param name="definition">The workflow definition. </param>
         /// <returns>True when the activity should be automatically and immediately executed (with no args). </returns>
-        public override async Task<bool> PrepareAsync(WorkflowDataProvider data, WorkflowDefinition definition)
+        internal override async Task<bool> PrepareAsync(WorkflowDataProvider data, WorkflowDefinition definition)
         {
             return !HasCurrentActivityBeforeActivity(data, definition, this, new List<WorkflowTransition>());
         }

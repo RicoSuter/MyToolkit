@@ -7,6 +7,7 @@
 //-----------------------------------------------------------------------
 
 using Windows.UI.Xaml.Controls;
+using MyToolkit.Messaging;
 using SampleWindowsStoreApp.ViewModels;
 
 namespace SampleWindowsStoreApp.Views

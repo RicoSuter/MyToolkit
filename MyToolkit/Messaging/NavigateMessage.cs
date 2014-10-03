@@ -10,24 +10,32 @@ using System;
 
 namespace MyToolkit.Messaging
 {
-	public class NavigateMessage
-	{
-		public Type Page { get; private set; }
+    /// <summary>Message to navigate to another page. </summary>
+    public class NavigateMessage
+    {
+        /// <summary>The view model type of the page. </summary>
+        public Type ViewModelType { get; private set; }
 
-		public object Parameter { get; private set; }
+        /// <summary>The navigation parameter. </summary>
+        public object Parameter { get; private set; }
 
-		public NavigateMessage(Type page) : this(page, null) { } 
+        /// <summary>Initializes a new instance of the <see cref="NavigateMessage"/> class. </summary>
+        public NavigateMessage(Type viewModelType)
+            : this(viewModelType, null)
+        {
+        }
 
-		public NavigateMessage(Type page, object parameter)
-		{
-			Page = page;
-			Parameter = parameter; 
-		}
+        /// <summary>Initializes a new instance of the <see cref="NavigateMessage"/> class. </summary>
+        public NavigateMessage(Type viewModelType, params object[] parameters)
+            : this(viewModelType, (object)parameters)
+        {
+        }
 
-		public NavigateMessage(Type page, params object[] parameters)
-		{
-			Page = page;
-			Parameter = parameters;
-		}
-	}
+        /// <summary>Initializes a new instance of the <see cref="NavigateMessage"/> class. </summary>
+        public NavigateMessage(Type viewModelType, object parameter)
+        {
+            ViewModelType = viewModelType;
+            Parameter = parameter;
+        }
+    }
 }

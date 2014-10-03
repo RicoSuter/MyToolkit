@@ -164,10 +164,10 @@ namespace MyToolkit.WorkflowEngine
                 var allowedTransitions = WorkflowDefinition.GetOutboundTransitions(activity);
 
                 var argsContainer = new WorkflowActivityArguments(args);
-                var result = await activity.CompleteAsync(Data, WorkflowDefinition, argsContainer, cancellationToken);
+                var result = await activity.CompleteAsync(Data, argsContainer, cancellationToken);
                 if (result.Successful)
                 {
-                    var nextActivities = result.NextActivities;
+                    var nextActivities = result.GetNextActivities(activity, WorkflowDefinition);
                     if (nextActivities == null)
                         nextActivities = GetDefaultNextActivities(activity);
 
@@ -206,7 +206,11 @@ namespace MyToolkit.WorkflowEngine
 
         private WorkflowActivityBase[] GetDefaultNextActivities(WorkflowActivityBase activity)
         {
-            return WorkflowDefinition.GetOutboundTransitions(activity)
+            var transitions = WorkflowDefinition.GetOutboundTransitions(activity).ToArray();
+            if (transitions.Any(t => t.IsConditional))
+                throw new WorkflowException(string.Format("Default outgoing transitions of ({0}) cannot be conditional. ", activity.Id));
+
+            return transitions
                 .Select(t => WorkflowDefinition.GetActivityById(t.To))
                 .ToArray();
         }

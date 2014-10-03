@@ -7,8 +7,10 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
+using MyToolkit.Messaging;
 using MyToolkit.Paging;
 using SampleWindowsStoreApp.Views;
 
@@ -29,6 +31,10 @@ namespace SampleWindowsStoreApp
         public override Task OnInitializedAsync(MtFrame frame, ApplicationExecutionState args)
         {
             // TODO: Called when the app is started (not resumed)
+
+            var mapper = RegexViewModelToViewMapper.CreateDefaultMapper(typeof(App).GetTypeInfo().Assembly);
+            Messenger.Default.Register(DefaultActions.GetNavigateMessageAction(mapper, frame));
+
             return null;
         }
 
