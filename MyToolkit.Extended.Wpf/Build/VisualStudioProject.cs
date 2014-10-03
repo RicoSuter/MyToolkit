@@ -58,6 +58,7 @@ namespace MyToolkit.Build
             }
         }
 
+
         /// <summary>Loads a project from a given file path. </summary>
         /// <param name="filePath">The project file path. </param>
         /// <returns>The project. </returns>
@@ -65,8 +66,14 @@ namespace MyToolkit.Build
         {
             var document = XDocument.Load(filePath);
             var project = new VisualStudioProject();
+
             project.Path = System.IO.Path.GetFullPath(filePath);
             project.Name = document.Descendants(XName.Get("AssemblyName", XmlNamespace)).First().Value;
+            project.Namespace = document.Descendants(XName.Get("RootNamespace", XmlNamespace)).First().Value;
+
+            var frameworkVersionTag = document.Descendants(XName.Get("TargetFrameworkVersion", XmlNamespace)).FirstOrDefault();
+            project.FrameworkVersion = frameworkVersionTag != null ? frameworkVersionTag.Value : string.Empty;
+
             project.LoadReferences();
 
             return project;
@@ -94,7 +101,7 @@ namespace MyToolkit.Build
         /// <returns>True when the given project is referenced. </returns>
         public bool IsReferencingProject(VisualStudioProject project)
         {
-            return ProjectReferences.Any(p => ProjectDependencyResolver.IsSameProject(p.Path, project.Path));
+            return ProjectReferences.Any(p => p.HasSameProjectFile(project));
         }
 
         /// <summary>Checks whether the project is referencing any of the given projects. </summary>
@@ -103,6 +110,22 @@ namespace MyToolkit.Build
         public bool IsReferencingAnyProjects(IEnumerable<VisualStudioProject> projects)
         {
             return projects.Any(IsReferencingProject);
+        }
+
+        /// <summary>Checks whether both projects are loaded from the same file. </summary>
+        /// <param name="filePath">The project path. </param>
+        /// <returns>true when both projects are loaded from the same file. </returns>
+        public bool CheckProjectPath(string filePath)
+        {
+            return ProjectDependencyResolver.IsSameProject(Path, filePath);
+        }
+
+        /// <summary>Checks whether both projects are loaded from the same file. </summary>
+        /// <param name="project">The other project. </param>
+        /// <returns>true when both projects are loaded from the same file. </returns>
+        public bool HasSameProjectFile(VisualStudioProject project)
+        {
+            return ProjectDependencyResolver.IsSameProject(Path, project.Path);
         }
 
         private void LoadProjectReferences()

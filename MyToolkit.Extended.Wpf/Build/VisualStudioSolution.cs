@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.PeerResolvers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -28,7 +29,6 @@ namespace MyToolkit.Build
             var solution = new VisualStudioSolution();
             solution.Name = System.IO.Path.GetFileNameWithoutExtension(filePath);
             solution.Path = System.IO.Path.GetFullPath(filePath);
-            solution.LoadProjects();
             return solution;
         }
 
@@ -46,18 +46,45 @@ namespace MyToolkit.Build
         /// <summary>Loads all projects of the solution. </summary>
         public void LoadProjects()
         {
+            LoadProjects(new List<VisualStudioProject>(), false);
+        }
+
+        /// <summary>Loads all projects of the solution. </summary>
+        /// <param name="loadedProjects">The already loaded projects (used instead of reloading a project object). </param>
+        /// <param name="ignoreExceptions">Specifies whether to ignore exceptions. </param>
+        public void LoadProjects(IList<VisualStudioProject> loadedProjects, bool ignoreExceptions)
+        {
             var content = File.ReadAllText(Path);
 
             var projects = new List<VisualStudioProject>();
             foreach (Match match in Regex.Matches(content.Replace("\r", ""), @"\nProject.*?""([^""]*?.csproj)""(.|\n)*?\nEndProject"))
             {
-                var projectPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Path), match.Groups[1].Value));
-
-                if (File.Exists(projectPath))
-                    projects.Add(VisualStudioProject.FromFilePath(projectPath));
+                var directory = System.IO.Path.GetDirectoryName(Path);
+                if (directory != null)
+                {
+                    var projectPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(directory, match.Groups[1].Value));
+                    if (File.Exists(projectPath))
+                    {
+                        var loadedProject = loadedProjects.SingleOrDefault(p => p.CheckProjectPath(projectPath));
+                        if (loadedProject != null)
+                            projects.Add(loadedProject);
+                        else
+                        {
+                            try
+                            {
+                                projects.Add(VisualStudioProject.FromFilePath(projectPath));
+                            }
+                            catch (Exception)
+                            {
+                                if (!ignoreExceptions)
+                                    throw;
+                            }
+                        }
+                    }
+                }
             }
 
-            _projects = projects.OrderBy(p => p.Name).ToList(); 
+            _projects = projects.OrderBy(p => p.Name).ToList();
         }
 
         /// <summary>Recursively loads all Visual Studio solutions from the given directory. </summary>

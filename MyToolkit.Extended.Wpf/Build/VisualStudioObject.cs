@@ -23,6 +23,12 @@ namespace MyToolkit.Build
         /// <summary>Gets the path of the project file. </summary>
         public string Path { get; internal set; }
 
+        /// <summary>Gets the root namespace. </summary>
+        public string Namespace { get; internal set; }
+
+        /// <summary>Gets or sets the target framework version. </summary>
+        public string FrameworkVersion { get; internal set; }
+
         /// <summary>Gets the file name of the project. </summary>
         public string FileName
         {
