@@ -125,6 +125,7 @@
     <Compile Include="WorkflowEngine\WorkflowDataProvider.cs" />
     <Compile Include="WorkflowEngine\WorkflowDefinition.cs" />
     <Compile Include="WorkflowEngine\WorkflowInstance.cs" />
+    <Compile Include="WorkflowEngine\WorkflowInstanceData.cs" />
     <Compile Include="WorkflowEngine\WorkflowParametersBase.cs" />
     <Compile Include="WorkflowEngine\WorkflowTransition.cs" />
   </ItemGroup>
