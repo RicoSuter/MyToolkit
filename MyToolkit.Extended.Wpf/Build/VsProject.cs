@@ -109,7 +109,7 @@ namespace MyToolkit.Build
         /// <returns>True when the given project is referenced. </returns>
         public bool IsReferencingProject(VsProject project)
         {
-            return ProjectReferences.Any(p => p.HasSameProjectFile(project));
+            return ProjectReferences.Any(p => p.IsSameProject(project));
         }
 
         /// <summary>Checks whether the project is referencing any of the given projects. </summary>
@@ -123,17 +123,17 @@ namespace MyToolkit.Build
         /// <summary>Checks whether both projects are loaded from the same file. </summary>
         /// <param name="filePath">The project path. </param>
         /// <returns>true when both projects are loaded from the same file. </returns>
-        public bool CheckProjectPath(string filePath)
+        public bool IsProjectFile(string filePath)
         {
-            return AreSameProjectFiles(Path, filePath);
+            return Id == GetIdFromPath(filePath);
         }
 
         /// <summary>Checks whether both projects are loaded from the same file. </summary>
         /// <param name="project">The other project. </param>
         /// <returns>true when both projects are loaded from the same file. </returns>
-        public bool HasSameProjectFile(VsProject project)
+        public bool IsSameProject(VsProject project)
         {
-            return AreSameProjectFiles(Path, project.Path);
+            return Id == project.Id;
         }
 
         private void LoadProjectReferences()

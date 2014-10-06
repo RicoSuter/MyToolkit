@@ -29,7 +29,7 @@ namespace MyToolkit.Build
                 {
                     foreach (var project in sourceProjects)
                     {
-                        var item = project.ProjectReferences.SingleOrDefault(v => v.HasSameProjectFile(projectWithNoDependencies));
+                        var item = project.ProjectReferences.SingleOrDefault(v => v.IsSameProject(projectWithNoDependencies));
                         if (item != null)
                             project.ProjectReferences.Remove(item);
                     }

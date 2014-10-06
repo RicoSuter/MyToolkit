@@ -28,7 +28,7 @@ namespace MyToolkit.Build
         /// <param name="projects">The projects. </param>
         public VsProjectRepository(IEnumerable<VsProject> projects)
         {
-            _projects = projects.ToDictionary(p => Path.GetFullPath(p.Path).ToLower(), p => p);
+            _projects = projects.ToDictionary(p => p.Id, p => p);
         }
 
         /// <summary>Returns the cached project in the repository or returns null. </summary>

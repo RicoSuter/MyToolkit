@@ -17,11 +17,27 @@ namespace MyToolkit.Build
     /// <summary>Describes a Visual Studio object. </summary>
     public class VsObject
     {
+        private string _path;
+
+        /// <summary>Gets the id of the object. </summary>
+        public string Id { get; private set; }
+
         /// <summary>Gets the name of the project. </summary>
         public string Name { get; internal set; }
 
         /// <summary>Gets the path of the project file. </summary>
-        public string Path { get; internal set; }
+        public string Path
+        {
+            get { return _path; }
+            internal set
+            {
+                if (_path != value)
+                {
+                    _path = value;
+                    Id = GetIdFromPath(_path);
+                }
+            }
+        }
 
         /// <summary>Gets the root namespace. </summary>
         public string Namespace { get; internal set; }
@@ -33,6 +49,11 @@ namespace MyToolkit.Build
         public string FileName
         {
             get { return System.IO.Path.GetFileName(Path); }
+        }
+
+        internal static string GetIdFromPath(string path)
+        {
+            return System.IO.Path.GetFullPath(path).ToLower();
         }
 
         internal static Task<List<T>> LoadAllFromDirectoryAsync<T>(string path, bool ignoreExceptions, string extension, Func<string, T> creator) 
