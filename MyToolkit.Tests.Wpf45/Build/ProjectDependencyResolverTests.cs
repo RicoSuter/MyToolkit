@@ -28,7 +28,7 @@ namespace MyToolkit.Tests.Wpf45.Build
             var path = "../../../MyToolkit.sln";
 
             //// Act
-            var solution = VisualStudioSolution.FromFilePath(path);
+            var solution = VsSolution.FromFilePath(path);
 
             //// Assert
             Assert.IsTrue(solution.Projects.Any(p => p.Path.EndsWith("\\MyToolkit.csproj")));
@@ -41,7 +41,7 @@ namespace MyToolkit.Tests.Wpf45.Build
             var path = "../../../MyToolkit.Extended.Wp8/MyToolkit.Extended.Wp8.csproj";
 
             //// Act
-            var project = VisualStudioProject.FromFilePath(path);
+            var project = VsProject.FromFilePath(path);
 
             //// Assert
             Assert.AreEqual(1, project.NuGetReferences.Count());
@@ -55,7 +55,7 @@ namespace MyToolkit.Tests.Wpf45.Build
             var path = "../../../";
 
             //// Act
-            var projects = await VisualStudioProject.LoadAllFromDirectoryAsync(path, false);
+            var projects = await VsProject.LoadAllFromDirectoryAsync(path, false);
 
             //// Assert
             Assert.IsTrue(projects.Any());

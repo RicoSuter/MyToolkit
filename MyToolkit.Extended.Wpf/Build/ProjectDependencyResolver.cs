@@ -20,7 +20,7 @@ namespace MyToolkit.Build
         /// <returns>The referenced project files. </returns>
         public static IEnumerable<string> GetProjectReferences(string projectPath)
         {
-            return VisualStudioProject.FromFilePath(projectPath).ProjectReferences.Select(p => p.Path);
+            return VsProject.FromFilePath(projectPath).ProjectReferences.Select(p => p.Path);
         }
 
         /// <summary>Sorts the given projects in their required build order. </summary>
@@ -28,16 +28,7 @@ namespace MyToolkit.Build
         /// <returns>The project file paths in the correct build order. </returns>
         public static IEnumerable<string> GetBuildOrder(IEnumerable<string> projectPaths)
         {
-            return projectPaths.Select(VisualStudioProject.FromFilePath).SortByBuildOrder().Select(p => p.Path);
-        }
-
-        /// <summary>Checks whether the two project file paths are the same files. </summary>
-        /// <param name="projectPath1">The first project file path. </param>
-        /// <param name="projectPath2">The second project file path. </param>
-        /// <returns>True when the paths are the same files. </returns>
-        public static bool IsSameProject(string projectPath1, string projectPath2)
-        {
-            return Path.GetFullPath(projectPath1).ToLower() == Path.GetFullPath(projectPath2).ToLower();
+            return projectPaths.Select(VsProject.FromFilePath).SortByBuildOrder().Select(p => p.Path);
         }
     }
 }

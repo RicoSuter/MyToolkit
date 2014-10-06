@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="VisualStudioObject.cs" company="MyToolkit">
+// <copyright file="VsObject.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
 // <license>http://mytoolkit.codeplex.com/license</license>
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace MyToolkit.Build
 {
     /// <summary>Describes a Visual Studio object. </summary>
-    public class VisualStudioObject
+    public class VsObject
     {
         /// <summary>Gets the name of the project. </summary>
         public string Name { get; internal set; }
