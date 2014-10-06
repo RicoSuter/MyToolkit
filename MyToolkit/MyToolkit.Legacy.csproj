@@ -102,6 +102,7 @@
     <Compile Include="Utilities\EntityContainer.cs" />
     <Compile Include="Utilities\EnumerableExtensions.cs" />
     <Compile Include="Utilities\EnumerableMathExtensions.cs" />
+    <Compile Include="Utilities\EventHandlerExtensions.cs" />
     <Compile Include="Utilities\ExpressionUtilities.cs" />
     <Compile Include="Utilities\GeolocationUtilities.cs" />
     <Compile Include="Utilities\HttpUtilityExtensions.cs" />
