@@ -407,9 +407,10 @@ namespace MyToolkit.Paging
         /// <param name="data">The data. </param>
         public void SetNavigationState(string data)
         {
-            var tuple = DataContractSerialization.Deserialize<MtFrameDescription>(data, MtSuspensionManager.KnownTypes.ToArray());
-            _pages = tuple.PageStack;
-            _currentIndex = tuple.PageIndex;
+            var frameDescription = DataContractSerialization.Deserialize<MtFrameDescription>(data, MtSuspensionManager.KnownTypes.ToArray());
+            
+            _pages = frameDescription.PageStack;
+            _currentIndex = frameDescription.PageIndex;
 
             if (_currentIndex != -1)
             {

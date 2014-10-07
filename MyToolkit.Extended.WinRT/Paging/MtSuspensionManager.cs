@@ -13,52 +13,36 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 
 namespace MyToolkit.Paging
 {
-    /// <summary>
-    /// SuspensionManager captures global session state to simplify process lifetime management
-    /// for an application.  Note that session state will be automatically cleared under a variety
-    /// of conditions and should only be used to store information that would be convenient to
-    /// carry across sessions, but that should be disacarded when an application crashes or is
-    /// upgraded.
-    /// </summary>
+    /// <summary>Stores and loads global session state for application life cycle management. </summary>
     public sealed class MtSuspensionManager
     {
         private const string SessionStateFilename = "_sessionState.xml";
 
+        private static readonly HashSet<Type> _knownTypes = new HashSet<Type>();
         private static Dictionary<string, object> _sessionState = new Dictionary<string, object>();
-        private static readonly List<Type> _knownTypes = new List<Type>();
 
-        /// <summary>
-        /// Provides access to global session state for the current session.  This state is
-        /// serialized by <see cref="SaveAsync"/> and restored by
-        /// <see cref="RestoreAsync"/>, so values must be serializable by
-        /// <see cref="DataContractSerializer"/> and should be as compact as possible.  Strings
-        /// and other self-contained data types are strongly recommended.
-        /// </summary>
+        private static readonly List<WeakReference<MtFrame>> _registeredFrames = new List<WeakReference<MtFrame>>();
+
+        /// <summary>Gets the session state for the current session. 
+        /// The objects must be serializable with the <see cref="DataContractSerializer"/> 
+        /// and the types provided in <see cref="KnownTypes"/>. </summary>
         public static Dictionary<string, object> SessionState
         {
             get { return _sessionState; }
         }
 
-        /// <summary>
-        /// List of custom types provided to the <see cref="DataContractSerializer"/> when
-        /// reading and writing session state.  Initially empty, additional types may be
-        /// added to customize the serialization process.
-        /// </summary>
-        public static List<Type> KnownTypes
+        /// <summary>Gets a list of known types for the <see cref="DataContractSerializer"/> 
+        /// to serialize the <see cref="SessionState"/>. </summary>
+        public static HashSet<Type> KnownTypes
         {
             get { return _knownTypes; }
         }
 
-        /// <summary>Save the current <see cref="SessionState"/>. Any <see cref="Windows.UI.Xaml.Controls.Frame"/> instances
-        /// registered with <see cref="RegisterFrame"/> will also preserve their current
-        /// navigation stack, which in turn gives their active <see cref="Windows.UI.Xaml.Controls.Page"/> an opportunity
-        /// to save its state. </summary>
-        /// <returns>An asynchronous task that reflects when session state has been saved.</returns>
+        /// <summary>Saves the current session state. </summary>
         public static async Task SaveAsync()
         {
             foreach (var weakFrameReference in _registeredFrames)
@@ -72,29 +56,21 @@ namespace MyToolkit.Paging
             var serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
             serializer.WriteObject(sessionData, _sessionState);
 
-            var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(SessionStateFilename, CreationCollisionOption.ReplaceExisting);
+            var folder = ApplicationData.Current.LocalFolder; 
+            var file = await folder.CreateFileAsync(SessionStateFilename, CreationCollisionOption.ReplaceExisting);
             await FileIO.WriteBufferAsync(file, sessionData.GetWindowsRuntimeBuffer());
         }
 
-        /// <summary>Restores previously saved <see cref="SessionState"/>.  Any <see cref="Windows.UI.Xaml.Controls.Frame"/> instances
-        /// registered with <see cref="RegisterFrame"/> will also restore their prior navigation
-        /// state, which in turn gives their active <see cref="Windows.UI.Xaml.Controls.Page"/> an opportunity restore its
-        /// state. </summary>
-        /// <returns>An asynchronous task that reflects when session state has been read.  The
-        /// content of <see cref="SessionState"/> should not be relied upon until this task
-        /// completes.</returns>
+        /// <summary>Restores the previously stored session state. </summary>
         public static async Task RestoreAsync()
         {
-            _sessionState = new Dictionary<String, Object>();
-
-            var file = await ApplicationData.Current.LocalFolder.GetFileAsync(SessionStateFilename);
-            var serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
-            using (var inputStream = await file.OpenSequentialReadAsync())
+            var folder = ApplicationData.Current.LocalFolder;
+            using (var stream = await folder.OpenStreamForReadAsync(SessionStateFilename))
             {
-                using (var stream = inputStream.AsStreamForRead())
-                    _sessionState = (Dictionary<string, object>)serializer.ReadObject(stream);
+                var serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
+                _sessionState = (Dictionary<string, object>)serializer.ReadObject(stream);    
             }
-
+            
             foreach (var weakFrameReference in _registeredFrames)
             {
                 MtFrame frame;
@@ -106,26 +82,15 @@ namespace MyToolkit.Paging
             }
         }
 
-        private static DependencyProperty FrameSessionStateKeyProperty =
+        private static readonly DependencyProperty FrameSessionStateKeyProperty =
             DependencyProperty.RegisterAttached("_FrameSessionStateKey", typeof(String), typeof(MtSuspensionManager), null);
 
-        private static DependencyProperty FrameSessionStateProperty =
+        private static readonly DependencyProperty FrameSessionStateProperty =
             DependencyProperty.RegisterAttached("_FrameSessionState", typeof(Dictionary<String, Object>), typeof(MtSuspensionManager), null);
         
-        private static List<WeakReference<MtFrame>> _registeredFrames = new List<WeakReference<MtFrame>>();
-
-        /// <summary>
-        /// Registers a <see cref="Windows.UI.Xaml.Controls.Frame"/> instance to allow its navigation history to be saved to
-        /// and restored from <see cref="SessionState"/>.  Frames should be registered once
-        /// immediately after creation if they will participate in session state management.  Upon
-        /// registration if state has already been restored for the specified key
-        /// the navigation history will immediately be restored.  Subsequent invocations of
-        /// <see cref="RestoreAsync"/> will also restore navigation history.
-        /// </summary>
-        /// <param name="frame">An instance whose navigation history should be managed by
-        /// <see cref="MtSuspensionManager"/></param>
-        /// <param name="sessionStateKey">A unique key into <see cref="SessionState"/> used to
-        /// store navigation-related information.</param>
+        /// <summary>Registers a frame so that its navigation state can be saved and restored. </summary>
+        /// <param name="frame">The frame. </param>
+        /// <param name="sessionStateKey">The session state key. </param>
         public static void RegisterFrame(MtFrame frame, String sessionStateKey)
         {
             if (frame.GetValue(FrameSessionStateKeyProperty) != null)
@@ -134,25 +99,16 @@ namespace MyToolkit.Paging
             if (frame.GetValue(FrameSessionStateProperty) != null)
                 throw new InvalidOperationException("Frames must be either be registered before accessing frame session state, or not registered at all");
 
-            // Use a dependency property to associate the session key with a frame, and keep a list of frames whose
-            // navigation state should be managed
             frame.SetValue(FrameSessionStateKeyProperty, sessionStateKey);
             _registeredFrames.Add(new WeakReference<MtFrame>(frame));
-
-            // Check to see if navigation state can be restored
 
             RestoreFrameNavigationState(frame);
         }
 
-        /// <summary>
-        /// Disassociates a <see cref="Windows.UI.Xaml.Controls.Frame"/> previously registered by <see cref="RegisterFrame"/>
-        /// from <see cref="SessionState"/>.  Any navigation state previously captured will be removed.
-        /// </summary>
-        /// <param name="frame">An instance whose navigation history should no longer be managed.</param>
+        /// <summary>Deregisters a frame. </summary>
+        /// <param name="frame">The frame. </param>
         public static void DeregisterFrame(MtFrame frame)
         {
-            // Remove session state and remove the frame from the list of frames whose navigation
-            // state will be saved (along with any weak references that are no longer reachable)
             SessionState.Remove((String)frame.GetValue(FrameSessionStateKeyProperty));
             _registeredFrames.RemoveAll((weakFrameReference) =>
             {
@@ -161,19 +117,9 @@ namespace MyToolkit.Paging
             });
         }
 
-        /// <summary>
-        /// Provides storage for session state associated with the specified <see cref="Windows.UI.Xaml.Controls.Frame"/>.
-        /// Frames that have been previously registered with <see cref="RegisterFrame"/> have
-        /// their session state saved and restored automatically as a part of the global
-        /// <see cref="SessionState"/>.  Frames that are not registered have transient state
-        /// that can still be useful when restoring pages that have been discarded from the
-        /// navigation cache.
-        /// </summary>
-        /// <remarks>Apps may choose to rely on <see cref="LayoutAwarePage"/> to manage
-        /// page-specific state instead of working with frame session state directly.</remarks>
-        /// <param name="frame">The instance for which session state is desired.</param>
-        /// <returns>A collection of state subject to the same serialization mechanism as
-        /// <see cref="SessionState"/>.</returns>
+        /// <summary>Gets the session state for a given frame. </summary>
+        /// <param name="frame">The frame. </param>
+        /// <returns>The session state. </returns>
         public static Dictionary<String, Object> SessionStateForFrame(MtFrame frame)
         {
             var frameState = (Dictionary<String, Object>)frame.GetValue(FrameSessionStateProperty);
@@ -182,18 +128,12 @@ namespace MyToolkit.Paging
                 var frameSessionKey = (String)frame.GetValue(FrameSessionStateKeyProperty);
                 if (frameSessionKey != null)
                 {
-                    // Registered frames reflect the corresponding session state
                     if (!_sessionState.ContainsKey(frameSessionKey))
-                    {
                         _sessionState[frameSessionKey] = new Dictionary<String, Object>();
-                    }
                     frameState = (Dictionary<String, Object>)_sessionState[frameSessionKey];
                 }
                 else
-                {
-                    // Frames that aren't registered have transient state
                     frameState = new Dictionary<String, Object>();
-                }
                 frame.SetValue(FrameSessionStateProperty, frameState);
             }
             return frameState;
