@@ -1,6 +1,15 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="MtSuspensionManager.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -45,46 +54,32 @@ namespace MyToolkit.Paging
             get { return _knownTypes; }
         }
 
-        /// <summary>
-        /// Save the current <see cref="SessionState"/>. Any <see cref="Windows.UI.Xaml.Controls.Frame"/> instances
+        /// <summary>Save the current <see cref="SessionState"/>. Any <see cref="Windows.UI.Xaml.Controls.Frame"/> instances
         /// registered with <see cref="RegisterFrame"/> will also preserve their current
         /// navigation stack, which in turn gives their active <see cref="Windows.UI.Xaml.Controls.Page"/> an opportunity
-        /// to save its state.
-        /// </summary>
+        /// to save its state. </summary>
         /// <returns>An asynchronous task that reflects when session state has been saved.</returns>
         public static async Task SaveAsync()
         {
-            // Save the navigation state for all registered frames
             foreach (var weakFrameReference in _registeredFrames)
             {
                 MtFrame frame;
                 if (weakFrameReference.TryGetTarget(out frame))
-                {
                     SaveFrameNavigationState(frame);
-                }
             }
 
-            // Serialize the session state synchronously to avoid asynchronous access to shared state
             var sessionData = new MemoryStream();
             var serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
             serializer.WriteObject(sessionData, _sessionState);
 
-            // Get an output stream for the SessionState file and write the state asynchronously
             var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(SessionStateFilename, CreationCollisionOption.ReplaceExisting);
-            using (var fileStream = await file.OpenStreamForWriteAsync())
-            {
-                sessionData.Seek(0, SeekOrigin.Begin);
-                await sessionData.CopyToAsync(fileStream);
-                await fileStream.FlushAsync();
-            }
+            await FileIO.WriteBufferAsync(file, sessionData.GetWindowsRuntimeBuffer());
         }
 
-        /// <summary>
-        /// Restores previously saved <see cref="SessionState"/>.  Any <see cref="Windows.UI.Xaml.Controls.Frame"/> instances
+        /// <summary>Restores previously saved <see cref="SessionState"/>.  Any <see cref="Windows.UI.Xaml.Controls.Frame"/> instances
         /// registered with <see cref="RegisterFrame"/> will also restore their prior navigation
         /// state, which in turn gives their active <see cref="Windows.UI.Xaml.Controls.Page"/> an opportunity restore its
-        /// state.
-        /// </summary>
+        /// state. </summary>
         /// <returns>An asynchronous task that reflects when session state has been read.  The
         /// content of <see cref="SessionState"/> should not be relied upon until this task
         /// completes.</returns>
@@ -92,16 +87,14 @@ namespace MyToolkit.Paging
         {
             _sessionState = new Dictionary<String, Object>();
 
-            // Get the input stream for the SessionState file
-            StorageFile file = await ApplicationData.Current.LocalFolder.GetFileAsync(SessionStateFilename);
-            using (IInputStream inStream = await file.OpenSequentialReadAsync())
+            var file = await ApplicationData.Current.LocalFolder.GetFileAsync(SessionStateFilename);
+            var serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
+            using (var inputStream = await file.OpenSequentialReadAsync())
             {
-                // Deserialize the Session State
-                DataContractSerializer serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
-                _sessionState = (Dictionary<string, object>)serializer.ReadObject(inStream.AsStreamForRead());
+                using (var stream = inputStream.AsStreamForRead())
+                    _sessionState = (Dictionary<string, object>)serializer.ReadObject(stream);
             }
 
-            // Restore any registered frames to their saved state
             foreach (var weakFrameReference in _registeredFrames)
             {
                 MtFrame frame;

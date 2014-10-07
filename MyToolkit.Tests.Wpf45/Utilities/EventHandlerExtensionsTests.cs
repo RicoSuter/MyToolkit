@@ -20,7 +20,7 @@ namespace MyToolkit.Tests.Wpf45.Utilities
         {
             //// Arrange
             var count = 0; 
-            var obj = new EventTestStub();
+            var obj = new EventHandlerTestStub();
             obj.PropertyChanged += delegate { count++; };
 
             //// Act
@@ -34,18 +34,16 @@ namespace MyToolkit.Tests.Wpf45.Utilities
         public void When_no_callback_is_registered_then_raise_should_not_throw_error()
         {
             //// Arrange
-            var count = 0;
-            var obj = new EventTestStub();
+            var obj = new EventHandlerTestStub();
 
             //// Act
             obj.RaiseEvent();
 
             //// Assert
-            Assert.AreEqual(0, count);
         }
     }
 
-    public class EventTestStub : INotifyPropertyChanged
+    public class EventHandlerTestStub : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
