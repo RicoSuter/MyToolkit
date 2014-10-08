@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using MyToolkit.Controls;
+using MyToolkit.Utilities;
 
 namespace SampleWindowsStoreApp.Views
 {
@@ -23,7 +24,7 @@ namespace SampleWindowsStoreApp.Views
         private async void OnScrolledToEnd(object sender, ScrolledToEndEventArgs e)
         {
             MtListBox.TriggerScrolledToEndEvents = false;
-           
+
             await Task.Delay(2000); // Simulate network
             for (var i = 1; i <= 100; i++)
                 _list.Add("Item " + i);

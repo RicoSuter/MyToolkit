@@ -484,11 +484,20 @@
     <Compile Include="..\shared\utilities\ColorUtility.cs">
       <Link>Utilities\ColorUtility.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Utilities\DependencyObjectExtensions.cs">
+      <Link>Utilities\DependencyObjectExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Utilities\DependencyPropertyChangedEvent.cs">
       <Link>Utilities\DependencyPropertyChangedEvent.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\EntityContainer.cs">
       <Link>Utilities\EntityContainer.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\FrameworkElementExtensions.cs">
+      <Link>Utilities\FrameworkElementExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Utilities\ItemsControlExtensions.cs">
+      <Link>Utilities\ItemsControlExtensions.cs</Link>
     </Compile>
     <Compile Include="..\shared\utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
