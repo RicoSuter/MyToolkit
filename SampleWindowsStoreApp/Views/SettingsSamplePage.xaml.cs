@@ -23,12 +23,12 @@ namespace SampleWindowsStoreApp.Views
 
         // TODO: This should be implemented in Startup() of App.xaml.cs
 
-        protected override void OnNavigatedTo(MtNavigationEventArgs e)
+        protected override void OnNavigatedTo(MtNavigationEventArgs args)
         {
             SettingsPane.GetForCurrentView().CommandsRequested += OnSettingsCommandsRequested;
 		}
 
-        protected override void OnNavigatingFrom(MtNavigatingCancelEventArgs e)
+        protected override void OnNavigatingFrom(MtNavigatingCancelEventArgs args)
         {
             SettingsPane.GetForCurrentView().CommandsRequested -= OnSettingsCommandsRequested;
         }

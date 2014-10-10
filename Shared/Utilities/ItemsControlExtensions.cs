@@ -21,35 +21,41 @@ namespace MyToolkit.Utilities
     /// <summary>Provides extension methods for <see cref="ItemsControl"/> objects. </summary>
     public static class ItemsControlExtensions
     {
-        /// <summary>Gets all items of the <see cref="ItemsControl"/> which are visible to the user. </summary>
+        /// <summary>Gets all items of the <see cref="ItemsControl"/> which are currently visible on the screen. </summary>
         /// <typeparam name="T">The type of the items. </typeparam>
         /// <param name="itemsControl">The <see cref="ItemsControl"/>. </param>
         /// <returns>The visible items. </returns>
         public static List<T> GetVisibleItems<T>(this ItemsControl itemsControl)
         {
             var items = new List<T>();
-            foreach (var item in itemsControl.Items)
+            if (itemsControl.Items != null)
             {
-                var itemContainer = (ListBoxItem)itemsControl.ItemContainerGenerator.ContainerFromItem(item);
-                if (itemContainer != null && itemContainer.IsVisibleOnScreen(itemsControl))
-                    items.Add((T)item);
-                else if (items.Count > 0)
-                    break;
+                foreach (var item in itemsControl.Items)
+                {
+                    var itemContainer = (ListBoxItem)itemsControl.ItemContainerGenerator.ContainerFromItem(item);
+                    if (itemContainer != null && itemContainer.IsVisibleOnScreen(itemsControl))
+                        items.Add((T)item);
+                    else if (items.Count > 0)
+                        break;
+                }
             }
             return items;
         }
 
-        /// <summary>Gets the first item of the <see cref="ItemsControl"/> which is visible to the user. </summary>
+        /// <summary>Gets the first item of the <see cref="ItemsControl"/> which are currently visible on the screen. </summary>
         /// <typeparam name="T">The type of the item. </typeparam>
         /// <param name="itemsControl">The <see cref="ItemsControl"/>. </param>
         /// <returns>The visible item. </returns>
         public static T GetFirstVisibleItem<T>(this ItemsControl itemsControl)
         {
-            foreach (var item in itemsControl.Items)
+            if (itemsControl.Items != null)
             {
-                var itemContainer = (FrameworkElement)itemsControl.ItemContainerGenerator.ContainerFromItem(item);
-                if (itemContainer != null && itemContainer.IsVisibleOnScreen(itemsControl))
-                    return (T)item;
+                foreach (var item in itemsControl.Items)
+                {
+                    var itemContainer = (FrameworkElement)itemsControl.ItemContainerGenerator.ContainerFromItem(item);
+                    if (itemContainer != null && itemContainer.IsVisibleOnScreen(itemsControl))
+                        return (T)item;
+                }
             }
             return default(T);
         }

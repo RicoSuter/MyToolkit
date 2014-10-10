@@ -204,9 +204,7 @@ namespace MyToolkit.Paging
         /// </summary>
         public bool UseBackKeyToNavigateInWebView { get; set; }
 
-        /// <summary>
-        /// Used to load the saved state when the page has been reactivated. 
-        /// </summary>
+        /// <summary>Used to load the saved state when the page has been reactivated. </summary>
         /// <param name="parameter">The initial page parameter. </param>
         /// <param name="pageState">The saved page state. </param>
         [Obsolete("Use OnLoadState instead. 7/28/2014")]
@@ -215,9 +213,7 @@ namespace MyToolkit.Paging
             // Must be empty
         }
 
-        /// <summary>
-        /// Used to save the state when the page gets suspended. 
-        /// </summary>
+        /// <summary>Used to save the state when the page gets suspended. </summary>
         /// <param name="pageState">The dictionary to save the page state into. </param>
         [Obsolete("Use OnSaveState instead. 7/28/2014")]
         protected internal virtual void SaveState(Dictionary<String, Object> pageState)
@@ -248,59 +244,47 @@ namespace MyToolkit.Paging
             // Must be empty
         }
 
-        /// <summary>
-        /// Called when a key up event has occured (not supported on WP). 
-        /// </summary>
-        /// <param name="args"></param>
+        /// <summary>Called when a key up event has occured (not supported on WP). </summary>
+        /// <param name="args">The event arguments. </param>
         protected internal virtual void OnKeyUp(AcceleratorKeyEventArgs args)
         {
             // Must be empty
         }
 
-        /// <summary>
-        /// Called when navigated to this page. 
-        /// </summary>
-        /// <param name="e"></param>
-        protected internal virtual void OnNavigatedTo(MtNavigationEventArgs e)
+        /// <summary>Called when navigated to this page. </summary>
+        /// <param name="args">The event arguments. </param>
+        protected internal virtual void OnNavigatedTo(MtNavigationEventArgs args)
         {
             // Leave empty!
         }
 
-        /// <summary>
-        /// Called when navigating from this page. 
-        /// </summary>
-        /// <param name="e"></param>
-        protected internal virtual void OnNavigatingFrom(MtNavigatingCancelEventArgs e)
+        /// <summary>Called when navigating from this page. </summary>
+        /// <param name="args">The event arguments. </param>
+        protected internal virtual void OnNavigatingFrom(MtNavigatingCancelEventArgs args)
         {
             // Must be empty
         }
 
-        /// <summary>
-        /// Called when navigating from this page. 
+        /// <summary>Called when navigating from this page. 
         /// The navigation does no happen until the returned task has completed. 
-        /// Return null or empty task to run the method synchronously. 
-        /// </summary>
-        /// <param name="e"></param>
-        /// <returns>The Task. </returns>
-        protected internal virtual Task OnNavigatingFromAsync(MtNavigatingCancelEventArgs e)
+        /// Return null or empty task to run the method synchronously. </summary>
+        /// <param name="args">The event arguments. </param>
+        /// <returns>The task. </returns>
+        protected internal virtual Task OnNavigatingFromAsync(MtNavigatingCancelEventArgs args)
         {
             // Must be empty
             return null;
         }
 
-        /// <summary>
-        /// Called when navigated from this page. 
-        /// </summary>
-        /// <param name="e"></param>
-        protected internal virtual void OnNavigatedFrom(MtNavigationEventArgs e)
+        /// <summary>Called when navigated from this page. </summary>
+        /// <param name="args">The event arguments. </param>
+        protected internal virtual void OnNavigatedFrom(MtNavigationEventArgs args)
         {
             // Must be empty
         }
 
-        /// <summary>
-        /// Called when the page visibility has changed (e.g. the app has been suspended and it is no longer visible to the user).  
-        /// </summary>
-        /// <param name="args">The args. </param>
+        /// <summary>Called when the page visibility has changed (e.g. the app has been suspended and it is no longer visible to the user). </summary>
+        /// <param name="args">The event arguments. </param>
         protected internal virtual void OnVisibilityChanged(VisibilityChangedEventArgs args)
         {
             // Must be empty

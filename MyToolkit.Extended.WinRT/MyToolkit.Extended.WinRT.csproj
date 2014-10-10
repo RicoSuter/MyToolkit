@@ -48,7 +48,10 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\MyToolkit.Extended.Wp8\Controls\ScrollableItemsControl.cs">
+    <Compile Include="..\Shared\Media\ImageHelper.cs">
+      <Link>Media\ImageHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\ScrollableItemsControl.cs">
       <Link>Controls\ScrollableItemsControl.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Behaviors\Behavior.cs">
@@ -287,7 +290,6 @@
     <Compile Include="Environment\Device.cs" />
     <Compile Include="Environment\Machine.cs" />
     <Compile Include="Input\Keyboard.cs" />
-    <Compile Include="Media\ImageHelper.cs" />
     <Compile Include="Mvvm\IStateHandlingViewModel.cs" />
     <Compile Include="Mvvm\ViewModelHelper.cs" />
     <Compile Include="Paging\Handlers\BackKeyPressedHandler.cs" />

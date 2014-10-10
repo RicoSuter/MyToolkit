@@ -197,7 +197,7 @@
     <Compile Include="..\MyToolkit.Extended.Wp8\Controls\NavigationList.cs">
       <Link>Controls\NavigationList.cs</Link>
     </Compile>
-    <Compile Include="..\MyToolkit.Extended.Wp8\Controls\ScrollableItemsControl.cs">
+    <Compile Include="..\Shared\Controls\ScrollableItemsControl.cs">
       <Link>Controls\ScrollableItemsControl.cs</Link>
     </Compile>
     <Compile Include="..\MyToolkit.Extended.Wp8\Controls\TranslatedToggleSwitch.cs">

@@ -15,7 +15,7 @@ namespace SampleWindowsStoreApp.Views
             InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(MtNavigationEventArgs e)
+        protected override void OnNavigatedTo(MtNavigationEventArgs args)
         {
             PrintManager.GetForCurrentView().PrintTaskRequested += OnPrintManagerPrintTaskRequested;
 
@@ -27,7 +27,7 @@ namespace SampleWindowsStoreApp.Views
             _documentSource = _printDocument.DocumentSource;
         }
 
-        protected override void OnNavigatedFrom(MtNavigationEventArgs e)
+        protected override void OnNavigatedFrom(MtNavigationEventArgs args)
         {
             PrintManager.GetForCurrentView().PrintTaskRequested -= OnPrintManagerPrintTaskRequested;
         }

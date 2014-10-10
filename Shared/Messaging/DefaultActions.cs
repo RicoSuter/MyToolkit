@@ -33,7 +33,7 @@ namespace MyToolkit.Messaging
         /// <returns>The message action. </returns>
         public static Action<GoBackMessage> GetGoBackMessageAction(MtFrame frame)
         {
-            return m => frame.GoBackAsync();
+            return message => frame.GoBackAsync();
         }
 
         /// <summary>Gets the default handling action of <see cref="NavigateMessage"/> objects. </summary>

@@ -8,7 +8,7 @@
 
 using MyToolkit.Paging;
 
-namespace MyToolkit.MVVM
+namespace MyToolkit.Mvvm
 {
     /// <summary>Interface of a view model which can save and load its state. </summary>
     public interface IStateHandlingViewModel

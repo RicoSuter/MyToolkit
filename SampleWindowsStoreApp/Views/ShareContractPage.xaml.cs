@@ -17,13 +17,13 @@ namespace SampleWindowsStoreApp.Views
             InitializeComponent();
         }
 
-        protected override void OnNavigatedTo(MtNavigationEventArgs e)
+        protected override void OnNavigatedTo(MtNavigationEventArgs args)
         {
             var manager = DataTransferManager.GetForCurrentView();
             manager.DataRequested += OnShareData;
         }
 
-        protected override void OnNavigatedFrom(MtNavigationEventArgs e)
+        protected override void OnNavigatedFrom(MtNavigationEventArgs args)
         {
             var manager = DataTransferManager.GetForCurrentView();
             manager.DataRequested -= OnShareData;

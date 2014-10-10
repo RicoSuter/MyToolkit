@@ -25,13 +25,13 @@ namespace SampleWindowsStoreApp.Views
             Model.PropertyChanged += OnPropertyChanged;
         }
 
-        protected override void OnNavigatedTo(MtNavigationEventArgs e)
+        protected override void OnNavigatedTo(MtNavigationEventArgs args)
         {
             // TODO: This should be registered in the App's OnLaunched method after creating a new Frame object. 
             Messenger.Default.Register(this, DefaultActions.GetTextMessageAction());
         }
 
-        protected override void OnNavigatedFrom(MtNavigationEventArgs e)
+        protected override void OnNavigatedFrom(MtNavigationEventArgs args)
         {
             Messenger.Default.Deregister(this);
         }
