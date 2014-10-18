@@ -51,21 +51,21 @@ namespace MyToolkit.Controls
 			// second row used for details view
 			RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 			RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+
+            Loaded += delegate
+            {
+                if (DataGrid.SelectedItems != null)
+                    IsSelected = DataGrid.SelectedItems.Contains(item);
+            };
 		}
 
-        /// <summary>
-        /// Gets the parent <see cref="DataGrid"/>. 
-        /// </summary>
+        /// <summary>Gets the parent <see cref="DataGrid"/>. </summary>
 		public DataGrid DataGrid { get; private set; }
 
-        /// <summary>
-        /// Gets or sets the associated item. 
-        /// </summary>
+        /// <summary>Gets or sets the associated item. </summary>
 		public object Item { get; private set; }
 
-        /// <summary>
-        /// Gets a value indicathing whether the row is selected. 
-        /// </summary>
+        /// <summary>Gets a value indicating whether the row is selected. </summary>
 		public bool IsSelected
 		{
 			get { return _isSelected; }
@@ -79,17 +79,15 @@ namespace MyToolkit.Controls
 			}
 		}
 
-        /// <summary>
-        /// Gets the list of <see cref="DataGridCell"/>. 
-        /// </summary>
-        public IList<DataGridCell> Cells
+        /// <summary>Gets the list of <see cref="DataGridCellBase"/>. </summary>
+        public IList<DataGridCellBase> Cells
         {
             get
             {
                 return Children
                     .OfType<ContentPresenter>()
-                    .Where(c => c.Tag is DataGridCell)
-                    .Select(c => (DataGridCell)c.Tag)
+                    .Where(c => c.Tag is DataGridCellBase)
+                    .Select(c => (DataGridCellBase)c.Tag)
                     .ToList();
             }
         }

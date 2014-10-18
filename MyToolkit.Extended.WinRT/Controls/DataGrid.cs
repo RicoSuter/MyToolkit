@@ -7,10 +7,13 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using Windows.UI.Core;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using MyToolkit.Collections;
 using Windows.UI.Xaml;
@@ -25,7 +28,6 @@ namespace MyToolkit.Controls
     public class DataGrid : Control
     {
         private Grid _titleRowControl;
-        private DataGridColumn _selectedColumn;
         private MtListBox _listControl;
         private bool _initialized = false;
         private object _initialSelectedItem;
@@ -34,8 +36,8 @@ namespace MyToolkit.Controls
         public DataGrid()
         {
             DefaultStyleKey = typeof(DataGrid);
-
-            Columns = new ObservableCollection<DataGridColumn>(); // Needed so that columns can be defined in XAML
+            Columns = new ObservableCollection<DataGridColumnBase>(); // Initialize collection so that columns can be defined in XAML
+            
             if (!Designer.IsInDesignMode)
                 Loaded += OnLoaded;
         }
@@ -46,105 +48,11 @@ namespace MyToolkit.Controls
         /// <summary>Occurs when the user clicked on an item and wants to navigate to its detail page. </summary>
         public event EventHandler<NavigationListEventArgs> Navigate;
 
-        #region Dependency properties
-
-        public static readonly DependencyProperty HeaderBackgroundProperty = 
-            DependencyProperty.Register("HeaderBackground", typeof (Brush), typeof (DataGrid), new PropertyMetadata(default(Brush)));
-
-        /// <summary>
-        /// Gets or sets the header background. 
-        /// </summary>
-        public Brush HeaderBackground
+        /// <summary>Gets the list of currently selected items. </summary>
+        public IList<object> SelectedItems
         {
-            get { return (Brush) GetValue(HeaderBackgroundProperty); }
-            set { SetValue(HeaderBackgroundProperty, value); }
+            get { return _listControl.SelectedItems; }
         }
-
-        public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof(object), typeof(DataGrid), new PropertyMetadata(null, OnSelectedItemChanged));
-
-        /// <summary>
-        /// Gets or sets the selected item. 
-        /// </summary>
-        public object SelectedItem
-        {
-            get { return (object)GetValue(SelectedItemProperty); }
-            set { SetValue(SelectedItemProperty, value); }
-        }
-
-        public static readonly DependencyProperty ItemsSourceProperty =
-            DependencyProperty.Register("ItemsSource", typeof(object), typeof(DataGrid), new PropertyMetadata(null, OnItemsSourceChanged));
-
-        /// <summary>
-        /// Gets or sets the collection to show in the <see cref="DataGrid"/>. 
-        /// </summary>
-        public object ItemsSource
-        {
-            get { return (object)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
-        }
-
-        public static readonly DependencyProperty DefaultOrderIndexProperty =
-            DependencyProperty.Register("DefaultOrderIndex", typeof(int), typeof(DataGrid), new PropertyMetadata(-1));
-
-        /// <summary>
-        /// Gets or sets the index of the column which is initially ordered. 
-        /// </summary>
-        public int DefaultOrderIndex
-        {
-            get { return (int)GetValue(DefaultOrderIndexProperty); }
-            set { SetValue(DefaultOrderIndexProperty, value); }
-        }
-
-        public static readonly DependencyProperty RowStyleProperty =
-            DependencyProperty.Register("RowStyle", typeof(Style), typeof(DataGrid), new PropertyMetadata(default(Style)));
-
-        /// <summary>
-        /// Used to change the row style, the ItemContainerStyle of the internal ListBox; use ListBoxItem as style target type. 
-        /// </summary>
-        public Style RowStyle
-        {
-            get { return (Style)GetValue(RowStyleProperty); }
-            set { SetValue(RowStyleProperty, value); }
-        }
-
-        public static readonly DependencyProperty ItemDetailsTemplateProperty =
-            DependencyProperty.Register("ItemDetailsTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
-
-        /// <summary>
-        /// Gets or sets the data template for item details (shown when an item is selected). When null then no details are shown. 
-        /// </summary>
-        public DataTemplate ItemDetailsTemplate
-        {
-            get { return (DataTemplate)GetValue(ItemDetailsTemplateProperty); }
-            set { SetValue(ItemDetailsTemplateProperty, value); }
-        }
-
-        public static readonly DependencyProperty HeaderTemplateProperty =
-            DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
-
-        /// <summary>
-        /// Gets or sets the header data template (styling of column container).
-        /// </summary>
-        public DataTemplate HeaderTemplate
-        {
-            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
-            set { SetValue(HeaderTemplateProperty, value); }
-        }
-
-        public static readonly DependencyProperty CellTemplateProperty =
-            DependencyProperty.Register("CellTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
-
-        /// <summary>
-        /// Gets or sets the cell data template (currently not working). 
-        /// </summary>
-        public DataTemplate CellTemplate
-        {
-            get { return (DataTemplate)GetValue(CellTemplateProperty); }
-            set { SetValue(CellTemplateProperty, value); }
-        }
-
-        #endregion
 
         /// <summary>Gets a value indicating whether the item details are shown. </summary>
         public bool ShowItemDetails
@@ -158,48 +66,139 @@ namespace MyToolkit.Controls
             get { return _listControl == null ? null : _listControl.ItemsSource as IObservableCollectionView; }
         }
 
+        /// <summary>Gets the selected column. </summary>
+        public DataGridColumnBase SelectedColumn { get; private set; }
+
+        #region Dependency Properties
+
+        public static readonly DependencyProperty HeaderBackgroundProperty =
+            DependencyProperty.Register("HeaderBackground", typeof(Brush), typeof(DataGrid), new PropertyMetadata(default(Brush)));
+
+        public static readonly DependencyProperty SelectionModeProperty = DependencyProperty.Register(
+            "SelectionMode", typeof(SelectionMode), typeof(DataGrid), new PropertyMetadata(SelectionMode.Single));
+
+        public static readonly DependencyProperty SelectedItemProperty =
+            DependencyProperty.Register("SelectedItem", typeof(object), typeof(DataGrid), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty ItemsSourceProperty =
+            DependencyProperty.Register("ItemsSource", typeof(object), typeof(DataGrid), 
+                new PropertyMetadata(null, (obj, args) => ((DataGrid)obj).UpdateItemsSource()));
+
+        public static readonly DependencyProperty DefaultOrderIndexProperty =
+            DependencyProperty.Register("DefaultOrderIndex", typeof(int), typeof(DataGrid), new PropertyMetadata(-1));
+
+        public static readonly DependencyProperty RowStyleProperty =
+            DependencyProperty.Register("RowStyle", typeof(Style), typeof(DataGrid), new PropertyMetadata(default(Style)));
+
+        public static readonly DependencyProperty ItemDetailsTemplateProperty =
+            DependencyProperty.Register("ItemDetailsTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
+
+        public static readonly DependencyProperty HeaderTemplateProperty =
+            DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
+
+        public static readonly DependencyProperty CellTemplateProperty =
+            DependencyProperty.Register("CellTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
+
         public static readonly DependencyProperty ColumnsProperty = DependencyProperty.RegisterAttached("Columns",
-              typeof(ObservableCollection<DataGridColumn>), typeof(DataGrid),
-              new PropertyMetadata(null, OnColumnsPropertyChanged));
+            typeof(ObservableCollection<DataGridColumnBase>), typeof(DataGrid), new PropertyMetadata(null, OnColumnsPropertyChanged));
+
+        /// <summary>Gets or sets the header background. </summary>
+        public Brush HeaderBackground
+        {
+            get { return (Brush)GetValue(HeaderBackgroundProperty); }
+            set { SetValue(HeaderBackgroundProperty, value); }
+        }
+
+        /// <summary>Gets or sets the selection mode (default: single). </summary>
+        public SelectionMode SelectionMode
+        {
+            get { return (SelectionMode)GetValue(SelectionModeProperty); }
+            set { SetValue(SelectionModeProperty, value); }
+        }
+
+        /// <summary>Gets or sets the selected item. </summary>
+        public object SelectedItem
+        {
+            get { return (object)GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
+        }
+
+        /// <summary>Gets or sets the items collection to show in the <see cref="DataGrid"/>. </summary>
+        public object ItemsSource
+        {
+            get { return (object)GetValue(ItemsSourceProperty); }
+            set { SetValue(ItemsSourceProperty, value); }
+        }
+
+        /// <summary>Gets or sets the index of the column which is initially ordered. </summary>
+        public int DefaultOrderIndex
+        {
+            get { return (int)GetValue(DefaultOrderIndexProperty); }
+            set { SetValue(DefaultOrderIndexProperty, value); }
+        }
+
+        /// <summary>Used to change the row style, the ItemContainerStyle of the internal ListBox; use ListBoxItem as style target type. </summary>
+        public Style RowStyle
+        {
+            get { return (Style)GetValue(RowStyleProperty); }
+            set { SetValue(RowStyleProperty, value); }
+        }
+
+        /// <summary>Gets or sets the data template for item details (shown when an item is selected). When null then no details are shown. </summary>
+        public DataTemplate ItemDetailsTemplate
+        {
+            get { return (DataTemplate)GetValue(ItemDetailsTemplateProperty); }
+            set { SetValue(ItemDetailsTemplateProperty, value); }
+        }
+
+        /// <summary>Gets or sets the header data template (styling of column container). </summary>
+        public DataTemplate HeaderTemplate
+        {
+            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
+            set { SetValue(HeaderTemplateProperty, value); }
+        }
+
+        /// <summary>Gets or sets the cell data template (currently not working). </summary>
+        public DataTemplate CellTemplate
+        {
+            get { return (DataTemplate)GetValue(CellTemplateProperty); }
+            set { SetValue(CellTemplateProperty, value); }
+        }
 
         /// <summary>Gets the column description of the <see cref="DataGrid"/>. </summary>
-        public ObservableCollection<DataGridColumn> Columns
+        public ObservableCollection<DataGridColumnBase> Columns
         {
-            get { return (ObservableCollection<DataGridColumn>)GetValue(ColumnsProperty); }
+            get { return (ObservableCollection<DataGridColumnBase>)GetValue(ColumnsProperty); }
             set { SetValue(ColumnsProperty, value); }
         }
 
-        /// <summary>Gets the selected column. </summary>
-        public DataGridColumn SelectedColumn
-        {
-            get { return _selectedColumn; }
-        }
+        #endregion
 
         /// <summary>Selects a column for ordering. 
         /// If the column is not selected the the default ordering is used (IsAscendingDefault property). 
         /// If the column is already selected then the ordering direction will be inverted. </summary>
         /// <param name="column">The column. </param>
         /// <returns>Returns true if column could be changed. </returns>
-        public bool SelectColumn(DataGridColumn column)
+        public bool SelectColumn(DataGridColumnBase column)
         {
-            return SelectColumn(column, column == _selectedColumn ? !column.IsAscending : column.IsAscendingDefault);
+            return SelectColumn(column, column == SelectedColumn ? !column.IsAscending : column.IsAscendingDefault);
         }
 
         /// <summary>Selects a column for ordering. </summary>
         /// <param name="column">The column. </param>
         /// <param name="ascending">The value indicating whether to sort the column ascending; otherwise descending. </param>
         /// <returns>Returns true if column could be changed. </returns>
-        public bool SelectColumn(DataGridColumn column, bool ascending)
+        public bool SelectColumn(DataGridColumnBase column, bool ascending)
         {
             if (column.CanSort)
             {
-                var oldColumn = _selectedColumn;
+                var oldColumn = SelectedColumn;
                 if (oldColumn != null)
                     oldColumn.IsSelected = false;
 
-                _selectedColumn = column;
-                _selectedColumn.IsSelected = true;
-                _selectedColumn.IsAscending = ascending;
+                SelectedColumn = column;
+                SelectedColumn.IsSelected = true;
+                SelectedColumn.IsAscending = ascending;
 
                 UpdateOrder();
                 return true;
@@ -212,13 +211,13 @@ namespace MyToolkit.Controls
         /// <param name="filter"></param>
         public void SetFilter<TItem>(Func<TItem, bool> filter)
         {
-            Items.Filter = filter; 
+            Items.Filter = filter;
         }
 
         /// <summary>Removes the current filter. </summary>
         public void RemoveFilter()
         {
-            Items.Filter = null; 
+            Items.Filter = null;
         }
 
         protected override void OnApplyTemplate()
@@ -230,6 +229,11 @@ namespace MyToolkit.Controls
             _listControl = (MtListBox)GetTemplateChild("Rows");
             _listControl.PrepareContainerForItem += OnPrepareContainerForItem;
             _listControl.SelectionChanged += OnSelectionChanged;
+
+            _listControl.SetBinding(Selector.SelectedItemProperty, 
+                new Binding { Source = this, Path = new PropertyPath("SelectedItem"), Mode = BindingMode.TwoWay });
+            _listControl.SetBinding(ListBox.SelectionModeProperty, 
+                new Binding { Source = this, Path = new PropertyPath("SelectionMode"), Mode = BindingMode.TwoWay });
 
             _initialSelectedItem = SelectedItem;
 
@@ -246,17 +250,12 @@ namespace MyToolkit.Controls
                 Initialize();
         }
 
-        private static void OnItemsSourceChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-        {
-            ((DataGrid)obj).UpdateItemsSource();
-        }
-
         private static void OnColumnsPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             var dataGrid = (DataGrid)obj;
 
-            var oldList = args.OldValue as ObservableCollection<DataGridColumn>;
-            var newList = args.NewValue as ObservableCollection<DataGridColumn>;
+            var oldList = args.OldValue as ObservableCollection<DataGridColumnBase>;
+            var newList = args.NewValue as ObservableCollection<DataGridColumnBase>;
 
             if (oldList != null)
                 oldList.CollectionChanged -= dataGrid.OnColumnsChanged;
@@ -284,24 +283,28 @@ namespace MyToolkit.Controls
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var lastItem = e.RemovedItems.Count > 0 ? _listControl.GetListBoxItemFromItem(e.RemovedItems[0]) : null;
-            var newItem = e.AddedItems.Count > 0 ? _listControl.GetListBoxItemFromItem(e.AddedItems[0]) : null;
+            foreach (var item in e.RemovedItems)
+                ChangeItemSelection(item, false);
 
-            if (lastItem != null && lastItem.Content != null)
-                ((DataGridRow)lastItem.Content).IsSelected = false;
-            if (newItem != null && newItem.Content != null)
-                ((DataGridRow)newItem.Content).IsSelected = true;
-
-            SelectedItem = _listControl.SelectedItem;
+            foreach (var item in e.AddedItems)
+                ChangeItemSelection(item, true);
 
             var copy = SelectionChanged;
             if (copy != null)
                 copy(sender, e);
         }
 
+        private void ChangeItemSelection(object item, bool isSelected)
+        {
+            var lbItem = _listControl.GetListBoxItemFromItem(item);
+            if (lbItem != null && lbItem.Content != null)
+                ((DataGridRow)lbItem.Content).IsSelected = isSelected;
+        }
+
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             Loaded -= OnLoaded;
+
             Dispatcher.RunAsync(CoreDispatcherPriority.Normal, Initialize);
             Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
             {
@@ -311,13 +314,6 @@ namespace MyToolkit.Controls
                     _initialSelectedItem = null;
                 }
             });
-        }
-
-        private static void OnSelectedItemChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-        {
-            var dataGrid = (DataGrid)obj;
-            if (dataGrid._listControl != null)
-                dataGrid._listControl.SelectedItem = args.NewValue;
         }
 
         private void OnPrepareContainerForItem(object sender, PrepareContainerForItemEventArgs e)
@@ -386,20 +382,20 @@ namespace MyToolkit.Controls
                 _titleRowControl.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
             // Update selected column
-            if (_selectedColumn == null || !Columns.Contains(_selectedColumn))
+            if (SelectedColumn == null || !Columns.Contains(SelectedColumn))
             {
                 if (Columns.Count > DefaultOrderIndex)
                     SelectColumn(Columns[DefaultOrderIndex]);
                 else if (Columns.Any(c => c.CanSort))
                     SelectColumn(Columns.First(c => c.CanSort));
                 else
-                    _selectedColumn = null;
+                    SelectedColumn = null;
             }
         }
 
         private void OnColumnTapped(object sender, TappedRoutedEventArgs e)
         {
-            var column = (DataGridColumn)((ContentPresenter)sender).Content;
+            var column = (DataGridColumnBase)((ContentPresenter)sender).Content;
             if (column != null && column.CanSort)
                 SelectColumn(column);
         }
@@ -408,14 +404,16 @@ namespace MyToolkit.Controls
         {
             if (Items != null)
             {
-                var selectedItem = SelectedItem;
+                var previouslySelectedItems = SelectedItems.ToList();
 
                 Items.IsTracking = false;
-                Items.Order = new Func<object, object>(o => PropertyPathHelper.Evaluate(o, _selectedColumn.OrderPropertyPath));
-                Items.Ascending = _selectedColumn.IsAscending;
+                Items.Order = new Func<object, object>(o => PropertyPathHelper.Evaluate(o, SelectedColumn.OrderPropertyPath));
+                Items.Ascending = SelectedColumn.IsAscending;
                 Items.IsTracking = true;
 
-                SelectedItem = selectedItem;
+                var currentlySelectedItems = SelectedItems.ToList();
+                foreach (var item in previouslySelectedItems.Where(i => !currentlySelectedItems.Contains(i)))
+                    SelectedItems.Add(item);
             }
         }
 

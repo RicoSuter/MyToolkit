@@ -2,7 +2,7 @@
 
 namespace MyToolkit.Controls
 {
-    public class DefaultDataGridCell : DataGridCell
+    public class DefaultDataGridCell : DataGridCellBase
     {
         public DefaultDataGridCell(FrameworkElement control)
             : base(control) { }

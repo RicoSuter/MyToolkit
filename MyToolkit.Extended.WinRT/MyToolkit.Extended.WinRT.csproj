@@ -271,7 +271,7 @@
       <DependentUpon>TimePicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DataGrid.cs" />
-    <Compile Include="Controls\DataGridColumn.cs" />
+    <Compile Include="Controls\DataGridColumnBase.cs" />
     <Compile Include="Controls\DataGridRow.cs" />
     <Compile Include="Controls\DataGridTextCell.cs" />
     <Compile Include="Controls\DataGridTextColumn.cs" />

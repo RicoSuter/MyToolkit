@@ -49,8 +49,8 @@
         </StackPanel>
 
         <Grid Grid.Row="2" Margin="120,0,40,40">
-            <controls:DataGrid ItemsSource="{Binding People}" x:Name="DataGrid"
-                               SelectedItem="{Binding SelectedPerson, Mode=TwoWay}" 
+            <controls:DataGrid ItemsSource="{Binding People}" x:Name="DataGrid" SelectionMode="Multiple" 
+                               SelectedItem="{Binding SelectedPerson, Mode=TwoWay}" SelectionChanged="OnSelectedItemsChanged"
                                DefaultOrderIndex="1">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn Width="200" Header="Firstname" Binding="{Binding Firstname}"
@@ -78,6 +78,9 @@
         <StackPanel Grid.Row="3" Margin="120,0,0,40">
             <TextBlock Text="Selected Item" FontWeight="Bold" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,0,5" />
             <TextBlock Text="{Binding SelectedPerson.Firstname}" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,0,20" />
+
+            <TextBlock Text="Selected Items" FontWeight="Bold" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,0,5" />
+            <TextBlock x:Name="SelectedItems" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,0,20" />
             
             <StackPanel Orientation="Horizontal">
                 <Button Content="Select random Person" Click="OnSelectLastPerson" Margin="0,0,20,0" />

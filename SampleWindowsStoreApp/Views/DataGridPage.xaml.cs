@@ -24,7 +24,7 @@ namespace SampleWindowsStoreApp.Views
                 .TakeRandom(1).Single();
         }
 
-        private DataGridColumn _removedColumn;
+        private DataGridColumnBase _removedColumn;
         private void OnRemoveFirstColumn(object sender, RoutedEventArgs e)
         {
             if (DataGrid.Columns.Count > 0)
@@ -53,6 +53,11 @@ namespace SampleWindowsStoreApp.Views
                 filter = filter.ToLower();
                 DataGrid.SetFilter<Person>(p => p.Firstname.ToLower().Contains(filter) || p.Lastname.ToLower().Contains(filter));
             }
+        }
+
+        private void OnSelectedItemsChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SelectedItems.Text = string.Join(", ", DataGrid.SelectedItems.OfType<Person>().Select(p => p.Firstname));
         }
     }
 }

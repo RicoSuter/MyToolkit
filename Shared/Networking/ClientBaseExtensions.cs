@@ -26,7 +26,12 @@ namespace MyToolkit.Networking
 			OperationContext.Current.OutgoingMessageProperties[HttpRequestMessageProperty.Name] = prop;
 		}
 
-		private static string ConstructCookies(string incomingCookies)
+	    public static EventHandler<SendingRequestEventArgs> SendingRequest(string cookies)
+	    {
+	        return (s, e) => e.Request.Headers.Add(HttpRequestHeader.Cookie, cookies);
+	    }
+
+	    private static string ConstructCookies(string incomingCookies)
 		{
 			var cookies = incomingCookies.Split(new[] { ',', ';' });
 			var buffer = new StringBuilder(incomingCookies.Length * 10);
@@ -40,11 +45,6 @@ namespace MyToolkit.Networking
 			if (buffer.Length > 0)
 				buffer.Remove(buffer.Length - 2, 2);
 			return buffer.ToString();
-		}
-
-		public static EventHandler<SendingRequestEventArgs> SendingRequest(string cookies)
-		{
-			return (s, e) => e.Request.Headers.Add(HttpRequestHeader.Cookie, cookies);
 		}
 	}
 }

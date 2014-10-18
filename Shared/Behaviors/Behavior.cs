@@ -50,6 +50,7 @@ namespace MyToolkit.Behaviors
         /// <summary>Gets or sets the type of the associated object. </summary>
         protected internal Type AssociatedType { get; set; }
 
+        /// <exception cref="InvalidOperationException">dependencyObject does not satisfy the Behavior type constraint.</exception>
         public void Attach(DependencyObject dependencyObject)
         {
             if (AssociatedObject != null)

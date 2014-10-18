@@ -1,15 +1,25 @@
-﻿using Windows.UI.Xaml;
+﻿//-----------------------------------------------------------------------
+// <copyright file="DataGridCellBase.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using Windows.UI.Xaml;
 
 namespace MyToolkit.Controls
 {
-    public abstract class DataGridCell
+    public abstract class DataGridCellBase
 	{
-	    protected DataGridCell(FrameworkElement control)
+        /// <summary>Initializes a new instance of the <see cref="DataGridCellBase"/> class. </summary>
+        /// <param name="control">The control. </param>
+	    protected DataGridCellBase(FrameworkElement control)
         {
             Control = control;
         }
 
-        /// <summary>Gets the cell's UI control. </summary>
+        /// <summary>Gets the UI control of the cell. </summary>
 		public FrameworkElement Control { get; private set; }
 
         /// <summary>Called when the cell's row gets selected or unselected. </summary>

@@ -2,7 +2,7 @@ using Windows.UI.Xaml;
 
 namespace MyToolkit.Controls
 {
-	public class DataGridTemplatedCell : DataGridCell
+	public class DataGridTemplatedCell : DataGridCellBase
 	{
         public DataGridTemplatedCell(FrameworkElement control, bool onlyVisibleOnSelection)
             : base(control)

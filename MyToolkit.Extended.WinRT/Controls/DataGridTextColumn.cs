@@ -22,9 +22,7 @@ namespace MyToolkit.Controls
         private Brush _foreground;
         private Style _style;
 
-        /// <summary>
-        /// Gets or sets the font size. 
-        /// </summary>
+        /// <summary>Gets or sets the font size. </summary>
 		[DefaultValue(double.NaN)]
 		public double FontSize
 		{
@@ -32,39 +30,31 @@ namespace MyToolkit.Controls
 			set { _fontSize = value; }
 		}
 
-        /// <summary>
-        /// Gets or sets the font style. 
-        /// </summary>
+        /// <summary>Gets or sets the font style. </summary>
 		public FontStyle FontStyle
 		{
 			get { return _fontStyle ?? FontStyle.Normal; }
 			set { _fontStyle = value; }
 		}
 
-        /// <summary>
-        /// Gets or sets the foreground. 
-        /// </summary>
+        /// <summary>Gets or sets the foreground. </summary>
 		public Brush Foreground
 		{
 			get { return _foreground; }
 			set { _foreground = value; }
 		}
 
-        /// <summary>
-        /// Gets or sets the style. 
-        /// </summary>
+        /// <summary>Gets or sets the style. </summary>
 		public Style Style
 		{
 			get { return _style; }
 			set { _style = value; }
 		}
 
-        /// <summary>
-        /// Generates the cell for the given item. 
-        /// </summary>
+        /// <summary>Generates the cell for the given item. </summary>
         /// <param name="dataItem">The item to generate the cell for. </param>
-        /// <returns>The <see cref="DataGridCell"/>. </returns>
-		public override DataGridCell GenerateElement(object dataItem)
+        /// <returns>The <see cref="DataGridCellBase"/>. </returns>
+		public override DataGridCellBase GenerateElement(object dataItem)
 		{
 			var block = new TextBlock();
 			block.VerticalAlignment = VerticalAlignment.Center;
