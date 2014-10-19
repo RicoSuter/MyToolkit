@@ -118,6 +118,7 @@
   <ItemGroup>
     <Compile Include="Collections\ExtendedObservableCollectionTests.cs" />
     <Compile Include="Collections\ObservableCollectionViewTests.cs" />
+    <Compile Include="Collections\QueryObservableCollectionViewTests.cs" />
     <Compile Include="Composition\CompositionContextTests.cs" />
     <Compile Include="Composition\ServiceLocatorTests.cs" />
     <Compile Include="Mocks\MockObservableObject.cs" />

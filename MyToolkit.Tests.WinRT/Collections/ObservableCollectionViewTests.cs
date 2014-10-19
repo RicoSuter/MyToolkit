@@ -9,19 +9,6 @@ namespace MyToolkit.Tests.WinRT.Collections
     [TestClass]
     public class ObservableCollectionViewTests
     {
-        public class SampleClass : ObservableObject
-        {
-            private string _first;
-
-            public string First
-            {
-                get { return _first; }
-                set { Set(ref _first, value); }
-            }
-
-            public string Last { get; set; }
-        }
-
         [TestMethod]
         public void When_filtering_collection_then_count_should_be_correct()
         {
@@ -143,5 +130,18 @@ namespace MyToolkit.Tests.WinRT.Collections
             //// Assert
             Assert.AreEqual(3, view.Count);
         }
+    }
+
+    public class SampleClass : ObservableObject
+    {
+        private string _first;
+
+        public string First
+        {
+            get { return _first; }
+            set { Set(ref _first, value); }
+        }
+
+        public string Last { get; set; }
     }
 }
