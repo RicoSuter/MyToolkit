@@ -269,7 +269,7 @@ namespace MyToolkit.Controls
         {
             if (_initialized)
             {
-                var selectedItem = SelectedItem;
+                var previouslySelectedItems = SelectedItems.ToList();
                 UpdateColumnHeaders();
 
                 // update rows
@@ -277,7 +277,9 @@ namespace MyToolkit.Controls
                 _listControl.ItemsSource = null;
                 _listControl.ItemsSource = itemsSource;
 
-                SelectedItem = selectedItem;
+                var currentlySelectedItems = SelectedItems.ToList();
+                foreach (var item in previouslySelectedItems.Where(i => !currentlySelectedItems.Contains(i)))
+                    SelectedItems.Add(item);
             }
         }
 

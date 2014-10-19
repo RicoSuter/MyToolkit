@@ -56,9 +56,12 @@
     <Compile Include="Collections\ExtendedNotifyCollectionChangedEventArgs.cs" />
     <Compile Include="Collections\ExtendedObservableCollection.cs" />
     <Compile Include="Collections\Group.cs" />
+    <Compile Include="Collections\IObservableCollectionView.cs" />
     <Compile Include="Collections\ObservableCollectionObserver.cs" />
     <Compile Include="Collections\ObservableCollectionView.cs" />
+    <Compile Include="Collections\ObservableCollectionViewBase.cs" />
     <Compile Include="Collections\ObservableDictionary.cs" />
+    <Compile Include="Collections\QueryObservableCollectionView.cs" />
     <Compile Include="Command\AsyncRelayCommand.cs" />
     <Compile Include="Command\CommandBase.cs" />
     <Compile Include="Command\RelayCommand.cs" />
