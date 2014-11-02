@@ -21,70 +21,72 @@ using System.Windows.Controls;
 
 namespace MyToolkit.Controls.HtmlTextBlockImplementation
 {
-	internal static class HtmlTextBlockHelper
-	{
-		async internal static void Generate(this IHtmlTextBlock me)
-		{
-			var html = me.Html;
-			var itemsCtrl = (ItemsControl)me;
+    internal static class HtmlTextBlockHelper
+    {
+        async internal static void Generate(this IHtmlTextBlock me)
+        {
+            var html = me.Html;
+            var itemsCtrl = (ItemsControl)me;
 
-			if (string.IsNullOrEmpty(html))
-				itemsCtrl.Items.Clear();
+            if (string.IsNullOrEmpty(html))
+                itemsCtrl.Items.Clear();
 
-			var tb = me as HtmlTextBlock;
-			if (tb != null)
-				tb.UpdateHeader();
+            var tb = me as HtmlTextBlock;
+            if (tb != null)
+                tb.UpdateHeader();
 
-			if (string.IsNullOrEmpty(html))
-			{
-				if (tb != null)
-					tb.UpdateFooter();
+            if (string.IsNullOrEmpty(html))
+            {
+                if (tb != null)
+                    tb.UpdateFooter();
 
                 if (me is HtmlTextBlock)
-	    			((HtmlTextBlock)me).CallHtmlLoaded();
+                    ((HtmlTextBlock)me).CallHtmlLoaded();
                 else
-	    			((FixedHtmlTextBlock)me).CallHtmlLoaded();
-				return;
-			}
+                    ((FixedHtmlTextBlock)me).CallHtmlLoaded();
+                return;
+            }
 
-			HtmlNode node = null;
+            HtmlNode node = null;
 #if WP7
             await Task.Factory.StartNew(() =>
 #else
             await Task.Run(() =>
 #endif
             {
-				try
-				{
-					var parser = new HtmlParser();
-					node = parser.Parse(html);
-				} catch { }
-			});
+                try
+                {
+                    var parser = new HtmlParser();
+                    node = parser.Parse(html);
+                }
+                catch { }
+            });
 
-			if (html == me.Html) 
-			{
-				if (node != null)
-				{
-					try
-					{
-						itemsCtrl.Items.Clear();
+            if (html == me.Html)
+            {
+                if (node != null)
+                {
+                    try
+                    {
+                        itemsCtrl.Items.Clear();
 
-						if (tb != null)
-							tb.UpdateHeader();
+                        if (tb != null)
+                            tb.UpdateHeader();
 
-						foreach (var c in node.GetControls(me))
-							itemsCtrl.Items.Add(c);
+                        foreach (var c in node.GetControls(me))
+                            itemsCtrl.Items.Add(c);
 
-						if (tb != null)
-							tb.UpdateFooter();
-					} catch { }
-				}
+                        if (tb != null)
+                            tb.UpdateFooter();
+                    }
+                    catch { }
+                }
 
                 if (me is HtmlTextBlock)
                     ((HtmlTextBlock)me).CallHtmlLoaded();
                 else
                     ((FixedHtmlTextBlock)me).CallHtmlLoaded();
             }
-		}
-	}
+        }
+    }
 }

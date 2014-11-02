@@ -9,7 +9,8 @@
 using System;
 using System.Collections.Generic;
 using MyToolkit.Controls.HtmlTextBlockImplementation;
-
+using MyToolkit.Mvvm;
+using MyToolkit.Utilities;
 #if WINRT
 using MyToolkit.UI;
 using Windows.UI.Xaml;
@@ -51,6 +52,11 @@ namespace MyToolkit.Controls
 
             SizeChanged += OnSizeChanged;
             SizeDependentControls = new List<ISizeDependentControl>();
+
+            DependencyPropertyChangedEvent.Register(this, FontSizeProperty, delegate { this.Generate(); });
+            DependencyPropertyChangedEvent.Register(this, FontFamilyProperty, delegate { this.Generate(); });
+            DependencyPropertyChangedEvent.Register(this, ForegroundProperty, delegate { this.Generate(); });
+            DependencyPropertyChangedEvent.Register(this, BackgroundProperty, delegate { this.Generate(); });
         }
 
         /// <summary>Gets the list of HTML element generators. </summary>

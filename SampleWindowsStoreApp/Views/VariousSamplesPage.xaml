@@ -9,21 +9,21 @@
                      xmlns:paging="using:MyToolkit.Paging"
                      mc:Ignorable="d" x:Name="PageRoot">
 
-	<paging:MtPage.Resources>
-		<viewModels:VariousSamplesPageModel x:Key="ViewModel" />
-	</paging:MtPage.Resources>
+    <paging:MtPage.Resources>
+        <viewModels:VariousSamplesPageModel x:Key="ViewModel" />
+    </paging:MtPage.Resources>
 
     <Grid DataContext="{StaticResource ViewModel}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-		<Grid Margin="120,50,40,40">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="*" />
-			</Grid.RowDefinitions>
-			
-			<TextBlock Style="{StaticResource SubheaderTextStyle}" Text="MyToolkit Samples" Margin="0,0,0,20" />
+        <Grid Margin="120,50,40,40">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-			<controls:MtPivot Grid.Row="1">
-				<!--<controls:PivotItem Header="Validation">
+            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="MyToolkit Samples" Margin="0,0,0,20" />
+
+            <controls:MtPivot Grid.Row="1">
+                <!--<controls:PivotItem Header="Validation">
 					<StackPanel>
 						<validation:ValidationContainer x:Name="val">
 							<StackPanel>
@@ -51,19 +51,29 @@
 						<Button Content="Save" IsEnabled="{Binding ElementName=val, Path=IsValid}" Margin="0,20,0,0" />
 					</StackPanel>
 				</controls:PivotItem>-->
-                
-				<controls:MtPivotItem Header="HtmlTextBlock">
-					<ScrollViewer Margin="0,0,-40,0">
-						<controls:FixedHtmlTextBlock Html="{Binding Html}" Margin="0,0,40,0" />
-					</ScrollViewer>
-				</controls:MtPivotItem>
-                
-				<controls:MtPivotItem Header="Other">
-					<StackPanel>
-						<Button Content="ListPickerBox test" Click="OnListPickerBoxTest"/>
 
-						<controls:TextButton Content="&#xE116;" Header="TextButton" Margin="0,20,0,20"/>
-						<!-- Symbols can be read in "Characters Map" application -->
+                <controls:MtPivotItem Header="HtmlTextBlock">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <controls:HtmlTextBlock Html="{Binding Html}" Loaded="OnHtmlTextBlockLoaded" x:Name="HtmlTextBlock" />
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <Button Content="Font Size" Click="OnChangeFontSize" />
+                        </StackPanel>
+                    </Grid>
+
+                </controls:MtPivotItem>
+
+                <controls:MtPivotItem Header="Other">
+                    <StackPanel>
+                        <Button Content="ListPickerBox test" Click="OnListPickerBoxTest"/>
+
+                        <controls:TextButton Content="&#xE116;" Header="TextButton" Margin="0,20,0,20"/>
+                        <!-- Symbols can be read in "Characters Map" application -->
 
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                             <controls:TextButton Content="&#xE115;" Margin="0,0,20,0"/>
@@ -72,9 +82,9 @@
                             <controls:TextButton Content="&#xE112;" Margin="0,0,20,0"/>
                         </StackPanel>
                     </StackPanel>
-				</controls:MtPivotItem>
-			</controls:MtPivot>
-		</Grid>
+                </controls:MtPivotItem>
+            </controls:MtPivot>
+        </Grid>
 
         <Button Margin="39,59,39,0" Command="{Binding Frame.GoBackCommand, ElementName=PageRoot}"
                 Style="{StaticResource NavigationBackButtonNormalStyle}" VerticalAlignment="Top"
