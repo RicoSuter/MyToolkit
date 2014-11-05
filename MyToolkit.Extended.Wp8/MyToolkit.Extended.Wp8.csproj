@@ -107,18 +107,6 @@
     <Compile Include="..\shared\animation\Flipping.cs">
       <Link>Animation\Flipping.cs</Link>
     </Compile>
-    <Compile Include="..\shared\behaviors\Behavior.cs">
-      <Link>Behaviors\Behavior.cs</Link>
-    </Compile>
-    <Compile Include="..\shared\behaviors\BehaviorCollection.cs">
-      <Link>Behaviors\BehaviorCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\shared\behaviors\CommandToEvent.cs">
-      <Link>Behaviors\CommandToEvent.cs</Link>
-    </Compile>
-    <Compile Include="..\shared\behaviors\Interaction.cs">
-      <Link>Behaviors\Interaction.cs</Link>
-    </Compile>
     <Compile Include="..\Shared\Controls\ExtendedListBox.cs">
       <Link>Controls\ExtendedListBox.cs</Link>
     </Compile>

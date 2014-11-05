@@ -66,18 +66,6 @@
     <Compile Include="..\MyToolkit.Extended.WinRT\MVVM\ViewModelHelper.cs">
       <Link>MVVM\ViewModelHelper.cs</Link>
     </Compile>
-    <Compile Include="..\shared\behaviors\Behavior.cs">
-      <Link>Behaviors\Behavior.cs</Link>
-    </Compile>
-    <Compile Include="..\shared\behaviors\BehaviorCollection.cs">
-      <Link>Behaviors\BehaviorCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\shared\behaviors\CommandToEvent.cs">
-      <Link>Behaviors\CommandToEvent.cs</Link>
-    </Compile>
-    <Compile Include="..\shared\behaviors\Interaction.cs">
-      <Link>Behaviors\Interaction.cs</Link>
-    </Compile>
     <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
     </Compile>

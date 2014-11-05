@@ -54,18 +54,6 @@
     <Compile Include="..\Shared\Controls\ScrollableItemsControl.cs">
       <Link>Controls\ScrollableItemsControl.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Behaviors\Behavior.cs">
-      <Link>Behaviors\Behavior.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Behaviors\BehaviorCollection.cs">
-      <Link>Behaviors\BehaviorCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Behaviors\CommandToEvent.cs">
-      <Link>Behaviors\CommandToEvent.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Behaviors\Interaction.cs">
-      <Link>Behaviors\Interaction.cs</Link>
-    </Compile>
     <Compile Include="..\Shared\Controls\ExtendedListBox.cs">
       <Link>Controls\ExtendedListBox.cs</Link>
     </Compile>
