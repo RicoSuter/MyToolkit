@@ -56,9 +56,13 @@
                     <controls:DataGridTextColumn Width="200" Header="Firstname" Binding="{Binding Firstname}"
                                                  Style="{StaticResource BodyTextStyle}" 
                                                  d:DataContext="{d:DesignInstance Type=domain:Person}" />
-                    <controls:DataGridTextColumn Width="200" Header="Lastname" Binding="{Binding Lastname}" 
+                    <controls:DataGridTextColumn Width="200" Binding="{Binding Lastname}" 
                                                  Style="{StaticResource BodyTextStyle}" 
-                                                 d:DataContext="{d:DesignInstance Type=domain:Person}" />
+                                                 d:DataContext="{d:DesignInstance Type=domain:Person}">
+                        <controls:DataGridTextColumn.Header>
+                            <TextBlock Text="Lastname" Foreground="Green" />
+                        </controls:DataGridTextColumn.Header>
+                    </controls:DataGridTextColumn>
                     <controls:DataGridTextColumn Width="200" Header="Category" Binding="{Binding Category}" 
                                                  Style="{StaticResource BodyTextStyle}" 
                                                  d:DataContext="{d:DesignInstance Type=domain:Person}" />

@@ -26,11 +26,11 @@ namespace MyToolkit.Controls
             DependencyProperty.Register("IsAscendingDefault", typeof(bool), typeof(DataGridColumnBase), new PropertyMetadata(true));
 
         public static readonly DependencyProperty HeaderProperty =
-            DependencyProperty.Register("Header", typeof(string), typeof(DataGridColumnBase), new PropertyMetadata(default(string)));
+            DependencyProperty.Register("Header", typeof(object), typeof(DataGridColumnBase), new PropertyMetadata(default(object)));
 
         public static readonly DependencyProperty WidthProperty =
             DependencyProperty.Register("Width", typeof(GridLength), typeof(DataGridColumnBase), new PropertyMetadata(default(GridLength)));
-        
+
         /// <summary>Gets or sets a value indicating whether the column can be sorted. </summary>
         public bool CanSort
 		{
@@ -62,10 +62,10 @@ namespace MyToolkit.Controls
 			set { SetValue(IsAscendingDefaultProperty, value); }
 		}
 
-        /// <summary>Gets or sets the header text. </summary>
-        public string Header
+        /// <summary>Gets or sets the header. </summary>
+        public object Header
 		{
-			get { return (string)GetValue(HeaderProperty); }
+            get { return (object)GetValue(HeaderProperty); }
 			set { SetValue(HeaderProperty, value); }
 		}
 

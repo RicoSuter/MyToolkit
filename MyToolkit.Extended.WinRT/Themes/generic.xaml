@@ -2,7 +2,8 @@
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
 					xmlns:controls="using:MyToolkit.Controls" 
 					xmlns:converters="using:MyToolkit.Converters" 
-					xmlns:Paging="using:MyToolkit.Paging">
+					xmlns:Paging="using:MyToolkit.Paging"
+					xmlns:data="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
 	<converters:NotConverter x:Key="nc" />
 	<converters:VisibilityConverter x:Key="vc" />
@@ -135,9 +136,11 @@
 							<ColumnDefinition Width="Auto" />
 							<ColumnDefinition Width="*" />
 						</Grid.ColumnDefinitions>
-
-						<TextBlock Grid.Column="0" Text="{Binding Header}" VerticalAlignment="Center" Margin="15,0,15,0" FontSize="26.667" />
-						<StackPanel Grid.Column="1" Visibility="{Binding IsSelected, Converter={StaticResource vc}}" 
+                        <ContentPresenter Grid.Column="0" VerticalAlignment="Center"
+                                          FontSize="26.667" Margin="15,0,15,0" 
+                                          Content="{data:Binding Header}" />
+						<StackPanel Grid.Column="1" 
+                                    Visibility="{Binding IsSelected, Converter={StaticResource vc}}" 
 									VerticalAlignment="Center" HorizontalAlignment="Left">
 							<Path Data="M5,0 L0,10 L10,10 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource vc}}"/>
 							<Path Data="M0,0 L5,10 L10,0 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource nc}}"/>
@@ -156,13 +159,13 @@
 			</Setter.Value>
 		</Setter>
 	</Style>
-
+    
 	<Style TargetType="controls:ImageButton">
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:ImageButton">
 					<StackPanel Orientation="Horizontal" x:Name="container" Background="Transparent">
-						<ContentPresenter x:Name="content" VerticalAlignment="Center" />
+                        <ContentPresenter x:Name="content" VerticalAlignment="Center" />
 						<TextBlock x:Name="header" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header}"
 								   Margin="15,0,0,0" FontSize="36" FontWeight="SemiLight" VerticalAlignment="Center"
 								   Visibility="{Binding ElementName=header, Path=Text, Converter={StaticResource vc}}" />
