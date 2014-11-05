@@ -215,7 +215,7 @@ namespace MyToolkit.Controls
                 if (_footerPresenter == null)
                 {
                     _footerPresenter = new ContentPresenter();
-                    _headerPresenter.Content = this.FindParentDataContext();
+                    _footerPresenter.Content = this.FindParentDataContext();
                     _footerPresenter.Visibility = ShowFooter ? Visibility.Visible : Visibility.Collapsed;
                 }
 
