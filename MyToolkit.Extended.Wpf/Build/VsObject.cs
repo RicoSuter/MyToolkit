@@ -17,27 +17,20 @@ namespace MyToolkit.Build
     /// <summary>Describes a Visual Studio object. </summary>
     public class VsObject
     {
-        private string _path;
+        public VsObject(string path)
+        {
+            Id = GetIdFromPath(path);
+            Path = path;
+        }
 
         /// <summary>Gets the id of the object. </summary>
         public string Id { get; private set; }
 
+        /// <summary>Gets the path of the project file. </summary>
+        public string Path { get; private set; }
+
         /// <summary>Gets the name of the project. </summary>
         public string Name { get; internal set; }
-
-        /// <summary>Gets the path of the project file. </summary>
-        public string Path
-        {
-            get { return _path; }
-            internal set
-            {
-                if (_path != value)
-                {
-                    _path = value;
-                    Id = GetIdFromPath(_path);
-                }
-            }
-        }
 
         /// <summary>Gets the root namespace. </summary>
         public string Namespace { get; internal set; }
@@ -51,13 +44,33 @@ namespace MyToolkit.Build
             get { return System.IO.Path.GetFileName(Path); }
         }
 
+        /// <summary>Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>. </summary>
+        /// <returns>true if the specified object  is equal to the current object; otherwise, false. </returns>
+        /// <param name="obj">The object to compare with the current object. </param>
+        public override bool Equals(object obj)
+        {
+            if (obj == this)
+                return true;
+
+            if (!(obj is VsObject))
+                return false;
+
+            return Id == ((VsObject)obj).Id;
+        }
+
+        /// <summary>Serves as a hash function for a particular type. </summary>
+        /// <returns>A hash code for the current <see cref="T:System.Object"/>. </returns>
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
         internal static string GetIdFromPath(string path)
         {
             return System.IO.Path.GetFullPath(path).ToLower();
         }
 
-        internal static Task<List<T>> LoadAllFromDirectoryAsync<T>(string path, bool ignoreExceptions, string extension, Func<string, T> creator) 
-            where T : new()
+        internal static Task<List<T>> LoadAllFromDirectoryAsync<T>(string path, bool ignoreExceptions, string extension, Func<string, T> creator)
         {
             return Task.Run(async () =>
             {
@@ -66,20 +79,20 @@ namespace MyToolkit.Build
 
                 try
                 {
-                    foreach (var directoy in Directory.GetDirectories(path))
-                        tasks.Add(LoadAllFromDirectoryAsync(directoy, ignoreExceptions, extension, creator));
+                    foreach (var directory in Directory.GetDirectories(path))
+                        tasks.Add(LoadAllFromDirectoryAsync(directory, ignoreExceptions, extension, creator));
 
                     foreach (var file in Directory.GetFiles(path))
                     {
                         var ext = System.IO.Path.GetExtension(file);
                         if (ext != null && ext.ToLower() == extension)
                         {
-                            var lfile = file;
+                            var lFile = file;
                             tasks.Add(Task.Run(() =>
                             {
                                 try
                                 {
-                                    return creator(lfile);
+                                    return creator(lFile);
                                 }
                                 catch (Exception)
                                 {

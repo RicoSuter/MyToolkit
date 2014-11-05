@@ -20,14 +20,17 @@ namespace MyToolkit.Build
     {
         private List<VsProject> _projects;
 
+        public VsSolution(string path) : base(path)
+        {
+        }
+
         /// <summary>Loads a solution from a given file path. </summary>
         /// <param name="filePath">The solution file path. </param>
         /// <returns>The solution. </returns>
         public static VsSolution FromFilePath(string filePath)
         {
-            var solution = new VsSolution();
+            var solution = new VsSolution(System.IO.Path.GetFullPath(filePath));
             solution.Name = System.IO.Path.GetFileNameWithoutExtension(filePath);
-            solution.Path = System.IO.Path.GetFullPath(filePath);
             return solution;
         }
 

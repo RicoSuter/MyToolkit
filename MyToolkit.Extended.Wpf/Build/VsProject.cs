@@ -19,14 +19,19 @@ namespace MyToolkit.Build
     /// <summary>Describes a Visual Studio project. </summary>
     public class VsProject : VsObject
     {
-        private List<VsProject> _projectReferences;
+        private List<VsProjectReference> _projectReferences;
         private List<AssemblyReference> _assemblyReferences;
         private List<NuGetPackage> _nuGetReferences;
 
         private const string XmlNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
 
+        public VsProject(string path)
+            : base(path)
+        {
+        }
+
         /// <summary>Gets the list of referenced projects. </summary>
-        public List<VsProject> ProjectReferences
+        public List<VsProjectReference> ProjectReferences
         {
             get
             {
@@ -73,17 +78,12 @@ namespace MyToolkit.Build
         public static VsProject FromFilePath(string filePath)
         {
             var document = XDocument.Load(filePath);
-            var project = new VsProject();
-
-            project.Path = System.IO.Path.GetFullPath(filePath);
+            var project = new VsProject(System.IO.Path.GetFullPath(filePath));
             project.Name = document.Descendants(XName.Get("AssemblyName", XmlNamespace)).First().Value;
             project.Namespace = document.Descendants(XName.Get("RootNamespace", XmlNamespace)).First().Value;
 
             var frameworkVersionTag = document.Descendants(XName.Get("TargetFrameworkVersion", XmlNamespace)).FirstOrDefault();
             project.FrameworkVersion = frameworkVersionTag != null ? frameworkVersionTag.Value : String.Empty;
-
-            project.LoadReferences();
-
             return project;
         }
 
@@ -136,19 +136,29 @@ namespace MyToolkit.Build
             return Id == project.Id;
         }
 
-        private void LoadProjectReferences()
+        /// <summary>Checks whether both projects are loaded from the same file. </summary>
+        /// <param name="projectReference">The other project reference. </param>
+        /// <returns>true when both projects are loaded from the same file. </returns>
+        public bool IsSameProject(VsProjectReference projectReference)
+        {
+            return Id == projectReference.Id;
+        }
+
+        public void LoadProjectReferences()
         {
             var document = XDocument.Load(Path);
-            var references = new List<VsProject>();
+            var references = new List<VsProjectReference>();
             foreach (var element in document.Descendants(XName.Get("ProjectReference", XmlNamespace)))
             {
-                references.Add(new VsProject
+                var path = System.IO.Path.GetFullPath(System.IO.Path.Combine(
+                    System.IO.Path.GetDirectoryName(Path), element.Attribute("Include").Value));
+
+                references.Add(new VsProjectReference(path)
                 {
                     Name = element.Descendants(XName.Get("Name", XmlNamespace)).First().Value,
-                    Path = System.IO.Path.GetFullPath(System.IO.Path.Combine(
-                        System.IO.Path.GetDirectoryName(Path), element.Attribute("Include").Value))
                 });
             }
+
             _projectReferences = references.OrderBy(r => r.Name).ToList(); 
         }
 

@@ -147,6 +147,7 @@
     <Compile Include="Build\AssemblyReference.cs" />
     <Compile Include="Build\BuildOrderException.cs" />
     <Compile Include="Build\NuGetPackage.cs" />
+    <Compile Include="Build\VsProjectReference.cs" />
     <Compile Include="Build\VsProjectRepository.cs" />
     <Compile Include="Build\VsObject.cs" />
     <Compile Include="Build\VsProject.cs" />
