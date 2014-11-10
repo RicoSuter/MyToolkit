@@ -134,12 +134,13 @@
     </Compile>
     <Compile Include="Build\AssemblyReference.cs" />
     <Compile Include="Build\BuildOrderException.cs" />
-    <Compile Include="Build\NuGetPackage.cs" />
+    <Compile Include="Build\NuGetPackageReference.cs" />
     <Compile Include="Build\VsProjectReference.cs" />
     <Compile Include="Build\VsProjectRepository.cs" />
     <Compile Include="Build\VsObject.cs" />
     <Compile Include="Build\VsProject.cs" />
     <Compile Include="Build\VsProjectEnumerableExtensions.cs" />
+    <Compile Include="Build\VsReferenceBase.cs" />
     <Compile Include="Build\VsSolution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\XsdGenerator.cs" />

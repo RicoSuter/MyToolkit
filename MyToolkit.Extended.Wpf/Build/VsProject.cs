@@ -21,7 +21,7 @@ namespace MyToolkit.Build
     {
         private List<VsProjectReference> _projectReferences;
         private List<AssemblyReference> _assemblyReferences;
-        private List<NuGetPackage> _nuGetReferences;
+        private List<NuGetPackageReference> _nuGetReferences;
 
         private const string XmlNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
 
@@ -53,7 +53,7 @@ namespace MyToolkit.Build
         }
 
         /// <summary>Gets the list of installed NuGet packages. </summary>
-        public List<NuGetPackage> NuGetReferences
+        public List<NuGetPackageReference> NuGetReferences
         {
             get
             {
@@ -143,6 +143,13 @@ namespace MyToolkit.Build
         {
             return Id == projectReference.Id;
         }
+        
+        /// <summary>Returns a string that represents the current object.</summary>
+        /// <returns>A string that represents the current object. </returns>
+        public override string ToString()
+        {
+            return string.Format("{0}", Name);
+        }
 
         public void LoadProjectReferences()
         {
@@ -177,18 +184,12 @@ namespace MyToolkit.Build
         private void LoadNuGetReferences()
         {
             var configurationPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Path), "packages.config");
-            var references = new List<NuGetPackage>();
+            var references = new List<NuGetPackageReference>();
             if (File.Exists(configurationPath))
             {
                 var document = XDocument.Load(configurationPath);
                 foreach (var element in document.Descendants("package"))
-                {
-                    references.Add(new NuGetPackage
-                    {
-                        Name = element.Attribute("id").Value,
-                        Version = element.Attribute("version").Value
-                    });
-                }
+                    references.Add(new NuGetPackageReference(element.Attribute("id").Value, element.Attribute("version").Value));
             }
             _nuGetReferences = references.OrderBy(r => r.Name).ToList(); 
         }

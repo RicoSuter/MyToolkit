@@ -12,7 +12,7 @@ using System.Linq;
 namespace MyToolkit.Build
 {
     /// <summary>Describes a referenced assembly. </summary>
-    public class AssemblyReference
+    public class AssemblyReference : VsReferenceBase
     {
         /// <summary>Initializes a new instance of the <see cref="AssemblyReference"/> class. </summary>
         /// <param name="rawName">The raw name. </param>
@@ -39,11 +39,5 @@ namespace MyToolkit.Build
 
         /// <summary>Gets the full name. </summary>
         public string RawName { get; private set; }
-
-        /// <summary>Gets the name. </summary>
-        public string Name { get; private set; }
-
-        /// <summary>Gets the assembly version. </summary>
-        public string Version { get; private set; }
     }
 }

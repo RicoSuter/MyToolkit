@@ -21,5 +21,13 @@ namespace MyToolkit.Build
         {
             return Id == project.Id;
         }
+
+        /// <summary>Checks whether both projects are loaded from the same file. </summary>
+        /// <param name="projectReference">The other project reference. </param>
+        /// <returns>true when both projects are loaded from the same file. </returns>
+        public bool IsSameProject(VsProjectReference projectReference)
+        {
+            return Id == projectReference.Id;
+        }
     }
 }

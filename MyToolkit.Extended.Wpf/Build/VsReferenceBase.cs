@@ -1,17 +1,18 @@
 //-----------------------------------------------------------------------
-// <copyright file="NuGetPackage.cs" company="MyToolkit">
+// <copyright file="AssemblyReference.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
 // <license>http://mytoolkit.codeplex.com/license</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
-using System;
+using System.Diagnostics;
 
 namespace MyToolkit.Build
 {
-    /// <summary>Describes an installed NuGet package. </summary>
-    public class NuGetPackage
+    /// <summary>Describes a reference. </summary>
+    [DebuggerDisplay("{Name} - {Version}")]
+    public abstract class VsReferenceBase
     {
         /// <summary>Gets the name of the NuGet package. </summary>
         public string Name { get; internal set; }
