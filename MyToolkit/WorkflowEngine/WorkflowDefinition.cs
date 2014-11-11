@@ -19,15 +19,23 @@ namespace MyToolkit.WorkflowEngine
 {
     /// <summary>Describes a workflow using activities and transitions. </summary>
     public class WorkflowDefinition
-    {           
+    {
         /// <summary>Gets or sets the ID of the first activity. </summary>
         [XmlElement("StartActivity")]
         public string StartActivityId { get; set; }
 
         /// <summary>Gets or sets the workflow activities. </summary>
-        [XmlArray]
+        [XmlArray("Activities")]
         [XmlArrayItem("Activity")]
-        public List<WorkflowActivityBase> Activities { get; set; }
+        public List<object> RawActivities { get; set; }
+
+        /// <summary>Gets or sets the workflow activities. </summary>
+        [XmlIgnore]
+        public List<IWorkflowActivityBase> Activities
+        {
+            get { return RawActivities.OfType<IWorkflowActivityBase>().ToList(); }
+            set { RawActivities = value.OfType<object>().ToList(); }
+        }
 
         /// <summary>Gets or sets the workflow transitions. </summary>
         [XmlArray]
@@ -36,7 +44,7 @@ namespace MyToolkit.WorkflowEngine
 
         /// <summary>Gets or sets the first activity. </summary>
         [XmlIgnore]
-        public WorkflowActivityBase StartActivity
+        public IWorkflowActivityBase StartActivity
         {
             get { return GetActivityById(StartActivityId); }
             set { StartActivityId = value.Id; }
@@ -45,11 +53,10 @@ namespace MyToolkit.WorkflowEngine
         /// <summary>Creates a workflow instance from a XML string. </summary>
         /// <param name="xml">The XML. </param>
         /// <param name="activityTypes">The possible activity types. </param>
-        /// <param name="parameterTypes">The possible parameter types. </param>
         /// <returns>The workflow. </returns>
-        public static WorkflowDefinition FromXml(string xml, Type[] activityTypes, Type[] parameterTypes)
+        public static WorkflowDefinition FromXml(string xml, Type[] activityTypes)
         {
-            var workflow = XmlSerialization.Deserialize<WorkflowDefinition>(xml, activityTypes.Union(parameterTypes).ToArray());
+            var workflow = XmlSerialization.Deserialize<WorkflowDefinition>(xml, activityTypes.ToArray());
             workflow.StartActivity = workflow.GetActivityById(workflow.StartActivityId);
             return workflow;
         }
@@ -66,16 +73,15 @@ namespace MyToolkit.WorkflowEngine
         /// <returns>The <see cref="WorkflowInstance"/>. </returns>
         public WorkflowInstance CreateInstance()
         {
-            var data = new WorkflowDataProvider();
-            data.ResolveInstanceData().CurrentActivityIds.Add(StartActivity.Id);
-
-            return new WorkflowInstance(this, data);
+            var instance = new WorkflowInstance(this, new List<ActivityData>());
+            instance.CurrentActivityIds.Add(StartActivityId);
+            return instance;
         }
 
         /// <summary>Gets an activity by ID. </summary>
         /// <param name="activityId">The activity ID. </param>
-        /// <returns>The <see cref="WorkflowActivityBase"/>. </returns>
-        public WorkflowActivityBase GetActivityById(string activityId)
+        /// <returns>The <see cref="IWorkflowActivityBase"/>. </returns>
+        public IWorkflowActivityBase GetActivityById(string activityId)
         {
             return Activities.Single(a => a.Id == activityId);
         }
@@ -83,7 +89,7 @@ namespace MyToolkit.WorkflowEngine
         /// <summary>Gets the outbound transitions of a given activity. </summary>
         /// <param name="activity">The activity. </param>
         /// <returns>The transitions. </returns>
-        public WorkflowTransition[] GetOutboundTransitions(WorkflowActivityBase activity)
+        public WorkflowTransition[] GetOutboundTransitions(IWorkflowActivityBase activity)
         {
             return Transitions.Where(t => t.From == activity.Id).ToArray();
         }
@@ -91,7 +97,7 @@ namespace MyToolkit.WorkflowEngine
         /// <summary>Gets the inbound transitions of a given activity. </summary>
         /// <param name="activity">The activity. </param>
         /// <returns>The transitions. </returns>
-        public WorkflowTransition[] GetInboundTransitions(WorkflowActivityBase activity)
+        public WorkflowTransition[] GetInboundTransitions(IWorkflowActivityBase activity)
         {
             return Transitions.Where(t => t.To == activity.Id).ToArray();
         }

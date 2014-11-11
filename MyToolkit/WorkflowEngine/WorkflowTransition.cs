@@ -20,7 +20,7 @@ namespace MyToolkit.WorkflowEngine
         }
 
         /// <summary>Initializes a new instance of the <see cref="WorkflowTransition"/> class. </summary>
-        public WorkflowTransition(WorkflowActivityBase from, WorkflowActivityBase to)
+        public WorkflowTransition(IWorkflowActivityBase from, IWorkflowActivityBase to)
         {
             From = from.Id;
             To = to.Id;

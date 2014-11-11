@@ -9,9 +9,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 using MyToolkit.Model;
 using MyToolkit.Serialization;
 using MyToolkit.Utilities;
@@ -29,25 +29,24 @@ namespace MyToolkit.WorkflowEngine
         /// <summary>Deserializes a workflow instance from XML. </summary>
         /// <param name="xml">The XML as string. </param>
         /// <param name="workflowDefinition">The instance's workflow description. </param>
-        /// <param name="dataTypes">All possible data container types. </param>
         /// <returns>The workflow instance. </returns>
-        public static WorkflowInstance FromXml(string xml, WorkflowDefinition workflowDefinition, Type[] dataTypes)
+        public static WorkflowInstance FromXml(string xml, WorkflowDefinition workflowDefinition)
         {
-            dataTypes = dataTypes.Union(new[] {typeof (WorkflowInstanceData)}).ToArray();
-
+            var types = workflowDefinition.Activities.Select(a => a.GetType()).ToArray();
             var instance = new WorkflowInstance();
-            instance.Data = XmlSerialization.Deserialize<WorkflowDataProvider>(xml, dataTypes);
+            instance.Data = XmlSerialization.Deserialize<List<ActivityData>>(xml, types);
             instance.WorkflowDefinition = workflowDefinition;
             return instance;
         }
 
         /// <summary>Initializes a new instance of the <see cref="WorkflowInstance"/> class. </summary>
         /// <param name="workflowDefinition">The workflow definition. </param>
-        /// <param name="dataProvider">The data provider. </param>
-        public WorkflowInstance(WorkflowDefinition workflowDefinition, WorkflowDataProvider dataProvider)
+        /// <param name="data">The data provider. </param>
+        public WorkflowInstance(WorkflowDefinition workflowDefinition, List<ActivityData> data)
         {
-            Data = dataProvider;
+            Data = data;
             WorkflowDefinition = workflowDefinition;
+            CurrentActivityIds = new List<string>();
         }
 
         /// <summary>Used only for serialization. </summary>
@@ -55,11 +54,11 @@ namespace MyToolkit.WorkflowEngine
         {
         }
 
+        /// <summary>Gets the data. </summary>
+        public List<ActivityData> Data { get; private set; }
+
         /// <summary>Gets the instance's workflow description. </summary>
         public WorkflowDefinition WorkflowDefinition { get; private set; }
-
-        /// <summary>Gets or sets the data provider of the workflow instance. </summary>
-        public WorkflowDataProvider Data { get; set; }
 
         /// <summary>Occurs when the current activities of the workflow instance changed. </summary>
         public event EventHandler<CurrentActivitiesChangedEventArgs> CurrentActivitiesChanged;
@@ -72,7 +71,7 @@ namespace MyToolkit.WorkflowEngine
         }
 
         /// <summary>Gets the list of current activities. </summary>
-        public WorkflowActivityBase[] CurrentActivities
+        public IWorkflowActivityBase[] CurrentActivities
         {
             get
             {
@@ -83,71 +82,83 @@ namespace MyToolkit.WorkflowEngine
         }
 
         /// <summary>Gets the first activity of the current activities or null of there are no more activities. </summary>
-        public WorkflowActivityBase NextActivity
+        public IWorkflowActivityBase NextActivity
         {
             get { return CurrentActivities.FirstOrDefault(); }
         }
 
         /// <summary>Gets the list of current activity ids. </summary>
-        internal List<string> CurrentActivityIds
-        {
-            get { return Data.ResolveInstanceData().CurrentActivityIds; }
-        }
+        internal List<string> CurrentActivityIds { get; set; }
 
         /// <summary>Serializes the workflow instance to XML. </summary>
         /// <returns>The XML. </returns>
         public string ToXml()
         {
-            return XmlSerialization.Serialize(Data, Data.Data.Select(d => d.GetType()).Distinct().ToArray());
-        }
-
-        /// <summary>Resolves the requested data object. </summary>
-        /// <typeparam name="T">The type of the data object. </typeparam>
-        /// <param name="activity">The current activity to load the used data group from. </param>
-        /// <returns>The data object. </returns>
-        public T ResolveData<T>(WorkflowActivityBase activity) where T : ActivityDataBase, new()
-        {
-            return Data.Resolve<T>(activity);
-        }
-
-        /// <summary>Resolves the requested data object. </summary>
-        /// <typeparam name="T">The type of the data object. </typeparam>
-        /// <param name="group">The data group. Only use activity properties as parameter (no hard-coded strings). </param>
-        /// <returns>The data object. </returns>
-        public T ResolveData<T>(string group) where T : ActivityDataBase, new()
-        {
-            return Data.Resolve<T>(group);
+            return XmlSerialization.Serialize(Data, Data.Select(d => d.Output.GetType()).Distinct().ToArray());
         }
 
         /// <summary>Executes the given activity with the given arguments. </summary>
         /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
-        public Task<WorkflowActivityResult> CompleteAsync(WorkflowActivityBase activity, params object[] args)
+        public Task<WorkflowActivityOutput> CompleteAsync(IWorkflowActivityBase activity)
         {
-            return CompleteAsync(activity.Id, CancellationToken.None, args);
+            return CompleteAsync<WorkflowActivityInput>(activity.Id, CancellationToken.None, null);
         }
 
         /// <summary>Executes the given activity with the given arguments. </summary>
         /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
-        public Task<WorkflowActivityResult> CompleteAsync(WorkflowActivityBase activity, CancellationToken cancellationToken, params object[] args)
+        public Task<WorkflowActivityOutput> CompleteAsync(string activityId)
         {
-            return CompleteAsync(activity.Id, cancellationToken, args);
+            return CompleteAsync<WorkflowActivityInput>(activityId, CancellationToken.None, null);
         }
 
         /// <summary>Executes the given activity with the given arguments. </summary>
         /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
-        public Task<WorkflowActivityResult> CompleteAsync(string activityId, params object[] args)
+        public Task<WorkflowActivityOutput> CompleteAsync(IWorkflowActivityBase activity, CancellationToken cancellationToken)
         {
-            return CompleteAsync(activityId, CancellationToken.None, args);
+            return CompleteAsync<WorkflowActivityInput>(activity.Id, cancellationToken, null);
         }
 
         /// <summary>Executes the given activity with the given arguments. </summary>
         /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
-        public async Task<WorkflowActivityResult> CompleteAsync(string activityId, CancellationToken cancellationToken, params object[] args)
+        public Task<WorkflowActivityOutput> CompleteAsync(string activityId, CancellationToken cancellationToken)
+        {
+            return CompleteAsync<WorkflowActivityInput>(activityId, cancellationToken, null);
+        }
+
+        /// <summary>Executes the given activity with the given arguments. </summary>
+        /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
+        public Task<WorkflowActivityOutput> CompleteAsync<T>(IWorkflowActivityBase activity, Action<T> initializeInput)
+            where T : WorkflowActivityInput
+        {
+            return CompleteAsync(activity.Id, CancellationToken.None, initializeInput);
+        }
+
+        /// <summary>Executes the given activity with the given arguments. </summary>
+        /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
+        public Task<WorkflowActivityOutput> CompleteAsync<T>(IWorkflowActivityBase activity, CancellationToken cancellationToken, 
+            Action<T> initializeInput)
+            where T : WorkflowActivityInput
+        {
+            return CompleteAsync(activity.Id, cancellationToken, initializeInput);
+        }
+
+        /// <summary>Executes the given activity with the given arguments. </summary>
+        /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
+        public Task<WorkflowActivityOutput> CompleteAsync<T>(string activityId, Action<T> initializeInput)
+            where T : WorkflowActivityInput
+        {
+            return CompleteAsync(activityId, CancellationToken.None, initializeInput);
+        }
+
+        /// <summary>Executes the given activity with the given arguments. </summary>
+        /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
+        public async Task<WorkflowActivityOutput> CompleteAsync<T>(string activityId, CancellationToken cancellationToken, Action<T> initializeInput)
+            where T : WorkflowActivityInput
         {
             try
             {
                 IsRunning = true;
-                return await CompleteInternalAsync(activityId, cancellationToken, args);
+                return await CompleteInternalAsync(activityId, cancellationToken, initializeInput);
             }
             finally
             {
@@ -156,17 +167,21 @@ namespace MyToolkit.WorkflowEngine
             }
         }
 
-        private async Task<WorkflowActivityResult> CompleteInternalAsync(string activityId, CancellationToken cancellationToken, object[] args)
+        /// <exception cref="WorkflowException">Activity has multiple next activities but only ForkActivity activities can return multiple activities. </exception>
+        private async Task<WorkflowActivityOutput> CompleteInternalAsync<T>(string activityId, CancellationToken cancellationToken, Action<T> initializeInput)
+            where T : WorkflowActivityInput
         {
             if (CurrentActivityIds.Contains(activityId))
             {
                 var activity = WorkflowDefinition.GetActivityById(activityId);
                 var allowedTransitions = WorkflowDefinition.GetOutboundTransitions(activity);
 
-                var argsContainer = new WorkflowActivityArguments(args);
-                var result = await activity.CompleteAsync(Data, argsContainer, cancellationToken);
+                var input = CreateActivityInput(activity, initializeInput);
+                var result = await activity.CompleteAsync(input, cancellationToken);
                 if (result.Successful)
                 {
+                    AddActivityResultToData(activity, result);
+
                     var nextActivities = result.GetNextActivities(activity, WorkflowDefinition);
                     if (nextActivities == null)
                         nextActivities = GetDefaultNextActivities(activity);
@@ -183,9 +198,47 @@ namespace MyToolkit.WorkflowEngine
                     await AddNextActivitiesAsync(activityId, nextActivities, allowedTransitions);
                     return result;
                 }
+                else
+                {
+                    // TODO: Workflow => What if not successful
+                }
+            }
+            throw new WorkflowException("The activity to complete could not be found in the current activity list. ");
+        }
+
+        private void AddActivityResultToData(IWorkflowActivityBase activity, WorkflowActivityOutput result)
+        {
+            var data = Data.SingleOrDefault(d => d.ActivityId == activity.Id);
+            if (data != null)
+                Data.Remove(data);
+
+            Data.Add(new ActivityData { ActivityId = activity.Id, Output = result });
+        }
+
+        /// <exception cref="WorkflowException">The requested input data for the activity could not be found. </exception>
+        private WorkflowActivityInput CreateActivityInput<T>(IWorkflowActivityBase activity, Action<T> initializeInput)
+            where T : WorkflowActivityInput
+        {
+            var input = (WorkflowActivityInput)Activator.CreateInstance(activity.InputType);
+            input.Instance = this;
+            foreach (var route in activity.Routes)
+            {
+                var outputData = Data.FirstOrDefault(d => d.ActivityId == route.OutputActivityId);
+                if (outputData != null)
+                {
+                    var inputProperty = input.GetType().GetRuntimeProperty(route.InputProperty);
+                    var outputProperty = outputData.Output.GetType().GetRuntimeProperty(route.OutputProperty);
+
+                    inputProperty.SetValue(input, outputProperty.GetValue(outputData.Output));
+                }
+                else
+                    throw new WorkflowException("The requested input data for the activity could not be found. ");
             }
 
-            return new WorkflowActivityResult(false);
+            if (initializeInput != null)
+                initializeInput((T)input);
+
+            return input;
         }
 
         private void RaiseCurrentActivitiesChanged()
@@ -204,7 +257,8 @@ namespace MyToolkit.WorkflowEngine
             }
         }
 
-        private WorkflowActivityBase[] GetDefaultNextActivities(WorkflowActivityBase activity)
+        /// <exception cref="WorkflowException">Default outgoing transitions of cannot be conditional. </exception>
+        private IWorkflowActivityBase[] GetDefaultNextActivities(IWorkflowActivityBase activity)
         {
             var transitions = WorkflowDefinition.GetOutboundTransitions(activity).ToArray();
             if (transitions.Any(t => t.IsConditional))
@@ -215,7 +269,8 @@ namespace MyToolkit.WorkflowEngine
                 .ToArray();
         }
 
-        private async Task AddNextActivitiesAsync(string activityId, IList<WorkflowActivityBase> nextActivities, WorkflowTransition[] allowedTransitions)
+        /// <exception cref="WorkflowException">Transitions for activities ({0}) produced by activity could not be found. </exception>
+        private async Task AddNextActivitiesAsync(string activityId, IList<IWorkflowActivityBase> nextActivities, WorkflowTransition[] allowedTransitions)
         {
             var hasFollowingActivities = allowedTransitions.Length > 0;
             if (!hasFollowingActivities)
@@ -232,7 +287,8 @@ namespace MyToolkit.WorkflowEngine
             }
         }
 
-        private async Task PrepareNextActivities(IEnumerable<WorkflowActivityBase> nextActivities)
+        /// <exception cref="WorkflowException">Activity has multiple next activities but only ForkActivity activities can return multiple activities. </exception>
+        private async Task PrepareNextActivities(IEnumerable<IWorkflowActivityBase> nextActivities)
         {
             foreach (var nextActivity in nextActivities)
             {
@@ -242,9 +298,10 @@ namespace MyToolkit.WorkflowEngine
 
                 RaiseCurrentActivitiesChanged();
 
-                var immediatelyExecuteActivity = await nextActivity.PrepareAsync(Data, WorkflowDefinition);
+                var input = CreateActivityInput<WorkflowActivityInput>(nextActivity, null);
+                var immediatelyExecuteActivity = await nextActivity.PrepareAsync(input, WorkflowDefinition);
                 if (immediatelyExecuteActivity)
-                    await CompleteInternalAsync(nextActivityId, CancellationToken.None, new object[] { });
+                    await CompleteInternalAsync<WorkflowActivityInput>(nextActivityId, CancellationToken.None, null);
             }
         }
     }

@@ -14,8 +14,6 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
     public class WorkflowTests
     {
         private static readonly Type[] _activityTypes = { typeof(MockActivity) };
-        private static readonly Type[] _dataTypes = { typeof(MockData) };
-        private static readonly Type[] _parameterTypes = { typeof(MockParameters) };
 
         [TestMethod]
         public void When_serializing_workfow_then_deserialization_should_work()
@@ -25,7 +23,7 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
 
             //// Act
             var workflowXml = workflow.ToXml();
-            var workflow2 = WorkflowDefinition.FromXml(workflowXml, _activityTypes, _parameterTypes);
+            var workflow2 = WorkflowDefinition.FromXml(workflowXml, _activityTypes);
             var workflowXml2 = workflow2.ToXml();
 
             //// Assert
@@ -40,14 +38,14 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
             var instance = workflow.CreateInstance();
 
             //// Act
-            await instance.CompleteAsync(instance.CurrentActivities.First(), "Test");
+            var activity = instance.CurrentActivities.First();
+            var result = await instance.CompleteAsync(activity);
 
             var instanceXml = instance.ToXml();
-            var instance2 = WorkflowInstance.FromXml(instanceXml, workflow, _dataTypes);
+            var instance2 = WorkflowInstance.FromXml(instanceXml, workflow);
             var instanceXml2 = instance2.ToXml();
 
             //// Assert
-            Assert.AreEqual("Test", instance2.Data.Resolve<MockData>(instance2.CurrentActivities.First()).Test1);
             Assert.AreEqual(instanceXml, instanceXml2);
         }
 
@@ -103,9 +101,9 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
             var instance = workflow.CreateInstance();
 
             //// Act
-            await instance.CompleteAsync(instance.CurrentActivities.First(), "Test");
-            await instance.CompleteAsync(instance.CurrentActivities.First(), "Test");
-            await instance.CompleteAsync(instance.CurrentActivities.First(), "Test");
+            await instance.CompleteAsync(instance.CurrentActivities.First());
+            await instance.CompleteAsync(instance.CurrentActivities.First());
+            await instance.CompleteAsync(instance.CurrentActivities.First());
 
             //// Assert
             Assert.AreEqual(0, instance.CurrentActivities.Length);
@@ -115,15 +113,15 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
         public async Task When_executing_task_then_changed_event_must_be_called()
         {
             //// Arrange
-            var changes = 0; 
+            var changes = 0;
             var workflow = Given_a_workflow_with_three_serial_empty_activities();
             var instance = workflow.CreateInstance();
             instance.CurrentActivitiesChanged += (sender, args) => { changes++; };
 
             //// Act
-            await instance.CompleteAsync(instance.CurrentActivities.First(), "Test");
-            await instance.CompleteAsync(instance.CurrentActivities.First(), "Test");
-            await instance.CompleteAsync(instance.CurrentActivities.First(), "Test");
+            await instance.CompleteAsync(instance.CurrentActivities.First());
+            await instance.CompleteAsync(instance.CurrentActivities.First());
+            await instance.CompleteAsync(instance.CurrentActivities.First());
 
             //// Assert
             Assert.AreEqual(3, changes);
@@ -138,14 +136,11 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
 
             //// Act
             var activity = instance.CurrentActivities.First();
-
-            Assert.AreEqual("Empty", instance.Data.Resolve<MockData>(activity).Test1);
-            await instance.CompleteAsync(activity, "Test");
+            await instance.CompleteAsync(activity);
 
             //// Assert
-            activity = instance.CurrentActivities.First();
-            
-            Assert.AreEqual("Test", instance.Data.Resolve<MockData>(activity).Test1);
+            var data = instance.Data.Single(d => d.ActivityId == activity.Id);
+            Assert.AreEqual("Hello", ((MyOutput)data.Output).Output);
         }
 
         [TestMethod]
@@ -156,13 +151,13 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
             var instance = workflow.CreateInstance();
 
             //// Act
-            await instance.CompleteAsync(instance.CurrentActivities.First(), "Test");
-            
+            await instance.CompleteAsync(instance.CurrentActivities.First());
+
             var activities = instance.CurrentActivities;
             Assert.AreEqual(2, activities.Length);
 
-            await instance.CompleteAsync(activities[0], "Test");
-            await instance.CompleteAsync(activities[1], "Test");
+            await instance.CompleteAsync(activities[0]);
+            await instance.CompleteAsync(activities[1]);
 
             // JoinActivity should now be completed
 
@@ -170,15 +165,17 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
             Assert.AreEqual(0, instance.CurrentActivities.Length);
         }
 
-        // TODO Test overloaded GetNextActivities
-
         private static WorkflowDefinition Given_a_workflow_with_three_serial_empty_activities()
         {
             var workflow = new WorkflowDefinition();
-            workflow.Activities = new List<WorkflowActivityBase>
+            workflow.Activities = new List<IWorkflowActivityBase>
             {
-                new MockActivity { Id = "1" },
-                new MockActivity { Id = "2" },
+                new MockActivity { Id = "1", DefaultInput = "Hello" },
+                new MockActivity 
+                {
+                    Id = "2", 
+                    Routes = { WorkflowRoute.Create<MyOutput, MyInput>("1", a => a.Output, a => a.Input) }
+                },
                 new MockActivity { Id = "3" },
             };
             workflow.StartActivity = workflow.Activities.First();
@@ -193,7 +190,7 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
         private static WorkflowDefinition Given_a_workflow_with_fork_and_join()
         {
             var workflow = new WorkflowDefinition();
-            workflow.Activities = new List<WorkflowActivityBase>
+            workflow.Activities = new List<IWorkflowActivityBase>
             {
                 new ForkActivity { Id = "1" },
                 new MockActivity { Id = "2" },
@@ -211,10 +208,11 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
             return workflow;
         }
 
+        // TODO: Use this
         private static WorkflowDefinition Given_a_workflow_with_invalid_fork_and_join()
         {
             var workflow = new WorkflowDefinition();
-            workflow.Activities = new List<WorkflowActivityBase>
+            workflow.Activities = new List<IWorkflowActivityBase>
             {
                 new ForkActivity { Id = "1" },
                 new MockActivity { Id = "2" },
@@ -234,41 +232,36 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
         }
 
         [XmlType("MockActivity")]
-        public class MockActivity : WorkflowActivityBase
+        [XmlInclude(typeof(MyInput))]
+        [XmlInclude(typeof(MyOutput))]
+        public class MockActivity : WorkflowActivityBase<MyInput, MyOutput>
         {
-            public override Task<WorkflowActivityResult> CompleteAsync(WorkflowDataProvider data, WorkflowActivityArguments args, CancellationToken cancellationToken)
+            public string DefaultInput { get; set; }
+            
+            /// <summary>Completes the activity. </summary>
+            /// <param name="input">The input. </param>
+            /// <param name="cancellationToken">The cancellation token. </param>
+            /// <returns>True when the activity has been completed. </returns>
+            public override Task<MyOutput> CompleteAsync(MyInput input, CancellationToken cancellationToken)
             {
-                var argument = args.GetArgument<string>(0);  
-              
-                var mockData = data.Resolve<MockData>(this);
-                mockData.Test1 = argument;
-
-                return Task.FromResult(new WorkflowActivityResult(true));
+                return Task.FromResult(new MyOutput
+                {
+                    Successful = true,
+                    Output = input.Input ?? DefaultInput
+                });
             }
         }
 
-        [XmlType("MockData")]
-        public class MockData : ActivityDataBase
+        public class MyInput : WorkflowActivityInput
         {
-            public MockData()
-            {
-                Test1 = "Empty";
-                Test2 = "Empty";
-            }
-
-            public string Test1 { get; set; }
-            public string Test2 { get; set; }
+            [XmlElement]
+            public string Input { get; set; }
         }
 
-        [XmlType("MockParameters")]
-        public class MockParameters : WorkflowParametersBase
+        public class MyOutput : WorkflowActivityOutput
         {
-            public MockParameters()
-            {
-                Test1 = "Empty";
-            }
-
-            public string Test1 { get; set; }
+            [XmlElement]
+            public string Output { get; set; }
         }
     }
 }

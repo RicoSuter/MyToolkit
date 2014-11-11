@@ -20,26 +20,25 @@ namespace MyToolkit.WorkflowEngine.Activities
     {
         /// <summary>Called when the previous activity has been executed. 
         /// The method may be called multiple times when there are multiple incoming transitions. </summary>
-        /// <param name="data">The workflow instance's data provider. </param>
+        /// <param name="input">The input. </param>
         /// <param name="definition">The workflow definition. </param>
         /// <returns>True when the activity should be automatically and immediately executed (with no args). </returns>
-        internal override async Task<bool> PrepareAsync(WorkflowDataProvider data, WorkflowDefinition definition)
+        internal override async Task<bool> PrepareAsync(WorkflowActivityInput input, WorkflowDefinition definition)
         {
-            return !HasCurrentActivityBeforeActivity(data, definition, this, new List<WorkflowTransition>());
+            return !HasCurrentActivityBeforeActivity(input, definition, this, new List<WorkflowTransition>());
         }
 
-        private bool HasCurrentActivityBeforeActivity(WorkflowDataProvider data, WorkflowDefinition definition, WorkflowActivityBase activity, List<WorkflowTransition> checkedTransitions)
+        private bool HasCurrentActivityBeforeActivity(WorkflowActivityInput input, WorkflowDefinition definition, 
+            IWorkflowActivityBase activity, List<WorkflowTransition> checkedTransitions)
         {
-            var instanceData = data.ResolveInstanceData(); 
-
             var inboundTransitions = definition.GetInboundTransitions(activity);
-            if (inboundTransitions.Any(t => instanceData.CurrentActivityIds.Contains(t.From)))
+            if (inboundTransitions.Any(t => input.Instance.CurrentActivityIds.Contains(t.From)))
                 return true;
 
             checkedTransitions.AddRange(inboundTransitions);
             foreach (var transition in inboundTransitions)
             {
-                if (HasCurrentActivityBeforeActivity(data, definition, definition.GetActivityById(transition.From), checkedTransitions))
+                if (HasCurrentActivityBeforeActivity(input, definition, definition.GetActivityById(transition.From), checkedTransitions))
                     return true;
             }
 
