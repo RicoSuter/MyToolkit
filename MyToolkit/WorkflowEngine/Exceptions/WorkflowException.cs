@@ -15,5 +15,9 @@ namespace MyToolkit.WorkflowEngine.Exceptions
     {
         /// <summary>Initializes a new instance of the <see cref="WorkflowException"/> class. </summary>
         public WorkflowException(string message) : base(message) { }
+
+        /// <summary>Initializes a new instance of the <see cref="WorkflowException"/> class. </summary>
+        public WorkflowException(string message, Exception innerException) : base(message, innerException) { }
+
     }
 }

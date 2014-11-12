@@ -98,67 +98,37 @@ namespace MyToolkit.WorkflowEngine
         }
 
         /// <summary>Executes the given activity with the given arguments. </summary>
-        /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
+        /// <exception cref="WorkflowException">A workflow exception occurred. </exception>
         public Task<WorkflowActivityOutput> CompleteAsync(IWorkflowActivityBase activity)
         {
-            return CompleteAsync<WorkflowActivityInput>(activity.Id, CancellationToken.None, null);
+            return CompleteAsync<WorkflowActivityInput>(activity, CancellationToken.None, null);
         }
 
         /// <summary>Executes the given activity with the given arguments. </summary>
-        /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
-        public Task<WorkflowActivityOutput> CompleteAsync(string activityId)
-        {
-            return CompleteAsync<WorkflowActivityInput>(activityId, CancellationToken.None, null);
-        }
-
-        /// <summary>Executes the given activity with the given arguments. </summary>
-        /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
+        /// <exception cref="WorkflowException">A workflow exception occurred. </exception>
         public Task<WorkflowActivityOutput> CompleteAsync(IWorkflowActivityBase activity, CancellationToken cancellationToken)
         {
-            return CompleteAsync<WorkflowActivityInput>(activity.Id, cancellationToken, null);
+            return CompleteAsync<WorkflowActivityInput>(activity, cancellationToken, null);
         }
 
         /// <summary>Executes the given activity with the given arguments. </summary>
-        /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
-        public Task<WorkflowActivityOutput> CompleteAsync(string activityId, CancellationToken cancellationToken)
+        /// <exception cref="WorkflowException">A workflow exception occurred. </exception>
+        public Task<WorkflowActivityOutput> CompleteAsync<TInput>(IWorkflowActivityBase activity, TInput input)
+            where TInput : WorkflowActivityInput
         {
-            return CompleteAsync<WorkflowActivityInput>(activityId, cancellationToken, null);
+            return CompleteAsync(activity, CancellationToken.None, input);
         }
 
         /// <summary>Executes the given activity with the given arguments. </summary>
-        /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
-        public Task<WorkflowActivityOutput> CompleteAsync<T>(IWorkflowActivityBase activity, Action<T> initializeInput)
-            where T : WorkflowActivityInput
-        {
-            return CompleteAsync(activity.Id, CancellationToken.None, initializeInput);
-        }
-
-        /// <summary>Executes the given activity with the given arguments. </summary>
-        /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
-        public Task<WorkflowActivityOutput> CompleteAsync<T>(IWorkflowActivityBase activity, CancellationToken cancellationToken, 
-            Action<T> initializeInput)
-            where T : WorkflowActivityInput
-        {
-            return CompleteAsync(activity.Id, cancellationToken, initializeInput);
-        }
-
-        /// <summary>Executes the given activity with the given arguments. </summary>
-        /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
-        public Task<WorkflowActivityOutput> CompleteAsync<T>(string activityId, Action<T> initializeInput)
-            where T : WorkflowActivityInput
-        {
-            return CompleteAsync(activityId, CancellationToken.None, initializeInput);
-        }
-
-        /// <summary>Executes the given activity with the given arguments. </summary>
-        /// <exception cref="WorkflowException">Thrown when execution failed. </exception>
-        public async Task<WorkflowActivityOutput> CompleteAsync<T>(string activityId, CancellationToken cancellationToken, Action<T> initializeInput)
-            where T : WorkflowActivityInput
+        /// <exception cref="WorkflowException">A workflow exception occurred. </exception>
+        public async Task<WorkflowActivityOutput> CompleteAsync<TInput>(
+            IWorkflowActivityBase activity, CancellationToken cancellationToken, TInput input)
+            where TInput : WorkflowActivityInput
         {
             try
             {
                 IsRunning = true;
-                return await CompleteInternalAsync(activityId, cancellationToken, initializeInput);
+                return await CompleteInternalAsync(activity, cancellationToken, input);
             }
             finally
             {
@@ -167,16 +137,16 @@ namespace MyToolkit.WorkflowEngine
             }
         }
 
-        /// <exception cref="WorkflowException">Activity has multiple next activities but only ForkActivity activities can return multiple activities. </exception>
-        private async Task<WorkflowActivityOutput> CompleteInternalAsync<T>(string activityId, CancellationToken cancellationToken, Action<T> initializeInput)
-            where T : WorkflowActivityInput
+        /// <exception cref="WorkflowException">A workflow exception occurred. </exception>
+        private async Task<WorkflowActivityOutput> CompleteInternalAsync<TInput>(
+            IWorkflowActivityBase activity, CancellationToken cancellationToken, TInput input)
+            where TInput : WorkflowActivityInput
         {
-            if (CurrentActivityIds.Contains(activityId))
+            if (CurrentActivityIds.Contains(activity.Id))
             {
-                var activity = WorkflowDefinition.GetActivityById(activityId);
                 var allowedTransitions = WorkflowDefinition.GetOutboundTransitions(activity);
 
-                var input = CreateActivityInput(activity, initializeInput);
+                input = CreateActivityInput(activity, input);
                 var result = await activity.CompleteAsync(input, cancellationToken);
                 if (result.Successful)
                 {
@@ -193,9 +163,9 @@ namespace MyToolkit.WorkflowEngine
                             activity.Id, string.Join(", ", nextActivities.Select(a => a.Id))));
                     }
 
-                    CurrentActivityIds.Remove(activityId);
+                    CurrentActivityIds.Remove(activity.Id);
 
-                    await AddNextActivitiesAsync(activityId, nextActivities, allowedTransitions);
+                    await AddNextActivitiesAsync(activity.Id, nextActivities, allowedTransitions);
                     return result;
                 }
                 else
@@ -215,11 +185,11 @@ namespace MyToolkit.WorkflowEngine
             Data.Add(new ActivityData { ActivityId = activity.Id, Output = result });
         }
 
-        /// <exception cref="WorkflowException">The requested input data for the activity could not be found. </exception>
-        private WorkflowActivityInput CreateActivityInput<T>(IWorkflowActivityBase activity, Action<T> initializeInput)
-            where T : WorkflowActivityInput
+        /// <exception cref="WorkflowException">A workflow exception occurred. </exception>
+        private TInput CreateActivityInput<TInput>(IWorkflowActivityBase activity, TInput input)
+            where TInput : WorkflowActivityInput
         {
-            var input = (WorkflowActivityInput)Activator.CreateInstance(activity.InputType);
+            input = input ?? (TInput)Activator.CreateInstance(activity.InputType);
             input.Instance = this;
             foreach (var route in activity.Routes)
             {
@@ -227,17 +197,20 @@ namespace MyToolkit.WorkflowEngine
                 if (outputData != null)
                 {
                     var inputProperty = input.GetType().GetRuntimeProperty(route.InputProperty);
-                    var outputProperty = outputData.Output.GetType().GetRuntimeProperty(route.OutputProperty);
-
-                    inputProperty.SetValue(input, outputProperty.GetValue(outputData.Output));
+                    if (inputProperty != null)
+                    {
+                        var outputProperty = outputData.Output.GetType().GetRuntimeProperty(route.OutputProperty);
+                        if (outputProperty != null)
+                            inputProperty.SetValue(input, outputProperty.GetValue(outputData.Output));
+                        else
+                            throw new WorkflowException("The output property of the route could not be found on the output data. ");
+                    }
+                    else
+                        throw new WorkflowException("The input property of the route could not be found on the input data. ");
                 }
                 else
                     throw new WorkflowException("The requested input data for the activity could not be found. ");
             }
-
-            if (initializeInput != null)
-                initializeInput((T)input);
-
             return input;
         }
 
@@ -269,7 +242,7 @@ namespace MyToolkit.WorkflowEngine
                 .ToArray();
         }
 
-        /// <exception cref="WorkflowException">Transitions for activities ({0}) produced by activity could not be found. </exception>
+        /// <exception cref="WorkflowException">A workflow exception occurred. </exception>
         private async Task AddNextActivitiesAsync(string activityId, IList<IWorkflowActivityBase> nextActivities, WorkflowTransition[] allowedTransitions)
         {
             var hasFollowingActivities = allowedTransitions.Length > 0;
@@ -287,7 +260,7 @@ namespace MyToolkit.WorkflowEngine
             }
         }
 
-        /// <exception cref="WorkflowException">Activity has multiple next activities but only ForkActivity activities can return multiple activities. </exception>
+        /// <exception cref="WorkflowException">A workflow exception occurred. </exception>
         private async Task PrepareNextActivities(IEnumerable<IWorkflowActivityBase> nextActivities)
         {
             foreach (var nextActivity in nextActivities)
@@ -301,7 +274,7 @@ namespace MyToolkit.WorkflowEngine
                 var input = CreateActivityInput<WorkflowActivityInput>(nextActivity, null);
                 var immediatelyExecuteActivity = await nextActivity.PrepareAsync(input, WorkflowDefinition);
                 if (immediatelyExecuteActivity)
-                    await CompleteInternalAsync<WorkflowActivityInput>(nextActivityId, CancellationToken.None, null);
+                    await CompleteInternalAsync<WorkflowActivityInput>(nextActivity, CancellationToken.None, null);
             }
         }
     }
