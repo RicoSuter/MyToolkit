@@ -8,16 +8,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyToolkit.Build
 {
     /// <summary>Describes a Visual Studio object. </summary>
-    public class VsObject
+    public abstract class VsObject
     {
-        public VsObject(string path)
+        /// <summary>Initializes a new instance of the <see cref="VsObject"/> class. </summary>
+        /// <param name="path">The path to the object. </param>
+        protected VsObject(string path)
         {
             Id = GetIdFromPath(path);
             Path = path;
@@ -30,13 +32,7 @@ namespace MyToolkit.Build
         public string Path { get; private set; }
 
         /// <summary>Gets the name of the project. </summary>
-        public string Name { get; internal set; }
-
-        /// <summary>Gets the root namespace. </summary>
-        public string Namespace { get; internal set; }
-
-        /// <summary>Gets or sets the target framework version. </summary>
-        public string FrameworkVersion { get; internal set; }
+        public abstract string Name { get; }
 
         /// <summary>Gets the file name of the project. </summary>
         public string FileName

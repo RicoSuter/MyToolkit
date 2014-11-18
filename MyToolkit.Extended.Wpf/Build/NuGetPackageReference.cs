@@ -6,45 +6,51 @@
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Xml.Linq;
+using MyToolkit.Build.Exceptions;
 using MyToolkit.Utilities;
 
 namespace MyToolkit.Build
 {
-    public class NuGetPackageNotFoundException : Exception
-    {
-        public NuGetPackageNotFoundException(string message, Exception innerException) 
-            : base(message, innerException)
-        {
-        }
-    }
-
     /// <summary>Describes an installed NuGet package. </summary>
     public class NuGetPackageReference : VsReferenceBase
     {
         private readonly static Dictionary<string, List<NuGetPackageReference>> _cache =
             new Dictionary<string, List<NuGetPackageReference>>();
 
-        private object _lock = new object();
+        private readonly object _lock = new object();
         private bool? _isNuGetOrgPackage;
         private XDocument _nuGetDependencies = null;
+
+        private readonly string _name;
+        private readonly string _version;
 
         /// <summary>Initializes a new instance of the <see cref="NuGetPackageReference"/> class. </summary>
         /// <param name="name">The package id. </param>
         /// <param name="version">The package version. </param>
-        public NuGetPackageReference(string name, string version)
+        internal NuGetPackageReference(string name, string version)
         {
-            Name = name;
-            Version = version;
+            _name = name;
+            _version = version;
+        }
+        
+        /// <summary>Gets the name of the NuGet package. </summary>
+        public override string Name
+        {
+            get { return _name; }
         }
 
+        /// <summary>Gets the version of the installed NuGet package. </summary>
+        public override string Version
+        {
+            get { return _version; }
+        }
+        
         /// <exception cref="WebException">There was a connection exception. </exception>
         public async Task<bool> IsNuGetOrgPackageAsync()
         {
@@ -62,25 +68,6 @@ namespace MyToolkit.Build
                     return _isNuGetOrgPackage.Value;
                 }
             });
-        }
-
-        /// <exception cref="WebException">There was a connection exception. </exception>
-        [DebuggerStepThrough]
-        private bool IsNuGetOrgPackageInternal()
-        {
-            try
-            {
-                var url = string.Format("https://www.nuget.org/api/v2/Packages(Id='{0}',Version='{1}')/Dependencies", Name, Version);
-                _nuGetDependencies = XDocument.Load(url);
-                return true;
-            }
-            catch (WebException ex)
-            {
-                var response = ex.Response as HttpWebResponse;
-                if (response != null && response.StatusCode == HttpStatusCode.NotFound)
-                    return false;
-                throw;
-            }
         }
 
         /// <summary>Loads the package dependencies from NuGet.org. </summary>
@@ -105,8 +92,7 @@ namespace MyToolkit.Build
                     lock (_lock)
                     {
                         var dependencies = _nuGetDependencies.Root
-                            .Value
-                            .Split('|')
+                            .Value.Split('|')
                             .Where(p => !string.IsNullOrEmpty(p))
                             .Select(p =>
                             {
@@ -143,6 +129,25 @@ namespace MyToolkit.Build
         public override string ToString()
         {
             return string.Format("{0} {1}", Name, Version);
+        }
+
+        /// <exception cref="WebException">There was a connection exception. </exception>
+        [DebuggerStepThrough]
+        private bool IsNuGetOrgPackageInternal()
+        {
+            try
+            {
+                var url = string.Format("https://www.nuget.org/api/v2/Packages(Id='{0}',Version='{1}')/Dependencies", Name, Version);
+                _nuGetDependencies = XDocument.Load(url);
+                return true;
+            }
+            catch (WebException ex)
+            {
+                var response = ex.Response as HttpWebResponse;
+                if (response != null && response.StatusCode == HttpStatusCode.NotFound)
+                    return false;
+                throw;
+            }
         }
     }
 }

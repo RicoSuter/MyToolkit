@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="BuildOrderException.cs" company="MyToolkit">
+// <copyright file="NuGetPackageNotFoundException.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
 // <license>http://mytoolkit.codeplex.com/license</license>
@@ -8,10 +8,13 @@
 
 using System;
 
-namespace MyToolkit.Build
+namespace MyToolkit.Build.Exceptions
 {
-    public class BuildOrderException : Exception
+    public class NuGetPackageNotFoundException : Exception
     {
-        public BuildOrderException(string message) : base(message) { }
+        public NuGetPackageNotFoundException(string message, Exception innerException) 
+            : base(message, innerException)
+        {
+        }
     }
 }

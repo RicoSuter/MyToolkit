@@ -44,6 +44,7 @@
     <AssemblyOriginatorKeyFile>Default.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Build" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -133,13 +134,15 @@
       <Link>Utilities\Xml.cs</Link>
     </Compile>
     <Compile Include="Build\AssemblyReference.cs" />
-    <Compile Include="Build\BuildOrderException.cs" />
+    <Compile Include="Build\Exceptions\BuildOrderException.cs" />
+    <Compile Include="Build\Exceptions\NuGetPackageNotFoundException.cs" />
     <Compile Include="Build\NuGetPackageReference.cs" />
-    <Compile Include="Build\VsProjectReference.cs" />
-    <Compile Include="Build\VsProjectRepository.cs" />
+    <Compile Include="Build\ProjectDependencyResolver.cs" />
+    <Compile Include="Build\ReflectionExtensions.cs" />
     <Compile Include="Build\VsObject.cs" />
     <Compile Include="Build\VsProject.cs" />
     <Compile Include="Build\VsProjectEnumerableExtensions.cs" />
+    <Compile Include="Build\VsProjectReference.cs" />
     <Compile Include="Build\VsReferenceBase.cs" />
     <Compile Include="Build\VsSolution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -152,7 +155,6 @@
     <Compile Include="Utilities\FileOpenEventArgs.cs" />
     <Compile Include="Utilities\FileOpenHandler.cs" />
     <Compile Include="Utilities\NamedPipeServerStreamExtensions.cs" />
-    <Compile Include="Build\ProjectDependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyToolkit\MyToolkit.csproj">

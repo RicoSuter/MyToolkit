@@ -15,9 +15,9 @@ namespace MyToolkit.Build
     public abstract class VsReferenceBase
     {
         /// <summary>Gets the name of the NuGet package. </summary>
-        public string Name { get; internal set; }
+        public abstract string Name { get; }
 
         /// <summary>Gets the version of the installed NuGet package. </summary>
-        public string Version { get; internal set; }
+        public abstract string Version { get; }
     }
 }

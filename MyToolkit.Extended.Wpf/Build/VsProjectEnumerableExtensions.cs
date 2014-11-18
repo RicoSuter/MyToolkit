@@ -8,6 +8,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using MyToolkit.Build.Exceptions;
 
 namespace MyToolkit.Build
 {

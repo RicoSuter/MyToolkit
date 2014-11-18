@@ -12,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Microsoft.Build.Evaluation;
+using Microsoft.Build.Exceptions;
 using MyToolkit.Utilities;
 
 namespace MyToolkit.Build
@@ -19,16 +21,40 @@ namespace MyToolkit.Build
     /// <summary>Describes a Visual Studio project. </summary>
     public class VsProject : VsObject
     {
+        private readonly static object _lock = new Object();
+        private readonly static Dictionary<string, VsProject> _projects = new Dictionary<string, VsProject>();
+
         private List<VsProjectReference> _projectReferences;
         private List<AssemblyReference> _assemblyReferences;
         private List<NuGetPackageReference> _nuGetReferences;
 
-        private const string XmlNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
-
-        public VsProject(string path)
+        /// <exception cref="InvalidProjectFileException">The project file could not be found. </exception>
+        private VsProject(string path)
             : base(path)
         {
+            Project = new Project(path);
         }
+
+        /// <summary>Loads a project from a given file path. </summary>
+        /// <param name="filePath">The project file path. </param>
+        /// <returns>The project. </returns>
+        /// <exception cref="InvalidProjectFileException">The project file could not be found. </exception>
+        public static VsProject Load(string filePath)
+        {
+            lock (_lock)
+            {
+                var id = GetIdFromPath(filePath);
+                if (_projects.ContainsKey(id))
+                    return _projects[id];
+
+                var project = new VsProject(filePath);
+                _projects[id] = project;
+                return project;
+            }
+        }
+
+        /// <summary>Gets the internal MSBuild project. </summary>
+        public Project Project { get; private set; }
 
         /// <summary>Gets the list of referenced projects. </summary>
         public List<VsProjectReference> ProjectReferences
@@ -63,6 +89,36 @@ namespace MyToolkit.Build
             }
         }
 
+        /// <summary>Gets the name of the project. </summary>
+        public override string Name
+        {
+            get { return Project.GetPropertyValue("AssemblyName"); }
+        }
+
+        /// <summary>Gets the root namespace. </summary>
+        public string Namespace
+        {
+            get { return Project.GetPropertyValue("RootNamespace"); }
+        }
+
+        /// <summary>Gets or sets the target framework version. </summary>
+        public string FrameworkVersion
+        {
+            get { return Project.GetPropertyValue("TargetFrameworkVersion"); }
+        }
+
+        /// <summary>Gets or sets the used tools version. </summary>
+        public string ToolsVersion
+        {
+            get { return Project.ToolsVersion; }
+        }
+
+        /// <summary>Gets or sets the project's GUID. </summary>
+        public string Guid
+        {
+            get { return Project.GetPropertyValue("ProjectGuid"); }
+        }
+
         /// <summary>Checks whether the two project file paths are the same files. </summary>
         /// <param name="projectPath1">The first project file path. </param>
         /// <param name="projectPath2">The second project file path. </param>
@@ -71,29 +127,14 @@ namespace MyToolkit.Build
         {
             return System.IO.Path.GetFullPath(projectPath1).ToLower() == System.IO.Path.GetFullPath(projectPath2).ToLower();
         }
-
-        /// <summary>Loads a project from a given file path. </summary>
-        /// <param name="filePath">The project file path. </param>
-        /// <returns>The project. </returns>
-        public static VsProject FromFilePath(string filePath)
-        {
-            var document = XDocument.Load(filePath);
-            var project = new VsProject(System.IO.Path.GetFullPath(filePath));
-            project.Name = document.Descendants(XName.Get("AssemblyName", XmlNamespace)).First().Value;
-            project.Namespace = document.Descendants(XName.Get("RootNamespace", XmlNamespace)).First().Value;
-
-            var frameworkVersionTag = document.Descendants(XName.Get("TargetFrameworkVersion", XmlNamespace)).FirstOrDefault();
-            project.FrameworkVersion = frameworkVersionTag != null ? frameworkVersionTag.Value : String.Empty;
-            return project;
-        }
-
+        
         /// <summary>Recursively loads all Visual Studio projects from the given directory. </summary>
         /// <param name="path">The directory path. </param>
         /// <param name="ignoreExceptions">Specifies whether to ignore exceptions (projects with exceptions are not returned). </param>
         /// <returns>The projects. </returns>
         public static Task<List<VsProject>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions)
         {
-            return LoadAllFromDirectoryAsync(path, ignoreExceptions, ".csproj", FromFilePath);
+            return LoadAllFromDirectoryAsync(path, ignoreExceptions, ".csproj", Load);
         }
 
         /// <summary>Loads the project's referenced assemblies, projects and NuGet packages. </summary>
@@ -153,37 +194,30 @@ namespace MyToolkit.Build
 
         public void LoadProjectReferences()
         {
-            var document = XDocument.Load(Path);
-            var references = new List<VsProjectReference>();
-            foreach (var element in document.Descendants(XName.Get("ProjectReference", XmlNamespace)))
-            {
-                var path = System.IO.Path.GetFullPath(System.IO.Path.Combine(
-                    System.IO.Path.GetDirectoryName(Path), element.Attribute("Include").Value));
+            _projectReferences = Project.Items
+                .Where(i => i.ItemType == "ProjectReference")
+                .Select(p => VsProjectReference.Load(this, p))
+                .OrderBy(r => r.Name)
+                .ToList(); 
+        }
 
-                references.Add(new VsProjectReference(path)
-                {
-                    Name = element.Descendants(XName.Get("Name", XmlNamespace)).First().Value,
-                });
-            }
-
-            _projectReferences = references.OrderBy(r => r.Name).ToList(); 
+        private string NuGetPackagesFile
+        {
+            get { return System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Path), "packages.config"); }
         }
 
         private void LoadAssemblyReferences()
         {
-            var document = XDocument.Load(Path);
-            var references = new List<AssemblyReference>();
-            foreach (var element in document.Descendants(XName.Get("Reference", XmlNamespace)))
-            {
-                var include = element.Attribute("Include").Value;
-                references.Add(new AssemblyReference(include));
-            }
-            _assemblyReferences = references.OrderByThenBy(r => r.Name, r => VersionUtilities.FromString(r.Version)).ToList(); 
+            _assemblyReferences = Project.Items
+                .Where(i => i.ItemType == "Reference")
+                .Select(reference => new AssemblyReference(reference))
+                .OrderByThenBy(r => r.Name, r => VersionUtilities.FromString(r.Version))
+                .ToList(); 
         }
 
         private void LoadNuGetReferences()
         {
-            var configurationPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Path), "packages.config");
+            var configurationPath = NuGetPackagesFile;
             var references = new List<NuGetPackageReference>();
             if (File.Exists(configurationPath))
             {

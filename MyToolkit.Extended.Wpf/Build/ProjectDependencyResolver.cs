@@ -7,7 +7,6 @@
 //-----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace MyToolkit.Build
@@ -20,7 +19,7 @@ namespace MyToolkit.Build
         /// <returns>The referenced project files. </returns>
         public static IEnumerable<string> GetProjectReferences(string projectPath)
         {
-            return VsProject.FromFilePath(projectPath).ProjectReferences.Select(p => p.Path);
+            return VsProject.Load(projectPath).ProjectReferences.Select(p => p.Path);
         }
 
         /// <summary>Sorts the given projects in their required build order. </summary>
@@ -28,7 +27,7 @@ namespace MyToolkit.Build
         /// <returns>The project file paths in the correct build order. </returns>
         public static IEnumerable<string> GetBuildOrder(IEnumerable<string> projectPaths)
         {
-            return projectPaths.Select(VsProject.FromFilePath).SortByBuildOrder().Select(p => p.Path);
+            return projectPaths.Select(VsProject.Load).SortByBuildOrder().Select(p => p.Path);
         }
     }
 }
