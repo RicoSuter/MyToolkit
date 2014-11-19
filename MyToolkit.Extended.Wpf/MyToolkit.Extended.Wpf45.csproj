@@ -138,6 +138,7 @@
     <Compile Include="Build\Exceptions\NuGetPackageNotFoundException.cs" />
     <Compile Include="Build\NuGetPackageReference.cs" />
     <Compile Include="Build\ProjectDependencyResolver.cs" />
+    <Compile Include="Build\ProjectTypeGuidMapper.cs" />
     <Compile Include="Build\ReflectionExtensions.cs" />
     <Compile Include="Build\VsObject.cs" />
     <Compile Include="Build\VsProject.cs" />

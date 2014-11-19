@@ -119,6 +119,24 @@ namespace MyToolkit.Build
             get { return Project.GetPropertyValue("ProjectGuid"); }
         }
 
+        /// <summary>Gets the project type GUIDs. </summary>
+        public string[] ProjectTypeGuids
+        {
+            get
+            {
+                var guids = Project.GetPropertyValue("ProjectTypeGuids");
+                if (!string.IsNullOrEmpty(guids))
+                    return guids.Split(';');
+                return new string[] { };
+            }
+        }
+
+        /// <summary>Gets the project types. </summary>
+        public VsProjectType[] ProjectTypes
+        {
+            get { return ProjectTypeGuids.Select(ProjectTypeGuidMapper.ResolveGuid).ToArray(); }
+        }
+
         /// <summary>Checks whether the two project file paths are the same files. </summary>
         /// <param name="projectPath1">The first project file path. </param>
         /// <param name="projectPath2">The second project file path. </param>
@@ -127,7 +145,7 @@ namespace MyToolkit.Build
         {
             return System.IO.Path.GetFullPath(projectPath1).ToLower() == System.IO.Path.GetFullPath(projectPath2).ToLower();
         }
-        
+
         /// <summary>Recursively loads all Visual Studio projects from the given directory. </summary>
         /// <param name="path">The directory path. </param>
         /// <param name="ignoreExceptions">Specifies whether to ignore exceptions (projects with exceptions are not returned). </param>
@@ -144,7 +162,7 @@ namespace MyToolkit.Build
             LoadAssemblyReferences();
             LoadNuGetReferences();
         }
-        
+
         /// <summary>Checks whether this project references the given project. </summary>
         /// <param name="project">The project. </param>
         /// <returns>True when the given project is referenced. </returns>
@@ -184,7 +202,7 @@ namespace MyToolkit.Build
         {
             return Id == projectReference.Id;
         }
-        
+
         /// <summary>Returns a string that represents the current object.</summary>
         /// <returns>A string that represents the current object. </returns>
         public override string ToString()
@@ -198,7 +216,7 @@ namespace MyToolkit.Build
                 .Where(i => i.ItemType == "ProjectReference")
                 .Select(p => VsProjectReference.Load(this, p))
                 .OrderBy(r => r.Name)
-                .ToList(); 
+                .ToList();
         }
 
         private string NuGetPackagesFile
@@ -212,7 +230,7 @@ namespace MyToolkit.Build
                 .Where(i => i.ItemType == "Reference")
                 .Select(reference => new AssemblyReference(reference))
                 .OrderByThenBy(r => r.Name, r => VersionUtilities.FromString(r.Version))
-                .ToList(); 
+                .ToList();
         }
 
         private void LoadNuGetReferences()
@@ -225,7 +243,7 @@ namespace MyToolkit.Build
                 foreach (var element in document.Descendants("package"))
                     references.Add(new NuGetPackageReference(element.Attribute("id").Value, element.Attribute("version").Value));
             }
-            _nuGetReferences = references.OrderBy(r => r.Name).ToList(); 
+            _nuGetReferences = references.OrderBy(r => r.Name).ToList();
         }
     }
 }
