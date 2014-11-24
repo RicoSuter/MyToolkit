@@ -51,6 +51,7 @@ namespace MyToolkit.Controls
         public MtListBox()
         {
             LayoutUpdated += RegisterScrollEvent;
+            Unloaded += OnUnloaded;
 
 #if WINRT
             DefaultStyleKey = typeof(MtListBox);
@@ -355,7 +356,7 @@ namespace MyToolkit.Controls
 
         public static readonly DependencyProperty IsScrollingProperty =
             DependencyProperty.Register("IsScrolling", typeof(bool),
-                typeof(MtListBox), new PropertyMetadata(false, IsScrollingPropertyChanged));
+            typeof(MtListBox), new PropertyMetadata(false, (o, args) => ((MtListBox)o).IsScrollingPropertyChanged(args)));
 
         /// <summary>Gets a value indicating whether the user is currently scrolling the view. </summary>
         public bool IsScrolling
@@ -370,21 +371,36 @@ namespace MyToolkit.Controls
             }
         }
 
+        private bool _isScrolling = false;
+
         protected virtual void OnScrollingStateChanged(ScrollingStateChangedEventArgs e)
         {
             // Must be empty
         }
 
-        internal static void IsScrollingPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        internal void IsScrollingPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
-            var listbox = (MtListBox)source;
-            if (listbox._allowIsScrollingChanges != true)
-                throw new InvalidOperationException("IsScrolling property is read-only");
+            if (_allowIsScrollingChanges != true)
+                throw new InvalidOperationException("IsScrolling property is read-only. ");
+
+            _isScrolling = (bool)e.NewValue;
 
             var args = new ScrollingStateChangedEventArgs((bool)e.OldValue, (bool)e.NewValue);
-            listbox.OnScrollingStateChanged(args);
-            if (listbox.ScrollingStateChanged != null)
-                listbox.ScrollingStateChanged(listbox, args);
+            OnScrollingStateChanged(args);
+
+            var handler = ScrollingStateChanged;
+            if (handler != null)
+                handler(this, args);
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            if (_isScrolling)
+            {
+                var handler = ScrollingStateChanged;
+                if (handler != null)
+                    handler(this, new ScrollingStateChangedEventArgs(true, false));
+            }
         }
 
         private void ScrollingStateChanging(object sender, VisualStateChangedEventArgs e)
@@ -393,9 +409,9 @@ namespace MyToolkit.Controls
         }
 
 #if WINRT
-        private void RegisterScrollEvent(object s, object o)
+		private void RegisterScrollEvent(object s, object o)
 #else
-		private void RegisterScrollEvent(object s, EventArgs eventArgs)
+        private void RegisterScrollEvent(object s, EventArgs eventArgs)
 #endif
         {
             if (_eventRegistred)
@@ -404,7 +420,7 @@ namespace MyToolkit.Controls
             if (_scrollViewer != null)
             {
                 var child = _scrollViewer.GetVisualChild(0);
-                var group = child.GetVisualStateGroup("ScrollStates");
+                var group = child.GetVisualStateGroup("ScrollStates"); // TODO: Fix this => group is null in WinRT
                 if (group != null)
                 {
                     group.CurrentStateChanging -= ScrollingStateChanging;

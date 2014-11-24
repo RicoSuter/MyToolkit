@@ -50,6 +50,7 @@ namespace MyToolkit.Controls
         public ScrollableItemsControl()
         {
             DefaultStyleKey = typeof (ScrollableItemsControl);
+            Unloaded += OnUnloaded;
         }
 
         /// <summary>Gets the <see cref="ListBoxItem"/> for a given item. </summary>
@@ -339,7 +340,7 @@ namespace MyToolkit.Controls
 
         public static readonly DependencyProperty IsScrollingProperty =
             DependencyProperty.Register("IsScrolling", typeof(bool),
-            typeof(ScrollableItemsControl), new PropertyMetadata(false, IsScrollingPropertyChanged));
+            typeof(ScrollableItemsControl), new PropertyMetadata(false, (o, args) => ((ScrollableItemsControl)o).IsScrollingPropertyChanged(args)));
 
         /// <summary>Gets a value indicating whether the user is currently scrolling the view. </summary>
         public bool IsScrolling
@@ -354,22 +355,36 @@ namespace MyToolkit.Controls
             }
         }
 
+        private bool _isScrolling = false; 
+
         protected virtual void OnScrollingStateChanged(ScrollingStateChangedEventArgs e)
         {
             // Must be empty
         }
 
-        internal static void IsScrollingPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
+        internal void IsScrollingPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
-            var listbox = (ScrollableItemsControl)source;
-            if (listbox._allowIsScrollingChanges != true)
-                throw new InvalidOperationException("IsScrolling property is read-only");
+            if (_allowIsScrollingChanges != true)
+                throw new InvalidOperationException("IsScrolling property is read-only. ");
+
+            _isScrolling = (bool) e.NewValue;
 
             var args = new ScrollingStateChangedEventArgs((bool)e.OldValue, (bool)e.NewValue);
-            listbox.OnScrollingStateChanged(args);
+            OnScrollingStateChanged(args);
 
-            if (listbox.ScrollingStateChanged != null)
-                listbox.ScrollingStateChanged(listbox, args);
+            var handler = ScrollingStateChanged;
+            if (handler != null)
+                handler(this, args);
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            if (_isScrolling)
+            {
+                var handler = ScrollingStateChanged;
+                if (handler != null)
+                    handler(this, new ScrollingStateChangedEventArgs(true, false));
+            }
         }
 
         private void ScrollingStateChanging(object sender, VisualStateChangedEventArgs e)
