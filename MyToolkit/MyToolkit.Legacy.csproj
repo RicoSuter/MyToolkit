@@ -115,23 +115,6 @@
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="Utilities\TaskUtilities.cs" />
     <Compile Include="Utilities\VersionUtilities.cs" />
-    <Compile Include="WorkflowEngine\Activities\AutomaticWorkflowActivityBase.cs" />
-    <Compile Include="WorkflowEngine\Activities\EmptyActivity.cs" />
-    <Compile Include="WorkflowEngine\Activities\EmptyAutomaticActivity.cs" />
-    <Compile Include="WorkflowEngine\Activities\ForkActivity.cs" />
-    <Compile Include="WorkflowEngine\Activities\JoinActivity.cs" />
-    <Compile Include="WorkflowEngine\Activities\WorkflowActivityBase.cs" />
-    <Compile Include="WorkflowEngine\ActivityDataBase.cs" />
-    <Compile Include="WorkflowEngine\CurrentActivitiesChangedEventArgs.cs" />
-    <Compile Include="WorkflowEngine\Exceptions\WorkflowException.cs" />
-    <Compile Include="WorkflowEngine\WorkflowActivityArguments.cs" />
-    <Compile Include="WorkflowEngine\WorkflowActivityResult.cs" />
-    <Compile Include="WorkflowEngine\WorkflowDataProvider.cs" />
-    <Compile Include="WorkflowEngine\WorkflowDefinition.cs" />
-    <Compile Include="WorkflowEngine\WorkflowInstance.cs" />
-    <Compile Include="WorkflowEngine\WorkflowInstanceData.cs" />
-    <Compile Include="WorkflowEngine\WorkflowParametersBase.cs" />
-    <Compile Include="WorkflowEngine\WorkflowTransition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Default.snk" />
