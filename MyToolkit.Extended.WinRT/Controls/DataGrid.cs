@@ -269,17 +269,14 @@ namespace MyToolkit.Controls
         {
             if (_initialized)
             {
-                var previouslySelectedItems = SelectedItems.ToList();
-                UpdateColumnHeaders();
+                RunWithSelectedItemRestore(() =>
+                {
+                    UpdateColumnHeaders();
 
-                // update rows
-                var itemsSource = _listControl.ItemsSource;
-                _listControl.ItemsSource = null;
-                _listControl.ItemsSource = itemsSource;
-
-                var currentlySelectedItems = SelectedItems.ToList();
-                foreach (var item in previouslySelectedItems.Where(i => !currentlySelectedItems.Contains(i)))
-                    SelectedItems.Add(item);
+                    var itemsSource = _listControl.ItemsSource;
+                    _listControl.ItemsSource = null;
+                    _listControl.ItemsSource = itemsSource;
+                });
             }
         }
 
@@ -406,13 +403,28 @@ namespace MyToolkit.Controls
         {
             if (Items != null)
             {
+                RunWithSelectedItemRestore(() =>
+                {
+                    Items.IsTracking = false;
+                    Items.Order = new Func<object, object>(o => PropertyPathHelper.Evaluate(o, SelectedColumn.OrderPropertyPath));
+                    Items.Ascending = SelectedColumn.IsAscending;
+                    Items.IsTracking = true;
+                });
+            }
+        }
+
+        private void RunWithSelectedItemRestore(Action action)
+        {
+            if (SelectionMode == SelectionMode.Single)
+            {
+                var previouslySelectedItem = SelectedItem;
+                action();
+                SelectedItem = previouslySelectedItem;
+            }
+            else
+            {
                 var previouslySelectedItems = SelectedItems.ToList();
-
-                Items.IsTracking = false;
-                Items.Order = new Func<object, object>(o => PropertyPathHelper.Evaluate(o, SelectedColumn.OrderPropertyPath));
-                Items.Ascending = SelectedColumn.IsAscending;
-                Items.IsTracking = true;
-
+                action();
                 var currentlySelectedItems = SelectedItems.ToList();
                 foreach (var item in previouslySelectedItems.Where(i => !currentlySelectedItems.Contains(i)))
                     SelectedItems.Add(item);

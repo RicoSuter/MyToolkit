@@ -8,6 +8,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Windows.Networking.Sockets;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -54,8 +55,16 @@ namespace MyToolkit.Controls
 
             Loaded += delegate
             {
-                if (DataGrid.SelectedItems != null)
-                    IsSelected = DataGrid.SelectedItems.Contains(item);
+                if (DataGrid.SelectionMode == SelectionMode.Single)
+                {
+                    if (DataGrid.SelectedItem != null)
+                        IsSelected = DataGrid.SelectedItem.Equals(item);
+                }
+                else
+                {
+                    if (DataGrid.SelectedItems != null)
+                        IsSelected = DataGrid.SelectedItems.Contains(item);
+                }
             };
 		}
 
