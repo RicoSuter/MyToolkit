@@ -8,6 +8,7 @@
                xmlns:viewModels="using:SampleWindowsStoreApp.ViewModels"
                xmlns:controls="using:MyToolkit.Controls"
                xmlns:domain="using:SampleWindowsStoreApp.Domain"
+               xmlns:views="using:SampleWindowsStoreApp.Views"
                mc:Ignorable="d">
 
     <paging:MtPage.Resources>

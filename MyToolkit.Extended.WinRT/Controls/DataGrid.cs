@@ -74,8 +74,8 @@ namespace MyToolkit.Controls
         public static readonly DependencyProperty HeaderBackgroundProperty =
             DependencyProperty.Register("HeaderBackground", typeof(Brush), typeof(DataGrid), new PropertyMetadata(default(Brush)));
 
-        public static readonly DependencyProperty SelectionModeProperty = DependencyProperty.Register(
-            "SelectionMode", typeof(SelectionMode), typeof(DataGrid), new PropertyMetadata(SelectionMode.Single));
+        public static readonly DependencyProperty SelectionModeProperty = 
+            DependencyProperty.Register("SelectionMode", typeof(SelectionMode), typeof(DataGrid), new PropertyMetadata(SelectionMode.Single));
 
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register("SelectedItem", typeof(object), typeof(DataGrid), new PropertyMetadata(null));
@@ -290,7 +290,7 @@ namespace MyToolkit.Controls
 
             var copy = SelectionChanged;
             if (copy != null)
-                copy(sender, e);
+                copy(this, e);
         }
 
         private void ChangeItemSelection(object item, bool isSelected)

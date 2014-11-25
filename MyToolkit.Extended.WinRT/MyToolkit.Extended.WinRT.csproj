@@ -235,6 +235,7 @@
     <Compile Include="Controls\AppBarToggleButton.cs" />
     <Compile Include="Controls\ColorChooser.cs" />
     <Compile Include="Controls\DataGridBoundColumn.cs" />
+    <Compile Include="Controls\DataGridExtensions.cs" />
     <Compile Include="Controls\DataGridTemplatedCell.cs" />
     <Compile Include="Controls\DataGridTemplatedColumn.cs" />
     <Compile Include="Controls\DefaultDataGridCell.cs" />
