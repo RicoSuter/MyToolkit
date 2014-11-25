@@ -404,7 +404,7 @@ namespace MyToolkit.Controls
             if (_scrollViewer != null)
             {
                 var child = _scrollViewer.GetVisualChild(0);
-                var group = child.GetVisualStateGroup("ScrollStates");
+                var group = child.GetVisualStateGroup("ScrollStates"); // TODO: Fix this => group is null in WinRT
                 if (group != null)
                 {
                     group.CurrentStateChanging -= ScrollingStateChanging;
