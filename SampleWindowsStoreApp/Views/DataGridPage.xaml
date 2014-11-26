@@ -58,7 +58,7 @@
                                                  Style="{StaticResource BodyTextStyle}" 
                                                  d:DataContext="{d:DesignInstance Type=domain:Person}" />
                     <controls:DataGridTextColumn Width="200" Binding="{Binding Lastname}" 
-                                                 Style="{StaticResource BodyTextStyle}" 
+                                                 Style="{StaticResource BodyTextStyle}" IsAscendingDefault="False"
                                                  d:DataContext="{d:DesignInstance Type=domain:Person}">
                         <controls:DataGridTextColumn.Header>
                             <TextBlock Text="Lastname" Foreground="Green" />

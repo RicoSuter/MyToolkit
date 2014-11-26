@@ -8,7 +8,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Windows.Networking.Sockets;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -105,7 +104,7 @@ namespace MyToolkit.Controls
 		{
 			if (DataGrid.ItemDetailsTemplate != null)
 			{
-				if (!_isSelected || !DataGrid.ShowItemDetails)
+				if (!_isSelected)
 				{
 					if (_detailsControl != null)
 					{
@@ -113,7 +112,7 @@ namespace MyToolkit.Controls
 						_detailsControl = null;
 					}
 				}
-				else if (_isSelected && DataGrid.ShowItemDetails)
+				else if (_isSelected)
 				{
 					if (_detailsControl == null)
 					{

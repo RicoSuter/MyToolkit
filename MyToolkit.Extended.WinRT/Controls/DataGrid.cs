@@ -54,12 +54,6 @@ namespace MyToolkit.Controls
             get { return _listControl.SelectedItems; }
         }
 
-        /// <summary>Gets a value indicating whether the item details are shown. </summary>
-        public bool ShowItemDetails
-        {
-            get { return true; }
-        }
-
         /// <summary>Gets the currently displayed items. </summary>
         public IObservableCollectionView Items
         {
@@ -246,8 +240,7 @@ namespace MyToolkit.Controls
                     DefaultOrderIndex = 0;
             }
 
-            if (!_initialized)
-                Initialize();
+            Initialize();
         }
 
         private static void OnColumnsPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
@@ -303,7 +296,6 @@ namespace MyToolkit.Controls
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             Loaded -= OnLoaded;
-
             Dispatcher.RunAsync(CoreDispatcherPriority.Normal, Initialize);
             Dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
             {
@@ -338,14 +330,19 @@ namespace MyToolkit.Controls
 
         private void Initialize()
         {
-            if (_titleRowControl == null)
-                return;
+            if (!_initialized)
+            {
+                if (_titleRowControl == null)
+                    return;
 
-            _initialized = true;
+                _initialized = true;
 
-            UpdateColumnHeaders();
-            if (_listControl.ItemsSource == null)
-                UpdateItemsSource();
+                UpdateColumnHeaders();
+                if (_listControl.ItemsSource == null)
+                    UpdateItemsSource();
+
+                UpdateOrder();
+            }
         }
 
         private void UpdateColumnHeaders()
