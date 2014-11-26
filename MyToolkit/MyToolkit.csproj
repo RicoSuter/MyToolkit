@@ -85,8 +85,8 @@
     <Compile Include="Messaging\TextMessage.cs" />
     <Compile Include="Command\AsyncRelayCommand.cs" />
     <Compile Include="Command\CommandBase.cs" />
-    <Compile Include="Model\ExtendedObservableObject.cs" />
-    <Compile Include="Model\ExtendedPropertyChangedEventArgs.cs" />
+    <Compile Include="Model\GraphObservableObject.cs" />
+    <Compile Include="Model\GraphPropertyChangedEventArgs.cs" />
     <Compile Include="Mvvm\IDispatcher.cs" />
     <Compile Include="Data\UndoRedoManager.cs" />
     <Compile Include="Mvvm\ViewModelBase.cs" />

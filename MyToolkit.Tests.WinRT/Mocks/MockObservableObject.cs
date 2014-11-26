@@ -4,7 +4,7 @@ using MyToolkit.Model;
 
 namespace MyToolkit.Tests.WinRT.Mocks
 {
-    public class MockObservableObject : ExtendedObservableObject
+    public class MockObservableObject : GraphObservableObject
     {
         private string _name;
         private MockObservableObject _child;

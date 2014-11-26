@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ExtendedObservableObject.cs" company="MyToolkit">
+// <copyright file="GraphObservableObject.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
 // <license>http://mytoolkit.codeplex.com/license</license>
@@ -22,9 +22,9 @@ namespace MyToolkit.Model
 {
     /// <summary>An <see cref="ObservableObject"/> with graph property changed event and extended 
     /// changed event (including old and new value). </summary>
-    public class ExtendedObservableObject : ObservableObject
+    public class GraphObservableObject : ObservableObject
     {
-        private readonly List<object> _registeredChilds = new List<object>(); 
+        private readonly List<object> _registeredChildren = new List<object>(); 
         private readonly Dictionary<object, List<object>> _registeredCollections = new Dictionary<object, List<object>>();
         private readonly List<Type> _excludedChildTypes = new List<Type>(); 
 
@@ -52,39 +52,39 @@ namespace MyToolkit.Model
             DeregisterChild(oldValue);
             RegisterChild(newValue);
             
-            var args = new ExtendedPropertyChangedEventArgs(propertyName, oldValue, newValue);
+            var args = new GraphPropertyChangedEventArgs(propertyName, oldValue, newValue);
 
             oldValue = newValue;
             RaisePropertyChanged(args);
             return true;
         }
 
-        /// <summary>Raises the property changed event with <see cref="ExtendedPropertyChangedEventArgs"/> arguments. </summary>
+        /// <summary>Raises the property changed event with <see cref="GraphPropertyChangedEventArgs"/> arguments. </summary>
         /// <param name="oldValue">The old value. </param>
         /// <param name="newValue">The new value. </param>
         /// <param name="propertyName">The property name. </param>
         public void RaisePropertyChanged(object oldValue, object newValue, [CallerMemberName] string propertyName = null)
         {
-            RaisePropertyChanged(new ExtendedPropertyChangedEventArgs(propertyName, oldValue, newValue));
+            RaisePropertyChanged(new GraphPropertyChangedEventArgs(propertyName, oldValue, newValue));
         }
 
-        /// <summary>Raises the property changed event with <see cref="ExtendedPropertyChangedEventArgs"/> arguments. </summary>
+        /// <summary>Raises the property changed event with <see cref="GraphPropertyChangedEventArgs"/> arguments. </summary>
         /// <param name="oldValue">The old value. </param>
         /// <param name="newValue">The new value. </param>
         /// <param name="propertyNameExpression">The property name as lambda. </param>
         public void RaisePropertyChanged(Expression<Func<object>> propertyNameExpression, object oldValue, object newValue)
         {
-            RaisePropertyChanged(new ExtendedPropertyChangedEventArgs(ExpressionUtilities.GetPropertyName(propertyNameExpression), oldValue, newValue));
+            RaisePropertyChanged(new GraphPropertyChangedEventArgs(ExpressionUtilities.GetPropertyName(propertyNameExpression), oldValue, newValue));
         }
 
-        /// <summary>Raises the property changed event with <see cref="ExtendedPropertyChangedEventArgs"/> arguments. </summary>
+        /// <summary>Raises the property changed event with <see cref="GraphPropertyChangedEventArgs"/> arguments. </summary>
         /// <param name="oldValue">The old value. </param>
         /// <param name="newValue">The new value. </param>
         /// <typeparam name="TClass">The type of the class with the property. </typeparam>
         /// <param name="propertyNameExpression">The property name as lambda. </param>
         public void RaisePropertyChanged<TClass>(Expression<Func<TClass, object>> propertyNameExpression, object oldValue, object newValue)
         {
-            RaisePropertyChanged(new ExtendedPropertyChangedEventArgs(ExpressionUtilities.GetPropertyName(propertyNameExpression), oldValue, newValue));
+            RaisePropertyChanged(new GraphPropertyChangedEventArgs(ExpressionUtilities.GetPropertyName(propertyNameExpression), oldValue, newValue));
         }
 
         /// <summary>Registers a child to receive property changes. </summary>
@@ -96,23 +96,23 @@ namespace MyToolkit.Model
 
 #if LEGACY
             var childTypeInfo = child.GetType();
-            if (_registeredChilds.Contains(child) || ExcludedChildTypes.Any(t => t.IsAssignableFrom(childTypeInfo)))
+            if (_registeredChildren.Contains(child) || ExcludedChildTypes.Any(t => t.IsAssignableFrom(childTypeInfo)))
                 return;
 #else
             var childTypeInfo = child.GetType().GetTypeInfo();
-            if (_registeredChilds.Contains(child) || ExcludedChildTypes.Any(t => t.GetTypeInfo().IsAssignableFrom(childTypeInfo)))
+            if (_registeredChildren.Contains(child) || ExcludedChildTypes.Any(t => t.GetTypeInfo().IsAssignableFrom(childTypeInfo)))
                 return;
 #endif
 
-            if (child is ExtendedObservableObject)
+            if (child is GraphObservableObject)
             {
-                ((ExtendedObservableObject)child).GraphPropertyChanged += RaiseGraphPropertyChanged;
-                _registeredChilds.Add(child);
+                ((GraphObservableObject)child).GraphPropertyChanged += RaiseGraphPropertyChanged;
+                _registeredChildren.Add(child);
             }
             else if (child is INotifyPropertyChanged)
             {
                 ((INotifyPropertyChanged)child).PropertyChanged += RaiseGraphPropertyChanged;
-                _registeredChilds.Add(child);
+                _registeredChildren.Add(child);
 
                 if (child is ICollection)
                 {
@@ -143,18 +143,18 @@ namespace MyToolkit.Model
         /// <param name="child">The child object. </param>
         protected void DeregisterChild(object child)
         {
-            if (child == null || !_registeredChilds.Contains(child))
+            if (child == null || !_registeredChildren.Contains(child))
                 return;
 
-            if (child is ExtendedObservableObject)
+            if (child is GraphObservableObject)
             {
-                ((ExtendedObservableObject)child).GraphPropertyChanged -= RaiseGraphPropertyChanged;
-                _registeredChilds.Remove(child);
+                ((GraphObservableObject)child).GraphPropertyChanged -= RaiseGraphPropertyChanged;
+                _registeredChildren.Remove(child);
             }
             else if (child is INotifyPropertyChanged)
             {
                 ((INotifyPropertyChanged)child).PropertyChanged -= RaiseGraphPropertyChanged;
-                _registeredChilds.Remove(child);
+                _registeredChildren.Remove(child);
 
                 if (child is ICollection)
                 {
@@ -227,5 +227,10 @@ namespace MyToolkit.Model
 
             RaiseGraphPropertyChanged(sender, new ExtendedNotifyCollectionChangedEventArgs<object>(addedItems, removedItems, oldCollectionCopy));
         }
+    }
+
+    [Obsolete("Use GraphObservableObject instead. 11/26/2014")]
+    public class ExtendedObservableObject : GraphObservableObject
+    {
     }
 }

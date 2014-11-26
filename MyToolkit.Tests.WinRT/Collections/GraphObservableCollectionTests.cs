@@ -5,12 +5,11 @@ using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using MyToolkit.Collections;
 using MyToolkit.Model;
 using MyToolkit.Tests.WinRT.Mocks;
-using MyToolkit.Tests.WinRT.Model;
 
 namespace MyToolkit.Tests.WinRT.Collections
 {
     [TestClass]
-    public class ExtendedObservableCollectionTests
+    public class GraphObservableCollectionTests
     {
         private static IReadOnlyList<string> _addedItems;
         private static IReadOnlyList<string> _removedItems;
@@ -138,8 +137,8 @@ namespace MyToolkit.Tests.WinRT.Collections
 
             //// Assert
             Assert.AreEqual(2, list.Count);
-            Assert.AreEqual("A", ((ExtendedPropertyChangedEventArgs)list[0]).OldValue);
-            Assert.AreEqual("B", ((ExtendedPropertyChangedEventArgs)list[0]).NewValue);
+            Assert.AreEqual("A", ((GraphPropertyChangedEventArgs)list[0]).OldValue);
+            Assert.AreEqual("B", ((GraphPropertyChangedEventArgs)list[0]).NewValue);
         }
 
         [TestMethod]

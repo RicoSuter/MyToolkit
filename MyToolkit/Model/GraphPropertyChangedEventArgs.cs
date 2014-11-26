@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="ExtendedPropertyChangedEventArgs.cs" company="MyToolkit">
+// <copyright file="GraphPropertyChangedEventArgs.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
 // <license>http://mytoolkit.codeplex.com/license</license>
@@ -11,10 +11,10 @@ using System.ComponentModel;
 namespace MyToolkit.Model
 {
     /// <summary>The argument of the ExtendedPropertyChanged event. </summary>
-    public class ExtendedPropertyChangedEventArgs : PropertyChangedEventArgs
+    public class GraphPropertyChangedEventArgs : PropertyChangedEventArgs
     {
-        /// <summary>Initializes a new instance of the <see cref="ExtendedPropertyChangedEventArgs"/> class. </summary>
-        public ExtendedPropertyChangedEventArgs(string propertyName, object oldValue, object newValue) : base(propertyName)
+        /// <summary>Initializes a new instance of the <see cref="GraphPropertyChangedEventArgs"/> class. </summary>
+        public GraphPropertyChangedEventArgs(string propertyName, object oldValue, object newValue) : base(propertyName)
         {
             OldValue = oldValue;
             NewValue = newValue;

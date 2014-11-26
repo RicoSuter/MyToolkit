@@ -18,9 +18,9 @@ using MyToolkit.Mvvm;
 
 namespace MyToolkit.Data
 {
-    /// <summary>Manages undo/redo for a <see cref="ExtendedObservableObject"/> object. 
-    /// Only classes which inherit from ExtendedObservableObject and properties which are 
-    /// changed via the Set method or raise <see cref="ExtendedPropertyChangedEventArgs"/> are tracked for undo/redo. 
+    /// <summary>Manages undo/redo for a <see cref="GraphObservableObject"/> object. 
+    /// Only classes which inherit from GraphObservableObject and properties which are 
+    /// changed via the Set method or raise <see cref="GraphPropertyChangedEventArgs"/> are tracked for undo/redo. 
     /// Properties must have an accessible setter. Collection must inherit from INotifyCollectionChanged for
     /// undo/redo of collection changes. The class is not thread-safe; all methods must be called on the UI thread. </summary>
     public class UndoRedoManager : ObservableObject
@@ -28,14 +28,14 @@ namespace MyToolkit.Data
         private readonly List<List<UndoRedoCommand>> _commands = new List<List<UndoRedoCommand>>();
         private readonly IDispatcher _dispatcher;
         private readonly string[] _excludedRootProperties;
-        private readonly ExtendedObservableObject _root;
+        private readonly GraphObservableObject _root;
 
         private int _currentIndex = -1;
         private bool _trackEntities = true;
         private List<UndoRedoCommand> _currentCommandSet;
         private int _restorePoint = -1;
 
-        public UndoRedoManager(ExtendedObservableObject root, IDispatcher dispatcher, string[] excludedRootProperties = null)
+        public UndoRedoManager(GraphObservableObject root, IDispatcher dispatcher, string[] excludedRootProperties = null)
         {
             _root = root;
             _dispatcher = dispatcher;
@@ -152,7 +152,7 @@ namespace MyToolkit.Data
             if (sender == _root && _excludedRootProperties.Contains(args.PropertyName))
                 return;
 
-            if (args is ExtendedPropertyChangedEventArgs || args is IExtendedNotifyCollectionChangedEventArgs)
+            if (args is GraphPropertyChangedEventArgs || args is IExtendedNotifyCollectionChangedEventArgs)
             {
                 var callDispatcher = false;
                 if (_currentCommandSet == null)
@@ -214,7 +214,7 @@ namespace MyToolkit.Data
             }
             else
             {
-                var propertyArgs = (ExtendedPropertyChangedEventArgs)args;
+                var propertyArgs = (GraphPropertyChangedEventArgs)args;
                 return new PropertyCommand(sender, propertyArgs.PropertyName, propertyArgs.OldValue, propertyArgs.NewValue);
             }
         }
@@ -321,7 +321,7 @@ namespace MyToolkit.Data
         }
     }
 
-    internal class ObservableCollectionWrapper : ExtendedObservableObject
+    internal class ObservableCollectionWrapper : GraphObservableObject
     {
         private INotifyCollectionChanged _collection;
 

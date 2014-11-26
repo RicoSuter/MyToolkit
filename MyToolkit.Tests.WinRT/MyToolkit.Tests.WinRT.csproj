@@ -116,7 +116,7 @@
     <SDKReference Include="TestPlatform, Version=11.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\ExtendedObservableCollectionTests.cs" />
+    <Compile Include="Collections\GraphObservableCollectionTests.cs" />
     <Compile Include="Collections\ObservableCollectionViewTests.cs" />
     <Compile Include="Collections\QueryObservableCollectionViewTests.cs" />
     <Compile Include="Composition\CompositionContextTests.cs" />
