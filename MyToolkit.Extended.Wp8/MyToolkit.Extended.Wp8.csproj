@@ -335,7 +335,7 @@
     <Compile Include="Animation\Transitions\TurnstileBackwardOutAnimator.cs" />
     <Compile Include="Animation\Transitions\TurnstileForwardInAnimator.cs" />
     <Compile Include="Animation\Transitions\TurnstileForwardOutAnimator.cs" />
-    <Compile Include="Controls\ExtendedListPicker.cs" />
+    <Compile Include="Controls\MtListPicker.cs" />
     <Compile Include="Converters\LongListSelectorHasItemsConverter.cs" />
     <Compile Include="Environment\PhoneApplication.cs" />
     <Compile Include="Environment\PhoneManifest.cs" />

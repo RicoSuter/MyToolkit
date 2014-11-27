@@ -19,7 +19,6 @@ using Windows.UI.Xaml.Controls;
 using System.Windows;
 using System.Windows.Controls;
 using MyToolkit.UI;
-
 #endif
 
 namespace MyToolkit.Controls

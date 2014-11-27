@@ -3,15 +3,15 @@ using Microsoft.Phone.Controls;
 
 namespace MyToolkit.Controls
 {
-	public class ExtendedListPicker : ListPicker
+	public class MtListPicker : ListPicker
 	{
 		//public static readonly DependencyProperty MySelectedItemsProperty =
-		//    DependencyProperty.Register("TypedSelectedItems", typeof(IList), typeof(ExtendedListPicker),
+		//    DependencyProperty.Register("TypedSelectedItems", typeof(IList), typeof(MtListPicker),
 		//    new PropertyMetadata(default(IEnumerable), PropertyChangedCallback));
 
 		//private static void PropertyChangedCallback(DependencyObject obj, DependencyPropertyChangedEventArgs args)
 		//{
-		//    var ctrl = (ExtendedListPicker)obj;
+		//    var ctrl = (MtListPicker)obj;
 		//    ctrl.Update();
 		//}
 
@@ -49,8 +49,8 @@ namespace MyToolkit.Controls
 
 		//public class Helper
 		//{
-		//    private readonly ExtendedListPicker picker;
-		//    public Helper(ExtendedListPicker p)
+		//    private readonly MtListPicker picker;
+		//    public Helper(MtListPicker p)
 		//    {
 		//        picker = p;
 		//    }
