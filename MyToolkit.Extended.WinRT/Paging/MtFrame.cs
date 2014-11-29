@@ -180,11 +180,11 @@ namespace MyToolkit.Paging
         }
 
         /// <summary>Navigates back to the given page. </summary>
-        /// <param name="page">The page to navigate to. </param>
+        /// <param name="pageDescription">The page to navigate to. </param>
         /// <returns>True if the navigation could be performed. </returns>
-        public async Task<bool> GoBackToAsync(MtPageDescription page)
+        public async Task<bool> GoBackToAsync(MtPageDescription pageDescription)
         {
-            var index = _pages.IndexOf(page);
+            var index = _pages.IndexOf(pageDescription);
             return await GoBackToAsync(index);
         }
 
@@ -204,6 +204,37 @@ namespace MyToolkit.Paging
                 if (!await GoBackAsync())
                     return false;
             }
+
+            return true;
+        }
+
+        /// <summary>Removes a page from the page stack. </summary>
+        /// <param name="pageDescription">The page to remove. </param>
+        /// <returns><c>true</c> if the page has been found and was removed; otherwise, <c>false</c>. </returns>
+        /// <exception cref="ArgumentException">The current page cannot be removed from the stack. </exception>
+        public bool RemovePageFromStack(MtPageDescription pageDescription)
+        {
+            var index = _pages.IndexOf(pageDescription);
+            if (index >= 0)
+            {
+                RemovePageFromStackAt(index);
+                return true; 
+            }
+            return false; 
+        }
+
+        /// <summary>Removes a page from the page stack. </summary>
+        /// <param name="pageIndex">The index of the page page to remove. </param>
+        /// <returns><c>true</c> if the page has been found and was removed; otherwise, <c>false</c>. </returns>
+        /// <exception cref="ArgumentException">The current page cannot be removed from the stack. </exception>
+        public bool RemovePageFromStackAt(int pageIndex)
+        {
+            if (pageIndex == _currentIndex)
+                throw new ArgumentException("The current page cannot be removed from the stack. ");
+
+            _pages.RemoveAt(pageIndex);
+            if (pageIndex < _currentIndex)
+                _currentIndex--;
 
             return true;
         }
@@ -243,7 +274,7 @@ namespace MyToolkit.Paging
                 var newPage = CurrentPage;
 
                 if (mode == NavigationMode.Back && DisableForwardStack)
-                    RemoveAllPagesAfterCurrent();
+                    RemoveForwardStack();
 
                 Content = newPage.GetPage(this).InternalPage;
 
@@ -307,7 +338,7 @@ namespace MyToolkit.Paging
                 CurrentPage.GetPage(this).OnVisibilityChanged(args);
         }
 
-        private void RemoveAllPagesAfterCurrent()
+        private void RemoveForwardStack()
         {
             for (var i = _pages.Count - 1; i > _currentIndex; i--)
             {
@@ -320,7 +351,7 @@ namespace MyToolkit.Paging
         {
             // Remove forward stack
             var previousPage = CurrentPage;
-            RemoveAllPagesAfterCurrent();
+            RemoveForwardStack();
 
             // Create new page
             var newPage = new MtPageDescription(type, parameter);
