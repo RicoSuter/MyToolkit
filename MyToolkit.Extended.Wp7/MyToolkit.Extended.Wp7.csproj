@@ -182,20 +182,23 @@
     <Compile Include="..\MyToolkit.Extended.Wp8\Controls\ExtendedItemsControl.cs">
       <Link>Controls\ExtendedItemsControl.cs</Link>
     </Compile>
-    <Compile Include="..\MyToolkit.Extended.Wp8\Controls\ExtendedListPicker.cs">
-      <Link>Controls\ExtendedListPicker.cs</Link>
-    </Compile>
     <Compile Include="..\MyToolkit.Extended.Wp8\Controls\FixedNavigationList.cs">
       <Link>Controls\FixedNavigationList.cs</Link>
     </Compile>
     <Compile Include="..\MyToolkit.Extended.Wp8\Controls\ImageButton.cs">
       <Link>Controls\ImageButton.cs</Link>
     </Compile>
+    <Compile Include="..\MyToolkit.Extended.Wp8\Controls\MtListPicker.cs">
+      <Link>Controls\MtListPicker.cs</Link>
+    </Compile>
     <Compile Include="..\MyToolkit.Extended.Wp8\Controls\NativeLongListSelector.cs">
       <Link>Controls\NativeLongListSelector.cs</Link>
     </Compile>
     <Compile Include="..\MyToolkit.Extended.Wp8\Controls\NavigationList.cs">
       <Link>Controls\NavigationList.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\MtListBox.cs">
+      <Link>Controls\MtListBox.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Controls\ScrollableItemsControl.cs">
       <Link>Controls\ScrollableItemsControl.cs</Link>
@@ -295,9 +298,6 @@
     </Compile>
     <Compile Include="..\shared\animation\Flipping.cs">
       <Link>Animation\Flipping.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\ExtendedListBox.cs">
-      <Link>Controls\ExtendedListBox.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Controls\FixedHtmlTextBlock.cs">
       <Link>Controls\FixedHtmlTextBlock.cs</Link>

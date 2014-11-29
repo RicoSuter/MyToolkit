@@ -95,6 +95,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Shared\Controls\MtListBox.cs">
+      <Link>Controls\MtListBox.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Controls\ScrollableItemsControl.cs">
       <Link>Controls\ScrollableItemsControl.cs</Link>
     </Compile>
@@ -106,9 +109,6 @@
     </Compile>
     <Compile Include="..\shared\animation\Flipping.cs">
       <Link>Animation\Flipping.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\ExtendedListBox.cs">
-      <Link>Controls\ExtendedListBox.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Controls\FixedHtmlTextBlock.cs">
       <Link>Controls\FixedHtmlTextBlock.cs</Link>

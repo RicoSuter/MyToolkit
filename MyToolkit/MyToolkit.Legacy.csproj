@@ -52,16 +52,16 @@
     </Compile>
     <Compile Include="Collections\AlphaGroups.cs" />
     <Compile Include="Collections\BlockingQueue.cs" />
-    <Compile Include="Collections\ExtendedGroup.cs" />
-    <Compile Include="Collections\ExtendedNotifyCollectionChangedEventArgs.cs" />
-    <Compile Include="Collections\ExtendedObservableCollection.cs" />
     <Compile Include="Collections\Group.cs" />
     <Compile Include="Collections\IObservableCollectionView.cs" />
+    <Compile Include="Collections\MtNotifyCollectionChangedEventArgs.cs" />
+    <Compile Include="Collections\MtObservableCollection.cs" />
     <Compile Include="Collections\ObservableCollectionObserver.cs" />
     <Compile Include="Collections\ObservableCollectionView.cs" />
     <Compile Include="Collections\ObservableCollectionViewBase.cs" />
     <Compile Include="Collections\ObservableDictionary.cs" />
     <Compile Include="Collections\QueryObservableCollectionView.cs" />
+    <Compile Include="Collections\TopItemsGroup.cs" />
     <Compile Include="Command\AsyncRelayCommand.cs" />
     <Compile Include="Command\CommandBase.cs" />
     <Compile Include="Command\RelayCommand.cs" />
@@ -87,8 +87,8 @@
     <Compile Include="Messaging\MessengerExtensions.cs" />
     <Compile Include="Messaging\NavigateMessage.cs" />
     <Compile Include="Messaging\TextMessage.cs" />
-    <Compile Include="Model\ExtendedObservableObject.cs" />
-    <Compile Include="Model\ExtendedPropertyChangedEventArgs.cs" />
+    <Compile Include="Model\GraphObservableObject.cs" />
+    <Compile Include="Model\GraphPropertyChangedEventArgs.cs" />
     <Compile Include="Model\ObservableObject.cs" />
     <Compile Include="Model\PropertyChangedEventArgsExtensions.cs" />
     <Compile Include="Model\ValidationObject.cs" />

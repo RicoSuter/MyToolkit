@@ -99,8 +99,8 @@
     <Compile Include="..\Shared\Controls\DataTemplateSelector.cs">
       <Link>Controls\DataTemplateSelector.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\ExtendedListBox.cs">
-      <Link>Controls\ExtendedListBox.cs</Link>
+    <Compile Include="..\Shared\Controls\MtListBox.cs">
+      <Link>Controls\MtListBox.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
       <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>

@@ -31,8 +31,6 @@ using Windows.UI.Xaml.Markup;
 
 // developed by Rico Suter (http://rsuter.com), http://mytoolkit.codeplex.com
 
-// TODO: Rename file to MtListBox.cs
-
 namespace MyToolkit.Controls
 {
     /// <summary>A <see cref="ListBox"/> with additional features. </summary>

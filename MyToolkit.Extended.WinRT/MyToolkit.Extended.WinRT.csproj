@@ -48,14 +48,14 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Shared\Controls\MtListBox.cs">
+      <Link>Controls\MtListBox.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Media\ImageHelper.cs">
       <Link>Media\ImageHelper.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Controls\ScrollableItemsControl.cs">
       <Link>Controls\ScrollableItemsControl.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\ExtendedListBox.cs">
-      <Link>Controls\ExtendedListBox.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Controls\FixedHtmlTextBlock.cs">
       <Link>Controls\FixedHtmlTextBlock.cs</Link>
