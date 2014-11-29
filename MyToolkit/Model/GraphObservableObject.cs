@@ -225,7 +225,7 @@ namespace MyToolkit.Model
                 DeregisterChild(item);
             }
 
-            RaiseGraphPropertyChanged(sender, new ExtendedNotifyCollectionChangedEventArgs<object>(addedItems, removedItems, oldCollectionCopy));
+            RaiseGraphPropertyChanged(sender, new MtNotifyCollectionChangedEventArgs<object>(addedItems, removedItems, oldCollectionCopy));
         }
     }
 

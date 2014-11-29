@@ -1,11 +1,12 @@
 //-----------------------------------------------------------------------
-// <copyright file="ExtendedGroup.cs" company="MyToolkit">
+// <copyright file="TopItemsGroup.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
 // <license>http://mytoolkit.codeplex.com/license</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -15,21 +16,21 @@ namespace MyToolkit.Collections
 {
     /// <summary>An extended group implementation with a list of items but showing only a given number of them. </summary>
     /// <typeparam name="T">The type of an item. </typeparam>
-	public class ExtendedGroup<T> : Group<T>
+	public class TopItemsGroup<T> : Group<T>
 	{
 		private int _topItemsCount = -1;
         private bool _updateLock = false;
 
-        /// <summary>Initializes a new instance of the <see cref="ExtendedGroup{T}"/> class. </summary>
-        public ExtendedGroup(string title, int topItemsCount = -1)
+        /// <summary>Initializes a new instance of the <see cref="TopItemsGroup{T}"/> class. </summary>
+        public TopItemsGroup(string title, int topItemsCount = -1)
 			: base(title)
 		{
 			_topItemsCount = topItemsCount;
 			UpdateTopItems();
 		}
 
-        /// <summary>Initializes a new instance of the <see cref="ExtendedGroup{T}"/> class. </summary>
-        public ExtendedGroup(string title, IEnumerable<T> items, int topItemsCount = -1)
+        /// <summary>Initializes a new instance of the <see cref="TopItemsGroup{T}"/> class. </summary>
+        public TopItemsGroup(string title, IEnumerable<T> items, int topItemsCount = -1)
 			: base(title, items)
 		{
 			_topItemsCount = topItemsCount;
@@ -52,7 +53,7 @@ namespace MyToolkit.Collections
         }
 
         /// <summary>Gets the items to show in the group. </summary>
-        public ExtendedObservableCollection<T> TopItems { get; private set; }
+        public MtObservableCollection<T> TopItems { get; private set; }
 
         /// <summary>Initializes the group with a list of items. </summary>
         /// <param name="items">The items. </param>
@@ -83,9 +84,23 @@ namespace MyToolkit.Collections
 
 			var collection = TopItemsCount == -1 ? this : this.Take(TopItemsCount);
 			if (TopItems == null)
-				TopItems = new ExtendedObservableCollection<T>(collection);
+				TopItems = new MtObservableCollection<T>(collection);
 			else
 				TopItems.Initialize(collection);
 		}
 	}
+
+    [Obsolete("Use TopItemsGroup<T> instead. 11/29/2014")]
+    public class ExtendedGroup<T> : TopItemsGroup<T>
+    {
+        /// <summary>Initializes a new instance of the <see cref="TopItemsGroup{T}"/> class. </summary>
+        public ExtendedGroup(string title, int topItemsCount = -1) : base(title, topItemsCount)
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="TopItemsGroup{T}"/> class. </summary>
+        public ExtendedGroup(string title, IEnumerable<T> items, int topItemsCount = -1) : base(title, items, topItemsCount)
+        {
+        }
+    }
 }

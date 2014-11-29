@@ -57,13 +57,13 @@
     <Compile Include="Data\DataManagerBase.cs" />
     <Compile Include="Collections\AlphaGroups.cs" />
     <Compile Include="Collections\BlockingQueue.cs" />
-    <Compile Include="Collections\ExtendedGroup.cs" />
-    <Compile Include="Collections\ExtendedObservableCollection.cs" />
+    <Compile Include="Collections\TopItemsGroup.cs" />
+    <Compile Include="Collections\MtObservableCollection.cs" />
     <Compile Include="Collections\Group.cs" />
     <Compile Include="Collections\ObservableCollectionObserver.cs" />
     <Compile Include="Collections\ObservableDictionary.cs" />
     <Compile Include="Collections\ObservableCollectionViewBase.cs" />
-    <Compile Include="Collections\ExtendedNotifyCollectionChangedEventArgs.cs" />
+    <Compile Include="Collections\MtNotifyCollectionChangedEventArgs.cs" />
     <Compile Include="Composition\Composition.cs" />
     <Compile Include="Composition\CompositionContext.cs" />
     <Compile Include="Composition\ExportAttribute.cs" />

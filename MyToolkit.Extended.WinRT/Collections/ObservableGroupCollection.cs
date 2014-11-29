@@ -22,8 +22,8 @@ namespace MyToolkit.Collections
         /// <summary>Creates and adds a group to the collection. </summary>
         /// <param name="title">The title of the group. </param>
         /// <param name="topItemsCount">The top items count. </param>
-        /// <returns>The created <see cref="ExtendedGroup{T}"/></returns>
-		public ExtendedGroup<TItem> AddGroup(string title, int topItemsCount = -1)
+        /// <returns>The created <see cref="TopItemsGroup{T}"/></returns>
+		public TopItemsGroup<TItem> AddGroup(string title, int topItemsCount = -1)
 		{
 			return AddGroup(title, new List<TItem>(), topItemsCount);
 		}
@@ -32,10 +32,10 @@ namespace MyToolkit.Collections
         /// <param name="title">The title of the group. </param>
         /// <param name="items">The items in the group. </param>
         /// <param name="topItemsCount">The top items count. </param>
-        /// <returns>The created <see cref="ExtendedGroup{T}"/></returns>
-        public ExtendedGroup<TItem> AddGroup(string title, IEnumerable<TItem> items, int topItemsCount = -1)
+        /// <returns>The created <see cref="TopItemsGroup{T}"/></returns>
+        public TopItemsGroup<TItem> AddGroup(string title, IEnumerable<TItem> items, int topItemsCount = -1)
 		{
-			var group = new ExtendedGroup<TItem>(title, items, topItemsCount);
+			var group = new TopItemsGroup<TItem>(title, items, topItemsCount);
 			Add(group);
 			return group;
 		}

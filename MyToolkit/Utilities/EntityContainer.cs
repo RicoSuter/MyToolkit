@@ -10,9 +10,9 @@ namespace MyToolkit.Utilities
 
     public class EntityContainer<TEntity, TIdentity> where TEntity : class, IEntity<TIdentity>
 	{
-		private readonly ExtendedObservableCollection<TEntity> _collection = new ExtendedObservableCollection<TEntity>();
+		private readonly MtObservableCollection<TEntity> _collection = new MtObservableCollection<TEntity>();
 
-		public ExtendedObservableCollection<TEntity> Collection 
+		public MtObservableCollection<TEntity> Collection 
         { 
             get { return _collection; } 
         }

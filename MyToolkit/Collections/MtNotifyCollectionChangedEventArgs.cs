@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="ExtendedNotifyCollectionChangedEventArgs.cs" company="MyToolkit">
+// <copyright file="MtNotifyCollectionChangedEventArgs.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
 // <license>http://mytoolkit.codeplex.com/license</license>
@@ -12,10 +12,10 @@ using System.ComponentModel;
 
 namespace MyToolkit.Collections
 {
-    public class ExtendedNotifyCollectionChangedEventArgs<T> : PropertyChangedEventArgs, IExtendedNotifyCollectionChangedEventArgs
+    public class MtNotifyCollectionChangedEventArgs<T> : PropertyChangedEventArgs, IExtendedNotifyCollectionChangedEventArgs
     {
 #if !LEGACY
-        public ExtendedNotifyCollectionChangedEventArgs(IReadOnlyList<T> addedItems, IReadOnlyList<T> removedItems, IReadOnlyList<T> oldCollection)
+        public MtNotifyCollectionChangedEventArgs(IReadOnlyList<T> addedItems, IReadOnlyList<T> removedItems, IReadOnlyList<T> oldCollection)
             : base(null)
         {
             AddedItems = addedItems;
@@ -29,11 +29,11 @@ namespace MyToolkit.Collections
         /// <summary>Gets or sets the list of removed items. </summary>
         public IReadOnlyList<T> RemovedItems { get; private set; }
 
-        /// <summary>Gets the previous collection (only provided when enabled in the <see cref="ExtendedObservableCollection{T}"/> object). </summary>
+        /// <summary>Gets the previous collection (only provided when enabled in the <see cref="MtObservableCollection{T}"/> object). </summary>
         public IReadOnlyList<T> OldCollection { get; private set; }
 
 #else
-        public ExtendedNotifyCollectionChangedEventArgs(IList<T> addedItems, IList<T> removedItems, IList<T> oldCollection)
+        public MtNotifyCollectionChangedEventArgs(IList<T> addedItems, IList<T> removedItems, IList<T> oldCollection)
             : base(null)
         {
             AddedItems = addedItems;
@@ -52,7 +52,7 @@ namespace MyToolkit.Collections
         public IList<T> RemovedItems { get; private set; }
 
         /// <summary>
-        /// Gets the previous collection (only provided when enabled in the <see cref="ExtendedObservableCollection{T}"/> object). 
+        /// Gets the previous collection (only provided when enabled in the <see cref="MtObservableCollection{T}"/> object). 
         /// </summary>
         public IList<T> OldCollection { get; private set; }
 
@@ -82,7 +82,7 @@ namespace MyToolkit.Collections
         /// <summary>Gets the list of removed items. </summary>
         IEnumerable RemovedItems { get; }
 
-        /// <summary>Gets the previous collection (only provided when enabled in the <see cref="ExtendedObservableCollection{T}"/> object). </summary>
+        /// <summary>Gets the previous collection (only provided when enabled in the <see cref="MtObservableCollection{T}"/> object). </summary>
         IEnumerable OldCollection { get; }
     }
 }

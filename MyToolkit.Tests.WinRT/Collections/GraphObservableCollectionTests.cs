@@ -13,7 +13,7 @@ namespace MyToolkit.Tests.WinRT.Collections
     {
         private static IReadOnlyList<string> _addedItems;
         private static IReadOnlyList<string> _removedItems;
-        private static ExtendedObservableCollection<string> _collection;
+        private static MtObservableCollection<string> _collection;
 
         [TestMethod]
         public void When_item_removed_then_event_is_triggered_with_it()
@@ -50,7 +50,7 @@ namespace MyToolkit.Tests.WinRT.Collections
         {
             _addedItems = new List<string>();
             _removedItems = new List<string>();
-            _collection = new ExtendedObservableCollection<string>
+            _collection = new MtObservableCollection<string>
             {
                 "a",
                 "b",

@@ -19,9 +19,9 @@ namespace SampleWindowsStoreApp.ViewModels
     {
         public WelcomePageModel()
         {
-            Groups = new ObservableCollection<ExtendedGroup<NavigationItem>>();
+            Groups = new ObservableCollection<TopItemsGroup<NavigationItem>>();
 
-            Groups.Add(new ExtendedGroup<NavigationItem>("MyToolkit", new List<NavigationItem>
+            Groups.Add(new TopItemsGroup<NavigationItem>("MyToolkit", new List<NavigationItem>
             {
                 new NavigationItem {Title = "Model-View-ViewModel (MVVM)", Subtitle = "MvvmSamplePage", PageType = typeof(MvvmSamplePage)},
                 new NavigationItem {Title = "YouTube Player and PlayTo", Subtitle = "YouTubePlayerPage", PageType = typeof(YouTubePlayerPage)},
@@ -32,7 +32,7 @@ namespace SampleWindowsStoreApp.ViewModels
                 new NavigationItem {Title = "MtListBox", Subtitle = "MtListBoxPage", PageType = typeof(MtListBoxPage)},
             }));
 
-            Groups.Add(new ExtendedGroup<NavigationItem>("Windows 8", new List<NavigationItem>
+            Groups.Add(new TopItemsGroup<NavigationItem>("Windows 8", new List<NavigationItem>
             {
                 new NavigationItem {Title = "Settings", Subtitle = "SettingsSamplePage", PageType = typeof(SettingsSamplePage)},
                 new NavigationItem {Title = "Localization", Subtitle = "LocalizationPage", PageType = typeof(LocalizationPage)},
@@ -48,6 +48,6 @@ namespace SampleWindowsStoreApp.ViewModels
             }));
         }
 
-        public ObservableCollection<ExtendedGroup<NavigationItem>> Groups { get; private set; }
+        public ObservableCollection<TopItemsGroup<NavigationItem>> Groups { get; private set; }
     }
 }

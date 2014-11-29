@@ -23,7 +23,7 @@ namespace MyToolkit.Collections
         private readonly List<T> _registeredItems = new List<T>();
         
         /// <summary>Occurs when the collection changes. </summary>
-		public event EventHandler<ExtendedNotifyCollectionChangedEventArgs<T>> CollectionChanged;
+		public event EventHandler<MtNotifyCollectionChangedEventArgs<T>> CollectionChanged;
 
 		/// <summary>Occurs when an element of the collection changes. </summary>
 		public event PropertyChangedEventHandler ItemChanged;
@@ -91,7 +91,7 @@ namespace MyToolkit.Collections
 
 			var copy = CollectionChanged;
 			if (copy != null)
-                copy(sender, new ExtendedNotifyCollectionChangedEventArgs<T>(addedItems, removedItems, null));
+                copy(sender, new MtNotifyCollectionChangedEventArgs<T>(addedItems, removedItems, null));
 		}
 	}
 }

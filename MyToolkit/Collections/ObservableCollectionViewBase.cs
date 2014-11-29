@@ -23,7 +23,7 @@ namespace MyToolkit.Collections
     public abstract class ObservableCollectionViewBase<TItem> : IList<TItem>, IDisposable, IList, INotifyCollectionChanged, INotifyPropertyChanged
     {
         private NotifyCollectionChangedEventHandler _itemsChangedHandler;
-        private ExtendedObservableCollection<TItem> _internalCollection = new ExtendedObservableCollection<TItem>();
+        private MtObservableCollection<TItem> _internalCollection = new MtObservableCollection<TItem>();
         private readonly Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler> _events =
             new Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler>();
 
@@ -130,8 +130,8 @@ namespace MyToolkit.Collections
             var old = TrackCollectionChanges;
             TrackCollectionChanges = false;
 
-            if (Items is ExtendedObservableCollection<TItem>)
-                ((ExtendedObservableCollection<TItem>)Items).AddRange(items);
+            if (Items is MtObservableCollection<TItem>)
+                ((MtObservableCollection<TItem>)Items).AddRange(items);
             else
             {
                 foreach (var i in items)

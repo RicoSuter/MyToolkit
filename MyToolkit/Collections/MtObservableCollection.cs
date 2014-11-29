@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="ExtendedObservableCollection.cs" company="MyToolkit">
+// <copyright file="MtObservableCollection.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
 // <license>http://mytoolkit.codeplex.com/license</license>
@@ -18,14 +18,14 @@ namespace MyToolkit.Collections
     /// <summary>Provides a safe collection changed event which always provides the added 
     /// and removed items, some more events and more range methods. </summary>
     /// <typeparam name="T"></typeparam>
-    public class ExtendedObservableCollection<T> : ObservableCollection<T>
+    public class MtObservableCollection<T> : ObservableCollection<T>
     {
         private List<T> _oldCollection = null;
-        private event EventHandler<ExtendedNotifyCollectionChangedEventArgs<T>> _extendedCollectionChanged;
+        private event EventHandler<MtNotifyCollectionChangedEventArgs<T>> _extendedCollectionChanged;
 
-        public ExtendedObservableCollection() { }
+        public MtObservableCollection() { }
 
-        public ExtendedObservableCollection(IEnumerable<T> collection) : base(collection) { }
+        public MtObservableCollection(IEnumerable<T> collection) : base(collection) { }
 
         /// <summary>Gets or sets a value indicating whether to provide the previous collection in the extended collection changed event. 
         /// Enabling this feature may have a performance impact as for each collection changed event a copy of the collection gets created. </summary>
@@ -83,7 +83,7 @@ namespace MyToolkit.Collections
         }
 
         /// <summary>Collection changed event with safe/always correct added items and removed items list. </summary>
-        public event EventHandler<ExtendedNotifyCollectionChangedEventArgs<T>> ExtendedCollectionChanged
+        public event EventHandler<MtNotifyCollectionChangedEventArgs<T>> ExtendedCollectionChanged
         {
             add
             {
@@ -130,8 +130,13 @@ namespace MyToolkit.Collections
                     _oldCollection.Remove(item);
                 }
 
-                copy(this, new ExtendedNotifyCollectionChangedEventArgs<T>(addedItems, removedItems, oldCollection));
+                copy(this, new MtNotifyCollectionChangedEventArgs<T>(addedItems, removedItems, oldCollection));
             }
         }
+    }
+
+    [Obsolete("Use MtObservableCollection<T> instead. 11/29/2014")]
+    public class ExtendedObservableCollection<T> : MtObservableCollection<T>
+    {
     }
 }

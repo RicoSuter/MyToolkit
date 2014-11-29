@@ -106,7 +106,7 @@ namespace MyToolkit.Tests.WinRT.Collections
         public void When_adding_item_by_initialize_then_change_tracking_should_work()
         {
             //// Arrange
-            var source = new ExtendedObservableCollection<SampleClass>
+            var source = new MtObservableCollection<SampleClass>
             {
                 new SampleClass {First = "a", Last = "b"},
                 new SampleClass {First = "a", Last = "b"},
