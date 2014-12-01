@@ -69,10 +69,11 @@ namespace MyToolkit.Mathematics
 			return startIndex;
 		}
 
-	    public static Matrix Identity(int matrixSize)
+        /// <exception cref="ArgumentException">The matrixSize parameter must be bigger than 0. </exception>
+        public static Matrix Identity(int matrixSize)
 	    {
 		    if (matrixSize < 1)
-			    throw new ArgumentException("matrixSize must be bigger than 0");
+			    throw new ArgumentException("The matrixSize parameter must be bigger than 0. ");
 
 		    var result = new Matrix(matrixSize, matrixSize);
 		    for (var i = 0; i < matrixSize; i++)
@@ -103,8 +104,9 @@ namespace MyToolkit.Mathematics
             {
 #if DEBUG
                 if (Double.IsInfinity(value) || Double.IsNaN(value))
-                    throw new ArgumentException("value does not fall within expected range");
+                    throw new ArgumentOutOfRangeException("The value does not fall within expected range. ");
 #endif
+
                 Data[row, col] = value;
             }
         }

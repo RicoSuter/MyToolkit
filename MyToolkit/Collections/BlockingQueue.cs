@@ -34,7 +34,7 @@ namespace MyToolkit.Collections
 				_stop = false;
 		}
 
-        /// <summary>Stops all waits in the Enqueue or Dequeue methods. </summary>
+        /// <summary>Stops all waits in the <see cref="Enqueue"/> or <see cref="Dequeue"/> methods. </summary>
         public void Stop()
         {
             lock (_lock)

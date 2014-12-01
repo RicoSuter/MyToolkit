@@ -218,10 +218,11 @@ namespace MyToolkit.Mvvm
         }
 
         /// <summary>Handles an exception which occured in the <see cref="RunTaskAsync"/> method. </summary>
-        /// <param name="exception">The exception. </param>
+        /// <param name="exception">The exception to handle. </param>
+        /// <exception cref="NotImplementedException">An exception occured in RunTaskAsync. Override ViewModelBase.HandleException to handle this exception. </exception>
         public virtual void HandleException(Exception exception)
         {
-            throw new Exception("An exception occured in RunTaskAsync. Override ViewModelBase.HandleException to handle this exception. ", exception);
+            throw new NotImplementedException("An exception occured in RunTaskAsync. Override ViewModelBase.HandleException to handle this exception. ", exception);
         }
 
         /// <summary>Disposes and deregisters a <see cref="CancellationTokenSource"/>. 

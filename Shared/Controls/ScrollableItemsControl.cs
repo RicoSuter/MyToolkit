@@ -362,10 +362,11 @@ namespace MyToolkit.Controls
             // Must be empty
         }
 
+        /// <exception cref="InvalidOperationException">The IsScrolling property is read-only. </exception>
         internal void IsScrollingPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
             if (_allowIsScrollingChanges != true)
-                throw new InvalidOperationException("IsScrolling property is read-only. ");
+                throw new InvalidOperationException("The IsScrolling property is read-only. ");
 
             _isScrolling = (bool) e.NewValue;
 

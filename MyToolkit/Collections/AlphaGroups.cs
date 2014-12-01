@@ -55,8 +55,9 @@ namespace MyToolkit.Collections
 			foreach (var g in _groups)
 				Add(g.Value);
 
-			if (CollectionChanged != null)
-				CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            var handler = CollectionChanged;
+            if (handler != null)
+                handler(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 		}
 
         /// <summary>Adds multiple items to the group. </summary>
@@ -67,7 +68,7 @@ namespace MyToolkit.Collections
 
 			foreach (var item in items)
 			{
-				var group = AddEx(item, true);
+				var group = AddItemToCorrectGroup(item, true);
 				if (!changedGroups.Contains(group))
 					changedGroups.Add(group);
 			}
@@ -80,18 +81,19 @@ namespace MyToolkit.Collections
         /// <param name="item">The item. </param>
 		public void Add(T item)
 		{
-			var group = AddEx(item, true);
+			var group = AddItemToCorrectGroup(item, true);
 			RaiseGroupChanged(group);
 		}
 
         private void RaiseGroupChanged(Group<T> group)
         {
             var index = IndexOf(group);
-            if (CollectionChanged != null)
-                CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, group, group, index));
+            var handler = CollectionChanged;
+            if (handler != null)
+                handler(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, group, group, index));
         }
 
-        private Group<T> AddEx(T item, bool searchPosition)
+        private Group<T> AddItemToCorrectGroup(T item, bool searchPosition)
 		{
 			var name = item.ToString();
 			var group = _groups[GetFirstCharacter(name)];

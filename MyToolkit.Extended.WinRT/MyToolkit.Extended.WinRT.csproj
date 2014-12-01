@@ -254,6 +254,7 @@
     <Compile Include="Controls\OrientedSize.cs" />
     <Compile Include="Controls\MtPivot.cs" />
     <Compile Include="Controls\MtPivotItem.cs" />
+    <Compile Include="Controls\PivotExtensions.cs" />
     <Compile Include="Controls\SuppressTappedPresenter.cs" />
     <Compile Include="Controls\TextButton.cs" />
     <Compile Include="Controls\TimePicker.xaml.cs">

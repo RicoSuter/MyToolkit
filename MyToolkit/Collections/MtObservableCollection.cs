@@ -138,5 +138,12 @@ namespace MyToolkit.Collections
     [Obsolete("Use MtObservableCollection<T> instead. 11/29/2014")]
     public class ExtendedObservableCollection<T> : MtObservableCollection<T>
     {
+        public ExtendedObservableCollection()
+        {
+        }
+
+        public ExtendedObservableCollection(IEnumerable<T> collection) : base(collection)
+        {
+        }
     }
 }
