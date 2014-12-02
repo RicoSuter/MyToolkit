@@ -1,4 +1,4 @@
-﻿namespace SampleWindowsStoreApp.Domain
+﻿namespace SampleUniversalPhoneApp.Models
 {
     public class Person
     {

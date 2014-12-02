@@ -26,8 +26,8 @@ namespace MyToolkit.Controls
 			
 			var x = 0;
 			var hasStar = false;
-			foreach (var c in dataGrid.Columns)
-			{
+            foreach (var c in dataGrid.Columns)
+            {
 				var cell = c.GenerateElement(item);
 
                 var content = new ContentPresenter();

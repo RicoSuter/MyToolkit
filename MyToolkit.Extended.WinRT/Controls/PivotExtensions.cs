@@ -37,6 +37,8 @@ namespace MyToolkit.Controls
 
         private static void OnDisableAutoMarginChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
+            // see http://stackoverflow.com/questions/24752412/pivot-overlapping-other-elements-in-wp-8-1-universal-app
+
             var control = (Control)dependencyObject;
             control.Template = (ControlTemplate) XamlReader.Load(
 @"<ControlTemplate xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""

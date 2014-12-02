@@ -6,6 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:paging="using:MyToolkit.Paging"
+    xmlns:controls="using:MyToolkit.Controls"
+    xmlns:models="using:SampleUniversalPhoneApp.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -28,7 +30,34 @@
         </StackPanel>
 
         <Grid Grid.Row="1">
-            
+            <controls:DataGrid ItemsSource="{Binding People}" x:Name="DataGrid" SelectionMode="Multiple" 
+                               SelectedItem="{Binding SelectedPerson, Mode=TwoWay}" 
+                               DefaultOrderIndex="1">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Width="200" Header="Firstname" Binding="{Binding Firstname}"
+                                                 Style="{StaticResource BaseTextBlockStyle}" 
+                                                 d:DataContext="{d:DesignInstance Type=models:Person}" />
+                    <controls:DataGridTextColumn Width="200" Binding="{Binding Lastname}" 
+                                                 Style="{StaticResource BaseTextBlockStyle}" IsAscendingDefault="False"
+                                                 d:DataContext="{d:DesignInstance Type=models:Person}">
+                        <controls:DataGridTextColumn.Header>
+                            <TextBlock Text="Lastname" Foreground="Green" />
+                        </controls:DataGridTextColumn.Header>
+                    </controls:DataGridTextColumn>
+                    <controls:DataGridTextColumn Width="200" Header="Category" Binding="{Binding Category}" 
+                                                 Style="{StaticResource BaseTextBlockStyle}" 
+                                                 d:DataContext="{d:DesignInstance Type=models:Person}" />
+                </controls:DataGrid.Columns>
+                <controls:DataGrid.ItemDetailsTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="10,10,10,5">
+                            <TextBlock Text="Details: " Style="{StaticResource BaseTextBlockStyle}" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Firstname}" Style="{StaticResource BaseTextBlockStyle}" />
+                            <TextBlock Text="{Binding Lastname}" Style="{StaticResource BaseTextBlockStyle}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </controls:DataGrid.ItemDetailsTemplate>
+            </controls:DataGrid>
         </Grid>
     </Grid>
 </paging:MtPage>

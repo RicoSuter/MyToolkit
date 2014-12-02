@@ -7,6 +7,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -94,7 +95,7 @@ namespace MyToolkit.Controls
             DependencyProperty.Register("CellTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
 
         public static readonly DependencyProperty ColumnsProperty = DependencyProperty.RegisterAttached("Columns",
-            typeof(ObservableCollection<DataGridColumnBase>), typeof(DataGrid), new PropertyMetadata(null, OnColumnsPropertyChanged));
+            typeof(IList), typeof(DataGrid), new PropertyMetadata(null, OnColumnsPropertyChanged));
 
         /// <summary>Gets or sets the header background. </summary>
         public Brush HeaderBackground
@@ -160,9 +161,9 @@ namespace MyToolkit.Controls
         }
 
         /// <summary>Gets the column description of the <see cref="DataGrid"/>. </summary>
-        public ObservableCollection<DataGridColumnBase> Columns
+        public IList<DataGridColumnBase> Columns
         {
-            get { return (ObservableCollection<DataGridColumnBase>)GetValue(ColumnsProperty); }
+            get { return (IList<DataGridColumnBase>)GetValue(ColumnsProperty); }
             set { SetValue(ColumnsProperty, value); }
         }
 
@@ -233,7 +234,7 @@ namespace MyToolkit.Controls
 
             if (DefaultOrderIndex == -1)
             {
-                var currentOrdered = Columns.FirstOrDefault(c => c.CanSort);
+                var currentOrdered = Columns.Cast<DataGridColumnBase>().FirstOrDefault(c => c.CanSort);
                 if (currentOrdered != null)
                     DefaultOrderIndex = Columns.IndexOf(currentOrdered);
                 else
@@ -247,8 +248,8 @@ namespace MyToolkit.Controls
         {
             var dataGrid = (DataGrid)obj;
 
-            var oldList = args.OldValue as ObservableCollection<DataGridColumnBase>;
-            var newList = args.NewValue as ObservableCollection<DataGridColumnBase>;
+            var oldList = args.OldValue as INotifyCollectionChanged;
+            var newList = args.NewValue as INotifyCollectionChanged;
 
             if (oldList != null)
                 oldList.CollectionChanged -= dataGrid.OnColumnsChanged;

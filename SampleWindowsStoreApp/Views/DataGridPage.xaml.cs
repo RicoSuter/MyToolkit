@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using MyToolkit.Controls;
 using MyToolkit.Utilities;
-using SampleWindowsStoreApp.Domain;
+using SampleWindowsStoreApp.Models;
 using SampleWindowsStoreApp.ViewModels;
 
 namespace SampleWindowsStoreApp.Views

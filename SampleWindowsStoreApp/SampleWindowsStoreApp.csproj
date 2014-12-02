@@ -136,7 +136,7 @@
     <Compile Include="ViewModels\LocalizationPageModel.cs" />
     <Compile Include="ViewModels\DataGridPageModel.cs" />
     <Compile Include="ViewModels\VariousSamplesPageModel.cs" />
-    <Compile Include="Domain\Person.cs" />
+    <Compile Include="Models\Person.cs" />
     <Compile Include="ViewModels\MvvmSamplePageModel.cs" />
     <Compile Include="ViewModels\Settings\MySettingsFlyoutModel.cs" />
     <Compile Include="ViewModels\WelcomePageModel.cs" />

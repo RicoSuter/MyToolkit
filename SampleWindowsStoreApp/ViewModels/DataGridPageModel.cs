@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using MyToolkit.MVVM;
 using MyToolkit.Mvvm;
-using SampleWindowsStoreApp.Domain;
+using SampleWindowsStoreApp.Models;
 
 namespace SampleWindowsStoreApp.ViewModels
 {
