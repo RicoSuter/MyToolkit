@@ -9,7 +9,7 @@ using MyToolkit.Networking;
 
 namespace MyToolkit.Tests.WinRT.Multimedia
 {
-    //[TestClass]
+    [TestClass]
     public class YouTubeTests
     {
         [TestMethod]
@@ -46,8 +46,8 @@ namespace MyToolkit.Tests.WinRT.Multimedia
         [DataRow("Z6FPJOgfCkc")]
         [DataRow("xE2MxCv5vVY")]
         [DataRow("0G3_kG5FFfQ")]
-        [DataRow("AF5WZ64bnIo")]
-        //[DataRow("ohfSspPiOF8")] => TODO: Whats wrong here?
+        [DataRow("ohfSspPiOF8")] 
+        [DataRow("-ynZN3p6FH8")] 
         //[DataRow("rSy0JtBCZMQ")] // different problem => missing URL key
         public async Task When_loading_video_then_uri_it_should_be_available(string youTubeId)
         {
