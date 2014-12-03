@@ -110,7 +110,8 @@ namespace MyToolkit.Build
             get
             {
                 if (_solutionParserType == null)
-                    _solutionParserType = Type.GetType("Microsoft.Build.Construction.SolutionParser, Microsoft.Build", false, false);
+                    _solutionParserType = Type.GetType("Microsoft.Build.Construction.SolutionParser, Microsoft.Build, " +
+                                                       "Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", true);
                 return _solutionParserType;
             }
         }
