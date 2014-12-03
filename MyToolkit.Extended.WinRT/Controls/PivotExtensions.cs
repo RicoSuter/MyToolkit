@@ -40,7 +40,10 @@ namespace MyToolkit.Controls
             // see http://stackoverflow.com/questions/24752412/pivot-overlapping-other-elements-in-wp-8-1-universal-app
 
             var control = (Control)dependencyObject;
-            control.Template = (ControlTemplate) XamlReader.Load(
+            if ((bool) args.NewValue == false)
+                control.Template = null; 
+            else
+                control.Template = (ControlTemplate) XamlReader.Load(
 @"<ControlTemplate xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation""
                    xmlns:x=""http://schemas.microsoft.com/winfx/2006/xaml"" 
                    TargetType=""Pivot"">
