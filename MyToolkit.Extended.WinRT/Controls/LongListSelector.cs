@@ -32,7 +32,7 @@ namespace MyToolkit.Controls
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
             "ItemsSource", typeof (object), typeof (LongListSelector), new PropertyMetadata(default(object)));
 
-        /// <summary>Gets or sets the item source (usually an <see cref="AlphaGroups{T}"/> object). </summary>
+        /// <summary>Gets or sets the item source (usually an <see cref="AlphaGroupCollection{T}"/> object). </summary>
         public object ItemsSource
         {
             get { return (object) GetValue(ItemsSourceProperty); }

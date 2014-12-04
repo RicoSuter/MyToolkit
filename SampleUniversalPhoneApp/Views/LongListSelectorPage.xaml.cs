@@ -6,13 +6,13 @@ namespace SampleUniversalPhoneApp.Views
 {
     public sealed partial class LongListSelectorPage : MtPage
     {
-        private readonly AlphaGroups<string> _groups;
+        private readonly AlphaGroupCollection<string> _groups;
 
         public LongListSelectorPage()
         {
             InitializeComponent();
 
-            _groups = new AlphaGroups<string>
+            _groups = new AlphaGroupCollection<string>
             {
                 "Rico Suter", 
                 "Hans Muster", 

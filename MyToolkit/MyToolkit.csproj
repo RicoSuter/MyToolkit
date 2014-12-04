@@ -55,7 +55,7 @@
     <Compile Include="Collections\QueryObservableCollectionView.cs" />
     <Compile Include="Data\CacheManager.cs" />
     <Compile Include="Data\DataManagerBase.cs" />
-    <Compile Include="Collections\AlphaGroups.cs" />
+    <Compile Include="Collections\AlphaGroupCollection.cs" />
     <Compile Include="Collections\BlockingQueue.cs" />
     <Compile Include="Collections\TopItemsGroup.cs" />
     <Compile Include="Collections\MtObservableCollection.cs" />
