@@ -9,7 +9,7 @@
                Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"> 
 
     <Grid>
-        <controls:LongListSelector x:Name="List" Margin="20,20,0,0" />
+        <controls:LongListSelector x:Name="LongListSelector" Margin="20,20,0,0" />
     </Grid>
 
     <paging:MtPage.BottomAppBar>

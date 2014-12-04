@@ -22,7 +22,7 @@ namespace SampleUniversalPhoneApp.Views
                 "Bill Gates", 
             };
 
-            List.ItemsSource = _groups;
+            LongListSelector.ItemsSource = _groups;
         }
 
         private void OnAddItem(object sender, RoutedEventArgs e)
