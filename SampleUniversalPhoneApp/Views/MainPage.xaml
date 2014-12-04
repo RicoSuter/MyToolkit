@@ -30,7 +30,8 @@
 
         <Grid Grid.Row="1">
             <StackPanel Margin="24,0,24,0">
-                <Button Content="Go" Click="OnShowDetails" />
+                <Button Content="Show DataGrid" Click="OnShowDataGrid" />
+                <Button Content="Show LongListSelector" Click="OnShowLongListSelector" />
 
                 <TextBlock Text="YouTube ID" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,0,6" />
                 <TextBox x:Name="YouTubeTextBox" Margin="0,0,0,12" />

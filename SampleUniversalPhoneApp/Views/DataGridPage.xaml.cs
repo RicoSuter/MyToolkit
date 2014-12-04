@@ -7,9 +7,9 @@ namespace SampleUniversalPhoneApp.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class DetailsPage
+    public sealed partial class DataGridPage
     {
-        public DetailsPage()
+        public DataGridPage()
         {
             InitializeComponent();
 

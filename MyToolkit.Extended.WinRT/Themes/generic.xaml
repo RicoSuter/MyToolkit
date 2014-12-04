@@ -59,7 +59,7 @@
                                 <GridView.ItemTemplate>
                                     <DataTemplate>
                                         <Border Background="{Binding Group, Converter={StaticResource LongListSelectorBackgroundConverter}}" 
-                                                Width="85" Height="85" Margin="5">
+                                                Width="80" Height="80" Margin="5,10,5,0">
                                             <TextBlock Text="{Binding Group.Title}" FontSize="44" Padding="10,0,0,0"
                                                        FontFamily="{StaticResource PhoneFontFamilySemiBold}"
                                                        Foreground="{StaticResource PhoneForegroundBrush}"

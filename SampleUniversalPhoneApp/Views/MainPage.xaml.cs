@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using Windows.Media.Playback;
-using Windows.System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using MyToolkit.Multimedia;
 
 namespace SampleUniversalPhoneApp.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage
     {
         public MainPage()
@@ -22,9 +16,14 @@ namespace SampleUniversalPhoneApp.Views
             YouTubeTextBox.Text = "Zln9I9IttLA";
         }
 
-        private void OnShowDetails(object sender, RoutedEventArgs e)
+        private void OnShowDataGrid(object sender, RoutedEventArgs e)
         {
-            Frame.NavigateAsync(typeof(DetailsPage));
+            Frame.NavigateAsync(typeof(DataGridPage));
+        }
+
+        private void OnShowLongListSelector(object sender, RoutedEventArgs e)
+        {
+            Frame.NavigateAsync(typeof(LongListSelectorPage));
         }
 
         private async void OnPlay(object o, RoutedEventArgs routedEventArgs)
