@@ -94,11 +94,6 @@ namespace MyToolkit.Controls
             set { SetValue(UnselectedBrushProperty, value); }
         }
 
-        private FrameworkElement CurrentPrivotElement
-        {
-            get { return _list != null && _list.SelectedItem != null ? ((MtPivotItem)_list.SelectedItem).Content : null; }
-        }
-
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -126,6 +121,11 @@ namespace MyToolkit.Controls
                 _list.SelectedIndex = _initialIndex;
         }
 
+        private FrameworkElement CurrentPivotElement
+        {
+            get { return _list != null && _list.SelectedItem != null ? ((MtPivotItem)_list.SelectedItem).Content : null; }
+        }
+
         private void OnSelectedItemChanged()
         {
             if (_list != null)
@@ -150,32 +150,44 @@ namespace MyToolkit.Controls
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            foreach (MtPivotItem item in args.OldItems)
+            if (args.OldItems != null)
             {
-                if (!_items.Contains(item) && _grid.Children.Contains(item.Content))
-                    _grid.Children.Remove(item.Content);
+                foreach (MtPivotItem item in args.OldItems)
+                {
+                    if (!_items.Contains(item) && _grid.Children.Contains(item.Content))
+                        _grid.Children.Remove(item.Content);
+                }
             }
 
-            foreach (MtPivotItem item in args.NewItems)
+            if (args.NewItems != null)
             {
-                if (_items.Contains(item) && item.Preload)
-                    AddElement(item.Content);
+                foreach (MtPivotItem item in args.NewItems)
+                {
+                    if (_items.Contains(item) && item.Preload)
+                        AddElement(item.Content);
+                }
             }
         }
 
         private void ShowSelectedPivot()
         {
             _translate.X = 30;
-            CurrentPrivotElement.Visibility = Visibility.Visible;
+            CurrentPivotElement.Visibility = Visibility.Visible;
             _story.Begin();
         }
 
 		private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
 		{
+		    if (CurrentPivotElement == null)
+		    {
+                SelectedIndex = 0;
+                return;
+            }
+
 			foreach (var item in _grid.Children)
 				item.Visibility = Visibility.Collapsed;
 
-			AddElement(CurrentPrivotElement);
+			AddElement(CurrentPivotElement);
 
 			SelectedIndex = _list.SelectedIndex;
 			SelectedItem = _list.SelectedItem;

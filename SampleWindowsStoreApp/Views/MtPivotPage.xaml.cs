@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Linq;
+using Windows.UI.Xaml;
 
 namespace SampleWindowsStoreApp.Views
 {
@@ -7,6 +8,13 @@ namespace SampleWindowsStoreApp.Views
         public MtPivotPage()
         {
             InitializeComponent();
+        }
+
+        private void OnRemoveLastPivotItem(object sender, RoutedEventArgs e)
+        {
+            var item = Pivot.Items.LastOrDefault();
+            if (item != null)
+                Pivot.Items.Remove(item);
         }
     }
 }

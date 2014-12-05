@@ -22,6 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid>
@@ -39,7 +40,7 @@
         </Grid>
 
         <Grid Grid.Row="1" Margin="120,0,40,40">
-            <controls:MtPivot SelectedIndex="1">
+            <controls:MtPivot SelectedIndex="1" x:Name="Pivot">
                 <controls:MtPivotItem Header="Pivot 1">
                     <TextBlock Text="Pivot 1 Content" Style="{StaticResource BasicTextStyle}" />
                 </controls:MtPivotItem>
@@ -67,5 +68,8 @@
                 </controls:MtPivotItem>
             </controls:MtPivot>
         </Grid>
+        <StackPanel Grid.Row="2" Margin="120,0,0,20">
+            <Button Content="Remove last pivot item" Click="OnRemoveLastPivotItem" />
+        </StackPanel>
     </Grid>
 </paging:MtPage>
