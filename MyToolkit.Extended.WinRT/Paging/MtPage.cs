@@ -340,14 +340,14 @@ namespace MyToolkit.Paging
             if (TopAppBar != null)
             {
                 InternalPage.TopAppBar = TopAppBar;
-                foreach (var item in Resources)
+                foreach (var item in Resources.Where(item => !(item.Value is DependencyObject)))
                     InternalPage.TopAppBar.Resources[item.Key] = item.Value;
             }
 
             if (BottomAppBar != null)
             {
                 InternalPage.BottomAppBar = BottomAppBar;
-                foreach (var item in Resources)
+                foreach (var item in Resources.Where(item => !(item.Value is DependencyObject)))
                     InternalPage.BottomAppBar.Resources[item.Key] = item.Value;
             }
         }
