@@ -91,6 +91,8 @@
                 <Button Content="Select random Person" Click="OnSelectLastPerson" Margin="0,0,20,0" />
                 <Button Content="Remove first Column" Click="OnRemoveFirstColumn" Margin="0,0,20,0" />
                 <Button Content="Add removed Column" Click="OnAddRemovedColumn" Margin="0,0,20,0" />
+                
+                <Button Content="Add 10 elements" Click="OnAdd10Elements" Margin="0,0,20,0" />
             </StackPanel>
         </StackPanel>
     </Grid>
