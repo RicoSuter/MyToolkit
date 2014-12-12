@@ -10,6 +10,7 @@
 		<licenseUrl>https://mytoolkit.codeplex.com/license</licenseUrl>
         <description>MyToolkit is a set of .NET libraries containing lots of useful classes for various .NET platforms like WinRT, Windows Phone, WPF and Silverlight. </description>
         <releaseNotes/>
+        <iconUrl>http://rsuter.com/Projects/MyToolkit/NuGetIcon.png</iconUrl>
         <dependencies>
             <group targetFramework="portable-sl5+wp71">
                 <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
