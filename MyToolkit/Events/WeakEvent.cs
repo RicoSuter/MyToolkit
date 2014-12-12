@@ -15,7 +15,7 @@ namespace MyToolkit.Events
 {
     /// <summary>Provides methods to register and deregister weak events. </summary>
     public static class WeakEvent
-	{
+    {
         private static List<WeakEventRegistration> _registeredWeakEvents = null;
         internal static List<WeakEventRegistration> RegisteredWeakEvents
         {
@@ -376,5 +376,5 @@ namespace MyToolkit.Events
         }
 
 #endif
-	}
+    }
 }
