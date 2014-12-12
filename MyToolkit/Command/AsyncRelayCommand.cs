@@ -20,7 +20,7 @@ namespace MyToolkit.Command
         private readonly Func<Task> _execute;
         private readonly Func<bool> _canExecute;
         private bool _isRunning = false;
-        
+
         /// <summary>Initializes a new instance of the <see cref="AsyncRelayCommand"/> class. </summary>
         /// <param name="execute">The function to execute. </param>
         public AsyncRelayCommand(Func<Task> execute)
@@ -62,7 +62,7 @@ namespace MyToolkit.Command
         }
 
         /// <summary>Gets a value indicating whether the command can execute in its current state. </summary>
-        public override bool CanExecute 
+        public override bool CanExecute
         {
             get { return !IsRunning && (_canExecute == null || _canExecute()); }
         }
@@ -124,5 +124,5 @@ namespace MyToolkit.Command
                 IsRunning = false;
             }
         }
-    } 
+    }
 }

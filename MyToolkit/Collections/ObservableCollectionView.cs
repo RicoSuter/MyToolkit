@@ -167,7 +167,7 @@ namespace MyToolkit.Collections
         /// <returns>The items. </returns>
         protected override IList<TItem> GetItems()
         {
-            List<TItem> list; 
+            List<TItem> list;
 
             if (Filter != null && Order != null && Ascending)
                 list = Items.Where(Filter).OrderBy(Order).ToList();
@@ -187,7 +187,7 @@ namespace MyToolkit.Collections
             if (Limit > 0 || Offset > 0)
                 list = list.Skip(Offset).Take(Limit).ToList();
 
-            return list; 
+            return list;
         }
     }
 }

@@ -102,6 +102,7 @@
     <Compile Include="Storage\ApplicationSettingsWp8.cs" />
     <Compile Include="Storage\ApplicationSettingsWpf.cs" />
     <Compile Include="Storage\IApplicationSettings.cs" />
+    <Compile Include="Utilities\CodeContractExtensions.cs" />
     <Compile Include="Utilities\CommandProcessor.cs" />
     <Compile Include="Utilities\DateTimeExtensions.cs" />
     <Compile Include="Utilities\DateTimeUtilities.cs" />

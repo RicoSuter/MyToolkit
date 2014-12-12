@@ -20,7 +20,7 @@ namespace MyToolkit.Collections
         {
             AddedItems = addedItems;
             RemovedItems = removedItems;
-            OldCollection = oldCollection; 
+            OldCollection = oldCollection;
         }
 
         /// <summary>Gets or sets the list of added items. </summary>

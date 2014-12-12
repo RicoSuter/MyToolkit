@@ -1,0 +1,70 @@
+﻿//-----------------------------------------------------------------------
+// <copyright file="CodeContractExtensions.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
+using System.Diagnostics;
+using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
+
+namespace MyToolkit.Utilities
+{
+    /// <summary>Provides extension methods for Code Contracts and method parameter validation. </summary>
+    public static class CodeContractExtensions
+    {
+        /// <summary>Throws an <see cref="ArgumentNullException" /> if the value is <c>null</c> or <c>string.Empty</c>.</summary>
+        /// <param name="value">The value.</param>
+        /// <param name="parameterName">The name of the parameter.</param>
+        /// <exception cref="ArgumentNullException">The value cannot be null or empty.</exception>
+        /// <remarks>The method throws a <see cref="ArgumentNullException" /> and also defines Contract.Requires statements for static analysis.</remarks>
+        [DebuggerStepThrough]
+#if !LEGACY
+        [ContractAbbreviator]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public static void CheckNotNullOrEmpty([ValidatedNotNullAttribute] this string value, string parameterName)
+        {
+#if !LEGACY
+            Contract.Requires(value != null, "The value '" + parameterName + "' cannot be null. ");
+            Contract.Requires(value != string.Empty, "The string '" + parameterName + "' cannot be empty. ");
+#endif
+
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentNullException(parameterName);
+        }
+
+        /// <summary>Throws an <see cref="ArgumentNullException" /> if the value is <c>null</c>.</summary>
+        /// <typeparam name="T">The type of the value. </typeparam>
+        /// <param name="value">The value.</param>
+        /// <param name="parameterName">The name of the parameter.</param>
+        /// <exception cref="ArgumentNullException">The value cannot be null.</exception>
+        /// <remarks>The method throws a <see cref="ArgumentNullException" /> and also defines a Contract.Requires statement for static analysis.</remarks>
+        [DebuggerStepThrough]
+#if !LEGACY
+        [ContractAbbreviator]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
+        public static void CheckNotNull<T>([ValidatedNotNullAttribute] this T value, string parameterName)
+          where T : class
+        {
+#if !LEGACY
+            Contract.Requires(value != null, "The value '" + parameterName + "' cannot be null. ");
+#endif
+
+            if (value == null)
+                throw new ArgumentNullException(parameterName);
+        }
+
+        // This attribute is used to avoid (FxCop/VS) CA1062 
+        // See http://geekswithblogs.net/terje/archive/2010/10/14.aspx
+        [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false)]
+        internal sealed class ValidatedNotNullAttribute : Attribute
+        {
+        }
+    }
+
+}

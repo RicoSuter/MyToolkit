@@ -43,10 +43,10 @@ namespace MyToolkit.Collections
         /// <param name="collection">The items to add. </param>
         public void AddRange(IEnumerable<T> collection)
         {
-            if (collection == null) 
+            if (collection == null)
                 throw new ArgumentNullException("collection");
 
-            foreach (var item in collection) 
+            foreach (var item in collection)
                 Items.Add(item);
 
             OnPropertyChanged(new PropertyChangedEventArgs("Count"));
@@ -57,10 +57,10 @@ namespace MyToolkit.Collections
         /// <param name="collection">The items to remove. </param>
         public void RemoveRange(IEnumerable<T> collection)
         {
-            if (collection == null) 
+            if (collection == null)
                 throw new ArgumentNullException("collection");
 
-            foreach (var item in collection.ToList()) 
+            foreach (var item in collection.ToList())
                 Items.Remove(item);
 
             OnPropertyChanged(new PropertyChangedEventArgs("Count"));
@@ -71,11 +71,11 @@ namespace MyToolkit.Collections
         /// <param name="collection">The collection. </param>
         public void Initialize(IEnumerable<T> collection)
         {
-            if (collection == null) 
+            if (collection == null)
                 throw new ArgumentNullException("collection");
 
             Items.Clear();
-            foreach (var i in collection) 
+            foreach (var i in collection)
                 Items.Add(i);
 
             OnPropertyChanged(new PropertyChangedEventArgs("Count"));
@@ -142,7 +142,8 @@ namespace MyToolkit.Collections
         {
         }
 
-        public ExtendedObservableCollection(IEnumerable<T> collection) : base(collection)
+        public ExtendedObservableCollection(IEnumerable<T> collection)
+            : base(collection)
         {
         }
     }

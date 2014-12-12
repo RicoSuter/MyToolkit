@@ -98,6 +98,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\XmlSerialization.cs" />
     <Compile Include="Storage\ApplicationSettings.cs" />
+    <Compile Include="Utilities\CodeContractExtensions.cs" />
     <Compile Include="Utilities\CommandProcessor.cs" />
     <Compile Include="Utilities\DateTimeExtensions.cs" />
     <Compile Include="Utilities\DateTimeUtilities.cs" />

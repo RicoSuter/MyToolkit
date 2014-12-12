@@ -22,7 +22,7 @@ namespace MyToolkit.Collections
         IDictionary<TKey, TValue>, INotifyCollectionChanged,
         INotifyPropertyChanged, IDictionary
 #if !LEGACY
-        , IReadOnlyDictionary<TKey, TValue>
+, IReadOnlyDictionary<TKey, TValue>
 #endif
     {
         private IDictionary<TKey, TValue> _dictionary;

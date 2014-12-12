@@ -38,7 +38,7 @@ namespace MyToolkit.Collections
         public QueryObservableCollectionView(IList<TItem> items, Func<IList<TItem>, IEnumerable<TItem>> query)
             : base(items, false)
         {
-            Query = query; 
+            Query = query;
         }
 
         /// <summary>Gets or sets the query. </summary>

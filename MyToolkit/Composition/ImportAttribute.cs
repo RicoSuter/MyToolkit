@@ -12,8 +12,8 @@ namespace MyToolkit.Composition
 {
     /// <summary>Marks a property to import another object. </summary>
     [AttributeUsage(AttributeTargets.Property)]
-	public class ImportAttribute : Attribute
-	{
+    public class ImportAttribute : Attribute
+    {
         /// <summary>Gets or sets the interface type to import. </summary>
         public Type Type;
 
@@ -23,8 +23,8 @@ namespace MyToolkit.Composition
         /// <summary>Initializes a new instance of the <see cref="ImportAttribute"/> class. </summary>
         /// <param name="type">The interface type to import. </param>
         public ImportAttribute(Type type)
-		{
-			Type = type; 
-		}
-	}
+        {
+            Type = type;
+        }
+    }
 }

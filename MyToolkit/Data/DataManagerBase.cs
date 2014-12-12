@@ -121,7 +121,7 @@ namespace MyToolkit.Data
                 }
                 return null;
             }
-            finally 
+            finally
             {
                 if (loadingProperty != null)
                     loadingProperty.SetValue(item, false, null);
@@ -218,7 +218,7 @@ namespace MyToolkit.Data
             var itemType = baseType.Name;
 
 #if !LEGACY
-            var property = info.GetRuntimeProperty(propertyName); 
+            var property = info.GetRuntimeProperty(propertyName);
             var isCollectionProperty = typeof(IList).GetTypeInfo().IsAssignableFrom(property.PropertyType.GetTypeInfo());
 #else
             var property = info.GetProperty(propertyName);
@@ -226,7 +226,7 @@ namespace MyToolkit.Data
 #endif
 
             // check loaded
-            TIdentity foreignId = default(TIdentity); 
+            TIdentity foreignId = default(TIdentity);
             if (!reload)
             {
                 var currentValue = property.GetValue(item, null);
@@ -247,15 +247,15 @@ namespace MyToolkit.Data
                         var foreignIdObject = idProperty.GetValue(item, null);
 
                         // sync navigation proprety with foreign id
-                        if (foreignIdObject == null) 
+                        if (foreignIdObject == null)
                         {
                             if (currentValue != null)
                                 property.SetValue(item, null, null);
-                            return; 
+                            return;
                         }
                         else
                         {
-                            foreignId = (TIdentity) foreignIdObject;
+                            foreignId = (TIdentity)foreignIdObject;
                             if (currentValue != null && Equals(((IEntity<TIdentity>)currentValue).Id, foreignId))
                                 return;
                             property.SetValue(item, null, null);
@@ -272,7 +272,7 @@ namespace MyToolkit.Data
 
             // check IsLoading (already loading)
 #if !LEGACY
-            var loadingProperty = info.GetRuntimeProperty("Is" + propertyName + "Loading"); 
+            var loadingProperty = info.GetRuntimeProperty("Is" + propertyName + "Loading");
 #else
             var loadingProperty = info.GetProperty("Is" + propertyName + "Loading");
 #endif

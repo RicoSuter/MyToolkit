@@ -19,7 +19,7 @@ namespace MyToolkit.Composition
     public class CompositionContext : ICompositionContext
     {
         private readonly List<PartDescription> _parts;
-        private Dictionary<Type, Dictionary<PropertyInfo, Attribute>> _typeMappingCache = null; 
+        private Dictionary<Type, Dictionary<PropertyInfo, Attribute>> _typeMappingCache = null;
 
         /// <summary>Initializes a new instance of the <see cref="CompositionContext"/> class. </summary>
         public CompositionContext()
@@ -118,10 +118,10 @@ namespace MyToolkit.Composition
                 Key = interfaceType,
                 Type = implementationType,
                 Name = name,
-            }; 
+            };
 
             p.SetPart(this, part);
-            
+
             _parts.Add(p);
             return true;
         }
@@ -290,7 +290,7 @@ namespace MyToolkit.Composition
             ctx.SatisfyImports(_part);
 
             lock (this)
-                _part = part; 
+                _part = part;
         }
 
         public object GetPart(CompositionContext ctx)

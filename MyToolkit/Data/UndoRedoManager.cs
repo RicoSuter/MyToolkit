@@ -304,7 +304,7 @@ namespace MyToolkit.Data
                 foreach (var item in NewCollection)
                     ((IList)Sender).Add(item);
             }
-            else 
+            else
             {
 #if LEGACY
                 ((IDictionary)Sender).Clear();

@@ -182,7 +182,7 @@ namespace MyToolkit.Collections
         /// <summary>Gets the list of items with the current order and filter.</summary>
         /// <returns>The items. </returns>
         protected abstract IList<TItem> GetItems();
-        
+
         private void OnOriginalCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             lock (SyncRoot)
@@ -392,7 +392,7 @@ namespace MyToolkit.Collections
             lock (SyncRoot)
                 _internalCollection.CopyTo(array, arrayIndex);
         }
-        
+
         //int IList.Add(object value)
         //{
         //    throw new NotSupportedException("Use ObservableCollectionViewBase.Add() instead.");

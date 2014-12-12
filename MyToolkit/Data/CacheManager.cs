@@ -25,7 +25,7 @@ namespace MyToolkit.Data
         /// <summary>Gets or sets the internal list of managed items. </summary>
         protected Dictionary<string, Dictionary<TIdentity, IEntity<TIdentity>>> List
             = new Dictionary<string, Dictionary<TIdentity, IEntity<TIdentity>>>();
-        
+
         /// <summary>Returns an item by ID. </summary>
         /// <typeparam name="T">Type of the item. </typeparam>
         /// <param name="id">ID of the item. </param>
@@ -97,8 +97,8 @@ namespace MyToolkit.Data
 
         private IEntity<TIdentity> AddItem(IEntity<TIdentity> item, HashSet<IEntity<TIdentity>> mergedObjects, bool mergeFields)
         {
-            var isMerging = false; 
-            var currentItem = GetItem(item.GetType(), item.Id);			
+            var isMerging = false;
+            var currentItem = GetItem(item.GetType(), item.Id);
             if (currentItem == null)
             {
                 currentItem = item;
@@ -113,7 +113,7 @@ namespace MyToolkit.Data
                 List[type.Name][item.Id] = item;
             }
             else
-                isMerging = true; 
+                isMerging = true;
 
             if (mergedObjects.Contains(currentItem))
                 return currentItem;
@@ -138,7 +138,7 @@ namespace MyToolkit.Data
                     var attr = property.GetCustomAttributes(typeof(DataMemberAttribute), true).FirstOrDefault();
                     if (attr != null)
                     {
-                        var isCacheableProperty = false; 
+                        var isCacheableProperty = false;
 
                         var value = property.GetValue(item, null);
                         if (value != null)
@@ -146,7 +146,7 @@ namespace MyToolkit.Data
                             if (value is IEntity<TIdentity>)
                             {
                                 value = AddItem((IEntity<TIdentity>)value, mergedObjects, !mergedObjects.Contains((IEntity<TIdentity>)value));
-                                isCacheableProperty = true; 
+                                isCacheableProperty = true;
                             }
                             else if (value is IList)
                             {
