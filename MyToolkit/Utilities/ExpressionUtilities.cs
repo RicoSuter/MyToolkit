@@ -13,8 +13,8 @@ using System.Runtime.CompilerServices;
 namespace MyToolkit.Utilities
 {
     /// <summary>Provides methods to handle lambda expressions. </summary>
-	public class ExpressionUtilities
-	{
+    public class ExpressionUtilities
+    {
         /// <summary>Returns the property name of the property specified in the given lambda (e.g. GetPropertyName(i => i.MyProperty)). </summary>
         /// <typeparam name="TClass">The type of the class with the property. </typeparam>
         /// <typeparam name="TProperty">The property type. </typeparam>
@@ -24,11 +24,11 @@ namespace MyToolkit.Utilities
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
 #endif
         public static string GetPropertyName<TClass, TProperty>(Expression<Func<TClass, TProperty>> expression)
-		{
-			if (expression.Body is UnaryExpression)
-				return ((MemberExpression)(((UnaryExpression)expression.Body).Operand)).Member.Name;
-			return ((MemberExpression)expression.Body).Member.Name;
-		}
+        {
+            if (expression.Body is UnaryExpression)
+                return ((MemberExpression)(((UnaryExpression)expression.Body).Operand)).Member.Name;
+            return ((MemberExpression)expression.Body).Member.Name;
+        }
 
         /// <summary>Returns the property name of the property specified in the given lambda (e.g. GetPropertyName(i => i.MyProperty)). </summary>
         /// <typeparam name="TProperty">The property type. </typeparam>
@@ -58,20 +58,20 @@ namespace MyToolkit.Utilities
             return ((MemberExpression)expression.Body).Member.Name;
         }
 
-//        /// <summary>Returns the event name of the event specified in the given lambda (e.g. GetEventName(i => i.MyEvent += null)). </summary>
-//        /// <typeparam name="TClass">The type of the class with the event. </typeparam>
-//        /// <param name="expression">The lambda with the event. </param>
-//        /// <returns>The name of the event in the lambda. </returns>
-//#if !LEGACY
-//        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-//#endif
-//        public static string GetEventName<TClass>(Expression<Action<TClass>> expression)
-//        {
-//            if (expression.Body is UnaryExpression)
-//                return ((MemberExpression)(((UnaryExpression)expression.Body).Operand)).Member.Name;
-//            return ((MemberExpression)expression.Body).Member.Name;
-//        }
-	}
+        //        /// <summary>Returns the event name of the event specified in the given lambda (e.g. GetEventName(i => i.MyEvent += null)). </summary>
+        //        /// <typeparam name="TClass">The type of the class with the event. </typeparam>
+        //        /// <param name="expression">The lambda with the event. </param>
+        //        /// <returns>The name of the event in the lambda. </returns>
+        //#if !LEGACY
+        //        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        //#endif
+        //        public static string GetEventName<TClass>(Expression<Action<TClass>> expression)
+        //        {
+        //            if (expression.Body is UnaryExpression)
+        //                return ((MemberExpression)(((UnaryExpression)expression.Body).Operand)).Member.Name;
+        //            return ((MemberExpression)expression.Body).Member.Name;
+        //        }
+    }
 
     [Obsolete("Use ExpressionUtilities instead. 9/25/2014")]
     public class ExpressionHelper

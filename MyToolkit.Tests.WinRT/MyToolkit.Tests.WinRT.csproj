@@ -129,6 +129,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\XmlSerializationTests.cs" />
     <Compile Include="Storage\ApplicationSettingsTests.cs" />
+    <Compile Include="Utilities\CodeContractExtensionsTests.cs" />
     <Compile Include="Utilities\DateTimeUtilitiesTests.cs" />
     <Compile Include="Utilities\ExpressionUtilitiesTests.cs" />
     <Compile Include="Utilities\EventUtilitiesTests.cs" />

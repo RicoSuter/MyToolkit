@@ -44,7 +44,7 @@ namespace MyToolkit.Utilities
         {
             return source.GroupBy(keySelector).Select(g => g.First());
         }
-        
+
         /// <summary>Returns true if the second list contains exactly the same items in the same order or is equal. </summary>
         /// <typeparam name="T">The item type. </typeparam>
         /// <param name="list1">The first list. </param>
@@ -64,7 +64,7 @@ namespace MyToolkit.Utilities
 
             if (list1.Count != list2.Count)
                 return false;
-            
+
             // Has same order
             for (int i = 0; i < list1.Count; i++)
             {
@@ -78,7 +78,7 @@ namespace MyToolkit.Utilities
             if (list2.Any(a => !list1.Contains(a)))
                 return false;
 
-            return true; 
+            return true;
         }
 
         /// <summary>Returns true if the second list contains exactly the same items or is equal. </summary>
@@ -205,10 +205,10 @@ namespace MyToolkit.Utilities
                 return list.ToList();
 
             var output = new List<T>();
-            var startIndex = list.Count/2 - count/2;
+            var startIndex = list.Count / 2 - count / 2;
             for (var i = 0; i < count; i++)
                 output.Add(list[startIndex + i]);
-            return output; 
+            return output;
         }
     }
 }

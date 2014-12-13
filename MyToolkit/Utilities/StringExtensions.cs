@@ -17,269 +17,269 @@ using System.Text.RegularExpressions;
 namespace MyToolkit.Utilities
 {
     /// <summary>Provides methods to manipulate strings. </summary>
-	public static class StringExtensions
-	{
+    public static class StringExtensions
+    {
         /// <summary>Correctly URI escapes the given string. </summary>
         /// <param name="value">The string to escape. </param>
         /// <returns>The escaped string</returns>
-		public static string EscapeUriString(this string value)
-		{
-			const int limit = 32768;
-			var sb = new StringBuilder();
-			var loops = value.Length / limit;
-			for (int i = 0; i <= loops; i++)
-			{
-				if (i < loops)
-					sb.Append(Uri.EscapeDataString(value.Substring(limit * i, limit)));
-				else
-					sb.Append(Uri.EscapeDataString(value.Substring(limit * i)));
-			}
-			return sb.ToString();
-		}
+        public static string EscapeUriString(this string value)
+        {
+            const int limit = 32768;
+            var sb = new StringBuilder();
+            var loops = value.Length / limit;
+            for (int i = 0; i <= loops; i++)
+            {
+                if (i < loops)
+                    sb.Append(Uri.EscapeDataString(value.Substring(limit * i, limit)));
+                else
+                    sb.Append(Uri.EscapeDataString(value.Substring(limit * i)));
+            }
+            return sb.ToString();
+        }
 
         /// <summary>Splits a string into key-value pairs (format: 'key1:value2,key2:value2'). </summary>
         /// <param name="text">The parameter string. </param>
         /// <returns>The parsed dictionary. </returns>
-		public static Dictionary<string, string> GetConverterParameters(this string text)
-		{
-			var output = new Dictionary<string, string>();
-			foreach (var item in text.Split(','))
-			{
-				var arr = item.Split(':');
-				if (arr.Length == 2)
-					output[arr[0].ToLower()] = arr[1];
-				else
-					output[arr[0].ToLower()] = ""; 
-			}
-			return output; 
-		}
+        public static Dictionary<string, string> GetConverterParameters(this string text)
+        {
+            var output = new Dictionary<string, string>();
+            foreach (var item in text.Split(','))
+            {
+                var arr = item.Split(':');
+                if (arr.Length == 2)
+                    output[arr[0].ToLower()] = arr[1];
+                else
+                    output[arr[0].ToLower()] = "";
+            }
+            return output;
+        }
 
         /// <summary>Removes all HTML tags from the given string. </summary>
         /// <param name="html">The HTML string to remove the HTML tags from. </param>
         /// <returns>The cleaned string. </returns>
-		public static string RemoveHtmlTags(this string html)
-		{
-			return Regex.Replace(html, "<[^>]*>", string.Empty);
-		}
+        public static string RemoveHtmlTags(this string html)
+        {
+            return Regex.Replace(html, "<[^>]*>", string.Empty);
+        }
 
         /// <summary>Removes all HTML links from the given string. </summary>
         /// <param name="html">The HTML string to remove the links from. </param>
         /// <returns>The cleaned string. </returns>
-		public static string RemoveHtmlLinks(this string html)
-		{
-			return Regex.Replace(html, "<a[^>]*>[^<]*</a>", string.Empty);
-		}
+        public static string RemoveHtmlLinks(this string html)
+        {
+            return Regex.Replace(html, "<a[^>]*>[^<]*</a>", string.Empty);
+        }
 
         /// <summary>Converts all contained UTF-8 characters in the string to their correct internal representation. </summary>
         /// <param name="text">The string to convert. </param>
         /// <returns>The converted string. </returns>
-		public static string ConvertUtf8Characters(this string text)
-		{
-			return text.
-				Replace("\u008B", "‹").
-				Replace("\u009B", "›");
-		}
+        public static string ConvertUtf8Characters(this string text)
+        {
+            return text.
+                Replace("\u008B", "‹").
+                Replace("\u009B", "›");
+        }
 
         /// <summary>Converts all HTML entities to their correct character representation. </summary>
         /// <param name="html">The string to convert. </param>
         /// <returns>The converted string. </returns>
-		public static string ConvertHtmlCharacters(this string html)
-		{
-			if (html == null)
-				return null;
+        public static string ConvertHtmlCharacters(this string html)
+        {
+            if (html == null)
+                return null;
 
-			if (html.IndexOf('&') < 0)
-				return html;
+            if (html.IndexOf('&') < 0)
+                return html;
 
-			var sb = new StringBuilder();
-			var writer = new StringWriter(sb, CultureInfo.InvariantCulture);
-			var length = html.Length;
-			for (var i = 0; i < length; i++)
-			{
-				var ch = html[i];
-				if (ch == '&')
-				{
-					var num3 = html.IndexOfAny(new char[] { ';', '&' }, i + 1);
-					if ((num3 > 0) && (html[num3] == ';'))
-					{
-						var entity = html.Substring(i + 1, (num3 - i) - 1);
-						if ((entity.Length > 1) && (entity[0] == '#'))
-						{
-							try
-							{
-								if ((entity[1] == 'x') || (entity[1] == 'X'))
-									ch = (char)int.Parse(entity.Substring(2), NumberStyles.AllowHexSpecifier, 
-										CultureInfo.InvariantCulture);
-								else
-									ch = (char)int.Parse(entity.Substring(1), CultureInfo.InvariantCulture);
-								i = num3;
-							}
-							catch (FormatException)
-							{
-								i++;
-							}
-							catch (ArgumentException)
-							{
-								i++;
-							}
-						}
-						else
-						{
-							i = num3;
-							var ch2 = HtmlEntities.Lookup(entity);
-							if (ch2 != '\0')
-								ch = ch2;
-							else
-							{
-								writer.Write('&');
-								writer.Write(entity);
-								writer.Write(';');
-								continue;
-							}
-						}
-					}
-				}
-				writer.Write(ch);
-			}
+            var sb = new StringBuilder();
+            var writer = new StringWriter(sb, CultureInfo.InvariantCulture);
+            var length = html.Length;
+            for (var i = 0; i < length; i++)
+            {
+                var ch = html[i];
+                if (ch == '&')
+                {
+                    var num3 = html.IndexOfAny(new char[] { ';', '&' }, i + 1);
+                    if ((num3 > 0) && (html[num3] == ';'))
+                    {
+                        var entity = html.Substring(i + 1, (num3 - i) - 1);
+                        if ((entity.Length > 1) && (entity[0] == '#'))
+                        {
+                            try
+                            {
+                                if ((entity[1] == 'x') || (entity[1] == 'X'))
+                                    ch = (char)int.Parse(entity.Substring(2), NumberStyles.AllowHexSpecifier,
+                                        CultureInfo.InvariantCulture);
+                                else
+                                    ch = (char)int.Parse(entity.Substring(1), CultureInfo.InvariantCulture);
+                                i = num3;
+                            }
+                            catch (FormatException)
+                            {
+                                i++;
+                            }
+                            catch (ArgumentException)
+                            {
+                                i++;
+                            }
+                        }
+                        else
+                        {
+                            i = num3;
+                            var ch2 = HtmlEntities.Lookup(entity);
+                            if (ch2 != '\0')
+                                ch = ch2;
+                            else
+                            {
+                                writer.Write('&');
+                                writer.Write(entity);
+                                writer.Write(';');
+                                continue;
+                            }
+                        }
+                    }
+                }
+                writer.Write(ch);
+            }
 
-			return sb.ToString();
-		}
+            return sb.ToString();
+        }
 
         /// <summary>Removes unneeded (hidden) HTML whitespaces. </summary>
         /// <param name="html">The HTML string to convert. </param>
         /// <returns>The transformed string. </returns>
-		public static string RemoveHtmlWhitespaces(this string html)
-		{
-			html = new Regex(@"\n\s+").Replace(html, string.Empty);
-			html = new Regex(@">\s+<").Replace(html, "> <");
-			return html; 
-		}
+        public static string RemoveHtmlWhitespaces(this string html)
+        {
+            html = new Regex(@"\n\s+").Replace(html, string.Empty);
+            html = new Regex(@">\s+<").Replace(html, "> <");
+            return html;
+        }
 
         /// <summary>Truncates a string without chopping whole words. </summary>
         /// <param name="text">The string to truncate. </param>
         /// <param name="length">The maximum string length of the result. </param>
         /// <returns>The truncated string. </returns>
-		public static string TruncateWithoutChopping(this string text, int length)
-		{
-			if (text == null || text.Length < length)
-				return text;
+        public static string TruncateWithoutChopping(this string text, int length)
+        {
+            if (text == null || text.Length < length)
+                return text;
 
-			var index = text.LastIndexOf(" ", length, StringComparison.Ordinal);
-			return string.Format("{0}...", text.Substring(0, (index > 0) ? index : text.Length).Trim());
-		}
+            var index = text.LastIndexOf(" ", length, StringComparison.Ordinal);
+            return string.Format("{0}...", text.Substring(0, (index > 0) ? index : text.Length).Trim());
+        }
 
         /// <summary>Trims a string from the start of the input string. </summary>
         /// <param name="input">The input string. </param>
         /// <param name="trimString">The string to trim. </param>
         /// <returns>The trimmed string. </returns>
-		public static string TrimStart(this string input, string trimString)
-		{
-			var result = input;
-			while (result.StartsWith(trimString))
-				result = result.Substring(trimString.Length);
-			return result;
-		}
+        public static string TrimStart(this string input, string trimString)
+        {
+            var result = input;
+            while (result.StartsWith(trimString))
+                result = result.Substring(trimString.Length);
+            return result;
+        }
 
         /// <summary>Trims a string from the end of the input string. </summary>
         /// <param name="input">The input string. </param>
         /// <param name="trimString">The string to trim. </param>
         /// <returns>The trimmed string. </returns>
         public static string TrimEnd(this string input, string trimString)
-		{
-			var result = input;
-			while (result.EndsWith(trimString))
-				result = result.Substring(0, result.Length - trimString.Length);
-			return result;
-		}
+        {
+            var result = input;
+            while (result.EndsWith(trimString))
+                result = result.Substring(0, result.Length - trimString.Length);
+            return result;
+        }
 
         /// <summary>Trims a string from the start and end of the input string. </summary>
         /// <param name="input">The input string. </param>
         /// <param name="trimString">The string to trim. </param>
         /// <returns>The trimmed string. </returns>
         public static string Trim(this string input, string trimString)
-		{
-			return input.TrimStart(trimString).TrimEnd(trimString);
-		}
+        {
+            return input.TrimStart(trimString).TrimEnd(trimString);
+        }
 
         /// <summary>Extracts a language string from the given input string (format: 'en:Hello;de:Hallo;fr:"semi;colon"'). </summary>
         /// <param name="input">The input string. </param>
         /// <param name="language">The language. </param>
         /// <returns>The extracted string. </returns>
-		public static string ExtractLocalizedString(this string input, string language = null)
-		{
-			if (input == null)
-				return null; 
+        public static string ExtractLocalizedString(this string input, string language = null)
+        {
+            if (input == null)
+                return null;
 
-			if (language == null)
-				language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+            if (language == null)
+                language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 
-			var mapping = new Dictionary<string, string>();
-			var position = 0;
-			string key = null; 
-			while (true)
-			{
-				if (key == null) // find language
-				{
-					var index = input.IndexOf(':', position);
-					if (index == -1)
-						break;
+            var mapping = new Dictionary<string, string>();
+            var position = 0;
+            string key = null;
+            while (true)
+            {
+                if (key == null) // find language
+                {
+                    var index = input.IndexOf(':', position);
+                    if (index == -1)
+                        break;
 
-					key = input.Substring(position, index - position).Trim();
-					position = index + 1; 
-				}
-				else
-				{
-					var semiIndex = input.IndexOf(';', position);
-					var startQuoteIndex = input.IndexOf('"', position);
+                    key = input.Substring(position, index - position).Trim();
+                    position = index + 1;
+                }
+                else
+                {
+                    var semiIndex = input.IndexOf(';', position);
+                    var startQuoteIndex = input.IndexOf('"', position);
 
-					if (startQuoteIndex != -1 && (semiIndex == -1 || startQuoteIndex < semiIndex))
-					{
-						position = startQuoteIndex + 1; 
-						while (true)
-						{
-							position = input.IndexOf('"', position);
-							if (position == -1)
-								return "wrong_quoting";
+                    if (startQuoteIndex != -1 && (semiIndex == -1 || startQuoteIndex < semiIndex))
+                    {
+                        position = startQuoteIndex + 1;
+                        while (true)
+                        {
+                            position = input.IndexOf('"', position);
+                            if (position == -1)
+                                return "wrong_quoting";
 
-							position++;
-							if (input[position - 2] != '\\')
-								break;
-						}
+                            position++;
+                            if (input[position - 2] != '\\')
+                                break;
+                        }
 
-						if (position == -1)
-							break;
+                        if (position == -1)
+                            break;
 
-						mapping.Add(key, input.Substring(startQuoteIndex + 1, position - startQuoteIndex - 2).Replace("\\\"", "\"").Trim());
-						position = input.IndexOf(';', position);
+                        mapping.Add(key, input.Substring(startQuoteIndex + 1, position - startQuoteIndex - 2).Replace("\\\"", "\"").Trim());
+                        position = input.IndexOf(';', position);
 
-						if (position == -1)
-							break;
-						position++; 
-					}
-					else
-					{
-						if (semiIndex == -1)
-						{
-							mapping.Add(key, input.Substring(position).Trim());
-							break; 
-						}
-						mapping.Add(key, input.Substring(position, semiIndex - position).Trim());
-						position = semiIndex + 1;
-					}
+                        if (position == -1)
+                            break;
+                        position++;
+                    }
+                    else
+                    {
+                        if (semiIndex == -1)
+                        {
+                            mapping.Add(key, input.Substring(position).Trim());
+                            break;
+                        }
+                        mapping.Add(key, input.Substring(position, semiIndex - position).Trim());
+                        position = semiIndex + 1;
+                    }
 
-					key = null; 
-				}
-			}
+                    key = null;
+                }
+            }
 
-			return mapping.Count > 0 ? (mapping.ContainsKey(language) ? mapping[language] : mapping.First().Value) : input; 
-		}
+            return mapping.Count > 0 ? (mapping.ContainsKey(language) ? mapping[language] : mapping.First().Value) : input;
+        }
 
-		internal static class HtmlEntities
-		{
-			static HtmlEntities()
-			{
-				_lookupLockObject = new object();
-				_entitiesList = new [] { 
+        internal static class HtmlEntities
+        {
+            static HtmlEntities()
+            {
+                _lookupLockObject = new object();
+                _entitiesList = new[] { 
 					"\"-quot", "&-amp", "<-lt", ">-gt", "\x00a0-nbsp", "\x00a1-iexcl", "\x00a2-cent", "\x00a3-pound", "\x00a4-curren", "\x00a5-yen", "\x00a6-brvbar", "\x00a7-sect", "\x00a8-uml", "\x00a9-copy", "\x00aa-ordf", "\x00ab-laquo", 
 					"\x00ac-not", "\x00ad-shy", "\x00ae-reg", "\x00af-macr", "\x00b0-deg", "\x00b1-plusmn", "\x00b2-sup2", "\x00b3-sup3", "\x00b4-acute", "\x00b5-micro", "\x00b6-para", "\x00b7-middot", "\x00b8-cedil", "\x00b9-sup1", "\x00ba-ordm", "\x00bb-raquo", 
 					"\x00bc-frac14", "\x00bd-frac12", "\x00be-frac34", "\x00bf-iquest", "\x00c0-Agrave", "\x00c1-Aacute", "\x00c2-Acirc", "\x00c3-Atilde", "\x00c4-Auml", "\x00c5-Aring", "\x00c6-AElig", "\x00c7-Ccedil", "\x00c8-Egrave", "\x00c9-Eacute", "\x00ca-Ecirc", "\x00cb-Euml", 
@@ -297,33 +297,33 @@ namespace MyToolkit.Utilities
 					"\u2234-there4", "\u223c-sim", "\u2245-cong", "\u2248-asymp", "\u2260-ne", "\u2261-equiv", "\u2264-le", "\u2265-ge", "\u2282-sub", "\u2283-sup", "\u2284-nsub", "\u2286-sube", "\u2287-supe", "\u2295-oplus", "\u2297-otimes", "\u22a5-perp", 
 					"\u22c5-sdot", "\u2308-lceil", "\u2309-rceil", "\u230a-lfloor", "\u230b-rfloor", "\u2329-lang", "\u232a-rang", "\u25ca-loz", "\u2660-spades", "\u2663-clubs", "\u2665-hearts", "\u2666-diams"
 			   };
-			}
+            }
 
-			internal static char Lookup(string entity)
-			{
-				if (_entitiesLookupTable == null)
-				{
-					lock (_lookupLockObject)
-					{
-						if (_entitiesLookupTable == null)
-						{
-							var dictionary = new Dictionary<string, char>();
-							foreach (string text1 in _entitiesList)
-								dictionary[text1.Substring(2)] = text1[0];
-							_entitiesLookupTable = dictionary;
-						}
-					}
-				}
+            internal static char Lookup(string entity)
+            {
+                if (_entitiesLookupTable == null)
+                {
+                    lock (_lookupLockObject)
+                    {
+                        if (_entitiesLookupTable == null)
+                        {
+                            var dictionary = new Dictionary<string, char>();
+                            foreach (string text1 in _entitiesList)
+                                dictionary[text1.Substring(2)] = text1[0];
+                            _entitiesLookupTable = dictionary;
+                        }
+                    }
+                }
 
-				char character;
-				if (_entitiesLookupTable.TryGetValue(entity, out character))
-					return character;
-				return '\0';
-			}
+                char character;
+                if (_entitiesLookupTable.TryGetValue(entity, out character))
+                    return character;
+                return '\0';
+            }
 
-			private static readonly string[] _entitiesList;
-			private static Dictionary<string, char> _entitiesLookupTable;
-			private static readonly object _lookupLockObject;
-		}
-	}
+            private static readonly string[] _entitiesList;
+            private static Dictionary<string, char> _entitiesLookupTable;
+            private static readonly object _lookupLockObject;
+        }
+    }
 }

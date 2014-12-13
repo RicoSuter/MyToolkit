@@ -52,7 +52,7 @@ namespace MyToolkit.Utilities
         /// <returns>True when the date time is between. </returns>
         public static bool IsBetween(this DateTime dt, DateTime start, DateTime end)
         {
-            return start <= dt && dt < end; 
+            return start <= dt && dt < end;
         }
 
         /// <summary>Checks whether a date time is between two date times. </summary>

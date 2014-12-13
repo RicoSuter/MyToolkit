@@ -84,7 +84,7 @@ namespace MyToolkit.Utilities
         // This attribute is used to avoid (FxCop/VS) CA1062 
         // See http://geekswithblogs.net/terje/archive/2010/10/14.aspx
         [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false)]
-        internal sealed class ValidatedNotNullAttribute : Attribute
+        public sealed class ValidatedNotNullAttribute : Attribute
         {
         }
     }

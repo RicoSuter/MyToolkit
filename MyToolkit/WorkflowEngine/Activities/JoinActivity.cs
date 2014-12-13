@@ -28,7 +28,7 @@ namespace MyToolkit.WorkflowEngine.Activities
             return !HasCurrentActivityBeforeActivity(input, definition, this, new List<WorkflowTransition>());
         }
 
-        private bool HasCurrentActivityBeforeActivity(WorkflowActivityInput input, WorkflowDefinition definition, 
+        private bool HasCurrentActivityBeforeActivity(WorkflowActivityInput input, WorkflowDefinition definition,
             IWorkflowActivityBase activity, List<WorkflowTransition> checkedTransitions)
         {
             var inboundTransitions = definition.GetInboundTransitions(activity);

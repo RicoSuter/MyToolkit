@@ -21,17 +21,17 @@ namespace MyToolkit.Serialization
     /// <summary>Provides methods to serialize and deserialize objects to XML. </summary>
     public static class XmlSerialization
     {
-        private static readonly Dictionary<Type, List<Tuple<Type[], XmlSerializer>>> Serializers = 
+        private static readonly Dictionary<Type, List<Tuple<Type[], XmlSerializer>>> Serializers =
             new Dictionary<Type, List<Tuple<Type[], XmlSerializer>>>();
 
         /// <summary>Creates or retrieves a serializer for the given type and extra types. </summary>
-        /// <typeparam name="T">The type to create the serialzer for. </typeparam>
+        /// <typeparam name="T">The type to create the serializer for. </typeparam>
         /// <param name="extraTypes">The extra types. </param>
         /// <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
         /// <returns>The <see cref="XmlSerializer"/>. </returns>
         public static XmlSerializer CreateSerializer<T>(Type[] extraTypes = null, bool useSerializerCache = true)
         {
-            var type = typeof (T);
+            var type = typeof(T);
             if (!useSerializerCache)
                 return extraTypes == null ? new XmlSerializer(type) : new XmlSerializer(type, extraTypes);
 

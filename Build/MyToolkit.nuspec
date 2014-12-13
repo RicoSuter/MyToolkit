@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>MyToolkit</id>
-        <version>2.3.21.0</version>
+        <version>2.3.22.0</version>
         <title>MyToolkit</title>
 		<authors>Rico Suter</authors>
 		<owners>Rico Suter</owners>
@@ -16,10 +16,14 @@
                 <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
             </group>
         </dependencies>
+        <references>
+            <reference file="MyToolkit.dll" />
+        </references>
     </metadata>
 	<files>
         <file src="..\- Output\MyToolkit\MyToolkit.dll" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.dll" />
         <file src="..\- Output\MyToolkit\MyToolkit.xml" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.xml" />
+        <file src="..\- Output\MyToolkit\CodeContracts\MyToolkit.Contracts.dll" target="lib\portable-net45+wp8+win8+wpa81\CodeContracts\MyToolkit.Contracts.dll" />
 
         <file src="..\- Output\MyToolkit.Legacy\MyToolkit.dll" target="lib\portable-sl5+wp71\MyToolkit.dll" />
         <file src="..\- Output\MyToolkit.Legacy\MyToolkit.xml" target="lib\portable-sl5+wp71\MyToolkit.xml" />

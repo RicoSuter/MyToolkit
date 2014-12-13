@@ -19,7 +19,7 @@ namespace MyToolkit.Utilities
         /// <summary>Recursively copies a dictionary. </summary>
         /// <param name="dictionary">The dictionary to copy. </param>
         /// <returns>The copied dictionary. </returns>
-        public static Dictionary<string, object> DeepCopy(this Dictionary<string, object> dictionary) 
+        public static Dictionary<string, object> DeepCopy(this Dictionary<string, object> dictionary)
         {
             var output = new Dictionary<string, object>();
             foreach (var p in dictionary)
