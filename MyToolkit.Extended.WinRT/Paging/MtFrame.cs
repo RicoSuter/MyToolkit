@@ -336,6 +336,8 @@ namespace MyToolkit.Paging
         /// <returns>The data. </returns>
         public string GetNavigationState()
         {
+            RaisePageOnNavigatedFrom(CurrentPage, NavigationMode.Forward);
+
             // remove pages which do not support tombstoning
             var pagesToSerialize = _pages;
             var currentIndexToSerialize = _currentIndex;
