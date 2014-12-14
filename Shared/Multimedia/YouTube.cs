@@ -350,10 +350,6 @@ namespace MyToolkit.Multimedia
                             var value = Uri.UnescapeDataString(p.Substring(index + 1));
                             if (key == "url")
                                 url = value;
-                                //else if (key == "conn")
-                                //    connection = value;
-                                //else if (key == "stream")
-                                //    stream = value;
                             else if (key == "itag")
                                 tuple.Itag = int.Parse(value);
                             else if (key == "type" && (value.Contains("video/mp4") || value.Contains("audio/mp4")))
@@ -365,9 +361,7 @@ namespace MyToolkit.Multimedia
                                 if (javaScriptCode == null)
                                 {
                                     var javaScriptUri = "http://s.ytimg.com/yts/jsbin/html5player-" +
-                                                        Regex.Match(response,
-                                                            "\"\\\\/\\\\/s.ytimg.com\\\\/yts\\\\/jsbin\\\\/html5player-(.+?)\\.js\"")
-                                                            .Groups[1] + ".js";
+                                        Regex.Match(response, "\"\\\\/\\\\/s.ytimg.com\\\\/yts\\\\/jsbin\\\\/html5player-(.+?)\\.js\"").Groups[1] + ".js";
                                     javaScriptCode = await HttpGet(javaScriptUri);
                                 }
 
@@ -380,11 +374,6 @@ namespace MyToolkit.Multimedia
                         }
                     }
                 }
-
-                //if (string.IsNullOrEmpty(url) && !string.IsNullOrEmpty(connection) && !string.IsNullOrEmpty(stream))
-                //{
-                //    url = connection + "?" + stream; 
-                //}
 
                 if (url.Contains("&signature=") || url.Contains("?signature="))
                     tuple._url = url;
