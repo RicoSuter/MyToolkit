@@ -336,9 +336,6 @@ namespace MyToolkit.Paging
         /// <returns>The data. </returns>
         public string GetNavigationState()
         {
-            //RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.Forward);
-            RaisePageOnNavigatedFrom(CurrentPage, NavigationMode.Forward);
-
             // remove pages which do not support tombstoning
             var pagesToSerialize = _pages;
             var currentIndexToSerialize = _currentIndex;
@@ -458,8 +455,7 @@ namespace MyToolkit.Paging
 
         private async Task AnimateNavigatedToAsync(NavigationMode navigationMode, FrameworkElement previousPage, FrameworkElement nextPage)
         {
-            if (IsFirstPage && ShowNavigationOnAppInAndOut &&
-                (navigationMode == NavigationMode.New || navigationMode == NavigationMode.Forward))
+            if (IsFirstPage && ShowNavigationOnAppInAndOut && (navigationMode == NavigationMode.New || navigationMode == NavigationMode.Forward))
             {
                 nextPage.Opacity = 1;
                 return;
@@ -491,7 +487,7 @@ namespace MyToolkit.Paging
             }
         }
 
-        private void RaisePageOnNavigatedFrom(MtPageDescription description, NavigationMode mode)
+        internal void RaisePageOnNavigatedFrom(MtPageDescription description, NavigationMode mode)
         {
             var page = description.GetPage(this);
 
@@ -500,6 +496,7 @@ namespace MyToolkit.Paging
             args.SourcePageType = description.Type;
             args.Parameter = description.Parameter;
             args.NavigationMode = mode;
+
             page.OnNavigatedFromCore(args);
         }
 

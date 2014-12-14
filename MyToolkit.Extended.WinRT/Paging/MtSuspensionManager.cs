@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Navigation;
 
 namespace MyToolkit.Paging
 {
