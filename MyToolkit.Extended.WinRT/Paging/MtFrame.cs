@@ -72,31 +72,18 @@ namespace MyToolkit.Paging
                 _pageAnimation = new TurnstilePageAnimation();
             }
             else
-                DisableForwardStack = false; 
+                DisableForwardStack = false;
         }
 
         public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
             "Content", typeof(object), typeof(MtFrame), new PropertyMetadata(default(object)));
 
-        /// <summary>
-        /// Gets or sets the content of the <see cref="MtFrame"/>. 
-        /// </summary>
+        /// <summary>Gets or sets the content of the <see cref="MtFrame"/>. </summary>
         public object Content
         {
             get { return (object)GetValue(ContentProperty); }
             set { SetValue(ContentProperty, value); }
         }
-
-        //public static readonly DependencyProperty ContentTransitionsProperty = DependencyProperty.Register(
-        //    "ContentTransitions", typeof(TransitionCollection), typeof(MtFrame), new PropertyMetadata(default(TransitionCollection), OnContentTransitionsChanged));
-
-        //private static void OnContentTransitionsChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-        //{
-        //    if (((TransitionCollection)args.NewValue).Any(t => t.GetType().Name == "NavigationThemeTransition"))
-        //        throw new Exception("ContentTransitions collection cannot contain NavigationThemeTransition, use MtFrame.PageAnimation for page transition animations. ");
-
-        //    ((MtFrame)obj).InternalFrame.ContentTransitions = (TransitionCollection)args.NewValue;
-        //}
 
         public static readonly DependencyProperty ContentTransitionsProperty = DependencyProperty.Register(
             "ContentTransitions", typeof(TransitionCollection), typeof(MtFrame), new PropertyMetadata(default(TransitionCollection)));
@@ -151,7 +138,7 @@ namespace MyToolkit.Paging
         /// <returns>Returns true if navigating forward, false if cancelled</returns>
         public async Task<bool> GoForwardAsync()
         {
-            if (await CallOnNavigatingFromAsync(CurrentPage, NavigationMode.Forward))
+            if (await RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.Forward))
                 return false;
 
             GoForwardOrBack(NavigationMode.Forward);
@@ -218,9 +205,9 @@ namespace MyToolkit.Paging
             if (index >= 0)
             {
                 RemovePageFromStackAt(index);
-                return true; 
+                return true;
             }
-            return false; 
+            return false;
         }
 
         /// <summary>Removes a page from the page stack. </summary>
@@ -258,33 +245,11 @@ namespace MyToolkit.Paging
         /// <returns>Returns true if navigating back, false if cancelled or CanGoBack is false. </returns>
         public async Task<bool> GoBackAsync()
         {
-            if (await CallOnNavigatingFromAsync(CurrentPage, NavigationMode.Back))
+            if (await RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.Back))
                 return false;
 
             GoForwardOrBack(NavigationMode.Back);
             return true;
-        }
-
-        private void GoForwardOrBack(NavigationMode mode)
-        {
-            if (mode == NavigationMode.Forward ? CanGoForward : CanGoBack)
-            {
-                var oldPage = CurrentPage;
-                _currentIndex += mode == NavigationMode.Forward ? 1 : -1;
-                var newPage = CurrentPage;
-
-                if (mode == NavigationMode.Back && DisableForwardStack)
-                    RemoveForwardStack();
-
-                Content = newPage.GetPage(this).InternalPage;
-
-                CallOnNavigatedFrom(oldPage, mode);
-                CallOnNavigatedTo(newPage, mode);
-
-                ((RelayCommand)GoBackCommand).RaiseCanExecuteChanged();
-            }
-            else
-                throw new Exception("cannot go forward or back");
         }
 
         /// <summary>Initializes the frame and navigates to the given first page. </summary>
@@ -293,7 +258,7 @@ namespace MyToolkit.Paging
         /// <returns>Always true. </returns>
         public bool Initialize(Type homePageType, object parameter = null)
         {
-            NavigateInternal(homePageType, parameter);
+            NavigateAsync(homePageType, parameter);
             return true;
         }
 
@@ -305,17 +270,128 @@ namespace MyToolkit.Paging
             return NavigateAsync(pageType, null);
         }
 
+        private Grid ContentGrid
+        {
+            get
+            {
+                if (Content == null)
+                    Content = new Grid();
+                return (Grid)Content;
+            }
+        }
+
+        private async void GoForwardOrBack(NavigationMode navigationMode)
+        {
+            if (navigationMode == NavigationMode.Forward ? CanGoForward : CanGoBack)
+            {
+                var currentPage = CurrentPage;
+                _currentIndex += navigationMode == NavigationMode.Forward ? 1 : -1;
+                var newPage = CurrentPage;
+
+                if (navigationMode == NavigationMode.Back && DisableForwardStack)
+                    RemoveForwardStack();
+
+                await NavigateWithAnimationsAndCallbacksAsync(navigationMode, currentPage, newPage);
+            }
+            else
+                throw new Exception("cannot go forward or back");
+        }
+
         /// <summary>Navigates forward to a new instance of the given page type. </summary>
         /// <param name="pageType">The page type. </param>
         /// <param name="parameter">The page parameter. </param>
         /// <returns>Returns true if the navigation process has not been cancelled. </returns>
         public async Task<bool> NavigateAsync(Type pageType, object parameter)
         {
-            if (CurrentPage != null && await CallOnNavigatingFromAsync(CurrentPage, NavigationMode.New))
+            var currentPage = CurrentPage;
+            if (currentPage != null && await RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.New))
                 return false;
 
-            NavigateInternal(pageType, parameter);
+            RemoveForwardStack();
+
+            var newPage = new MtPageDescription(pageType, parameter);
+            await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.New, currentPage, newPage);
+
+            // Destroy current page if cache is disabled
+            if (currentPage != null && (currentPage.Page.NavigationCacheMode == NavigationCacheMode.Disabled || DisableCache))
+                currentPage.Page = null;
+
             return true;
+        }
+
+        private async Task NavigateWithAnimationsAndCallbacksAsync(NavigationMode navigationMode, MtPageDescription currentPage, MtPageDescription newPage)
+        {
+            ContentGrid.IsHitTestVisible = false; 
+
+            // navigating from animation
+            ContentGrid.Children.Insert(0, newPage.GetPage(this).InternalPage);
+            if (currentPage != null)
+            {
+                await AnimateNavigatingFromAsync(navigationMode,
+                    currentPage.GetPage(this).ActualAnimationContext,
+                    newPage.GetPage(this).ActualAnimationContext);
+            }
+
+            // callbacks
+            if (currentPage != null)
+            {
+                ContentGrid.Children.Move(1, 0);
+                RaisePageOnNavigatedFrom(currentPage, navigationMode);
+            }
+
+            if (navigationMode == NavigationMode.New)
+            {
+                _pages.Add(newPage);
+                _currentIndex++;
+            }
+
+            RaisePageOnNavigatedTo(newPage, navigationMode);
+            ((RelayCommand)GoBackCommand).RaiseCanExecuteChanged();
+
+            // navigated to animation
+            if (currentPage != null)
+            {
+                await AnimateNavigatedToAsync(navigationMode,
+                    currentPage.GetPage(this).ActualAnimationContext,
+                    newPage.GetPage(this).ActualAnimationContext);
+                ContentGrid.Children.Remove(currentPage.GetPage(this).InternalPage);
+            }
+
+            ContentGrid.IsHitTestVisible = true; 
+        }
+
+        private async Task AnimateNavigatingFromAsync(NavigationMode navigationMode, FrameworkElement previousPage, FrameworkElement nextPage)
+        {
+            if (IsFirstPage && ShowNavigationOnAppInAndOut && navigationMode == NavigationMode.Back)
+                return;
+
+            if (PageAnimation != null)
+            {
+                if (navigationMode == NavigationMode.Back)
+                    await PageAnimation.NavigatingFromBackward(previousPage, nextPage);
+                else if (navigationMode != NavigationMode.Refresh)
+                    await PageAnimation.NavigatingFromForward(previousPage, nextPage);
+            }
+        }
+
+        private async Task AnimateNavigatedToAsync(NavigationMode navigationMode, FrameworkElement previousPage, FrameworkElement nextPage)
+        {
+            if (IsFirstPage && ShowNavigationOnAppInAndOut &&
+                (navigationMode == NavigationMode.New || navigationMode == NavigationMode.Forward))
+            {
+                nextPage.Opacity = 1;
+                return;
+            }
+
+            if (PageAnimation != null)
+            {
+                if (navigationMode == NavigationMode.Back)
+                    await PageAnimation.NavigatedToBackward(previousPage, nextPage);
+                else if (navigationMode != NavigationMode.Refresh)
+                    await PageAnimation.NavigatedToForward(previousPage, nextPage);
+            }
+
+            nextPage.Opacity = 1;
         }
 
         /// <summary>Navigates to the page of the given type. </summary>
@@ -347,66 +423,44 @@ namespace MyToolkit.Paging
             }
         }
 
-        private void NavigateInternal(Type type, object parameter)
-        {
-            // Remove forward stack
-            var previousPage = CurrentPage;
-            RemoveForwardStack();
-
-            // Create new page
-            var newPage = new MtPageDescription(type, parameter);
-            _pages.Add(newPage);
-            _currentIndex++;
-
-            Content = newPage.GetPage(this).InternalPage;
-
-            // Call navigation event methods
-            if (previousPage != null)
-                CallOnNavigatedFrom(previousPage, NavigationMode.New);
-            CallOnNavigatedTo(newPage, NavigationMode.New);
-
-            ((RelayCommand)GoBackCommand).RaiseCanExecuteChanged();
-
-            // Destroy current page if cache is disabled
-            if (previousPage != null && (previousPage.Page.NavigationCacheMode == NavigationCacheMode.Disabled || DisableCache))
-                previousPage.Page = null;
-        }
-
-        private void CallOnNavigatedFrom(MtPageDescription description, NavigationMode mode)
+        private void RaisePageOnNavigatedFrom(MtPageDescription description, NavigationMode mode)
         {
             var page = description.GetPage(this);
+
             var args = new MtNavigationEventArgs();
             args.Content = page;
             args.SourcePageType = description.Type;
             args.Parameter = description.Parameter;
             args.NavigationMode = mode;
-            page.InternalOnNavigatedFrom(args);
+            page.OnNavigatedFromCore(args);
         }
 
-        private async Task<bool> CallOnNavigatingFromAsync(MtPageDescription description, NavigationMode mode)
+        private async Task<bool> RaisePageOnNavigatingFromAsync(MtPageDescription description, NavigationMode mode)
         {
             var page = description.GetPage(this);
+
             var args = new MtNavigatingCancelEventArgs();
             args.Content = page;
             args.SourcePageType = description.Type;
             args.NavigationMode = mode;
 
             IsNavigating = true;
-            await page.InternalOnNavigatingFromAsync(args);
+            await page.OnNavigatingFromCoreAsync(args);
             IsNavigating = false;
 
             return args.Cancel;
         }
 
-        private void CallOnNavigatedTo(MtPageDescription description, NavigationMode mode)
+        private void RaisePageOnNavigatedTo(MtPageDescription description, NavigationMode mode)
         {
             var page = description.GetPage(this);
+
             var args = new MtNavigationEventArgs();
             args.Content = page;
             args.SourcePageType = description.Type;
             args.Parameter = description.Parameter;
             args.NavigationMode = mode;
-            page.InternalOnNavigatedTo(args);
+            page.OnNavigatedToCore(args);
 
             var copy = Navigated;
             if (copy != null)
@@ -439,14 +493,14 @@ namespace MyToolkit.Paging
         public void SetNavigationState(string data)
         {
             var frameDescription = DataContractSerialization.Deserialize<MtFrameDescription>(data, MtSuspensionManager.KnownTypes.ToArray());
-            
+
             _pages = frameDescription.PageStack;
             _currentIndex = frameDescription.PageIndex;
 
             if (_currentIndex != -1)
             {
                 Content = CurrentPage.GetPage(this).InternalPage;
-                CallOnNavigatedTo(CurrentPage, NavigationMode.Back);
+                RaisePageOnNavigatedTo(CurrentPage, NavigationMode.Back);
             }
         }
 
@@ -454,8 +508,8 @@ namespace MyToolkit.Paging
         /// <returns>The data. </returns>
         public string GetNavigationState()
         {
-            //CallOnNavigatingFromAsync(CurrentPage, NavigationMode.Forward);
-            CallOnNavigatedFrom(CurrentPage, NavigationMode.Forward);
+            //RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.Forward);
+            RaisePageOnNavigatedFrom(CurrentPage, NavigationMode.Forward);
 
             // remove pages which do not support tombstoning
             var pagesToSerialize = _pages;

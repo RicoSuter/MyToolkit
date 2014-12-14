@@ -364,68 +364,22 @@ namespace MyToolkit.Paging
         // internal methods ensure that base implementations of InternalOn* is always called
         // even if user does not call base.InternalOn* in the overridden On* method. 
 
-        internal async virtual void InternalOnNavigatedTo(MtNavigationEventArgs e)
+        internal virtual void OnNavigatedToCore(MtNavigationEventArgs e)
         {
             OnNavigatedTo(e);
             PageStateHandler.OnNavigatedTo(e);
-
-            await AnimateNavigatedToAsync(e);
         }
 
-        internal virtual async Task InternalOnNavigatingFromAsync(MtNavigatingCancelEventArgs e)
+        internal virtual async Task OnNavigatingFromCoreAsync(MtNavigatingCancelEventArgs e)
         {
             OnNavigatingFrom(e);
 
             var task = OnNavigatingFromAsync(e);
             if (task != null)
                 await task;
-
-            await AnimateNavigatingFromAsync(e);
         }
 
-        private async Task AnimateNavigatedToAsync(MtNavigationEventArgs e)
-        {
-            if (Frame.IsFirstPage && Frame.ShowNavigationOnAppInAndOut &&
-                (e.NavigationMode == NavigationMode.New || e.NavigationMode == NavigationMode.Forward))
-            {
-                ActualAnimationContext.Opacity = 1;
-                return;
-            }
-
-            if (Frame.PageAnimation != null)
-            {
-                if (e.NavigationMode == NavigationMode.Back)
-                    await Frame.PageAnimation.NavigatedToBackward(ActualAnimationContext);
-                else if (e.NavigationMode != NavigationMode.Refresh)
-                    await Frame.PageAnimation.NavigatedToForward(ActualAnimationContext);
-                else
-                    ActualAnimationContext.Opacity = 1;
-            }
-        }
-
-        private async Task AnimateNavigatingFromAsync(MtNavigatingCancelEventArgs e)
-        {
-            if (!e.Cancel)
-            {
-                if (Frame.IsFirstPage && Frame.ShowNavigationOnAppInAndOut && e.NavigationMode == NavigationMode.Back)
-                {
-                    ActualAnimationContext.Opacity = 1;
-                    return;
-                }
-
-                if (Frame.PageAnimation != null)
-                {
-                    if (e.NavigationMode == NavigationMode.Back)
-                        await Frame.PageAnimation.NavigatingFromBackward(ActualAnimationContext);
-                    else if (e.NavigationMode != NavigationMode.Refresh)
-                        await Frame.PageAnimation.NavigatingFromForward(ActualAnimationContext);
-                    else
-                        ActualAnimationContext.Opacity = 1;
-                }
-            }
-        }
-
-        internal void InternalOnNavigatedFrom(MtNavigationEventArgs e)
+        internal void OnNavigatedFromCore(MtNavigationEventArgs e)
         {
             OnNavigatedFrom(e);
             PageStateHandler.OnNavigatedFrom(e);

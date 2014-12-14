@@ -115,7 +115,7 @@ namespace MyToolkit.UI
 
 			if (parent is Paging.MtFrame)
 			{
-				var page = ((Paging.MtFrame)parent).Content as Paging.MtPage;
+				var page = ((Paging.MtFrame)parent).CurrentPage.Page;
 				if (page != null)
 				{
 					if (page.TopAppBar != null)
@@ -157,8 +157,8 @@ namespace MyToolkit.UI
 
 				if (parent is Paging.MtFrame)
 				{
-					var page = ((Paging.MtFrame)parent).Content as Paging.MtPage;
-					if (page != null)
+                    var page = ((Paging.MtFrame)parent).CurrentPage.Page;
+                    if (page != null)
 					{
 						if (page.TopAppBar != null)
 							page.TopAppBar.Visibility = topAppBarVisibility;

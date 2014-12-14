@@ -16,24 +16,35 @@ namespace MyToolkit.Paging.Animations
 {
     public class TurnstilePageAnimation : IPageAnimation
     {
-        public Task NavigatedToForward(FrameworkElement source)
+        public TurnstilePageAnimation()
         {
-            return Turnstile(source, -75, 0, 0, 1);
+            Duration = TimeSpan.FromSeconds(0.15);
+        }
+        
+        public TimeSpan Duration { get; set; }
+
+        public Task NavigatingFromForward(FrameworkElement previousPage, FrameworkElement nextPage)
+        {
+            nextPage.Opacity = 0;
+            return Turnstile(previousPage, 5, 75, 1, 0);
         }
 
-        public Task NavigatedToBackward(FrameworkElement source)
+        public Task NavigatedToForward(FrameworkElement previousPage, FrameworkElement nextPage)
         {
-            return Turnstile(source, 75, 0, 0, 1);
+            previousPage.Opacity = 0;
+            return Turnstile(nextPage, -75, 0, 0, 1);
         }
 
-        public Task NavigatingFromForward(FrameworkElement source)
+        public Task NavigatingFromBackward(FrameworkElement previousPage, FrameworkElement nextPage)
         {
-            return Turnstile(source, 5, 75, 1, 0);
+            nextPage.Opacity = 0;
+            return Turnstile(previousPage, -5, -75, 1, 0);
         }
 
-        public Task NavigatingFromBackward(FrameworkElement source)
+        public Task NavigatedToBackward(FrameworkElement previousPage, FrameworkElement nextPage)
         {
-            return Turnstile(source, -5, -75, 1, 0);
+            previousPage.Opacity = 0;
+            return Turnstile(nextPage, 75, 0, 0, 1);
         }
 
         private Task Turnstile(FrameworkElement source, double fromRotation, double toRotation, double fromOpacity, double toOpacity)
@@ -44,12 +55,11 @@ namespace MyToolkit.Paging.Animations
             source.Opacity = 1;
             source.Projection = new PlaneProjection { CenterOfRotationX = 0 };
 
-            var duration = TimeSpan.FromSeconds(0.15);
             var story = new Storyboard();
 
             var turnstileAnimation = new DoubleAnimation
             {
-                Duration = duration,
+                Duration = Duration,
                 From = fromRotation, 
                 To = toRotation
             };
@@ -58,7 +68,7 @@ namespace MyToolkit.Paging.Animations
 
             var opacityAnimation = new DoubleAnimation
             {
-                Duration = duration,
+                Duration = Duration,
                 From = fromOpacity,
                 To = toOpacity,
             };

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using MyToolkit.Messaging;
 using MyToolkit.Paging;
+using MyToolkit.Paging.Animations;
 using SampleWindowsStoreApp.Views;
 
 namespace SampleWindowsStoreApp
@@ -31,6 +32,9 @@ namespace SampleWindowsStoreApp
         public override Task OnInitializedAsync(MtFrame frame, ApplicationExecutionState args)
         {
             // TODO: Called when the app is started (not resumed)
+
+            //frame.PageAnimation = new TurnstilePageAnimation();
+            //frame.PageAnimation = new PushPageAnimation();
 
             var mapper = RegexViewModelToViewMapper.CreateDefaultMapper(typeof(App).GetTypeInfo().Assembly);
             Messenger.Default.Register(DefaultActions.GetNavigateMessageAction(mapper, frame));

@@ -13,9 +13,10 @@ namespace MyToolkit.Paging.Animations
 {
     public interface IPageAnimation
     {
-        Task NavigatedToForward(FrameworkElement source);
-        Task NavigatedToBackward(FrameworkElement source);
-        Task NavigatingFromForward(FrameworkElement source);
-        Task NavigatingFromBackward(FrameworkElement source);
+        Task NavigatingFromForward(FrameworkElement previousPage, FrameworkElement nextPage);
+        Task NavigatedToForward(FrameworkElement previousPage, FrameworkElement nextPage);
+
+        Task NavigatingFromBackward(FrameworkElement previousPage, FrameworkElement nextPage);
+        Task NavigatedToBackward(FrameworkElement previousPage, FrameworkElement nextPage);
     }
 }
