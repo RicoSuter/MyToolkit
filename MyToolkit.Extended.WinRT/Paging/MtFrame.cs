@@ -151,6 +151,22 @@ namespace MyToolkit.Paging
         /// <summary>Gets a list of the pages in the page stack. </summary>
         public IReadOnlyList<MtPageDescription> Pages { get { return _pages; } }
 
+        /// <summary>Gets the number of pages in the page back stack. </summary>
+        public int BackStackDepth
+        {
+            get { return _currentIndex + 1; }
+        }
+
+        private Grid ContentGrid
+        {
+            get
+            {
+                if (Content == null)
+                    Content = new Grid();
+                return (Grid)Content;
+            }
+        }
+
         /// <summary>Gets the first page of the specified type in the page back stack or null if no page of the type is available. </summary>
         /// <param name="pageType">The page type. </param>
         /// <returns>The page or null if not found. </returns>
@@ -270,31 +286,12 @@ namespace MyToolkit.Paging
             return NavigateAsync(pageType, null);
         }
 
-        private Grid ContentGrid
+        /// <summary>Navigates to the page of the given type. </summary>
+        /// <param name="sourcePageType">The page type. </param>
+        public bool Navigate(Type sourcePageType)
         {
-            get
-            {
-                if (Content == null)
-                    Content = new Grid();
-                return (Grid)Content;
-            }
-        }
-
-        private async void GoForwardOrBack(NavigationMode navigationMode)
-        {
-            if (navigationMode == NavigationMode.Forward ? CanGoForward : CanGoBack)
-            {
-                var currentPage = CurrentPage;
-                _currentIndex += navigationMode == NavigationMode.Forward ? 1 : -1;
-                var newPage = CurrentPage;
-
-                if (navigationMode == NavigationMode.Back && DisableForwardStack)
-                    RemoveForwardStack();
-
-                await NavigateWithAnimationsAndCallbacksAsync(navigationMode, currentPage, newPage);
-            }
-            else
-                throw new Exception("cannot go forward or back");
+            NavigateAsync(sourcePageType);
+            return true;
         }
 
         /// <summary>Navigates forward to a new instance of the given page type. </summary>
@@ -317,6 +314,91 @@ namespace MyToolkit.Paging
                 currentPage.Page = null;
 
             return true;
+        }
+
+        /// <summary>Used set the serialized the current page stack (used in the SuspensionManager). </summary>
+        /// <param name="data">The data. </param>
+        public void SetNavigationState(string data)
+        {
+            var frameDescription = DataContractSerialization.Deserialize<MtFrameDescription>(data, MtSuspensionManager.KnownTypes.ToArray());
+
+            _pages = frameDescription.PageStack;
+            _currentIndex = frameDescription.PageIndex;
+
+            if (_currentIndex != -1)
+            {
+                Content = CurrentPage.GetPage(this).InternalPage;
+                RaisePageOnNavigatedTo(CurrentPage, NavigationMode.Back);
+            }
+        }
+
+        /// <summary>Used to serialize the current page stack (used in the SuspensionManager). </summary>
+        /// <returns>The data. </returns>
+        public string GetNavigationState()
+        {
+            //RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.Forward);
+            RaisePageOnNavigatedFrom(CurrentPage, NavigationMode.Forward);
+
+            // remove pages which do not support tombstoning
+            var pagesToSerialize = _pages;
+            var currentIndexToSerialize = _currentIndex;
+            var firstPageToRemove = _pages.FirstOrDefault(p =>
+            {
+                var page = p.GetPage(this);
+                return !page.IsSuspendable;
+            });
+
+            if (firstPageToRemove != null)
+            {
+                var index = pagesToSerialize.IndexOf(firstPageToRemove);
+                pagesToSerialize = _pages.Take(index).ToList();
+                currentIndexToSerialize = index - 1;
+            }
+
+            var output = DataContractSerialization.Serialize(
+                new MtFrameDescription { PageIndex = currentIndexToSerialize, PageStack = pagesToSerialize },
+                true, MtSuspensionManager.KnownTypes.ToArray());
+
+            return output;
+        }
+
+        /// <summary>Called when a new page has been created. </summary>
+        /// <param name="sender">The frame. </param>
+        /// <param name="page">The created page. </param>
+        protected virtual void OnPageCreated(object sender, object page)
+        {
+            // Must be empty. 
+        }
+
+        /// <summary>Called when navigated to another page. </summary>
+        /// <param name="sender">The sender. </param>
+        /// <param name="args">The args. </param>
+        protected virtual void OnNavigated(object sender, MtNavigationEventArgs args)
+        {
+            // Must be empty. 
+        }
+
+        protected override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            InternalFrame = (Frame)GetTemplateChild("Frame");
+        }
+
+        private async void GoForwardOrBack(NavigationMode navigationMode)
+        {
+            if (navigationMode == NavigationMode.Forward ? CanGoForward : CanGoBack)
+            {
+                var currentPage = CurrentPage;
+                _currentIndex += navigationMode == NavigationMode.Forward ? 1 : -1;
+                var newPage = CurrentPage;
+
+                if (navigationMode == NavigationMode.Back && DisableForwardStack)
+                    RemoveForwardStack();
+
+                await NavigateWithAnimationsAndCallbacksAsync(navigationMode, currentPage, newPage);
+            }
+            else
+                throw new Exception("cannot go forward or back");
         }
 
         private async Task NavigateWithAnimationsAndCallbacksAsync(NavigationMode navigationMode, MtPageDescription currentPage, MtPageDescription newPage)
@@ -394,20 +476,6 @@ namespace MyToolkit.Paging
             nextPage.Opacity = 1;
         }
 
-        /// <summary>Navigates to the page of the given type. </summary>
-        /// <param name="sourcePageType">The page type. </param>
-        public bool Navigate(Type sourcePageType)
-        {
-            NavigateAsync(sourcePageType);
-            return true;
-        }
-
-        protected override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-            InternalFrame = (Frame)GetTemplateChild("Frame");
-        }
-
         private void OnVisibilityChanged(object sender, VisibilityChangedEventArgs args)
         {
             if (CurrentPage != null)
@@ -470,74 +538,6 @@ namespace MyToolkit.Paging
 
             if (args.NavigationMode == NavigationMode.New)
                 OnPageCreated(this, page);
-        }
-
-        /// <summary>Called when a new page has been created. </summary>
-        /// <param name="sender">The frame. </param>
-        /// <param name="page">The created page. </param>
-        protected virtual void OnPageCreated(object sender, object page)
-        {
-            // Must be empty. 
-        }
-
-        /// <summary>Called when navigated to another page. </summary>
-        /// <param name="sender">The sender. </param>
-        /// <param name="args">The args. </param>
-        protected virtual void OnNavigated(object sender, MtNavigationEventArgs args)
-        {
-            // Must be empty. 
-        }
-
-        /// <summary>Used set the serialized the current page stack (used in the SuspensionManager). </summary>
-        /// <param name="data">The data. </param>
-        public void SetNavigationState(string data)
-        {
-            var frameDescription = DataContractSerialization.Deserialize<MtFrameDescription>(data, MtSuspensionManager.KnownTypes.ToArray());
-
-            _pages = frameDescription.PageStack;
-            _currentIndex = frameDescription.PageIndex;
-
-            if (_currentIndex != -1)
-            {
-                Content = CurrentPage.GetPage(this).InternalPage;
-                RaisePageOnNavigatedTo(CurrentPage, NavigationMode.Back);
-            }
-        }
-
-        /// <summary>Used to serialize the current page stack (used in the SuspensionManager). </summary>
-        /// <returns>The data. </returns>
-        public string GetNavigationState()
-        {
-            //RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.Forward);
-            RaisePageOnNavigatedFrom(CurrentPage, NavigationMode.Forward);
-
-            // remove pages which do not support tombstoning
-            var pagesToSerialize = _pages;
-            var currentIndexToSerialize = _currentIndex;
-            var firstPageToRemove = _pages.FirstOrDefault(p =>
-            {
-                var page = p.GetPage(this);
-                return !page.IsSuspendable;
-            });
-
-            if (firstPageToRemove != null)
-            {
-                var index = pagesToSerialize.IndexOf(firstPageToRemove);
-                pagesToSerialize = _pages.Take(index).ToList();
-                currentIndexToSerialize = index - 1;
-            }
-
-            var output = DataContractSerialization.Serialize(
-                new MtFrameDescription { PageIndex = currentIndexToSerialize, PageStack = pagesToSerialize },
-                true, MtSuspensionManager.KnownTypes.ToArray());
-
-            return output;
-        }
-
-        /// <summary>Gets the number of pages in the page back stack. </summary>
-        public int BackStackDepth
-        {
-            get { return _currentIndex + 1; }
         }
     }
 }
