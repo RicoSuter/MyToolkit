@@ -14,46 +14,65 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace MyToolkit.Paging.Animations
 {
+    /// <summary>A turnstile animation. </summary>
     public class TurnstilePageAnimation : IPageAnimation
     {
+        /// <summary>Initializes a new instance of the <see cref="TurnstilePageAnimation"/> class. </summary>
         public TurnstilePageAnimation()
         {
             Duration = TimeSpan.FromSeconds(0.15);
         }
-        
+
+        /// <summary>Gets or sets the duration of the animation. </summary>
         public TimeSpan Duration { get; set; }
 
-        public Task NavigatingFromForward(FrameworkElement previousPage, FrameworkElement nextPage)
+        /// <summary>Animates for navigating forward from a page. </summary>
+        /// <param name="previousPage">The previous page. </param>
+        /// <param name="nextPage">The next page. </param>
+        /// <returns>The task. </returns>
+        public Task AnimateForwardNavigatingFromAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
             nextPage.Opacity = 0;
-            return Turnstile(previousPage, 5, 75, 1, 0);
+            return AnimateAsync(previousPage, 5, 75, 1, 0);
         }
 
-        public Task NavigatedToForward(FrameworkElement previousPage, FrameworkElement nextPage)
+        /// <summary>Animates for navigating forward to a page. </summary>
+        /// <param name="previousPage">The previous page. </param>
+        /// <param name="nextPage">The next page. </param>
+        /// <returns>The task. </returns>
+        public Task AnimateForwardNavigatedToAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
             previousPage.Opacity = 0;
-            return Turnstile(nextPage, -75, 0, 0, 1);
+            return AnimateAsync(nextPage, -75, 0, 0, 1);
         }
 
-        public Task NavigatingFromBackward(FrameworkElement previousPage, FrameworkElement nextPage)
+        /// <summary>Animates for navigating backward from a page. </summary>
+        /// <param name="previousPage">The previous page. </param>
+        /// <param name="nextPage">The next page. </param>
+        /// <returns>The task. </returns>
+        public Task AnimateBackwardNavigatingFromAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
             nextPage.Opacity = 0;
-            return Turnstile(previousPage, -5, -75, 1, 0);
+            return AnimateAsync(previousPage, -5, -75, 1, 0);
         }
 
-        public Task NavigatedToBackward(FrameworkElement previousPage, FrameworkElement nextPage)
+        /// <summary>Animates for navigating backward to a page. </summary>
+        /// <param name="previousPage">The previous page. </param>
+        /// <param name="nextPage">The next page. </param>
+        /// <returns>The task. </returns>
+        public Task AnimateBackwardNavigatedToAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
             previousPage.Opacity = 0;
-            return Turnstile(nextPage, 75, 0, 0, 1);
+            return AnimateAsync(nextPage, 75, 0, 0, 1);
         }
 
-        private Task Turnstile(FrameworkElement source, double fromRotation, double toRotation, double fromOpacity, double toOpacity)
+        private Task AnimateAsync(FrameworkElement page, double fromRotation, double toRotation, double fromOpacity, double toOpacity)
         {
-            if (source == null)
+            if (page == null)
                 return Task.FromResult<object>(null);
 
-            source.Opacity = 1;
-            source.Projection = new PlaneProjection { CenterOfRotationX = 0 };
+            page.Opacity = 1;
+            page.Projection = new PlaneProjection { CenterOfRotationX = 0 };
 
             var story = new Storyboard();
 
@@ -64,7 +83,7 @@ namespace MyToolkit.Paging.Animations
                 To = toRotation
             };
             Storyboard.SetTargetProperty(turnstileAnimation, "(UIElement.Projection).(PlaneProjection.RotationY)");
-            Storyboard.SetTarget(turnstileAnimation, source);
+            Storyboard.SetTarget(turnstileAnimation, page);
 
             var opacityAnimation = new DoubleAnimation
             {
@@ -73,7 +92,7 @@ namespace MyToolkit.Paging.Animations
                 To = toOpacity,
             };
             Storyboard.SetTargetProperty(opacityAnimation, "Opacity");
-            Storyboard.SetTarget(opacityAnimation, source);
+            Storyboard.SetTarget(opacityAnimation, page);
 
             story.Children.Add(turnstileAnimation);
             story.Children.Add(opacityAnimation);
@@ -81,8 +100,8 @@ namespace MyToolkit.Paging.Animations
             var completion = new TaskCompletionSource<object>();
             story.Completed += delegate
             {
-                ((PlaneProjection) source.Projection).RotationY = toRotation;
-                source.Opacity = toOpacity;
+                ((PlaneProjection) page.Projection).RotationY = toRotation;
+                page.Opacity = toOpacity;
                 completion.SetResult(null);
             };
             story.Begin();

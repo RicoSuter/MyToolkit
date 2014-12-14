@@ -368,9 +368,9 @@ namespace MyToolkit.Paging
             if (PageAnimation != null)
             {
                 if (navigationMode == NavigationMode.Back)
-                    await PageAnimation.NavigatingFromBackward(previousPage, nextPage);
+                    await PageAnimation.AnimateBackwardNavigatingFromAsync(previousPage, nextPage);
                 else if (navigationMode != NavigationMode.Refresh)
-                    await PageAnimation.NavigatingFromForward(previousPage, nextPage);
+                    await PageAnimation.AnimateForwardNavigatingFromAsync(previousPage, nextPage);
             }
         }
 
@@ -386,9 +386,9 @@ namespace MyToolkit.Paging
             if (PageAnimation != null)
             {
                 if (navigationMode == NavigationMode.Back)
-                    await PageAnimation.NavigatedToBackward(previousPage, nextPage);
+                    await PageAnimation.AnimateBackwardNavigatedToAsync(previousPage, nextPage);
                 else if (navigationMode != NavigationMode.Refresh)
-                    await PageAnimation.NavigatedToForward(previousPage, nextPage);
+                    await PageAnimation.AnimateForwardNavigatedToAsync(previousPage, nextPage);
             }
 
             nextPage.Opacity = 1;

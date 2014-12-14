@@ -1,3 +1,11 @@
+//-----------------------------------------------------------------------
+// <copyright file="PushPageAnimation.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
 using System;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
@@ -6,40 +14,59 @@ using Windows.UI.Xaml.Media.Animation;
 
 namespace MyToolkit.Paging.Animations
 {
+    /// <summary>A push page animation. </summary>
     public class PushPageAnimation : IPageAnimation
     {
+        /// <summary>Initializes a new instance of the <see cref="PushPageAnimation"/> class. </summary>
         public PushPageAnimation()
         {
             Duration = TimeSpan.FromSeconds(0.15);
         }
 
+        /// <summary>Gets or sets the duration of the animation. </summary>
         public TimeSpan Duration { get; set; }
 
-        public Task NavigatingFromForward(FrameworkElement previousPage, FrameworkElement nextPage)
+        /// <summary>Animates for navigating forward from a page. </summary>
+        /// <param name="previousPage">The previous page. </param>
+        /// <param name="nextPage">The next page. </param>
+        /// <returns>The task. </returns>
+        public Task AnimateForwardNavigatingFromAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
             var width = previousPage.ActualWidth;
-            return Animate(previousPage, nextPage, 0, -(width / 2.0), width, width / 2.0);
+            return AnimateAsync(previousPage, nextPage, 0, -(width / 2.0), width, width / 2.0);
         }
 
-        public Task NavigatedToForward(FrameworkElement previousPage, FrameworkElement nextPage)
+        /// <summary>Animates for navigating forward to a page. </summary>
+        /// <param name="previousPage">The previous page. </param>
+        /// <param name="nextPage">The next page. </param>
+        /// <returns>The task. </returns>
+        public Task AnimateForwardNavigatedToAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
             var width = previousPage.ActualWidth;
-            return Animate(previousPage, nextPage, -(width / 2.0), -width, width / 2, 0);
+            return AnimateAsync(previousPage, nextPage, -(width / 2.0), -width, width / 2, 0);
         }
 
-        public Task NavigatingFromBackward(FrameworkElement previousPage, FrameworkElement nextPage)
+        /// <summary>Animates for navigating backward from a page. </summary>
+        /// <param name="previousPage">The previous page. </param>
+        /// <param name="nextPage">The next page. </param>
+        /// <returns>The task. </returns>
+        public Task AnimateBackwardNavigatingFromAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
             var width = previousPage.ActualWidth;
-            return Animate(previousPage, nextPage, 1, width / 2.0, -width, -(width / 2.0));
+            return AnimateAsync(previousPage, nextPage, 1, width / 2.0, -width, -(width / 2.0));
         }
 
-        public Task NavigatedToBackward(FrameworkElement previousPage, FrameworkElement nextPage)
+        /// <summary>Animates for navigating backward to a page. </summary>
+        /// <param name="previousPage">The previous page. </param>
+        /// <param name="nextPage">The next page. </param>
+        /// <returns>The task. </returns>
+        public Task AnimateBackwardNavigatedToAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
             var width = previousPage.ActualWidth;
-            return Animate(previousPage, nextPage, width / 2.0, width, -(width / 2.0), 0);
+            return AnimateAsync(previousPage, nextPage, width / 2.0, width, -(width / 2.0), 0);
         }
 
-        private Task Animate(FrameworkElement page, FrameworkElement otherPage, double fromOffsetPreviousPage, double toOffsetPreviousPage, double fromOffsetNextPage, double toOffsetNextPage)
+        private Task AnimateAsync(FrameworkElement page, FrameworkElement otherPage, double fromOffsetPreviousPage, double toOffsetPreviousPage, double fromOffsetNextPage, double toOffsetNextPage)
         {
             if (page == null)
                 return Task.FromResult<object>(null);
