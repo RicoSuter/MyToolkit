@@ -26,9 +26,6 @@ namespace MyToolkit.Paging.Animations
         /// <summary>Gets or sets the duration of the animation. </summary>
         public TimeSpan Duration { get; set; }
 
-        /// <summary>Gets or sets a value indicating whether to use bitmap cache mode for the page controls. </summary>
-        public bool UseBitmapCacheMode { get; set; }
-
         /// <summary>Gets the insertion mode for the next page.</summary>
         public PageInsertionMode PageInsertionMode
         {
@@ -79,10 +76,7 @@ namespace MyToolkit.Paging.Animations
         {
             if (page == null)
                 return Task.FromResult<object>(null);
-
-            if (UseBitmapCacheMode && !(page.CacheMode is BitmapCache))
-                page.CacheMode = new BitmapCache();
-
+            
             page.Projection = new PlaneProjection();
             otherPage.Projection = new PlaneProjection();
 

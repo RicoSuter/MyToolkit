@@ -76,8 +76,12 @@ namespace MyToolkit.Paging.Animations
             if (page == null)
                 return Task.FromResult<object>(null);
 
+            CacheMode originalCacheMode = null;
             if (UseBitmapCacheMode && !(page.CacheMode is BitmapCache))
+            {
+                originalCacheMode = page.CacheMode;
                 page.CacheMode = new BitmapCache();
+            }
 
             page.Opacity = 1;
             page.Projection = new PlaneProjection { CenterOfRotationX = 0 };
@@ -109,7 +113,10 @@ namespace MyToolkit.Paging.Animations
             story.Completed += delegate
             {
                 ((PlaneProjection)page.Projection).RotationY = toRotation;
+
                 page.Opacity = toOpacity;
+                page.CacheMode = originalCacheMode;
+
                 completion.SetResult(null);
             };
             story.Begin();
