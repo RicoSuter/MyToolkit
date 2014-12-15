@@ -14,6 +14,9 @@ namespace MyToolkit.Paging.Animations
     /// <summary>Initializes a new instance of the <see cref="IPageAnimation"/> class. </summary>
     public interface IPageAnimation
     {
+        /// <summary>Gets the insertion mode for the next page.</summary>
+        PageInsertionMode PageInsertionMode { get; }
+
         /// <summary>Animates for navigating forward from a page. </summary>
         /// <param name="previousPage">The previous page. </param>
         /// <param name="nextPage">The next page. </param>

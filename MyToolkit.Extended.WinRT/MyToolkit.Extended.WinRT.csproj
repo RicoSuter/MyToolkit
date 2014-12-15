@@ -282,6 +282,7 @@
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Mvvm\IStateHandlingViewModel.cs" />
     <Compile Include="Mvvm\ViewModelHelper.cs" />
+    <Compile Include="Paging\Animations\PageInsertionMode.cs" />
     <Compile Include="Paging\Animations\PushPageAnimation.cs" />
     <Compile Include="Paging\Handlers\BackKeyPressedHandler.cs" />
     <Compile Include="Paging\Handlers\NavigationKeyHandler.cs" />

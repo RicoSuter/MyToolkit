@@ -32,24 +32,6 @@ namespace MyToolkit.Paging
         private IPageAnimation _pageAnimation;
         private List<MtPageDescription> _pages = new List<MtPageDescription>();
 
-        /// <summary>Gets the current <see cref="MtFrame"/>. </summary>
-        public static MtFrame Current
-        {
-            get { return Window.Current.Content as MtFrame; }
-        }
-
-        /// <summary>Gets the current page index. </summary>
-        public int CurrentIndex
-        {
-            get { return _currentIndex; }
-        }
-
-        /// <summary>Gets a value indicating whether the first/root page is visible. </summary>
-        public bool IsFirstPage
-        {
-            get { return _currentIndex == 0; }
-        }
-
         /// <summary>Initializes a new instance of the <see cref="MtFrame"/> class. </summary>
         public MtFrame()
         {
@@ -95,6 +77,24 @@ namespace MyToolkit.Paging
             set { SetValue(ContentTransitionsProperty, value); }
         }
 
+        /// <summary>Gets the current <see cref="MtFrame"/>. </summary>
+        public static MtFrame Current
+        {
+            get { return Window.Current.Content as MtFrame; }
+        }
+
+        /// <summary>Gets the current page index. </summary>
+        public int CurrentIndex
+        {
+            get { return _currentIndex; }
+        }
+
+        /// <summary>Gets a value indicating whether the first/root page is visible. </summary>
+        public bool IsFirstPage
+        {
+            get { return _currentIndex == 0; }
+        }
+
         /// <summary>Occurs when navigating to a page. </summary>
         public event NavigatedEventHandler Navigated;
 
@@ -110,13 +110,22 @@ namespace MyToolkit.Paging
         public bool DisableCache { get; set; }
 
         /// <summary>Gets the page before the current page in the page stack or null if not available. </summary>
-        public MtPageDescription PreviousPage { get { return _currentIndex > 0 ? _pages[_currentIndex - 1] : null; } }
+        public MtPageDescription PreviousPage
+        {
+            get { return _currentIndex > 0 ? _pages[_currentIndex - 1] : null; }
+        }
 
         /// <summary>Gets the current page. </summary>
-        public MtPageDescription CurrentPage { get { return _pages.Count > 0 ? _pages[_currentIndex] : null; } }
+        public MtPageDescription CurrentPage
+        {
+            get { return _pages.Count > 0 ? _pages[_currentIndex] : null; }
+        }
 
         /// <summary>Gets the page after the current page in the page stack or null if not available. </summary>
-        public MtPageDescription NextPage { get { return _currentIndex < _pages.Count - 1 ? _pages[_currentIndex + 1] : null; } }
+        public MtPageDescription NextPage
+        {
+            get { return _currentIndex < _pages.Count - 1 ? _pages[_currentIndex + 1] : null; }
+        }
 
         /// <summary>Gets the current page animation. Only available when ContentTransitions is null. </summary>
         public IPageAnimation PageAnimation
@@ -402,23 +411,51 @@ namespace MyToolkit.Paging
 
         private async Task NavigateWithAnimationsAndCallbacksAsync(NavigationMode navigationMode, MtPageDescription currentPage, MtPageDescription newPage)
         {
-            ContentGrid.IsHitTestVisible = false; 
+            var insertionMode = PageAnimation != null ? PageAnimation.PageInsertionMode : PageInsertionMode.Sequential;
 
-            // navigating from animation
-            ContentGrid.Children.Insert(0, newPage.GetPage(this).InternalPage);
+            ContentGrid.IsHitTestVisible = false;
+            
+            AddNewPageToGridIfNotSequential(insertionMode, newPage);
+            
+            await AnimateNavigatedFromIfCurrentPageNotNull(navigationMode, insertionMode, currentPage, newPage);
+
+            SwitchPagesIfSequential(insertionMode, currentPage, newPage);
+            RaiseNavigationEvents(navigationMode, currentPage, newPage);
+
+            await AnimateNavigatedToAndRemoveCurrentPageAsync(navigationMode, insertionMode, currentPage, newPage);
+
+            ContentGrid.IsHitTestVisible = true; 
+        }
+
+        private void AddNewPageToGridIfNotSequential(PageInsertionMode insertionMode, MtPageDescription newPage)
+        {
+            if (insertionMode == PageInsertionMode.ConcurrentAbove)
+                ContentGrid.Children.Add(newPage.GetPage(this).InternalPage);
+            else if (insertionMode == PageInsertionMode.ConcurrentBelow)
+                ContentGrid.Children.Insert(0, newPage.GetPage(this).InternalPage);
+        }
+
+        private async Task AnimateNavigatedFromIfCurrentPageNotNull(NavigationMode navigationMode, PageInsertionMode insertionMode, MtPageDescription currentPage, MtPageDescription newPage)
+        {
             if (currentPage != null)
             {
-                await AnimateNavigatingFromAsync(navigationMode,
-                    currentPage.GetPage(this).ActualAnimationContext,
-                    newPage.GetPage(this).ActualAnimationContext);
+                if (insertionMode != PageInsertionMode.Sequential)
+                {
+                    await AnimateNavigatingFromAsync(navigationMode,
+                        currentPage.GetPage(this).ActualAnimationContext,
+                        insertionMode != PageInsertionMode.Sequential ? newPage.GetPage(this).ActualAnimationContext : null);
+                }
+                else
+                {
+                    await AnimateNavigatingFromAsync(navigationMode, currentPage.GetPage(this).ActualAnimationContext, null);
+                }
             }
+        }
 
-            // callbacks
+        private void RaiseNavigationEvents(NavigationMode navigationMode, MtPageDescription currentPage, MtPageDescription newPage)
+        {
             if (currentPage != null)
-            {
-                ContentGrid.Children.Move(1, 0);
                 RaisePageOnNavigatedFrom(currentPage, navigationMode);
-            }
 
             if (navigationMode == NavigationMode.New)
             {
@@ -427,18 +464,37 @@ namespace MyToolkit.Paging
             }
 
             RaisePageOnNavigatedTo(newPage, navigationMode);
-            ((RelayCommand)GoBackCommand).RaiseCanExecuteChanged();
+            ((RelayCommand) GoBackCommand).RaiseCanExecuteChanged();
+        }
 
-            // navigated to animation
+        private void SwitchPagesIfSequential(PageInsertionMode insertionMode, MtPageDescription currentPage, MtPageDescription newPage)
+        {
+            if (insertionMode == PageInsertionMode.Sequential)
+            {
+                if (currentPage != null)
+                    ContentGrid.Children.Remove(currentPage.GetPage(this).InternalPage);
+                ContentGrid.Children.Add(newPage.GetPage(this).InternalPage);
+            }
+        }
+
+        private async Task AnimateNavigatedToAndRemoveCurrentPageAsync(NavigationMode navigationMode, PageInsertionMode insertionMode, MtPageDescription currentPage, MtPageDescription newPage)
+        {
             if (currentPage != null)
             {
-                await AnimateNavigatedToAsync(navigationMode,
-                    currentPage.GetPage(this).ActualAnimationContext,
-                    newPage.GetPage(this).ActualAnimationContext);
-                ContentGrid.Children.Remove(currentPage.GetPage(this).InternalPage);
-            }
+                if (insertionMode != PageInsertionMode.Sequential)
+                {
+                    await AnimateNavigatedToAsync(navigationMode,
+                        currentPage.GetPage(this).ActualAnimationContext,
+                        newPage.GetPage(this).ActualAnimationContext);
 
-            ContentGrid.IsHitTestVisible = true; 
+                    ContentGrid.Children.Remove(currentPage.GetPage(this).InternalPage);
+                }
+                else
+                {
+                    await AnimateNavigatedToAsync(navigationMode, null,
+                        newPage.GetPage(this).ActualAnimationContext);
+                }
+            }
         }
 
         private async Task AnimateNavigatingFromAsync(NavigationMode navigationMode, FrameworkElement previousPage, FrameworkElement nextPage)
@@ -459,7 +515,8 @@ namespace MyToolkit.Paging
         {
             if (IsFirstPage && ShowNavigationOnAppInAndOut && (navigationMode == NavigationMode.New || navigationMode == NavigationMode.Forward))
             {
-                nextPage.Opacity = 1;
+                if (nextPage != null)
+                    nextPage.Opacity = 1;
                 return;
             }
 
@@ -471,7 +528,8 @@ namespace MyToolkit.Paging
                     await PageAnimation.AnimateForwardNavigatedToAsync(previousPage, nextPage);
             }
 
-            nextPage.Opacity = 1;
+            if (nextPage != null)
+                nextPage.Opacity = 1;
         }
 
         private void OnVisibilityChanged(object sender, VisibilityChangedEventArgs args)

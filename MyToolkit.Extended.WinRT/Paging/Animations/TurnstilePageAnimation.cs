@@ -26,13 +26,21 @@ namespace MyToolkit.Paging.Animations
         /// <summary>Gets or sets the duration of the animation. </summary>
         public TimeSpan Duration { get; set; }
 
+        /// <summary>Gets or sets a value indicating whether to use bitmap cache mode for the page controls. </summary>
+        public bool UseBitmapCacheMode { get; set; }
+
+        /// <summary>Gets the insertion mode for the next page.</summary>
+        public PageInsertionMode PageInsertionMode
+        {
+            get { return PageInsertionMode.Sequential; }
+        }
+
         /// <summary>Animates for navigating forward from a page. </summary>
         /// <param name="previousPage">The previous page. </param>
         /// <param name="nextPage">The next page. </param>
         /// <returns>The task. </returns>
         public Task AnimateForwardNavigatingFromAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
-            nextPage.Opacity = 0;
             return AnimateAsync(previousPage, 5, 75, 1, 0);
         }
 
@@ -42,7 +50,6 @@ namespace MyToolkit.Paging.Animations
         /// <returns>The task. </returns>
         public Task AnimateForwardNavigatedToAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
-            previousPage.Opacity = 0;
             return AnimateAsync(nextPage, -75, 0, 0, 1);
         }
 
@@ -52,7 +59,6 @@ namespace MyToolkit.Paging.Animations
         /// <returns>The task. </returns>
         public Task AnimateBackwardNavigatingFromAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
-            nextPage.Opacity = 0;
             return AnimateAsync(previousPage, -5, -75, 1, 0);
         }
 
@@ -62,7 +68,6 @@ namespace MyToolkit.Paging.Animations
         /// <returns>The task. </returns>
         public Task AnimateBackwardNavigatedToAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
-            previousPage.Opacity = 0;
             return AnimateAsync(nextPage, 75, 0, 0, 1);
         }
 
@@ -70,6 +75,9 @@ namespace MyToolkit.Paging.Animations
         {
             if (page == null)
                 return Task.FromResult<object>(null);
+
+            if (UseBitmapCacheMode && !(page.CacheMode is BitmapCache))
+                page.CacheMode = new BitmapCache();
 
             page.Opacity = 1;
             page.Projection = new PlaneProjection { CenterOfRotationX = 0 };
@@ -79,7 +87,7 @@ namespace MyToolkit.Paging.Animations
             var turnstileAnimation = new DoubleAnimation
             {
                 Duration = Duration,
-                From = fromRotation, 
+                From = fromRotation,
                 To = toRotation
             };
             Storyboard.SetTargetProperty(turnstileAnimation, "(UIElement.Projection).(PlaneProjection.RotationY)");
@@ -100,7 +108,7 @@ namespace MyToolkit.Paging.Animations
             var completion = new TaskCompletionSource<object>();
             story.Completed += delegate
             {
-                ((PlaneProjection) page.Projection).RotationY = toRotation;
+                ((PlaneProjection)page.Projection).RotationY = toRotation;
                 page.Opacity = toOpacity;
                 completion.SetResult(null);
             };
