@@ -114,7 +114,7 @@ namespace MyToolkit.Paging.Animations
             {
                 ((PlaneProjection)page.Projection).RotationY = toRotation;
 
-                page.Opacity = toOpacity;
+                page.Opacity = 1.0;
                 page.CacheMode = originalCacheMode;
 
                 completion.SetResult(null);

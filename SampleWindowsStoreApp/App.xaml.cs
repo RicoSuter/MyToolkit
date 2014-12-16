@@ -33,7 +33,7 @@ namespace SampleWindowsStoreApp
         {
             // TODO: Called when the app is started (not resumed)
 
-            //frame.PageAnimation = new TurnstilePageAnimation();
+            frame.PageAnimation = new TurnstilePageAnimation();
             //frame.PageAnimation = new PushPageAnimation();
 
             var mapper = RegexViewModelToViewMapper.CreateDefaultMapper(typeof(App).GetTypeInfo().Assembly);

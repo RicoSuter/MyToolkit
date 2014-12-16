@@ -1,9 +1,7 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using MyToolkit.Controls;
-using MyToolkit.Paging;
 using MyToolkit.Utilities;
 using SampleWindowsStoreApp.Models;
 using SampleWindowsStoreApp.ViewModels;
@@ -17,6 +15,7 @@ namespace SampleWindowsStoreApp.Views
         public DataGridPage()
         {
             InitializeComponent();
+            //PageAnimation = new PushPageAnimation();
         }
 
         public DataGridPageModel ViewModel { get { return (DataGridPageModel)Resources["ViewModel"]; } }

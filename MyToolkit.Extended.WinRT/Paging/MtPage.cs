@@ -16,7 +16,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using MyToolkit.Mvvm;
-using MyToolkit.MVVM;
+using MyToolkit.Paging.Animations;
 using MyToolkit.Paging.Handlers;
 
 namespace MyToolkit.Paging
@@ -41,6 +41,11 @@ namespace MyToolkit.Paging
                     MtFrame.Current.CurrentPage.Page : null;
             }
         }
+
+        /// <summary>Gets the current page animation. 
+        /// Only available when the <see cref="MtFrame"/>'s ContentTransitions  is null. 
+        /// Overrides the <see cref="MtFrame"/>'s PageAnimation property. </summary>
+        public IPageAnimation PageAnimation { get; set; }
 
         /// <summary>
         /// Gets the <see cref="MtFrame"/> instance which is hosting the page. 
