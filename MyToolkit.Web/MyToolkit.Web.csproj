@@ -77,6 +77,7 @@
     <Compile Include="Translations\DefaultTranslationOf.cs" />
     <Compile Include="Translations\ExpressiveExtensions.cs" />
     <Compile Include="Translations\TranslationMap.cs" />
+    <Compile Include="Utilities\ServiceClientUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
