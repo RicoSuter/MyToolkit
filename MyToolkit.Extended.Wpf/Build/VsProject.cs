@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.Build.Evaluation;
@@ -22,7 +23,7 @@ namespace MyToolkit.Build
     public class VsProject : VsObject
     {
         private readonly static object _lock = new Object();
-        private readonly static Dictionary<string, VsProject> _projects = new Dictionary<string, VsProject>();
+        private readonly static Dictionary<string, Task<VsProject>> _projects = new Dictionary<string, Task<VsProject>>();
 
         private List<VsProjectReference> _projectReferences;
         private List<AssemblyReference> _assemblyReferences;
@@ -41,15 +42,14 @@ namespace MyToolkit.Build
         /// <exception cref="InvalidProjectFileException">The project file could not be found. </exception>
         public static VsProject Load(string filePath)
         {
+            var id = GetIdFromPath(filePath);
             lock (_lock)
             {
-                var id = GetIdFromPath(filePath);
                 if (_projects.ContainsKey(id))
-                    return _projects[id];
+                    return _projects[id].Result;
 
-                var project = new VsProject(filePath);
-                _projects[id] = project;
-                return project;
+                _projects[id] = Task.Run(() => new VsProject(filePath));
+                return _projects[id].Result;
             }
         }
 
