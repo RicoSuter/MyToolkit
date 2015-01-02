@@ -26,14 +26,14 @@ namespace SampleWindowsStoreApp
 
         public override Type StartPageType
         {
-            get { return typeof (WelcomePage); }
+            get { return typeof(WelcomePage); }
         }
 
         public override Task OnInitializedAsync(MtFrame frame, ApplicationExecutionState args)
         {
             // TODO: Called when the app is started (not resumed)
 
-            frame.PageAnimation = new TurnstilePageAnimation();
+            //frame.PageAnimation = new TurnstilePageAnimation { UseBitmapCacheMode = true };
             //frame.PageAnimation = new PushPageAnimation();
 
             var mapper = RegexViewModelToViewMapper.CreateDefaultMapper(typeof(App).GetTypeInfo().Assembly);
@@ -56,7 +56,7 @@ namespace SampleWindowsStoreApp
         {
             // TODO: Add "Search" in the "Declarations" section of Package.appxmanifest
             await InitializeFrameAsync(args.PreviousExecutionState);
-            
+
             // TODO: Implement this directly in App.xaml.cs
             SearchSamplePage.OnSearchActivated(args);
         }
