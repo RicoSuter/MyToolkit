@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -19,6 +20,43 @@ namespace MyToolkit.Utilities
     /// <summary>Provides methods to manipulate strings. </summary>
     public static class StringExtensions
     {
+        /// <summary>Converts a string to an enum value. </summary>
+        /// <typeparam name="TEnum">The enum type. </typeparam>
+        /// <param name="value">The value. </param>
+        /// <param name="defaultValue">The default value which is returned when the value could not be parsed. </param>
+        /// <returns>The enum value. </returns>
+        /// <exception cref="ArgumentException">TEnum must be an enum. </exception>
+        public static TEnum ToEnum<TEnum>(this string value, TEnum defaultValue)
+            where TEnum : struct, IComparable, IFormattable
+        {
+            if (!typeof(TEnum).GetTypeInfo().IsEnum)
+                throw new ArgumentException("TEnum must be an enum. ");
+
+            TEnum result;
+            if (Enum.TryParse(value, true, out result))
+                return result;
+
+            return defaultValue;
+        }
+
+        /// <summary>Converts a string to an enum value. </summary>
+        /// <typeparam name="TEnum">The enum type. </typeparam>
+        /// <param name="value">The value. </param>
+        /// <returns>The enum value. </returns>
+        /// <exception cref="ArgumentException">TEnum must be an enum. </exception>
+        public static TEnum? ToEnum<TEnum>(this string value)
+            where TEnum : struct, IComparable, IFormattable
+        {
+            if (!typeof(TEnum).GetTypeInfo().IsEnum)
+                throw new ArgumentException("TEnum must be an enum. ");
+
+            TEnum result;
+            if (Enum.TryParse(value, true, out result))
+                return result;
+
+            return null;
+        }
+
         /// <summary>Correctly URI escapes the given string. </summary>
         /// <param name="value">The string to escape. </param>
         /// <returns>The escaped string</returns>
