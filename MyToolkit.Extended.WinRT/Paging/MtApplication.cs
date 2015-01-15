@@ -8,6 +8,7 @@ namespace MyToolkit.Paging
 {
     public abstract class MtApplication : Application
     {
+        /// <summary>Initializes a new instance of the <see cref="MtApplication"/> class. </summary>
         protected MtApplication()
         {
             Suspending += OnSuspending;
@@ -55,13 +56,7 @@ namespace MyToolkit.Paging
 
                 MtSuspensionManager.RegisterFrame(rootFrame, "AppFrame");
                 if (executionState == ApplicationExecutionState.Terminated)
-                {
-                    try
-                    {
-                        await MtSuspensionManager.RestoreAsync();
-                    }
-                    catch { }
-                }
+                    await RestoreStateAsync();
 
                 var task = OnInitializedAsync(rootFrame, executionState);
                 if (task != null)
@@ -76,6 +71,26 @@ namespace MyToolkit.Paging
             Window.Current.Activate();
         }
 
+        /// <summary>Restores the saved page states using the <see cref="MtSuspensionManager"/>. </summary>
+        /// <returns>The task. </returns>
+        protected virtual async Task RestoreStateAsync()
+        {
+            try
+            {
+                await MtSuspensionManager.RestoreAsync();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>Loads the saved page states using the <see cref="MtSuspensionManager"/>. </summary>
+        /// <returns>The task. </returns>
+        protected virtual async Task SaveStateAsync()
+        {
+            await MtSuspensionManager.SaveAsync();
+        }
+
         /// <summary>Invoked when application execution is being suspended.  Application state is saved
         /// without knowing whether the application will be terminated or resumed with the contents
         /// of memory still intact. </summary>
@@ -84,7 +99,7 @@ namespace MyToolkit.Paging
         private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            await MtSuspensionManager.SaveAsync();
+            await SaveStateAsync();
             deferral.Complete();
         }
     }
