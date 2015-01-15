@@ -71,10 +71,7 @@ namespace MyToolkit.Paging
             }
 
             if (rootFrame.Content == null)
-            {
-                if (!rootFrame.Initialize(StartPageType))
-                    throw new Exception("Failed to create initial page");
-            }
+                rootFrame.Initialize(StartPageType);
             
             Window.Current.Activate();
         }

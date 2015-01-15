@@ -290,11 +290,9 @@ namespace MyToolkit.Paging
         /// <summary>Initializes the frame and navigates to the given first page. </summary>
         /// <param name="homePageType">The type of the home page. </param>
         /// <param name="parameter">The parameter for the page. </param>
-        /// <returns>Always true. </returns>
-        public bool Initialize(Type homePageType, object parameter = null)
+        public void Initialize(Type homePageType, object parameter = null)
         {
             NavigateAsync(homePageType, parameter);
-            return true;
         }
 
         /// <summary>Navigates forward to a new instance of the given page type. </summary>
