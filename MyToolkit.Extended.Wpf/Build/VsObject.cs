@@ -70,15 +70,13 @@ namespace MyToolkit.Build
         {
             return Task.Run(async () =>
             {
-                var tasks = new List<Task>();
+                var tasks = new List<Task<T>>();
                 var projects = new List<T>();
 
                 try
                 {
-                    foreach (var directory in Directory.GetDirectories(path))
-                        tasks.Add(LoadAllFromDirectoryAsync(directory, ignoreExceptions, extension, creator));
-
-                    foreach (var file in Directory.GetFiles(path))
+                    var files = Directory.GetFiles(path, "*" + extension, SearchOption.AllDirectories);
+                    foreach (var file in files.Distinct())
                     {
                         var ext = System.IO.Path.GetExtension(file);
                         if (ext != null && ext.ToLower() == extension)
@@ -102,12 +100,8 @@ namespace MyToolkit.Build
 
                     await Task.WhenAll(tasks);
 
-                    foreach (var task in tasks.OfType<Task<T>>().Where(t => t.Result != null))
+                    foreach (var task in tasks.Where(t => t.Result != null))
                         projects.Add(task.Result);
-
-                    foreach (var task in tasks.OfType<Task<List<T>>>())
-                        projects.AddRange(task.Result);
-
                 }
                 catch (Exception)
                 {

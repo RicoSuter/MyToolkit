@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>MyToolkit.Extended</id>
-		<version>2.3.22.0</version>
+		<version>2.3.23.0</version>
 		<title>MyToolkit.Extended</title>
 		<authors>Rico Suter</authors>
 		<owners>Rico Suter</owners>
@@ -13,24 +13,24 @@
         <iconUrl>http://rsuter.com/Projects/MyToolkit/NuGetIcon.png</iconUrl>
 		<dependencies>
 			<group>
-				<dependency id="MyToolkit" version="2.3.22.0" />
+				<dependency id="MyToolkit" version="2.3.23.0" />
 			</group>
             <group targetFramework="sl50">
-                <dependency id="MyToolkit" version="2.3.22.0" />
+                <dependency id="MyToolkit" version="2.3.23.0" />
             </group>
 			<group targetFramework="sl4-wp71">
-				<dependency id="MyToolkit" version="2.3.22.0" />
+				<dependency id="MyToolkit" version="2.3.23.0" />
 				<dependency id="WPtoolkit" version="4.2013.08.16" />
 			</group>
             <group targetFramework="wp80">
-                <dependency id="MyToolkit" version="2.3.22.0" />
+                <dependency id="MyToolkit" version="2.3.23.0" />
                 <dependency id="WPtoolkit" version="4.2013.08.16" />
             </group>
             <group targetFramework="net40">
                 <dependency id="AsyncBridge" version="0.1.1" />
             </group>
             <group targetFramework="net45">
-                <dependency id="MyToolkit" version="2.3.22.0" />
+                <dependency id="MyToolkit" version="2.3.23.0" />
             </group>
         </dependencies>
 	</metadata>

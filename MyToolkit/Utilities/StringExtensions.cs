@@ -20,6 +20,8 @@ namespace MyToolkit.Utilities
     /// <summary>Provides methods to manipulate strings. </summary>
     public static class StringExtensions
     {
+#if !LEGACY
+
         /// <summary>Converts a string to an enum value. </summary>
         /// <typeparam name="TEnum">The enum type. </typeparam>
         /// <param name="value">The value. </param>
@@ -56,6 +58,8 @@ namespace MyToolkit.Utilities
 
             return null;
         }
+
+#endif
 
         /// <summary>Correctly URI escapes the given string. </summary>
         /// <param name="value">The string to escape. </param>

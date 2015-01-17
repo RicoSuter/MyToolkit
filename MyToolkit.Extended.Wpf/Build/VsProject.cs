@@ -36,7 +36,7 @@ namespace MyToolkit.Build
             Project = new Project(path);
         }
 
-        /// <summary>Loads a project from a given file path. </summary>
+        /// <summary>Loads a project from a given file path, if the project has already been loaded before, the same reference is returned. </summary>
         /// <param name="filePath">The project file path. </param>
         /// <returns>The project. </returns>
         /// <exception cref="InvalidProjectFileException">The project file could not be found. </exception>
@@ -209,7 +209,7 @@ namespace MyToolkit.Build
         {
             return string.Format("{0}", Name);
         }
-
+        
         public void LoadProjectReferences()
         {
             _projectReferences = Project.Items

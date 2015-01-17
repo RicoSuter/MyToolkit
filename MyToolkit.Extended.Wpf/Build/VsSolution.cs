@@ -67,15 +67,15 @@ namespace MyToolkit.Build
         /// <summary>Loads all projects of the solution. </summary>
         public void LoadProjects()
         {
-            LoadProjects(false);
+            LoadProjects(false, null);
         }
 
         /// <summary>Loads all projects of the solution. </summary>
         /// <param name="ignoreExceptions">Specifies whether to ignore exceptions. </param>
-        public void LoadProjects(bool ignoreExceptions)
+        /// <param name="projectCache">The project cache with already loaded projects. </param>
+        public void LoadProjects(bool ignoreExceptions, Dictionary<string, VsProject> projectCache)
         {
             var projects = new List<VsProject>();
-            
             var array = (Array)_solutionParser.GetPropertyValue("Projects");
             foreach (var projectObject in array)
             {
@@ -84,7 +84,12 @@ namespace MyToolkit.Build
                     var relativePath = projectObject.GetPropertyValue("RelativePath").ToString();
                     var projectPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Path), relativePath));
                     if (projectPath.ToLower().EndsWith(".csproj") && File.Exists(projectPath))
-                        projects.Add(VsProject.Load(projectPath));
+                    {
+                        if (projectCache != null && projectCache.ContainsKey(projectPath))
+                            projects.Add(projectCache[projectPath]);
+                        else
+                            projects.Add(VsProject.Load(projectPath));
+                    }
                 }
                 catch (Exception)
                 {
