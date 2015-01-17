@@ -47,9 +47,12 @@ namespace MyToolkit.Tests.WinRT.Multimedia
         [DataRow("xE2MxCv5vVY")]
         [DataRow("0G3_kG5FFfQ")]
         [DataRow("ohfSspPiOF8")]
-        [DataRow("-ynZN3p6FH8")] 
+        [DataRow("-ynZN3p6FH8")]
+        [DataRow("nfWlot6h_JM")] // vevo 
+        [DataRow("xFfCG_hffPA")] // vevo 
+        [DataRow("H74AIvjDifo")] // vevo 
         //[DataRow("rSy0JtBCZMQ")] // different problem => missing URL key
-        public async Task When_loading_video_then_uri_it_should_be_available(string youTubeId)
+        public async Task When_loading_video_then_uri_should_be_available_accessible(string youTubeId)
         {
             //// Act
             Debug.WriteLine(youTubeId);
