@@ -389,7 +389,14 @@ namespace MyToolkit.Multimedia
 
         private static string GenerateSignature(string signature, string javaScriptCode)
         {
-            var functionName = Regex.Match(javaScriptCode, "signature=(.*?)\\(").Groups[1].ToString();
+            var functionNameMatch = Regex.Match(javaScriptCode, @"\.set\s*\(""signature""\s*,\s*([a-zA-Z0-9_$][\w$]*)\(");
+            if (functionNameMatch.Groups.Count != 2)
+            {
+                functionNameMatch = Regex.Match(javaScriptCode, @"\.sig\s*\|\|\s*([a-zA-Z0-9_$][\w$]*)\(");
+                if (functionNameMatch.Groups.Count != 2)
+                    functionNameMatch = Regex.Match(javaScriptCode, @"\.signature\s*=\s*([a-zA-Z_$][\w$]*)\([a-zA-Z_$][\w$]*\)");
+            }
+            var functionName = functionNameMatch.Groups[1].ToString();
             var functionMath = Regex.Match(javaScriptCode, "function " + Regex.Escape(functionName) + "\\((\\w+)\\)\\{(.+?)\\}", RegexOptions.Singleline);
 
             var parameterName = Regex.Escape(functionMath.Groups[1].ToString());
