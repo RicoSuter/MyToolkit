@@ -48,6 +48,7 @@ namespace MyToolkit.Tests.WinRT.Multimedia
         [DataRow("JF8BRvqGCNs")]
         [DataRow("ohfSspPiOF8")]
         [DataRow("0G3_kG5FFfQ")]
+        [DataRow("e-ORhEE9VVg")]
         [DataRow("nfWlot6h_JM")] // vevo 
         [DataRow("xFfCG_hffPA")] // vevo 
         [DataRow("H74AIvjDifo")] // vevo 
