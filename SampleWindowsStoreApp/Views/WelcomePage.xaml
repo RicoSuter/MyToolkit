@@ -6,8 +6,6 @@
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                      xmlns:paging="using:MyToolkit.Paging"
                      xmlns:viewModels="using:SampleWindowsStoreApp.ViewModels"
-                     xmlns:media="using:MyToolkit.Media"
-                     xmlns:networking="using:MyToolkit.Networking"
                      mc:Ignorable="d">
 
     <paging:MtPage.Resources>
