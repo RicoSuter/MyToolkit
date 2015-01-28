@@ -34,7 +34,6 @@ namespace MyToolkit.Tests.WinRT.Multimedia
         }
 
         [DataTestMethod]
-        [DataRow("JF8BRvqGCNs")]
         [DataRow("kYQ8w7kxdDk")]
         [DataRow("J3UjJ4wKLkg")]
         [DataRow("O-zpOMYRi0w")]
@@ -45,9 +44,10 @@ namespace MyToolkit.Tests.WinRT.Multimedia
         [DataRow("kPsd2XaBKzc")]
         [DataRow("Z6FPJOgfCkc")]
         [DataRow("xE2MxCv5vVY")]
-        [DataRow("0G3_kG5FFfQ")]
-        [DataRow("ohfSspPiOF8")]
         [DataRow("-ynZN3p6FH8")]
+        [DataRow("JF8BRvqGCNs")]
+        [DataRow("ohfSspPiOF8")]
+        [DataRow("0G3_kG5FFfQ")]
         [DataRow("nfWlot6h_JM")] // vevo 
         [DataRow("xFfCG_hffPA")] // vevo 
         [DataRow("H74AIvjDifo")] // vevo 

@@ -326,9 +326,9 @@ namespace MyToolkit.Multimedia
             string javaScriptCode = null;
 
             var response = await HttpGet("https://www.youtube.com/watch?v=" + youTubeId + "&nomobile=1");
-            var match = Regex.Match(response, "url_encoded_fmt_stream_map\": \"(.*?)\"");
+            var match = Regex.Match(response, "url_encoded_fmt_stream_map\": ?\"(.*?)\"");
             var data = Uri.UnescapeDataString(match.Groups[1].Value);
-            match = Regex.Match(response, "adaptive_fmts\": \"(.*?)\"");
+            match = Regex.Match(response, "adaptive_fmts\": ?\"(.*?)\"");
             var data2 = Uri.UnescapeDataString(match.Groups[1].Value);
 
             var arr = Regex.Split(data + "," + data2, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"); // split by comma but outside quotes
@@ -431,7 +431,9 @@ namespace MyToolkit.Multimedia
                             // Parse methods
                             methods = new Dictionary<string, Func<string, int, string>>();
 
-                            var code = Regex.Match(javaScriptCode, "var " + root + "=\\{(.*?)\\};function").Groups[1].ToString();
+                            var code = Regex.Match(javaScriptCode, "var " + Regex.Escape(root) + "={(.*?)};function").Groups[1].ToString();
+                            //var code = Regex.Match(javaScriptCode, "var " + root + "=\\{(.*?)\\};function").Groups[1].ToString();
+                            //var code = Regex.Match(javaScriptCode, "var " + Regex.Escape(root) + @"\\s*\\(\\w+\\)\\s*{\\w+=\\w+\\.split\\(""""\);(.+);return \\w+\\.join');").Groups[1].ToString();
                             var methodsArray = code.Split(new[] {"},"}, StringSplitOptions.None);
                             foreach (var m in methodsArray)
                             {
