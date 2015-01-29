@@ -90,9 +90,6 @@
     <Compile Include="..\Shared\Multimedia\YouTube.cs">
       <Link>Multimedia\YouTube.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Multimedia\YouTubeQuality.cs">
-      <Link>Multimedia\YouTubeQuality.cs</Link>
-    </Compile>
     <Compile Include="..\Shared\Networking\ClientBaseExtensions.cs">
       <Link>Networking\ClientBaseExtensions.cs</Link>
     </Compile>

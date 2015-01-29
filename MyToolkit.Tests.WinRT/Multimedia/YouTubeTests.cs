@@ -20,14 +20,19 @@ namespace MyToolkit.Tests.WinRT.Multimedia
 
             //// Act
             var allUris = await YouTube.GetUrisAsync(youTubeId);
-            var uri480P = await YouTube.GetVideoUriAsync(youTubeId, YouTubeQuality.Quality480P, YouTubeQuality.Quality480P);
             var uri720P = await YouTube.GetVideoUriAsync(youTubeId, YouTubeQuality.Quality480P, YouTubeQuality.Quality720P);
+            var has480P = false; 
+            try
+            {
+                var uri480P = await YouTube.GetVideoUriAsync(youTubeId, YouTubeQuality.Quality480P, YouTubeQuality.Quality480P);
+                has480P = true; 
+            }
+            catch (Exception) { }
 
             //// Assert
             Assert.IsTrue(allUris.Any(u => u.VideoQuality == YouTubeQuality.Quality480P && !u.HasAudio));
             Assert.IsFalse(allUris.Any(u => u.VideoQuality == YouTubeQuality.Quality480P && u.HasAudio));
-
-            Assert.IsNull(uri480P); //// No 480p stream with audio available
+            Assert.IsFalse(has480P); //// No 480p stream with audio available
 
             Assert.IsNotNull(uri720P); //// 720p stream with audio available
             Assert.AreEqual(YouTubeQuality.Quality720P, uri720P.VideoQuality);

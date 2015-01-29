@@ -435,10 +435,6 @@
       <Link>Multimedia\YouTube.cs</Link>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="..\Shared\Multimedia\YouTubeQuality.cs">
-      <Link>Multimedia\YouTubeQuality.cs</Link>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="..\shared\mvvm\DependencyPropertyHelper.cs">
       <Link>MVVM\DependencyPropertyHelper.cs</Link>
     </Compile>
