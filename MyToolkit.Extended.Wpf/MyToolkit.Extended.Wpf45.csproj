@@ -153,6 +153,7 @@
     <Compile Include="Utilities\FileOpenEventArgs.cs" />
     <Compile Include="Utilities\FileOpenHandler.cs" />
     <Compile Include="Utilities\NamedPipeServerStreamExtensions.cs" />
+    <Compile Include="Utilities\UriExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyToolkit\MyToolkit.csproj">
