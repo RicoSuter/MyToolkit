@@ -14,9 +14,11 @@ using MyToolkit.Utilities;
 #if WINRT
 using MyToolkit.UI;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls;
 #else
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Controls;
 using MyToolkit.UI;
 #endif
@@ -39,12 +41,17 @@ namespace MyToolkit.Controls
         {
 #if !WINRT
 			InnerMargin = new Thickness(24, 0, 24, 0);
+
 			if (Resources.Contains("PhoneFontSizeNormal"))
 				FontSize = (double)Resources["PhoneFontSizeNormal"];
+
+            if (Resources.Contains("PhoneForegroundBrush"))
+                Foreground = (Brush)Resources["PhoneForegroundBrush"];
 #else
             InnerMargin = new Thickness(0, 0, 20, 0);
-            if (Resources.ContainsKey("TextStyleLargeFontSize"))
-                FontSize = (double)Resources["TextStyleLargeFontSize"];
+
+            FontSize = (double)Resources["ControlContentThemeFontSize"];
+			Foreground = (Brush)Resources["ApplicationForegroundThemeBrush"];
 #endif
 
             Margin = new Thickness(0);

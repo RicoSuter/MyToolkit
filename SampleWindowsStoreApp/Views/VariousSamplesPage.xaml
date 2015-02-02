@@ -22,7 +22,7 @@
 
             <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="MyToolkit Samples" Margin="0,0,0,20" />
 
-            <controls:MtPivot Grid.Row="1">
+            <controls:MtPivot Grid.Row="1" FontSize="24">
                 <!--<controls:PivotItem Header="Validation">
 					<StackPanel>
 						<validation:ValidationContainer x:Name="val">

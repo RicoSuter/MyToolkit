@@ -40,7 +40,7 @@ namespace MyToolkit.Controls
 
 			Margin = new Thickness(12, 0, 12, 0);
 #else
-			FontSize = (double)Resources["ControlContentThemeFontSize"];
+            FontSize = (double)Resources["ControlContentThemeFontSize"];
 			Foreground = (Brush)Resources["ApplicationForegroundThemeBrush"];
 #endif
 

@@ -36,6 +36,8 @@
                 <TextBlock Text="YouTube ID" Style="{StaticResource BaseTextBlockStyle}" Margin="0,0,0,6" />
                 <TextBox x:Name="YouTubeTextBox" Margin="0,0,0,12" />
 
+                <controls:FixedHtmlTextBlock Html="Hello world. " />
+
                 <Button Content="Play" Click="OnPlay" />
             </StackPanel>
         </Grid>
