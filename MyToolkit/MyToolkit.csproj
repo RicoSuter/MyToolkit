@@ -179,7 +179,7 @@
     <Compile Include="Model\ObservableObject.cs" />
     <Compile Include="Model\PropertyChangedEventArgsExtensions.cs" />
     <Compile Include="Command\RelayCommand.cs" />
-    <Compile Include="Model\ValidationObject.cs" />
+    <Compile Include="Model\ValidatedObservableObject.cs" />
     <Compile Include="Networking\AuthenticatedUri.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\XmlSerialization.cs" />

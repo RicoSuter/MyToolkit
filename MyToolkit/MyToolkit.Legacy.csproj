@@ -91,7 +91,6 @@
     <Compile Include="Model\GraphPropertyChangedEventArgs.cs" />
     <Compile Include="Model\ObservableObject.cs" />
     <Compile Include="Model\PropertyChangedEventArgsExtensions.cs" />
-    <Compile Include="Model\ValidationObject.cs" />
     <Compile Include="MVVM\IDispatcher.cs" />
     <Compile Include="MVVM\ViewModelBase.cs" />
     <Compile Include="Networking\AuthenticatedUri.cs" />
