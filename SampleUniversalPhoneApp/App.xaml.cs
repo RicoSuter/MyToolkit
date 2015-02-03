@@ -25,7 +25,7 @@ namespace SampleUniversalPhoneApp
         /// <param name="args">The launch arguments.</param>
         public override Task OnInitializedAsync(MtFrame frame, ApplicationExecutionState args)
         {
-            //frame.PageAnimation = new PushPageAnimation();
+            frame.PageAnimation = new TurnstilePageAnimation();
 
             // TODO: Run when the app is started (not resumed)
             return null;
