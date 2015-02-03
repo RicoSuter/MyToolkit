@@ -344,7 +344,7 @@ namespace MyToolkit.Paging
 
             if (_currentIndex != -1)
             {
-                Content = CurrentPage.GetPage(this).InternalPage;
+                ContentGrid.Children.Add(CurrentPage.GetPage(this).InternalPage);
                 RaisePageOnNavigatedTo(CurrentPage, NavigationMode.Back);
             }
         }

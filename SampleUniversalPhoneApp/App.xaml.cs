@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using MyToolkit.Paging;
+using MyToolkit.Paging.Animations;
 using SampleUniversalPhoneApp.Views;
 
 namespace SampleUniversalPhoneApp
@@ -24,6 +25,8 @@ namespace SampleUniversalPhoneApp
         /// <param name="args">The launch arguments.</param>
         public override Task OnInitializedAsync(MtFrame frame, ApplicationExecutionState args)
         {
+            //frame.PageAnimation = new PushPageAnimation();
+
             // TODO: Run when the app is started (not resumed)
             return null;
         }
