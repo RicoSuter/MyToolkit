@@ -38,7 +38,7 @@ namespace MyToolkit.Controls
         {
             DefaultStyleKey = typeof(DataGrid);
             Columns = new ObservableCollection<DataGridColumnBase>(); // Initialize collection so that columns can be defined in XAML
-            
+
             if (!Designer.IsInDesignMode)
                 Loaded += OnLoaded;
         }
@@ -69,14 +69,14 @@ namespace MyToolkit.Controls
         public static readonly DependencyProperty HeaderBackgroundProperty =
             DependencyProperty.Register("HeaderBackground", typeof(Brush), typeof(DataGrid), new PropertyMetadata(default(Brush)));
 
-        public static readonly DependencyProperty SelectionModeProperty = 
+        public static readonly DependencyProperty SelectionModeProperty =
             DependencyProperty.Register("SelectionMode", typeof(SelectionMode), typeof(DataGrid), new PropertyMetadata(SelectionMode.Single));
 
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register("SelectedItem", typeof(object), typeof(DataGrid), new PropertyMetadata(null));
 
         public static readonly DependencyProperty ItemsSourceProperty =
-            DependencyProperty.Register("ItemsSource", typeof(object), typeof(DataGrid), 
+            DependencyProperty.Register("ItemsSource", typeof(object), typeof(DataGrid),
                 new PropertyMetadata(null, (obj, args) => ((DataGrid)obj).UpdateItemsSource()));
 
         public static readonly DependencyProperty DefaultOrderIndexProperty =
@@ -95,7 +95,7 @@ namespace MyToolkit.Controls
             DependencyProperty.Register("CellTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
 
         public static readonly DependencyProperty ColumnsProperty = DependencyProperty.RegisterAttached("Columns",
-            typeof(IList), typeof(DataGrid), new PropertyMetadata(null, OnColumnsPropertyChanged));
+            typeof(ObservableCollection<DataGridColumnBase>), typeof(DataGrid), new PropertyMetadata(null, OnColumnsPropertyChanged));
 
         /// <summary>Gets or sets the header background. </summary>
         public Brush HeaderBackground
@@ -161,9 +161,9 @@ namespace MyToolkit.Controls
         }
 
         /// <summary>Gets the column description of the <see cref="DataGrid"/>. </summary>
-        public IList<DataGridColumnBase> Columns
+        public ObservableCollection<DataGridColumnBase> Columns
         {
-            get { return (IList<DataGridColumnBase>)GetValue(ColumnsProperty); }
+            get { return (ObservableCollection<DataGridColumnBase>)GetValue(ColumnsProperty); }
             set { SetValue(ColumnsProperty, value); }
         }
 
@@ -225,9 +225,9 @@ namespace MyToolkit.Controls
             _listControl.PrepareContainerForItem += OnPrepareContainerForItem;
             _listControl.SelectionChanged += OnSelectionChanged;
 
-            _listControl.SetBinding(Selector.SelectedItemProperty, 
+            _listControl.SetBinding(Selector.SelectedItemProperty,
                 new Binding { Source = this, Path = new PropertyPath("SelectedItem"), Mode = BindingMode.TwoWay });
-            _listControl.SetBinding(ListBox.SelectionModeProperty, 
+            _listControl.SetBinding(ListBox.SelectionModeProperty,
                 new Binding { Source = this, Path = new PropertyPath("SelectionMode"), Mode = BindingMode.TwoWay });
 
             _initialSelectedItem = SelectedItem;
