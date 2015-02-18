@@ -1,6 +1,4 @@
-﻿using MyToolkit.Data;
-using MyToolkit.Model;
-using MyToolkit.MVVM;
+﻿using MyToolkit.Model;
 using SamplePhoneApp.Resources;
 
 namespace SamplePhoneApp.ViewModels
