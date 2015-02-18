@@ -14,6 +14,10 @@ namespace MyToolkit.Networking
     /// <summary>Provides an URI with authentication information (username/password). </summary>
     public class AuthenticatedUri : Uri
     {
+        /// <summary>Initializes a new instance of the <see cref="AuthenticatedUri"/> class.</summary>
+        /// <param name="uriString">The URI string.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
         public AuthenticatedUri(string uriString, string username = null, string password = null)
             : base(uriString)
         {
@@ -21,6 +25,11 @@ namespace MyToolkit.Networking
             Password = password;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="AuthenticatedUri"/> class.</summary>
+        /// <param name="uriString">The URI string.</param>
+        /// <param name="uriKind">Kind of the URI.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
         public AuthenticatedUri(string uriString, UriKind uriKind, string username = null, string password = null)
             : base(uriString, uriKind)
         {
@@ -28,6 +37,11 @@ namespace MyToolkit.Networking
             Password = password;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="AuthenticatedUri"/> class.</summary>
+        /// <param name="baseUri">The base URI.</param>
+        /// <param name="relativeUri">The relative URI.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
         public AuthenticatedUri(Uri baseUri, string relativeUri, string username = null, string password = null)
             : base(baseUri, relativeUri)
         {
@@ -35,6 +49,11 @@ namespace MyToolkit.Networking
             Password = password;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="AuthenticatedUri"/> class.</summary>
+        /// <param name="baseUri">The base URI.</param>
+        /// <param name="relativeUri">The relative URI.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
         public AuthenticatedUri(Uri baseUri, Uri relativeUri, string username = null, string password = null)
             : base(baseUri, relativeUri)
         {

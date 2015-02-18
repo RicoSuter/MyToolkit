@@ -122,6 +122,7 @@
     <Compile Include="Composition\CompositionContextTests.cs" />
     <Compile Include="Composition\ServiceLocatorTests.cs" />
     <Compile Include="Mocks\MockObservableObject.cs" />
+    <Compile Include="Model\AsyncValidatedObservableObjectTests.cs" />
     <Compile Include="Model\ValidatedObservableObjectTests.cs" />
     <Compile Include="Multimedia\YouTubeTests.cs" />
     <Compile Include="Model\ObservableObjectTests.cs" />

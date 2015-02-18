@@ -23,8 +23,11 @@ namespace MyToolkit.Collections
         private List<T> _oldCollection = null;
         private event EventHandler<MtNotifyCollectionChangedEventArgs<T>> _extendedCollectionChanged;
 
+        /// <summary>Initializes a new instance of the <see cref="MtObservableCollection{T}"/> class.</summary>
         public MtObservableCollection() { }
 
+        /// <summary>Initializes a new instance of the <see cref="MtObservableCollection{T}"/> class.</summary>
+        /// <param name="collection">The collection.</param>
         public MtObservableCollection(IEnumerable<T> collection) : base(collection) { }
 
         /// <summary>Gets or sets a value indicating whether to provide the previous collection in the extended collection changed event. 
@@ -41,6 +44,7 @@ namespace MyToolkit.Collections
 
         /// <summary>Adds multiple items to the collection. </summary>
         /// <param name="collection">The items to add. </param>
+        /// <exception cref="ArgumentNullException">The value of 'collection' cannot be null. </exception>
         public void AddRange(IEnumerable<T> collection)
         {
             if (collection == null)
@@ -55,6 +59,7 @@ namespace MyToolkit.Collections
 
         /// <summary>Removes multiple items from the collection. </summary>
         /// <param name="collection">The items to remove. </param>
+        /// <exception cref="ArgumentNullException">The value of 'collection' cannot be null. </exception>
         public void RemoveRange(IEnumerable<T> collection)
         {
             if (collection == null)
@@ -69,6 +74,7 @@ namespace MyToolkit.Collections
 
         /// <summary>Resets the whole collection with a given list. </summary>
         /// <param name="collection">The collection. </param>
+        /// <exception cref="ArgumentNullException">The value of 'collection' cannot be null. </exception>
         public void Initialize(IEnumerable<T> collection)
         {
             if (collection == null)

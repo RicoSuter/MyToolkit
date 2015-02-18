@@ -24,12 +24,12 @@ namespace MyToolkit.Model
     /// changed event (including old and new value). </summary>
     public class GraphObservableObject : ObservableObject
     {
-        private readonly List<object> _registeredChildren = new List<object>(); 
+        private readonly List<object> _registeredChildren = new List<object>();
         private readonly Dictionary<object, List<object>> _registeredCollections = new Dictionary<object, List<object>>();
-        private readonly List<Type> _excludedChildTypes = new List<Type>(); 
+        private readonly List<Type> _excludedChildTypes = new List<Type>();
 
         private bool _suppressGraphPropertyChanged = false;
-        
+
         /// <summary>Occurs when a property value of the object or any child changes. </summary>
         public event PropertyChangedEventHandler GraphPropertyChanged;
 
@@ -51,7 +51,7 @@ namespace MyToolkit.Model
 
             DeregisterChild(oldValue);
             RegisterChild(newValue);
-            
+
             var args = new GraphPropertyChangedEventArgs(propertyName, oldValue, newValue);
 
             oldValue = newValue;
@@ -133,7 +133,7 @@ namespace MyToolkit.Model
 #if LEGACY
                 var value = child.GetType().GetProperty("Value").GetValue(child, null); 
 #else
-                var value = child.GetType().GetRuntimeProperty("Value").GetValue(child); 
+                var value = child.GetType().GetRuntimeProperty("Value").GetValue(child);
 #endif
                 RegisterChild(value);
             }
@@ -175,7 +175,7 @@ namespace MyToolkit.Model
 #if LEGACY
                 var value = child.GetType().GetProperty("Value").GetValue(child, null); 
 #else
-                var value = child.GetType().GetRuntimeProperty("Value").GetValue(child); 
+                var value = child.GetType().GetRuntimeProperty("Value").GetValue(child);
 #endif
                 DeregisterChild(value);
             }
@@ -200,7 +200,7 @@ namespace MyToolkit.Model
             if (copy != null)
                 copy(sender, args);
 
-            _suppressGraphPropertyChanged = false; 
+            _suppressGraphPropertyChanged = false;
         }
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
@@ -217,7 +217,7 @@ namespace MyToolkit.Model
             }
 
             var removedItems = new List<object>();
-            var currentItems = ((ICollection) sender).OfType<object>().ToArray();
+            var currentItems = ((ICollection)sender).OfType<object>().ToArray();
             foreach (var item in oldCollection.Where(i => !currentItems.Contains(i)).ToArray()) // deleted items
             {
                 removedItems.Add(item);

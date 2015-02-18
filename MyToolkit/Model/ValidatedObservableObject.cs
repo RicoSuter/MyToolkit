@@ -20,57 +20,23 @@ namespace MyToolkit.Model
     /// <summary>Implementation of the <see cref="INotifyPropertyChanged"/> interface with <see cref="INotifyDataErrorInfo"/> support.</summary>
     public class ValidatedObservableObject : ObservableObject, INotifyDataErrorInfo
     {
-        private static readonly MethodInfo TryValidatePropertyMethod;
-        private static readonly MethodInfo TryValidateObjectMethod;
-
-        private static readonly ConstructorInfo ValidationResultsConstructor;
-        private static readonly ConstructorInfo ValidationContextConstructor;
-
         private Dictionary<string, ICollection<string>> _errors;
-        private bool _autoValidateProperties = true;
-        private bool _raiseErrorsChanged = true;
+        private readonly object _lock = new object();
 
-        static ValidatedObservableObject()
-        {
-            try
-            {
-                var validationContextType = Type.GetType(
-                  "System.ComponentModel.DataAnnotations.ValidationContext, " +
-                  "System.ComponentModel.DataAnnotations, Version=4.0.0.0, " +
-                  "Culture=neutral, PublicKeyToken=31bf3856ad364e35");
-
-                var validatorType = Type.GetType(
-                  "System.ComponentModel.DataAnnotations.Validator, " +
-                  "System.ComponentModel.DataAnnotations, Version=4.0.0.0, " +
-                  "Culture=neutral, PublicKeyToken=31bf3856ad364e35");
-
-                var validationResultType = Type.GetType(
-                  "System.ComponentModel.DataAnnotations.ValidationResult, " +
-                  "System.ComponentModel.DataAnnotations, Version=4.0.0.0, " +
-                  "Culture=neutral, PublicKeyToken=31bf3856ad364e35");
-
-                var validationResultsType = typeof(List<>).MakeGenericType(validationResultType);
-
-                TryValidatePropertyMethod = validatorType.GetRuntimeMethods()
-                    .Single(m => m.Name == "TryValidateProperty" && m.GetParameters().Length == 3);
-                TryValidateObjectMethod = validatorType.GetRuntimeMethods()
-                    .Single(m => m.Name == "TryValidateObject" && m.GetParameters().Length == 4);
-
-                ValidationResultsConstructor = validationResultsType.GetTypeInfo().
-                    DeclaredConstructors.Single(m => m.IsConstructor && m.GetParameters().Length == 0);
-                ValidationContextConstructor = validationContextType.GetTypeInfo().
-                    DeclaredConstructors.Single(m => m.IsConstructor && m.GetParameters().Length == 1);
-            }
-            catch (Exception exception)
-            {
-                throw new NotSupportedException("The ValidatedObservableObject class cannot be used with the current .NET framework. ", exception);
-            }
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="ValidatedObservableObject"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MyToolkit.Model.ValidatedObservableObject"/> class.</summary>
         public ValidatedObservableObject()
         {
-            _errors = new Dictionary<string, ICollection<string>>();
+            NotValidatedProperties = new HashSet<string>
+            {
+                "NotValidatedProperties", 
+                "HasErrors", 
+                "InvalidProperties", 
+                "AutoValidateProperties", 
+                "Lock", 
+                "InvariantErrors"
+            };
+            AutoValidateProperties = true;
+            Initialize();
         }
 
         /// <summary>Occurs when the validation errors have changed for a property or for the entire entity. </summary>
@@ -81,7 +47,11 @@ namespace MyToolkit.Model
         [XmlIgnore]
         public bool HasErrors
         {
-            get { return _errors.Any(p => p.Value != null && p.Value.Count > 0); }
+            get
+            {
+                lock (Lock)
+                    return _errors.Any(p => p.Value != null && p.Value.Count > 0);
+            }
         }
 
         /// <summary>Gets the properties with validation errors.</summary>
@@ -90,39 +60,39 @@ namespace MyToolkit.Model
         {
             get
             {
-                return _errors
-                  .Where(p => p.Value != null && p.Value.Count > 0)
-                  .Select(p => p.Key);
-            }
-        }
-
-        /// <summary>Gets or sets a value indicating whether the properties are automatically validated.</summary>
-        /// <remarks>When enabling the automatic validation, the whole object is validated immediately. </remarks>
-        public bool AutoValidateProperties
-        {
-            get { return _autoValidateProperties; }
-            set
-            {
-                if (_autoValidateProperties != value)
+                lock (Lock)
                 {
-                    _autoValidateProperties = value;
-                    if (_autoValidateProperties)
-                        ValidateObject();
+                    return _errors
+                      .Where(p => p.Value != null && p.Value.Count > 0 && p.Key != string.Empty)
+                      .Select(p => p.Key);
                 }
             }
         }
 
+        /// <summary>Gets the invariant object errors.</summary>
+        public IEnumerable<string> InvariantErrors
+        {
+            get { return GetErrors(string.Empty); }
+        }
+
+        /// <summary>Gets or sets a value indicating whether the properties are automatically validated.</summary>
+        /// <remarks>After enabling automatic validation you should call <see cref="Validate"/> to updated the validation errors. </remarks>
+        public bool AutoValidateProperties { get; set; }
+
         /// <summary>Gets the validation errors for a specified property or for the entire entity. </summary>
-        /// <returns>The validation errors for the property or entity. </returns>
         /// <param name="propertyName">The name of the property to retrieve validation errors for; or null or <see cref="F:System.String.Empty"/>, to retrieve entity-level errors.</param>
-        public ICollection<string> GetErrors(string propertyName)
+        /// <returns>The validation errors for the property or entity. </returns>
+        public IEnumerable<string> GetErrors(string propertyName)
         {
             if (propertyName == null)
                 return null;
 
-            ICollection<string> errorsForName;
-            if (_errors.TryGetValue(propertyName, out errorsForName))
-                return errorsForName;
+            lock (Lock)
+            {
+                ICollection<string> errorsForName;
+                if (_errors.TryGetValue(propertyName, out errorsForName))
+                    return errorsForName;
+            }
 
             return null;
         }
@@ -132,31 +102,34 @@ namespace MyToolkit.Model
             return GetErrors(propertyName);
         }
 
-        /// <summary>Validates the object.</summary>
-        public void ValidateObject()
+        /// <summary>Validates all properties and the object invariants.</summary>
+        public void Validate()
         {
-            _raiseErrorsChanged = false;
-            try
+            foreach (PropertyInfo property in GetType().GetRuntimeProperties().Where(p => p.CanRead && !NotValidatedProperties.Contains(p.Name)))
             {
-                foreach (var property in GetType().GetRuntimeProperties().Where(p => p.CanRead))
-                {
-                    var errors = ValidateProperty(property.Name);
-                    SetPropertyErrors(property.Name, errors);
-                }
+                var errors = ValidateProperty(property.Name);
+                SetPropertyErrors(property.Name, errors);
             }
-            finally
-            {
-                _raiseErrorsChanged = true;
-            }
-            RaiseErrorsChanged(string.Empty);
+
+            var invariantErrors = ValidateInvariants();
+            SetPropertyErrors(string.Empty, invariantErrors);
         }
+
+        /// <summary>Gets the lock object for synchronizing this object. </summary>
+        protected object Lock
+        {
+            get { return _lock; }
+        }
+
+        /// <summary>Gets a set with properties which will not be validated. </summary>
+        protected HashSet<string> NotValidatedProperties { get; private set; }
 
         /// <summary>Validates the given property.</summary>
         /// <param name="propertyName">The name of the property.</param>
-        public virtual ICollection<string> ValidateProperty(string propertyName)
+        /// <param name="value">The property value.</param>
+        /// <returns>The list of validation errors (never <c>null</c>).</returns>
+        protected virtual ICollection<string> ValidateProperty(string propertyName, object value)
         {
-            var value = GetType().GetRuntimeProperty(propertyName).GetValue(this);
-
             var validationResults = CreateValidationResults();
             var validationContext = CreateValidationContext(propertyName);
 
@@ -164,25 +137,37 @@ namespace MyToolkit.Model
 
             return validationResults
                 .OfType<object>()
-                .Select(r =>
+                .Select(result =>
                 {
-                    dynamic dyn = r;
-                    return (string)dyn.ErrorMessage;
+                    dynamic dynamicResult = result;
+                    return (string)dynamicResult.ErrorMessage;
                 })
                 .ToList();
         }
 
-        /// <summary>Raises the property changed event. </summary>
-        /// <param name="args">The arguments. </param>
-        protected override void RaisePropertyChanged(PropertyChangedEventArgs args)
+        /// <summary>Validates the invariants.</summary>
+        /// <returns>The list of validation errors (never <c>null</c>). </returns>
+        protected virtual ICollection<string> ValidateInvariants()
         {
-            if (AutoValidateProperties)
-            {
-                var errors = ValidateProperty(args.PropertyName);
-                SetPropertyErrors(args.PropertyName, errors);
-            }
+            return new List<string>();
+        }
 
-            base.RaisePropertyChanged(args);
+        /// <summary>Called when a property needs to be validated. </summary>
+        /// <param name="sender">The sender. </param>
+        /// <param name="args">The arguments. </param>
+        protected virtual void OnValidateProperty(object sender, PropertyChangedEventArgs args)
+        {
+            if (AutoValidateProperties &&
+                !args.IsProperty<ValidatedObservableObject>(o => o.HasErrors) &&
+                !args.IsProperty<ValidatedObservableObject>(o => o.InvalidProperties) &&
+                !args.IsProperty<ValidatedObservableObject>(o => o.InvariantErrors))
+            {
+                var propertyErrors = ValidateProperty(args.PropertyName);
+                SetPropertyErrors(args.PropertyName, propertyErrors);
+
+                var invariantErrors = ValidateInvariants();
+                SetPropertyErrors(string.Empty, invariantErrors);
+            }
         }
 
         /// <summary>Called when the object has been deserialized.</summary>
@@ -190,28 +175,107 @@ namespace MyToolkit.Model
         [OnDeserialized]
         protected virtual void OnDeserialized(StreamingContext context)
         {
-            _errors = new Dictionary<string, ICollection<string>>();
-            ValidateObject();
+            Initialize();
+            Validate();
         }
 
-        private void SetPropertyErrors(string propertyName, ICollection<string> validationResults)
+        /// <summary>Validates a property. </summary>
+        /// <param name="propertyName">The property name. </param>
+        /// <returns>The validation errors. </returns>
+        protected ICollection<string> ValidateProperty(string propertyName)
         {
-            if (validationResults.Count == 0)
-                _errors.Remove(propertyName);
-            else
-                _errors[propertyName] = validationResults;
+            var value = GetType().GetRuntimeProperty(propertyName).GetValue(this);
+            return ValidateProperty(propertyName, value);
+        }
+
+        private void Initialize()
+        {
+            lock (Lock)
+                _errors = new Dictionary<string, ICollection<string>>();
+
+            PropertyChanged += (sender, args) =>
+            {
+                if (AutoValidateProperties &&
+                  !args.IsProperty<ValidatedObservableObject>(o => o.HasErrors) &&
+                  !args.IsProperty<ValidatedObservableObject>(o => o.InvalidProperties) &&
+                  !args.IsProperty<ValidatedObservableObject>(o => o.InvariantErrors))
+                {
+                    OnValidateProperty(sender, args);
+                }
+            };
+        }
+
+        /// <summary>Sets the errors for the given property. </summary>
+        /// <param name="propertyName">The property name. </param>
+        /// <param name="validationErrors">The validation errors. </param>
+        protected void SetPropertyErrors(string propertyName, ICollection<string> validationErrors)
+        {
+            lock (Lock)
+            {
+                if (validationErrors.Count == 0)
+                {
+                    if (!_errors.ContainsKey(propertyName))
+                        return;
+                    _errors.Remove(propertyName);
+                }
+                else
+                    _errors[propertyName] = validationErrors;
+            }
 
             RaiseErrorsChanged(propertyName);
+            if (propertyName == string.Empty)
+                RaisePropertyChanged(() => InvariantErrors);
         }
 
         private void RaiseErrorsChanged(string propertyName)
         {
-            if (!_raiseErrorsChanged)
-                return;
-
             var handler = ErrorsChanged;
             if (handler != null)
                 handler(this, new DataErrorsChangedEventArgs(propertyName));
+
+            RaisePropertyChanged(() => HasErrors);
+            RaisePropertyChanged(() => InvalidProperties);
+        }
+
+        #region Reflection
+
+        private static readonly MethodInfo TryValidatePropertyMethod;
+        private static readonly ConstructorInfo ValidationResultsConstructor;
+        private static readonly ConstructorInfo ValidationContextConstructor;
+
+        static ValidatedObservableObject()
+        {
+            try
+            {
+                var validationContextType = Type.GetType(
+                    "System.ComponentModel.DataAnnotations.ValidationContext, " +
+                    "System.ComponentModel.DataAnnotations, Version=4.0.0.0, " +
+                    "Culture=neutral, PublicKeyToken=31bf3856ad364e35");
+
+                var validatorType = Type.GetType(
+                    "System.ComponentModel.DataAnnotations.Validator, " +
+                    "System.ComponentModel.DataAnnotations, Version=4.0.0.0, " +
+                    "Culture=neutral, PublicKeyToken=31bf3856ad364e35");
+
+                var validationResultType = Type.GetType(
+                    "System.ComponentModel.DataAnnotations.ValidationResult, " +
+                    "System.ComponentModel.DataAnnotations, Version=4.0.0.0, " +
+                    "Culture=neutral, PublicKeyToken=31bf3856ad364e35");
+
+                var validationResultsType = typeof(List<>).MakeGenericType(validationResultType);
+
+                TryValidatePropertyMethod = validatorType.GetRuntimeMethods()
+                    .Single(m => m.Name == "TryValidateProperty" && m.GetParameters().Length == 3);
+
+                ValidationResultsConstructor = validationResultsType.GetTypeInfo().
+                    DeclaredConstructors.Single(m => m.IsConstructor && m.GetParameters().Length == 0);
+                ValidationContextConstructor = validationContextType.GetTypeInfo().
+                    DeclaredConstructors.Single(m => m.IsConstructor && m.GetParameters().Length == 1);
+            }
+            catch (Exception exception)
+            {
+                throw new NotSupportedException("The ValidatedObservableObject class cannot be used with the current .NET framework. ", exception);
+            }
         }
 
         private object CreateValidationContext(string propertyName)
@@ -232,9 +296,6 @@ namespace MyToolkit.Model
             return (bool)TryValidatePropertyMethod.Invoke(null, new object[] { value, validationContext, validationResults });
         }
 
-        private bool InvokeTryValidateObjectMethod(object validationContext, IList validationResults)
-        {
-            return (bool)TryValidateObjectMethod.Invoke(null, new[] { this, validationContext, validationResults, true });
-        }
+        #endregion
     }
 }

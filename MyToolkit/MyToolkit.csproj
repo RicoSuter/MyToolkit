@@ -125,6 +125,7 @@
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
     <CodeContractsInferEnsuresAutoProperties>True</CodeContractsInferEnsuresAutoProperties>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -171,6 +172,7 @@
     <Compile Include="Messaging\TextMessage.cs" />
     <Compile Include="Command\AsyncRelayCommand.cs" />
     <Compile Include="Command\CommandBase.cs" />
+    <Compile Include="Model\AsyncValidatedObservableObject.cs" />
     <Compile Include="Model\GraphObservableObject.cs" />
     <Compile Include="Model\GraphPropertyChangedEventArgs.cs" />
     <Compile Include="Mvvm\IDispatcher.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Utilities\DateTimeExtensions.cs" />
     <Compile Include="Utilities\DateTimeUtilities.cs" />
     <Compile Include="Utilities\DictionaryExtensions.cs" />
+    <Compile Include="Utilities\DisposableProvider.cs" />
     <Compile Include="Utilities\EntityContainer.cs" />
     <Compile Include="Utilities\EnumerableExtensions.cs" />
     <Compile Include="Events\EventUtilities.cs" />

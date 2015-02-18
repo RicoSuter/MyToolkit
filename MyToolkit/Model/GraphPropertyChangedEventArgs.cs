@@ -14,7 +14,8 @@ namespace MyToolkit.Model
     public class GraphPropertyChangedEventArgs : PropertyChangedEventArgs
     {
         /// <summary>Initializes a new instance of the <see cref="GraphPropertyChangedEventArgs"/> class. </summary>
-        public GraphPropertyChangedEventArgs(string propertyName, object oldValue, object newValue) : base(propertyName)
+        public GraphPropertyChangedEventArgs(string propertyName, object oldValue, object newValue)
+            : base(propertyName)
         {
             OldValue = oldValue;
             NewValue = newValue;

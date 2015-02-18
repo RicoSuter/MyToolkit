@@ -28,9 +28,11 @@ namespace MyToolkit.Collections
         /// <summary>Occurs when an element of the collection changes. </summary>
         public event PropertyChangedEventHandler ItemChanged;
 
-        public ObservableCollectionObserver(ObservableCollection<T> list = null)
+        /// <summary>Initializes a new instance of the <see cref="ObservableCollectionObserver{T}"/> class.</summary>
+        /// <param name="collection">The initial collection.</param>
+        public ObservableCollectionObserver(ObservableCollection<T> collection = null)
         {
-            Initialize(list);
+            Initialize(collection);
         }
 
         /// <summary>Sets the observed collection. </summary>

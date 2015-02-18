@@ -210,14 +210,22 @@ namespace MyToolkit.Serialization
         /// <summary>Used only for serialization</summary>
         public class KeyValuePair<TKey, TValue>
         {
+            /// <summary>Initializes a new instance of the <see cref="KeyValuePair{TKey, TValue}"/> class.</summary>
             public KeyValuePair() { }
+
+            /// <summary>Initializes a new instance of the <see cref="KeyValuePair{TKey, TValue}"/> class.</summary>
+            /// <param name="key">The key.</param>
+            /// <param name="value">The value.</param>
             public KeyValuePair(TKey key, TValue value)
             {
                 Key = key;
                 Value = value;
             }
 
+            /// <summary>Gets or sets the key.</summary>
             public TKey Key { get; set; }
+
+            /// <summary>Gets or sets the value.</summary>
             public TValue Value { get; set; }
         }
     }

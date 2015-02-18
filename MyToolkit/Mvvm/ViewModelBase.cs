@@ -19,8 +19,8 @@ namespace MyToolkit.Mvvm
 {
     /// <summary>Provides a base implementation of a view model. </summary>
     [DataContract]
-	public class ViewModelBase : ObservableObject
-	{
+    public class ViewModelBase : ObservableObject
+    {
         private int _loadingCounter = 0;
         private List<CancellationTokenSource> _cancellationTokenSources;
 
@@ -28,18 +28,19 @@ namespace MyToolkit.Mvvm
         /// Gets or sets a value indicating whether the view model is currently loading. 
         /// </summary>
         [XmlIgnore]
-		public bool IsLoading
-		{
-			get { return _loadingCounter > 0; }
-			set 
-			{
-				if (value)
-					_loadingCounter++;
-				else if (_loadingCounter > 0)
-					_loadingCounter--;
-				RaisePropertyChanged();
-			}
-		}
+        public bool IsLoading
+        {
+            get { return _loadingCounter > 0; }
+            set
+            {
+                if (value)
+                    _loadingCounter++;
+                else if (_loadingCounter > 0)
+                    _loadingCounter--;
+
+                RaisePropertyChanged();
+            }
+        }
 
         /// <summary>Initializes the view model. Must only be called once per view model instance 
         /// (after the InitializeComponent method of a UserControl). </summary>
@@ -70,7 +71,7 @@ namespace MyToolkit.Mvvm
                 RegisterCancellationTokenSource(token);
             return token;
         }
-        
+
         /// <summary>Runs a task 
         /// and correctly updates the <see cref="IsLoading"/> property, 
         /// handles exceptions in the <see cref="HandleException"/> method 
@@ -195,9 +196,9 @@ namespace MyToolkit.Mvvm
 #if LEGACY
                 Task.Factory.StartNew(action)
 #else
-                Task.Run(action)
+Task.Run(action)
 #endif
-            );
+);
         }
 
         /// <summary>Asynchronously runs an action 
@@ -212,12 +213,12 @@ namespace MyToolkit.Mvvm
 #if LEGACY
                 Task.Factory.StartNew(action)
 #else
-                Task.Run(action)
+Task.Run(action)
 #endif
-            );
+);
         }
 
-        /// <summary>Handles an exception which occured in the <see cref="RunTaskAsync"/> method. </summary>
+        /// <summary>Handles an exception which occured in the <c>RunTaskAsync</c> method. </summary>
         /// <param name="exception">The exception to handle. </param>
         /// <exception cref="NotImplementedException">An exception occured in RunTaskAsync. Override ViewModelBase.HandleException to handle this exception. </exception>
         public virtual void HandleException(Exception exception)
@@ -230,7 +231,7 @@ namespace MyToolkit.Mvvm
         /// <param name="cancellationTokenSource"></param>
         public void DeregisterCancellationTokenSource(CancellationTokenSource cancellationTokenSource)
         {
-            try             
+            try
             {
                 cancellationTokenSource.Cancel();
                 cancellationTokenSource.Dispose();
@@ -241,13 +242,13 @@ namespace MyToolkit.Mvvm
 
         /// <summary>Initializes the view model (should be called in the view's Loaded event). </summary>
         public void CallOnLoaded()
-		{
-			if (!IsViewLoaded)
-			{
-			    OnLoaded();
-				IsViewLoaded = true; 
-			}
-		}
+        {
+            if (!IsViewLoaded)
+            {
+                OnLoaded();
+                IsViewLoaded = true;
+            }
+        }
 
         /// <summary>Cleans up the view model (should be called in the view's Unloaded event). </summary>
         public void CallOnUnloaded()
@@ -296,6 +297,6 @@ namespace MyToolkit.MVVM
     [Obsolete("Use MyToolkit.Mvvm.ViewModelBase instead. 5/17/2014")]
     public class BaseViewModel : ViewModelBase
     {
-        
+
     }
 }
