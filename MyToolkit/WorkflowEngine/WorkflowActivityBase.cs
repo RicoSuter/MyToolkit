@@ -8,7 +8,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -42,12 +41,14 @@ namespace MyToolkit.WorkflowEngine
         [XmlAttribute]
         public string Id { get; set; }
 
+        /// <summary>Gets the type of the input.</summary>
         [XmlIgnore]
         public Type InputType
         {
             get { return typeof(TInputType); }
         }
 
+        /// <summary>Gets the type of the output.</summary>
         [XmlIgnore]
         public Type OutputType
         {

@@ -14,7 +14,6 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Serialization;
 using MyToolkit.Serialization;
-using MyToolkit.WorkflowEngine.Activities;
 using MyToolkit.WorkflowEngine.Exceptions;
 
 namespace MyToolkit.WorkflowEngine
@@ -45,6 +44,7 @@ namespace MyToolkit.WorkflowEngine
         public List<WorkflowTransition> Transitions { get; set; }
 
         /// <summary>Gets or sets the first inputActivity. </summary>
+        /// <exception cref="WorkflowException" accessor="get">The activity could not be found. </exception>
         [XmlIgnore]
         public IWorkflowActivityBase StartActivity
         {
@@ -56,6 +56,7 @@ namespace MyToolkit.WorkflowEngine
         /// <param name="xml">The XML. </param>
         /// <param name="activityTypes">The possible inputActivity types. </param>
         /// <returns>The workflow. </returns>
+        /// <exception cref="WorkflowException">The activity could not be found. </exception>
         public static WorkflowDefinition FromXml(string xml, Type[] activityTypes)
         {
             var workflow = XmlSerialization.Deserialize<WorkflowDefinition>(xml, activityTypes.ToArray());

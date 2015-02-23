@@ -128,32 +128,39 @@ namespace MyToolkit.Composition
 
         /// <summary>Removes a part. </summary>
         /// <typeparam name="TInterface">The type of the part. </typeparam>
-        public void RemovePart<TInterface>()
+        /// <returns><c>true</c> if the part has been found and removed; otherwise, <c>false</c>. </returns>
+        public bool RemovePart<TInterface>()
         {
-            RemovePart(typeof(TInterface), null);
+            return RemovePart(typeof(TInterface), null);
         }
 
         /// <summary>Removes a part. </summary>
         /// <typeparam name="TInterface">The type of the part. </typeparam>
         /// <param name="name">The name of the part. </param>
-        public void RemovePart<TInterface>(string name)
+        /// <returns><c>true</c> if the part has been found and removed; otherwise, <c>false</c>. </returns>
+        public bool RemovePart<TInterface>(string name)
         {
-            RemovePart(typeof(TInterface), name);
+            return RemovePart(typeof(TInterface), name);
         }
 
         /// <summary>Removes a part. </summary>
         /// <param name="interfaceType">The interface type of the part. </param>
         /// <param name="name">The name of the part. </param>
-        protected void RemovePart(Type interfaceType, string name)
+        /// <returns><c>true</c> if the part has been found and removed; otherwise, <c>false</c>. </returns>
+        protected bool RemovePart(Type interfaceType, string name)
         {
             var oldPart = _parts.SingleOrDefault(p => p.Type == interfaceType && p.Name == name);
             if (oldPart != null)
+            {
                 _parts.Remove(oldPart);
+                return true;
+            }
+            return false;
         }
 
         /// <summary>Gets a single part. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
-        /// <exception cref="Exception">Multiple parts found. </exception>
+        /// <exception cref="InvalidOperationException">Multiple parts found. </exception>
         /// <returns>The part. </returns>
         public TInterface GetPart<TInterface>()
         {
@@ -163,7 +170,7 @@ namespace MyToolkit.Composition
         /// <summary>Gets a single part. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
         /// <param name="name">The name of the part. </param>
-        /// <exception cref="Exception">Multiple parts found. </exception>
+        /// <exception cref="InvalidOperationException">Multiple parts found. </exception>
         /// <returns>The part. </returns>
         public TInterface GetPart<TInterface>(string name)
         {
@@ -173,7 +180,7 @@ namespace MyToolkit.Composition
         /// <summary>Gets a single part. </summary>
         /// <param name="interfaceType">The type of the part. </param>
         /// <param name="name">The name of the part. </param>
-        /// <exception cref="Exception">Multiple parts found. </exception>
+        /// <exception cref="InvalidOperationException">Multiple parts found. </exception>
         /// <returns>The part. </returns>
         internal protected object GetPart(Type interfaceType, string name)
         {

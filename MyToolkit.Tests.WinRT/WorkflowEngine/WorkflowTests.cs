@@ -15,6 +15,32 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
     {
         private static readonly Type[] _activityTypes = { typeof(MockActivity) };
 
+        //[TestMethod]
+        //public void METHOD()
+        //{
+        //    //// Arrange
+        //    var workflow = Given_a_workflow_with_three_serial_empty_activities();
+        //    workflow.ExceptionHandlers = new List<IWorkflowActivityBase>
+        //    {
+        //        new ExceptionHandler
+        //        {
+        //            ErrorActivity = "3", 
+        //            HandleExceptions = true, 
+        //            Activities = new List<string>
+        //            {
+        //                "1", 
+        //                "2"
+        //            }
+        //        }
+        //    };
+
+        //    //// Act
+
+
+        //    //// Assert
+
+        //}
+
         [TestMethod]
         public void When_serializing_workfow_then_deserialization_should_work()
         {
@@ -237,7 +263,7 @@ namespace MyToolkit.Tests.WinRT.WorkflowEngine
         public class MockActivity : WorkflowActivityBase<MyInput, MyOutput>
         {
             public string DefaultInput { get; set; }
-            
+
             /// <summary>Completes the activity. </summary>
             /// <param name="input">The input. </param>
             /// <param name="cancellationToken">The cancellation token. </param>

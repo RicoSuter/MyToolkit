@@ -24,7 +24,7 @@ namespace MyToolkit.WorkflowEngine
     public class WorkflowInstance : ObservableObject
     {
         private bool _isRunning;
-        private string[] _lastCurrentActivityIds = null;
+        private string[] _lastCurrentActivityIds;
 
         /// <summary>Deserializes a workflow instance from XML. </summary>
         /// <param name="xml">The XML as string. </param>
@@ -144,36 +144,60 @@ namespace MyToolkit.WorkflowEngine
         {
             if (CurrentActivityIds.Contains(activity.Id))
             {
-                var allowedTransitions = WorkflowDefinition.GetOutboundTransitions(activity);
-
                 input = CreateActivityInput(activity, input);
-                var result = await activity.CompleteAsync(input, cancellationToken);
+
+                WorkflowActivityOutput result;
+                try
+                {
+                    result = await activity.CompleteAsync(input, cancellationToken);
+                }
+                catch (Exception exception)
+                {
+                    return HandleCompletionException(exception);
+                }
+
                 if (result.Successful)
-                {
-                    AddActivityResultToData(activity, result);
-
-                    var nextActivities = result.GetNextActivities(activity, WorkflowDefinition);
-                    if (nextActivities == null)
-                        nextActivities = GetDefaultNextActivities(activity);
-
-                    if (!(activity is ForkActivity) && nextActivities.Length > 1)
-                    {
-                        throw new WorkflowException(string.Format("Activity ({0}) has multiple next activities ({1}) " +
-                                                                  "but only ForkActivity activities can return multiple activities. ",
-                            activity.Id, string.Join(", ", nextActivities.Select(a => a.Id))));
-                    }
-
-                    CurrentActivityIds.Remove(activity.Id);
-
-                    await AddNextActivitiesAsync(activity.Id, nextActivities, allowedTransitions);
-                    return result;
-                }
+                    return await HandleCompletionSuccess(activity, result);
                 else
-                {
-                    // TODO: Workflow => What if not successful
-                }
+                    return HandleCompletionFailed(result);
             }
             throw new WorkflowException("The activity to complete could not be found in the current activity list. ");
+        }
+
+        private static WorkflowActivityOutput HandleCompletionFailed(WorkflowActivityOutput result)
+        {
+            return result;
+        }
+
+        /// <exception cref="WorkflowException">A workflow exception occurred. </exception>
+        private static WorkflowActivityOutput HandleCompletionException(Exception exception)
+        {
+            if (exception != null)
+                throw new WorkflowException("Error while completing an activity.", exception);
+
+            return new WorkflowActivityOutput { Successful = false };
+        }
+
+        /// <exception cref="WorkflowException">A workflow exception occurred. </exception>
+        private async Task<WorkflowActivityOutput> HandleCompletionSuccess(IWorkflowActivityBase activity, WorkflowActivityOutput result)
+        {
+            AddActivityResultToData(activity, result);
+
+            var nextActivities = result.GetNextActivities(activity, WorkflowDefinition);
+            if (nextActivities == null)
+                nextActivities = GetDefaultNextActivities(activity);
+
+            if (!(activity is ForkActivity) && nextActivities.Length > 1)
+            {
+                throw new WorkflowException(string.Format("Activity ({0}) has multiple next activities ({1}) " +
+                                                          "but only ForkActivity activities can return multiple activities. ",
+                    activity.Id, string.Join(", ", nextActivities.Select(a => a.Id))));
+            }
+
+            CurrentActivityIds.Remove(activity.Id);
+
+            await AddNextActivitiesAsync(activity, nextActivities);
+            return result;
         }
 
         private void AddActivityResultToData(IWorkflowActivityBase activity, WorkflowActivityOutput result)
@@ -243,8 +267,10 @@ namespace MyToolkit.WorkflowEngine
         }
 
         /// <exception cref="WorkflowException">A workflow exception occurred. </exception>
-        private async Task AddNextActivitiesAsync(string activityId, IList<IWorkflowActivityBase> nextActivities, WorkflowTransition[] allowedTransitions)
+        private async Task AddNextActivitiesAsync(IWorkflowActivityBase activity, IList<IWorkflowActivityBase> nextActivities)
         {
+            var allowedTransitions = WorkflowDefinition.GetOutboundTransitions(activity);
+
             var hasFollowingActivities = allowedTransitions.Length > 0;
             if (!hasFollowingActivities)
                 return;
@@ -256,7 +282,7 @@ namespace MyToolkit.WorkflowEngine
             {
                 throw new WorkflowException(
                     string.Format("Transitions for activities ({0}) produced by activity ({1}) could not be found. ",
-                        string.Join(", ", nextActivities.Select(a => a.Id)), activityId));
+                        string.Join(", ", nextActivities.Select(a => a.Id)), activity.Id));
             }
         }
 

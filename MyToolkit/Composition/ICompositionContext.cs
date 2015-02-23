@@ -50,23 +50,25 @@ namespace MyToolkit.Composition
 
         /// <summary>Removes a part. </summary>
         /// <typeparam name="TInterface">The type of the part. </typeparam>
-        void RemovePart<TInterface>();
+        /// <returns><c>true</c> if the part has been found and removed; otherwise, <c>false</c>. </returns>
+        bool RemovePart<TInterface>();
 
         /// <summary>Removes a part. </summary>
         /// <typeparam name="TInterface">The type of the part. </typeparam>
         /// <param name="name">The name of the part. </param>
-        void RemovePart<TInterface>(string name);
+        /// <returns><c>true</c> if the part has been found and removed; otherwise, <c>false</c>. </returns>
+        bool RemovePart<TInterface>(string name);
 
         /// <summary>Gets a single part. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
-        /// <exception cref="Exception">Multiple parts found. </exception>
+        /// <exception cref="InvalidOperationException">Multiple parts found. </exception>
         /// <returns>The part. </returns>
         TInterface GetPart<TInterface>();
 
         /// <summary>Gets a single part. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
         /// <param name="name">The name of the part. </param>
-        /// <exception cref="Exception">Multiple parts found. </exception>
+        /// <exception cref="InvalidOperationException">Multiple parts found. </exception>
         /// <returns>The part. </returns>
         TInterface GetPart<TInterface>(string name);
 

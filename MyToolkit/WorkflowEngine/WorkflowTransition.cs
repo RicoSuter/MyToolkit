@@ -7,7 +7,6 @@
 //-----------------------------------------------------------------------
 
 using System.Xml.Serialization;
-using MyToolkit.WorkflowEngine.Activities;
 
 namespace MyToolkit.WorkflowEngine
 {

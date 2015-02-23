@@ -35,6 +35,10 @@ namespace MyToolkit.Data
         private List<UndoRedoCommand> _currentCommandSet;
         private int _restorePoint = -1;
 
+        /// <summary>Initializes a new instance of the <see cref="UndoRedoManager"/> class.</summary>
+        /// <param name="root">The root.</param>
+        /// <param name="dispatcher">The dispatcher.</param>
+        /// <param name="excludedRootProperties">The excluded root properties.</param>
         public UndoRedoManager(GraphObservableObject root, IDispatcher dispatcher, string[] excludedRootProperties = null)
         {
             _root = root;
@@ -44,6 +48,10 @@ namespace MyToolkit.Data
             root.GraphPropertyChanged += OnGraphPropertyChanged;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="UndoRedoManager"/> class.</summary>
+        /// <param name="root">The root.</param>
+        /// <param name="dispatcher">The dispatcher.</param>
+        /// <param name="excludedRootProperties">The excluded root properties.</param>
         public UndoRedoManager(INotifyCollectionChanged root, IDispatcher dispatcher, string[] excludedRootProperties = null)
             : this(new ObservableCollectionWrapper { Collection = root }, dispatcher, excludedRootProperties)
         {
@@ -139,6 +147,7 @@ namespace MyToolkit.Data
             {
                 while (_currentIndex != index)
                     Undo();
+
                 return true;
             }
             return false;

@@ -16,13 +16,13 @@ namespace MyToolkit.WorkflowEngine
     /// <summary>Represents a result of an activity's execution. </summary>
     public class WorkflowActivityOutput
     {
-        /// <summary>Gets a value indicating whether the processing of the activity was successful. </summary>
+        /// <summary>Gets or sets a value indicating whether the processing of the activity was successful. </summary>
         [XmlIgnore]
         public bool Successful { get; set; }
 
-        /// <summary>Gets the condition for the next activities (null if using the default activities from the workflow). </summary>
+        /// <summary>Gets or sets the condition for the next activities (null if using the default activities from the workflow). </summary>
         [XmlIgnore]
-        public string NextActivitiesCondition { get; private set; }
+        public string NextActivitiesCondition { get; set; }
 
         /// <summary>Gets the next activities or null when no condition is available. </summary>
         /// <param name="activity">The current workflow activity. </param>
@@ -35,21 +35,21 @@ namespace MyToolkit.WorkflowEngine
             if (string.IsNullOrEmpty(NextActivitiesCondition))
                 return null; 
             
-            var nextActivitites = definition.GetOutboundTransitions(activity)
+            var nextActivities = definition.GetOutboundTransitions(activity)
                 .Where(t => t.Condition == NextActivitiesCondition)
                 .Select(t => definition.GetActivityById(t.To))
                 .ToArray();
 
-            if (nextActivitites.Length == 0)
+            if (nextActivities.Length == 0)
                 throw new WorkflowException(
                     string.Format("No next activities could be found based on the given condition '{0}'. ", NextActivitiesCondition));
 
-            if (nextActivitites.Length > 1 && !(activity is ForkActivity))
+            if (nextActivities.Length > 1 && !(activity is ForkActivity))
                 throw new WorkflowException(
                     string.Format("More then one activity found for condition '{0}' " +
                                   "but activity is not a ForkActivity. ", NextActivitiesCondition));
 
-            return nextActivitites;
+            return nextActivities;
         }
     }
 }
