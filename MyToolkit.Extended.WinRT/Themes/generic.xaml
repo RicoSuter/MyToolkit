@@ -321,6 +321,7 @@
 
                         <controls:MtListBox x:Name="List" Margin="0" BorderThickness="0" Grid.Row="0" 
                                             ItemTemplate="{TemplateBinding HeaderTemplate}"
+                                            IsEnabled="{TemplateBinding IsHeaderEnabled}"
 											HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
 											ScrollViewer.HorizontalScrollBarVisibility="Hidden"
 											ScrollViewer.HorizontalScrollMode="Auto"

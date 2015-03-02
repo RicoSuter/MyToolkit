@@ -16,7 +16,7 @@ namespace MyToolkit.Controls
     {
         /// <summary>Gets or sets a value indicating whether to allow only a single selection which can be deselected.</summary>
         public static readonly DependencyProperty UseSingleSelectionAndDeselectionProperty =
-            DependencyProperty.RegisterAttached("UseSingleSelectionAndDeselection", typeof(bool), 
+            DependencyProperty.RegisterAttached("UseSingleSelectionAndDeselection", typeof(bool),
                 typeof(DataGridExtensions), new PropertyMetadata(false, OnClickSelectionChanged));
 
         /// <summary>Gets a value indicating whether to allow only a single selection which can be deselected.</summary>

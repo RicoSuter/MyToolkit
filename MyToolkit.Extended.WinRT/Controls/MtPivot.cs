@@ -19,14 +19,14 @@ using Windows.UI.Xaml.Media.Animation;
 namespace MyToolkit.Controls
 {
     /// <summary>A pivot control for WinRT. </summary>
-	[ContentProperty(Name = "Items")]
-	public class MtPivot : Control
-	{
+    [ContentProperty(Name = "Items")]
+    public class MtPivot : Control
+    {
         private MtListBox _list;
         private Grid _grid;
         private Storyboard _story;
         private TranslateTransform _translate;
-        
+
         private int _initialIndex = 0;
         private object _initialItem;
 
@@ -34,12 +34,23 @@ namespace MyToolkit.Controls
 
         /// <summary>Initializes a new instance of the <see cref="MtPivot"/> class. </summary>
         public MtPivot()
-		{
+        {
             DefaultStyleKey = typeof(MtPivot);
-		}
+        }
+
+        public static readonly DependencyProperty IsHeaderEnabledProperty = DependencyProperty.Register(
+            "IsHeaderEnabled", typeof(bool), typeof(MtPivot), new PropertyMetadata(true));
+
+
+        /// <summary>Gets or sets a value indicating whether the header is enabled and can be interacted with.</summary>
+        public bool IsHeaderEnabled
+        {
+            get { return (bool)GetValue(IsHeaderEnabledProperty); }
+            set { SetValue(IsHeaderEnabledProperty, value); }
+        }
 
         /// <summary>Occurs when the selected pivot changed. </summary>
-		public event SelectionChangedEventHandler SelectionChanged;
+        public event SelectionChangedEventHandler SelectionChanged;
 
         /// <summary>Gets the list of <see cref="MtPivotItem"/> objects. </summary>
         public ObservableCollection<MtPivotItem> Items { get { return _items; } }
@@ -55,22 +66,22 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof(object), typeof(MtPivot), 
-            new PropertyMetadata(default(object), (o, args) => ((MtPivot) o).OnSelectedItemChanged()));
+            DependencyProperty.Register("SelectedItem", typeof(object), typeof(MtPivot),
+            new PropertyMetadata(default(object), (o, args) => ((MtPivot)o).OnSelectedItemChanged()));
 
         /// <summary>Gets or sets the current visible <see cref="MtPivotItem"/>. </summary>
-	    public object SelectedItem
+        public object SelectedItem
         {
             get { return GetValue(SelectedItemProperty); }
             set { SetValue(SelectedItemProperty, value); }
         }
 
         public static readonly DependencyProperty SelectedIndexProperty =
-            DependencyProperty.Register("SelectedIndex", typeof(int), typeof(MtPivot), 
-            new PropertyMetadata(default(int), (o, args) => ((MtPivot) o).OnSelectedIndexChanged()));
+            DependencyProperty.Register("SelectedIndex", typeof(int), typeof(MtPivot),
+            new PropertyMetadata(default(int), (o, args) => ((MtPivot)o).OnSelectedIndexChanged()));
 
         /// <summary>Gets or sets the index of the currently selected <see cref="MtPivotItem"/>. </summary>
-	    public int SelectedIndex
+        public int SelectedIndex
         {
             get { return (int)GetValue(SelectedIndexProperty); }
             set { SetValue(SelectedIndexProperty, value); }
@@ -176,29 +187,29 @@ namespace MyToolkit.Controls
             _story.Begin();
         }
 
-		private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
-		{
-		    if (CurrentPivotElement == null)
-		    {
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            if (CurrentPivotElement == null)
+            {
                 SelectedIndex = 0;
                 return;
             }
 
-			foreach (var item in _grid.Children)
-				item.Visibility = Visibility.Collapsed;
+            foreach (var item in _grid.Children)
+                item.Visibility = Visibility.Collapsed;
 
-			AddElement(CurrentPivotElement);
+            AddElement(CurrentPivotElement);
 
-			SelectedIndex = _list.SelectedIndex;
-			SelectedItem = _list.SelectedItem;
+            SelectedIndex = _list.SelectedIndex;
+            SelectedItem = _list.SelectedItem;
 
-			var copy = SelectionChanged;
-			if (copy != null)
-				copy(sender, args);
+            var copy = SelectionChanged;
+            if (copy != null)
+                copy(sender, args);
 
-			ShowSelectedPivot();
-		}
-	}
+            ShowSelectedPivot();
+        }
+    }
 
     [Obsolete("Use MtPivot instead. 8/31/2014")]
     public class Pivot : MtPivot

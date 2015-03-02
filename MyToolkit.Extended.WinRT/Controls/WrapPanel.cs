@@ -539,9 +539,9 @@ namespace MyToolkit.Controls
         /// </returns>
         public static bool AreClose(double left, double right)
         {
-// ReSharper disable CompareOfFloatsByEqualityOperator
+            // ReSharper disable CompareOfFloatsByEqualityOperator
             if (left == right)
-// ReSharper restore CompareOfFloatsByEqualityOperator
+            // ReSharper restore CompareOfFloatsByEqualityOperator
             {
                 return true;
             }

@@ -22,18 +22,18 @@ using System.Windows.Media.Imaging;
 
 namespace MyToolkit.Controls
 {
-	public class PanAndZoomImage : PanAndZoomViewer
-	{
-		private Image image;
-		public PanAndZoomImage()
-		{
-			DefaultStyleKey = typeof(PanAndZoomImage);
-		}
+    public class PanAndZoomImage : PanAndZoomViewer
+    {
+        private Image image;
+        public PanAndZoomImage()
+        {
+            DefaultStyleKey = typeof(PanAndZoomImage);
+        }
 
 #if WINRT
 
-		public event RoutedEventHandler ImageOpened;
-		public event ExceptionRoutedEventHandler ImageFailed;
+        public event RoutedEventHandler ImageOpened;
+        public event ExceptionRoutedEventHandler ImageFailed;
 #else
 		public event EventHandler<RoutedEventArgs> ImageOpened;
 		public event EventHandler<ExceptionRoutedEventArgs> ImageFailed;
@@ -41,83 +41,83 @@ namespace MyToolkit.Controls
 #endif
 
 #if WINRT
-		protected override void OnApplyTemplate()
+        protected override void OnApplyTemplate()
 #else
 		public override void OnApplyTemplate()
 #endif
-		{
-			base.OnApplyTemplate();
+        {
+            base.OnApplyTemplate();
 
-			image = (Image)GetTemplateChild("image");
-			image.IsHitTestVisible = false;
-			image.ImageOpened += OnImageOpened;
-			image.ImageFailed += OnImageFailed;
+            image = (Image)GetTemplateChild("image");
+            image.IsHitTestVisible = false;
+            image.ImageOpened += OnImageOpened;
+            image.ImageFailed += OnImageFailed;
 
-			SizeChanged += delegate { UpdateMaxZoomFactor(); };
-		}
+            SizeChanged += delegate { UpdateMaxZoomFactor(); };
+        }
 
-		private void OnImageOpened(object sender, RoutedEventArgs routedEventArgs)
-		{
-			var copy = ImageOpened;
-			if (copy != null)
-				copy(this, new RoutedEventArgs());
+        private void OnImageOpened(object sender, RoutedEventArgs routedEventArgs)
+        {
+            var copy = ImageOpened;
+            if (copy != null)
+                copy(this, new RoutedEventArgs());
 
-			UpdateMaxZoomFactor();
-		}
-		
-		private void OnImageFailed(object sender, ExceptionRoutedEventArgs exceptionRoutedEventArgs)
-		{
-			var copy = ImageFailed;
-			if (copy != null)
-				copy(this, null);
+            UpdateMaxZoomFactor();
+        }
 
-			UpdateMaxZoomFactor();
-		}
+        private void OnImageFailed(object sender, ExceptionRoutedEventArgs exceptionRoutedEventArgs)
+        {
+            var copy = ImageFailed;
+            if (copy != null)
+                copy(this, null);
 
-		private void UpdateMaxZoomFactor()
-		{
-			if (AutomaticZoomFactor && ActualHeight > 0 && ActualWidth > 0)
-			{
-				var bitmap = image.Source as BitmapImage;
-				if (bitmap != null && bitmap.PixelWidth > 0 && bitmap.PixelHeight > 0)
-					CalculateMaxZoomFactor(bitmap.PixelWidth, bitmap.PixelHeight);
-			}
-		}
+            UpdateMaxZoomFactor();
+        }
 
-		public static readonly DependencyProperty SourceProperty =
-			DependencyProperty.Register("Source", typeof(Uri), typeof(PanAndZoomImage), new PropertyMetadata(default(Uri)));
+        private void UpdateMaxZoomFactor()
+        {
+            if (AutomaticZoomFactor && ActualHeight > 0 && ActualWidth > 0)
+            {
+                var bitmap = image.Source as BitmapImage;
+                if (bitmap != null && bitmap.PixelWidth > 0 && bitmap.PixelHeight > 0)
+                    CalculateMaxZoomFactor(bitmap.PixelWidth, bitmap.PixelHeight);
+            }
+        }
 
-		public Uri Source
-		{
-			get { return (Uri)GetValue(SourceProperty); }
-			set { SetValue(SourceProperty, value); }
-		}
+        public static readonly DependencyProperty SourceProperty =
+            DependencyProperty.Register("Source", typeof(Uri), typeof(PanAndZoomImage), new PropertyMetadata(default(Uri)));
 
-		public static readonly DependencyProperty StretchProperty =
-			DependencyProperty.Register("Stretch", typeof(Stretch), typeof(PanAndZoomImage), new PropertyMetadata(default(Stretch)));
+        public Uri Source
+        {
+            get { return (Uri)GetValue(SourceProperty); }
+            set { SetValue(SourceProperty, value); }
+        }
 
-		public Stretch Stretch
-		{
-			get { return (Stretch)GetValue(StretchProperty); }
-			set { SetValue(StretchProperty, value); }
-		}
+        public static readonly DependencyProperty StretchProperty =
+            DependencyProperty.Register("Stretch", typeof(Stretch), typeof(PanAndZoomImage), new PropertyMetadata(default(Stretch)));
 
-		public static readonly DependencyProperty AutomaticMaxZoomFactorProperty =
-			DependencyProperty.Register("AutomaticMaxZoomFactor", typeof (bool), typeof (PanAndZoomImage), new PropertyMetadata(true));
+        public Stretch Stretch
+        {
+            get { return (Stretch)GetValue(StretchProperty); }
+            set { SetValue(StretchProperty, value); }
+        }
 
-		public bool AutomaticZoomFactor
-		{
-			get { return (bool) GetValue(AutomaticMaxZoomFactorProperty); }
-			set { SetValue(AutomaticMaxZoomFactorProperty, value); }
-		}
+        public static readonly DependencyProperty AutomaticMaxZoomFactorProperty =
+            DependencyProperty.Register("AutomaticMaxZoomFactor", typeof(bool), typeof(PanAndZoomImage), new PropertyMetadata(true));
 
-		public static readonly DependencyProperty InnerMarginProperty =
-			DependencyProperty.Register("InnerMargin", typeof (Thickness), typeof (PanAndZoomImage), new PropertyMetadata(default(Thickness)));
+        public bool AutomaticZoomFactor
+        {
+            get { return (bool)GetValue(AutomaticMaxZoomFactorProperty); }
+            set { SetValue(AutomaticMaxZoomFactorProperty, value); }
+        }
 
-		public Thickness InnerMargin
-		{
-			get { return (Thickness) GetValue(InnerMarginProperty); }
-			set { SetValue(InnerMarginProperty, value); }
-		}
-	}
+        public static readonly DependencyProperty InnerMarginProperty =
+            DependencyProperty.Register("InnerMargin", typeof(Thickness), typeof(PanAndZoomImage), new PropertyMetadata(default(Thickness)));
+
+        public Thickness InnerMargin
+        {
+            get { return (Thickness)GetValue(InnerMarginProperty); }
+            set { SetValue(InnerMarginProperty, value); }
+        }
+    }
 }

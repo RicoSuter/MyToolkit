@@ -51,7 +51,7 @@ namespace MyToolkit.Controls
             InnerMargin = new Thickness(0, 0, 20, 0);
 
             FontSize = (double)Resources["ControlContentThemeFontSize"];
-			Foreground = (Brush)Resources["ApplicationForegroundThemeBrush"];
+            Foreground = (Brush)Resources["ApplicationForegroundThemeBrush"];
 #endif
 
             Margin = new Thickness(0);
@@ -78,7 +78,7 @@ namespace MyToolkit.Controls
         public event EventHandler<EventArgs> HtmlLoaded;
 
         public static readonly DependencyProperty HtmlProperty =
-            DependencyProperty.Register("Html", typeof(String), typeof(HtmlTextBlock), new PropertyMetadata(default(String), 
+            DependencyProperty.Register("Html", typeof(String), typeof(HtmlTextBlock), new PropertyMetadata(default(String),
                 (obj, e) => ((HtmlTextBlock)obj).Generate()));
 
         /// <summary>Gets or sets the HTML content to display. </summary>
@@ -114,7 +114,7 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty HeaderTemplateProperty =
-            DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(HtmlTextBlock), new PropertyMetadata(default(DataTemplate), 
+            DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(HtmlTextBlock), new PropertyMetadata(default(DataTemplate),
                 (d, e) => ((HtmlTextBlock)d).UpdateHeader()));
 
         /// <summary>Gets or sets the header template. </summary>
@@ -125,7 +125,7 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty ShowHeaderProperty =
-            DependencyProperty.Register("ShowHeader", typeof(bool), typeof(HtmlTextBlock), 
+            DependencyProperty.Register("ShowHeader", typeof(bool), typeof(HtmlTextBlock),
             new PropertyMetadata(true, (d, e) => ((HtmlTextBlock)d).UpdateShowHeader()));
 
         /// <summary>Gets or sets a value indicating whether the header should be shown. </summary>
@@ -136,7 +136,7 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty FooterTemplateProperty =
-            DependencyProperty.Register("FooterTemplate", typeof(DataTemplate), typeof(HtmlTextBlock), 
+            DependencyProperty.Register("FooterTemplate", typeof(DataTemplate), typeof(HtmlTextBlock),
             new PropertyMetadata(default(DataTemplate), (d, e) => ((HtmlTextBlock)d).UpdateFooter()));
 
         /// <summary>Gets or sets the footer template. </summary>

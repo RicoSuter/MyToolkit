@@ -13,7 +13,7 @@ namespace MyToolkit.Controls
         /// <param name="isSelected">Indicates whether the cell is selected or not. </param>
         public override void OnSelectedChanged(bool isSelected)
         {
-			
+
         }
     }
 }

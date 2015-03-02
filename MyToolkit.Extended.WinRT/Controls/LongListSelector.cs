@@ -30,33 +30,33 @@ namespace MyToolkit.Controls
         public event EventHandler<NavigationListEventArgs> Navigate;
 
         public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
-            "ItemsSource", typeof (object), typeof (LongListSelector), new PropertyMetadata(default(object)));
+            "ItemsSource", typeof(object), typeof(LongListSelector), new PropertyMetadata(default(object)));
 
         /// <summary>Gets or sets the item source (usually an <see cref="AlphaGroupCollection{T}"/> object). </summary>
         public object ItemsSource
         {
-            get { return (object) GetValue(ItemsSourceProperty); }
+            get { return (object)GetValue(ItemsSourceProperty); }
             set { SetValue(ItemsSourceProperty, value); }
         }
 
         public static readonly DependencyProperty ItemTemplateProperty = DependencyProperty.Register(
-            "ItemTemplate", typeof (DataTemplate), typeof (LongListSelector), new PropertyMetadata(default(DataTemplate)));
+            "ItemTemplate", typeof(DataTemplate), typeof(LongListSelector), new PropertyMetadata(default(DataTemplate)));
 
         /// <summary>Gets or sets the item template for rendering an item. </summary>
         public DataTemplate ItemTemplate
         {
-            get { return (DataTemplate) GetValue(ItemTemplateProperty); }
+            get { return (DataTemplate)GetValue(ItemTemplateProperty); }
             set { SetValue(ItemTemplateProperty, value); }
         }
 
         public static readonly DependencyProperty UseNavigationEventProperty = DependencyProperty.Register(
-            "UseNavigationEvent", typeof (bool), typeof (LongListSelector), new PropertyMetadata(true));
+            "UseNavigationEvent", typeof(bool), typeof(LongListSelector), new PropertyMetadata(true));
 
         /// <summary>Gets or sets a value indicating whether the <see cref="Navigate"/> event should be triggered
         /// when clicking on an item (default: true). </summary>
         public bool UseNavigationEvent
         {
-            get { return (bool) GetValue(UseNavigationEventProperty); }
+            get { return (bool)GetValue(UseNavigationEventProperty); }
             set { SetValue(UseNavigationEventProperty, value); }
         }
 

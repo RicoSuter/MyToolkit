@@ -11,30 +11,30 @@ using Windows.UI.Xaml.Controls;
 
 namespace MyToolkit.Controls
 {
-	public class NavigationListView : MtListView
-	{
-		public NavigationListView()
-		{
-			SelectionChanged += OnSelectionChanged;
-		}
+    public class NavigationListView : MtListView
+    {
+        public NavigationListView()
+        {
+            SelectionChanged += OnSelectionChanged;
+        }
 
         /// <summary>Occurs when the user wants to navigate to an item. </summary>
         public event EventHandler<NavigationListEventArgs> Navigate;
-        
+
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
-		{
-			var item = SelectedItem;
-			SelectedItem = null;
+        {
+            var item = SelectedItem;
+            SelectedItem = null;
 
-			if (item != null)
-				OnNavigate(new NavigationListEventArgs(item));
-		}
+            if (item != null)
+                OnNavigate(new NavigationListEventArgs(item));
+        }
 
-		protected void OnNavigate(NavigationListEventArgs args)
-		{
-			var copy = Navigate;
-			if (copy != null)
-				copy(this, args);
-		}
-	}
+        protected void OnNavigate(NavigationListEventArgs args)
+        {
+            var copy = Navigate;
+            if (copy != null)
+                copy(this, args);
+        }
+    }
 }

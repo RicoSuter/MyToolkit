@@ -15,16 +15,16 @@ namespace MyToolkit.Controls
 {
     /// <summary>A <see cref="GridView"/> with additional features. </summary>
     public class MtGridView : GridView
-	{
+    {
         private event EventHandler<ScrolledToEndEventArgs> _scrolledToEnd;
         private double _lastExtentWidth = 0;
         private bool _bindingCreated = false;
 
         /// <summary>Initializes a new instance of the <see cref="MtGridView"/> class. </summary>
         public MtGridView()
-		{
-			Loaded += OnLoaded;
-		}
+        {
+            Loaded += OnLoaded;
+        }
 
         /// <summary>Gets the view's <see cref="ScrollViewer"/>. </summary>
         public ScrollViewer ScrollViewer { get; private set; }
@@ -45,66 +45,66 @@ namespace MyToolkit.Controls
 
         /// <summary>Occurs when a new container control gets created. </summary>
         public event EventHandler<PrepareContainerForItemEventArgs> PrepareContainerForItem;
-        
+
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
-		{
-			base.PrepareContainerForItemOverride(element, item);
-			OnPrepareContainerForItem(new PrepareContainerForItemEventArgs(element, item));
-		}
+        {
+            base.PrepareContainerForItemOverride(element, item);
+            OnPrepareContainerForItem(new PrepareContainerForItemEventArgs(element, item));
+        }
 
-		private void OnPrepareContainerForItem(PrepareContainerForItemEventArgs args)
-		{
-			var copy = PrepareContainerForItem;
-			if (copy != null)
-				copy(this, args);
-		}
+        private void OnPrepareContainerForItem(PrepareContainerForItemEventArgs args)
+        {
+            var copy = PrepareContainerForItem;
+            if (copy != null)
+                copy(this, args);
+        }
 
-		private void OnLoaded(object sender, RoutedEventArgs e)
-		{
-			ScrollViewer = (ScrollViewer)GetTemplateChild("ScrollViewer");
-			RegisterHorizontalOffsetChangedHandler();
-		}
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            ScrollViewer = (ScrollViewer)GetTemplateChild("ScrollViewer");
+            RegisterHorizontalOffsetChangedHandler();
+        }
 
         private static readonly DependencyProperty InternalOffsetProperty = DependencyProperty.Register(
             "InternalOffset", typeof(double), typeof(MtGridView),
             new PropertyMetadata(default(double), OnHorizontalOffsetChanged));
-        
+
         private static void OnHorizontalOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var ctrl = (MtGridView)d;
-			if (!ctrl.TriggerScrolledToEndEvents || ctrl._scrolledToEnd == null)
-				return;
+        {
+            var ctrl = (MtGridView)d;
+            if (!ctrl.TriggerScrolledToEndEvents || ctrl._scrolledToEnd == null)
+                return;
 
-			var viewer = ctrl.ScrollViewer;
-			if (viewer != null)
-			{
-				var triggered = ctrl._lastExtentWidth == viewer.ExtentWidth;
-				if (!triggered && viewer.HorizontalOffset >= viewer.ScrollableWidth - viewer.ViewportWidth - viewer.ViewportWidth / 2)
-				{
+            var viewer = ctrl.ScrollViewer;
+            if (viewer != null)
+            {
+                var triggered = ctrl._lastExtentWidth == viewer.ExtentWidth;
+                if (!triggered && viewer.HorizontalOffset >= viewer.ScrollableWidth - viewer.ViewportWidth - viewer.ViewportWidth / 2)
+                {
                     ctrl._lastExtentWidth = viewer.ExtentWidth;
-					var handler = ctrl._scrolledToEnd;
-					if (handler != null)
-						handler(ctrl, new ScrolledToEndEventArgs(viewer));
-				}
-			}
-		}
+                    var handler = ctrl._scrolledToEnd;
+                    if (handler != null)
+                        handler(ctrl, new ScrolledToEndEventArgs(viewer));
+                }
+            }
+        }
 
-		private void RegisterHorizontalOffsetChangedHandler()
-		{
-			if (ScrollViewer == null || _bindingCreated || _scrolledToEnd == null)
-				return;
+        private void RegisterHorizontalOffsetChangedHandler()
+        {
+            if (ScrollViewer == null || _bindingCreated || _scrolledToEnd == null)
+                return;
 
-			TriggerScrolledToEndEvents = true;
+            TriggerScrolledToEndEvents = true;
 
-			var binding = new Binding();
-			binding.Source = ScrollViewer;
-			binding.Path = new PropertyPath("HorizontalOffset");
-			binding.Mode = BindingMode.OneWay;
-			SetBinding(InternalOffsetProperty, binding);
+            var binding = new Binding();
+            binding.Source = ScrollViewer;
+            binding.Path = new PropertyPath("HorizontalOffset");
+            binding.Mode = BindingMode.OneWay;
+            SetBinding(InternalOffsetProperty, binding);
 
-			_bindingCreated = true;
-		}
-	}
+            _bindingCreated = true;
+        }
+    }
 
     /// <summary>A <see cref="GridView"/> with additional features. </summary>
     [Obsolete("Use MtGridView instead. 8/31/2014")]

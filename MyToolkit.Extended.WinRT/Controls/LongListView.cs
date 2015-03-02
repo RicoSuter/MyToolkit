@@ -11,103 +11,103 @@ using Windows.UI.Xaml.Controls;
 
 namespace MyToolkit.Controls
 {
-	public class LongListView : ListView
-	{
+    public class LongListView : ListView
+    {
         private NotifyCollectionChangedEventHandler _collectionChangedHandler = null;
 
         public LongListView()
-		{
-			SelectionChanged += OnSelectionChanged;
+        {
+            SelectionChanged += OnSelectionChanged;
 
-			// prevent memory leaks
-			Loaded += delegate
-			{
-				if (_collectionChangedHandler != null)
-					((INotifyCollectionChanged)ItemsSource).CollectionChanged += _collectionChangedHandler;
-			};
-			Unloaded += delegate
-			{
-				if (_collectionChangedHandler != null)
-					((INotifyCollectionChanged)ItemsSource).CollectionChanged -= _collectionChangedHandler;
-			};
-		}
-        
-		public static readonly DependencyProperty ItemsSourceProperty =
-			DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(LongListView), new PropertyMetadata(default(object), OnItemsSourceChanged));
+            // prevent memory leaks
+            Loaded += delegate
+            {
+                if (_collectionChangedHandler != null)
+                    ((INotifyCollectionChanged)ItemsSource).CollectionChanged += _collectionChangedHandler;
+            };
+            Unloaded += delegate
+            {
+                if (_collectionChangedHandler != null)
+                    ((INotifyCollectionChanged)ItemsSource).CollectionChanged -= _collectionChangedHandler;
+            };
+        }
 
-		public IEnumerable ItemsSource
-		{
-			get { return (IEnumerable)GetValue(ItemsSourceProperty); }
-			set { SetValue(ItemsSourceProperty, value); }
-		}
+        public static readonly DependencyProperty ItemsSourceProperty =
+            DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(LongListView), new PropertyMetadata(default(object), OnItemsSourceChanged));
 
-		private static void OnItemsSourceChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-		{
-			var control = (LongListView)obj;
-			control.UpdateList();
+        public IEnumerable ItemsSource
+        {
+            get { return (IEnumerable)GetValue(ItemsSourceProperty); }
+            set { SetValue(ItemsSourceProperty, value); }
+        }
 
-			if (control._collectionChangedHandler != null) // prevent memory leaks
-			{
-				((INotifyCollectionChanged) args.OldValue).CollectionChanged -= control._collectionChangedHandler;
-				control._collectionChangedHandler = null; 
-			}
+        private static void OnItemsSourceChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var control = (LongListView)obj;
+            control.UpdateList();
 
-			var collection = control.ItemsSource as INotifyCollectionChanged;
-			if (collection != null)
-			{
-				control._collectionChangedHandler = (sender, e) => control.UpdateList();
-				collection.CollectionChanged += control._collectionChangedHandler;
-			}
-		}
+            if (control._collectionChangedHandler != null) // prevent memory leaks
+            {
+                ((INotifyCollectionChanged)args.OldValue).CollectionChanged -= control._collectionChangedHandler;
+                control._collectionChangedHandler = null;
+            }
 
-		public static readonly DependencyProperty GroupHeaderTemplateProperty =
-			DependencyProperty.Register("GroupHeaderTemplate", typeof (DataTemplate), typeof (LongListView), new PropertyMetadata(default(DataTemplate)));
+            var collection = control.ItemsSource as INotifyCollectionChanged;
+            if (collection != null)
+            {
+                control._collectionChangedHandler = (sender, e) => control.UpdateList();
+                collection.CollectionChanged += control._collectionChangedHandler;
+            }
+        }
 
-		public DataTemplate GroupHeaderTemplate
-		{
-			get { return (DataTemplate) GetValue(GroupHeaderTemplateProperty); }
-			set { SetValue(GroupHeaderTemplateProperty, value); }
-		}
+        public static readonly DependencyProperty GroupHeaderTemplateProperty =
+            DependencyProperty.Register("GroupHeaderTemplate", typeof(DataTemplate), typeof(LongListView), new PropertyMetadata(default(DataTemplate)));
+
+        public DataTemplate GroupHeaderTemplate
+        {
+            get { return (DataTemplate)GetValue(GroupHeaderTemplateProperty); }
+            set { SetValue(GroupHeaderTemplateProperty, value); }
+        }
 
 
-		private void UpdateList()
-		{
-			Items.Clear();
-			foreach (var group in ItemsSource)
-			{
-				var headerViewItem = new ListViewItem { Content = group, ContentTemplate = GroupHeaderTemplate, Tag = this };
-				Items.Add(headerViewItem);
-				foreach (var item in (IEnumerable) group)
-				{
-					var viewItem = new ListViewItem { Content = item, ContentTemplate = ItemTemplate };
-					Items.Add(viewItem);
-				}
-			}
-		}
-		
-		private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
-		{
-			if (SelectedItem != null)
-			{
-				var item = ((ListViewItem) SelectedItem);
-				if (item.Tag == this)
-				{
-					// TODO show group selector!
-				}
-				else
-					OnNavigate(new NavigationListEventArgs(item.Content));
-			}
+        private void UpdateList()
+        {
+            Items.Clear();
+            foreach (var group in ItemsSource)
+            {
+                var headerViewItem = new ListViewItem { Content = group, ContentTemplate = GroupHeaderTemplate, Tag = this };
+                Items.Add(headerViewItem);
+                foreach (var item in (IEnumerable)group)
+                {
+                    var viewItem = new ListViewItem { Content = item, ContentTemplate = ItemTemplate };
+                    Items.Add(viewItem);
+                }
+            }
+        }
 
-			SelectedItem = null;
-		}
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            if (SelectedItem != null)
+            {
+                var item = ((ListViewItem)SelectedItem);
+                if (item.Tag == this)
+                {
+                    // TODO show group selector!
+                }
+                else
+                    OnNavigate(new NavigationListEventArgs(item.Content));
+            }
 
-		public event EventHandler<NavigationListEventArgs> Navigate;
+            SelectedItem = null;
+        }
 
-		protected void OnNavigate(NavigationListEventArgs args)
-		{
-			var copy = Navigate;
-			if (copy != null)
-				copy(this, args);
-		}
-	}
+        public event EventHandler<NavigationListEventArgs> Navigate;
+
+        protected void OnNavigate(NavigationListEventArgs args)
+        {
+            var copy = Navigate;
+            if (copy != null)
+                copy(this, args);
+        }
+    }
 }
