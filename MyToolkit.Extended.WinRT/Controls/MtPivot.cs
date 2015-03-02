@@ -40,8 +40,7 @@ namespace MyToolkit.Controls
 
         public static readonly DependencyProperty IsHeaderEnabledProperty = DependencyProperty.Register(
             "IsHeaderEnabled", typeof(bool), typeof(MtPivot), new PropertyMetadata(true));
-
-
+        
         /// <summary>Gets or sets a value indicating whether the header is enabled and can be interacted with.</summary>
         public bool IsHeaderEnabled
         {

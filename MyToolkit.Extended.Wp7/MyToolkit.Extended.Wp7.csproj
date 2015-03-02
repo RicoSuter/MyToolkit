@@ -477,9 +477,6 @@
     <Compile Include="..\Shared\Utilities\EntityContainer.cs">
       <Link>Utilities\EntityContainer.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Utilities\FrameworkElementExtensions.cs">
-      <Link>Utilities\FrameworkElementExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\Shared\Utilities\ItemsControlExtensions.cs">
       <Link>Utilities\ItemsControlExtensions.cs</Link>
     </Compile>

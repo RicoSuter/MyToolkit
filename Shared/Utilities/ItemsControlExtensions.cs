@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Controls;
 using System.Windows;
 using System.Windows.Controls;
 #endif
+using MyToolkit.UI;
 
 namespace MyToolkit.Utilities
 {

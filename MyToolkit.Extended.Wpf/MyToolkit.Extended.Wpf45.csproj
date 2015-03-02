@@ -109,6 +109,9 @@
     <Compile Include="..\Shared\UI\Designer.cs">
       <Link>UI\Designer.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\UI\FrameworkElementExtensions.cs">
+      <Link>UI\FrameworkElementExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Utilities\ColorUtility.cs">
       <Link>Utilities\ColorUtility.cs</Link>
     </Compile>
@@ -120,9 +123,6 @@
     </Compile>
     <Compile Include="..\Shared\Utilities\ExpressionHelper.cs">
       <Link>Utilities\ExpressionHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\FrameworkElementExtensions.cs">
-      <Link>Utilities\FrameworkElementExtensions.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\ItemsControlExtensions.cs">
       <Link>Utilities\ItemsControlExtensions.cs</Link>
