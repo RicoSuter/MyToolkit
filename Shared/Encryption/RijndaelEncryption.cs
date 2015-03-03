@@ -5,12 +5,11 @@ using System.Security.Cryptography;
 
 namespace MyToolkit.Encryption
 {
-    /// <summary>
-    /// Provides methods to encrypt and decrypt data using the Rijndael encryption algorithm. 
-    /// </summary>
+    /// <summary>Provides methods to encrypt and decrypt data using the Rijndael encryption algorithm.</summary>
     public static class RijndaelEncryption
     {
         private static Dictionary<string, Tuple<byte[], byte[]>> _passwords;
+
         private static Tuple<byte[], byte[]> DeriveBytes(string password)
         {
             if (_passwords == null)

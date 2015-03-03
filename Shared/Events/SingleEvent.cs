@@ -27,7 +27,7 @@ namespace MyToolkit.Events
         /// <param name="deregister">The event deregistration action. </param>
         /// <returns>The task. </returns>
         public static Task<TEventArgs> WaitForEventAsync<TEventSource, TEventArgs>(TEventSource source, Action<TEventSource, EventHandler<TEventArgs>> register,
-            Action<TEventSource, EventHandler<TEventArgs>> deregister) 
+            Action<TEventSource, EventHandler<TEventArgs>> deregister)
             where TEventArgs : EventArgs
         {
             var task = new TaskCompletionSource<TEventArgs>();
@@ -41,7 +41,7 @@ namespace MyToolkit.Events
         /// <param name="register">The event registration action. </param>
         /// <param name="deregister">The event deregistration action. </param>
         /// <returns>The task. </returns>
-        public static Task WaitForRoutedEventAsync<TEventSource>(TEventSource source, 
+        public static Task WaitForRoutedEventAsync<TEventSource>(TEventSource source,
             Action<TEventSource, RoutedEventHandler> register,
             Action<TEventSource, RoutedEventHandler> deregister)
         {
@@ -92,8 +92,8 @@ namespace MyToolkit.Events
         /// <param name="deregister">The event deregistration action. </param>
         /// <param name="handler">The event handler. </param>
         /// <returns>The task. </returns>
-        public static void RegisterRoutedEvent<TEventSource>(TEventSource source, Action<TEventSource, RoutedEventHandler> register, 
-            Action<TEventSource, RoutedEventHandler> deregister, Action<object, RoutedEventArgs> handler) 
+        public static void RegisterRoutedEvent<TEventSource>(TEventSource source, Action<TEventSource, RoutedEventHandler> register,
+            Action<TEventSource, RoutedEventHandler> deregister, Action<object, RoutedEventArgs> handler)
         {
             var wrapper = new SingleRoutedEventHandlerContainer();
             wrapper.Handler = delegate(object s, RoutedEventArgs args)
