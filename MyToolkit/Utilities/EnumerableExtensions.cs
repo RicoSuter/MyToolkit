@@ -210,5 +210,26 @@ namespace MyToolkit.Utilities
                 output.Add(list[startIndex + i]);
             return output;
         }
+
+        /// <summary>Partitions an enumerable into blocks of a given size.</summary>
+        /// <typeparam name="T">The item type. </typeparam>
+        /// <param name="source">The source enumeration.</param>
+        /// <param name="blockSize">Size of the block.</param>
+        /// <returns>The partitions. </returns>
+        public static IEnumerable<IEnumerable<T>> Partition<T>(this IEnumerable<T> source, int blockSize)
+        {
+            var enumerator = source.GetEnumerator();
+            while (enumerator.MoveNext())
+                yield return GetNextPartition(enumerator, blockSize);
+        }
+
+        private static IEnumerable<T> GetNextPartition<T>(IEnumerator<T> enumerator, int blockSize)
+        {
+            do
+            {
+                yield return enumerator.Current;
+            }
+            while (--blockSize > 0 && enumerator.MoveNext());
+        }
     }
 }

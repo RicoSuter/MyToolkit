@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0"?>
 <package >
-	<metadata>
-		<id>MyToolkit.Web</id>
+    <metadata>
+        <id>MyToolkit.Web</id>
         <version>2.3.28.0</version>
         <title>MyToolkit.Web</title>
-		<authors>Rico Suter</authors>
-		<owners>Rico Suter</owners>
-		<projectUrl>https://mytoolkit.codeplex.com</projectUrl>
-		<licenseUrl>https://mytoolkit.codeplex.com/license</licenseUrl>
-		<description>MyToolkit is a set of .NET libraries containing lots of useful classes for various .NET platforms like WinRT, Windows Phone, WPF and Silverlight. </description>
-		<releaseNotes/>
+        <authors>Rico Suter</authors>
+        <owners>Rico Suter</owners>
+        <projectUrl>https://mytoolkit.codeplex.com</projectUrl>
+        <licenseUrl>https://mytoolkit.codeplex.com/license</licenseUrl>
+        <description>MyToolkit is a set of .NET libraries containing lots of useful classes for various .NET platforms like WinRT, Windows Phone, WPF and Silverlight. </description>
+        <releaseNotes/>
         <iconUrl>http://rsuter.com/Projects/MyToolkit/NuGetIcon.png</iconUrl>
         <dependencies>
             <group>
@@ -17,7 +17,7 @@
             </group>
         </dependencies>
     </metadata>
-	<files>
-		<file src="..\- Output\MyToolkit.Web\MyToolkit.Web.dll" target="lib\net45\MyToolkit.Web.dll" />
-	</files>
+    <files>
+        <file src="..\- Output\MyToolkit.Web\MyToolkit.Web.dll" target="lib\net45\MyToolkit.Web.dll" />
+    </files>
 </package>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LinkGenerator", "LinkGenerator", "{6D65D0E8-1C50-4CED-B77C-A0B75B441085}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{6D65D0E8-1C50-4CED-B77C-A0B75B441085}"
 	ProjectSection(SolutionItems) = preProject
 		Build\MyToolkit.Extended.nuspec = Build\MyToolkit.Extended.nuspec
 		Build\MyToolkit.Http.nuspec = Build\MyToolkit.Http.nuspec

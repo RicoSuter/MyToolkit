@@ -143,6 +143,7 @@
     <Compile Include="Build\VsProjectReference.cs" />
     <Compile Include="Build\VsReferenceBase.cs" />
     <Compile Include="Build\VsSolution.cs" />
+    <Compile Include="Controls\TreeViewExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\XsdGenerator.cs" />
     <Compile Include="UI\ShortcutManager.cs" />

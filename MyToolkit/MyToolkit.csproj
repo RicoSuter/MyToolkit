@@ -140,6 +140,7 @@
     <Compile Include="Collections\IObservableCollectionView.cs" />
     <Compile Include="Collections\ObservableCollectionView.cs" />
     <Compile Include="Collections\QueryObservableCollectionView.cs" />
+    <Compile Include="Composition\PartDescription.cs" />
     <Compile Include="Data\CacheManager.cs" />
     <Compile Include="Data\DataManagerBase.cs" />
     <Compile Include="Collections\AlphaGroupCollection.cs" />

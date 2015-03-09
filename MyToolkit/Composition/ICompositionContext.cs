@@ -20,33 +20,46 @@ namespace MyToolkit.Composition
         /// <returns>The number of added parts. </returns>
         int AddPartsFromAssembly(Assembly assembly);
 
-        /// <summary>Adds a part and automatically resolves are imports. </summary>
+        /// <summary>Adds an existing part for a given interface and implementation type. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
         /// <typeparam name="TImplementation">The instance type of the part. </typeparam>
         /// <param name="part">The part. </param>
-        /// <returns>True if the part has been added. </returns>
+        /// <returns><c>true</c> if the part has been added. </returns>
         bool AddPart<TInterface, TImplementation>(TImplementation part);
 
-        /// <summary>Adds a part and automatically resolves are imports. </summary>
+        /// <summary>Adds an existing part for a given interface, implementation type and name. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
         /// <typeparam name="TImplementation">The instance type of the part. </typeparam>
         /// <param name="name">The name of the part. </param>
         /// <param name="part">The part. </param>
-        /// <returns>True if the part has been added. </returns>
+        /// <returns><c>true</c> if the part has been added. </returns>
         bool AddPart<TInterface, TImplementation>(TImplementation part, string name);
 
-        /// <summary>Adds a lazy instantiated part. The imports are resolved when the part is instantiated. </summary>
+        /// <summary>Adds a part for a given interface and implementation type which is instantiated when first requested. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
         /// <typeparam name="TImplementation">The instance type of the part. </typeparam>
-        /// <returns>True if the part has been added. </returns>
+        /// <returns><c>true</c> if the part has been added. </returns>
         bool AddPart<TInterface, TImplementation>();
 
-        /// <summary>Adds a lazy instantiated part. The imports are resolved when the part is instantiated. </summary>
+        /// <summary>Adds a part for a given interface, implementation type and name which is instantiated when first requested. </summary>
         /// <typeparam name="TInterface">The interface type of the part. </typeparam>
         /// <typeparam name="TImplementation">The instance type of the part. </typeparam>
         /// <param name="name">The name of the part. </param>
-        /// <returns>True if the part has been added. </returns>
+        /// <returns><c>true</c> if the part has been added. </returns>
         bool AddPart<TInterface, TImplementation>(string name);
+
+        /// <summary>Adds a part for a given interface and implementation type which is instantiated for each request. </summary>
+        /// <typeparam name="TInterface">The interface type of the part. </typeparam>
+        /// <typeparam name="TImplementation">The instance type of the part. </typeparam>
+        /// <returns><c>true</c> if the part has been added. </returns>
+        bool AddPerRequestPart<TInterface, TImplementation>();
+
+        /// <summary>Adds a part for a given interface, implementation type and name which is instantiated for each request. </summary>
+        /// <typeparam name="TInterface">The interface type of the part. </typeparam>
+        /// <typeparam name="TImplementation">The instance type of the part. </typeparam>
+        /// <param name="name">The name of the part. </param>
+        /// <returns><c>true</c> if the part has been added. </returns>
+        bool AddPerRequestPart<TInterface, TImplementation>(string name);
 
         /// <summary>Removes a part. </summary>
         /// <typeparam name="TInterface">The type of the part. </typeparam>

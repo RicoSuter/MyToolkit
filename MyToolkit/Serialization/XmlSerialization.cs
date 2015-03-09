@@ -76,7 +76,7 @@ namespace MyToolkit.Serialization
         /// <summary>Deserializes an object from a XML string. </summary>
         /// <typeparam name="T">The type of the resulting object. </typeparam>
         /// <param name="xml">The XML string. </param>
-        /// <param name="extraTypes">The addional types. </param>
+        /// <param name="extraTypes">The additional types. </param>
         /// <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
         /// <returns>The deserialized object. </returns>
         public static T Deserialize<T>(string xml, Type[] extraTypes = null, bool useSerializerCache = true)
@@ -104,7 +104,7 @@ namespace MyToolkit.Serialization
         /// <typeparam name="TKey">The dictionary key type. </typeparam>
         /// <typeparam name="TValue">The dictionary value type. </typeparam>
         /// <param name="xml">The XML string. </param>
-        /// <param name="extraTypes">The addional types. </param>
+        /// <param name="extraTypes">The additional types. </param>
         /// <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
         /// <returns>The deserialized object. </returns>
         public static Dictionary<TKey, TValue> DeserializeDictionary<TKey, TValue>(string xml, Type[] extraTypes = null, bool useSerializerCache = true)
@@ -139,7 +139,7 @@ namespace MyToolkit.Serialization
         /// <summary>Asynchronously deserializes an object from a XML string. </summary>
         /// <typeparam name="T">The type of the resulting object. </typeparam>
         /// <param name="xml">The XML string. </param>
-        /// <param name="extraTypes">The addional types. </param>
+        /// <param name="extraTypes">The additional types. </param>
         /// <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
         /// <returns>The deserialized object. </returns>
         public static Task<T> DeserializeAsync<T>(string xml, Type[] extraTypes = null, bool useSerializerCache = true)
@@ -187,7 +187,7 @@ namespace MyToolkit.Serialization
         /// <typeparam name="TKey">The dictionary key type. </typeparam>
         /// <typeparam name="TValue">The dictionary value type. </typeparam>
         /// <param name="xml">The XML string. </param>
-        /// <param name="extraTypes">The addional types. </param>
+        /// <param name="extraTypes">The additional types. </param>
         /// <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
         /// <returns>The deserialized object. </returns>
         public static Task<Dictionary<TKey, TValue>> DeserializeDictionaryAsync<TKey, TValue>(string xml, Type[] extraTypes = null, bool useSerializerCache = true)
