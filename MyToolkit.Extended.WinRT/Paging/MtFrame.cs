@@ -328,7 +328,7 @@ namespace MyToolkit.Paging
 
             // Destroy current page if cache is disabled
             if (currentPage != null && (currentPage.Page.NavigationCacheMode == NavigationCacheMode.Disabled || DisableCache))
-                currentPage.Page = null;
+                currentPage.ReleasePage();
 
             return true;
         }
@@ -400,6 +400,7 @@ namespace MyToolkit.Paging
             InternalFrame = (Frame)GetTemplateChild("Frame");
         }
 
+        /// <exception cref="InvalidOperationException">The frame cannot go forward or back</exception>
         private async void GoForwardOrBack(NavigationMode navigationMode)
         {
             if (navigationMode == NavigationMode.Forward ? CanGoForward : CanGoBack)
@@ -414,7 +415,7 @@ namespace MyToolkit.Paging
                     RemoveForwardStack();
             }
             else
-                throw new Exception("cannot go forward or back");
+                throw new InvalidOperationException("The frame cannot go forward or back");
         }
 
         private async Task NavigateWithAnimationsAndCallbacksAsync(NavigationMode navigationMode,
@@ -553,6 +554,8 @@ namespace MyToolkit.Paging
             for (var i = _pages.Count - 1; i > _currentIndex; i--)
             {
                 var page = _pages[i];
+                page.ReleasePage();
+
                 _pages.Remove(page);
             }
         }

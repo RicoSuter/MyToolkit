@@ -45,36 +45,8 @@ namespace MyToolkit.Paging.Handlers
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled)
                 return;
 
-            page.Loaded += (sender, args) =>
-            {
-                if (IsRunningOnPhone)
-                {
-                    if (_handler == null)
-                        _handler = new BackKeyPressedHandler();
-
-                    _handler.Add(page, s => TryGoBackAsync());
-                }
-                else
-                {
-                    if (page.ActualHeight == Window.Current.Bounds.Height &&
-                        page.ActualWidth == Window.Current.Bounds.Width)
-                    {
-                        Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += OnAcceleratorKeyActivated;
-                        Window.Current.CoreWindow.PointerPressed += OnPointerPressed;
-                    }
-                }
-            };
-
-            page.Unloaded += (sender, args) =>
-            {
-                if (IsRunningOnPhone)
-                    _handler.Remove(_page);
-                else
-                {
-                    Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= OnAcceleratorKeyActivated;
-                    Window.Current.CoreWindow.PointerPressed -= OnPointerPressed;
-                }
-            };
+            page.Loaded += OnPageLoaded;
+            page.Unloaded += OnPageUnloaded;
         }
 
         /// <summary>Gets a value indicating whether the application is running on a Windows Phone. </summary>
@@ -103,6 +75,39 @@ namespace MyToolkit.Paging.Handlers
         public void RemoveGoBackAsyncHandler(Func<CancelEventArgs, Task> action)
         {
             _goBackActions.Remove(action);
+        }
+
+        private void OnPageLoaded(object sender, RoutedEventArgs e)
+        {
+            var page = (MtPage)sender;
+            if (IsRunningOnPhone)
+            {
+                if (_handler == null)
+                    _handler = new BackKeyPressedHandler();
+
+                _handler.Add(page, s => TryGoBackAsync());
+            }
+            else
+            {
+                if (page.ActualHeight == Window.Current.Bounds.Height &&
+                    page.ActualWidth == Window.Current.Bounds.Width)
+                {
+                    Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += OnAcceleratorKeyActivated;
+                    Window.Current.CoreWindow.PointerPressed += OnPointerPressed;
+                }
+            }
+        }
+
+        private void OnPageUnloaded(object sender, RoutedEventArgs e)
+        {
+            var page = (MtPage)sender;
+            if (IsRunningOnPhone)
+                _handler.Remove(page);
+            else
+            {
+                Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated -= OnAcceleratorKeyActivated;
+                Window.Current.CoreWindow.PointerPressed -= OnPointerPressed;
+            }
         }
 
         private void OnAcceleratorKeyActivated(CoreDispatcher sender, AcceleratorKeyEventArgs args)

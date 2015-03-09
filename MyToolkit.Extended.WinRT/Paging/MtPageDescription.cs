@@ -18,8 +18,12 @@ namespace MyToolkit.Paging
 	{
         private Type _type;
 
+        /// <summary>Initializes a new instance of the <see cref="MtPageDescription"/> class.</summary>
         internal MtPageDescription() { } // for serialization
 
+        /// <summary>Initializes a new instance of the <see cref="MtPageDescription"/> class.</summary>
+        /// <param name="pageType">Type of the page.</param>
+        /// <param name="parameter">The parameter.</param>
 		public MtPageDescription(Type pageType, object parameter)
 		{
 			_type = pageType;
@@ -49,7 +53,7 @@ namespace MyToolkit.Paging
 		public object Parameter { get; internal set; }
 
         /// <summary>Gets the page object or null if the page is not instantiated. </summary>
-		public MtPage Page { get; internal set; }
+		public MtPage Page { get; private set; }
 
         [DataMember]
         internal string SerializationType { get; set; }
@@ -72,15 +76,21 @@ namespace MyToolkit.Paging
         {
             if (Page == null)
             {
-                var page = Activator.CreateInstance(Type);
-                if (!(page is MtPage))
+                var page = Activator.CreateInstance(Type) as MtPage;
+                if (page == null)
                     throw new InvalidOperationException("The base type is not an MtPage. Change the base type from Page to MtPage. ");
 
-                Page = (MtPage)page;
+                Page = page;
                 Page.Frame = frame;
             }
 
             return Page;
+        }
+
+        /// <summary>Releases the page so that the GC can collect it.</summary>
+        internal void ReleasePage()
+        {
+            Page = null; 
         }
 	}
 }
