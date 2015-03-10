@@ -326,10 +326,6 @@ namespace MyToolkit.Paging
             var newPage = new MtPageDescription(pageType, parameter);
             await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.New, currentPage, newPage, _currentIndex + 1);
 
-            // Destroy current page if cache is disabled
-            if (currentPage != null && (currentPage.Page.NavigationCacheMode == NavigationCacheMode.Disabled || DisableCache))
-                currentPage.ReleasePage();
-
             return true;
         }
 
@@ -436,6 +432,14 @@ namespace MyToolkit.Paging
             await AnimateNavigatedToAndRemoveCurrentPageAsync(pageAnimation, navigationMode, insertionMode, currentPage, nextPage);
 
             ContentGrid.IsHitTestVisible = true;
+            
+            ReleasePageIfNecessary(currentPage);
+        }
+
+        private void ReleasePageIfNecessary(MtPageDescription page)
+        {
+            if (page != null && (page.Page.NavigationCacheMode == NavigationCacheMode.Disabled || DisableCache))
+                page.ReleasePage();
         }
 
         private void AddNewPageToGridIfNotSequential(PageInsertionMode insertionMode, MtPageDescription newPage)
