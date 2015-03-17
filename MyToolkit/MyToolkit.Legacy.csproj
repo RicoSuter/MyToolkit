@@ -72,6 +72,7 @@
     <Compile Include="Composition\ImportAttribute.cs" />
     <Compile Include="Composition\ImportManyAttribute.cs" />
     <Compile Include="Composition\IServiceLocator.cs" />
+    <Compile Include="Composition\PartDescription.cs" />
     <Compile Include="Composition\ServiceLocator.cs" />
     <Compile Include="Data\CacheManager.cs" />
     <Compile Include="Data\DataManagerBase.cs" />
