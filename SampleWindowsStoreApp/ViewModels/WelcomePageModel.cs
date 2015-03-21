@@ -30,6 +30,7 @@ namespace SampleWindowsStoreApp.ViewModels
                 new NavigationItem {Title = "Various Samples", Subtitle = "VariousSamplesPage", PageType = typeof(VariousSamplesPage)},
                 new NavigationItem {Title = "RSS Loader", Subtitle = "RssReaderPage", PageType = typeof(RssReaderPage)},
                 new NavigationItem {Title = "MtListBox", Subtitle = "MtListBoxPage", PageType = typeof(MtListBoxPage)},
+                new NavigationItem {Title = "Navigation Sample", Subtitle = "NavigationSamplePage", PageType = typeof(NavigationSamplePage)},
             }));
 
             Groups.Add(new TopItemsGroup<NavigationItem>("Windows 8", new List<NavigationItem>

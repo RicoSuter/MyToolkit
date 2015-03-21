@@ -180,6 +180,9 @@
     <Compile Include="Views\ShareTargetPage.xaml.cs">
       <DependentUpon>ShareTargetPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\NavigationSamplePage.xaml.cs">
+      <DependentUpon>NavigationSamplePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\YouTubePlayerPage.xaml.cs">
       <DependentUpon>YouTubePlayerPage.xaml</DependentUpon>
     </Compile>
@@ -283,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShareTargetPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\NavigationSamplePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

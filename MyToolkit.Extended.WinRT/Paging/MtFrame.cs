@@ -154,13 +154,14 @@ namespace MyToolkit.Paging
         public bool CanGoForward { get { return _currentIndex < _pages.Count - 1; } }
 
         /// <summary>Tries to navigate forward to the next page. </summary>
+        /// <remarks>After the task has completed the <see cref="Frame"/>'s current page has changed. </remarks>
         /// <returns>Returns true if navigating forward, false if cancelled</returns>
         public async Task<bool> GoForwardAsync()
         {
             if (await RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.Forward))
                 return false;
 
-            GoForwardOrBack(NavigationMode.Forward);
+            await GoForwardOrBackAsync(NavigationMode.Forward);
             return true;
         }
 
@@ -210,22 +211,34 @@ namespace MyToolkit.Paging
             return await GoBackToAsync(index);
         }
 
-        /// <summary>Navigates back to the given index. </summary>
-        /// <param name="newIndex">The page index. </param>
+        /// <summary>Navigates back to the first page in the page stack. </summary>
         /// <returns>True if the navigation could be performed. </returns>
-        public async Task<bool> GoBackToAsync(int newIndex)
+        public Task<bool> GoHomeAsync()
         {
-            if (newIndex == _currentIndex)
-                return true;
+            return GoBackToAsync(0);
+        }
 
-            if (newIndex < 0 || newIndex > _currentIndex)
+        /// <summary>Navigates back to the given index. </summary>
+        /// <param name="newPageIndex">The page index. </param>
+        /// <returns>True if the navigation could be performed. </returns>
+        public async Task<bool> GoBackToAsync(int newPageIndex)
+        {
+            if (newPageIndex == _currentIndex)
                 return false;
 
-            while (_currentIndex != newIndex)
-            {
-                if (!await GoBackAsync())
-                    return false;
-            }
+            if (newPageIndex < 0 || newPageIndex > _currentIndex)
+                return false;
+
+            if (await RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.Back))
+                return false;
+            
+            var currentPage = CurrentPage;
+            var nextPage = _pages[newPageIndex];
+
+            await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.Back, currentPage, nextPage, newPageIndex);
+
+            if (DisableForwardStack)
+                RemoveForwardStack();
 
             return true;
         }
@@ -261,29 +274,18 @@ namespace MyToolkit.Paging
             return true;
         }
 
-        /// <summary>Navigates back to the first page in the page stack. </summary>
-        /// <returns>True if the navigation could be performed. </returns>
-        public async Task<bool> GoHomeAsync()
-        {
-            while (_currentIndex != 0)
-            {
-                if (!await GoBackAsync())
-                    return false;
-            }
-            return true;
-        }
-
         /// <summary>Gets a value indicating whether the frame is currently navigating to another page. </summary>
         public bool IsNavigating { get; private set; }
 
         /// <summary>Tries to navigate back to the previous page. </summary>
+        /// <remarks>After the task has completed the <see cref="Frame"/>'s current page has changed. </remarks>
         /// <returns>Returns true if navigating back, false if cancelled or CanGoBack is false. </returns>
         public async Task<bool> GoBackAsync()
         {
             if (await RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.Back))
                 return false;
 
-            GoForwardOrBack(NavigationMode.Back);
+            await GoForwardOrBackAsync(NavigationMode.Back);
             return true;
         }
 
@@ -397,7 +399,7 @@ namespace MyToolkit.Paging
         }
 
         /// <exception cref="InvalidOperationException">The frame cannot go forward or back</exception>
-        private async void GoForwardOrBack(NavigationMode navigationMode)
+        private async Task GoForwardOrBackAsync(NavigationMode navigationMode)
         {
             if (navigationMode == NavigationMode.Forward ? CanGoForward : CanGoBack)
             {
