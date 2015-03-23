@@ -80,9 +80,6 @@
     <Compile Include="Utilities\ServiceClientUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Translations\Readme.txt" />
   </ItemGroup>
   <ItemGroup>
