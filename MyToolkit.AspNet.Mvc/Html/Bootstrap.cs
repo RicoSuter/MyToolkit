@@ -21,10 +21,10 @@ namespace MyToolkit.Html
         /// <param name="currentPage">The current page number.</param>
         /// <param name="pageCount">The page count.</param>
         /// <param name="actionName">The name of the controller action.</param>
-        /// <param name="pageKeyName">The page key name. </param>
         /// <param name="routeValues">The route values. </param>
+        /// <param name="pageKeyName">The page key name. </param>
         /// <returns>The HTML string. </returns>
-        public static IHtmlString Pagination(WebViewPage page, int currentPage, int pageCount, string actionName, string pageKeyName = "page", object routeValues = null)
+        public static IHtmlString Pagination(WebViewPage page, int currentPage, int pageCount, string actionName, object routeValues = null, string pageKeyName = "page")
         {
             var html = new StringBuilder();
             html.AppendLine(@"<nav>");
@@ -46,15 +46,18 @@ namespace MyToolkit.Html
                 var values = new RouteValueDictionary(routeValues);
                 values.Add(pageKeyName, i);
 
-                html.AppendLine(@"  <li class=""" + (i == currentPage ? "active" : string.Empty) + @""">" + page.Html.ActionLink(i.ToString(), actionName, values) + @"</li>");
+                html.AppendLine(@"  <li class=""" + (i == currentPage ? "active" : string.Empty) + @""">");
+                html.AppendLine(@"   <a href=""" + (i == currentPage ? "#" : page.Url.Action(actionName, values)) + @""">" + i + @"</a>");
+                html.AppendLine(@"  </li>");
             }
 
             // next page
             var nextValues = new RouteValueDictionary(routeValues);
             nextValues.Add(pageKeyName, currentPage + 1);
 
-            html.AppendLine(@"  <li class=""" + (currentPage == pageCount ? "disabled" : string.Empty) + @""">");
-            html.AppendLine(@"   <a href=""" + (currentPage == pageCount ? "#" : page.Url.Action(actionName, nextValues)) + @""" aria-label=""Next"">");
+            var canGoNext = currentPage == pageCount || pageCount == 0;
+            html.AppendLine(@"  <li class=""" + (canGoNext ? "disabled" : string.Empty) + @""">");
+            html.AppendLine(@"   <a href=""" + (canGoNext ? "#" : page.Url.Action(actionName, nextValues)) + @""" aria-label=""Next"">");
             html.AppendLine(@"    <span aria-hidden=""true"">&raquo;</span>");
             html.AppendLine(@"   </a>");
             html.AppendLine(@"  </li>");
