@@ -1,0 +1,81 @@
+﻿//-----------------------------------------------------------------------
+// <copyright file="CollectionEditorExtensions.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Mvc.Html;
+using System.Web.Routing;
+
+namespace MyToolkit.Html
+{
+    public static class CollectionEditorExtensions
+    {
+        public static IHtmlString CollectionEditorFor<TModel, TItem>(this HtmlHelper<TModel> htmlHelper,
+            Func<TModel, IEnumerable<TItem>> collection, string partialViewName,
+            string controllerActionPath, string addButtonTitle, object addButtonHtmlAttributes = null)
+        {
+            var editorId = "CollectionEditor_" + Guid.NewGuid().ToString("N");
+            var addButtonId = "CollectionEditorAdd_" + Guid.NewGuid().ToString("N");
+
+            var html = new StringBuilder();
+
+            RenderInitialCollection(html, htmlHelper, collection, partialViewName, editorId);
+            RenderAddButton(html, addButtonId, addButtonTitle, addButtonHtmlAttributes);
+            RenderEditorScript(controllerActionPath, html, editorId, addButtonId);
+
+            return new HtmlString(html.ToString());
+        }
+
+        private static void RenderInitialCollection<TModel, TItem>(StringBuilder html, HtmlHelper<TModel> htmlHelper,
+            Func<TModel, IEnumerable<TItem>> collection, string partialViewName, string editorId)
+        {
+            html.AppendLine(@"<ul id=""" + editorId + @""" style=""list-style-type: none; padding: 0"">");
+            foreach (var item in collection(htmlHelper.ViewData.Model))
+                html.AppendLine(htmlHelper.Partial(partialViewName, item).ToString());
+            html.AppendLine(@"</ul>");
+        }
+
+        private static void RenderAddButton(StringBuilder html, string addButtonId, string addButtonTitle, object addButtonHtmlAttributes)
+        {
+            var inputTag = new TagBuilder("input");
+            inputTag.Attributes.Add("type", "button");
+            inputTag.Attributes.Add("value", addButtonTitle);
+            inputTag.Attributes.Add("id", addButtonId);
+            inputTag.MergeAttributes(new RouteValueDictionary(addButtonHtmlAttributes));
+
+            html.AppendLine(@"<p>");
+            html.AppendLine(inputTag.ToString());
+            html.AppendLine(@"</p>");
+        }
+
+        private static void RenderEditorScript(string controllerActionPath, StringBuilder html, string editorId, string addButtonId)
+        {
+            html.AppendLine(
+                @"<script type=""text/javascript"">
+                    $(function() {
+                        $(""#" + editorId + @""").sortable();
+                        $(""#" + addButtonId + @""").click(function() {
+                            $.get('" + controllerActionPath + @"', function (template) {
+                                var itemList = $(""#" + editorId + @""");
+                                itemList.append(template);
+
+                                var form = itemList.closest(""form"");
+                                form.removeData(""validator"");
+                                form.removeData(""unobtrusiveValidation"");
+                                $.validator.unobtrusive.parse(form);
+                                form.validate();
+                            });
+                        });
+                    });
+                </script>");
+        }
+    }
+}

@@ -39,3 +39,7 @@
 **/obj/**
 **.user
 /*.sdf
+
+/TestResults
+/MyToolkit.sln.GhostDoc.xml
+/MyToolkit.VS2012.sln.GhostDoc.xml
