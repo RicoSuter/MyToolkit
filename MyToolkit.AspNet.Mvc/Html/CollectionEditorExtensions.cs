@@ -77,5 +77,62 @@ namespace MyToolkit.Html
                     });
                 </script>");
         }
+
+        public static IDisposable BeginCollectionItem<TModel>(this HtmlHelper<TModel> html, string collectionPropertyName)
+        {
+            var itemIndex = GetCollectionItemIndex(collectionPropertyName);
+            var collectionItemName = String.Format("{0}[{1}]", collectionPropertyName, itemIndex);
+
+            var hiddenInput = new TagBuilder("input");
+            hiddenInput.MergeAttributes(new Dictionary<string, string> 
+            {
+                { "name", String.Format("{0}.Index", collectionPropertyName) },
+                { "value", itemIndex },
+                { "type", "hidden" },
+                { "autocomplete", "off" }
+            });
+
+            html.ViewContext.Writer.WriteLine(hiddenInput.ToString(TagRenderMode.SelfClosing));
+            return new CollectionItemNamePrefixScope(html.ViewData.TemplateInfo, collectionItemName);
+        }
+
+        private static string GetCollectionItemIndex(string collectionIndexFieldName)
+        {
+            Queue<string> previousIndices = (Queue<string>)HttpContext.Current.Items[collectionIndexFieldName];
+
+            if (previousIndices == null)
+            {
+                previousIndices = new Queue<string>();
+                HttpContext.Current.Items[collectionIndexFieldName] = new Queue<string>();
+
+                var previousIndicesValues = HttpContext.Current.Request[collectionIndexFieldName];
+                if (!String.IsNullOrWhiteSpace(previousIndicesValues))
+                {
+                    foreach (var index in previousIndicesValues.Split(','))
+                        previousIndices.Enqueue(index);
+                }
+            }
+
+            return previousIndices.Count > 0 ? previousIndices.Dequeue() : Guid.NewGuid().ToString();
+        }
+
+        private class CollectionItemNamePrefixScope : IDisposable
+        {
+            private readonly TemplateInfo _templateInfo;
+            private readonly string _previousPrefix;
+
+            public CollectionItemNamePrefixScope(TemplateInfo templateInfo, string collectionItemName)
+            {
+                _templateInfo = templateInfo;
+                _previousPrefix = templateInfo.HtmlFieldPrefix;
+
+                templateInfo.HtmlFieldPrefix = collectionItemName;
+            }
+
+            public void Dispose()
+            {
+                _templateInfo.HtmlFieldPrefix = _previousPrefix;
+            }
+        }
     }
 }
