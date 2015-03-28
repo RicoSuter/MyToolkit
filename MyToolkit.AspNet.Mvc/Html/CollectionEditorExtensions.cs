@@ -38,8 +38,12 @@ namespace MyToolkit.Html
             Func<TModel, IEnumerable<TItem>> collection, string partialViewName, string editorId)
         {
             html.AppendLine(@"<ul id=""" + editorId + @""" style=""list-style-type: none; padding: 0"">");
-            foreach (var item in collection(htmlHelper.ViewData.Model))
-                html.AppendLine(htmlHelper.Partial(partialViewName, item).ToString());
+            var items = collection(htmlHelper.ViewData.Model);
+            if (items != null)
+            {
+                foreach (var item in collection(htmlHelper.ViewData.Model))
+                    html.AppendLine(htmlHelper.Partial(partialViewName, item).ToString());
+            }
             html.AppendLine(@"</ul>");
         }
 
