@@ -70,12 +70,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Composition\AspNetMvcControllerFactory.cs" />
+    <Compile Include="Composition\AspNetMvcDependencyResolver.cs" />
     <Compile Include="Html\Bootstrap.cs" />
     <Compile Include="Html\CollectionEditorExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyToolkit\MyToolkit.csproj">
+      <Project>{f01f49c0-5da2-4757-b4e0-02ec7a187ded}</Project>
+      <Name>MyToolkit</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
