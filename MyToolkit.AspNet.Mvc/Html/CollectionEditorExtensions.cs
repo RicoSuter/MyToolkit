@@ -67,7 +67,7 @@ namespace MyToolkit.Html
                     $(function() {
                         $(""#" + editorId + @""").sortable();
                         $(""#" + addButtonId + @""").click(function() {
-                            $.get('" + controllerActionPath + @"', function (template) {
+                            $.get('" + controllerActionPath + @"', { '_': $.now() }, function (template) {
                                 var itemList = $(""#" + editorId + @""");
                                 itemList.append(template);
 
