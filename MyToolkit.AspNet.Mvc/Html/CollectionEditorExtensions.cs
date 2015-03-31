@@ -16,8 +16,19 @@ using System.Web.Routing;
 
 namespace MyToolkit.Html
 {
+    /// <summary>Provides extension methods to generate a collection editor. </summary>
     public static class CollectionEditorExtensions
     {
+        /// <summary>Renders the collection editor for an enumerable.</summary>
+        /// <typeparam name="TModel">The type of the model.</typeparam>
+        /// <typeparam name="TItem">The type of the item.</typeparam>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="collection">The collection.</param>
+        /// <param name="partialViewName">The partial name of the editor view.</param>
+        /// <param name="controllerActionPath">The controller action path to generate a new item editor.</param>
+        /// <param name="addButtonTitle">The title of the add button.</param>
+        /// <param name="addButtonHtmlAttributes">The HTML attributes of the add button.</param>
+        /// <returns>The HTML string. </returns>
         public static IHtmlString CollectionEditorFor<TModel, TItem>(this HtmlHelper<TModel> htmlHelper,
             Func<TModel, IEnumerable<TItem>> collection, string partialViewName,
             string controllerActionPath, string addButtonTitle, object addButtonHtmlAttributes = null)
@@ -82,7 +93,12 @@ namespace MyToolkit.Html
                 </script>");
         }
 
-        public static IDisposable BeginCollectionItem<TModel>(this HtmlHelper<TModel> html, string collectionPropertyName)
+        /// <summary>Begins the rendering of collection item editor.</summary>
+        /// <typeparam name="TModel">The type of the model.</typeparam>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="collectionPropertyName">The name of the collection property in the master view model.</param>
+        /// <returns>The disposable. </returns>
+        public static IDisposable BeginCollectionItem<TModel>(this HtmlHelper<TModel> htmlHelper, string collectionPropertyName)
         {
             var itemIndex = GetCollectionItemIndex(collectionPropertyName);
             var collectionItemName = String.Format("{0}[{1}]", collectionPropertyName, itemIndex);
@@ -96,8 +112,8 @@ namespace MyToolkit.Html
                 { "autocomplete", "off" }
             });
 
-            html.ViewContext.Writer.WriteLine(hiddenInput.ToString(TagRenderMode.SelfClosing));
-            return new CollectionItemNamePrefixScope(html.ViewData.TemplateInfo, collectionItemName);
+            htmlHelper.ViewContext.Writer.WriteLine(hiddenInput.ToString(TagRenderMode.SelfClosing));
+            return new CollectionItemNamePrefixScope(htmlHelper.ViewData.TemplateInfo, collectionItemName);
         }
 
         private static string GetCollectionItemIndex(string collectionIndexFieldName)
