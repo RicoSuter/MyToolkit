@@ -34,22 +34,23 @@ namespace MyToolkit.Html
         /// <param name="html">The HTML helper.</param>
         /// <param name="imageProperty">The image property.</param>
         /// <param name="thumbnailPath">The image thumbnail path.</param>
+        /// <param name="maxThumbnailWidth">The maximum thumbnail width (0 = no maximum).</param>
         /// <returns>The HTML string. </returns>
         public static IHtmlString RequiredImageUploadFor<TModel, TValue>(this HtmlHelper<TModel> html,
             Expression<Func<TModel, TValue>> imageProperty,
-            string thumbnailPath)
+            string thumbnailPath, int maxThumbnailWidth = 0)
         {
             var imagePathId = "ImagePath_" + Guid.NewGuid().ToString("N");
 
             var imagePropertyMeta = ModelMetadata.FromLambdaExpression(imageProperty, html.ViewData);
             var imagePropertyName = imagePropertyMeta.PropertyName;
-            
+
             var output = new StringBuilder();
             output.AppendLine(@"<div>");
 
             if (!string.IsNullOrEmpty(thumbnailPath))
             {
-                RenderImage(output, thumbnailPath);
+                RenderImage(output, thumbnailPath, maxThumbnailWidth);
                 RenderButton(output, imagePropertyName, imagePathId, "Change image...");
             }
             else
@@ -80,11 +81,12 @@ namespace MyToolkit.Html
         /// <param name="imageProperty">The image property.</param>
         /// <param name="hasImageProperty">The has image property.</param>
         /// <param name="thumbnailPath">The image thumbnail path.</param>
+        /// <param name="maxThumbnailWidth">The maximum thumbnail width (0 = no maximum).</param>
         /// <returns>The HTML string. </returns>
         public static IHtmlString ImageUploadFor<TModel, TValue>(this HtmlHelper<TModel> html,
             Expression<Func<TModel, TValue>> imageProperty,
             Expression<Func<TModel, bool>> hasImageProperty,
-            string thumbnailPath)
+            string thumbnailPath, int maxThumbnailWidth = 0)
         {
             var imagePathId = "ImagePath_" + Guid.NewGuid().ToString("N");
 
@@ -117,7 +119,7 @@ namespace MyToolkit.Html
                     output.AppendLine(@"</div>");
                 }
 
-                RenderImage(output, thumbnailPath);
+                RenderImage(output, thumbnailPath, maxThumbnailWidth);
                 RenderButton(output, imagePropertyName, imagePathId, "Change image...");
             }
             else
@@ -132,10 +134,18 @@ namespace MyToolkit.Html
             return new HtmlString(output.ToString());
         }
 
-        private static void RenderImage(StringBuilder output, string thumbnailPath)
+        private static void RenderImage(StringBuilder output, string thumbnailPath, int maxThumbnailWidth)
         {
             output.AppendLine(@"<p>");
-            output.AppendLine(@"  <img src=""" + thumbnailPath + @""" alt=""Thumbnail"" />");
+
+            if (maxThumbnailWidth == 0)
+                output.AppendLine(@"  <img src=""" + thumbnailPath + @""" alt=""Thumbnail"" />");
+            else
+            {
+                output.AppendLine(@"  <img src=""" + thumbnailPath + @""" alt=""Thumbnail"" " +
+                                        @" style=""max-width: " + maxThumbnailWidth + @"px; height: auto"" />");
+            }
+
             output.AppendLine(@"</p>");
         }
 
