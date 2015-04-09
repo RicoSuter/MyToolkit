@@ -121,14 +121,14 @@ namespace MyToolkit.Html
                     RenderRadioButtons(output, hasImagePropertyName);
 
                 RenderImage(output, thumbnailPath, maxThumbnailWidth);
-                RenderButton(output, imagePropertyName, imagePathId, "Change image...");
+                RenderButton(output, imagePropertyName, imagePathId, changeImageText);
             }
             else
             {
                 if (!imagePropertyMeta.IsRequired)
                     output.AppendLine(@"<input type=""hidden"" name=""" + hasImagePropertyName + @""" value=""true"" />");
 
-                RenderButton(output, imagePropertyName, imagePathId, "Choose image...");
+                RenderButton(output, imagePropertyName, imagePathId, chooseImageText);
             }
 
             output.AppendLine(@"</div>");
