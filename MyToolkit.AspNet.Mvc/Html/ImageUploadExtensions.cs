@@ -14,6 +14,7 @@ using System.Web.Mvc;
 
 namespace MyToolkit.Html
 {
+    /// <summary>Extension methods to render image upload controls. </summary>
     public static class ImageUploadExtensions
     {
         /// <summary>Renders the image upload control to upload a required image.</summary>
@@ -21,11 +22,13 @@ namespace MyToolkit.Html
         /// <typeparam name="TValue">The type of the value.</typeparam>
         /// <param name="html">The HTML helper.</param>
         /// <param name="imageProperty">The image property.</param>
+        /// <param name="chooseImageText">The text of the choose image button.</param>
         /// <returns>The HTML string. </returns>
         public static IHtmlString RequiredImageUploadFor<TModel, TValue>(this HtmlHelper<TModel> html,
-            Expression<Func<TModel, TValue>> imageProperty)
+            Expression<Func<TModel, TValue>> imageProperty,
+            string chooseImageText = "Choose Image...")
         {
-            return RequiredImageUploadFor(html, imageProperty, null);
+            return RequiredImageUploadFor(html, imageProperty, null, 0, chooseImageText);
         }
 
         /// <summary>Renders the image upload control to upload a required image.</summary>
@@ -35,10 +38,15 @@ namespace MyToolkit.Html
         /// <param name="imageProperty">The image property.</param>
         /// <param name="thumbnailPath">The image thumbnail path.</param>
         /// <param name="maxThumbnailWidth">The maximum thumbnail width (0 = no maximum).</param>
-        /// <returns>The HTML string. </returns>
+        /// <param name="chooseImageText">The text of the choose image button.</param>
+        /// <param name="changeImageText">The text of the change image button.</param>
+        /// <returns>The HTML string.</returns>
         public static IHtmlString RequiredImageUploadFor<TModel, TValue>(this HtmlHelper<TModel> html,
             Expression<Func<TModel, TValue>> imageProperty,
-            string thumbnailPath, int maxThumbnailWidth = 0)
+            string thumbnailPath, 
+            int maxThumbnailWidth, 
+            string chooseImageText = "Choose Image...", 
+            string changeImageText = "Change Image...")
         {
             var imagePathId = "ImagePath_" + Guid.NewGuid().ToString("N");
 
@@ -51,10 +59,10 @@ namespace MyToolkit.Html
             if (!string.IsNullOrEmpty(thumbnailPath))
             {
                 RenderImage(output, thumbnailPath, maxThumbnailWidth);
-                RenderButton(output, imagePropertyName, imagePathId, "Change image...");
+                RenderButton(output, imagePropertyName, imagePathId, changeImageText);
             }
             else
-                RenderButton(output, imagePropertyName, imagePathId, "Choose image...");
+                RenderButton(output, imagePropertyName, imagePathId, chooseImageText);
 
             output.AppendLine(@"</div>");
             return new HtmlString(output.ToString());
@@ -66,12 +74,14 @@ namespace MyToolkit.Html
         /// <param name="html">The HTML helper.</param>
         /// <param name="imageProperty">The image property.</param>
         /// <param name="hasImageProperty">The has image property.</param>
+        /// <param name="chooseImageText">The text of the choose image button.</param>
         /// <returns>The HTML string. </returns>
         public static IHtmlString ImageUploadFor<TModel, TValue>(this HtmlHelper<TModel> html,
             Expression<Func<TModel, TValue>> imageProperty,
-            Expression<Func<TModel, bool>> hasImageProperty)
+            Expression<Func<TModel, bool>> hasImageProperty,
+            string chooseImageText = "Choose Image...")
         {
-            return ImageUploadFor(html, imageProperty, hasImageProperty, null);
+            return ImageUploadFor(html, imageProperty, hasImageProperty, null, 0, chooseImageText);
         }
 
         /// <summary>Renders the image upload control to upload an optional image.</summary>
@@ -82,11 +92,16 @@ namespace MyToolkit.Html
         /// <param name="hasImageProperty">The has image property.</param>
         /// <param name="thumbnailPath">The image thumbnail path.</param>
         /// <param name="maxThumbnailWidth">The maximum thumbnail width (0 = no maximum).</param>
+        /// <param name="chooseImageText">The text of the choose image button.</param>
+        /// <param name="changeImageText">The text of the change image button.</param>
         /// <returns>The HTML string. </returns>
         public static IHtmlString ImageUploadFor<TModel, TValue>(this HtmlHelper<TModel> html,
             Expression<Func<TModel, TValue>> imageProperty,
             Expression<Func<TModel, bool>> hasImageProperty,
-            string thumbnailPath, int maxThumbnailWidth = 0)
+            string thumbnailPath,
+            int maxThumbnailWidth,
+            string chooseImageText = "Choose Image...",
+            string changeImageText = "Change Image...")
         {
             var imagePathId = "ImagePath_" + Guid.NewGuid().ToString("N");
 
@@ -102,22 +117,8 @@ namespace MyToolkit.Html
             var hasImage = hasImageProperty != null && hasImageProperty.Compile().Invoke(html.ViewData.Model);
             if (hasImage)
             {
-                var noImageRadioId = "NoImageRadioId_" + Guid.NewGuid().ToString("N");
-                var currentImageRadioId = "CurrentImageRadioId_" + Guid.NewGuid().ToString("N");
-
                 if (!imagePropertyMeta.IsRequired)
-                {
-
-                    output.AppendLine(@"<div>");
-                    output.AppendLine(@"  <input type=""radio"" id=""" + noImageRadioId + @""" name=""" + hasImagePropertyName + @""" value=""false"">");
-                    output.AppendLine(@"  <label for=""" + noImageRadioId + @""">No image</label>");
-                    output.AppendLine(@"</div>");
-
-                    output.AppendLine(@"<div>");
-                    output.AppendLine(@"  <input type=""radio"" id=""" + currentImageRadioId + @""" name=""" + hasImagePropertyName + @""" value=""true"" checked=""checked"">");
-                    output.AppendLine(@"  <label for=""" + currentImageRadioId + @""">Current image:</label><br />");
-                    output.AppendLine(@"</div>");
-                }
+                    RenderRadioButtons(output, hasImagePropertyName);
 
                 RenderImage(output, thumbnailPath, maxThumbnailWidth);
                 RenderButton(output, imagePropertyName, imagePathId, "Change image...");
@@ -134,6 +135,22 @@ namespace MyToolkit.Html
             return new HtmlString(output.ToString());
         }
 
+        private static void RenderRadioButtons(StringBuilder output, string hasImagePropertyName)
+        {
+            var noImageRadioId = "NoImageRadioId_" + Guid.NewGuid().ToString("N");
+            var currentImageRadioId = "CurrentImageRadioId_" + Guid.NewGuid().ToString("N");
+
+            output.AppendLine(@"<div>");
+            output.AppendLine(@"  <input type=""radio"" id=""" + noImageRadioId + @""" name=""" + hasImagePropertyName + @""" value=""false"">");
+            output.AppendLine(@"  <label for=""" + noImageRadioId + @""">No image</label>");
+            output.AppendLine(@"</div>");
+
+            output.AppendLine(@"<div>");
+            output.AppendLine(@"  <input type=""radio"" id=""" + currentImageRadioId + @""" name=""" + hasImagePropertyName + @""" value=""true"" checked=""checked"">");
+            output.AppendLine(@"  <label for=""" + currentImageRadioId + @""">Current image:</label><br />");
+            output.AppendLine(@"</div>");
+        }
+        
         private static void RenderImage(StringBuilder output, string thumbnailPath, int maxThumbnailWidth)
         {
             output.AppendLine(@"<p>");
@@ -145,7 +162,7 @@ namespace MyToolkit.Html
                 output.AppendLine(@"  <img src=""" + thumbnailPath + @""" alt=""Thumbnail"" " +
                                         @" style=""max-width: " + maxThumbnailWidth + @"px; height: auto"" />");
             }
-
+            
             output.AppendLine(@"</p>");
         }
 

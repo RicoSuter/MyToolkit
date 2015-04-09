@@ -61,9 +61,12 @@ namespace MyToolkit.Html
         private static void RenderAddButton(StringBuilder output, string addButtonId, string addButtonTitle, object addButtonHtmlAttributes)
         {
             var inputTag = new TagBuilder("input");
-            inputTag.Attributes.Add("type", "button");
-            inputTag.Attributes.Add("value", addButtonTitle);
-            inputTag.Attributes.Add("id", addButtonId);
+            inputTag.MergeAttributes(new Dictionary<string, string> 
+            {
+                { "type", "button" },
+                { "value", addButtonTitle },
+                { "id", addButtonId },
+            });
             inputTag.MergeAttributes(new RouteValueDictionary(addButtonHtmlAttributes));
 
             output.AppendLine(@"<p>");
