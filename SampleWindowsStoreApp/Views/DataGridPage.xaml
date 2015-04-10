@@ -55,25 +55,23 @@
                                DefaultOrderIndex="1">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn Width="200" Header="Firstname" Binding="{Binding Firstname}"
-                                                 Style="{StaticResource BaselineTextStyle}" 
+                                                 Style="{StaticResource BaseTextBlockStyle}" 
                                                  d:DataContext="{d:DesignInstance Type=models:Person}" />
-                    <controls:DataGridTextColumn Width="200" Binding="{Binding Lastname}" 
-                                                 Style="{StaticResource BaselineTextStyle}" IsAscendingDefault="False"
+                    <controls:DataGridTextColumn Width="200" Binding="{Binding Lastname}" IsAscendingDefault="False"
                                                  d:DataContext="{d:DesignInstance Type=models:Person}">
                         <controls:DataGridTextColumn.Header>
                             <TextBlock Text="Lastname" Foreground="Green" />
                         </controls:DataGridTextColumn.Header>
                     </controls:DataGridTextColumn>
                     <controls:DataGridTextColumn Width="200" Header="Category" Binding="{Binding Category}" 
-                                                 Style="{StaticResource BaselineTextStyle}" 
                                                  d:DataContext="{d:DesignInstance Type=models:Person}" />
                 </controls:DataGrid.Columns>
                 <controls:DataGrid.ItemDetailsTemplate>
                     <DataTemplate>
                         <StackPanel Margin="10,10,10,5" d:DataContext="{d:DesignInstance Type=models:Person}">
-                            <TextBlock Text="Details: " Style="{StaticResource BaselineTextStyle}" FontWeight="Bold" />
-                            <TextBlock Text="{Binding Firstname}" Style="{StaticResource BaselineTextStyle}" />
-                            <TextBlock Text="{Binding Lastname}" Style="{StaticResource BaselineTextStyle}" />
+                            <TextBlock Text="Details: " FontWeight="Bold" />
+                            <TextBlock Text="{Binding Firstname}" />
+                            <TextBlock Text="{Binding Lastname}" />
                         </StackPanel>
                     </DataTemplate>
                 </controls:DataGrid.ItemDetailsTemplate>
