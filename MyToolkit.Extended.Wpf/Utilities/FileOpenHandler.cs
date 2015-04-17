@@ -46,7 +46,8 @@ namespace MyToolkit.Utilities
                         OnFileOpened(fileName);
 
                     ListenForFileOpenedPropagations(pipeName, cancelEvent);
-                } catch { }
+                }
+                catch { }
             });
             thread.Start();
 
@@ -125,7 +126,7 @@ namespace MyToolkit.Utilities
         {
             char ch;
             var fileName = "";
-            while ((ch = (char) server.ReadByte()) != 0)
+            while ((ch = (char)server.ReadByte()) != 0)
                 fileName += ch;
             return fileName;
         }
@@ -143,10 +144,13 @@ namespace MyToolkit.Utilities
 
                 if (Window.WindowState == WindowState.Minimized)
                     Window.WindowState = WindowState.Normal;
-                
-                var copy = FileOpen;
-                if (copy != null)
-                    copy(this, new FileOpenEventArgs { FileName = fileName });
+
+                Window.Dispatcher.InvokeAsync(() =>
+                {
+                    var copy = FileOpen;
+                    if (copy != null)
+                        copy(this, new FileOpenEventArgs { FileName = fileName });
+                });
             });
         }
     }
