@@ -123,6 +123,7 @@
                         </Grid>
                         <controls:MtListBox BorderThickness="0" Grid.Row="1" ItemContainerStyle="{TemplateBinding RowStyle}"
 											HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                            Foreground="{StaticResource ApplicationForegroundThemeBrush}"
 											Style="{StaticResource TransparentListBox}" Margin="0" x:Name="Rows" />
 					</Grid>
 				</ControlTemplate>
@@ -149,10 +150,8 @@
 		<Setter Property="CellTemplate">
 			<Setter.Value>
 				<DataTemplate>
-                    <Border Background="Red">
-                        <ContentPresenter Margin="10,0,0,5" Content="{Binding}" />
-                    </Border>
-				</DataTemplate>
+                    <ContentPresenter Margin="10,0,0,5" Content="{Binding}" />
+                </DataTemplate>
 			</Setter.Value>
 		</Setter>
 	</Style>
