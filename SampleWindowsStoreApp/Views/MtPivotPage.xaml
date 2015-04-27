@@ -48,7 +48,8 @@
                     <controls:MtPivot SelectedBrush="Blue" UnselectedBrush="Chartreuse">
                         <controls:MtPivot.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Header}" FontSize="36" FontWeight="Light" Margin="0,-10,20,20" />
+                                <TextBlock Text="{Binding Header}" FontSize="36" FontWeight="Light" Margin="0,-10,20,20"
+                                           d:DataContext="{d:DesignInstance controls:MtPivotItem}" />
                             </DataTemplate>
                         </controls:MtPivot.HeaderTemplate>
 
