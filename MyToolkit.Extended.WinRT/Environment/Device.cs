@@ -37,7 +37,7 @@ namespace MyToolkit.Environment
 			}
 		}
 
-        internal Type HardwareButtonsType
+        internal static Type HardwareButtonsType
         {
             get { return _hardwareButtonsType; }
         }
