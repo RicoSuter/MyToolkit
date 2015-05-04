@@ -37,7 +37,7 @@ namespace MyToolkit.Controls
         public DataGrid()
         {
             DefaultStyleKey = typeof(DataGrid);
-            Columns = new ObservableCollection<DataGridColumnBase>(); // Initialize collection so that columns can be defined in XAML
+            Columns = new DataGridColumnCollection(); // Initialize collection so that columns can be defined in XAML
 
             if (!Designer.IsInDesignMode)
                 Loaded += OnLoaded;
@@ -161,9 +161,9 @@ namespace MyToolkit.Controls
         }
 
         /// <summary>Gets the column description of the <see cref="DataGrid"/>. </summary>
-        public ObservableCollection<DataGridColumnBase> Columns
+        public DataGridColumnCollection Columns
         {
-            get { return (ObservableCollection<DataGridColumnBase>)GetValue(ColumnsProperty); }
+            get { return (DataGridColumnCollection)GetValue(ColumnsProperty); }
             set { SetValue(ColumnsProperty, value); }
         }
 

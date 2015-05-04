@@ -7,7 +7,6 @@
                xmlns:paging="using:MyToolkit.Paging"
                xmlns:viewModels="using:SampleWindowsStoreApp.ViewModels"
                xmlns:controls="using:MyToolkit.Controls"
-               xmlns:views="using:SampleWindowsStoreApp.Views"
                xmlns:models="using:SampleWindowsStoreApp.Models"
                mc:Ignorable="d">
 
@@ -39,7 +38,8 @@
                     AutomationProperties.Name="Back" AutomationProperties.AutomationId="BackButton" 
                     AutomationProperties.ItemType="Navigation Button"/>
 
-            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Windows 8 and MyToolkit Sample App" Margin="0,50,0,10" Grid.Column="1" />
+            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Windows 8 and MyToolkit Sample App" 
+                       Margin="0,50,0,10" Grid.Column="1" />
             <TextBlock Text="DataGrid" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" 
                        TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,100,0,0"/>
         </Grid>
@@ -55,7 +55,6 @@
                                DefaultOrderIndex="1">
                 <controls:DataGrid.Columns>
                     <controls:DataGridTextColumn Width="200" Header="Firstname" Binding="{Binding Firstname}"
-                                                 Style="{StaticResource BaseTextBlockStyle}" 
                                                  d:DataContext="{d:DesignInstance Type=models:Person}" />
                     <controls:DataGridTextColumn Width="200" Binding="{Binding Lastname}" IsAscendingDefault="False"
                                                  d:DataContext="{d:DesignInstance Type=models:Person}">
