@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using MyToolkit.Environment;
 
 namespace MyToolkit.Paging
 {
@@ -47,7 +48,7 @@ namespace MyToolkit.Paging
 
             DefaultStyleKey = typeof(MtFrame);
 
-            if (NavigationKeyHandler.IsRunningOnPhone)
+            if (Device.HasHardwareBackKey)
             {
                 DisableForwardStack = true;
                 PageAnimation = new TurnstilePageAnimation();

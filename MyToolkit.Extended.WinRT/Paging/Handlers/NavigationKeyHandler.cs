@@ -11,11 +11,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using MyToolkit.Environment;
 using MyToolkit.Input;
 using MyToolkit.UI;
 
@@ -23,16 +25,7 @@ namespace MyToolkit.Paging.Handlers
 {
     public class NavigationKeyHandler
     {
-        private static readonly Type _hardwareButtonsType;
         private static BackKeyPressedHandler _handler;
-
-        static NavigationKeyHandler()
-        {
-            _hardwareButtonsType = Type.GetType(
-                "Windows.Phone.UI.Input.HardwareButtons, " +
-                "Windows, Version=255.255.255.255, Culture=neutral, " +
-                "PublicKeyToken=null, ContentType=WindowsRuntime");
-        }
 
         private readonly MtPage _page;
         private readonly List<Func<CancelEventArgs, Task>> _goBackActions;
@@ -47,12 +40,6 @@ namespace MyToolkit.Paging.Handlers
 
             page.Loaded += OnPageLoaded;
             page.Unloaded += OnPageUnloaded;
-        }
-
-        /// <summary>Gets a value indicating whether the application is running on a Windows Phone. </summary>
-        public static bool IsRunningOnPhone
-        {
-            get { return _hardwareButtonsType != null; }
         }
 
         public Func<CancelEventArgs, Task> AddGoBackHandler(Action<CancelEventArgs> action)
@@ -80,7 +67,7 @@ namespace MyToolkit.Paging.Handlers
         private void OnPageLoaded(object sender, RoutedEventArgs e)
         {
             var page = (MtPage)sender;
-            if (IsRunningOnPhone)
+            if (Device.HasHardwareBackKey)
             {
                 if (_handler == null)
                     _handler = new BackKeyPressedHandler();
@@ -101,7 +88,7 @@ namespace MyToolkit.Paging.Handlers
         private void OnPageUnloaded(object sender, RoutedEventArgs e)
         {
             var page = (MtPage)sender;
-            if (IsRunningOnPhone)
+            if (Device.HasHardwareBackKey)
                 _handler.Remove(page);
             else
             {

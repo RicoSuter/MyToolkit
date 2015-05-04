@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using MyToolkit.Events;
-using MyToolkit.Utilities;
 
 namespace MyToolkit.Paging.Handlers
 {
@@ -11,17 +10,16 @@ namespace MyToolkit.Paging.Handlers
     public class BackKeyPressedHandler
     {
         private Type _hardwareButtonsType = null;
+        private object _registrationToken;
+        private bool _isEventRegistered = false;
 
         private readonly List<Tuple<MtPage, Func<object, bool>>> _handlers;
-        private object _registrationToken;
-
-        private bool _isEventRegistered = false;
 
         public BackKeyPressedHandler()
         {
             _handlers = new List<Tuple<MtPage, Func<object, bool>>>();
         }
-
+        
         /// <summary>Adds a back key handler for a given page. </summary>
         /// <param name="page">The page. </param>
         /// <param name="handler">The handler. </param>
@@ -29,6 +27,9 @@ namespace MyToolkit.Paging.Handlers
         {
             if (!_isEventRegistered)
             {
+#if WINDOWS_UAP_UNUSED
+                HardwareButtons.BackPressed += OnBackKeyPressed;
+#else
                 if (_hardwareButtonsType == null)
                 {
                     _hardwareButtonsType = Type.GetType(
@@ -38,6 +39,7 @@ namespace MyToolkit.Paging.Handlers
                 }
 
                 _registrationToken = EventUtilities.RegisterStaticEvent(_hardwareButtonsType, "BackPressed", OnBackKeyPressed);
+#endif
                 _isEventRegistered = true;
             }
 
@@ -52,20 +54,31 @@ namespace MyToolkit.Paging.Handlers
 
             if (_handlers.Count == 0)
             {
+#if WINDOWS_UAP_UNUSED
+                HardwareButtons.BackPressed -= OnBackKeyPressed;
+#else
                 EventUtilities.DeregisterStaticEvent(_hardwareButtonsType, "BackPressed", _registrationToken);
+#endif
                 _isEventRegistered = false; 
             }
         }
 
-        private void OnBackKeyPressed(object sender, dynamic args)
+#if WINDOWS_UAP_UNUSED
+        private void OnBackKeyPressed(object sender, BackPressedEventArgs args)
+#else
+        private void OnBackKeyPressed(object sender, object args)
+#endif
         {
-            if (args.Handled)
+            var property = args.GetType().GetRuntimeProperty("Handled");
+            var handled = (bool)property.GetValue(args);
+            if (handled)
                 return;
 
             foreach (var item in _handlers)
             {
-                args.Handled = item.Item2(sender);
-                if (args.Handled)
+                handled = item.Item2(sender);
+                property.SetValue(args, handled);
+                if (handled)
                     return;
             }
         }
