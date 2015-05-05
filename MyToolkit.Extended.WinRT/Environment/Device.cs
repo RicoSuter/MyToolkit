@@ -1,10 +1,21 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using Windows.Foundation.Metadata;
 using Windows.Networking.Connectivity;
 
 namespace MyToolkit.Environment
 {
 	public class Device
 	{
+        static Device()
+        {
+            _hardwareButtonsType = Type.GetType(
+                "Windows.Phone.UI.Input.HardwareButtons, " +
+                "Windows, Version=255.255.255.255, Culture=neutral, " +
+                "PublicKeyToken=null, ContentType=WindowsRuntime");
+        }
+
+        private static readonly Type _hardwareButtonsType;
         private static string _deviceId;
 
         /// <summary>
@@ -25,5 +36,20 @@ namespace MyToolkit.Environment
 				return _deviceId;
 			}
 		}
-	}
+
+        internal static Type HardwareButtonsType
+        {
+            get { return _hardwareButtonsType; }
+        }
+
+        /// <summary>Gets a value indicating whether the current device has a hardware back key. </summary>
+        public static bool HasHardwareBackKey
+        {
+#if WINDOWS_UAP
+            get { return ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"); }
+#else
+            get { return HardwareButtonsType != null; }
+#endif
+        }
+    }
 }

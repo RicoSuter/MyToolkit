@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{6D65D0E8-1C50-4CED-B77C-A0B75B441085}"
 	ProjectSection(SolutionItems) = preProject
@@ -51,6 +51,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{66E02D31-BCF3-4C82-AACF-28131C0B68E6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.AspNet.Mvc", "MyToolkit.AspNet.Mvc\MyToolkit.AspNet.Mvc.csproj", "{9FCFE823-C423-46CE-9BCE-85E2B86C3CD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit.Extended.Uwp", "MyToolkit.Extended.WinRT\MyToolkit.Extended.Uwp.csproj", "{28CDF611-02D2-474C-AC37-616024CAF0C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -368,6 +370,26 @@ Global
 		{9FCFE823-C423-46CE-9BCE-85E2B86C3CD9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9FCFE823-C423-46CE-9BCE-85E2B86C3CD9}.Release|x64.ActiveCfg = Release|Any CPU
 		{9FCFE823-C423-46CE-9BCE-85E2B86C3CD9}.Release|x86.ActiveCfg = Release|Any CPU
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Debug|ARM.ActiveCfg = Debug|ARM
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Debug|ARM.Build.0 = Debug|ARM
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Debug|x64.ActiveCfg = Debug|x64
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Debug|x64.Build.0 = Debug|x64
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Debug|x86.ActiveCfg = Debug|x86
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Debug|x86.Build.0 = Debug|x86
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Release|Any CPU.ActiveCfg = Release|x86
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Release|Any CPU.Build.0 = Release|x86
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Release|ARM.ActiveCfg = Release|ARM
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Release|ARM.Build.0 = Release|ARM
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Release|Mixed Platforms.Build.0 = Release|x86
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Release|x64.ActiveCfg = Release|x64
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Release|x64.Build.0 = Release|x64
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Release|x86.ActiveCfg = Release|x86
+		{28CDF611-02D2-474C-AC37-616024CAF0C1}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -390,5 +412,6 @@ Global
 		{7F59F752-ACD0-45AB-ABA6-862B5D68744F} = {66E02D31-BCF3-4C82-AACF-28131C0B68E6}
 		{EA79869F-6B69-4B35-A1F0-270BB31013E5} = {66E02D31-BCF3-4C82-AACF-28131C0B68E6}
 		{9FCFE823-C423-46CE-9BCE-85E2B86C3CD9} = {FE43777F-253C-4927-97CC-43ECDFA2D440}
+		{28CDF611-02D2-474C-AC37-616024CAF0C1} = {FE43777F-253C-4927-97CC-43ECDFA2D440}
 	EndGlobalSection
 EndGlobal
