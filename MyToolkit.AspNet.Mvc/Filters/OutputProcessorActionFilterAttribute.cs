@@ -65,10 +65,8 @@ namespace MyToolkit.Filters
                 {
                     writer.Write(_processor(_data.ToString()));
                     writer.Flush();
-
-                    _stream.Close();
-                    _data.Clear();
                 }
+                _data.Clear();
             }
 
             public override void Flush()
