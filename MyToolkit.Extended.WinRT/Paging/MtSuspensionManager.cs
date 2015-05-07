@@ -8,149 +8,128 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Navigation;
 
 namespace MyToolkit.Paging
 {
     /// <summary>Stores and loads global session state for application life cycle management. </summary>
     public sealed class MtSuspensionManager
     {
-        private const string SessionStateFilename = "_sessionState.xml";
+        private const string ApplicationStateFilename = "MtSuspensionManager_ApplicationState.xml";
 
+        private static readonly object _lock = new object();
+        private static readonly List<WeakReference<MtSuspensionManager>> _managers = new List<WeakReference<MtSuspensionManager>>();
         private static readonly HashSet<Type> _knownTypes = new HashSet<Type>();
-        private static Dictionary<string, object> _sessionState = new Dictionary<string, object>();
+        private static Dictionary<string, Dictionary<string, object>> _applicationState = new Dictionary<string, Dictionary<string, object>>();
 
-        private static readonly List<WeakReference<MtFrame>> _registeredFrames = new List<WeakReference<MtFrame>>();
-
-        /// <summary>Gets the session state for the current session. 
-        /// The objects must be serializable with the <see cref="DataContractSerializer"/> 
-        /// and the types provided in <see cref="KnownTypes"/>. </summary>
-        public static Dictionary<string, object> SessionState
+        private readonly MtFrame _frame;
+        private readonly string _sessionStateKey;
+        
+        public MtSuspensionManager(MtFrame frame, string sessionStateKey)
         {
-            get { return _sessionState; }
+            _frame = frame;
+            _sessionStateKey = sessionStateKey;
+
+            AddManager(this);
+            Restore();
         }
 
         /// <summary>Gets a list of known types for the <see cref="DataContractSerializer"/> 
         /// to serialize the <see cref="SessionState"/>. </summary>
-        public static HashSet<Type> KnownTypes
+        public static Type[] KnownTypes
         {
-            get { return _knownTypes; }
+            get { return _knownTypes.ToArray(); }
         }
 
-        /// <summary>Saves the current session state. </summary>
-        public static async Task SaveAsync()
+        /// <summary>Gets the session state for the current session. 
+        /// The objects must be serializable with the <see cref="DataContractSerializer"/> 
+        /// and the types provided in <see cref="KnownTypes"/>. </summary>
+        public Dictionary<string, object> SessionState
         {
-            foreach (var weakFrameReference in _registeredFrames)
+            get
             {
-                MtFrame frame;
-                if (weakFrameReference.TryGetTarget(out frame))
-                    SaveFrameNavigationState(frame);
+                lock (_lock)
+                {
+                    if (!_applicationState.ContainsKey(_sessionStateKey))
+                        _applicationState[_sessionStateKey] = new Dictionary<string, object>();
+                    return _applicationState[_sessionStateKey]; 
+                }
             }
+            set { _applicationState[_sessionStateKey] = value; }
+        }
 
-            var sessionData = new MemoryStream();
-            var serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
-            serializer.WriteObject(sessionData, _sessionState);
+        public static void AddKnownType(Type type)
+        {
+            _knownTypes.Add(type);
+        }
 
-            var folder = ApplicationData.Current.LocalFolder; 
-            var file = await folder.CreateFileAsync(SessionStateFilename, CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteBufferAsync(file, sessionData.GetWindowsRuntimeBuffer());
+        private void Save()
+        {
+            SessionState["Navigation"] = _frame.GetNavigationState();
+        }
+
+        private void Restore()
+        {
+            if (SessionState.ContainsKey("Navigation"))
+                _frame.SetNavigationState((String)SessionState["Navigation"]);
         }
 
         /// <summary>Restores the previously stored session state. </summary>
         public static async Task RestoreAsync()
         {
             var folder = ApplicationData.Current.LocalFolder;
-            using (var stream = await folder.OpenStreamForReadAsync(SessionStateFilename))
+            using (var stream = await folder.OpenStreamForReadAsync(ApplicationStateFilename))
             {
                 var serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
-                _sessionState = (Dictionary<string, object>)serializer.ReadObject(stream);    
+                _applicationState = (Dictionary<string, Dictionary<string, object>>)serializer.ReadObject(stream);
             }
-            
-            foreach (var weakFrameReference in _registeredFrames)
+
+            foreach (var manager in GetSuspensionManagerEnumerator())
+                manager.Restore();
+        }
+
+        public static async Task SaveAsync()
+        {
+            foreach (var manager in GetSuspensionManagerEnumerator())
+                manager.Save();
+
+            var stream = new MemoryStream();
+            var serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
+            serializer.WriteObject(stream, _applicationState);
+
+            var folder = ApplicationData.Current.LocalFolder;
+            var file = await folder.CreateFileAsync(ApplicationStateFilename, CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteBufferAsync(file, stream.GetWindowsRuntimeBuffer());
+        }
+
+        private static void AddManager(MtSuspensionManager addedManager)
+        {
+            lock (_lock)
+                _managers.Add(new WeakReference<MtSuspensionManager>(addedManager));
+        }
+
+        private static List<MtSuspensionManager> GetSuspensionManagerEnumerator()
+        {
+            var managers = new List<MtSuspensionManager>();
+            lock (_lock)
             {
-                MtFrame frame;
-                if (weakFrameReference.TryGetTarget(out frame))
+                foreach (var reference in _managers.ToArray())
                 {
-                    frame.ClearValue(FrameSessionStateProperty);
-                    RestoreFrameNavigationState(frame);
+                    MtSuspensionManager manager;
+                    if (reference.TryGetTarget(out manager))
+                        managers.Add(manager);
+                    else
+                        _managers.Remove(reference);
                 }
             }
-        }
-
-        private static readonly DependencyProperty FrameSessionStateKeyProperty =
-            DependencyProperty.RegisterAttached("_FrameSessionStateKey", typeof(String), typeof(MtSuspensionManager), null);
-
-        private static readonly DependencyProperty FrameSessionStateProperty =
-            DependencyProperty.RegisterAttached("_FrameSessionState", typeof(Dictionary<String, Object>), typeof(MtSuspensionManager), null);
-        
-        /// <summary>Registers a frame so that its navigation state can be saved and restored. </summary>
-        /// <param name="frame">The frame. </param>
-        /// <param name="sessionStateKey">The session state key. </param>
-        public static void RegisterFrame(MtFrame frame, String sessionStateKey)
-        {
-            if (frame.GetValue(FrameSessionStateKeyProperty) != null)
-                throw new InvalidOperationException("Frames can only be registered to one session state key");
-
-            if (frame.GetValue(FrameSessionStateProperty) != null)
-                throw new InvalidOperationException("Frames must be either be registered before accessing frame session state, or not registered at all");
-
-            frame.SetValue(FrameSessionStateKeyProperty, sessionStateKey);
-            _registeredFrames.Add(new WeakReference<MtFrame>(frame));
-
-            RestoreFrameNavigationState(frame);
-        }
-
-        /// <summary>Deregisters a frame. </summary>
-        /// <param name="frame">The frame. </param>
-        public static void DeregisterFrame(MtFrame frame)
-        {
-            SessionState.Remove((String)frame.GetValue(FrameSessionStateKeyProperty));
-            _registeredFrames.RemoveAll((weakFrameReference) =>
-            {
-                MtFrame testFrame;
-                return !weakFrameReference.TryGetTarget(out testFrame) || testFrame == frame;
-            });
-        }
-
-        /// <summary>Gets the session state for a given frame. </summary>
-        /// <param name="frame">The frame. </param>
-        /// <returns>The session state. </returns>
-        public static Dictionary<String, Object> SessionStateForFrame(MtFrame frame)
-        {
-            var frameState = (Dictionary<String, Object>)frame.GetValue(FrameSessionStateProperty);
-            if (frameState == null)
-            {
-                var frameSessionKey = (String)frame.GetValue(FrameSessionStateKeyProperty);
-                if (frameSessionKey != null)
-                {
-                    if (!_sessionState.ContainsKey(frameSessionKey))
-                        _sessionState[frameSessionKey] = new Dictionary<String, Object>();
-                    frameState = (Dictionary<String, Object>)_sessionState[frameSessionKey];
-                }
-                else
-                    frameState = new Dictionary<String, Object>();
-                frame.SetValue(FrameSessionStateProperty, frameState);
-            }
-            return frameState;
-        }
-
-        private static void RestoreFrameNavigationState(MtFrame frame)
-        {
-            var frameState = SessionStateForFrame(frame);
-            if (frameState.ContainsKey("Navigation"))
-                frame.SetNavigationState((String)frameState["Navigation"]);
-        }
-
-        private static void SaveFrameNavigationState(MtFrame frame)
-        {
-            var frameState = SessionStateForFrame(frame);
-            frameState["Navigation"] = frame.GetNavigationState();
+            return managers;
         }
     }
 }

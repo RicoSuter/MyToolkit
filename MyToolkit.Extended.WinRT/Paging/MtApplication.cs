@@ -8,6 +8,8 @@ namespace MyToolkit.Paging
 {
     public abstract class MtApplication : Application
     {
+        private UIElement _rootElement;
+
         /// <summary>Initializes a new instance of the <see cref="MtApplication"/> class. </summary>
         protected MtApplication()
         {
@@ -17,7 +19,7 @@ namespace MyToolkit.Paging
         /// <summary>Gets the type of the start page (first page when launching application). </summary>
         public abstract Type StartPageType { get; }
 
-        /// <summary>Called when a new instance of the application has been created. </summary>
+        /// <summary>Called when a new instance of the <see cref="MtFrame"/> as application root has been created. </summary>
         /// <param name="frame">The frame. </param>
         /// <param name="args">The launch arguments.</param>
         public virtual Task OnInitializedAsync(MtFrame frame, ApplicationExecutionState args)
@@ -25,11 +27,19 @@ namespace MyToolkit.Paging
             return null; // Must be empty
         }
 
+        /// <summary>Called when a new instance of the <see cref="UIElement"/> as application root has been created. </summary>
+        /// <param name="frame">The frame. </param>
+        /// <param name="args">The launch arguments.</param>
+        public virtual Task OnInitializedAsync(UIElement frame, ApplicationExecutionState args)
+        {
+            return null; // Must be empty
+        }
+
         /// <summary>Creates the root frame. </summary>
         /// <returns>The root frame. </returns>
-        public virtual MtFrame CreateFrame()
+        public virtual UIElement CreateFrame()
         {
-            return new MtFrame();
+            return new MtFrame("AppFrame");
         }
 
         /// <summary>
@@ -49,41 +59,38 @@ namespace MyToolkit.Paging
         /// <returns>The task. </returns>
         protected async Task InitializeFrameAsync(ApplicationExecutionState executionState)
         {
-            var rootFrame = Window.Current.Content as MtFrame;
-            if (rootFrame == null)
+            _rootElement = Window.Current.Content as MtFrame;
+            if (_rootElement == null)
             {
-                rootFrame = CreateFrame();
+                _rootElement = CreateFrame();
 
-                MtSuspensionManager.RegisterFrame(rootFrame, "AppFrame");
                 if (executionState == ApplicationExecutionState.Terminated)
-                    await RestoreStateAsync();
+                    await MtSuspensionManager.RestoreAsync(); 
 
-                var task = OnInitializedAsync(rootFrame, executionState);
-                if (task != null)
-                    await task;
+                var frame = _rootElement as MtFrame;
+                if (frame != null)
+                {
+                    var task = OnInitializedAsync(frame, executionState);
+                    if (task != null)
+                        await task;
+                }
 
-                Window.Current.Content = rootFrame;
+                var task2 = OnInitializedAsync(_rootElement, executionState);
+                if (task2 != null)
+                    await task2;
+
+                Window.Current.Content = _rootElement;
             }
 
-            if (rootFrame.Content == null)
-                rootFrame.Initialize(StartPageType);
-            
+            if (_rootElement is MtFrame)
+            {
+                if (((MtFrame)_rootElement).Content == null)
+                    ((MtFrame)_rootElement).Initialize(StartPageType);
+            }
+
             Window.Current.Activate();
         }
-
-        /// <summary>Restores the saved page states using the <see cref="MtSuspensionManager"/>. </summary>
-        /// <returns>The task. </returns>
-        protected virtual async Task RestoreStateAsync()
-        {
-            try
-            {
-                await MtSuspensionManager.RestoreAsync();
-            }
-            catch
-            {
-            }
-        }
-
+        
         /// <summary>Loads the saved page states using the <see cref="MtSuspensionManager"/>. </summary>
         /// <returns>The task. </returns>
         protected virtual async Task SaveStateAsync()

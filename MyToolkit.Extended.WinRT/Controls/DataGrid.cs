@@ -95,7 +95,7 @@ namespace MyToolkit.Controls
             DependencyProperty.Register("CellTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
 
         public static readonly DependencyProperty ColumnsProperty = DependencyProperty.RegisterAttached("Columns",
-            typeof(ObservableCollection<DataGridColumnBase>), typeof(DataGrid), new PropertyMetadata(null, OnColumnsPropertyChanged));
+            typeof(DataGridColumnCollection), typeof(DataGrid), new PropertyMetadata(null, OnColumnsPropertyChanged));
 
         /// <summary>Gets or sets the header background. </summary>
         public Brush HeaderBackground
