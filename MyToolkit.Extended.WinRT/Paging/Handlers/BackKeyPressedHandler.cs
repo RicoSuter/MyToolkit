@@ -27,9 +27,6 @@ namespace MyToolkit.Paging.Handlers
         {
             if (!_isEventRegistered)
             {
-#if WINDOWS_UAP_UNUSED
-                HardwareButtons.BackPressed += OnBackKeyPressed;
-#else
                 if (_hardwareButtonsType == null)
                 {
                     _hardwareButtonsType = Type.GetType(
@@ -39,7 +36,6 @@ namespace MyToolkit.Paging.Handlers
                 }
 
                 _registrationToken = EventUtilities.RegisterStaticEvent(_hardwareButtonsType, "BackPressed", OnBackKeyPressed);
-#endif
                 _isEventRegistered = true;
             }
 
@@ -54,20 +50,12 @@ namespace MyToolkit.Paging.Handlers
 
             if (_handlers.Count == 0)
             {
-#if WINDOWS_UAP_UNUSED
-                HardwareButtons.BackPressed -= OnBackKeyPressed;
-#else
                 EventUtilities.DeregisterStaticEvent(_hardwareButtonsType, "BackPressed", _registrationToken);
-#endif
                 _isEventRegistered = false; 
             }
         }
-
-#if WINDOWS_UAP_UNUSED
-        private void OnBackKeyPressed(object sender, BackPressedEventArgs args)
-#else
+        
         private void OnBackKeyPressed(object sender, object args)
-#endif
         {
             var property = args.GetType().GetRuntimeProperty("Handled");
             var handled = (bool)property.GetValue(args);
