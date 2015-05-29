@@ -77,6 +77,7 @@
     <Compile Include="Composition\AspNetMvcControllerFactory.cs" />
     <Compile Include="Composition\AspNetMvcDependencyResolver.cs" />
     <Compile Include="Filters\OutputProcessorActionFilterAttribute.cs" />
+    <Compile Include="Filters\OutputProcessorStream.cs" />
     <Compile Include="Html\Bootstrap.cs" />
     <Compile Include="Html\CollectionEditorExtensions.cs" />
     <Compile Include="Html\ImageUploadExtensions.cs" />

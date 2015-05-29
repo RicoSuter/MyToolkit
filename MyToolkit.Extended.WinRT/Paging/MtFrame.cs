@@ -11,15 +11,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using MyToolkit.Command;
+using MyToolkit.Paging.Animations;
+using MyToolkit.Paging.Handlers;
+using MyToolkit.Serialization;
+using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
-using Windows.UI.Xaml.Navigation;
-using MyToolkit.Command;
 using MyToolkit.Environment;
-using MyToolkit.Paging.Animations;
-using MyToolkit.Serialization;
 
 namespace MyToolkit.Paging
 {
@@ -31,15 +32,8 @@ namespace MyToolkit.Paging
         private int _currentIndex = -1;
         private List<MtPageDescription> _pages = new List<MtPageDescription>();
 
-        internal MtSuspensionManager SuspensionManager { get; private set; }
-
         /// <summary>Initializes a new instance of the <see cref="MtFrame"/> class. </summary>
-        public MtFrame() : this("GenericAppFrame")
-        {
-        }
-
-        /// <summary>Initializes a new instance of the <see cref="MtFrame"/> class. </summary>
-        public MtFrame(string frameId)
+        public MtFrame()
         {
             HorizontalContentAlignment = HorizontalAlignment.Stretch;
             VerticalContentAlignment = VerticalAlignment.Stretch;
@@ -61,8 +55,6 @@ namespace MyToolkit.Paging
             }
             else
                 DisableForwardStack = false;
-
-            SuspensionManager = new MtSuspensionManager(this, frameId);
         }
 
         public static readonly DependencyProperty ContentProperty = DependencyProperty.Register(
@@ -344,7 +336,7 @@ namespace MyToolkit.Paging
         /// <param name="data">The data. </param>
         public void SetNavigationState(string data)
         {
-            var frameDescription = DataContractSerialization.Deserialize<MtFrameDescription>(data, MtSuspensionManager.KnownTypes);
+            var frameDescription = DataContractSerialization.Deserialize<MtFrameDescription>(data, MtSuspensionManager.KnownTypes.ToArray());
 
             _pages = frameDescription.PageStack;
             _currentIndex = frameDescription.PageIndex;
@@ -380,7 +372,7 @@ namespace MyToolkit.Paging
 
             var output = DataContractSerialization.Serialize(
                 new MtFrameDescription { PageIndex = currentIndexToSerialize, PageStack = pagesToSerialize },
-                true, MtSuspensionManager.KnownTypes);
+                true, MtSuspensionManager.KnownTypes.ToArray());
 
             return output;
         }

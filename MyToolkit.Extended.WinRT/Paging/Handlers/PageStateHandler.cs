@@ -23,7 +23,7 @@ namespace MyToolkit.Paging.Handlers
             if (PageKey != null) // new instance
                 return;
 
-            var frameState = _page.Frame.SuspensionManager.SessionState;
+            var frameState = MtSuspensionManager.SessionStateForFrame(_page.Frame);
             PageKey = "Page" + _page.Frame.BackStackDepth;
 
             if (e.NavigationMode == NavigationMode.New)
@@ -36,7 +36,15 @@ namespace MyToolkit.Paging.Handlers
                     nextPageKey = "Page" + nextPageIndex;
                 }
 
+                // Does not make sense when no page state is available...
+                //var args = new MtLoadStateEventArgs(e.Parameter, null);
+
+                //var copy = LoadState;
+                //if (copy != null)
+                //    copy(this, args);
+
                 _page.LoadState(e.Parameter, null);
+                //_page.OnLoadState(args);
             }
             else
             {
@@ -54,7 +62,7 @@ namespace MyToolkit.Paging.Handlers
 
         public void OnNavigatedFrom(MtNavigationEventArgs e)
         {
-            var frameState = _page.Frame.SuspensionManager.SessionState;
+            var frameState = MtSuspensionManager.SessionStateForFrame(_page.Frame);
             var pageState = new Dictionary<String, Object>();
             var args = new MtSaveStateEventArgs(pageState);
 

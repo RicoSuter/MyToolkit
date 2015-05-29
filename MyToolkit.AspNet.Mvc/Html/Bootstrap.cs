@@ -13,6 +13,7 @@ using System.Web.Routing;
 
 namespace MyToolkit.Html
 {
+    /// <summary>Provides helper methods to generate HTML tags for Bootstrap.</summary>
     public static class Bootstrap
     {
         /// <summary>Creates the pagination bootstrap component.</summary>
