@@ -17,8 +17,6 @@ If you have found some bugs or have other comments, feel free to send me an e-ma
 
 Check my blog for other programming stuff: <http://blog.rsuter.com>
 
-**This is a project which changes rapidly. It is possible that the behavior of classes or APIs change without notice. I don't have the resources to maintain a change log and guarantee backward compatibility.**
-
 ## Solutions
 
 - MyToolkit.sln
