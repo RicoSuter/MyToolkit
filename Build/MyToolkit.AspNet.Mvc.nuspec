@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0"?>
 <package >
-    <metadata>
-        <id>MyToolkit.AspNet.Mvc</id>
-        <version>2.3.30.0</version>
-        <title>MyToolkit.AspNet.Mvc</title>
-        <authors>Rico Suter</authors>
-        <owners>Rico Suter</owners>
-        <projectUrl>https://mytoolkit.codeplex.com</projectUrl>
-        <licenseUrl>https://mytoolkit.codeplex.com/license</licenseUrl>
-        <description>MyToolkit is a set of .NET libraries containing lots of useful classes for various .NET platforms like WinRT, Windows Phone, WPF and Silverlight. </description>
-        <releaseNotes/>
-        <iconUrl>http://rsuter.com/Projects/MyToolkit/NuGetIcon.png</iconUrl>
-        <dependencies>
-            <group>
-                <dependency id="MyToolkit" version="2.3.30.0" />
-            </group>
-        </dependencies>
-    </metadata>
-    <files>
-        <file src="..\- Output\MyToolkit.AspNet.Mvc\MyToolkit.AspNetMvc.dll" target="lib\net45\MyToolkit.AspNetMvc.dll" />
-        <file src="..\- Output\MyToolkit.AspNet.Mvc\MyToolkit.AspNetMvc.xml" target="lib\net45\MyToolkit.AspNetMvc.xml" />
-    </files>
+  <metadata>
+    <id>MyToolkit.AspNet.Mvc</id>
+    <version>2.3.30.0</version>
+    <title>MyToolkit.AspNet.Mvc</title>
+    <authors>Rico Suter</authors>
+    <owners>Rico Suter</owners>
+    <projectUrl>https://github.com/MyToolkit/Core</projectUrl>
+    <licenseUrl>https://github.com/MyToolkit/Core/blob/master/README.md</licenseUrl>
+    <description>MyToolkit is a set of .NET libraries containing lots of useful classes for various .NET platforms like WinRT, Windows Phone, WPF and Silverlight. </description>
+    <releaseNotes/>
+    <iconUrl>http://rsuter.com/Projects/MyToolkit/NuGetIcon.png</iconUrl>
+    <dependencies>
+      <group>
+        <dependency id="MyToolkit" version="2.3.30.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\- Output\MyToolkit.AspNet.Mvc\MyToolkit.AspNetMvc.dll" target="lib\net45\MyToolkit.AspNetMvc.dll" />
+    <file src="..\- Output\MyToolkit.AspNet.Mvc\MyToolkit.AspNetMvc.xml" target="lib\net45\MyToolkit.AspNetMvc.xml" />
+  </files>
 </package>
