@@ -11,7 +11,7 @@ MyToolkit is a set of .NET libraries containing lots of useful classes for vario
 
 **Coming soon: Full support for the Universal Windows Platform (Windows 10)**
 
-## [Available classes and components](TODO)
+[Available classes and components](TODO)
 
 If you have found some bugs or have other comments, feel free to send me an e-mail (can be found on <http://rsuter.com>). This library is free to use and if you use it, please put a link to this GitHub site in the source code or your application. 
 
