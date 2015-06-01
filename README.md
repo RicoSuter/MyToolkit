@@ -13,9 +13,9 @@ MyToolkit is a set of .NET libraries containing lots of useful classes for vario
 
 [Available classes and components](TODO)
 
-If you have found some bugs or have other comments, feel free to send me an e-mail (can be found on <http://rsuter.com>). This library is free to use and if you use it, please put a link to this GitHub site in the source code or your application. 
+If you have found some bugs or have other comments, feel free to send me an E-Mail or create a GitHub issue. The MyToolkit library is free to use. Please put a link to this GitHub site in the source code or your application. 
 
-Check my blog for other programming stuff: <http://blog.rsuter.com>
+Check my blog for other programming stuff on my website at <http://blog.rsuter.com>. 
 
 ## Solutions
 
