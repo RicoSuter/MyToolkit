@@ -21,11 +21,11 @@ Check my blog for other programming stuff on my website at <http://blog.rsuter.c
 
 **MyToolkit.sln**
 
-    - Contains the projects for Windows 8.1, Windows Phone 8.1, Windows Phone Silverlight 8.0, WPF and Web
+- Contains the projects for Windows 8.1, Windows Phone 8.1, Windows Phone Silverlight 8.0, WPF and Web
     
 **MyToolkit.VS2012.sln**
 
-    - Contains the projects for Windows Phone 7 and Silverlight 5
+- Contains the projects for Windows Phone 7 and Silverlight 5
 
 ## Installation
 
