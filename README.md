@@ -76,5 +76,3 @@ List with some sample projects which use the MyToolkit libraries:
 MyToolkit is a free project that is developed in spare time. You can show your appreciation for MyToolkit and support future development by donating.
 
 [Donate with PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2P7BJZSVJPQWQ)
-
-This project is developed and maintained by [Rico Suter](http://rsuter.com/). 
