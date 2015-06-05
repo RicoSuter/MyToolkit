@@ -15,7 +15,7 @@ MyToolkit is a set of .NET libraries containing lots of useful classes for vario
 
 (This project has originally been hosted on [CodePlex](http://mytoolkit.codeplex.com))
 
-If you found some bugs or have other comments, please create a Pull Request, send me an E-Mail or create a GitHub issue. The MyToolkit library is free to use. Please put a link to this GitHub site in the source code or your application. 
+If you found some bugs or have other comments, please create a Pull Request or GitHub issue. The library is free to use, but please put a link to this GitHub site in the source code or your application. 
 
 Check my blog for other programming stuff on my website at <http://blog.rsuter.com>. 
 
