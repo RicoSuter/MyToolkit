@@ -45,3 +45,7 @@
 /MyToolkit.VS2012.sln.GhostDoc.xml
 /MyToolkit.sln.ide
 *.psess
+/Source/MyToolkit.Tests.WinRT/AppPackages
+/Source/SampleUniversalPhoneApp/AppPackages
+/Source/SampleWindowsStoreApp/AppPackages
+/Source/SampleWindowsStoreApp/BundleArtifacts
