@@ -18,7 +18,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\- Output\MyToolkit.AspNet.Mvc\MyToolkit.AspNetMvc.dll" target="lib\net45\MyToolkit.AspNetMvc.dll" />
-    <file src="..\- Output\MyToolkit.AspNet.Mvc\MyToolkit.AspNetMvc.xml" target="lib\net45\MyToolkit.AspNetMvc.xml" />
+    <file src="..\Output\MyToolkit.AspNet.Mvc\MyToolkit.AspNetMvc.dll" target="lib\net45\MyToolkit.AspNetMvc.dll" />
+    <file src="..\Output\MyToolkit.AspNet.Mvc\MyToolkit.AspNetMvc.xml" target="lib\net45\MyToolkit.AspNetMvc.xml" />
   </files>
 </package>

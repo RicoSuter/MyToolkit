@@ -1,0 +1,2227 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyToolkit</name>
+    </assembly>
+    <members>
+        <member name="T:MyToolkit.Collections.AlphaGroupCollection`1">
+            <summary>Groups a set of objects alphabetically (using the ToString() method). </summary>
+            <typeparam name="T">The item type. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Collections.AlphaGroupCollection`1.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.AlphaGroupCollection`1"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.AlphaGroupCollection`1.Initialize(System.Collections.Generic.IEnumerable{`0})">
+            <summary>Initializes the group with a list of items. </summary>
+            <param name="items">The items. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.AlphaGroupCollection`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>Adds multiple items to the group. </summary>
+            <param name="items">The items. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.AlphaGroupCollection`1.Add(`0)">
+            <summary>Adds an item to the group. </summary>
+            <param name="item">The item. </param>
+        </member>
+        <member name="E:MyToolkit.Collections.AlphaGroupCollection`1.CollectionChanged">
+            <summary>Occurs when the collection changes.</summary>
+        </member>
+        <member name="T:MyToolkit.Collections.BlockingQueue`1">
+            <summary>Thread-safe blocking queue. </summary>
+            <typeparam name="T">The type of an item. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Collections.BlockingQueue`1.#ctor(System.Int32)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.BlockingQueue`1"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.BlockingQueue`1.Restart">
+            <summary>Restarts the blocking queue. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.BlockingQueue`1.Stop">
+            <summary>Stops all waits in the <see cref="M:MyToolkit.Collections.BlockingQueue`1.Enqueue(`0,System.Int32)"/> or <see cref="M:MyToolkit.Collections.BlockingQueue`1.Dequeue(`0@,System.Int32)"/> methods. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.BlockingQueue`1.Enqueue(`0,System.Int32)">
+            <summary>Enqueues an item in the queue. </summary>
+            <param name="item">The item to enqueue. </param>
+            <param name="maximumWaitTime">The maximum wait time until free slot is available, 
+            if exceeded then item is not added and false is returned. </param>
+            <returns>True if successful. </returns>
+        </member>
+        <member name="M:MyToolkit.Collections.BlockingQueue`1.Dequeue(`0@,System.Int32)">
+            <summary>Tries do dequeue an item. </summary>
+            <param name="item">The dequeued item. </param>
+            <param name="maximumWaitTime">The maximum wait time to wait until an item is 
+            available if the queue is empty. Default is -1 (indefinitely). </param>
+            <returns>True when an item could be dequeued during the maximum wait time; otherwise false. </returns>
+        </member>
+        <member name="T:MyToolkit.Collections.IGroup">
+            <summary>The interface of a group. </summary>
+        </member>
+        <member name="T:MyToolkit.Collections.Group`1">
+            <summary>An group implementation with a title and a list of items. </summary>
+            <typeparam name="T">The item type. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Collections.Group`1.#ctor(System.String)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.Group`1"/> class. </summary>
+            <param name="title">The group title. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.Group`1.#ctor(System.String,System.Collections.Generic.IEnumerable{`0})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.Group`1"/> class. </summary>
+            <param name="title">The group title. </param>
+            <param name="items">The initial items. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.Group`1.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>Raises the System.Collections.ObjectModel.ObservableCollection{T}.PropertyChanged event with the provided arguments. </summary>
+            <param name="e">Arguments of the event being raised.</param>
+        </member>
+        <member name="P:MyToolkit.Collections.Group`1.Title">
+            <summary>Gets or sets the title of the group. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.Group`1.HasItems">
+            <summary>Gets a value indicating whether the group has items. </summary>
+        </member>
+        <member name="T:MyToolkit.Collections.IObservableCollectionView">
+            <summary>Provides a view for an <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/> with automatic sorting and filtering. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.IObservableCollectionView.IsTracking">
+            <summary>Gets or sets a value indicating whether the view should automatically be updated when needed. 
+            Disable this flag when doing multiple of operations on the underlying collection. 
+            Enabling this flag automatically updates the view if needed. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.IObservableCollectionView.Limit">
+            <summary>Gets or sets the maximum number of items in the view. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.IObservableCollectionView.Offset">
+            <summary>Gets or sets the offset from where the results a selected. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.IObservableCollectionView.Ascending">
+            <summary>Gets or sets a value indicating whether to sort ascending or descending. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.IObservableCollectionView.Filter">
+            <summary>Gets or sets the filter (a Func{TItem, bool} object). </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.IObservableCollectionView.Order">
+            <summary>Gets or sets the order (a Func{TItem, object} object). </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.IExtendedNotifyCollectionChangedEventArgs.AddedItems">
+            <summary>Gets the list of added items. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.IExtendedNotifyCollectionChangedEventArgs.RemovedItems">
+            <summary>Gets the list of removed items. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.IExtendedNotifyCollectionChangedEventArgs.OldCollection">
+            <summary>Gets the previous collection (only provided when enabled in the <see cref="T:MyToolkit.Collections.MtObservableCollection`1"/> object). </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.MtNotifyCollectionChangedEventArgs`1.AddedItems">
+            <summary>
+            Gets or sets the list of added items. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.MtNotifyCollectionChangedEventArgs`1.RemovedItems">
+            <summary>
+            Gets or sets the list of removed items. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.MtNotifyCollectionChangedEventArgs`1.OldCollection">
+            <summary>
+            Gets the previous collection (only provided when enabled in the <see cref="T:MyToolkit.Collections.MtObservableCollection`1"/> object). 
+            </summary>
+        </member>
+        <member name="T:MyToolkit.Collections.MtObservableCollection`1">
+            <summary>Provides a safe collection changed event which always provides the added 
+            and removed items, some more events and more range methods. </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:MyToolkit.Collections.MtObservableCollection`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>Adds multiple items to the collection. </summary>
+            <param name="collection">The items to add. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.MtObservableCollection`1.RemoveRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>Removes multiple items from the collection. </summary>
+            <param name="collection">The items to remove. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.MtObservableCollection`1.Initialize(System.Collections.Generic.IEnumerable{`0})">
+            <summary>Resets the whole collection with a given list. </summary>
+            <param name="collection">The collection. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.MtObservableCollection`1.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
+            <summary>Raises the System.Collections.ObjectModel.ObservableCollection{T}.CollectionChanged event with the provided arguments. </summary>
+            <param name="e">Arguments of the event being raised. </param>
+        </member>
+        <member name="P:MyToolkit.Collections.MtObservableCollection`1.ProvideOldCollection">
+            <summary>Gets or sets a value indicating whether to provide the previous collection in the extended collection changed event. 
+            Enabling this feature may have a performance impact as for each collection changed event a copy of the collection gets created. </summary>
+        </member>
+        <member name="E:MyToolkit.Collections.MtObservableCollection`1.PropertyChanged">
+            <summary>Occurs when a property value changes. 
+            This is the same event as on the <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/> except that it is public. </summary>
+        </member>
+        <member name="E:MyToolkit.Collections.MtObservableCollection`1.ExtendedCollectionChanged">
+            <summary>Collection changed event with safe/always correct added items and removed items list. </summary>
+        </member>
+        <member name="T:MyToolkit.Collections.ObservableCollectionObserver`1">
+            <summary>Provides events to react on changes of an ObservableCollection and its elements. </summary>
+            <typeparam name="T">The item type. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionObserver`1.Initialize(System.Collections.ObjectModel.ObservableCollection{`0})">
+            <summary>Sets the observed collection. </summary>
+            <param name="collection">The collection. </param>
+        </member>
+        <member name="E:MyToolkit.Collections.ObservableCollectionObserver`1.CollectionChanged">
+            <summary>Occurs when the collection changes. </summary>
+        </member>
+        <member name="E:MyToolkit.Collections.ObservableCollectionObserver`1.ItemChanged">
+            <summary>Occurs when an element of the collection changes. </summary>
+        </member>
+        <member name="T:MyToolkit.Collections.ObservableCollectionView`1">
+            <summary>Provides a view for an <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/> with automatic sorting and filtering. </summary>
+            <typeparam name="TItem">The type of an item. </typeparam>
+        </member>
+        <member name="T:MyToolkit.Collections.ObservableCollectionViewBase`1">
+            <summary>Provides a view for an <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/> with automatic sorting and filtering. </summary>
+            <typeparam name="TItem">The type of an item. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionViewBase`1.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableCollectionViewBase`1"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionViewBase`1.#ctor(System.Collections.Generic.IList{`0})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableCollectionViewBase`1"/> class. </summary>
+            <param name="items">The source item list. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionViewBase`1.#ctor(System.Collections.Generic.IList{`0},System.Boolean)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableCollectionViewBase`1"/> class. </summary>
+            <param name="items">The source item list. </param>
+            <param name="trackItemChanges">The value indicating whether to track items which implement <see cref="T:System.ComponentModel.INotifyPropertyChanged"/></param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionViewBase`1.AddRange(System.Collections.Generic.IEnumerable{`0})">
+            <summary>Adds a multiple elements to the underlying collection. </summary>
+            <param name="items">The items to add. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionViewBase`1.Dispose">
+            <summary>Releases all used resources and deregisters all events on the items and the underlying collection. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionViewBase`1.Close">
+            <summary>Releases all used resources and deregisters all events on the items and the underlying collection. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionViewBase`1.Update">
+            <summary>Refreshes the view. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionViewBase`1.Refresh">
+            <summary>Refreshes the view. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionViewBase`1.GetItems">
+            <summary>Gets the list of items with the current order and filter.</summary>
+            <returns>The items. </returns>
+        </member>
+        <member name="P:MyToolkit.Collections.ObservableCollectionViewBase`1.Items">
+            <summary>Gets the original items source. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.ObservableCollectionViewBase`1.IsTracking">
+            <summary>Gets or sets a flag whether the view should automatically be updated when needed. 
+            Disable this flag when doing multiple of operations on the underlying collection. 
+            Enabling this flag automatically updates the view if needed. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.ObservableCollectionViewBase`1.TrackCollectionChanges">
+            <summary>Gets or sets a value indicating whether the view should listen for collection 
+            changed events on the underlying collection (default: true). </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.ObservableCollectionViewBase`1.TrackItemChanges">
+            <summary>Gets or sets a value indicating whether the items in the collection should be tracked for property changes. 
+            The items must implement <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> to support item tracking. 
+            Enable this property if your items are mutable and the list has to be restored if an item property changes. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionView`1.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableCollectionView`1"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionView`1.#ctor(System.Collections.Generic.IList{`0})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableCollectionView`1"/> class. </summary>
+            <param name="items">The source item list. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionView`1.#ctor(System.Collections.Generic.IList{`0},System.Func{`0,System.Boolean})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableCollectionView`1"/> class. </summary>
+            <param name="items">The source item list. </param>
+            <param name="filter">The filter of the view. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionView`1.#ctor(System.Collections.Generic.IList{`0},System.Func{`0,System.Boolean},System.Func{`0,System.Object})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableCollectionView`1"/> class. </summary>
+            <param name="items">The source item list. </param>
+            <param name="filter">The filter of the view. </param>
+            <param name="orderBy">The order key of the view. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionView`1.#ctor(System.Collections.Generic.IList{`0},System.Func{`0,System.Boolean},System.Func{`0,System.Object},System.Boolean)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableCollectionView`1"/> class. </summary>
+            <param name="items">The source item list. </param>
+            <param name="filter">The filter of the view. </param>
+            <param name="orderBy">The order key of the view. </param>
+            <param name="ascending">The value indicating whether to sort ascending. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionView`1.#ctor(System.Collections.Generic.IList{`0},System.Func{`0,System.Boolean},System.Func{`0,System.Object},System.Boolean,System.Boolean)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableCollectionView`1"/> class. </summary>
+            <param name="items">The source item list. </param>
+            <param name="filter">The filter of the view. </param>
+            <param name="orderBy">The order key of the view. </param>
+            <param name="ascending">The value indicating whether to sort ascending. </param>
+            <param name="trackItemChanges">The value indicating whether to track items which implement <see cref="T:System.ComponentModel.INotifyPropertyChanged"/></param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableCollectionView`1.GetItems">
+            <summary>Gets the list of items with the current order and filter.</summary>
+            <returns>The items. </returns>
+        </member>
+        <member name="P:MyToolkit.Collections.ObservableCollectionView`1.Filter">
+            <summary>Gets or sets the filter. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.ObservableCollectionView`1.MyToolkit#Collections#IObservableCollectionView#Filter">
+            <summary>Gets or sets the filter (a Func{TItem, bool} object). </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.ObservableCollectionView`1.Order">
+            <summary>Gets or sets the sorting/order function. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.ObservableCollectionView`1.MyToolkit#Collections#IObservableCollectionView#Order">
+            <summary>Gets or sets the order. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.ObservableCollectionView`1.Limit">
+            <summary>Gets or sets the maximum number of items in the view. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.ObservableCollectionView`1.Offset">
+            <summary>Gets or sets the offset from where the results a selected. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.ObservableCollectionView`1.Ascending">
+            <summary>Gets or sets a value indicating whether the sorting should be ascending; otherwise descending. </summary>
+        </member>
+        <member name="T:MyToolkit.Collections.ObservableDictionary`2">
+            <summary>An implementation of an observable dictionary. </summary>
+            <typeparam name="TKey">The type of the key. </typeparam>
+            <typeparam name="TValue">The type of the value. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableDictionary`2.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableDictionary`2"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableDictionary`2.#ctor(System.Collections.Generic.IDictionary{`0,`1})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableDictionary`2"/> class. </summary>
+            <param name="dictionary">The dictionary to initialize this dictionary. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableDictionary`2.#ctor(System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableDictionary`2"/> class. </summary>
+            <param name="comparer">The comparer. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableDictionary`2.#ctor(System.Int32)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableDictionary`2"/> class. </summary>
+            <param name="capacity">The capacity. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableDictionary`2.#ctor(System.Collections.Generic.IDictionary{`0,`1},System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableDictionary`2"/> class. </summary>
+            <param name="dictionary">The dictionary to initialize this dictionary. </param>
+            <param name="comparer">The comparer. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableDictionary`2.#ctor(System.Int32,System.Collections.Generic.IEqualityComparer{`0})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.ObservableDictionary`2"/> class. </summary>
+            <param name="capacity">The capacity. </param>
+            <param name="comparer">The comparer. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableDictionary`2.AddRange(System.Collections.Generic.IDictionary{`0,`1})">
+            <summary>Adds multiple key-value pairs the the dictionary. </summary>
+            <param name="items">The key-value pairs. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableDictionary`2.Insert(`0,`1,System.Boolean)">
+            <summary>Inserts a key-value pair into the dictionary. </summary>
+            <param name="key">The key. </param>
+            <param name="value">The value. </param>
+            <param name="add">If true and key already exists then an exception is thrown. </param>
+        </member>
+        <member name="P:MyToolkit.Collections.ObservableDictionary`2.Dictionary">
+            <summary>Gets the underlying dictonary. </summary>
+        </member>
+        <member name="T:MyToolkit.Collections.QueryObservableCollectionView`1">
+            <summary>Provides a view for an <see cref="T:System.Collections.ObjectModel.ObservableCollection`1"/> with a query. </summary>
+            <typeparam name="TItem">The type of an item. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Collections.QueryObservableCollectionView`1.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.QueryObservableCollectionView`1"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.QueryObservableCollectionView`1.#ctor(System.Collections.Generic.IList{`0})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.QueryObservableCollectionView`1"/> class. </summary>
+            <param name="items">The source item list. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.QueryObservableCollectionView`1.#ctor(System.Collections.Generic.IList{`0},System.Func{System.Collections.Generic.IList{`0},System.Collections.Generic.IEnumerable{`0}})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.QueryObservableCollectionView`1"/> class. </summary>
+            <param name="items">The source item list. </param>
+            <param name="query">The initial query. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.QueryObservableCollectionView`1.GetItems">
+            <summary>Gets the list of items with the current order and filter.</summary>
+            <returns>The items. </returns>
+        </member>
+        <member name="P:MyToolkit.Collections.QueryObservableCollectionView`1.Query">
+            <summary>Gets or sets the query. </summary>
+        </member>
+        <member name="T:MyToolkit.Collections.TopItemsGroup`1">
+            <summary>An extended group implementation with a list of items but showing only a given number of them. </summary>
+            <typeparam name="T">The type of an item. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Collections.TopItemsGroup`1.#ctor(System.String,System.Int32)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.TopItemsGroup`1"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.TopItemsGroup`1.#ctor(System.String,System.Collections.Generic.IEnumerable{`0},System.Int32)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.TopItemsGroup`1"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.TopItemsGroup`1.Initialize(System.Collections.Generic.IEnumerable{`0})">
+            <summary>Initializes the group with a list of items. </summary>
+            <param name="items">The items. </param>
+        </member>
+        <member name="M:MyToolkit.Collections.TopItemsGroup`1.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
+            <summary>Called when the items collection changed. </summary>
+            <param name="e">The arguments. </param>
+        </member>
+        <member name="P:MyToolkit.Collections.TopItemsGroup`1.TopItemsCount">
+            <summary>Gets or sets the number of items to show in the group. </summary>
+        </member>
+        <member name="P:MyToolkit.Collections.TopItemsGroup`1.TopItems">
+            <summary>Gets the items to show in the group. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.ExtendedGroup`1.#ctor(System.String,System.Int32)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.TopItemsGroup`1"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Collections.ExtendedGroup`1.#ctor(System.String,System.Collections.Generic.IEnumerable{`0},System.Int32)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Collections.TopItemsGroup`1"/> class. </summary>
+        </member>
+        <member name="T:MyToolkit.Command.AsyncRelayCommand">
+            <summary>Provides an async implementation of the <see cref="T:System.Windows.Input.ICommand"/> interface. 
+            The command is inactive when the command's task is running. </summary>
+        </member>
+        <member name="T:MyToolkit.Command.CommandBase">
+            <summary>Provides a base implementation of the <see cref="T:System.Windows.Input.ICommand"/> interface. </summary>
+        </member>
+        <member name="T:MyToolkit.Model.ObservableObject">
+            <summary>Provides an implementation of the <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface. </summary>
+        </member>
+        <member name="M:MyToolkit.Model.ObservableObject.Set``1(``0@,``0,System.String)">
+            <summary>Updates the property and raises the changed event, but only if the new value does not equal the old value. </summary>
+            <param name="propertyName">The property name as lambda. </param>
+            <param name="oldValue">A reference to the backing field of the property. </param>
+            <param name="newValue">The new value. </param>
+            <returns>True if the property has changed. </returns>
+        </member>
+        <member name="M:MyToolkit.Model.ObservableObject.Set``1(System.Linq.Expressions.Expression{System.Func{``0}},``0@,``0)">
+            <summary>Updates the property and raises the changed event, but only if the new value does not equal the old value. </summary>
+            <typeparam name="T">The type of the property. </typeparam>
+            <param name="propertyNameExpression">The property name as lambda. </param>
+            <param name="oldValue">A reference to the backing field of the property. </param>
+            <param name="newValue">The new value. </param>
+            <returns>True if the property has changed. </returns>
+        </member>
+        <member name="M:MyToolkit.Model.ObservableObject.Set``2(System.Linq.Expressions.Expression{System.Func{``0,``1}},``1@,``1)">
+            <summary>Updates the property and raises the changed event, but only if the new value does not equal the old value. </summary>
+            <typeparam name="TClass">The type of the class with the property. </typeparam>
+            <typeparam name="TProp">The type of the property. </typeparam>
+            <param name="propertyNameExpression">The property name as lambda. </param>
+            <param name="oldValue">A reference to the backing field of the property. </param>
+            <param name="newValue">The new value. </param>
+            <returns>True if the property has changed. </returns>
+        </member>
+        <member name="M:MyToolkit.Model.ObservableObject.Set``1(System.String,``0@,``0)">
+            <summary>Updates the property and raises the changed event, but only if the new value does not equal the old value. </summary>
+            <param name="propertyName">The property name as lambda. </param>
+            <param name="oldValue">A reference to the backing field of the property. </param>
+            <param name="newValue">The new value. </param>
+            <returns>True if the property has changed. </returns>
+        </member>
+        <member name="M:MyToolkit.Model.ObservableObject.RaisePropertyChanged(System.String)">
+            <summary>Raises the property changed event. </summary>
+            <param name="propertyName">The property name. </param>
+        </member>
+        <member name="M:MyToolkit.Model.ObservableObject.RaisePropertyChanged(System.Linq.Expressions.Expression{System.Func{System.Object}})">
+            <summary>Raises the property changed event. </summary>
+            <param name="propertyNameExpression">The property name as lambda. </param>
+        </member>
+        <member name="M:MyToolkit.Model.ObservableObject.RaisePropertyChanged``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>Raises the property changed event. </summary>
+            <typeparam name="TClass">The type of the class with the property. </typeparam>
+            <param name="propertyNameExpression">The property name as lambda. </param>
+        </member>
+        <member name="M:MyToolkit.Model.ObservableObject.RaisePropertyChanged(System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>Raises the property changed event. </summary>
+            <param name="args">The arguments. </param>
+        </member>
+        <member name="M:MyToolkit.Model.ObservableObject.RaiseAllPropertiesChanged">
+            <summary>Raises the property changed event for all properties (string.Empty). </summary>
+        </member>
+        <member name="M:MyToolkit.Model.ObservableObject.SetProperty``1(System.Linq.Expressions.Expression{System.Func{``0}},``0@,``0)">
+            <summary>If the new value does not equal the old value, then updates the property and raises the changed event. </summary>
+            <typeparam name="T">The type of the property. </typeparam>
+            <param name="propertyNameExpression">The property name as lambda. </param>
+            <param name="oldValue">A reference to the backing field of the property. </param>
+            <param name="newValue">The new value. </param>
+            <returns>True if the property has changed. </returns>
+        </member>
+        <member name="M:MyToolkit.Model.ObservableObject.SetProperty``2(System.Linq.Expressions.Expression{System.Func{``0,``1}},``1@,``1)">
+            <summary>If the new value does not equal the old value, then updates the property and raises the changed event. </summary>
+            <typeparam name="TClass">The type of the class with the property. </typeparam>
+            <typeparam name="TProp">The type of the property. </typeparam>
+            <param name="propertyNameExpression">The property name as lambda. </param>
+            <param name="oldValue">A reference to the backing field of the property. </param>
+            <param name="newValue">The new value. </param>
+            <returns>True if the property has changed. </returns>
+        </member>
+        <member name="M:MyToolkit.Model.ObservableObject.SetProperty``1(System.String,``0@,``0)">
+            <summary>If the new value does not equal the old value, then updates the property and raises the changed event. </summary>
+            <param name="propertyName">The property name. </param>
+            <param name="oldValue">A reference to the backing field of the property. </param>
+            <param name="newValue">The new value. </param>
+            <returns>True if the property has changed. </returns>
+        </member>
+        <member name="M:MyToolkit.Model.ObservableObject.SetProperty``1(``0@,``0,System.String)">
+            <summary>If the new value does not equal the old value, then updates the property and raises the changed event. </summary>
+            <param name="propertyName">The property name. </param>
+            <param name="oldValue">A reference to the backing field of the property. </param>
+            <param name="newValue">The new value. </param>
+            <returns>True if the property has changed. </returns>
+        </member>
+        <member name="E:MyToolkit.Model.ObservableObject.PropertyChanged">
+            <summary>Occurs when a property value changes. </summary>
+        </member>
+        <member name="M:MyToolkit.Command.CommandBase.Execute">
+            <summary>Defines the method to be called when the command is invoked. </summary>
+        </member>
+        <member name="M:MyToolkit.Command.CommandBase.TryExecute">
+            <summary>Tries to execute the command by checking the <see cref="P:MyToolkit.Command.CommandBase.CanExecute"/> property 
+            and executes the command only when it can be executed. </summary>
+            <returns>True if command has been executed; false otherwise. </returns>
+        </member>
+        <member name="M:MyToolkit.Command.CommandBase.RaiseCanExecuteChanged">
+            <summary>Triggers the CanExecuteChanged event and a property changed event on the CanExecute property. </summary>
+        </member>
+        <member name="P:MyToolkit.Command.CommandBase.CanExecute">
+            <summary>Gets a value indicating whether the command can execute in its current state. </summary>
+        </member>
+        <member name="E:MyToolkit.Command.CommandBase.CanExecuteChanged">
+            <summary>Occurs when changes occur that affect whether or not the command should execute. </summary>
+        </member>
+        <member name="M:MyToolkit.Command.AsyncRelayCommand.#ctor(System.Func{System.Threading.Tasks.Task})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Command.AsyncRelayCommand"/> class. </summary>
+            <param name="execute">The function to execute. </param>
+        </member>
+        <member name="M:MyToolkit.Command.AsyncRelayCommand.#ctor(System.Func{System.Threading.Tasks.Task},System.Func{System.Boolean})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Command.AsyncRelayCommand"/> class. </summary>
+            <param name="execute">The function. </param>
+            <param name="canExecute">The predicate to check whether the function can be executed. </param>
+        </member>
+        <member name="M:MyToolkit.Command.AsyncRelayCommand.Execute">
+            <summary>Defines the method to be called when the command is invoked. </summary>
+        </member>
+        <member name="P:MyToolkit.Command.AsyncRelayCommand.IsRunning">
+            <summary>Gets a value indicating whether the command is currently running. </summary>
+        </member>
+        <member name="P:MyToolkit.Command.AsyncRelayCommand.CanExecute">
+            <summary>Gets a value indicating whether the command can execute in its current state. </summary>
+        </member>
+        <member name="T:MyToolkit.Command.AsyncRelayCommand`1">
+            <summary>Provides an implementation of the <see cref="T:System.Windows.Input.ICommand"/> interface. </summary>
+            <typeparam name="TParameter">The type of the command parameter. </typeparam>
+        </member>
+        <member name="T:MyToolkit.Command.CommandBase`1">
+            <summary>Provides an implementation of the <see cref="T:System.Windows.Input.ICommand"/> interface. </summary>
+            <typeparam name="T">The type of the command parameter. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Command.CommandBase`1.CanExecute(`0)">
+            <summary>Gets a value indicating whether the command can execute in its current state. </summary>
+        </member>
+        <member name="M:MyToolkit.Command.CommandBase`1.Execute(`0)">
+            <summary>
+            Defines the method to be called when the command is invoked.
+            </summary>
+        </member>
+        <member name="M:MyToolkit.Command.CommandBase`1.TryExecute(`0)">
+            <summary>Tries to execute the command by calling the <see cref="M:MyToolkit.Command.CommandBase`1.CanExecute(`0)"/> method 
+            and executes the command only when it can be executed. </summary>
+            <returns>True if command has been executed; false otherwise. </returns>
+        </member>
+        <member name="M:MyToolkit.Command.CommandBase`1.RaiseCanExecuteChanged">
+            <summary>Triggers the CanExecuteChanged event. </summary>
+        </member>
+        <member name="E:MyToolkit.Command.CommandBase`1.CanExecuteChanged">
+            <summary>Occurs when changes occur that affect whether or not the command should execute. </summary>
+        </member>
+        <member name="M:MyToolkit.Command.AsyncRelayCommand`1.#ctor(System.Func{`0,System.Threading.Tasks.Task})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Command.AsyncRelayCommand"/> class. </summary>
+            <param name="execute">The function. </param>
+        </member>
+        <member name="M:MyToolkit.Command.AsyncRelayCommand`1.#ctor(System.Func{`0,System.Threading.Tasks.Task},System.Predicate{`0})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Command.AsyncRelayCommand"/> class. </summary>
+            <param name="execute">The function. </param>
+            <param name="canExecute">The predicate to check whether the function can be executed. </param>
+        </member>
+        <member name="M:MyToolkit.Command.AsyncRelayCommand`1.CanExecute(`0)">
+            <summary>Gets a value indicating whether the command can execute in its current state. </summary>
+        </member>
+        <member name="M:MyToolkit.Command.AsyncRelayCommand`1.Execute(`0)">
+            <summary>Defines the method to be called when the command is invoked. </summary>
+        </member>
+        <member name="P:MyToolkit.Command.AsyncRelayCommand`1.IsRunning">
+            <summary>Gets a value indicating whether the command is currently running. </summary>
+        </member>
+        <member name="T:MyToolkit.Command.RelayCommand">
+            <summary>Provides an implementation of the <see cref="T:System.Windows.Input.ICommand"/> interface. </summary>
+        </member>
+        <member name="M:MyToolkit.Command.RelayCommand.#ctor(System.Action)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Command.RelayCommand"/> class. </summary>
+            <param name="execute">The action to execute. </param>
+        </member>
+        <member name="M:MyToolkit.Command.RelayCommand.#ctor(System.Action,System.Func{System.Boolean})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Command.RelayCommand"/> class. </summary>
+            <param name="execute">The action to execute. </param>
+            <param name="canExecute">The predicate to check whether the function can be executed. </param>
+        </member>
+        <member name="M:MyToolkit.Command.RelayCommand.Execute">
+            <summary>Defines the method to be called when the command is invoked. </summary>
+        </member>
+        <member name="P:MyToolkit.Command.RelayCommand.CanExecute">
+            <summary>Gets a value indicating whether the command can execute in its current state. </summary>
+        </member>
+        <member name="T:MyToolkit.Command.RelayCommand`1">
+            <summary>Provides an implementation of the <see cref="T:System.Windows.Input.ICommand"/> interface. </summary>
+            <typeparam name="T">The type of the command parameter. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Command.RelayCommand`1.#ctor(System.Action{`0})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Command.RelayCommand"/> class. </summary>
+            <param name="execute">The action to execute. </param>
+        </member>
+        <member name="M:MyToolkit.Command.RelayCommand`1.#ctor(System.Action{`0},System.Predicate{`0})">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Command.RelayCommand"/> class. </summary>
+            <param name="execute">The action to execute. </param>
+            <param name="canExecute">The predicate to check whether the function can be executed. </param>
+        </member>
+        <member name="M:MyToolkit.Command.RelayCommand`1.CanExecute(`0)">
+            <summary>Gets a value indicating whether the command can execute in its current state. </summary>
+        </member>
+        <member name="M:MyToolkit.Command.RelayCommand`1.Execute(`0)">
+            <summary>Defines the method to be called when the command is invoked. </summary>
+        </member>
+        <member name="T:MyToolkit.Composition.Composition">
+            <summary>Provides access to a singleton <see cref="T:MyToolkit.Composition.ICompositionContext"/> object. </summary>
+        </member>
+        <member name="P:MyToolkit.Composition.Composition.Default">
+            <summary>Gets or sets the default context. </summary>
+        </member>
+        <member name="T:MyToolkit.Composition.CompositionContext">
+            <summary>Provides the ability to store, retrieve and assemble parts. </summary>
+        </member>
+        <member name="T:MyToolkit.Composition.ICompositionContext">
+            <summary>Provides the ability to store, retrieve and assemble parts. </summary>
+        </member>
+        <member name="M:MyToolkit.Composition.ICompositionContext.AddPartsFromAssembly(System.Reflection.Assembly)">
+            <summary>Adds parts from a given assembly. </summary>
+            <param name="assembly">The assembly. </param>
+            <returns>The number of added parts. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.ICompositionContext.AddPart``2(``1)">
+            <summary>Adds a part and automatically resolves are imports. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <typeparam name="TImplementation">The instance type of the part. </typeparam>
+            <param name="part">The part. </param>
+            <returns>True if the part has been added. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.ICompositionContext.AddPart``2(``1,System.String)">
+            <summary>Adds a part and automatically resolves are imports. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <typeparam name="TImplementation">The instance type of the part. </typeparam>
+            <param name="name">The name of the part. </param>
+            <param name="part">The part. </param>
+            <returns>True if the part has been added. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.ICompositionContext.AddPart``2">
+            <summary>Adds a lazy instantiated part. The imports are resolved when the part is instantiated. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <typeparam name="TImplementation">The instance type of the part. </typeparam>
+            <returns>True if the part has been added. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.ICompositionContext.AddPart``2(System.String)">
+            <summary>Adds a lazy instantiated part. The imports are resolved when the part is instantiated. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <typeparam name="TImplementation">The instance type of the part. </typeparam>
+            <param name="name">The name of the part. </param>
+            <returns>True if the part has been added. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.ICompositionContext.RemovePart``1">
+            <summary>Removes a part. </summary>
+            <typeparam name="TInterface">The type of the part. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Composition.ICompositionContext.RemovePart``1(System.String)">
+            <summary>Removes a part. </summary>
+            <typeparam name="TInterface">The type of the part. </typeparam>
+            <param name="name">The name of the part. </param>
+        </member>
+        <member name="M:MyToolkit.Composition.ICompositionContext.GetPart``1">
+            <summary>Gets a single part. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <exception cref="T:System.Exception">Multiple parts found. </exception>
+            <returns>The part. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.ICompositionContext.GetPart``1(System.String)">
+            <summary>Gets a single part. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <param name="name">The name of the part. </param>
+            <exception cref="T:System.Exception">Multiple parts found. </exception>
+            <returns>The part. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.ICompositionContext.GetParts``1">
+            <summary>Gets multiple parts of a given interface type. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <returns>The list of parts. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.ICompositionContext.SatisfyImports``1(``0)">
+            <summary>Resolves all property injection annotations for the given object. </summary>
+            <param name="obj">The object. </param>
+        </member>
+        <member name="M:MyToolkit.Composition.ICompositionContext.BuildCache``1">
+            <summary>Builds the resolving cache for the given type. </summary>
+        </member>
+        <member name="M:MyToolkit.Composition.ICompositionContext.Clear">
+            <summary>Removes all parts. </summary>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Composition.CompositionContext"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.AddPartsFromAssembly(System.Reflection.Assembly)">
+            <summary>Adds parts from a given assembly. </summary>
+            <param name="assembly">The assembly. </param>
+            <returns>The number of added parts. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.AddPart``2(``1)">
+            <summary>Adds a part and automatically resolves are imports. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <typeparam name="TImplementation">The instance type of the part. </typeparam>
+            <param name="part">The part. </param>
+            <returns>True if the part has been added. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.AddPart``2(``1,System.String)">
+            <summary>Adds a part and automatically resolves are imports. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <typeparam name="TImplementation">The instance type of the part. </typeparam>
+            <param name="name">The name of the part. </param>
+            <param name="part">The part. </param>
+            <returns>True if the part has been added. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.AddPart``2">
+            <summary>Adds a lazy instantiated part. The imports are resolved when the part is instantiated. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <typeparam name="TImplementation">The instance type of the part. </typeparam>
+            <returns>True if the part has been added. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.AddPart``2(System.String)">
+            <summary>Adds a lazy instantiated part. The imports are resolved when the part is instantiated. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <typeparam name="TImplementation">The instance type of the part. </typeparam>
+            <param name="name">The name of the part. </param>
+            <returns>True if the part has been added. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.AddPart(System.Type,System.Type,System.String,System.Object)">
+            <summary>Adds a part and automatically resolves are imports. </summary>
+            <param name="interfaceType">The type of the part. </param>
+            <param name="name">The name of the part. </param>
+            <param name="part"></param>
+            <param name="implementationType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.RemovePart``1">
+            <summary>Removes a part. </summary>
+            <typeparam name="TInterface">The type of the part. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.RemovePart``1(System.String)">
+            <summary>Removes a part. </summary>
+            <typeparam name="TInterface">The type of the part. </typeparam>
+            <param name="name">The name of the part. </param>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.RemovePart(System.Type,System.String)">
+            <summary>Removes a part. </summary>
+            <param name="interfaceType">The interface type of the part. </param>
+            <param name="name">The name of the part. </param>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.GetPart``1">
+            <summary>Gets a single part. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <exception cref="T:System.Exception">Multiple parts found. </exception>
+            <returns>The part. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.GetPart``1(System.String)">
+            <summary>Gets a single part. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <param name="name">The name of the part. </param>
+            <exception cref="T:System.Exception">Multiple parts found. </exception>
+            <returns>The part. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.GetPart(System.Type,System.String)">
+            <summary>Gets a single part. </summary>
+            <param name="interfaceType">The type of the part. </param>
+            <param name="name">The name of the part. </param>
+            <exception cref="T:System.Exception">Multiple parts found. </exception>
+            <returns>The part. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.GetParts(System.Type)">
+            <summary>Gets multiple parts of a given type. </summary>
+            <param name="interfaceType">The interface type of the part. </param>
+            <returns>The list of parts. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.GetParts``1">
+            <summary>Gets multiple parts of a given interface type. </summary>
+            <typeparam name="TInterface">The interface type of the part. </typeparam>
+            <returns>The list of parts. </returns>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.SatisfyImports``1(``0)">
+            <summary>Resolves all property injection annotations for the given object. </summary>
+            <param name="obj">The object. </param>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.BuildCache``1">
+            <summary>Builds the resolving cache for the given type. </summary>
+        </member>
+        <member name="M:MyToolkit.Composition.CompositionContext.Clear">
+            <summary>Removes all parts. </summary>
+        </member>
+        <member name="T:MyToolkit.Composition.ExportAttribute">
+            <summary>Marks a class as exported part. </summary>
+        </member>
+        <member name="F:MyToolkit.Composition.ExportAttribute.Type">
+            <summary>Gets or sets the interface type to export the class for. </summary>
+        </member>
+        <member name="F:MyToolkit.Composition.ExportAttribute.Name">
+            <summary>Gets or sets the name of the exported part. </summary>
+        </member>
+        <member name="M:MyToolkit.Composition.ExportAttribute.#ctor(System.Type)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Composition.ExportAttribute"/> class. </summary>
+            <param name="type">The interface type to export the class for. </param>
+        </member>
+        <member name="T:MyToolkit.Composition.ImportAttribute">
+            <summary>Marks a property to import another object. </summary>
+        </member>
+        <member name="F:MyToolkit.Composition.ImportAttribute.Type">
+            <summary>Gets or sets the interface type to import. </summary>
+        </member>
+        <member name="F:MyToolkit.Composition.ImportAttribute.Name">
+            <summary>Gets or sets the name of the imported part. </summary>
+        </member>
+        <member name="M:MyToolkit.Composition.ImportAttribute.#ctor(System.Type)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Composition.ImportAttribute"/> class. </summary>
+            <param name="type">The interface type to import. </param>
+        </member>
+        <member name="T:MyToolkit.Composition.ImportManyAttribute">
+            <summary>Marks a collection property to import objects. </summary>
+        </member>
+        <member name="F:MyToolkit.Composition.ImportManyAttribute.Type">
+            <summary>Gets or sets the interface type to import. </summary>
+        </member>
+        <member name="M:MyToolkit.Composition.ImportManyAttribute.#ctor(System.Type)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Composition.ImportManyAttribute"/> class. </summary>
+            <param name="type">The interface type to import. </param>
+        </member>
+        <member name="T:MyToolkit.Composition.IServiceLocator">
+            <summary>The interface for a service locator. </summary>
+        </member>
+        <member name="M:MyToolkit.Composition.IServiceLocator.RegisterSingleton``2">
+            <summary>Registers a singleton service in the service locator where the service is lazily instantiated. </summary>
+            <typeparam name="TInterface">The interface type of the service. </typeparam>
+            <typeparam name="TImplementation">The implementation type of the service. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Composition.IServiceLocator.RegisterSingleton``2(``1)">
+            <summary>Registers a singleton service in the service locator. </summary>
+            <typeparam name="TInterface">The interface type of the service. </typeparam>
+            <typeparam name="TImplementation">The implementation type of the service. </typeparam>
+            <param name="service">The service object. </param>
+        </member>
+        <member name="M:MyToolkit.Composition.IServiceLocator.Resolve``1">
+            <summary>Returns a service object. </summary>
+            <typeparam name="TInterface">The interface type of the service. </typeparam>
+            <returns>The service object. </returns>
+        </member>
+        <member name="T:MyToolkit.Composition.ServiceLocator">
+            <summary>A service locator implementation. </summary>
+        </member>
+        <member name="M:MyToolkit.Composition.ServiceLocator.RegisterSingleton``2">
+            <summary>Registers a singleton service in the service locator where the service is lazily instantiated. </summary>
+            <typeparam name="TInterface">The interface type of the service. </typeparam>
+            <typeparam name="TImplementation">The implementation type of the service. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Composition.ServiceLocator.RegisterSingleton``2(``1)">
+            <summary>Registers a singleton service in the service locator. </summary>
+            <typeparam name="TInterface">The interface type of the service. </typeparam>
+            <typeparam name="TImplementation">The implementation type of the service. </typeparam>
+            <param name="service">The service object. </param>
+        </member>
+        <member name="M:MyToolkit.Composition.ServiceLocator.Resolve``1">
+            <summary>Returns a service object. </summary>
+            <typeparam name="TInterface">The interface type of the service. </typeparam>
+            <returns>The service object. </returns>
+        </member>
+        <member name="P:MyToolkit.Composition.ServiceLocator.Default">
+            <summary>Gets or sets the default service locator. </summary>
+        </member>
+        <member name="T:MyToolkit.Data.CacheManager`1">
+            <summary>Provides a cache per object type and automatically merges updated objects into old objects. </summary>
+        </member>
+        <member name="F:MyToolkit.Data.CacheManager`1.List">
+            <summary>Gets or sets the internal list of managed items. </summary>
+        </member>
+        <member name="M:MyToolkit.Data.CacheManager`1.GetItem``1(`0)">
+            <summary>Returns an item by ID. </summary>
+            <typeparam name="T">Type of the item. </typeparam>
+            <param name="id">ID of the item. </param>
+            <returns>The entity.</returns>
+        </member>
+        <member name="M:MyToolkit.Data.CacheManager`1.GetItem(System.Type,`0)">
+            <summary>Returns an item by ID. </summary>
+            <param name="type">Type of the item. </param>
+            <param name="id">ID of the item. </param>
+            <returns>The entity.</returns>
+        </member>
+        <member name="M:MyToolkit.Data.CacheManager`1.GetItem(System.String,`0)">
+            <summary>Returns an item by ID. </summary>
+            <param name="type">Type of the item (only class name). </param>
+            <param name="id">ID of the item. </param>
+            <returns>The entity.</returns>
+        </member>
+        <member name="M:MyToolkit.Data.CacheManager`1.AddItems``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>Adds mulitple items to the cache manager. </summary>
+            <typeparam name="T">Type of the items. </typeparam>
+            <param name="items">The items to add. </param>
+            <returns>The list with the added itmes. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.CacheManager`1.AddItem``1(``0)">
+            <summary>Adds an item to the cache manager and returns the used item, 
+            either the item itself or the already existing item with the updated properties. </summary>
+            <param name="item">The new item. </param>
+            <returns>The used item. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.CacheManager`1.AddItem(MyToolkit.Utilities.IEntity{`0})">
+            <summary>Adds an item to the cache manager and returns the used item, 
+            either the item itself or the already existing item with the updated properties. </summary>
+            <param name="item">The new item. </param>
+            <returns>The used item. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.CacheManager`1.GetBaseType(System.Type)">
+            <summary>Gets the base type of the given type. </summary>
+            <param name="type">The type to find the base type for. </param>
+            <returns>The base type. </returns>
+        </member>
+        <member name="T:MyToolkit.Data.DataManagerBase`1">
+            <summary>Provides an abstract CacheManager implementation with the ability to use a WCF service to load cacheable entities. </summary>
+        </member>
+        <member name="M:MyToolkit.Data.DataManagerBase`1.GetItemAsync(System.String,`0,System.String[])">
+            <summary>Loads a single item given its type and ID. </summary>
+            <param name="type">The type of the item to load. </param>
+            <param name="id">The ID of the item to load. </param>
+            <param name="included">The navigation properties to include in the items (e.g. eager load using EF). </param>
+            <returns>The loaded item. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.DataManagerBase`1.GetAllItemsAsync(System.String,System.String[])">
+            <summary>Loads all items of a given type. </summary>
+            <param name="type">The type of the items to load. </param>
+            <param name="included">The navigation properties to include in the item (e.g. eager load using EF). </param>
+            <returns>The loaded items. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.DataManagerBase`1.GetCollectionPropertyForItemAsync(System.String,`0,System.String,System.String[])">
+            <summary>Loads a collection navigation property of a given item. </summary>
+            <param name="type">The item type. </param>
+            <param name="id">The item ID. </param>
+            <param name="propertyName">The collection navigation property of the specified item. </param>
+            <param name="included">The navigation properties to include in the items (e.g. eager load using EF). </param>
+            <returns>The collection of the given collection navigation property. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.DataManagerBase`1.GetItemAsync``1(`0,System.Boolean,System.Linq.Expressions.Expression{System.Func{``0,System.Object}}[])">
+            <summary>Loads a single item. </summary>
+            <typeparam name="T">The type of the item. </typeparam>
+            <param name="id">The ID of the item. </param>
+            <param name="reload">Specifies whether to use the cached version (if available) or always reload the item. </param>
+            <param name="included">The navigation properties to include in the items (e.g. eager load using EF). </param>
+            <returns>The item. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.DataManagerBase`1.GetItemAsync``1(`0,System.Boolean,System.String[])">
+            <summary>Loads a single item. </summary>
+            <typeparam name="T">The type of the item. </typeparam>
+            <param name="id">The ID of the item. </param>
+            <param name="reload">Specifies whether to use the cached version (if available) or always reload the item. </param>
+            <param name="included">The navigation properties to include in the items (e.g. eager load using EF). </param>
+            <returns>The item. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.DataManagerBase`1.GetAllItemsAsync``1(System.Boolean,System.Linq.Expressions.Expression{System.Func{``0,System.Object}}[])">
+            <summary>Loads all items of a given type. </summary>
+            <typeparam name="T">The type of the item. </typeparam>
+            <param name="reload">Specifies whether to use the cached version (if available) or always reload the item. </param>
+            <param name="included">The navigation properties to include in the item (e.g. eager load using EF). </param>
+            <returns>The loaded items. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.DataManagerBase`1.GetAllItemsAsync``1(System.Boolean,System.String[])">
+            <summary>Loads all items of a given type. </summary>
+            <typeparam name="T">The type of the item. </typeparam>
+            <param name="reload">Specifies whether to use the cached version (if available) or always reload the item. </param>
+            <param name="included">The navigation properties to include in the item (e.g. eager load using EF). </param>
+            <returns>The loaded items. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.DataManagerBase`1.LoadPropertyForItemAsync``2(``0,System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Boolean,System.String[])">
+            <summary>Loads a property for a given item. </summary>
+            <typeparam name="T">The type of the item. </typeparam>
+            <typeparam name="TProperty">The type of the property. </typeparam>
+            <param name="item">The item. </param>
+            <param name="propertyName">The name of the property to load. </param>
+            <param name="reload">Specifies whether to use the cached version (if available) or always reload the item. </param>
+            <param name="included">The navigation properties to include in the item (e.g. eager load using EF). </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.DataManagerBase`1.LoadPropertyForItemAsync``2(``0,System.String,System.Boolean,System.String[])">
+            <summary>Loads a property for a given item. </summary>
+            <typeparam name="T">The type of the item. </typeparam>
+            <typeparam name="TProperty">The type of the property. </typeparam>
+            <param name="item">The item. </param>
+            <param name="propertyName">The name of the property to load. </param>
+            <param name="reload">Specifies whether to use the cached version (if available) or always reload the item. </param>
+            <param name="included">The navigation properties to include in the item (e.g. eager load using EF). </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="T:MyToolkit.Data.UndoRedoManager">
+            <summary>Manages undo/redo for a <see cref="T:MyToolkit.Model.GraphObservableObject"/> object. 
+            Only classes which inherit from GraphObservableObject and properties which are 
+            changed via the Set method or raise <see cref="T:MyToolkit.Model.GraphPropertyChangedEventArgs"/> are tracked for undo/redo. 
+            Properties must have an accessible setter. Collection must inherit from INotifyCollectionChanged for
+            undo/redo of collection changes. The class is not thread-safe; all methods must be called on the UI thread. </summary>
+        </member>
+        <member name="M:MyToolkit.Data.UndoRedoManager.Reset">
+            <summary>Removes all tracked changes and resets the restore point and current index. </summary>
+        </member>
+        <member name="M:MyToolkit.Data.UndoRedoManager.Undo">
+            <summary>Reverts the last action. </summary>
+            <returns>A value indicating whether the undo could be performed. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.UndoRedoManager.Redo">
+            <summary>Repeats the last reverted action. </summary>
+            <returns>A value indicating whether the redo could be performed. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.UndoRedoManager.CreateRestorePoint">
+            <summary>Sets the restore point to the current index. </summary>
+        </member>
+        <member name="M:MyToolkit.Data.UndoRedoManager.RevertToRestorePoint">
+            <summary>Reverts back to the last saved restore point (or to the initial state of the root object). </summary>
+            <returns>True if reversion worked. </returns>
+        </member>
+        <member name="M:MyToolkit.Data.UndoRedoManager.Revert(System.Int32)">
+            <summary>Reverts back to the given index. </summary>
+            <returns>True if reversion worked. </returns>
+        </member>
+        <member name="P:MyToolkit.Data.UndoRedoManager.CanUndo">
+            <summary>Gets a value indicating whether the last action can be reverted. </summary>
+        </member>
+        <member name="P:MyToolkit.Data.UndoRedoManager.CanRedo">
+            <summary>Gets a value indicating whether the last reverted action can be repeated. </summary>
+        </member>
+        <member name="P:MyToolkit.Data.UndoRedoManager.CurrentIndex">
+            <summary>Gets the the current index. </summary>
+        </member>
+        <member name="T:MyToolkit.Model.GraphObservableObject">
+            <summary>An <see cref="T:MyToolkit.Model.ObservableObject"/> with graph property changed event and extended 
+            changed event (including old and new value). </summary>
+        </member>
+        <member name="M:MyToolkit.Model.GraphObservableObject.Set``1(System.String,``0@,``0)">
+            <summary>Updates the property and raises the changed event, but only if the new value does not equal the old value. </summary>
+            <param name="propertyName">The property name as lambda. </param>
+            <param name="oldValue">A reference to the backing field of the property. </param>
+            <param name="newValue">The new value. </param>
+            <returns>True if the property has changed. </returns>
+        </member>
+        <member name="M:MyToolkit.Model.GraphObservableObject.RaisePropertyChanged(System.Object,System.Object,System.String)">
+            <summary>Raises the property changed event with <see cref="T:MyToolkit.Model.GraphPropertyChangedEventArgs"/> arguments. </summary>
+            <param name="oldValue">The old value. </param>
+            <param name="newValue">The new value. </param>
+            <param name="propertyName">The property name. </param>
+        </member>
+        <member name="M:MyToolkit.Model.GraphObservableObject.RaisePropertyChanged(System.Linq.Expressions.Expression{System.Func{System.Object}},System.Object,System.Object)">
+            <summary>Raises the property changed event with <see cref="T:MyToolkit.Model.GraphPropertyChangedEventArgs"/> arguments. </summary>
+            <param name="oldValue">The old value. </param>
+            <param name="newValue">The new value. </param>
+            <param name="propertyNameExpression">The property name as lambda. </param>
+        </member>
+        <member name="M:MyToolkit.Model.GraphObservableObject.RaisePropertyChanged``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Object,System.Object)">
+            <summary>Raises the property changed event with <see cref="T:MyToolkit.Model.GraphPropertyChangedEventArgs"/> arguments. </summary>
+            <param name="oldValue">The old value. </param>
+            <param name="newValue">The new value. </param>
+            <typeparam name="TClass">The type of the class with the property. </typeparam>
+            <param name="propertyNameExpression">The property name as lambda. </param>
+        </member>
+        <member name="M:MyToolkit.Model.GraphObservableObject.RegisterChild(System.Object)">
+            <summary>Registers a child to receive property changes. </summary>
+            <param name="child">The child object. </param>
+        </member>
+        <member name="M:MyToolkit.Model.GraphObservableObject.DeregisterChild(System.Object)">
+            <summary>Deregisters a child. </summary>
+            <param name="child">The child object. </param>
+        </member>
+        <member name="M:MyToolkit.Model.GraphObservableObject.RaisePropertyChanged(System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>Raises the property changed event. </summary>
+            <param name="args">The arguments. </param>
+        </member>
+        <member name="E:MyToolkit.Model.GraphObservableObject.GraphPropertyChanged">
+            <summary>Occurs when a property value of the object or any child changes. </summary>
+        </member>
+        <member name="P:MyToolkit.Model.GraphObservableObject.ExcludedChildTypes">
+            <summary>Gets the child types which are excluded for graph tracking (direct references or in collections).</summary>
+        </member>
+        <member name="T:MyToolkit.Events.EventUtilities">
+            <summary>Provides methods for event management. </summary>
+        </member>
+        <member name="M:MyToolkit.Events.EventUtilities.RegisterEvent(System.Object,System.String,System.Action{System.Object,System.Object})">
+            <summary>Registers an event on the given target object. </summary>
+            <param name="target">The target object. </param>
+            <param name="eventName">The event name. </param>
+            <param name="callback">The callback. </param>
+            <returns>The registration token to deregister the event. </returns>
+        </member>
+        <member name="M:MyToolkit.Events.EventUtilities.RegisterStaticEvent(System.Type,System.String,System.Action{System.Object,System.Object})">
+            <summary>Registers a static event on the given target object. </summary>
+            <param name="type">The target type. </param>
+            <param name="eventName">The event name. </param>
+            <param name="callback">The callback. </param>
+            <returns>The registration token to deregister the event. </returns>
+        </member>
+        <member name="M:MyToolkit.Events.EventUtilities.DeregisterEvent(System.Object,System.String,System.Object)">
+            <summary>Deregisters an event from the target object. </summary>
+            <param name="target">The target object. </param>
+            <param name="eventName">The event name. </param>
+            <param name="token">The registration token. </param>
+        </member>
+        <member name="M:MyToolkit.Events.EventUtilities.DeregisterStaticEvent(System.Type,System.String,System.Object)">
+            <summary>Deregisters a static event from the target type. </summary>
+            <param name="type">The target type. </param>
+            <param name="eventName">The event name. </param>
+            <param name="token">The registration token. </param>
+        </member>
+        <member name="T:MyToolkit.Events.WeakEvent">
+            <summary>Provides methods to register and deregister weak events. </summary>
+        </member>
+        <member name="M:MyToolkit.Events.WeakEvent.RegisterEvent``2(``0,System.Action{System.EventHandler{``1}},System.Action{System.EventHandler{``1}},System.Action{``0,System.Object,``1})">
+            <summary>Registers a weak event handler which is automatically deregistered after the subscriber 
+            has been garbage collected (checked on each event call). </summary>
+        </member>
+        <member name="M:MyToolkit.Events.WeakEvent.RegisterEvent``3(``0,System.Action{``1},System.Action{``1},System.Func{System.EventHandler{``2},``1},System.Action{``0,System.Object,``2})">
+            <summary>Registers a weak event handler which is automatically deregistered after the subscriber 
+            has been garbage collected (checked on each event call). </summary>
+            <param name="converter">The converter: h => (o, e) => h(o, e)</param>
+        </member>
+        <member name="M:MyToolkit.Events.WeakEvent.Register``2(``0,System.String,System.EventHandler{``1})">
+            <summary>Adds a weak event handler to the given source object. </summary>
+            <typeparam name="TEventSource">The type of the source object.</typeparam>
+            <typeparam name="TEventArgs">The type of the event args.</typeparam>
+            <param name="source">The source object to register the event on. </param>
+            <param name="eventName">The event name to create the registration for.</param>
+            <param name="handler">The delegate that handles the event.</param>
+        </member>
+        <member name="M:MyToolkit.Events.WeakEvent.RegisterStaticWeakEvent``1(System.Type,System.String,System.EventHandler{``0})">
+            <summary>Adds a static weak event handler to a static event. </summary>
+            <typeparam name="TEventArgs">The type of the event args.</typeparam>
+            <param name="sourceType">The type of the class that contains the static event. </param>
+            <param name="eventName">The event name to create the registration for.</param>
+            <param name="handler">The delegate that handles the event.</param>
+        </member>
+        <member name="M:MyToolkit.Events.WeakEvent.RegisterStaticWeakEvent``2(System.String,System.EventHandler{``1})">
+            <summary>Adds a static weak event handler to a static event. </summary>
+            <typeparam name="TEventArgs">The type of the event args.</typeparam>
+            <typeparam name="TEventSource">The type of the class that contains the static event. </typeparam>
+            <param name="eventName">The event name to create the registration for.</param>
+            <param name="handler">The delegate that handles the event.</param>
+        </member>
+        <member name="M:MyToolkit.Events.WeakEvent.DeregisterWeakEvent``1(``0,System.String,System.Delegate)">
+            <summary>Removes a weak event registration from the given source object.</summary>
+            <typeparam name="TEventSource">The type of the source object.</typeparam>
+            <param name="source">The source object to register the event from. </param>
+            <param name="eventName">The event name to remove the registration from.</param>
+            <param name="handler">The handler to remove.</param>
+            <returns>True if the event registration could be found and was removed. </returns>
+        </member>
+        <member name="M:MyToolkit.Events.WeakEvent.DeregisterStaticWeakEvent(System.Type,System.String,System.Delegate)">
+            <summary>Removes a static weak event registration from a static event.</summary>
+            <param name="sourceType">The type of the class that contains the static event. </param>
+            <param name="eventName">The event name to remove the registration from.</param>
+            <param name="handler">The handler to remove. </param>
+            <returns>True if the event registration could be found and was removed. </returns>
+        </member>
+        <member name="T:MyToolkit.IO.Utf8StringWriter">
+            <summary>String writer to write UTF-8. </summary>
+        </member>
+        <member name="P:MyToolkit.IO.Utf8StringWriter.Encoding">
+            <summary>Gets the encoding. </summary>
+        </member>
+        <member name="T:MyToolkit.Messaging.CallbackMessage">
+            <summary>Provides a message with a callback. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.CallbackMessage.CallSuccessCallback">
+            <summary>Calls the success callback. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.CallbackMessage.CallFailCallback">
+            <summary>Calls the fail callback. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.CallbackMessage.Task">
+            <summary>Gets the task to await for the callback call. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.CallbackMessage.SuccessCallback">
+            <summary>Gets or sets the callback which is called when the processing of the message was successful. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.CallbackMessage.FailCallback">
+            <summary>Gets or sets the callback which is called when the processing of the message failed. </summary>
+        </member>
+        <member name="T:MyToolkit.Messaging.CallbackMessage`1">
+            <summary>Provides a message with a callback with argument. </summary>
+            <typeparam name="T">The type of the first parameter of the callback. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Messaging.CallbackMessage`1.CallSuccessCallback(`0)">
+            <summary>Calls the success callback. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.CallbackMessage`1.CallFailCallback(`0)">
+            <summary>Calls the fail callback. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.CallbackMessage`1.Task">
+            <summary>Gets the task to await for the callback call. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.CallbackMessage`1.SuccessCallback">
+            <summary>Gets or sets the callback which is called when the processing of the message was successful. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.CallbackMessage`1.FailCallback">
+            <summary>Gets or sets the callback which is called when the processing of the message failed. </summary>
+        </member>
+        <member name="T:MyToolkit.Messaging.CallbackMessage`2">
+            <summary>Provides a message with a callback two arguments. </summary>
+            <typeparam name="TFirst">The type of the first parameter of the callback. </typeparam>
+            <typeparam name="TSecond">The type of the second parameter of the callback. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Messaging.CallbackMessage`2.CallSuccessCallback(`0,`1)">
+            <summary>Calls the success callback. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.CallbackMessage`2.CallFailCallback(`0,`1)">
+            <summary>Calls the fail callback. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.CallbackMessage`2.Task">
+            <summary>
+            Gets the task to await for the callback call. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.CallbackMessage`2.SuccessCallback">
+            <summary>Gets or sets the callback which is called when the processing of the message was successful. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.CallbackMessage`2.FailCallback">
+            <summary>Gets or sets the callback which is called when the processing of the message failed. </summary>
+        </member>
+        <member name="T:MyToolkit.Messaging.CallbackMessage`3">
+            <summary>Provides a message with a callback with three arguments. </summary>
+            <typeparam name="TFirst">The type of the first parameter of the callback. </typeparam>
+            <typeparam name="TSecond">The type of the second parameter of the callback. </typeparam>
+            <typeparam name="TThird">The type of the third parameter of the callback. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Messaging.CallbackMessage`3.CallSuccessCallback(`0,`1,`2)">
+            <summary>Calls the success callback. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.CallbackMessage`3.CallFailCallback(`0,`1,`2)">
+            <summary>Calls the fail callback. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.CallbackMessage`3.Task">
+            <summary>
+            Gets the task to await for the callback call. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.CallbackMessage`3.SuccessCallback">
+            <summary>Gets or sets the callback which is called when the processing of the message was successful. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.CallbackMessage`3.FailCallback">
+            <summary>Gets or sets the callback which is called when the processing of the message failed. </summary>
+        </member>
+        <member name="T:MyToolkit.Messaging.IMessenger">
+            <summary>The interface of the messenger. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.IMessenger.Register``1(System.Object,System.Action{``0})">
+            <summary>Registers an action for the given receiver. WARNING: You have to deregister the action to avoid memory leaks! </summary>
+            <typeparam name="T">Type of the message</typeparam>
+            <param name="receiver">Receiver to use as identifier</param>
+            <param name="action">Action to register</param>
+        </member>
+        <member name="M:MyToolkit.Messaging.IMessenger.Register``1(System.Action{``0})">
+            <summary>Registers an action for no receiver. </summary>
+            <typeparam name="T">Type of the message</typeparam>
+            <param name="action">Action to register</param>
+        </member>
+        <member name="M:MyToolkit.Messaging.IMessenger.Deregister">
+            <summary>Deregisters all actions with no receiver. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.IMessenger.Deregister(System.Object)">
+            <summary>Deregisters all actions with the given receiver. </summary>
+            <param name="receiver"></param>
+        </member>
+        <member name="M:MyToolkit.Messaging.IMessenger.Deregister``1(System.Action{``0})">
+            <summary>Deregisters the specified action. </summary>
+            <typeparam name="T">Type of the message</typeparam>
+            <param name="action">Action to deregister</param>
+        </member>
+        <member name="M:MyToolkit.Messaging.IMessenger.Deregister``1">
+            <summary>Deregisters the specified action. </summary>
+            <typeparam name="T">Type of the message</typeparam>
+        </member>
+        <member name="M:MyToolkit.Messaging.IMessenger.Deregister``1(System.Object)">
+            <summary>Deregisters the specified action. </summary>
+            <param name="receiver"></param>
+            <typeparam name="T">Type of the message</typeparam>
+        </member>
+        <member name="M:MyToolkit.Messaging.IMessenger.Deregister``1(System.Object,System.Action{``0})">
+            <summary>Deregisters an action for the specified receiver. </summary>
+            <typeparam name="T">Type of the message</typeparam>
+            <param name="receiver"></param>
+            <param name="action"></param>
+        </member>
+        <member name="M:MyToolkit.Messaging.IMessenger.Send``1(``0)">
+            <summary>Sends a message to the registered receivers. </summary>
+            <typeparam name="T">Type of the message</typeparam>
+            <param name="message"></param>
+        </member>
+        <member name="M:MyToolkit.Messaging.IMessenger.SendAsync(MyToolkit.Messaging.CallbackMessage)">
+            <summary>Sends a message to the registered receivers. 
+            Usage: new TextMessage("Test").Send();
+            Returns the input message for chaining. </summary>
+            <param name="msg">The message to send. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.IMessenger.SendAsync``1(MyToolkit.Messaging.CallbackMessage{``0})">
+            <summary>Usage: new TextMessage("Test").Send();
+            Returns the input message for chaining. </summary>
+            <param name="msg">The message to send. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.IMessenger.SendAsync``2(MyToolkit.Messaging.CallbackMessage{``0,``1})">
+            <summary>Sends a message to the registered receivers. 
+            Usage: new TextMessage("Test").Send();
+            Returns the input message for chaining. </summary>
+            <param name="msg">The message to send. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.IMessenger.SendAsync``3(MyToolkit.Messaging.CallbackMessage{``0,``1,``2})">
+            <summary>Sends a message to the registered receivers. 
+            Usage: new TextMessage("Test").Send();
+            Returns the input message for chaining. </summary>
+            <param name="msg">The message to send. </param>
+        </member>
+        <member name="T:MyToolkit.Messaging.Messenger">
+            <summary>An instance of the messenger. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.Messenger.Register``1(System.Object,System.Action{``0})">
+            <summary>Registers an action for the given receiver. WARNING: You have to deregister the action to avoid memory leaks! </summary>
+            <typeparam name="T">Type of the message. </typeparam>
+            <param name="receiver">Receiver to use as identifier. </param>
+            <param name="action">Action to register. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.Messenger.Register``1(System.Action{``0})">
+            <summary>Registers an action for no receiver. </summary>
+            <typeparam name="T">Type of the message. </typeparam>
+            <param name="action">Action to register. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.Messenger.Deregister">
+            <summary>Deregisters all actions with no receiver. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.Messenger.Deregister(System.Object)">
+            <summary>Deregisters all actions with the given receiver. </summary>
+            <param name="receiver"></param>
+        </member>
+        <member name="M:MyToolkit.Messaging.Messenger.Deregister``1(System.Action{``0})">
+            <summary>Deregisters the specified action. </summary>
+            <typeparam name="T">Type of the message. </typeparam>
+            <param name="action">Action to deregister. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.Messenger.Deregister``1">
+            <summary>Deregisters the specified action. </summary>
+            <typeparam name="T">Type of the message</typeparam>
+        </member>
+        <member name="M:MyToolkit.Messaging.Messenger.Deregister``1(System.Object)">
+            <summary>Deregisters the specified action. </summary>
+            <param name="receiver"></param>
+            <typeparam name="T">Type of the message</typeparam>
+        </member>
+        <member name="M:MyToolkit.Messaging.Messenger.Deregister``1(System.Object,System.Action{``0})">
+            <summary>Deregisters an action for the specified receiver. </summary>
+            <typeparam name="T">Type of the message. </typeparam>
+            <param name="receiver">The receiver object. </param>
+            <param name="action">The action to deregister on the receiver. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.Messenger.Send``1(``0)">
+            <summary>Sends a message to the registered receivers. </summary>
+            <typeparam name="T">Type of the message. </typeparam>
+            <param name="message">The message to send. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.Messenger.SendAsync(MyToolkit.Messaging.CallbackMessage)">
+            <summary>Sends a message to the registered receivers. 
+            Usage: new TextMessage("Test").Send();
+            Returns the input message for chaining. </summary>
+            <param name="message">The message to send. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.Messenger.SendAsync``1(MyToolkit.Messaging.CallbackMessage{``0})">
+            <summary>Usage: new TextMessage("Test").Send();
+            Returns the input message for chaining. </summary>
+            <param name="message">The message to send. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.Messenger.SendAsync``2(MyToolkit.Messaging.CallbackMessage{``0,``1})">
+            <summary>Sends a message to the registered receivers. 
+            Usage: new TextMessage("Test").Send();
+            Returns the input message for chaining. </summary>
+            <param name="message">The message to send. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.Messenger.SendAsync``3(MyToolkit.Messaging.CallbackMessage{``0,``1,``2})">
+            <summary>Sends a message to the registered receivers. 
+            Usage: new TextMessage("Test").Send();
+            Returns the input message for chaining. </summary>
+            <param name="message">The message to send. </param>
+        </member>
+        <member name="P:MyToolkit.Messaging.Messenger.Default">
+            <summary>Gets or sets the default messenger. </summary>
+        </member>
+        <member name="T:MyToolkit.Messaging.MessengerExtensions">
+            <summary>Extension methods to send messages using the default messenger. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.MessengerExtensions.Send``1(``0)">
+            <summary>Sends a message to the registered receivers using the default messenger. </summary>
+            <typeparam name="T">Type of the message. </typeparam>
+            <param name="message">The message to send. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.MessengerExtensions.SendAsync(MyToolkit.Messaging.CallbackMessage)">
+            <summary>Sends a message to the registered receivers using the default messenger. 
+            Usage: new TextMessage("Test").Send();
+            Returns the input message for chaining. </summary>
+            <param name="message">The message to send. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.MessengerExtensions.SendAsync``1(MyToolkit.Messaging.CallbackMessage{``0})">
+            <summary>Sends a message to the registered receivers using the default messenger. 
+            Usage: new TextMessage("Test").Send();
+            Returns the input message for chaining. </summary>
+            <param name="message">The message to send. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.MessengerExtensions.SendAsync``2(MyToolkit.Messaging.CallbackMessage{``0,``1})">
+            <summary>Sends a message to the registered receivers using the default messenger. 
+            Usage: new TextMessage("Test").Send();
+            Returns the input message for chaining. </summary>
+            <param name="message">The message to send. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.MessengerExtensions.SendAsync``3(MyToolkit.Messaging.CallbackMessage{``0,``1,``2})">
+            <summary>Sends a message to the registered receivers using the default messenger. 
+            Usage: new TextMessage("Test").Send();
+            Returns the input message for chaining. </summary>
+            <param name="message">The message to send. </param>
+        </member>
+        <member name="T:MyToolkit.Messaging.NavigateMessage">
+            <summary>Message to navigate to another page. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.NavigateMessage.#ctor(System.Type)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Messaging.NavigateMessage"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.NavigateMessage.#ctor(System.Type,System.Object[])">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Messaging.NavigateMessage"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.NavigateMessage.#ctor(System.Type,System.Object)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Messaging.NavigateMessage"/> class. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.NavigateMessage.ViewModelType">
+            <summary>The view model type of the page. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.NavigateMessage.Parameter">
+            <summary>The navigation parameter. </summary>
+        </member>
+        <member name="T:MyToolkit.Messaging.TextMessage">
+            <summary>Message to show a message box. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.TextMessage.#ctor(System.String)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Messaging.TextMessage"/> class. </summary>
+            <param name="text">The text. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.TextMessage.#ctor(System.String,System.String)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Messaging.TextMessage"/> class. </summary>
+            <param name="text">The text. </param>
+            <param name="title">The title. </param>
+        </member>
+        <member name="M:MyToolkit.Messaging.TextMessage.#ctor(System.String,System.String,MyToolkit.Messaging.MessageButton)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Messaging.TextMessage"/> class. </summary>
+            <param name="text">The text. </param>
+            <param name="title">The title. </param>
+            <param name="button">The shown buttons. </param>
+        </member>
+        <member name="P:MyToolkit.Messaging.TextMessage.Title">
+            <summary>Gets the message box title. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.TextMessage.Text">
+            <summary>Gets the message box text. </summary>
+        </member>
+        <member name="P:MyToolkit.Messaging.TextMessage.Button">
+            <summary>Gets the message box buttons. </summary>
+        </member>
+        <member name="T:MyToolkit.Model.GraphPropertyChangedEventArgs">
+            <summary>The argument of the ExtendedPropertyChanged event. </summary>
+        </member>
+        <member name="M:MyToolkit.Model.GraphPropertyChangedEventArgs.#ctor(System.String,System.Object,System.Object)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Model.GraphPropertyChangedEventArgs"/> class. </summary>
+        </member>
+        <member name="P:MyToolkit.Model.GraphPropertyChangedEventArgs.OldValue">
+            <summary>Gets the old value of the changed property. </summary>
+        </member>
+        <member name="P:MyToolkit.Model.GraphPropertyChangedEventArgs.NewValue">
+            <summary>Gets the new value of the changed property. </summary>
+        </member>
+        <member name="T:MyToolkit.MVVM.NotifyPropertyChanged">
+            <summary>Provides an implementation of the <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface. </summary>
+        </member>
+        <member name="T:MyToolkit.Model.PropertyChangedEventArgsExtensions">
+            <summary>Provides extension methods to check <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> in a type-safe manner using lambdas. </summary>
+        </member>
+        <member name="M:MyToolkit.Model.PropertyChangedEventArgsExtensions.IsProperty(System.ComponentModel.PropertyChangedEventArgs,System.String)">
+            <summary>Checks whether a given property has changed. </summary>
+            <param name="args">The <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/>. </param>
+            <param name="propertyName">The property name. </param>
+            <returns>True if it matches. </returns>
+        </member>
+        <member name="M:MyToolkit.Model.PropertyChangedEventArgsExtensions.IsProperty``1(System.ComponentModel.PropertyChangedEventArgs,System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>Checks whether a property given as lambda has changed. </summary>
+            <typeparam name="TObject">The type of the class with the property. </typeparam>
+            <param name="args">The <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/>. </param>
+            <param name="expression">The property name as lambda. </param>
+            <returns>True if it matches. </returns>
+        </member>
+        <member name="T:MyToolkit.Mvvm.IDispatcher">
+            <summary>Interface for a UI dispatcher. </summary>
+        </member>
+        <member name="M:MyToolkit.Mvvm.IDispatcher.InvokeAsync(System.Action)">
+            <summary>Invokes an action on the dispatcher thread. </summary>
+            <param name="action">The action. </param>
+        </member>
+        <member name="T:MyToolkit.Mvvm.ViewModelBase">
+            <summary>Provides a base implementation of a view model. </summary>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.Initialize">
+            <summary>Initializes the view model. Must only be called once per view model instance 
+            (after the InitializeComponent method of a UserControl). </summary>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.RegisterCancellationTokenSource(System.Threading.CancellationTokenSource)">
+            <summary>Registers a <see cref="T:System.Threading.CancellationTokenSource"/> which will be cancelled when cleaning up the view model. </summary>
+            <param name="cancellationTokenSource"></param>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.CreateCancellationTokenSource(System.Boolean)">
+            <summary>Creates a <see cref="T:System.Threading.CancellationTokenSource"/> and registers it if not disabled. </summary>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.RunTaskAsync``1(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.Task{``0}})">
+            <summary>Runs a task 
+            and correctly updates the <see cref="P:MyToolkit.Mvvm.ViewModelBase.IsLoading"/> property, 
+            handles exceptions in the <see cref="M:MyToolkit.Mvvm.ViewModelBase.HandleException(System.Exception)"/> method 
+            and automatically creates and registers a cancellation token source. </summary>
+            <param name="task">The task to run. </param>
+            <returns>The awaitable task. </returns>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.RunTaskAsync(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.Task})">
+            <summary>Runs a task 
+            and correctly updates the <see cref="P:MyToolkit.Mvvm.ViewModelBase.IsLoading"/> property, 
+            handles exceptions in the <see cref="M:MyToolkit.Mvvm.ViewModelBase.HandleException(System.Exception)"/> method 
+            and automatically creates and registers a cancellation token source. </summary>
+            <param name="task">The task to run. </param>
+            <returns>The awaitable task. </returns>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.RunTaskAsync(System.Func{System.Threading.Tasks.Task})">
+            <summary>Runs a task 
+            and correctly updates the <see cref="P:MyToolkit.Mvvm.ViewModelBase.IsLoading"/> property, 
+            handles exceptions in the <see cref="M:MyToolkit.Mvvm.ViewModelBase.HandleException(System.Exception)"/> method 
+            and automatically creates and registers a cancellation token source. </summary>
+            <param name="task">The task to run. </param>
+            <returns>The awaitable task. </returns>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.RunTaskAsync``1(System.Func{System.Threading.Tasks.Task{``0}})">
+            <summary>Runs a task 
+            and correctly updates the <see cref="P:MyToolkit.Mvvm.ViewModelBase.IsLoading"/> property, 
+            handles exceptions in the <see cref="M:MyToolkit.Mvvm.ViewModelBase.HandleException(System.Exception)"/> method 
+            and automatically creates and registers a cancellation token source. </summary>
+            <param name="task">The task to run. </param>
+            <returns>The awaitable task. </returns>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.RunTaskAsync``1(System.Threading.Tasks.Task{``0})">
+            <summary>Runs a task 
+            and correctly updates the <see cref="P:MyToolkit.Mvvm.ViewModelBase.IsLoading"/> property, 
+            handles exceptions in the <see cref="M:MyToolkit.Mvvm.ViewModelBase.HandleException(System.Exception)"/> method 
+            and automatically creates and registers a cancellation token source. </summary>
+            <param name="task">The task to run. </param>
+            <returns>The awaitable task. </returns>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.RunTaskAsync(System.Threading.Tasks.Task)">
+            <summary>Asynchronously runs an action 
+            and correctly updates the <see cref="P:MyToolkit.Mvvm.ViewModelBase.IsLoading"/> property, 
+            handles exceptions in the <see cref="M:MyToolkit.Mvvm.ViewModelBase.HandleException(System.Exception)"/> method 
+            and automatically creates and registers a cancellation token source. </summary>
+            <param name="task">The task to run. </param>
+            <returns>The awaitable task. </returns>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.RunTaskAsync(System.Action)">
+            <summary>Asynchronously runs an action 
+            and correctly updates the <see cref="P:MyToolkit.Mvvm.ViewModelBase.IsLoading"/> property, 
+            handles exceptions in the <see cref="M:MyToolkit.Mvvm.ViewModelBase.HandleException(System.Exception)"/> method 
+            and automatically creates and registers a cancellation token source. </summary>
+            <param name="action">The action to run. </param>
+            <returns>The awaitable task. </returns>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.RunTaskAsync``1(System.Func{``0})">
+            <summary>Asynchronously runs an action 
+            and correctly updates the <see cref="P:MyToolkit.Mvvm.ViewModelBase.IsLoading"/> property, 
+            handles exceptions in the <see cref="M:MyToolkit.Mvvm.ViewModelBase.HandleException(System.Exception)"/> method 
+            and automatically creates and registers a cancellation token source. </summary>
+            <param name="action">The action to run. </param>
+            <returns>The awaitable task. </returns>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.HandleException(System.Exception)">
+            <summary>Handles an exception which occured in the <see cref="M:MyToolkit.Mvvm.ViewModelBase.RunTaskAsync(System.Func{System.Threading.CancellationToken,System.Threading.Tasks.Task})"/> method. </summary>
+            <param name="exception">The exception to handle. </param>
+            <exception cref="T:System.NotImplementedException">An exception occured in RunTaskAsync. Override ViewModelBase.HandleException to handle this exception. </exception>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.DeregisterCancellationTokenSource(System.Threading.CancellationTokenSource)">
+            <summary>Disposes and deregisters a <see cref="T:System.Threading.CancellationTokenSource"/>. 
+            Should be called when the task has finished cleaning up the view model. </summary>
+            <param name="cancellationTokenSource"></param>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.CallOnLoaded">
+            <summary>Initializes the view model (should be called in the view's Loaded event). </summary>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.CallOnUnloaded">
+            <summary>Cleans up the view model (should be called in the view's Unloaded event). </summary>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.OnLoaded">
+            <summary>
+            Implementation of the initialization method. 
+            If the view model is already initialized the method is not called again by the Initialize method. 
+            </summary>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelBase.OnUnloaded">
+            <summary>
+            Implementation of the clean up method. 
+            If the view model is already cleaned up the method is not called again by the Cleanup method. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Mvvm.ViewModelBase.IsLoading">
+            <summary>
+            Gets or sets a value indicating whether the view model is currently loading. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Mvvm.ViewModelBase.IsViewLoaded">
+            <summary>Gets a value indicating whether the view model has been loaded. </summary>
+        </member>
+        <member name="T:MyToolkit.MVVM.BaseViewModel">
+            <summary>Provides a base implementation of a view model. </summary>
+        </member>
+        <member name="T:MyToolkit.Networking.AuthenticatedUri">
+            <summary>Provides an URI with authentication information (username/password). </summary>
+        </member>
+        <member name="P:MyToolkit.Networking.AuthenticatedUri.UserName">
+            <summary>Gets or sets the username. </summary>
+        </member>
+        <member name="P:MyToolkit.Networking.AuthenticatedUri.Password">
+            <summary>Gets or sets the password. </summary>
+        </member>
+        <member name="P:MyToolkit.Networking.AuthenticatedUri.Credentials">
+            <summary>Gets the the username and password as a credentials object. </summary>
+        </member>
+        <member name="T:MyToolkit.Serialization.XmlSerialization">
+            <summary>Provides methods to serialize and deserialize objects to XML. </summary>
+        </member>
+        <member name="M:MyToolkit.Serialization.XmlSerialization.CreateSerializer``1(System.Type[],System.Boolean)">
+            <summary>Creates or retrieves a serializer for the given type and extra types. </summary>
+            <typeparam name="T">The type to create the serializer for. </typeparam>
+            <param name="extraTypes">The extra types. </param>
+            <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+            <returns>The <see cref="T:System.Xml.Serialization.XmlSerializer"/>. </returns>
+        </member>
+        <member name="M:MyToolkit.Serialization.XmlSerialization.Serialize``1(``0,System.Type[],System.Boolean)">
+            <summary>Serializes an object to a XML string. </summary>
+            <typeparam name="T">The type of the object to serialize. </typeparam>
+            <param name="obj">The object to serialize. </param>
+            <param name="extraTypes">The additional types. </param>
+            <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+            <returns>The XML string. </returns>
+        </member>
+        <member name="M:MyToolkit.Serialization.XmlSerialization.Deserialize``1(System.String,System.Type[],System.Boolean)">
+            <summary>Deserializes an object from a XML string. </summary>
+            <typeparam name="T">The type of the resulting object. </typeparam>
+            <param name="xml">The XML string. </param>
+            <param name="extraTypes">The addional types. </param>
+            <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+            <returns>The deserialized object. </returns>
+        </member>
+        <member name="M:MyToolkit.Serialization.XmlSerialization.SerializeDictionary``2(System.Collections.Generic.Dictionary{``0,``1},System.Type[],System.Boolean)">
+            <summary>Serializes a dictionary to a XML string. </summary>
+            <typeparam name="TKey">The dictionary key type. </typeparam>
+            <typeparam name="TValue">The dictionary value type. </typeparam>
+            <param name="dictionary">The dictionary to serialize. </param>
+            <param name="extraTypes">The additional types. </param>
+            <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+            <returns>The XML string. </returns>
+        </member>
+        <member name="M:MyToolkit.Serialization.XmlSerialization.DeserializeDictionary``2(System.String,System.Type[],System.Boolean)">
+            <summary>Deserializes a dictionary from a XML string. </summary>
+            <typeparam name="TKey">The dictionary key type. </typeparam>
+            <typeparam name="TValue">The dictionary value type. </typeparam>
+            <param name="xml">The XML string. </param>
+            <param name="extraTypes">The addional types. </param>
+            <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+            <returns>The deserialized object. </returns>
+        </member>
+        <member name="M:MyToolkit.Serialization.XmlSerialization.SerializeAsync``1(``0,System.Type[],System.Boolean)">
+            <summary>Asynchronously serializes an object to a XML string. </summary>
+            <typeparam name="T">The type of the object to serialize. </typeparam>
+            <param name="obj">The object to serialize. </param>
+            <param name="extraTypes">The additional types. </param>
+            <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+            <returns>The XML string. </returns>
+        </member>
+        <member name="M:MyToolkit.Serialization.XmlSerialization.DeserializeAsync``1(System.String,System.Type[],System.Boolean)">
+            <summary>Asynchronously deserializes an object from a XML string. </summary>
+            <typeparam name="T">The type of the resulting object. </typeparam>
+            <param name="xml">The XML string. </param>
+            <param name="extraTypes">The addional types. </param>
+            <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+            <returns>The deserialized object. </returns>
+        </member>
+        <member name="M:MyToolkit.Serialization.XmlSerialization.SerializeDictionaryAsync``2(System.Collections.Generic.Dictionary{``0,``1},System.Type[],System.Boolean)">
+            <summary>Asynchronously serializes an object to a XML string. </summary>
+            <typeparam name="TKey">The dictionary key type. </typeparam>
+            <typeparam name="TValue">The dictionary value type. </typeparam>
+            <param name="obj">The object to serialize. </param>
+            <param name="extraTypes">The additional types. </param>
+            <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+            <returns>The XML string. </returns>
+        </member>
+        <member name="M:MyToolkit.Serialization.XmlSerialization.DeserializeDictionaryAsync``2(System.String,System.Type[],System.Boolean)">
+            <summary>Asynchronously deserializes an object from a XML string. </summary>
+            <typeparam name="TKey">The dictionary key type. </typeparam>
+            <typeparam name="TValue">The dictionary value type. </typeparam>
+            <param name="xml">The XML string. </param>
+            <param name="extraTypes">The addional types. </param>
+            <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+            <returns>The deserialized object. </returns>
+        </member>
+        <member name="T:MyToolkit.Serialization.XmlSerialization.KeyValuePair`2">
+            <summary>Used only for serialization</summary>
+        </member>
+        <member name="T:MyToolkit.Storage.ApplicationSettings">
+            <summary>Provides methods to access and write settings to the isolated storage (works only for WP and WinRT). </summary>
+        </member>
+        <member name="M:MyToolkit.Storage.ApplicationSettings.SetSetting``1(System.String,``0,System.Boolean,System.Boolean)">
+            <summary>Sets a setting in the isolated storage. </summary>
+            <typeparam name="T">The type of the setting. </typeparam>
+            <param name="key">The key of the setting. </param>
+            <param name="value">The value of the setting. </param>
+            <param name="roaming">True if the setting should be roamed to other devices. </param>
+            <param name="save">True if the the change should be written to the isolated storage. </param>
+        </member>
+        <member name="M:MyToolkit.Storage.ApplicationSettings.GetSetting``1(System.String)">
+            <summary>Gets a setting from the isolated storage. </summary>
+            <typeparam name="T">The type of the setting. </typeparam>
+            <param name="key">The key of the setting. </param>
+            <returns>The setting. </returns>
+        </member>
+        <member name="M:MyToolkit.Storage.ApplicationSettings.GetSetting``1(System.String,``0,System.Boolean)">
+            <summary>Gets a setting from the isolated storage. </summary>
+            <typeparam name="T">The type of the setting. </typeparam>
+            <param name="key">The key of the setting. </param>
+            <param name="defaultValue">The default value of the settings (returned if it is not currently set). </param>
+            <param name="roaming">True if the setting is roamed to other devices. </param>
+            <returns>The setting. </returns>
+        </member>
+        <member name="M:MyToolkit.Storage.ApplicationSettings.HasSetting``1(System.String,System.Boolean)">
+            <summary>Check whether a setting exists in the isolated storage. </summary>
+            <typeparam name="T">The type of the setting. </typeparam>
+            <param name="key">The key of the setting. </param>
+            <param name="roaming">True if the setting is roamed to other devices. </param>
+            <returns>True if setting exists. </returns>
+        </member>
+        <member name="M:MyToolkit.Storage.ApplicationSettings.RemoveSetting(System.String,System.Boolean,System.Boolean)">
+            <summary>Removes a setting from the isolated storage. </summary>
+            <param name="key">The key of the setting. </param>
+            <param name="roaming">True if the setting is roamed to other devices. </param>
+            <param name="save">True if the removal should be written to the isolated storage. </param>
+            <returns>Returns true if the setting has successfully removed. If setting is not present, false is returned. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.CodeContractExtensions">
+            <summary>Provides extension methods for Code Contracts and method parameter validation. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.CodeContractExtensions.CheckNotNullOrEmpty(System.String,System.String)">
+            <summary>Throws an <see cref="T:System.ArgumentNullException"/> if the value is <c>null</c> or <c>string.Empty</c>.</summary>
+            <param name="value">The value.</param>
+            <param name="parameterName">The name of the parameter.</param>
+            <exception cref="T:System.ArgumentNullException">The value cannot be null or empty.</exception>
+            <remarks>The method throws a <see cref="T:System.ArgumentNullException"/> and also defines Contract.Requires statements for static analysis.</remarks>
+        </member>
+        <member name="M:MyToolkit.Utilities.CodeContractExtensions.CheckNotNull(System.Object,System.String)">
+            <summary>Throws an <see cref="T:System.ArgumentNullException"/> if the value is <c>null</c>.</summary>
+            <typeparam name="T">The type of the value. </typeparam>
+            <param name="value">The value.</param>
+            <param name="parameterName">The name of the parameter.</param>
+            <exception cref="T:System.ArgumentNullException">The value cannot be null.</exception>
+            <remarks>The method throws a <see cref="T:System.ArgumentNullException"/> and also defines a Contract.Requires statement for static analysis.</remarks>
+        </member>
+        <member name="M:MyToolkit.Utilities.CodeContractExtensions.CheckNotNull``1(System.Nullable{``0},System.String)">
+            <summary>Throws an <see cref="T:System.ArgumentNullException"/> if the value is <c>null</c>.</summary>
+            <typeparam name="T">The type of the value. </typeparam>
+            <param name="value">The value.</param>
+            <param name="parameterName">The name of the parameter.</param>
+            <exception cref="T:System.ArgumentNullException">The value cannot be null.</exception>
+            <remarks>The method throws a <see cref="T:System.ArgumentNullException"/> and also defines a Contract.Requires statement for static analysis.</remarks>
+        </member>
+        <member name="T:MyToolkit.Utilities.CommandProcessor">
+            <summary>
+            Provides a command processor. 
+            </summary>
+        </member>
+        <member name="T:MyToolkit.Utilities.DateTimeExtensions">
+            <summary>Provides extension methods for date and time manipulation. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.DateTimeExtensions.ToStartOfDay(System.DateTime)">
+            <summary>Resets the time part to 00:00:00. </summary>
+            <param name="dt">The date time to work with. </param>
+            <returns>The new date time. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.DateTimeExtensions.ToEndOfDay(System.DateTime)">
+            <summary>Sets the time part to the latest time of the day. </summary>
+            <param name="dt">The date time to work with. </param>
+            <returns>The new date time. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.DateTimeExtensions.ToStartOfDay(System.Nullable{System.DateTime})">
+            <summary>Resets the time part to 00:00:00. </summary>
+            <param name="dt">The date time to work with. </param>
+            <returns>The new date time. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.DateTimeExtensions.ToEndOfDay(System.Nullable{System.DateTime})">
+            <summary>Sets the time part to the latest time of the day. </summary>
+            <param name="dt">The date time to work with. </param>
+            <returns>The new date time. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.DateTimeExtensions.IsBetween(System.DateTime,System.DateTime,System.DateTime)">
+            <summary>Checks whether a date time is between two date times. </summary>
+            <param name="dt">The date time to work with. </param>
+            <param name="start">The starting date time. </param>
+            <param name="end">The ending start time. </param>
+            <returns>True when the date time is between. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.DateTimeExtensions.IsBetween(System.Nullable{System.DateTime},System.DateTime,System.DateTime)">
+            <summary>Checks whether a date time is between two date times. </summary>
+            <param name="dt">The date time to work with. </param>
+            <param name="start">The starting date time. </param>
+            <param name="end">The ending start time. </param>
+            <returns>True when the date time is between. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.DateTimeExtensions.IsBetween(System.DateTime,System.DateTime,System.Nullable{System.DateTime})">
+            <summary>Checks whether a date time is between two date times. </summary>
+            <param name="dt">The date time to work with. </param>
+            <param name="start">The starting date time. </param>
+            <param name="end">The ending start time. Null means undefinitely in the future. </param>
+            <returns>True when the date time is between. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.DateTimeExtensions.IsBetween(System.Nullable{System.DateTime},System.DateTime,System.Nullable{System.DateTime})">
+            <summary>Checks whether a date time is between two date times. </summary>
+            <param name="dt">The date time to work with. </param>
+            <param name="start">The starting date time. </param>
+            <param name="end">The ending start time. Null means undefinitely in the future. </param>
+            <returns>True when the date time is between. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.DateTimeExtensions.IsBetween(System.DateTime,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Checks whether a date time is between two date times. 
+            </summary>
+            <param name="dt">The date time to work with. </param>
+            <param name="start">The starting date time. Null means undefinitely in the past. </param>
+            <param name="end">The ending start time. Null means undefinitely in the future. </param>
+            <returns>True when the date time is between. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.DateTimeExtensions.IsBetween(System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>Checks whether a date time is between two date times. </summary>
+            <param name="dt">The date time to work with. </param>
+            <param name="start">The starting date time. Null means undefinitely in the past. </param>
+            <param name="end">The ending start time. Null means undefinitely in the future. </param>
+            <returns>True when the date time is between. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.DateTimeUtilities">
+            <summary>Provides date time utility methods. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.DateTimeUtilities.FromUnixTimeStamp(System.Double,System.DateTimeKind)">
+            <summary>Converts a unix timestamp to a DateTime. </summary>
+            <param name="unixTimeStamp">The unix timestamp. </param>
+            <param name="kind">The kind of the unit timestamp and return value. </param>
+            <returns>The date time. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.DateTimeUtilities.ToUnixTimeStamp(System.DateTime,System.DateTimeKind)">
+            <summary>Converts a DateTime to an unix timestamp. </summary>
+            <param name="dateTime">The date time. </param>
+            <param name="kind">The kind of the date time and return value. </param>
+            <returns>The unix timestamp. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.DateTimeUtilities.SetTimeTakeDate(System.DateTime,System.Int32,System.Int32,System.Int32)">
+            <summary>Changes only the time part of the DateTime. </summary>
+            <param name="date">The date. </param>
+            <param name="hour">The hour. </param>
+            <param name="minute">The minute. </param>
+            <param name="second">The second. </param>
+            <returns></returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.DictionaryExtensions">
+            <summary>Provides extension methods for dictionaries. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.DictionaryExtensions.DeepCopy(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>Recursively copies a dictionary. </summary>
+            <param name="dictionary">The dictionary to copy. </param>
+            <returns>The copied dictionary. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.DictionaryExtensions.DeepCopy(MyToolkit.Collections.ObservableDictionary{System.String,System.Object})">
+            <summary>Recursively copies an observable dictionary. </summary>
+            <param name="dictionary">The observable dictionary to copy. </param>
+            <returns>The copied observable dictionary. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.EnumerableExtensions">
+            <summary>Provides extension methods for enumerations. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableExtensions.OrderByThenBy``3(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1},System.Func{``0,``2})">
+            <summary>Provides ordering by two expressions. Use this method instaed of OrderBy(...).ThenBy(...) as it calls ThenBy only if necessary. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableExtensions.DistinctBy``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>Removes equal objects by specifing the comparing key. </summary>
+            <typeparam name="TSource">The type of an item. </typeparam>
+            <typeparam name="TKey">The type of the key. </typeparam>
+            <param name="source">The source enumerable. </param>
+            <param name="keySelector">The key selector. </param>
+            <returns>The filtered enumerable. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableExtensions.IsCopyOf``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IList{``0})">
+            <summary>Returns true if the second list contains exactly the same items in the same order or is equal. </summary>
+            <typeparam name="T">The item type. </typeparam>
+            <param name="list1">The first list. </param>
+            <param name="list2">The second list. </param>
+            <returns></returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableExtensions.IsCopyOf``1(System.Collections.Generic.ICollection{``0},System.Collections.Generic.ICollection{``0})">
+            <summary>Returns true if the second list contains exactly the same items or is equal. </summary>
+            <typeparam name="T">The item type. </typeparam>
+            <param name="list1">The first collection. </param>
+            <param name="list2">The second collection. </param>
+            <returns></returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableExtensions.Shuffle``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>Returns a shuffled list. </summary>
+            <typeparam name="T">The item type. </typeparam>
+            <param name="source">The list to shuffle. </param>
+            <returns>The shuffled list. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableExtensions.TakeRandom``1(System.Collections.Generic.IList{``0},System.Int32)">
+            <summary>Takes random items from the given list. </summary>
+            <typeparam name="T">The item type. </typeparam>
+            <param name="source">The list to take the items from. </param>
+            <param name="amount">The amount of items to take. </param>
+            <returns>The randomly taken items. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableExtensions.MinObject``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>Takes the minimal object from a list. </summary>
+            <typeparam name="T">The item type. </typeparam>
+            <typeparam name="U">The compared type. </typeparam>
+            <param name="list">The list to search in. </param>
+            <param name="selector">The selector of the object to compare. </param>
+            <returns>The minimal object. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableExtensions.MaxObject``2(System.Collections.Generic.IEnumerable{``0},System.Func{``0,``1})">
+            <summary>Takes the maximum object from a list. </summary>
+            <typeparam name="T">The item type. </typeparam>
+            <typeparam name="TProperty">The compared type. </typeparam>
+            <param name="list">The list to search in. </param>
+            <param name="selector">The selector of the object to compare. </param>
+            <returns>The maximum object. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableExtensions.MiddleElements``1(System.Collections.Generic.IList{``0},System.Int32)">
+            <summary>Gets a specified amount of items in the middle of a list. </summary>
+            <typeparam name="T">The item type. </typeparam>
+            <param name="list">The list. </param>
+            <param name="count">The amount of items to retrieve. </param>
+            <returns>The middle items. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.EnumerableMathExtensions">
+            <summary>Provides LINQ extension methods for mathematical calculations. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableMathExtensions.StandardDeviation(System.Collections.Generic.IEnumerable{System.Double})">
+            <summary>Calculates the standard deviation from the given values. </summary>
+            <param name="values">The values. </param>
+            <returns>The standard deviation. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableMathExtensions.StandardDeviation(System.Collections.Generic.IEnumerable{System.Decimal})">
+            <summary>Calculates the standard deviation from the given values. </summary>
+            <param name="values">The values. </param>
+            <returns>The standard deviation. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableMathExtensions.Range(System.Collections.Generic.IEnumerable{System.Double})">
+            <summary>Calculates the statistical range of the given values. </summary>
+            <param name="values">The values. </param>
+            <returns>The range. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableMathExtensions.Range(System.Collections.Generic.IEnumerable{System.Decimal})">
+            <summary>Calculates the statistical range of the given values. </summary>
+            <param name="values">The values. </param>
+            <returns>The range. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableMathExtensions.Variance(System.Collections.Generic.IEnumerable{System.Double})">
+            <summary>Calculates the statistical variance of the given values. </summary>
+            <param name="values">The values. </param>
+            <returns>The variance. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableMathExtensions.Variance(System.Collections.Generic.IEnumerable{System.Decimal})">
+            <summary>Calculates the statistical variance of the given values. </summary>
+            <param name="values">The values. </param>
+            <returns>The variance. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableMathExtensions.Median(System.Collections.Generic.IEnumerable{System.Double})">
+            <summary>Calculates the median from the given values. </summary>
+            <param name="values">The values. </param>
+            <returns>The median. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.EnumerableMathExtensions.Median(System.Collections.Generic.IEnumerable{System.Decimal})">
+            <summary>Calculates the median from the given values. </summary>
+            <param name="values">The values. </param>
+            <returns>The median. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.EventHandlerExtensions">
+            <summary>Provides extension methods for event handlers. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.EventHandlerExtensions.Raise(System.EventHandler,System.Object,System.EventArgs)">
+            <summary>Raises the event in a thead-safe manner. </summary>
+            <param name="handler">The event handler. </param>
+            <param name="sender">The sender</param>
+            <param name="args">The event arguments</param>
+        </member>
+        <member name="M:MyToolkit.Utilities.EventHandlerExtensions.Raise``1(System.EventHandler{``0},System.Object,``0)">
+            <summary>Raises the event in a thead-safe manner. </summary>
+            <typeparam name="TEventArgs">The type of the event arguments. </typeparam>
+            <param name="handler">The event handler. </param>
+            <param name="sender">The sender</param>
+            <param name="args">The event arguments</param>
+        </member>
+        <member name="M:MyToolkit.Utilities.EventHandlerExtensions.Raise``2(``0,System.Object,``1)">
+            <summary>Raises the event in a thead-safe manner. </summary>
+            <typeparam name="TEventHandler">The type of the event handler. </typeparam>
+            <typeparam name="TEventArgs">The type of the event arguments. </typeparam>
+            <param name="handler">The event handler. </param>
+            <param name="sender">The sender</param>
+            <param name="args">The event arguments</param>
+        </member>
+        <member name="T:MyToolkit.Utilities.ExpressionUtilities">
+            <summary>Provides methods to handle lambda expressions. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.ExpressionUtilities.GetPropertyName``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>Returns the property name of the property specified in the given lambda (e.g. GetPropertyName(i => i.MyProperty)). </summary>
+            <typeparam name="TClass">The type of the class with the property. </typeparam>
+            <typeparam name="TProperty">The property type. </typeparam>
+            <param name="expression">The lambda with the property. </param>
+            <returns>The name of the property in the lambda. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.ExpressionUtilities.GetPropertyName``1(System.Linq.Expressions.Expression{System.Func{``0}})">
+            <summary>Returns the property name of the property specified in the given lambda (e.g. GetPropertyName(i => i.MyProperty)). </summary>
+            <typeparam name="TProperty">The property type. </typeparam>
+            <param name="expression">The lambda with the property. </param>
+            <returns>The name of the property in the lambda. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.ExpressionUtilities.GetPropertyName``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}})">
+            <summary>Returns the property name of the property specified in the given lambda (e.g. GetPropertyName(i => i.MyProperty)). </summary>
+            <typeparam name="TClass">The type of the class with the property. </typeparam>
+            <param name="expression">The lambda with the property. </param>
+            <returns>The name of the property in the lambda. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.GeolocationUtilities">
+            <summary>Provides methods to handle geolocations. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.GeolocationUtilities.GetDistanceTo(System.Double,System.Double,System.Double,System.Double)">
+            <summary>Calculates the distance between to coordinates. </summary>
+            <param name="lat1">Latitude of the first coordinate. </param>
+            <param name="long1">Longitude of the first coordinate. </param>
+            <param name="lat2">Latitude of the second coordinate. </param>
+            <param name="long2">Longitude of the second coordinate. </param>
+            <returns>The distance. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.HttpUtilityExtensions">
+            <summary>Provides HTTP utility methods. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.HttpUtilityExtensions.ParseQueryString(System.String)">
+            <summary>Parses a given HTTP query string into key-value pairs. </summary>
+            <param name="queryString">The query string to parse. </param>
+            <returns>The key-value pairs. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.IEntity`1">
+            <summary>Interface for an entity with an ID. </summary>
+        </member>
+        <member name="P:MyToolkit.Utilities.IEntity`1.Id">
+            <summary>Gets the ID of the entity. </summary>
+        </member>
+        <member name="T:MyToolkit.Utilities.ReflectionExtensions">
+            <summary>Provides additional reflection methods. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.ReflectionExtensions.GetName(System.Type)">
+            <summary>Gets the name of the type (without namespace or assembly version). </summary>
+            <param name="type">The type. </param>
+            <returns>The name of the type. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.ReflectionExtensions.CreateGenericObject(System.Type,System.Type,System.Object[])">
+            <summary>Instantiates an object of a generic type. </summary>
+            <param name="type">The type. </param>
+            <param name="innerType">The first generic type. </param>
+            <param name="args">The constructor parameters. </param>
+            <returns>The instantiated object. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.ReflectionExtensions.Merge``1(``0,``0)">
+            <summary>Merges a given source object into a target object (no deep copy!). </summary>
+            <param name="source">The source object. </param>
+            <param name="target">The target object. </param>
+        </member>
+        <member name="T:MyToolkit.Utilities.StreamExtensions">
+            <summary>Provides methods to handle streams. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.StreamExtensions.ReadToEnd(System.IO.Stream)">
+            <summary>
+            Reads all available bytes from the stream. 
+            </summary>
+            <param name="stream">The stream to read from. </param>
+            <returns>The read byte array. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StreamExtensions.ReadToEndAsync(System.IO.Stream)">
+            <summary>Asynchronously reads all available bytes from the stream. </summary>
+            <param name="stream">The stream to read from. </param>
+            <returns>The read byte array. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StreamExtensions.ReadToEndAsync(System.IO.Stream,System.Threading.CancellationToken,System.IProgress{System.Int64})">
+            <summary>Asynchronously reads all available bytes from the stream. </summary>
+            <param name="stream">The stream to read from. </param>
+            <param name="token">The cancellation token. </param>
+            <param name="progress">The progress. </param>
+            <returns>The read byte array. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StreamExtensions.ToStream(System.String)">
+            <summary>Converts a string to a memory stream. </summary>
+            <param name="str">The string to convert. </param>
+            <returns>The converted string. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.StringExtensions">
+            <summary>Provides methods to manipulate strings. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.StringExtensions.EscapeUriString(System.String)">
+            <summary>Correctly URI escapes the given string. </summary>
+            <param name="value">The string to escape. </param>
+            <returns>The escaped string</returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StringExtensions.GetConverterParameters(System.String)">
+            <summary>Splits a string into key-value pairs (format: 'key1:value2,key2:value2'). </summary>
+            <param name="text">The parameter string. </param>
+            <returns>The parsed dictionary. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StringExtensions.RemoveHtmlTags(System.String)">
+            <summary>Removes all HTML tags from the given string. </summary>
+            <param name="html">The HTML string to remove the HTML tags from. </param>
+            <returns>The cleaned string. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StringExtensions.RemoveHtmlLinks(System.String)">
+            <summary>Removes all HTML links from the given string. </summary>
+            <param name="html">The HTML string to remove the links from. </param>
+            <returns>The cleaned string. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StringExtensions.ConvertUtf8Characters(System.String)">
+            <summary>Converts all contained UTF-8 characters in the string to their correct internal representation. </summary>
+            <param name="text">The string to convert. </param>
+            <returns>The converted string. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StringExtensions.ConvertHtmlCharacters(System.String)">
+            <summary>Converts all HTML entities to their correct character representation. </summary>
+            <param name="html">The string to convert. </param>
+            <returns>The converted string. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StringExtensions.RemoveHtmlWhitespaces(System.String)">
+            <summary>Removes unneeded (hidden) HTML whitespaces. </summary>
+            <param name="html">The HTML string to convert. </param>
+            <returns>The transformed string. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StringExtensions.TruncateWithoutChopping(System.String,System.Int32)">
+            <summary>Truncates a string without chopping whole words. </summary>
+            <param name="text">The string to truncate. </param>
+            <param name="length">The maximum string length of the result. </param>
+            <returns>The truncated string. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StringExtensions.TrimStart(System.String,System.String)">
+            <summary>Trims a string from the start of the input string. </summary>
+            <param name="input">The input string. </param>
+            <param name="trimString">The string to trim. </param>
+            <returns>The trimmed string. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StringExtensions.TrimEnd(System.String,System.String)">
+            <summary>Trims a string from the end of the input string. </summary>
+            <param name="input">The input string. </param>
+            <param name="trimString">The string to trim. </param>
+            <returns>The trimmed string. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StringExtensions.Trim(System.String,System.String)">
+            <summary>Trims a string from the start and end of the input string. </summary>
+            <param name="input">The input string. </param>
+            <param name="trimString">The string to trim. </param>
+            <returns>The trimmed string. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.StringExtensions.ExtractLocalizedString(System.String,System.String)">
+            <summary>Extracts a language string from the given input string (format: 'en:Hello;de:Hallo;fr:"semi;colon"'). </summary>
+            <param name="input">The input string. </param>
+            <param name="language">The language. </param>
+            <returns>The extracted string. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.TaskUtilities">
+            <summary>Provides task helper methods. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.TaskUtilities.RunCallbackMethodAsync(System.Action{System.Action})">
+            <summary>Converts a callback based asynchronous method into a task. </summary>
+            <param name="func">The function. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.TaskUtilities.RunCallbackMethodAsync``1(System.Action{System.Action{``0}})">
+            <summary>Converts a callback based asynchronous method into a task. </summary>
+            <param name="func">The function. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.TaskUtilities.RunCallbackMethodAsync``1(System.Action{``0,System.Action},``0)">
+            <summary>Converts a callback based asynchronous method into a task. </summary>
+            <param name="func">The function. </param>
+            <param name="param1">The first parameter. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.TaskUtilities.RunCallbackMethodAsync``2(System.Action{``0,System.Action{``1}},``0)">
+            <summary>Converts a callback based asynchronous method into a task. </summary>
+            <param name="func">The function. </param>
+            <param name="param1">The first parameter. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.TaskUtilities.RunCallbackMethodAsync``2(System.Action{``0,``1,System.Action},``0,``1)">
+            <summary>Converts a callback based asynchronous method into a task. </summary>
+            <param name="func">The function. </param>
+            <param name="param1">The first parameter. </param>
+            <param name="param2">The second parameter. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.TaskUtilities.RunCallbackMethodAsync``3(System.Action{``0,``1,System.Action{``2}},``0,``1)">
+            <summary>Converts a callback based asynchronous method into a task. </summary>
+            <param name="func">The function. </param>
+            <param name="param1">The first parameter. </param>
+            <param name="param2">The second parameter. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.TaskUtilities.RunCallbackMethodAsync``3(System.Action{``0,``1,``2,System.Action},``0,``1,``2)">
+            <summary>Converts a callback based asynchronous method into a task. </summary>
+            <param name="func">The function. </param>
+            <param name="param1">The first parameter. </param>
+            <param name="param2">The second parameter. </param>
+            <param name="param3">The third parameter. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.TaskUtilities.RunCallbackMethodAsync``4(System.Action{``0,``1,``2,System.Action{``3}},``0,``1,``2)">
+            <summary>Converts a callback based asynchronous method into a task. </summary>
+            <param name="func">The function. </param>
+            <param name="param1">The first parameter. </param>
+            <param name="param2">The second parameter. </param>
+            <param name="param3">The third parameter. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="P:MyToolkit.Utilities.TaskUtilities.CompletedTask">
+            <summary>Gets a completed task without result type. </summary>
+        </member>
+        <member name="T:MyToolkit.Utilities.VersionUtilities">
+            <summary>Provides methods to work with <see cref="T:System.Version"/> objects. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.VersionUtilities.FromString(System.String)">
+            <summary>Converts a string to a <see cref="T:System.Version"/> object. </summary>
+            <param name="version">The version as string. </param>
+            <returns>The version. </returns>
+        </member>
+    </members>
+</doc>

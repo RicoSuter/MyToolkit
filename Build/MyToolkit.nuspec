@@ -21,11 +21,11 @@
     </references>
   </metadata>
   <files>
-    <file src="..\- Output\MyToolkit\MyToolkit.dll" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.dll" />
-    <file src="..\- Output\MyToolkit\MyToolkit.xml" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.xml" />
-    <file src="..\- Output\MyToolkit\CodeContracts\MyToolkit.Contracts.dll" target="lib\portable-net45+wp8+win8+wpa81\CodeContracts\MyToolkit.Contracts.dll" />
+    <file src="..\Output\MyToolkit\MyToolkit.dll" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.dll" />
+    <file src="..\Output\MyToolkit\MyToolkit.xml" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.xml" />
+    <file src="..\Output\MyToolkit\CodeContracts\MyToolkit.Contracts.dll" target="lib\portable-net45+wp8+win8+wpa81\CodeContracts\MyToolkit.Contracts.dll" />
 
-    <file src="..\- Output\MyToolkit.Legacy\MyToolkit.dll" target="lib\portable-sl5+wp71\MyToolkit.dll" />
-    <file src="..\- Output\MyToolkit.Legacy\MyToolkit.xml" target="lib\portable-sl5+wp71\MyToolkit.xml" />
+    <file src="..\Output\MyToolkit.Legacy\MyToolkit.dll" target="lib\portable-sl5+wp71\MyToolkit.dll" />
+    <file src="..\Output\MyToolkit.Legacy\MyToolkit.xml" target="lib\portable-sl5+wp71\MyToolkit.xml" />
   </files>
 </package>

@@ -1,0 +1,2495 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyToolkit.Extended</name>
+    </assembly>
+    <members>
+        <member name="T:MyToolkit.Controls.MtListBox">
+            <summary>A <see cref="T:Windows.UI.Xaml.Controls.ListBox"/> with additional features. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.MtListBox.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Controls.MtListBox"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.MtListBox.GetListBoxItemFromItem(System.Object)">
+            <summary>Gets the <see cref="T:Windows.UI.Xaml.Controls.ListBoxItem"/> for a given item. </summary>
+            <param name="item">The item. </param>
+            <returns>The <see cref="T:Windows.UI.Xaml.Controls.ListBoxItem"/>. </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.MtListBox.ScrollToVerticalOffset(System.Double)">
+            <summary>Scrolls to the given offset. </summary>
+            <param name="offset">The offset. </param>
+            <returns>Returns false if the <see cref="P:MyToolkit.Controls.MtListBox.ScrollViewer"/> was not loaded. </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.MtListBox.StopScrolling">
+            <summary>Stops the current scrolling. </summary>
+            <returns>Returns false if the <see cref="P:MyToolkit.Controls.MtListBox.ScrollViewer"/> was not loaded. </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.MtListBox.IsScrollingPropertyChanged(Windows.UI.Xaml.DependencyPropertyChangedEventArgs)">
+            <exception cref="T:System.InvalidOperationException">The IsScrolling property is read-only. </exception>
+        </member>
+        <member name="P:MyToolkit.Controls.MtListBox.ScrollViewer">
+            <summary>Gets the view's <see cref="P:MyToolkit.Controls.MtListBox.ScrollViewer"/>. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.MtListBox.TriggerScrolledToEndEvents">
+            <summary>Gets or sets a value indicating whether scrolled to end events should be triggered. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.MtListBox.ScrolledToEnd">
+            <summary>Occurs when the user scrolled to the end of the view. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.MtListBox.InnerMargin">
+            <summary>Gets or sets the inner margin. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.MtListBox.PrepareContainerForItem">
+            <summary>Occurs when a new container control gets created. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.MtListBox.ScrollingStateChanged">
+            <summary>Occurs when the scrolling state changed. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.MtListBox.IsScrolling">
+            <summary>Gets a value indicating whether the user is currently scrolling the view. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.ExtendedListBox">
+            <summary>A <see cref="T:Windows.UI.Xaml.Controls.ListBox"/> with additional features. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.ScrollingStateChangedEventArgs">
+            <summary>Contains information for the scrolling state changed event. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.ScrollingStateChangedEventArgs.#ctor(System.Boolean,System.Boolean)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Controls.ScrollingStateChangedEventArgs"/> class. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.ScrollingStateChangedEventArgs.OldValue">
+            <summary>Gets the old scrolling state. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.ScrollingStateChangedEventArgs.NewValue">
+            <summary>Gets the new scrolling state. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.ScrolledToEndEventArgs">
+            <summary>Contains information for the scrolled to end event. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.ScrolledToEndEventArgs.#ctor(Windows.UI.Xaml.Controls.ScrollViewer)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Controls.ScrolledToEndEventArgs"/> class. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.ScrolledToEndEventArgs.ScrollViewer">
+            <summary>Gets the involved scroll viewer. </summary>
+        </member>
+        <member name="T:MyToolkit.Media.ImageHelper">
+            <summary>
+            Provides an attached property to use authenticated URIs for images and defer image loading. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Media.ImageHelper.IsEnabled">
+            <summary>
+            Gets or sets a value indicating whether images can be currently downloaded (when false then changes get queued and downloaded when set to true).  
+            </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.ScrollableItemsControl">
+            <summary>A list of items in a <see cref="P:MyToolkit.Controls.ScrollableItemsControl.ScrollViewer"/> with no selection support. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.ScrollableItemsControl.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Controls.ScrollableItemsControl"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.ScrollableItemsControl.GetListBoxItemFromItem(System.Object)">
+            <summary>Gets the <see cref="T:Windows.UI.Xaml.Controls.ListBoxItem"/> for a given item. </summary>
+            <param name="item">The item. </param>
+            <returns>The <see cref="T:Windows.UI.Xaml.Controls.ListBoxItem"/>. </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.ScrollableItemsControl.ScrollToVerticalOffset(System.Double)">
+            <summary>Scrolls to the given offset. </summary>
+            <param name="offset">The offset. </param>
+            <returns>Returns false if the <see cref="P:MyToolkit.Controls.ScrollableItemsControl.ScrollViewer"/> was not loaded. </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.ScrollableItemsControl.StopScrolling">
+            <summary>Stops the current scrolling. </summary>
+            <returns>Returns false if the <see cref="P:MyToolkit.Controls.ScrollableItemsControl.ScrollViewer"/> was not loaded. </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.ScrollableItemsControl.IsScrollingPropertyChanged(Windows.UI.Xaml.DependencyPropertyChangedEventArgs)">
+            <exception cref="T:System.InvalidOperationException">The IsScrolling property is read-only. </exception>
+        </member>
+        <member name="P:MyToolkit.Controls.ScrollableItemsControl.ScrollViewer">
+            <summary>Gets the view's <see cref="P:MyToolkit.Controls.ScrollableItemsControl.ScrollViewer"/>. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.ScrollableItemsControl.TriggerScrolledToEndEvents">
+            <summary>Gets or sets a value indicating whether scrolled to end events should be triggered. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.ScrollableItemsControl.ScrolledToEnd">
+            <summary>Occurs when the user scrolled to the end of the view. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.ScrollableItemsControl.InnerMargin">
+            <summary>Gets or sets the inner margin. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.ScrollableItemsControl.PrepareContainerForItem">
+            <summary>Occurs when a new container control gets created. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.ScrollableItemsControl.ScrollingStateChanged">
+            <summary>Occurs when the scrolling state changed. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.ScrollableItemsControl.IsScrolling">
+            <summary>Gets a value indicating whether the user is currently scrolling the view. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.FixedHtmlTextBlock">
+            <summary>Renders HTML using native XAML controls without a scrollbar; use the control 
+            <see cref="T:MyToolkit.Controls.HtmlTextBlock"/> to render the HTML content in a <see cref="T:Windows.UI.Xaml.Controls.ScrollViewer"/>. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.HtmlTextBlockImplementation.IHtmlTextBlock">
+            <summary>Describes the interface of a HTML rendering control. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlockImplementation.IHtmlTextBlock.Html">
+            <summary>Gets or sets the HTML content to display. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlockImplementation.IHtmlTextBlock.Generators">
+            <summary>Gets the list of HTML element generators. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlockImplementation.IHtmlTextBlock.SizeDependentControls">
+            <summary>Gets the list of size dependent controls. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlockImplementation.IHtmlTextBlock.HtmlBaseUri">
+            <summary>Gets or sets the base URI which is used to resolve relative URIs. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlockImplementation.IHtmlTextBlock.ParagraphMargin">
+            <summary>Gets or sets the margin for paragraphs (added at the bottom of the element). </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlockImplementation.IHtmlTextBlock.Foreground">
+            <summary>Gets or sets a brush that describes the foreground color. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlockImplementation.IHtmlTextBlock.Background">
+            <summary>Gets or sets a brush that describes the background of a control. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlockImplementation.IHtmlTextBlock.FontSize">
+            <summary>Gets or sets the font size. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlockImplementation.IHtmlTextBlock.FontFamily">
+            <summary>Gets or sets the font family of the control. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlockImplementation.IHtmlTextBlock.ActualWidth">
+            <summary>Gets the rendered width of this element. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.FixedHtmlTextBlock.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Controls.FixedHtmlTextBlock"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.FixedHtmlTextBlock.CallHtmlLoaded">
+            <summary>Calls the <see cref="E:MyToolkit.Controls.FixedHtmlTextBlock.HtmlLoaded"/> event. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.FixedHtmlTextBlock.Generators">
+            <summary>Gets the list of HTML element generators. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.FixedHtmlTextBlock.SizeDependentControls">
+            <summary>Gets the list of size dependent controls. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.FixedHtmlTextBlock.Html">
+            <summary>Gets or sets the HTML content to display. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.FixedHtmlTextBlock.HtmlLoaded">
+            <summary>Occurs when the HTML content has been loaded. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.FixedHtmlTextBlock.ParagraphMargin">
+            <summary>Gets or sets the margin for paragraphs (added at the bottom of the element). </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.FixedHtmlTextBlock.HtmlBaseUri">
+            <summary>Gets or sets the base URI which is used to resolve relative URIs. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.HtmlTextBlock">
+            <summary>Renders HTML using native XAML controls in a scrollbar; use the control 
+            <see cref="T:MyToolkit.Controls.FixedHtmlTextBlock"/> to render the HTML content without a <see cref="T:Windows.UI.Xaml.Controls.ScrollViewer"/>. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.HtmlTextBlock.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Controls.HtmlTextBlock"/> class. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlock.Generators">
+            <summary>Gets the list of HTML element generators. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlock.SizeDependentControls">
+            <summary>Gets the list of size dependent controls. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.HtmlTextBlock.HtmlLoaded">
+            <summary>Occurs when the HTML content has been loaded. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlock.Html">
+            <summary>Gets or sets the HTML content to display. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlock.ParagraphMargin">
+            <summary>Gets or sets the margin for paragraphs (added at the bottom of the element). </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlock.HtmlBaseUri">
+            <summary>Gets or sets the base URI which is used to resolve relative URIs. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlock.HeaderTemplate">
+            <summary>Gets or sets the header template. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlock.ShowHeader">
+            <summary>Gets or sets a value indicating whether the header should be shown. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlock.FooterTemplate">
+            <summary>Gets or sets the footer template. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlock.ShowFooter">
+            <summary>Gets or sets a value indicating whether the footer should be shown. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.HtmlTextBlockImplementation.Generators.ParagraphGenerator.UseTextSplitting">
+            <summary>
+            Gets or sets a flag whether text should be split up in multiple RichTextBlocks to avoid the 2048px element size limit (default true).
+            </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.NavigationListEventArgs.GetItem``1">
+            <summary>Gets the item to naviate to and casts it to the given generic type. </summary>
+            <typeparam name="T">The item type. </typeparam>
+            <returns>The item. </returns>
+        </member>
+        <member name="P:MyToolkit.Controls.NavigationListEventArgs.Item">
+            <summary>Gets the item to navigate to. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.UniformGrid">
+            <summary>Panel which arranges children in a grid with all equal cell sizes. </summary>
+        </member>
+        <member name="T:MyToolkit.Converters.DateTimeConverter">
+            <summary>
+            Converts a DateTime into its string representation. 
+            </summary>
+        </member>
+        <member name="T:MyToolkit.Converters.EqualityConverter">
+            <summary>
+            Returns a bool whether the objects string representation equals to the converter parameter. 
+            The parameter can have multiple values devided by comma. 
+            It may begin with ! for not-equality, but it cannot have multiple values.  
+            </summary>
+        </member>
+        <member name="T:MyToolkit.Events.SingleEvent">
+            <summary>Provides methods to register self-deregistering event callbacks. </summary>
+        </member>
+        <member name="M:MyToolkit.Events.SingleEvent.WaitForEventAsync``2(``0,System.Action{``0,System.EventHandler{``1}},System.Action{``0,System.EventHandler{``1}})">
+            <summary>Asynchronously wait for an occurrence of the given event. </summary>
+            <typeparam name="TEventSource">The type of the event source. </typeparam>
+            <typeparam name="TEventArgs">The type of the event args. </typeparam>
+            <param name="source">The source object. </param>
+            <param name="register">The event registration action. </param>
+            <param name="deregister">The event deregistration action. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Events.SingleEvent.WaitForRoutedEventAsync``1(``0,System.Action{``0,Windows.UI.Xaml.RoutedEventHandler},System.Action{``0,Windows.UI.Xaml.RoutedEventHandler})">
+            <summary>Asynchronously wait for an occurrence of the given event. </summary>
+            <typeparam name="TEventSource">The type of the event source. </typeparam>
+            <param name="source">The source object. </param>
+            <param name="register">The event registration action. </param>
+            <param name="deregister">The event deregistration action. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Events.SingleEvent.WaitForEventAsync``1(``0,System.Action{``0,Windows.UI.Xaml.RoutedEventHandler},System.Action{``0,Windows.UI.Xaml.RoutedEventHandler})">
+            <summary>Asynchronously wait for an occurrence of the given event. </summary>
+            <typeparam name="TEventSource">The type of the event source. </typeparam>
+            <param name="source">The source object. </param>
+            <param name="register">The event registration action. </param>
+            <param name="deregister">The event deregistration action. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Events.SingleEvent.RegisterEvent``2(``0,System.Action{``0,System.EventHandler{``1}},System.Action{``0,System.EventHandler{``1}},System.Action{System.Object,``1})">
+            <summary>Registers an event callback which is called once and then automatically deregistered. </summary>
+            <typeparam name="TEventSource">The type of the event source. </typeparam>
+            <typeparam name="TEventArgs">The type of the event args. </typeparam>
+            <param name="source">The source object. </param>
+            <param name="register">The event registration action. </param>
+            <param name="deregister">The event deregistration action. </param>
+            <param name="handler">The event handler. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Events.SingleEvent.RegisterRoutedEvent``1(``0,System.Action{``0,Windows.UI.Xaml.RoutedEventHandler},System.Action{``0,Windows.UI.Xaml.RoutedEventHandler},System.Action{System.Object,Windows.UI.Xaml.RoutedEventArgs})">
+            <summary>Registers an event callback which is called once and then automatically deregistered. </summary>
+            <typeparam name="TEventSource">The type of the event source. </typeparam>
+            <param name="source">The source object. </param>
+            <param name="register">The event registration action. </param>
+            <param name="deregister">The event deregistration action. </param>
+            <param name="handler">The event handler. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Events.SingleEvent.RegisterEvent``1(``0,System.Action{``0,Windows.UI.Xaml.RoutedEventHandler},System.Action{``0,Windows.UI.Xaml.RoutedEventHandler},System.Action{System.Object,Windows.UI.Xaml.RoutedEventArgs})">
+            <summary>Registers an event callback which is called once and then automatically deregistered. </summary>
+            <typeparam name="TEventSource">The type of the event source. </typeparam>
+            <param name="source">The source object. </param>
+            <param name="register">The event registration action. </param>
+            <param name="deregister">The event deregistration action. </param>
+            <param name="handler">The event handler. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Events.SingleEvent.RegisterEvent``1(``0,System.Action{``0,Windows.UI.Xaml.ExceptionRoutedEventHandler},System.Action{``0,Windows.UI.Xaml.ExceptionRoutedEventHandler},System.Action{System.Object,Windows.UI.Xaml.RoutedEventArgs})">
+            <summary>Registers an event callback which is called once and then automatically deregistered. </summary>
+            <typeparam name="TEventSource">The type of the event source. </typeparam>
+            <param name="source">The source object. </param>
+            <param name="register">The event registration action. </param>
+            <param name="deregister">The event deregistration action. </param>
+            <param name="handler">The event handler. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Events.SingleEvent.WaitForEventAsync``1(``0,System.Action{``0,Windows.UI.Xaml.ExceptionRoutedEventHandler},System.Action{``0,Windows.UI.Xaml.ExceptionRoutedEventHandler})">
+            <summary>Asynchronously wait for an occurrence of the given event. </summary>
+            <typeparam name="TEventSource">The type of the event source. </typeparam>
+            <param name="source">The source object. </param>
+            <param name="register">The event registration action. </param>
+            <param name="deregister">The event deregistration action. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Mathematics.Matrix.Identity(System.Int32)">
+            <exception cref="T:System.ArgumentException">The matrixSize parameter must be bigger than 0. </exception>
+        </member>
+        <member name="M:MyToolkit.Mathematics.TrigonometryMath.Direction(Windows.Foundation.Point)">
+            <summary>
+            Returns the angle of the point relative to the origin (0,0). 
+            Degree 0 is at the top and is increased clock-wise. 
+            </summary>
+            <param name="point"></param>
+            <returns></returns>
+        </member>
+        <member name="T:MyToolkit.Messaging.DefaultActions">
+            <summary>Provides default actions for some message lcasses to use with the <see cref="T:MyToolkit.Messaging.Messenger"/>. </summary>
+        </member>
+        <member name="M:MyToolkit.Messaging.DefaultActions.GetGoBackMessageAction(MyToolkit.Paging.MtFrame)">
+            <summary>Gets the default handling action of <see cref="T:MyToolkit.Messaging.GoBackMessage"/> objects. </summary>
+            <param name="frame">The frame to call the navigation methods on. </param>
+            <returns>The message action. </returns>
+        </member>
+        <member name="M:MyToolkit.Messaging.DefaultActions.GetNavigateMessageAction(MyToolkit.Messaging.IViewModelToViewMapper,MyToolkit.Paging.MtFrame)">
+            <summary>Gets the default handling action of <see cref="T:MyToolkit.Messaging.NavigateMessage"/> objects. </summary>
+            <param name="mapper">The mapper which maps view model types to view types. </param>
+            <param name="frame">The frame. </param>
+            <returns>The message action. </returns>
+        </member>
+        <member name="M:MyToolkit.Messaging.DefaultActions.GetNavigateMessageAction(MyToolkit.Messaging.IViewModelToViewMapper,Windows.UI.Xaml.Controls.Frame)">
+            <summary>Gets the default handling action of <see cref="T:MyToolkit.Messaging.NavigateMessage"/> objects. </summary>
+            <param name="mapper">The mapper which maps view model types to view types. </param>
+            <param name="frame">The frame. </param>
+            <returns>The message action. </returns>
+        </member>
+        <member name="M:MyToolkit.Messaging.DefaultActions.GetTextMessageAction">
+            <summary>Gets the default handling action of <see cref="T:MyToolkit.Messaging.TextMessage"/> objects. </summary>
+            <returns>The message action. </returns>
+        </member>
+        <member name="T:MyToolkit.Multimedia.YouTube">
+            <summary>Provides methods to access YouTube streams and data. </summary>
+        </member>
+        <member name="F:MyToolkit.Multimedia.YouTube.DefaultMinQuality">
+            <summary>Gets the default minimum quality. </summary>
+        </member>
+        <member name="M:MyToolkit.Multimedia.YouTube.GetVideoUriAsync(System.String,MyToolkit.Multimedia.YouTubeQuality,MyToolkit.Multimedia.YouTubeQuality,System.Threading.CancellationToken)">
+            <summary>Returns the best matching YouTube stream URI which has an audio and video channel and is not 3D. </summary>
+            <returns>The best matching <see cref="T:MyToolkit.Multimedia.YouTubeUri"/> of the video. </returns>
+            <exception cref="T:MyToolkit.Multimedia.YouTubeUriNotFoundException">The <see cref="T:MyToolkit.Multimedia.YouTubeUri"/> could not be found. </exception>
+            <exception cref="T:System.Net.WebException">An error occurred while downloading the resource. </exception>
+        </member>
+        <member name="M:MyToolkit.Multimedia.YouTube.GetVideoUriAsync(System.String,MyToolkit.Multimedia.YouTubeQuality)">
+            <summary>Returns the best matching YouTube stream URI which has an audio and video channel and is not 3D. </summary>
+            <returns>The best matching <see cref="T:MyToolkit.Multimedia.YouTubeUri"/> of the video. </returns>
+            <exception cref="T:MyToolkit.Multimedia.YouTubeUriNotFoundException">The <see cref="T:MyToolkit.Multimedia.YouTubeUri"/> could not be found. </exception>
+            <exception cref="T:System.Net.WebException">An error occurred while downloading the resource. </exception>
+        </member>
+        <member name="M:MyToolkit.Multimedia.YouTube.GetVideoUriAsync(System.String,MyToolkit.Multimedia.YouTubeQuality,System.Threading.CancellationToken)">
+            <summary>Returns the best matching YouTube stream URI which has an audio and video channel and is not 3D. </summary>
+            <returns>The best matching <see cref="T:MyToolkit.Multimedia.YouTubeUri"/> of the video. </returns>
+            <exception cref="T:MyToolkit.Multimedia.YouTubeUriNotFoundException">The <see cref="T:MyToolkit.Multimedia.YouTubeUri"/> could not be found. </exception>
+            <exception cref="T:System.Net.WebException">An error occurred while downloading the resource. </exception>
+        </member>
+        <member name="M:MyToolkit.Multimedia.YouTube.GetVideoUriAsync(System.String,MyToolkit.Multimedia.YouTubeQuality,MyToolkit.Multimedia.YouTubeQuality)">
+            <summary>Returns the best matching YouTube stream URI which has an audio and video channel and is not 3D. </summary>
+            <returns>The best matching <see cref="T:MyToolkit.Multimedia.YouTubeUri"/> of the video. </returns>
+            <exception cref="T:MyToolkit.Multimedia.YouTubeUriNotFoundException">The <see cref="T:MyToolkit.Multimedia.YouTubeUri"/> could not be found. </exception>
+            <exception cref="T:System.Net.WebException">An error occurred while downloading the resource. </exception>
+        </member>
+        <member name="M:MyToolkit.Multimedia.YouTube.GetUrisAsync(System.String)">
+            <summary>Returns all available URIs (audio-only and video) for the given YouTube ID. </summary>
+            <returns>The <see cref="T:MyToolkit.Multimedia.YouTubeUri"/>s of the video. </returns>
+            <exception cref="T:System.Net.WebException">An error occurred while downloading the resource. </exception>
+        </member>
+        <member name="M:MyToolkit.Multimedia.YouTube.GetUrisAsync(System.String,System.Threading.CancellationToken)">
+            <summary>Returns all available URIs (audio-only and video) for the given YouTube ID. </summary>
+            <returns>The <see cref="T:MyToolkit.Multimedia.YouTubeUri"/>s of the video. </returns>
+            <exception cref="T:System.Net.WebException">An error occurred while downloading the resource. </exception>
+        </member>
+        <member name="M:MyToolkit.Multimedia.YouTube.HttpGetAsync(System.String)">
+            <exception cref="T:System.Net.WebException">An error occurred while downloading the resource. </exception>
+        </member>
+        <member name="M:MyToolkit.Multimedia.YouTube.GetVideoTitleAsync(System.String)">
+            <summary>Returns the title of the YouTube video. </summary>
+            <exception cref="T:System.Net.WebException">An error occurred while downloading the resource. </exception>
+        </member>
+        <member name="M:MyToolkit.Multimedia.YouTube.GetVideoTitleAsync(System.String,System.Threading.CancellationToken)">
+            <summary>Returns the title of the YouTube video. </summary>
+            <exception cref="T:System.Net.WebException">An error occurred while downloading the resource. </exception>
+        </member>
+        <member name="M:MyToolkit.Multimedia.YouTube.GetThumbnailUri(System.String,MyToolkit.Multimedia.YouTubeThumbnailSize)">
+            <summary>Returns a thumbnail for the given YouTube ID. </summary>
+            <exception cref="T:System.ArgumentException">The value of 'size' is not defined. </exception>
+        </member>
+        <member name="T:MyToolkit.Multimedia.YouTubeUriNotFoundException">
+            <summary>Exception which occurs when no <see cref="T:MyToolkit.Multimedia.YouTubeUri"/> could be found. </summary>
+        </member>
+        <member name="T:MyToolkit.Multimedia.YouTubeUri">
+            <summary>An URI to a YouTube MP4 video or audio stream. </summary>
+        </member>
+        <member name="P:MyToolkit.Multimedia.YouTubeUri.Itag">
+            <summary>Gets the Itag of the stream. </summary>
+        </member>
+        <member name="P:MyToolkit.Multimedia.YouTubeUri.Uri">
+            <summary>Gets the <see cref="P:MyToolkit.Multimedia.YouTubeUri.Uri"/> of the stream. </summary>
+        </member>
+        <member name="P:MyToolkit.Multimedia.YouTubeUri.Type">
+            <summary>Gets the stream type. </summary>
+        </member>
+        <member name="P:MyToolkit.Multimedia.YouTubeUri.HasAudio">
+            <summary>Gets a value indicating whether the stream has audio. </summary>
+        </member>
+        <member name="P:MyToolkit.Multimedia.YouTubeUri.HasVideo">
+            <summary>Gets a value indicating whether the stream has video. </summary>
+        </member>
+        <member name="P:MyToolkit.Multimedia.YouTubeUri.Is3DVideo">
+            <summary>Gets a value indicating whether the stream has 3D video. </summary>
+        </member>
+        <member name="P:MyToolkit.Multimedia.YouTubeUri.VideoQuality">
+            <summary>Gets stream's video quality. </summary>
+        </member>
+        <member name="P:MyToolkit.Multimedia.YouTubeUri.AudioQuality">
+            <summary>Gets stream's audio quality. </summary>
+        </member>
+        <member name="T:MyToolkit.Multimedia.YouTubeQuality">
+            <summary>Enumeration of stream qualities. </summary>
+        </member>
+        <member name="T:MyToolkit.Multimedia.YouTubeThumbnailSize">
+            <summary>Enumeration of thumbnail sizes. </summary>
+        </member>
+        <member name="M:MyToolkit.Serialization.DataContractSerialization.CreateCachedSerializer``1(System.Boolean,System.Type[])">
+            <summary>Creates or retrieves a serializer for the given type and extra types. </summary>
+            <typeparam name="T">The type to create the serialzer for. </typeparam>
+            <param name="preserveReferences">Specifies whether to preserve references. </param>
+            <param name="extraTypes">The extra types. </param>
+            <returns>The <see cref="T:System.Xml.Serialization.XmlSerializer"/>. </returns>
+        </member>
+        <member name="M:MyToolkit.Serialization.DataContractSerialization.CreateSerializer``1(System.Boolean,System.Type[])">
+            <summary>Creates a serializer for the given type and extra types. </summary>
+            <typeparam name="T">The type to create the serialzer for. </typeparam>
+            <param name="preserveReferences">Specifies whether to preserve references. </param>
+            <param name="extraTypes">The extra types. </param>
+            <returns>The <see cref="T:System.Xml.Serialization.XmlSerializer"/>. </returns>
+        </member>
+        <member name="M:MyToolkit.Serialization.DataContractSerialization.CanSerialize(System.Type)">
+            <summary>Checks whether the given type can be serialized with the <see cref="T:System.Runtime.Serialization.DataContractSerializer"/>. </summary>
+        </member>
+        <member name="M:MyToolkit.Serialization.DataContractSerialization.CanSerialize``1">
+            <summary>Checks whether the given generic type can be serialized with the <see cref="T:System.Runtime.Serialization.DataContractSerializer"/>. </summary>
+        </member>
+        <member name="M:MyToolkit.Serialization.DataContractSerialization.Serialize``1(``0,System.Boolean,System.Type[],System.Boolean)">
+            <summary>Serializes an object to a XML string. </summary>
+            <typeparam name="T">The type of the object to serialize. </typeparam>
+            <param name="obj">The object to serialize. </param>
+            <param name="preserveReferences">Specifies whether to preserve references. </param>
+            <param name="extraTypes">The additional types. </param>
+            <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+            <returns>The XML string. </returns>
+        </member>
+        <member name="M:MyToolkit.Serialization.DataContractSerialization.Deserialize``1(System.String,System.Type[],System.Boolean)">
+            <summary>Deserializes an object from a XML string. </summary>
+            <typeparam name="T">The type of the resulting object. </typeparam>
+            <param name="xml">The XML string. </param>
+            <param name="extraTypes">The addional types. </param>
+            <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+            <returns>The deserialized object. </returns>
+        </member>
+        <member name="M:MyToolkit.Serialization.DataContractSerialization.SerializeAsync``1(``0,System.Boolean,System.Type[],System.Boolean)">
+            <summary>Asynchronously serializes an object to a XML string. </summary>
+            <typeparam name="T">The type of the object to serialize. </typeparam>
+            <param name="preserveReferences">Specifies whether to preserve references. </param>
+            <param name="obj">The object to serialize. </param>
+            <param name="extraTypes">The additional types. </param>
+            <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+            <returns>The XML string. </returns>
+        </member>
+        <member name="M:MyToolkit.Serialization.DataContractSerialization.DeserializeAsync``1(System.String,System.Type[],System.Boolean)">
+            <summary>Asynchronously deserializes an object from a XML string. </summary>
+            <typeparam name="T">The type of the resulting object. </typeparam>
+            <param name="xml">The XML string. </param>
+            <param name="extraTypes">The addional types. </param>
+            <param name="useSerializerCache">Specifies whether to cache the serializer (default: true). </param>
+            <returns>The deserialized object. </returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.FindVisualChild(Windows.UI.Xaml.FrameworkElement,System.String)">
+            <summary>
+            Equivalent of FindName, but works on the visual tree to go through templates, etc.
+            </summary>
+            <param name="root">The node to search from</param>
+            <param name="name">The name to look for</param>
+            <returns>The found node, or null if not found</returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetPlaneProjection(Windows.UI.Xaml.UIElement,System.Boolean)">
+            <summary>
+            Returns a plane projection, creating it if necessary
+            </summary>
+            <param name="element">The element</param>
+            <param name="create">Whether or not to create the projection if it doesn't already exist</param>
+            <returns>The plane project, or null if not found / created</returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetTransform``1(Windows.UI.Xaml.UIElement,MyToolkit.UI.TransformCreationMode)">
+            <summary>
+            Returns a render transform of the specified type from the element, creating it if necessary
+            </summary>
+            <typeparam name="TRequestedTransform">The type of transform (Rotate, Translate, etc)</typeparam>
+            <param name="element">The element to check</param>
+            <param name="mode">The mode to use for creating transforms, if not found</param>
+            <returns>The specified transform, or null if not found and not created</returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualParent(Windows.UI.Xaml.FrameworkElement)">
+            <summary>
+            Returns the visual parent of an element
+            </summary>
+            <param name="node">The element whose parent is desired</param>
+            <returns>The visual parent, or null if not found (usually means visual tree is not ready)</returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualChild(Windows.UI.Xaml.FrameworkElement,System.Int32)">
+            <summary>
+            Returns a visual child of an element
+            </summary>
+            <param name="node">The element whose child is desired</param>
+            <param name="index">The index of the child</param>
+            <returns>The found child, or null if not found (usually means visual tree is not ready)</returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualChildren``1(Windows.UI.Xaml.DependencyObject)">
+            <summary>
+            Gets the visual children of type T.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="target"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualChildren``1(Windows.UI.Xaml.DependencyObject,System.Boolean)">
+            <summary>
+            Gets the visual children of type T.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="target">The target.</param>
+            <param name="strict">if set to <c>true</c> [strict].</param>
+            <returns></returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualChildren(Windows.UI.Xaml.DependencyObject)">
+            <summary>
+            Get the visual tree children of an element.
+            </summary>
+            <param name="element">The element.</param>
+            <returns>The visual tree children of an element.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="element"/> is null.
+            </exception>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualChildrenAndSelfIterator(Windows.UI.Xaml.DependencyObject)">
+            <summary>
+            Get the visual tree children of an element and the element itself.
+            </summary>
+            <param name="element">The element.</param>
+            <returns>
+            The visual tree children of an element and the element itself.
+            </returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualChildren(Windows.UI.Xaml.DependencyObject,System.Boolean)">
+            <summary>
+            Gets the visual children.
+            </summary>
+            <param name="target"></param>
+            <param name="strict">Prevents the search from navigating the logical tree; eg. ContentControl.Content</param>
+            <returns></returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualChildren(Windows.UI.Xaml.FrameworkElement)">
+            <summary>
+            Gets all the visual children of the element
+            </summary>
+            <param name="root">The element to get children of</param>
+            <returns>An enumerator of the children</returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualDecendants(Windows.UI.Xaml.DependencyObject,System.Boolean,System.Collections.Generic.Stack{Windows.UI.Xaml.DependencyObject})">
+            <summary>
+            A helper method used to get visual decnedants using a depth-first strategy.
+            </summary>
+            <param name="target"></param>
+            <param name="strict">Prevents the search from navigating the logical tree; eg. ContentControl.Content</param>
+            <param name="stack"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualDescendants(Windows.UI.Xaml.DependencyObject)">
+            <summary>
+            Get the visual tree descendants of an element.
+            </summary>
+            <param name="element">The element.</param>
+            <returns>The visual tree descendants of an element.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="element"/> is null.
+            </exception>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualDescendantsAndSelf(Windows.UI.Xaml.DependencyObject)">
+            <summary>
+            Get the visual tree descendants of an element and the element
+            itself.
+            </summary>
+            <param name="element">The element.</param>
+            <returns>
+            The visual tree descendants of an element and the element itself.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">
+            <paramref name="element"/> is null.
+            </exception>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualDescendantsAndSelfIterator(Windows.UI.Xaml.DependencyObject)">
+            <summary>
+            Get the visual tree descendants of an element and the element
+            itself.
+            </summary>
+            <param name="element">The element.</param>
+            <returns>
+            The visual tree descendants of an element and the element itself.
+            </returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualAncestors(Windows.UI.Xaml.FrameworkElement)">
+            <summary>
+            Gets the ancestors of the element, up to the root
+            </summary>
+            <param name="node">The element to start from</param>
+            <returns>An enumerator of the ancestors</returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.PrependWith``1(System.Collections.Generic.IEnumerable{``0},``0)">
+            <summary>
+            Prepends an item to the beginning of an enumeration
+            </summary>
+            <typeparam name="T">The type of item in the enumeration</typeparam>
+            <param name="list">The existing enumeration</param>
+            <param name="head">The item to return before the enumeration</param>
+            <returns>An enumerator that returns the head, followed by the rest of the list</returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualStateGroup(Windows.UI.Xaml.FrameworkElement,System.String)">
+            <summary>
+            Gets the VisualStateGroup with the given name, looking up the visual tree
+            </summary>
+            <param name="root">AssociatedObject to start from</param>
+            <param name="groupName">Name of the group to look for</param>
+            <returns>The group, if found, or null</returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.TestVisibility(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.Controls.Orientation,System.Boolean)">
+            <summary>
+            Tests if the given item is visible or not inside a given viewport
+            </summary>
+            <param name="item">The item to check for visibility</param>
+            <param name="viewport">The viewport to check visibility within</param>
+            <param name="orientation">The orientation to check visibility with respect to (vertical or horizontal)</param>
+            <param name="wantVisible">Whether the test is for being visible or invisible</param>
+            <returns>True if the item's visibility matches the wantVisible parameter</returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisibleItems``1(System.Collections.Generic.IEnumerable{``0},Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.Controls.Orientation)">
+            <summary>
+            Returns the items that are visible in a given container.
+            </summary>
+            <remarks>This function assumes that items are ordered top-to-bottom or left-to-right; if items are in random positions it won't work</remarks>
+            <typeparam name="T">The type of items being tested</typeparam>
+            <param name="items">The items being tested; typically the children of a StackPanel</param>
+            <param name="viewport">The viewport to test visibility against; typically a ScrollViewer</param>
+            <param name="orientation">Whether to check for vertical or horizontal visibility</param>
+            <returns>The items that are (at least partially) visible</returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisibleItems``1(System.Collections.Generic.IEnumerable{``0},Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.Controls.Orientation,System.Collections.Generic.List{``0}@,System.Collections.Generic.List{``0}@,System.Collections.Generic.List{``0}@)">
+            <summary>
+            Returns the items that are visible in a given container plus the invisible ones before and after.
+            </summary>
+            <remarks>This function assumes that items are ordered top-to-bottom or left-to-right; if items are in random positions it won't work</remarks>
+            <typeparam name="T">The type of items being tested</typeparam>
+            <param name="items">The items being tested; typically the children of a StackPanel</param>
+            <param name="viewport">The viewport to test visibility against; typically a ScrollViewer</param>
+            <param name="orientation">Wether to check for vertical or horizontal visibility</param>
+            <param name="beforeItems">List to be populated with items that precede the visible items</param>
+            <param name="visibleItems">List to be populated with the items that are visible</param>
+            <param name="afterItems">List to be populated with the items that follow the visible items</param>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualDescendents(Windows.UI.Xaml.FrameworkElement)">
+            <summary>
+            Performs a breadth-first enumeration of all the descendents in the tree
+            </summary>
+            <param name="root">The root node</param>
+            <returns>An enumerator of all the children</returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVisualDescendents``1(Windows.UI.Xaml.FrameworkElement,System.Boolean)">
+            <summary>
+            Returns all the descendents of a particular type
+            </summary>
+            <typeparam name="T">The type to look for</typeparam>
+            <param name="root">The root element</param>
+            <param name="allAtSameLevel">Whether to stop searching the tree after the first set of items are found</param>
+            <returns>List of the element found</returns>
+            <remarks>
+            The allAtSameLevel flag is used to control enumeration through the tree. For many cases (eg, finding ListBoxItems in a
+            ListBox) you want enumeration to stop as soon as you've found all the items in the ListBox (no need to search further
+            in the tree). For other cases though (eg, finding all the Buttons on a page) you want to exhaustively search the entire tree
+            </remarks>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.PrintDescendentsTree(Windows.UI.Xaml.FrameworkElement)">
+            <summary>
+            Print the entire visual element tree of an item to the debug console
+            </summary>
+            <param name="root">The item whose descendents should be printed</param>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetChildTree(Windows.UI.Xaml.FrameworkElement,System.String,System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Returns a list of descendents, formatted with indentation
+            </summary>
+            <param name="root">The item whose tree should be returned</param>
+            <param name="prefix">The prefix for this level of hierarchy</param>
+            <param name="addPrefix">The string to add for the next level</param>
+            <param name="results">A list that will contain the items on return</param>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.PrintAncestorTree(Windows.UI.Xaml.FrameworkElement)">
+            <summary>
+            Prints the visual ancestor tree for an item to the debug console
+            </summary>
+            <param name="node">The item whost ancestors you want to print</param>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetAncestorVisualTree(Windows.UI.Xaml.FrameworkElement,System.Collections.Generic.List{System.String})">
+            <summary>
+            Returns a list of ancestors
+            </summary>
+            <param name="node">The node whose ancestors you want</param>
+            <param name="children">A list that will contain the children</param>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetVerticalScrollOffset(Windows.UI.Xaml.Controls.ListBox)">
+            <summary>
+            Gets the vertical offset for a ListBox
+            </summary>
+            <param name="list">The ListBox to check</param>
+            <returns>The vertical offset</returns>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.GetHorizontalScrollOffset(Windows.UI.Xaml.Controls.ListBox)">
+            <summary>
+            Gets the horizontal offset for a ListBox
+            </summary>
+            <param name="list">The ListBox to check</param>
+            <returns>The horizontal offset</returns>
+        </member>
+        <member name="F:MyToolkit.UI.FrameworkElementExtensions.workItems">
+            <summary>
+            List of work to do on the next render (at the end of the current tick)
+            </summary>
+        </member>
+        <member name="M:MyToolkit.UI.FrameworkElementExtensions.ScheduleOnNextRender(System.Action)">
+            <summary>
+            Schedules work to happen at the end of this tick, when the <see cref="E:Windows.UI.Xaml.Media.CompositionTarget.Rendering"/> event is raised
+            </summary>
+            <param name="action">The work to do</param>
+            <remarks>
+            Typically you can schedule work using Dispatcher.BeginInvoke, but sometimes that will result in a single-frame
+            glitch of the visual tree. In that case, use this method.
+            </remarks>
+        </member>
+        <member name="T:MyToolkit.UI.FrameworkElementExtensions.VisibleSearchMode">
+            <summary>
+            Simple enumeration used in the state machine of GetVisibleItems
+            </summary>
+        </member>
+        <member name="F:MyToolkit.UI.TransformCreationMode.None">
+            <summary>
+            Don't try and create a transform if it doesn't already exist
+            </summary>
+        </member>
+        <member name="F:MyToolkit.UI.TransformCreationMode.Create">
+            <summary>
+            Create a transform if none exists
+            </summary>
+        </member>
+        <member name="F:MyToolkit.UI.TransformCreationMode.AddToGroup">
+            <summary>
+            Create and add to an existing group
+            </summary>
+        </member>
+        <member name="F:MyToolkit.UI.TransformCreationMode.CombineIntoGroup">
+            <summary>
+            Create a group and combine with existing transform; may break existing animations
+            </summary>
+        </member>
+        <member name="F:MyToolkit.UI.TransformCreationMode.IgnoreIdentityMatrix">
+            <summary>
+            Treat identity matrix as if it wasn't there; may break existing animations
+            </summary>
+        </member>
+        <member name="F:MyToolkit.UI.TransformCreationMode.CreateOrAddAndIgnoreMatrix">
+            <summary>
+            Create a new transform or add to group
+            </summary>
+        </member>
+        <member name="F:MyToolkit.UI.TransformCreationMode.Default">
+            <summary>
+            Default behaviour, equivalent to CreateOrAddAndIgnoreMatrix
+            </summary>
+        </member>
+        <member name="T:MyToolkit.Utilities.ColorUtilities">
+            <summary>Provides methods to manipulate <see cref="T:Windows.UI.Color"/> objects. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.ColorUtilities.Mix(Windows.UI.Color,System.Double,Windows.UI.Color)">
+            <summary>Blends the given foreground color with the background using the given alpha value. </summary>
+            <param name="foreground">The foreground <see cref="T:Windows.UI.Color"/>. </param>
+            <param name="alpha">The alpha value. </param>
+            <param name="background">The background <see cref="T:Windows.UI.Color"/>. </param>
+            <returns>The new <see cref="T:Windows.UI.Color"/>. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.ColorUtilities.RemoveAlpha(Windows.UI.Color,Windows.UI.Color)">
+            <summary>Removes the transparency from the foreground color using the given background color. </summary>
+            <param name="foreground">The foreground <see cref="T:Windows.UI.Color"/>. </param>
+            <param name="background">The background <see cref="T:Windows.UI.Color"/>. </param>
+            <returns>The color without transparency. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.ColorUtilities.ChangeAlpha(Windows.UI.Color,System.Byte)">
+            <summary>Changes the alpha channel of the <see cref="T:Windows.UI.Color"/>. </summary>
+            <param name="color">The <see cref="T:Windows.UI.Color"/>. </param>
+            <param name="alpha">The new alpha value. </param>
+            <returns>The new <see cref="T:Windows.UI.Color"/>. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.ColorUtilities.ChangeAlpha(Windows.UI.Color,System.String)">
+            <summary>Changes the alpha channel of the <see cref="T:Windows.UI.Color"/>. </summary>
+            <param name="color">The <see cref="T:Windows.UI.Color"/>. </param>
+            <param name="alpha">The new alpha value. </param>
+            <returns>The new <see cref="T:Windows.UI.Color"/>. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.ColorUtilities.ToHex(Windows.UI.Color,System.Boolean)">
+            <summary>Converts a <see cref="T:Windows.UI.Color"/> to HEX string. </summary>
+            <param name="color">The <see cref="T:Windows.UI.Color"/>. </param>
+            <param name="includeAlpha">If false then #RRGGBB, true then #AARRGGBB. </param>
+            <returns>The HEX string. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.ColorUtilities.FromHex(System.String)">
+            <summary>Creates a <see cref="T:Windows.UI.Color"/> from a HEX value. </summary>
+            <param name="colorCode">The HEX in the form #RRGGBB or #AARRGGBB. </param>
+            <returns>The <see cref="T:Windows.UI.Color"/>. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.ColorUtilities.FromHex(System.UInt32)">
+            <summary>Creates a <see cref="T:Windows.UI.Color"/> from a HEX value. </summary>
+            <param name="argb">The HEX value. </param>
+            <returns>The <see cref="T:Windows.UI.Color"/>. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.ColorUtilities.FromString(System.String)">
+            <summary>Creates a <see cref="T:Windows.UI.Color"/> from a <see cref="T:Windows.UI.Colors"/> enum string. </summary>
+            <param name="value">The color string. </param>
+            <returns>The <see cref="T:Windows.UI.Color"/>. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.DependencyObjectExtensions">
+            <summary>Provides extension methods for <see cref="T:Windows.UI.Xaml.DependencyObject"/> objects. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.DependencyObjectExtensions.FindVisualChild``1(Windows.UI.Xaml.DependencyObject)">
+            <summary>Traverses the visual tree and returns the first child of the desired type. </summary>
+            <typeparam name="T">The child type to find. </typeparam>
+            <param name="obj">The parent object. </param>
+            <returns>The child object. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.DependencyObjectExtensions.FindVisualChildren``1(Windows.UI.Xaml.DependencyObject)">
+            <summary>Traverses the visual tree and returns all children of the desired type. </summary>
+            <typeparam name="T">The child type to find. </typeparam>
+            <param name="obj">The parent object. </param>
+            <returns>The children. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.DependencyPropertyChangedEvent">
+            <summary>Provides methods to register to dependency property handler events. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.DependencyPropertyChangedEvent.Register(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.DependencyProperty,System.Action{System.Object,System.Object})">
+            <summary>Registers an event callback on a given dependency property. </summary>
+            <param name="frameworkElement">The source framework element. </param>
+            <param name="property">The property to register the callback for. </param>
+            <param name="handler">The event handler. </param>
+        </member>
+        <member name="M:MyToolkit.Utilities.DependencyPropertyChangedEvent.Deregister(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.DependencyProperty,System.Action{System.Object,System.Object})">
+            <summary>Deregisters an event callback from a given dependency property. </summary>
+            <param name="frameworkElement">The source framework element. </param>
+            <param name="property">The property to register the callback for. </param>
+            <param name="handler">The event handler. </param>
+        </member>
+        <member name="T:MyToolkit.Utilities.FrameworkElementExtensions">
+            <summary>Provides extension methods for <see cref="T:Windows.UI.Xaml.FrameworkElement"/> objects. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.FrameworkElementExtensions.GetVerticalScrollPosition(Windows.UI.Xaml.FrameworkElement)">
+            <summary>Gets the vertical scroll position of the element's <see cref="T:Windows.UI.Xaml.Controls.ScrollViewer"/>. </summary>
+            <param name="element">The element which must have a <see cref="T:Windows.UI.Xaml.Controls.ScrollViewer"/> as child. </param>
+            <returns>The scroll position. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.FrameworkElementExtensions.GetHorizontalScrollPosition(Windows.UI.Xaml.FrameworkElement)">
+            <summary>Sets the horizontal scroll position of the element's <see cref="T:Windows.UI.Xaml.Controls.ScrollViewer"/>. </summary>
+            <param name="element">The element which must have a <see cref="T:Windows.UI.Xaml.Controls.ScrollViewer"/> as child. </param>
+            <returns>The scroll position. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.FrameworkElementExtensions.SetVerticalScrollPosition(Windows.UI.Xaml.FrameworkElement,System.Double)">
+            <summary>Sets the horizontal scroll position of the element's <see cref="T:Windows.UI.Xaml.Controls.ScrollViewer"/>. </summary>
+            <param name="element">The element which must have a <see cref="T:Windows.UI.Xaml.Controls.ScrollViewer"/> as child. </param>
+            <param name="position">The scroll position. </param>
+        </member>
+        <member name="M:MyToolkit.Utilities.FrameworkElementExtensions.SetHorizontalScrollPosition(Windows.UI.Xaml.FrameworkElement,System.Double)">
+            <summary>Gets the horizontal scroll position of the element's <see cref="T:Windows.UI.Xaml.Controls.ScrollViewer"/>. </summary>
+            <param name="element">The element which must have a <see cref="T:Windows.UI.Xaml.Controls.ScrollViewer"/> as child. </param>
+            <param name="position">The scroll position. </param>
+        </member>
+        <member name="M:MyToolkit.Utilities.FrameworkElementExtensions.IsVisibleOnScreen(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement)">
+            <summary>Checks whether an element which is contained in a container is currently visible on the screen. </summary>
+            <param name="element">The element. </param>
+            <param name="container">The element's container (e.g. a <see cref="T:Windows.UI.Xaml.Controls.ListBox"/>). </param>
+            <returns>true if the element is visible to the user; false otherwise. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.ItemsControlExtensions">
+            <summary>Provides extension methods for <see cref="T:Windows.UI.Xaml.Controls.ItemsControl"/> objects. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.ItemsControlExtensions.GetVisibleItems``1(Windows.UI.Xaml.Controls.ItemsControl)">
+            <summary>Gets all items of the <see cref="T:Windows.UI.Xaml.Controls.ItemsControl"/> which are currently visible on the screen. </summary>
+            <typeparam name="T">The type of the items. </typeparam>
+            <param name="itemsControl">The <see cref="T:Windows.UI.Xaml.Controls.ItemsControl"/>. </param>
+            <returns>The visible items. </returns>
+        </member>
+        <member name="M:MyToolkit.Utilities.ItemsControlExtensions.GetFirstVisibleItem``1(Windows.UI.Xaml.Controls.ItemsControl)">
+            <summary>Gets the first item of the <see cref="T:Windows.UI.Xaml.Controls.ItemsControl"/> which are currently visible on the screen. </summary>
+            <typeparam name="T">The type of the item. </typeparam>
+            <param name="itemsControl">The <see cref="T:Windows.UI.Xaml.Controls.ItemsControl"/>. </param>
+            <returns>The visible item. </returns>
+        </member>
+        <member name="T:MyToolkit.Utilities.PropertyPathHelper">
+            <summary>Provides helper methods for handling property paths. </summary>
+        </member>
+        <member name="T:MyToolkit.Utilities.Xml">
+            <summary>Provides utility methods for handling XML. </summary>
+        </member>
+        <member name="M:MyToolkit.Animations.Fading.FadeInAsync(Windows.UI.Xaml.UIElement,System.TimeSpan,System.Double)">
+            <summary>
+            Fades an element in. 
+            </summary>
+            <param name="obj">The element to animate. </param>
+            <param name="duration">The animation duration. </param>
+            <param name="endOpacity">The opacity at the end of the animation. </param>
+            <returns>Returns a task. </returns>
+        </member>
+        <member name="M:MyToolkit.Animations.Fading.FadeOutAsync(Windows.UI.Xaml.UIElement,System.TimeSpan,System.Double)">
+            <summary>
+            Fades an element out. 
+            </summary>
+            <param name="obj">The element to animate. </param>
+            <param name="duration">The animation duration. </param>
+            <param name="endOpacity">The opacity at the end of the animation. </param>
+            <returns>Returns a task. </returns>
+        </member>
+        <member name="M:MyToolkit.Animations.Fading.FadeIn(Windows.UI.Xaml.UIElement,System.TimeSpan,System.Double,System.Action)">
+            <summary>
+            Fades an element in. 
+            </summary>
+            <param name="obj">The element to animate. </param>
+            <param name="duration">The animation duration. </param>
+            <param name="endOpacity">The opacity at the end of the animation. </param>
+            <returns>Returns a task. </returns>
+        </member>
+        <member name="M:MyToolkit.Animations.Fading.FadeOut(Windows.UI.Xaml.UIElement,System.TimeSpan,System.Double,System.Action)">
+            <summary>
+            Fades an element out. 
+            </summary>
+            <param name="obj">The element to animate. </param>
+            <param name="duration">The animation duration. </param>
+            <param name="endOpacity">The opacity at the end of the animation. </param>
+            <returns>Returns a task. </returns>
+        </member>
+        <member name="T:MyToolkit.Animations.Flipping">
+            <summary>
+            Methods to flip a two-sided GUI element to the back and front. 
+            </summary>
+        </member>
+        <member name="M:MyToolkit.Animations.Flipping.FlipToBack(Windows.UI.Xaml.UIElement,Windows.UI.Xaml.UIElement,Windows.UI.Xaml.UIElement,System.TimeSpan,System.Action)">
+            <summary>
+            Flips the element to its back view. 
+            </summary>
+            <param name="panel">A panel containing the front element and the back element. </param>
+            <param name="frontElement">The front element. </param>
+            <param name="backElement">The back element. </param>
+            <param name="duration">The anmiation duration. </param>
+            <param name="completed">Callback which is called after the animation has finished. </param>
+        </member>
+        <member name="M:MyToolkit.Animations.Flipping.FlipToFront(Windows.UI.Xaml.UIElement,Windows.UI.Xaml.UIElement,Windows.UI.Xaml.UIElement,System.TimeSpan,System.Action)">
+            <summary>
+            Flips the element to its front view. 
+            </summary>
+            <param name="panel">A panel containing the front element and the back element. </param>
+            <param name="frontElement">The front element. </param>
+            <param name="backElement">The back element. </param>
+            <param name="duration">The anmiation duration. </param>
+            <param name="completed">Callback which is called after the animation has finished. </param>
+        </member>
+        <member name="M:MyToolkit.Animations.Flipping.Flip(Windows.UI.Xaml.UIElement,Windows.UI.Xaml.UIElement,Windows.UI.Xaml.UIElement,System.TimeSpan,System.Boolean,System.Action)">
+            <summary>
+            Flips the element. 
+            </summary>
+            <param name="panel">A panel containing the front element and the back element. </param>
+            <param name="frontElement">The front element. </param>
+            <param name="backElement">The back element. </param>
+            <param name="duration">The anmiation duration. </param>
+            <param name="transitionToBack">Specifies whether the element should be flipped to its back view. </param>
+            <param name="completed">Callback which is called after the animation has finished. </param>
+        </member>
+        <member name="T:MyToolkit.Collections.ObservableGroupCollection`1">
+            <summary>Provides a collection of groups which is useful in Windows 8's GridView control. </summary>
+            <typeparam name="TItem">The item type. </typeparam>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableGroupCollection`1.AddGroup(System.String,System.Int32)">
+            <summary>Creates and adds a group to the collection. </summary>
+            <param name="title">The title of the group. </param>
+            <param name="topItemsCount">The top items count. </param>
+            <returns>The created <see cref="T:MyToolkit.Collections.TopItemsGroup`1"/></returns>
+        </member>
+        <member name="M:MyToolkit.Collections.ObservableGroupCollection`1.AddGroup(System.String,System.Collections.Generic.IEnumerable{`0},System.Int32)">
+            <summary>Creates and adds a group to the collection. </summary>
+            <param name="title">The title of the group. </param>
+            <param name="items">The items in the group. </param>
+            <param name="topItemsCount">The top items count. </param>
+            <returns>The created <see cref="T:MyToolkit.Collections.TopItemsGroup`1"/></returns>
+        </member>
+        <member name="P:MyToolkit.Collections.ObservableGroupCollection`1.View">
+            <summary>The <see cref="T:Windows.UI.Xaml.Data.CollectionViewSource"/> to use in XAML. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.ColorChooser">
+            <summary>Provides a simple color chooser. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.ColorChooser.SelectedColor">
+            <summary>Gets or sets the selected color. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.ColorChooser.Colors">
+            <summary>Gets or sets the available colors in the chooser. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGridColumnBase.GenerateElement(System.Object)">
+            <summary>Generates the cell for the given item. </summary>
+            <param name="dataItem">The item to generate the cell for. </param>
+            <returns>The <see cref="T:MyToolkit.Controls.DataGridCellBase"/>. </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGridColumnBase.CreateGridColumnDefinition">
+            <summary>Creates a new column definition </summary>
+            <returns>The column definition. </returns>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridColumnBase.CanSort">
+            <summary>Gets or sets a value indicating whether the column can be sorted. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridColumnBase.IsSelected">
+            <summary>Gets a value indicating whether the the column is selected and used for sorting. 
+            This property should not be set directly, use the SelectColumn method on <see cref="T:MyToolkit.Controls.DataGrid"/>. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridColumnBase.IsAscending">
+            <summary>Gets a value indicating whether the column is sorted ascending (otherwise descending). 
+            This property should not be set directly, use the SelectColumn method on <see cref="T:MyToolkit.Controls.DataGrid"/>. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridColumnBase.IsAscendingDefault">
+            <summary>Gets or sets a value indicating whether ascending sorting is default 
+            (first click on the column will sort it ascending, otherwise descending). </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridColumnBase.Header">
+            <summary>Gets or sets the header. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridColumnBase.Width">
+            <summary>Gets or sets the width of the column. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridColumnBase.OrderPropertyPath">
+            <summary>Gets the property path which is used for sorting. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridBoundColumn.Binding">
+            <summary>Gets or sets the data binding for this column. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridBoundColumn.OrderPropertyPath">
+            <summary>Gets the property path which is used for sorting. </summary>
+        </member>
+        <member name="F:MyToolkit.Controls.DataGridExtensions.UseSingleSelectionAndDeselectionProperty">
+            <summary>Gets or sets a value indicating whether to allow only a single selection which can be deselected.</summary>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGridExtensions.GetUseSingleSelectionAndDeselection(Windows.UI.Xaml.DependencyObject)">
+            <summary>Gets a value indicating whether to allow only a single selection which can be deselected.</summary>
+            <param name="obj">The <see cref="T:Windows.UI.Xaml.DependencyObject"/>. </param>
+            <returns>The value. </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGridExtensions.SetUseSingleSelectionAndDeselection(Windows.UI.Xaml.DependencyObject,System.Boolean)">
+            <summary>Sets a value indicating whether to allow only a single selection which can be deselected.</summary>
+            <param name="obj">The <see cref="T:Windows.UI.Xaml.DependencyObject"/>. </param>
+            <param name="value">The value. </param>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGridCellBase.#ctor(Windows.UI.Xaml.FrameworkElement)">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Controls.DataGridCellBase"/> class. </summary>
+            <param name="control">The control. </param>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGridCellBase.OnSelectedChanged(System.Boolean)">
+            <summary>Called when the cell's row gets selected or unselected. </summary>
+            <param name="isSelected">Indicates whether the cell is selected or not. </param>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridCellBase.Control">
+            <summary>Gets the UI control of the cell. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGridTemplatedCell.OnSelectedChanged(System.Boolean)">
+            <summary>Called when the cell's row gets selected or unselected. </summary>
+            <param name="isSelected">Indicates whether the cell is selected or not. </param>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridTemplatedCell.OnlyVisibleOnSelection">
+            <summary>Gets or sets a value indicating whether the cell is only visible when the row is selected.  </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGridTemplatedColumn.GenerateElement(System.Object)">
+            <summary>Generates the cell for the given item. </summary>
+            <param name="dataItem">The item to generate the cell for. </param>
+            <returns>The <see cref="T:MyToolkit.Controls.DataGridCellBase"/>. </returns>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridTemplatedColumn.CellTemplate">
+            <summary>Gets or sets the cell data template. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridTemplatedColumn.Order">
+            <summary>Gets or sets the binding which is used for sorting. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridTemplatedColumn.OrderPropertyPath">
+            <summary>Gets the property path which is used for sorting. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridTemplatedColumn.OnlyVisibleOnSelection">
+            <summary>Gets or sets a value indicating whether the column is only visible when the column is selected.  </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.DefaultDataGridCell.OnSelectedChanged(System.Boolean)">
+            <summary>
+            Calles when the cell's row gets selected or unselected. 
+            </summary>
+            <param name="isSelected">Indicates whether the cell is selected or not. </param>
+        </member>
+        <member name="T:MyToolkit.Controls.MtGridView">
+            <summary>A <see cref="T:Windows.UI.Xaml.Controls.GridView"/> with additional features. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.MtGridView.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Controls.MtGridView"/> class. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.MtGridView.ScrollViewer">
+            <summary>Gets the view's <see cref="P:MyToolkit.Controls.MtGridView.ScrollViewer"/>. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.MtGridView.TriggerScrolledToEndEvents">
+            <summary>Gets or sets a value indicating whether scrolled to end events should be triggered. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.MtGridView.ScrolledToEnd">
+            <summary>Occurs when the user scrolled to the end of the view. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.MtGridView.PrepareContainerForItem">
+            <summary>Occurs when a new container control gets created. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.ExtendedGridView">
+            <summary>A <see cref="T:Windows.UI.Xaml.Controls.GridView"/> with additional features. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.MtItemsControl">
+            <summary>A <see cref="T:Windows.UI.Xaml.Controls.ItemsControl"/> with additional features. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.MtItemsControl.PrepareContainerForItem">
+            <summary>Occurs when a container for an item gets prepared. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.ExtendedItemsControl">
+            <summary>A <see cref="T:Windows.UI.Xaml.Controls.ItemsControl"/> with additional features. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.MtListView">
+            <summary>A <see cref="T:Windows.UI.Xaml.Controls.ListView"/> with additional features. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.MtListView.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Controls.MtListView"/> class. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.ExtendedListView">
+            <summary>A <see cref="T:Windows.UI.Xaml.Controls.ListView"/> with additional features. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.LongListSelector">
+            <summary>Implementation of the <see cref="T:MyToolkit.Controls.LongListSelector"/> with native look and feel. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.LongListSelector.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Controls.LongListSelector"/> class. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.LongListSelector.Navigate">
+            <summary>Occurs when the user wants to navigate to an item. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.LongListSelector.ItemsSource">
+            <summary>Gets or sets the item source (usually an <see cref="T:MyToolkit.Collections.AlphaGroupCollection`1"/> object). </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.LongListSelector.ItemTemplate">
+            <summary>Gets or sets the item template for rendering an item. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.LongListSelector.UseNavigationEvent">
+            <summary>Gets or sets a value indicating whether the <see cref="E:MyToolkit.Controls.LongListSelector.Navigate"/> event should be triggered
+            when clicking on an item (default: true). </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.NavigationGridView.Navigate">
+            <summary>Occurs when the user wants to navigate to an item. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.NavigationListView.Navigate">
+            <summary>Occurs when the user wants to navigate to an item. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.OrientedSize">
+            <summary>
+            The OrientedSize structure is used to abstract the growth direction from
+            the layout algorithms of WrapPanel.  When the growth direction is
+            oriented horizontally (ex: the next element is arranged on the side of
+            the previous element), then the Width grows directly with the placement
+            of elements and Height grows indirectly with the size of the largest
+            element in the row.  When the orientation is reversed, so is the
+            directional growth with respect to Width and Height.
+            </summary>
+            <QualityBand>Mature</QualityBand>
+        </member>
+        <member name="F:MyToolkit.Controls.OrientedSize._orientation">
+            <summary>
+            The orientation of the structure.
+            </summary>
+        </member>
+        <member name="F:MyToolkit.Controls.OrientedSize._direct">
+            <summary>
+            The size dimension that grows directly with layout placement.
+            </summary>
+        </member>
+        <member name="F:MyToolkit.Controls.OrientedSize._indirect">
+            <summary>
+            The size dimension that grows indirectly with the maximum value of
+            the layout row or column.
+            </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.OrientedSize.#ctor(Windows.UI.Xaml.Controls.Orientation)">
+            <summary>
+            Initializes a new OrientedSize structure.
+            </summary>
+            <param name="orientation">Orientation of the structure.</param>
+        </member>
+        <member name="M:MyToolkit.Controls.OrientedSize.#ctor(Windows.UI.Xaml.Controls.Orientation,System.Double,System.Double)">
+            <summary>
+            Initializes a new OrientedSize structure.
+            </summary>
+            <param name="orientation">Orientation of the structure.</param>
+            <param name="width">Un-oriented width of the structure.</param>
+            <param name="height">Un-oriented height of the structure.</param>
+        </member>
+        <member name="P:MyToolkit.Controls.OrientedSize.Orientation">
+            <summary>
+            Gets the orientation of the structure.
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.OrientedSize.Direct">
+            <summary>
+            Gets or sets the size dimension that grows directly with layout
+            placement.
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.OrientedSize.Indirect">
+            <summary>
+            Gets or sets the size dimension that grows indirectly with the
+            maximum value of the layout row or column.
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.OrientedSize.Width">
+            <summary>
+            Gets or sets the width of the size.
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.OrientedSize.Height">
+            <summary>
+            Gets or sets the height of the size.
+            </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.MtPivot">
+            <summary>A pivot control for WinRT. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.MtPivot.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Controls.MtPivot"/> class. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.MtPivot.SelectionChanged">
+            <summary>Occurs when the selected pivot changed. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.MtPivot.Items">
+            <summary>Gets the list of <see cref="T:MyToolkit.Controls.MtPivotItem"/> objects. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.MtPivot.HeaderTemplate">
+            <summary>Gets or sets the header template. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.MtPivot.SelectedItem">
+            <summary>Gets or sets the current visible <see cref="T:MyToolkit.Controls.MtPivotItem"/>. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.MtPivot.SelectedIndex">
+            <summary>Gets or sets the index of the currently selected <see cref="T:MyToolkit.Controls.MtPivotItem"/>. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.PivotExtensions">
+            <summary>Attached properties for (Windows Phone's) Pivot control. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.PivotExtensions.SetDisableAutoMargin(Windows.UI.Xaml.DependencyObject,System.Boolean)">
+            <summary>Sets a value indicating whether the automatic margin on a Windows Phone Pivot control should be disabled. </summary>
+            <remarks>When this is set to <c>true</c>, the Pivot's template cannot be changed. 
+            Use this property only on Windows Phone Pivot controls. </remarks>
+            <param name="element">The element. </param>
+            <param name="value">The value. </param>
+        </member>
+        <member name="M:MyToolkit.Controls.PivotExtensions.GetDisableAutoMargin(Windows.UI.Xaml.DependencyObject)">
+            <summary>Gets a value indicating whether the automatic margin on a Windows Phone Pivot control should be disabled. </summary>
+            <param name="element">The element. </param>
+        </member>
+        <member name="T:MyToolkit.Controls.SuppressTappedPresenter">
+            <summary>Control which suppresses all tapped events. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.SuppressTappedPresenter.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Controls.SuppressTappedPresenter"/> class. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.DataGrid">
+            <summary>A data grid control. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGrid.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Controls.DataGrid"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGrid.SelectColumn(MyToolkit.Controls.DataGridColumnBase)">
+            <summary>Selects a column for ordering. 
+            If the column is not selected the the default ordering is used (IsAscendingDefault property). 
+            If the column is already selected then the ordering direction will be inverted. </summary>
+            <param name="column">The column. </param>
+            <returns>Returns true if column could be changed. </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGrid.SelectColumn(MyToolkit.Controls.DataGridColumnBase,System.Boolean)">
+            <summary>Selects a column for ordering. </summary>
+            <param name="column">The column. </param>
+            <param name="ascending">The value indicating whether to sort the column ascending; otherwise descending. </param>
+            <returns>Returns true if column could be changed. </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGrid.SetFilter``1(System.Func{``0,System.Boolean})">
+            <summary>Sets the filter on the items source. </summary>
+            <typeparam name="TItem"></typeparam>
+            <param name="filter"></param>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGrid.RemoveFilter">
+            <summary>Removes the current filter. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.DataGrid.SelectionChanged">
+            <summary>Occurs when the selected item (row) has changed. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.DataGrid.Navigate">
+            <summary>Occurs when the user clicked on an item and wants to navigate to its detail page. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGrid.SelectedItems">
+            <summary>Gets the list of currently selected items. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGrid.Items">
+            <summary>Gets the currently displayed items. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGrid.SelectedColumn">
+            <summary>Gets the selected column. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGrid.HeaderBackground">
+            <summary>Gets or sets the header background. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGrid.SelectionMode">
+            <summary>Gets or sets the selection mode (default: single). </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGrid.SelectedItem">
+            <summary>Gets or sets the selected item. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGrid.ItemsSource">
+            <summary>Gets or sets the items collection to show in the <see cref="T:MyToolkit.Controls.DataGrid"/>. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGrid.DefaultOrderIndex">
+            <summary>Gets or sets the index of the column which is initially ordered. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGrid.RowStyle">
+            <summary>Used to change the row style, the ItemContainerStyle of the internal ListBox; use ListBoxItem as style target type. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGrid.ItemDetailsTemplate">
+            <summary>Gets or sets the data template for item details (shown when an item is selected). When null then no details are shown. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGrid.HeaderTemplate">
+            <summary>Gets or sets the header data template (styling of column container). </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGrid.CellTemplate">
+            <summary>Gets or sets the cell data template (currently not working). </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGrid.Columns">
+            <summary>Gets the column description of the <see cref="T:MyToolkit.Controls.DataGrid"/>. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.DataGridRow">
+            <summary>A <see cref="P:MyToolkit.Controls.DataGridRow.DataGrid"/> row. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridRow.DataGrid">
+            <summary>Gets the parent <see cref="P:MyToolkit.Controls.DataGridRow.DataGrid"/>. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridRow.Item">
+            <summary>Gets or sets the associated item. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridRow.IsSelected">
+            <summary>Gets a value indicating whether the row is selected. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridRow.Cells">
+            <summary>Gets the list of <see cref="T:MyToolkit.Controls.DataGridCellBase"/>. </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.DataGridTextColumn.GenerateElement(System.Object)">
+            <summary>Generates the cell for the given item. </summary>
+            <param name="dataItem">The item to generate the cell for. </param>
+            <returns>The <see cref="T:MyToolkit.Controls.DataGridCellBase"/>. </returns>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridTextColumn.FontSize">
+            <summary>Gets or sets the font size. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridTextColumn.FontStyle">
+            <summary>Gets or sets the font style. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridTextColumn.Foreground">
+            <summary>Gets or sets the foreground. </summary>
+        </member>
+        <member name="P:MyToolkit.Controls.DataGridTextColumn.Style">
+            <summary>Gets or sets the style. </summary>
+        </member>
+        <member name="E:MyToolkit.Controls.NavigationList.Navigate">
+            <summary>Occurs when the user wants to navigate to an item. </summary>
+        </member>
+        <member name="T:MyToolkit.Controls.WrapPanel">
+            <summary>
+            Positions child elements sequentially from left to right or top to
+            bottom.  When elements extend beyond the panel edge, elements are
+            positioned in the next row or column.
+            </summary>
+            <QualityBand>Mature</QualityBand>
+        </member>
+        <member name="F:MyToolkit.Controls.WrapPanel._ignorePropertyChange">
+            <summary>
+            A value indicating whether a dependency property change handler
+            should ignore the next change notification.  This is used to reset
+            the value of properties without performing any of the actions in
+            their change handlers.
+            </summary>
+        </member>
+        <member name="F:MyToolkit.Controls.WrapPanel.ItemHeightProperty">
+            <summary>
+            Identifies the
+            <see cref="P:MyToolkit.Controls.WrapPanel.ItemHeight" />
+            dependency property.
+            </summary>
+            <value>
+            The identifier for the
+            <see cref="P:MyToolkit.Controls.WrapPanel.ItemHeight" />
+            dependency property
+            </value>
+        </member>
+        <member name="F:MyToolkit.Controls.WrapPanel.ItemWidthProperty">
+            <summary>
+            Identifies the
+            <see cref="P:MyToolkit.Controls.WrapPanel.ItemWidth" />
+            dependency property.
+            </summary>
+            <value>
+            The identifier for the
+            <see cref="P:MyToolkit.Controls.WrapPanel.ItemWidth" />
+            dependency property.
+            </value>
+        </member>
+        <member name="F:MyToolkit.Controls.WrapPanel.OrientationProperty">
+            <summary>
+            Identifies the
+            <see cref="P:MyToolkit.Controls.WrapPanel.Orientation" />
+            dependency property.
+            </summary>
+            <value>
+            The identifier for the
+            <see cref="P:MyToolkit.Controls.WrapPanel.Orientation" />
+            dependency property.
+            </value>
+        </member>
+        <member name="M:MyToolkit.Controls.WrapPanel.OnOrientationPropertyChanged(Windows.UI.Xaml.DependencyObject,Windows.UI.Xaml.DependencyPropertyChangedEventArgs)">
+            <summary>
+            OrientationProperty property changed handler.
+            </summary>
+            <param name="d">WrapPanel that changed its Orientation.</param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="M:MyToolkit.Controls.WrapPanel.#ctor">
+            <summary>
+            Initializes a new instance of the
+            <see cref="T:MyToolkit.Controls.WrapPanel" /> class.
+            </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.WrapPanel.OnItemHeightOrWidthPropertyChanged(Windows.UI.Xaml.DependencyObject,Windows.UI.Xaml.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Property changed handler for ItemHeight and ItemWidth.
+            </summary>
+            <param name="d">
+            WrapPanel that changed its ItemHeight or ItemWidth.
+            </param>
+            <param name="e">Event arguments.</param>
+        </member>
+        <member name="M:MyToolkit.Controls.WrapPanel.MeasureOverride(Windows.Foundation.Size)">
+            <summary>
+            Measures the child elements of a
+            <see cref="T:MyToolkit.Controls.WrapPanel"/> in anticipation
+            of arranging them during the
+            <see cref="M:Windows.UI.Xaml.FrameworkElement.ArrangeOverride(Windows.Foundation.Size)"/>
+            pass.
+            </summary>
+            <param name="constraint">
+            The size available to child elements of the wrap panel.
+            </param>
+            <returns>
+            The size required by the
+            <see cref="T:MyToolkit.Controls.WrapPanel"/> and its 
+            elements.
+            </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.WrapPanel.ArrangeOverride(Windows.Foundation.Size)">
+            <summary>
+            Arranges and sizes the
+            <see cref="T:MyToolkit.Controls.WrapPanel" /> control and its
+            child elements.
+            </summary>
+            <param name="finalSize">
+            The area within the parent that the
+            <see cref="T:MyToolkit.Controls.WrapPanel" /> should use 
+            arrange itself and its children.
+            </param>
+            <returns>
+            The actual size used by the
+            <see cref="T:MyToolkit.Controls.WrapPanel" />.
+            </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.WrapPanel.ArrangeLine(System.Int32,System.Int32,System.Nullable{System.Double},System.Double,System.Double)">
+            <summary>
+            Arrange a sequence of elements in a single line.
+            </summary>
+            <param name="lineStart">
+            Index of the first element in the sequence to arrange.
+            </param>
+            <param name="lineEnd">
+            Index of the last element in the sequence to arrange.
+            </param>
+            <param name="directDelta">
+            Optional fixed growth in the primary direction.
+            </param>
+            <param name="indirectOffset">
+            Offset of the line in the indirect direction.
+            </param>
+            <param name="indirectGrowth">
+            Shared indirect growth of the elements on this line.
+            </param>
+        </member>
+        <member name="P:MyToolkit.Controls.WrapPanel.ItemHeight">
+            <summary>
+            Gets or sets the height of the layout area for each item that is
+            contained in a <see cref="T:MyToolkit.Controls.WrapPanel" />.
+            </summary>
+            <value>
+            The height applied to the layout area of each item that is contained
+            within a <see cref="T:MyToolkit.Controls.WrapPanel" />.  The
+            default value is <see cref="F:System.Double.NaN" />.
+            </value>
+        </member>
+        <member name="P:MyToolkit.Controls.WrapPanel.ItemWidth">
+            <summary>
+            Gets or sets the width of the layout area for each item that is
+            contained in a <see cref="T:MyToolkit.Controls.WrapPanel" />.
+            </summary>
+            <value>
+            The width that applies to the layout area of each item that is
+            contained in a <see cref="T:MyToolkit.Controls.WrapPanel" />.
+            The default value is <see cref="F:System.Double.NaN" />.
+            </value>
+        </member>
+        <member name="P:MyToolkit.Controls.WrapPanel.Orientation">
+            <summary>
+            Gets or sets the direction in which child elements are arranged.
+            </summary>
+            <value>
+            One of the <see cref="T:Windows.UI.Xaml.Controls.Orientation" />
+            values.  The default is
+            <see cref="F:Windows.UI.Xaml.Controls.Orientation.Horizontal" />.
+            </value>
+        </member>
+        <member name="T:MyToolkit.Controls.NumericExtensions">
+            <summary>
+            Numeric utility methods used by controls.  These methods are similar in
+            scope to the WPF DoubleUtil class.
+            </summary>
+        </member>
+        <member name="M:MyToolkit.Controls.NumericExtensions.IsZero(System.Double)">
+            <summary>
+            Check if a number is zero.
+            </summary>
+            <param name="value">The number to check.</param>
+            <returns>True if the number is zero, false otherwise.</returns>
+        </member>
+        <member name="M:MyToolkit.Controls.NumericExtensions.IsNaN(System.Double)">
+            <summary>
+            Check if a number isn't really a number.
+            </summary>
+            <param name="value">The number to check.</param>
+            <returns>
+            True if the number is not a number, false if it is a number.
+            </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.NumericExtensions.IsGreaterThan(System.Double,System.Double)">
+            <summary>
+            Determine if one number is greater than another.
+            </summary>
+            <param name="left">First number.</param>
+            <param name="right">Second number.</param>
+            <returns>
+            True if the first number is greater than the second, false
+            otherwise.
+            </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.NumericExtensions.AreClose(System.Double,System.Double)">
+            <summary>
+            Determine if two numbers are close in value.
+            </summary>
+            <param name="left">First number.</param>
+            <param name="right">Second number.</param>
+            <returns>
+            True if the first number is close in value to the second, false
+            otherwise.
+            </returns>
+        </member>
+        <member name="M:MyToolkit.Controls.NumericExtensions.IsLessThanOrClose(System.Double,System.Double)">
+            <summary>
+            Determine if one number is less than or close to another.
+            </summary>
+            <param name="left">First number.</param>
+            <param name="right">Second number.</param>
+            <returns>
+            True if the first number is less than or close to the second, false
+            otherwise.
+            </returns>
+        </member>
+        <member name="T:MyToolkit.Controls.NumericExtensions.NanUnion">
+            <summary>
+            NanUnion is a C++ style type union used for efficiently converting
+            a double into an unsigned long, whose bits can be easily
+            manipulated.
+            </summary>
+        </member>
+        <member name="F:MyToolkit.Controls.NumericExtensions.NanUnion.FloatingValue">
+            <summary>
+            Floating point representation of the union.
+            </summary>
+        </member>
+        <member name="F:MyToolkit.Controls.NumericExtensions.NanUnion.IntegerValue">
+            <summary>
+            Integer representation of the union.
+            </summary>
+        </member>
+        <member name="T:MyToolkit.Converters.ChainedConverter">
+            <summary>
+            Used to compose multiple converters. 
+            </summary>
+        </member>
+        <member name="T:MyToolkit.Converters.ColorConverter">
+            <summary>
+            Converts a HEX string, color or brush to a HEX string, color or brush. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Environment.Device.DeviceId">
+            <summary>
+            Gets a unique ID which can be used to identify the current device. 
+            </summary>
+        </member>
+        <member name="T:MyToolkit.Mvvm.IStateHandlingViewModel">
+            <summary>Interface of a view model which can save and load its state. </summary>
+        </member>
+        <member name="M:MyToolkit.Mvvm.IStateHandlingViewModel.OnLoadState(MyToolkit.Paging.MtLoadStateEventArgs)">
+            <summary>Used to load the saved state when the page has been reactivated. </summary>
+            <param name="pageState">The saved page state. </param>
+        </member>
+        <member name="M:MyToolkit.Mvvm.IStateHandlingViewModel.OnSaveState(MyToolkit.Paging.MtSaveStateEventArgs)">
+            <summary>Used to save the state when the page gets suspended. </summary>
+            <param name="pageState">The dictionary to save the page state into. </param>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelHelper.BindViewModelToStatusBarProgress(MyToolkit.Mvvm.ViewModelBase)">
+            <summary>Binds the <see cref="P:MyToolkit.Mvvm.ViewModelBase.IsLoading"/> property of the view model to 
+            the progress bar visibility of the status bar (Windows Phone only). </summary>
+            <param name="viewModel">The view model. </param>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelHelper.RegisterViewModel(MyToolkit.Mvvm.ViewModelBase,Windows.UI.Xaml.FrameworkElement,System.Boolean)">
+            <summary>Initializes the view model and registers events so that the OnLoaded and OnUnloaded methods are called. 
+            This method must be called in the constructor after the <see cref="!:InitializeComponent"/> method call. </summary>
+            <param name="viewModel">The view model. </param>
+            <param name="view">The view. </param>
+            <param name="registerForStateHandling">Registers the view model also for state handling
+            The view model has to implement <see cref="T:MyToolkit.Mvvm.IStateHandlingViewModel"/> and the view must be a <see cref="T:MyToolkit.Paging.MtPage"/>. </param>
+        </member>
+        <member name="M:MyToolkit.Mvvm.ViewModelHelper.RegisterViewModelForStateHandling(MyToolkit.Mvvm.IStateHandlingViewModel,MyToolkit.Paging.MtPage)">
+            <summary>Registers the view model for state handling. </summary>
+            <param name="viewModel">The view model. </param>
+            <param name="page">The page. </param>
+        </member>
+        <member name="T:MyToolkit.Paging.Animations.PageInsertionMode">
+            <summary>Enumeration of the possible page insertion modes. </summary>
+        </member>
+        <member name="F:MyToolkit.Paging.Animations.PageInsertionMode.ConcurrentAbove">
+            <summary>Inserts the next page over the previous page before starting the animations so that both pages are in the visual tree during the animations. </summary>
+        </member>
+        <member name="F:MyToolkit.Paging.Animations.PageInsertionMode.ConcurrentBelow">
+            <summary>Inserts the next page below the previous page before starting the animations so that both pages are in the visual tree during the animations. </summary>
+        </member>
+        <member name="F:MyToolkit.Paging.Animations.PageInsertionMode.Sequential">
+            <summary>Inserts the next page after the navigating from animation and removes the previous page. </summary>
+        </member>
+        <member name="T:MyToolkit.Paging.Animations.PushPageAnimation">
+            <summary>A push page animation. </summary>
+        </member>
+        <member name="T:MyToolkit.Paging.Animations.IPageAnimation">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Paging.Animations.IPageAnimation"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.IPageAnimation.AnimateForwardNavigatingFromAsync(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement)">
+            <summary>Animates for navigating forward from a page. </summary>
+            <param name="previousPage">The previous page. </param>
+            <param name="nextPage">The next page. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.IPageAnimation.AnimateForwardNavigatedToAsync(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement)">
+            <summary>Animates for navigating forward to a page. </summary>
+            <param name="previousPage">The previous page. </param>
+            <param name="nextPage">The next page. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.IPageAnimation.AnimateBackwardNavigatingFromAsync(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement)">
+            <summary>Animates for navigating backward from a page. </summary>
+            <param name="previousPage">The previous page. </param>
+            <param name="nextPage">The next page. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.IPageAnimation.AnimateBackwardNavigatedToAsync(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement)">
+            <summary>Animates for navigating backward to a page. </summary>
+            <param name="previousPage">The previous page. </param>
+            <param name="nextPage">The next page. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="P:MyToolkit.Paging.Animations.IPageAnimation.PageInsertionMode">
+            <summary>Gets the insertion mode for the next page.</summary>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.PushPageAnimation.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Paging.Animations.PushPageAnimation"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.PushPageAnimation.AnimateForwardNavigatingFromAsync(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement)">
+            <summary>Animates for navigating forward from a page. </summary>
+            <param name="previousPage">The previous page. </param>
+            <param name="nextPage">The next page. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.PushPageAnimation.AnimateForwardNavigatedToAsync(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement)">
+            <summary>Animates for navigating forward to a page. </summary>
+            <param name="previousPage">The previous page. </param>
+            <param name="nextPage">The next page. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.PushPageAnimation.AnimateBackwardNavigatingFromAsync(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement)">
+            <summary>Animates for navigating backward from a page. </summary>
+            <param name="previousPage">The previous page. </param>
+            <param name="nextPage">The next page. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.PushPageAnimation.AnimateBackwardNavigatedToAsync(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement)">
+            <summary>Animates for navigating backward to a page. </summary>
+            <param name="previousPage">The previous page. </param>
+            <param name="nextPage">The next page. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="P:MyToolkit.Paging.Animations.PushPageAnimation.Duration">
+            <summary>Gets or sets the duration of the animation. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.Animations.PushPageAnimation.PageInsertionMode">
+            <summary>Gets the insertion mode for the next page.</summary>
+        </member>
+        <member name="T:MyToolkit.Paging.Handlers.BackKeyPressedHandler">
+            <summary>Registers for the hardware back key button on Windows Phone and calls the registered methods when the event occurs. </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.Handlers.BackKeyPressedHandler.Add(MyToolkit.Paging.MtPage,System.Func{System.Object,System.Boolean})">
+            <summary>Adds a back key handler for a given page. </summary>
+            <param name="page">The page. </param>
+            <param name="handler">The handler. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.Handlers.BackKeyPressedHandler.Remove(MyToolkit.Paging.MtPage)">
+            <summary>Removes a back key pressed handler for a given page. </summary>
+            <param name="page">The page. </param>
+        </member>
+        <member name="P:MyToolkit.Paging.Handlers.NavigationKeyHandler.IsRunningOnPhone">
+            <summary>Gets a value indicating whether the application is running on a Windows Phone. </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.MtApplication.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Paging.MtApplication"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.MtApplication.OnInitializedAsync(MyToolkit.Paging.MtFrame,Windows.ApplicationModel.Activation.ApplicationExecutionState)">
+            <summary>Called when a new instance of the application has been created. </summary>
+            <param name="frame">The frame. </param>
+            <param name="args">The launch arguments.</param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtApplication.CreateFrame">
+            <summary>Creates the root frame. </summary>
+            <returns>The root frame. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtApplication.OnLaunched(Windows.ApplicationModel.Activation.LaunchActivatedEventArgs)">
+            <summary>
+            Invoked when the application is launched normally by the end user.  Other entry points
+            will be used when the application is launched to open a specific file, to display
+            search results, and so forth.
+            </summary>
+            <param name="args">Details about the launch request and process.</param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtApplication.InitializeFrameAsync(Windows.ApplicationModel.Activation.ApplicationExecutionState)">
+            <summary>Creates the application's root frame and loads the first page if needed. 
+            Also calls <see cref="M:MyToolkit.Paging.MtApplication.OnInitializedAsync(MyToolkit.Paging.MtFrame,Windows.ApplicationModel.Activation.ApplicationExecutionState)"/> when the application is instantiated the first time. </summary>
+            <param name="executionState">The application execution state. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtApplication.RestoreStateAsync">
+            <summary>Restores the saved page states using the <see cref="T:MyToolkit.Paging.MtSuspensionManager"/>. </summary>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtApplication.SaveStateAsync">
+            <summary>Loads the saved page states using the <see cref="T:MyToolkit.Paging.MtSuspensionManager"/>. </summary>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtApplication.OnSuspending(System.Object,Windows.ApplicationModel.SuspendingEventArgs)">
+            <summary>Invoked when application execution is being suspended.  Application state is saved
+            without knowing whether the application will be terminated or resumed with the contents
+            of memory still intact. </summary>
+            <param name="sender">The source of the suspend request.</param>
+            <param name="e">Details about the suspend request.</param>
+        </member>
+        <member name="P:MyToolkit.Paging.MtApplication.StartPageType">
+            <summary>Gets the type of the start page (first page when launching application). </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.MtLoadStateEventArgs.GetWithXmlSerializer``1(System.String)">
+            <summary>Gets an object which is deserialized with <see cref="T:MyToolkit.Serialization.XmlSerialization"/>. </summary>
+            <typeparam name="T">The type of the object. </typeparam>
+            <param name="key">The key. </param>
+            <returns>The object. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtLoadStateEventArgs.GetWithXmlSerializer(System.String,System.Type)">
+            <summary>Gets an object which is deserialized with <see cref="T:MyToolkit.Serialization.XmlSerialization"/>. </summary>
+            <param name="key">The key. </param>
+            <param name="type">The type of the object. </param>
+            <returns>The object. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtLoadStateEventArgs.Get``1(System.String)">
+            <summary>Gets an object which is deserialized with <see cref="T:MyToolkit.Serialization.DataContractSerialization"/>. </summary>
+            <typeparam name="T">The type of the object. </typeparam>
+            <param name="key">The key. </param>
+            <returns>The object. </returns>
+        </member>
+        <member name="P:MyToolkit.Paging.MtLoadStateEventArgs.PageState">
+            <summary>A dictionary of state preserved by this page during an earlier
+            session.  This will be null the first time a page is visited. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtLoadStateEventArgs.NavigationParameter">
+            <summary>The parameter value passed to <see cref="M:MyToolkit.Paging.MtFrame.Navigate(System.Type)"/> 
+            when this page was initially requested. </summary>
+        </member>
+        <member name="T:MyToolkit.Paging.MtNavigatingCancelEventArgs">
+            <summary>
+            Event arguments for the navigating from event. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtNavigatingCancelEventArgs.Cancel">
+            <summary>
+            Gets or sets a value indiciating whether the navigation should be cancelled. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtNavigatingCancelEventArgs.Content">
+            <summary>
+            Gets the page object which is involved in the navigation. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtNavigatingCancelEventArgs.NavigationMode">
+            <summary>
+            Gets the navigation mode. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtNavigatingCancelEventArgs.SourcePageType">
+            <summary>
+            Gets the type of the page. 
+            </summary>
+        </member>
+        <member name="T:MyToolkit.Paging.MtNavigationEventArgs">
+            <summary>
+            Event arguments for the navigated to and from event. 
+            </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.MtNavigationEventArgs.GetParameter``1(System.Int32)">
+            <summary>Gets a typed parameter from index assuming the parameter object is an object[]. </summary>
+            <typeparam name="T">The parameter type. </typeparam>
+            <param name="index">The parameter index. </param>
+            <returns>The parameter value. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtNavigationEventArgs.GetParameter``1">
+            <summary>Gets a typed parameter. </summary>
+            <typeparam name="T">The parameter type. </typeparam>
+            <returns>The parameter value. </returns>
+        </member>
+        <member name="P:MyToolkit.Paging.MtNavigationEventArgs.Content">
+            <summary>
+            Gets the page object which is involved in the navigation. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtNavigationEventArgs.Parameter">
+            <summary>
+            Gets the navigation parameter. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtNavigationEventArgs.SourcePageType">
+            <summary>
+            Gets the type of the page. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtNavigationEventArgs.NavigationMode">
+            <summary>
+            Gets the navigation mode. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtNavigationEventArgs.Parameters">
+            <summary>
+            Gets the parameter object as object array or null if it is not an object array. 
+            </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.RegisterViewModel(MyToolkit.Mvvm.ViewModelBase,System.Boolean)">
+            <summary>Initializes the view model and registers events so that the OnLoaded and OnUnloaded methods are called. 
+            This method must be called in the constructor after the <see cref="!:InitializeComponent"/> method call. </summary>
+            <param name="viewModel">The view model. </param>
+            <param name="registerForStateHandling">Registers the view model also for state handling
+            The view model has to implement <see cref="T:MyToolkit.Mvvm.IStateHandlingViewModel"/> and the view must be a <see cref="T:MyToolkit.Paging.MtPage"/>. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.RegisterViewModelForStateHandling(MyToolkit.Mvvm.IStateHandlingViewModel)">
+            <summary>Registers the view model for state handling. </summary>
+            <param name="viewModel">The view model. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.BindViewModelToStatusBarProgress(MyToolkit.Mvvm.ViewModelBase)">
+            <summary>Binds the <see cref="P:MyToolkit.Mvvm.ViewModelBase.IsLoading"/> property of the view model to 
+            the progress bar visibility of the status bar (Windows Phone only). </summary>
+            <param name="viewModel">The view model. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.AddGoBackHandler(System.Action{System.ComponentModel.CancelEventArgs})">
+            <summary>
+            Adds a go back handler at the end of the handler queue. 
+            For example called when back key has been pressed on Windows Phone or backspace key or alt-left has been pressed Windows. 
+            </summary>
+            <param name="handler">The handler. </param>
+            <returns>Returns the created async go back handler which is used for deregistration (RemoveGoBackAsyncHandler). </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.AddGoBackAsyncHandler(System.Func{System.ComponentModel.CancelEventArgs,System.Threading.Tasks.Task})">
+            <summary>
+            Adds an async go back handler at the end of the handler queue. 
+            For example called when back key has been pressed on Windows Phone or backspace key or alt-left has been pressed Windows. 
+            </summary>
+            <param name="handler">The handler. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.RemoveGoBackAsyncHandler(System.Func{System.ComponentModel.CancelEventArgs,System.Threading.Tasks.Task})">
+            <summary>
+            Removes an async go back handler. 
+            </summary>
+            <param name="handler">The handler. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.LoadState(System.Object,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>Used to load the saved state when the page has been reactivated. </summary>
+            <param name="parameter">The initial page parameter. </param>
+            <param name="pageState">The saved page state. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.SaveState(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>Used to save the state when the page gets suspended. </summary>
+            <param name="pageState">The dictionary to save the page state into. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.OnLoadState(MyToolkit.Paging.MtLoadStateEventArgs)">
+            <summary>Used to load the saved state when the page has been reactivated. </summary>
+            <param name="pageState">The saved page state. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.OnSaveState(MyToolkit.Paging.MtSaveStateEventArgs)">
+            <summary>Used to save the state when the page gets suspended. </summary>
+            <param name="pageState">The dictionary to save the page state into. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.OnKeyActivated(Windows.UI.Core.AcceleratorKeyEventArgs)">
+            <summary>
+            Called when an accelerator key has been activated (not supported on WP).
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.OnKeyUp(Windows.UI.Core.AcceleratorKeyEventArgs)">
+            <summary>Called when a key up event has occured (not supported on WP). </summary>
+            <param name="args">The event arguments. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.OnNavigatedTo(MyToolkit.Paging.MtNavigationEventArgs)">
+            <summary>Called when navigated to this page. </summary>
+            <param name="args">The event arguments. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.OnNavigatingFrom(MyToolkit.Paging.MtNavigatingCancelEventArgs)">
+            <summary>Called when navigating from this page. </summary>
+            <param name="args">The event arguments. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.OnNavigatingFromAsync(MyToolkit.Paging.MtNavigatingCancelEventArgs)">
+            <summary>Called when navigating from this page. 
+            The navigation does no happen until the returned task has completed. 
+            Return null or empty task to run the method synchronously. </summary>
+            <param name="args">The event arguments. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.OnNavigatedFrom(MyToolkit.Paging.MtNavigationEventArgs)">
+            <summary>Called when navigated from this page. </summary>
+            <param name="args">The event arguments. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.OnVisibilityChanged(Windows.UI.Core.VisibilityChangedEventArgs)">
+            <summary>Called when the page visibility has changed (e.g. the app has been suspended and it is no longer visible to the user). </summary>
+            <param name="args">The event arguments. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.GoHome(System.Object,Windows.UI.Xaml.RoutedEventArgs)">
+            <summary>
+            Navigates to the first page in the page stack. 
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.GoBack(System.Object,Windows.UI.Xaml.RoutedEventArgs)">
+            <summary>
+            Navigates to the previous page in the page stack. 
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtPage.GoForward(System.Object,Windows.UI.Xaml.RoutedEventArgs)">
+            <summary>
+            Navigates forward to the next page in the page stack. 
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.Current">
+            <summary>
+            Gets the current page. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.PageAnimation">
+            <summary>Gets the current page animation. 
+            Only available when the <see cref="T:MyToolkit.Paging.MtFrame"/>'s ContentTransitions  is null. 
+            Overrides the <see cref="T:MyToolkit.Paging.MtFrame"/>'s PageAnimation property. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.Frame">
+            <summary>
+            Gets the <see cref="T:MyToolkit.Paging.MtFrame"/> instance which is hosting the page. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.AnimationContext">
+            <summary>Gets or sets the control which is used for page animations. 
+            If set to null, the root control of the page is used. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.ActualAnimationContext">
+            <summary>Gets the current animation context based on the <see cref="P:MyToolkit.Paging.MtPage.AnimationContext"/> property. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.InternalPage">
+            <summary>
+            Gets the underlying WinRT page object. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.NavigationCacheMode">
+            <summary>
+            Gets or sets the navigation cache mode (default: required). 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.TopAppBar">
+            <summary>
+            Gets or sets the top app bar. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.BottomAppBar">
+            <summary>
+            Gets or sets the bottom app bar. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.IsSuspendable">
+            <summary>
+            Gets or sets a value indicating whether the page can save and load its state (default: true). 
+            If false, then the page and all following pages are removed from the page stack when the app gets suspended. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.UsePointerButtonsToNavigate">
+            <summary>
+            Gets or sets a value indicating whether to use the special pointer buttons to navigate (default: true). 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.UseAltLeftOrRightToNavigate">
+            <summary>
+            Gets or sets a value indicating whether to use alt-left or alt-right to navigate back or forward (default: true). 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.UseBackKeyToNavigate">
+            <summary>
+            Gets or sets a value indicating whether the back key is used to navigate back (default: true).
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPage.UseBackKeyToNavigateInWebView">
+            <summary>
+            Gets or sets a value indicating whether the back key is used to navigate back even if the focus is in a web view (default: false). 
+            </summary>
+        </member>
+        <member name="T:MyToolkit.Paging.MtPageDescription">
+            <summary>
+            Describes a page in the page stack.  
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPageDescription.IsInstantiated">
+            <summary>
+            Gets a value indicating whether the page is instantiated. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPageDescription.Type">
+            <summary>
+            Gets the page type. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPageDescription.Parameter">
+            <summary>
+            Gets or sets the page parameter. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtPageDescription.Page">
+            <summary>
+            Gets the page object or null if the page is not instantiated. 
+            </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.MtSaveStateEventArgs.SetWithXmlSerializer``1(System.String,``0,System.Type[])">
+            <summary>Adds an object which is serialized with <see cref="T:MyToolkit.Serialization.XmlSerialization"/>. </summary>
+            <typeparam name="T">The type of the object. </typeparam>
+            <param name="key">The key. </param>
+            <param name="obj">The object. </param>
+            <param name="extraTypes">The additional types. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtSaveStateEventArgs.Set``1(System.String,``0,System.Type[])">
+            <summary>Adds an object which is serialized with <see cref="T:MyToolkit.Serialization.DataContractSerialization"/>. </summary>
+            <typeparam name="T">The type of the object. </typeparam>
+            <param name="key">The key. </param>
+            <param name="obj">The object. </param>
+            <param name="extraTypes">The additional types. </param>
+        </member>
+        <member name="P:MyToolkit.Paging.MtSaveStateEventArgs.PageState">
+            <summary>A dictionary of state preserved by this page during an earlier
+            session.  This will be null the first time a page is visited. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtSaveStateEventArgs.HasPageState">
+            <summary>Gets a value indicating whether there is page state available. </summary>
+        </member>
+        <member name="T:MyToolkit.Paging.MtSuspensionManager">
+            <summary>Stores and loads global session state for application life cycle management. </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.MtSuspensionManager.SaveAsync">
+            <summary>Saves the current session state. </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.MtSuspensionManager.RestoreAsync">
+            <summary>Restores the previously stored session state. </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.MtSuspensionManager.RegisterFrame(MyToolkit.Paging.MtFrame,System.String)">
+            <summary>Registers a frame so that its navigation state can be saved and restored. </summary>
+            <param name="frame">The frame. </param>
+            <param name="sessionStateKey">The session state key. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtSuspensionManager.DeregisterFrame(MyToolkit.Paging.MtFrame)">
+            <summary>Deregisters a frame. </summary>
+            <param name="frame">The frame. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtSuspensionManager.SessionStateForFrame(MyToolkit.Paging.MtFrame)">
+            <summary>Gets the session state for a given frame. </summary>
+            <param name="frame">The frame. </param>
+            <returns>The session state. </returns>
+        </member>
+        <member name="P:MyToolkit.Paging.MtSuspensionManager.SessionState">
+            <summary>Gets the session state for the current session. 
+            The objects must be serializable with the <see cref="T:System.Runtime.Serialization.DataContractSerializer"/> 
+            and the types provided in <see cref="P:MyToolkit.Paging.MtSuspensionManager.KnownTypes"/>. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtSuspensionManager.KnownTypes">
+            <summary>Gets a list of known types for the <see cref="T:System.Runtime.Serialization.DataContractSerializer"/> 
+            to serialize the <see cref="P:MyToolkit.Paging.MtSuspensionManager.SessionState"/>. </summary>
+        </member>
+        <member name="T:MyToolkit.Paging.Animations.TurnstilePageAnimation">
+            <summary>A turnstile animation. </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.TurnstilePageAnimation.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Paging.Animations.TurnstilePageAnimation"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.TurnstilePageAnimation.AnimateForwardNavigatingFromAsync(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement)">
+            <summary>Animates for navigating forward from a page. </summary>
+            <param name="previousPage">The previous page. </param>
+            <param name="nextPage">The next page. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.TurnstilePageAnimation.AnimateForwardNavigatedToAsync(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement)">
+            <summary>Animates for navigating forward to a page. </summary>
+            <param name="previousPage">The previous page. </param>
+            <param name="nextPage">The next page. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.TurnstilePageAnimation.AnimateBackwardNavigatingFromAsync(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement)">
+            <summary>Animates for navigating backward from a page. </summary>
+            <param name="previousPage">The previous page. </param>
+            <param name="nextPage">The next page. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.Animations.TurnstilePageAnimation.AnimateBackwardNavigatedToAsync(Windows.UI.Xaml.FrameworkElement,Windows.UI.Xaml.FrameworkElement)">
+            <summary>Animates for navigating backward to a page. </summary>
+            <param name="previousPage">The previous page. </param>
+            <param name="nextPage">The next page. </param>
+            <returns>The task. </returns>
+        </member>
+        <member name="P:MyToolkit.Paging.Animations.TurnstilePageAnimation.Duration">
+            <summary>Gets or sets the duration of the animation. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.Animations.TurnstilePageAnimation.UseBitmapCacheMode">
+            <summary>Gets or sets a value indicating whether to use bitmap cache mode for the page controls. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.Animations.TurnstilePageAnimation.PageInsertionMode">
+            <summary>Gets the insertion mode for the next page.</summary>
+        </member>
+        <member name="T:MyToolkit.Paging.MtFrame">
+            <summary>Navigation container for pages. </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:MyToolkit.Paging.MtFrame"/> class. </summary>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.GoForwardAsync">
+            <summary>Tries to navigate forward to the next page. </summary>
+            <returns>Returns true if navigating forward, false if cancelled</returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.GetNearestPageOfTypeInBackStack(System.Type)">
+            <summary>Gets the first page of the specified type in the page back stack or null if no page of the type is available. </summary>
+            <param name="pageType">The page type. </param>
+            <returns>The page or null if not found. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.GoBackToAsync(MyToolkit.Paging.MtPageDescription)">
+            <summary>Navigates back to the given page. </summary>
+            <param name="pageDescription">The page to navigate to. </param>
+            <returns>True if the navigation could be performed. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.GoBackToAsync(System.Int32)">
+            <summary>Navigates back to the given index. </summary>
+            <param name="newIndex">The page index. </param>
+            <returns>True if the navigation could be performed. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.RemovePageFromStack(MyToolkit.Paging.MtPageDescription)">
+            <summary>Removes a page from the page stack. </summary>
+            <param name="pageDescription">The page to remove. </param>
+            <returns><c>true</c> if the page has been found and was removed; otherwise, <c>false</c>. </returns>
+            <exception cref="T:System.ArgumentException">The current page cannot be removed from the stack. </exception>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.RemovePageFromStackAt(System.Int32)">
+            <summary>Removes a page from the page stack. </summary>
+            <param name="pageIndex">The index of the page page to remove. </param>
+            <returns><c>true</c> if the page has been found and was removed; otherwise, <c>false</c>. </returns>
+            <exception cref="T:System.ArgumentException">The current page cannot be removed from the stack. </exception>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.GoHomeAsync">
+            <summary>Navigates back to the first page in the page stack. </summary>
+            <returns>True if the navigation could be performed. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.GoBackAsync">
+            <summary>Tries to navigate back to the previous page. </summary>
+            <returns>Returns true if navigating back, false if cancelled or CanGoBack is false. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.Initialize(System.Type,System.Object)">
+            <summary>Initializes the frame and navigates to the given first page. </summary>
+            <param name="homePageType">The type of the home page. </param>
+            <param name="parameter">The parameter for the page. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.NavigateAsync(System.Type)">
+            <summary>Navigates forward to a new instance of the given page type. </summary>
+            <param name="pageType">The page type. </param>
+            <returns>Returns true if the navigation process has not been cancelled. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.Navigate(System.Type)">
+            <summary>Navigates to the page of the given type. </summary>
+            <param name="sourcePageType">The page type. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.NavigateAsync(System.Type,System.Object)">
+            <summary>Navigates forward to a new instance of the given page type. </summary>
+            <param name="pageType">The page type. </param>
+            <param name="parameter">The page parameter. </param>
+            <returns>Returns true if the navigation process has not been cancelled. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.SetNavigationState(System.String)">
+            <summary>Used set the serialized the current page stack (used in the SuspensionManager). </summary>
+            <param name="data">The data. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.GetNavigationState">
+            <summary>Used to serialize the current page stack (used in the SuspensionManager). </summary>
+            <returns>The data. </returns>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.OnPageCreated(System.Object,System.Object)">
+            <summary>Called when a new page has been created. </summary>
+            <param name="sender">The frame. </param>
+            <param name="page">The created page. </param>
+        </member>
+        <member name="M:MyToolkit.Paging.MtFrame.OnNavigated(System.Object,MyToolkit.Paging.MtNavigationEventArgs)">
+            <summary>Called when navigated to another page. </summary>
+            <param name="sender">The sender. </param>
+            <param name="args">The args. </param>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.Content">
+            <summary>Gets or sets the content of the <see cref="T:MyToolkit.Paging.MtFrame"/>. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.ContentTransitions">
+            <summary>Gets or sets the content transitions of the <see cref="T:MyToolkit.Paging.MtFrame"/>. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.Current">
+            <summary>Gets the current <see cref="T:MyToolkit.Paging.MtFrame"/>. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.CurrentIndex">
+            <summary>Gets the current page index. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.IsFirstPage">
+            <summary>Gets a value indicating whether the first/root page is visible. </summary>
+        </member>
+        <member name="E:MyToolkit.Paging.MtFrame.Navigated">
+            <summary>Occurs when navigating to a page. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.GoBackCommand">
+            <summary>Gets a command to navigate to the previous page. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.DisableForwardStack">
+            <summary>Gets or sets a value indicating whether the forward stack is disabled 
+            (default: disabled on Windows Phone, enabled on Windows). </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.DisableCache">
+            <summary>Gets or sets a value indicating whether the cache is fully 
+            deactivated (should be used only for testing). Default: false. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.PreviousPage">
+            <summary>Gets the page before the current page in the page stack or null if not available. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.CurrentPage">
+            <summary>Gets the current page. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.NextPage">
+            <summary>Gets the page after the current page in the page stack or null if not available. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.PageAnimation">
+            <summary>Gets the current page animation. 
+            Only available when ContentTransitions is null.
+            May be overridden by the current page's PageAnimation property. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.ShowNavigationOnAppInAndOut">
+            <summary>Gets or sets a value indicating whether to show the animation when launching, leaving or switching to the app. Default: false. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.InternalFrame">
+            <summary>Gets the underlying WinRT frame object. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.CanGoForward">
+            <summary>Gets a value indicating whether it is possible to navigate forward. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.CanGoBack">
+            <summary>Gets a value indicating whether it is possible to navigate back. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.Pages">
+            <summary>Gets a list of the pages in the page stack. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.BackStackDepth">
+            <summary>Gets the number of pages in the page back stack. </summary>
+        </member>
+        <member name="P:MyToolkit.Paging.MtFrame.IsNavigating">
+            <summary>Gets a value indicating whether the frame is currently navigating to another page. </summary>
+        </member>
+        <member name="M:MyToolkit.UI.PopupHelper.GetParentPopup(Windows.UI.Xaml.FrameworkElement)">
+            <summary>
+            Gets the parent popup of the given element or null if it is not contained in a popup. 
+            </summary>
+        </member>
+        <member name="M:MyToolkit.UI.PopupHelper.IsInPopup(Windows.UI.Xaml.FrameworkElement)">
+            <summary>
+            Returns true if the element is contained in a popup. 
+            </summary>
+        </member>
+        <member name="M:MyToolkit.UI.PopupHelper.ClosePopup(Windows.UI.Xaml.FrameworkElement)">
+            <summary>
+            Closes the parent popup of the given control. 
+            </summary>
+            <param name="childControl">The child control. </param>
+        </member>
+        <member name="M:MyToolkit.UI.PopupHelper.ShowHorizontalDialogAsync(Windows.UI.Xaml.FrameworkElement,System.Boolean)">
+            <summary>
+            Shows a horizontal popup given as <see cref="T:Windows.UI.Xaml.FrameworkElement"/> and provides a task to wait until it is closed. 
+            </summary>
+        </member>
+        <member name="M:MyToolkit.UI.PopupHelper.ShowVerticalDialogAsync(Windows.UI.Xaml.FrameworkElement,System.Boolean)">
+            <summary>
+            Shows a vertical popup given as <see cref="T:Windows.UI.Xaml.FrameworkElement"/> and provides a task to wait until it is closed. 
+            </summary>
+        </member>
+        <member name="M:MyToolkit.UI.PopupHelper.ShowHorizontalDialog(Windows.UI.Xaml.FrameworkElement,System.Boolean,System.Action{Windows.UI.Xaml.Controls.Primitives.Popup})">
+            <summary>
+            Shows a horizontal popup given as <see cref="T:Windows.UI.Xaml.FrameworkElement"/> and provides a task to wait until it is closed. 
+            </summary>
+        </member>
+        <member name="M:MyToolkit.UI.PopupHelper.ShowVerticalDialog(Windows.UI.Xaml.FrameworkElement,System.Boolean,System.Action{Windows.UI.Xaml.Controls.Primitives.Popup})">
+            <summary>
+            Shows a vertical popup given as <see cref="T:Windows.UI.Xaml.FrameworkElement"/> and provides a task to wait until it is closed. 
+            </summary>
+        </member>
+        <member name="M:MyToolkit.UI.PopupHelper.ShowSettings(Windows.UI.Xaml.FrameworkElement,System.Action{Windows.UI.Xaml.Controls.Primitives.Popup})">
+            <summary>
+            Shows a <see cref="T:Windows.UI.Xaml.FrameworkElement"/> as settings popup. 
+            Obsolete: Use the <see cref="T:Windows.UI.Xaml.Controls.SettingsFlyout"/> control instead. 
+            </summary>
+        </member>
+        <member name="M:MyToolkit.UI.PopupHelper.ShowPaneAsync(Windows.UI.Xaml.FrameworkElement,System.Boolean)">
+            <summary>
+            Shows a <see cref="T:Windows.UI.Xaml.FrameworkElement"/> as pane. 
+            </summary>
+        </member>
+        <member name="M:MyToolkit.UI.PopupHelper.ShowPane(Windows.UI.Xaml.FrameworkElement,System.Boolean,System.Action{Windows.UI.Xaml.Controls.Primitives.Popup})">
+            <summary>
+            Shows a <see cref="T:Windows.UI.Xaml.FrameworkElement"/> as pane. 
+            </summary>
+        </member>
+        <member name="P:MyToolkit.UI.PopupHelper.IsPopupVisible">
+            <summary>
+            Gets a value indicating whether a popup is currently visible. 
+            </summary>
+        </member>
+        <member name="T:MyToolkit.UI.TemplatedVisualTreeExtensions">
+            <summary>
+            A static class providing methods for working with the visual tree using generics.  
+            </summary>
+        </member>
+        <member name="M:MyToolkit.UI.TemplatedVisualTreeExtensions.GetFirstLogicalChildByType``1(Windows.UI.Xaml.FrameworkElement,System.Boolean)">
+            <summary>
+            Retrieves the first logical child of a specified type using a 
+            breadth-first search.  A visual element is assumed to be a logical 
+            child of another visual element if they are in the same namescope.
+            For performance reasons this method manually manages the queue 
+            instead of using recursion.
+            </summary>
+            <param name="parent">The parent framework element.</param>
+            <param name="applyTemplates">Specifies whether to apply templates on the traversed framework elements</param>
+            <returns>The first logical child of the framework element of the specified type.</returns>
+        </member>
+        <member name="M:MyToolkit.UI.TemplatedVisualTreeExtensions.GetLogicalChildrenByType``1(Windows.UI.Xaml.FrameworkElement,System.Boolean)">
+            <summary>
+            Retrieves all the logical children of a specified type using a 
+            breadth-first search.  A visual element is assumed to be a logical 
+            child of another visual element if they are in the same namescope.
+            For performance reasons this method manually manages the queue 
+            instead of using recursion.
+            </summary>
+            <param name="parent">The parent framework element.</param>
+            <param name="applyTemplates">Specifies whether to apply templates on the traversed framework elements</param>
+            <returns>The logical children of the framework element of the specified type.</returns>
+        </member>
+        <member name="T:MyToolkit.UI.TiltEffect">
+            <summary>Provides an attached property to enable the tilt effect (push down/up animation) for <see cref="T:Windows.UI.Xaml.UIElement"/>s. </summary>
+        </member>
+        <member name="M:MyToolkit.UI.TiltEffect.SetIsTiltEnabled(Windows.UI.Xaml.UIElement,System.Boolean)">
+            <summary>Sets a value indicating whether to enable tilt effect for the <see cref="T:Windows.UI.Xaml.UIElement"/>. </summary>
+            <param name="element">The element. </param>
+            <param name="value">The value. </param>
+        </member>
+        <member name="M:MyToolkit.UI.TiltEffect.GetIsTiltEnabled(Windows.UI.Xaml.UIElement)">
+            <summary>Gets a value indicating whether the tilt effect for the <see cref="T:Windows.UI.Xaml.UIElement"/> is enabled. </summary>
+            <param name="element">The element. </param>
+        </member>
+        <member name="T:MyToolkit.Utilities.PageUtilities">
+            <summary>Provides utility methods for page handling. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.PageUtilities.RegisterBackKey(Windows.UI.Xaml.Controls.Page)">
+            <summary>Call this method in Loaded event as the event will be automatically 
+            deregistered when the FrameworkElement has been unloaded. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.PageUtilities.RegisterAcceleratorKeyActivated(Windows.UI.Xaml.FrameworkElement,Windows.Foundation.TypedEventHandler{Windows.UI.Core.CoreDispatcher,Windows.UI.Core.AcceleratorKeyEventArgs})">
+            <summary>Call this method in Loaded event as the event will be automatically 
+            deregistered when the FrameworkElement has been unloaded. </summary>
+            <param name="page">The page. </param>
+            <param name="handler">The event handler. </param>
+        </member>
+        <member name="M:MyToolkit.Utilities.PageUtilities.RegisterSearchPressed(Windows.UI.Xaml.FrameworkElement,System.Action)">
+            <summary>Call this method in Loaded event as the event will be automatically 
+            deregistered when the FrameworkElement has been unloaded. </summary>
+        </member>
+        <member name="T:MyToolkit.Utilities.ThreadUtilities">
+            <summary>Provides thread related utility methods. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.ThreadUtilities.Sleep(System.Int32)">
+            <summary>Blocks the thread for multiple milliseconds. </summary>
+            <param name="ms">The wait time in milliseconds. </param>
+        </member>
+        <member name="T:MyToolkit.Utilities.ToastNotificationUtilities">
+            <summary>Provides helper methods to show toast notifications. </summary>
+        </member>
+        <member name="M:MyToolkit.Utilities.ToastNotificationUtilities.ShowMessage(System.String)">
+            <summary>Shows a toast message with the given message. </summary>
+            <param name="message">The message to show. </param>
+        </member>
+    </members>
+</doc>

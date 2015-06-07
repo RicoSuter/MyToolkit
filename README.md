@@ -1,3 +1,5 @@
+# MyToolkit for .NET
+
 MyToolkit is a set of .NET libraries containing lots of useful classes for various .NET platforms like WinRT (Universal apps), Windows Phone and WPF. The goal is to provide missing or replace existing classes to support the development of high-quality Windows and Windows Phone applications. For example, the library provides often used MVVM infrastructure classes, missing UI controls, IoC classes, additional LINQ extension methods and much more. All classes have been developed or collected by [Rico Suter](http://rsuter.com).
 
 - MVVM classes (Messenger,  RelayCommand,  ViewModelBase,  ObservableObject) in portable class library 
@@ -53,7 +55,7 @@ Download the [assemblies as ZIP file here](https://github.com/MyToolkit/Core/rel
 
 A list with the compiled libraries (VS projects) and their dependencies: 
 
-- <https://github.com/MyToolkit/Core/blob/master/Dependencies.txt>
+- <https://github.com/MyToolkit/Core/wiki/Dependencies>
 
 ## Sample applications
 There is a sample application for Windows Phone and WinRT which demonstrates various MyToolkit classes (MVVM, Paging, YouTube, etc...) as well as some Windows 8 features. 
