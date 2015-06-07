@@ -135,7 +135,7 @@
     <Compile Include="..\Shared\Converters\VisibilityConverter.cs">
       <Link>Converters\VisibilityConverter.cs</Link>
     </Compile>
-    <Compile Include="..\shared\events\SingleEvent.cs">
+    <Compile Include="..\Shared\Events\SingleEvent.cs">
       <Link>Events\SingleEvent.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Messaging\DefaultActions.cs">

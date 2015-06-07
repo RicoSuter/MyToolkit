@@ -1,50 +1,15 @@
-/MyToolkit/bin
-/MyToolkit/obj
-/MyToolkit.Extended.Sl5/bin
-/MyToolkit.Extended.Sl5/obj
-/MyToolkit.Extended.WinRT/bin
-/MyToolkit.Extended.WinRT/obj
-/MyToolkit.Extended.Wp7/bin
-/MyToolkit.Extended.Wp7/obj
-/MyToolkit.Extended.Wp8/bin
-/MyToolkit.Extended.Wp8/obj
-/MyToolkit.Extended.Wpf/bin
-/MyToolkit.Extended.Wpf/obj
-/MyToolkit.Http/bin
-/MyToolkit.Http/obj
-/MyToolkit.Tests.WinRT/bin
-/MyToolkit.Tests.Wp8/obj
-/MyToolkit.Web/bin
-/MyToolkit.Web/obj
-/- Samples/SamplePhoneApp/obj
-/- Samples/SampleUniversalPhoneApp/obj
-/- Samples/SampleWindowsStoreApp.BackgroundTask/obj
-/- Samples/SampleWindowsStoreApp/obj
-/- Samples/SampleWpfApplication/obj
-/MyToolkit.Tests.WinRT/obj
-/svn
-/packages
-/- Samples/SamplePhoneApp/bin
-/- Samples/SampleUniversalPhoneApp/bin
-/- Samples/SampleWindowsStoreApp/bin
-/- Samples/SampleWindowsStoreApp.BackgroundTask/bin
-/- Samples/SampleWpfApplication/bin
-/MyToolkit.Tests.Wp8/bin
 *.suo
-/- Samples/SamplePhone7App/bin
-/- Samples/SamplePhone7App/obj
-
-/- Output/**
+/Output/**
 **/bin/**
 **/obj/**
 **.user
 /*.sdf
-
-/TestResults
-/MyToolkit.sln.GhostDoc.xml
-/MyToolkit.VS2012.sln.GhostDoc.xml
-/MyToolkit.sln.ide
 *.psess
+
+/Source/packages
+/Source/MyToolkit.sln.GhostDoc.xml
+/Source/MyToolkit.VS2012.sln.GhostDoc.xml
+/Source/MyToolkit.sln.ide
 /Source/MyToolkit.Tests.WinRT/AppPackages
 /Source/SampleUniversalPhoneApp/AppPackages
 /Source/SampleWindowsStoreApp/AppPackages

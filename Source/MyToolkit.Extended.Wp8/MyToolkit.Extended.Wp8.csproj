@@ -104,10 +104,10 @@
     <Compile Include="..\Shared\Media\ImageHelper.cs">
       <Link>Media\ImageHelper.cs</Link>
     </Compile>
-    <Compile Include="..\shared\animation\Fading.cs">
+    <Compile Include="..\Shared\Animation\Fading.cs">
       <Link>Animation\Fading.cs</Link>
     </Compile>
-    <Compile Include="..\shared\animation\Flipping.cs">
+    <Compile Include="..\Shared\Animation\Flipping.cs">
       <Link>Animation\Flipping.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Controls\FixedHtmlTextBlock.cs">
@@ -185,43 +185,43 @@
     <Compile Include="..\Shared\Controls\WatermarkedTextBox.cs">
       <Link>Controls\WatermarkedTextBox.cs</Link>
     </Compile>
-    <Compile Include="..\shared\converters\ControlClippingConverter.cs">
+    <Compile Include="..\Shared\Converters\ControlClippingConverter.cs">
       <Link>Converters\ControlClippingConverter.cs</Link>
     </Compile>
-    <Compile Include="..\shared\converters\DateTimeConverter.cs">
+    <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
     </Compile>
-    <Compile Include="..\shared\converters\ImageBackgroundColorConverter.cs">
+    <Compile Include="..\Shared\Converters\ImageBackgroundColorConverter.cs">
       <Link>Converters\ImageBackgroundColorConverter.cs</Link>
     </Compile>
-    <Compile Include="..\shared\converters\JoinConverter.cs">
+    <Compile Include="..\Shared\Converters\JoinConverter.cs">
       <Link>Converters\JoinConverter.cs</Link>
     </Compile>
-    <Compile Include="..\shared\converters\NotConverter.cs">
+    <Compile Include="..\Shared\Converters\NotConverter.cs">
       <Link>Converters\NotConverter.cs</Link>
     </Compile>
-    <Compile Include="..\shared\converters\NumberConverter.cs">
+    <Compile Include="..\Shared\Converters\NumberConverter.cs">
       <Link>Converters\NumberConverter.cs</Link>
     </Compile>
-    <Compile Include="..\shared\converters\RemoveColorAlphaConverter.cs">
+    <Compile Include="..\Shared\Converters\RemoveColorAlphaConverter.cs">
       <Link>Converters\RemoveColorAlphaConverter.cs</Link>
     </Compile>
-    <Compile Include="..\shared\converters\TimeSpanConverter.cs">
+    <Compile Include="..\Shared\Converters\TimeSpanConverter.cs">
       <Link>Converters\TimeSpanConverter.cs</Link>
     </Compile>
-    <Compile Include="..\shared\converters\TruncateConverter.cs">
+    <Compile Include="..\Shared\Converters\TruncateConverter.cs">
       <Link>Converters\TruncateConverter.cs</Link>
     </Compile>
-    <Compile Include="..\shared\converters\TypeVisibilityConverter.cs">
+    <Compile Include="..\Shared\Converters\TypeVisibilityConverter.cs">
       <Link>Converters\TypeVisibilityConverter.cs</Link>
     </Compile>
-    <Compile Include="..\shared\converters\UpperTextConverter.cs">
+    <Compile Include="..\Shared\Converters\UpperTextConverter.cs">
       <Link>Converters\UpperTextConverter.cs</Link>
     </Compile>
-    <Compile Include="..\shared\converters\VisibilityConverter.cs">
+    <Compile Include="..\Shared\Converters\VisibilityConverter.cs">
       <Link>Converters\VisibilityConverter.cs</Link>
     </Compile>
-    <Compile Include="..\shared\events\SingleEvent.cs">
+    <Compile Include="..\Shared\Events\SingleEvent.cs">
       <Link>Events\SingleEvent.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Mathematics\GeometryMath.cs">
@@ -246,7 +246,7 @@
       <Link>Multimedia\YouTube.cs</Link>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="..\shared\mvvm\DependencyPropertyHelper.cs">
+    <Compile Include="..\Shared\Mvvm\DependencyPropertyHelper.cs">
       <Link>MVVM\DependencyPropertyHelper.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Networking\NetworkState.cs">
@@ -255,7 +255,7 @@
     <Compile Include="..\Shared\Networking\NetworkStateTracker.cs">
       <Link>Networking\NetworkStateTracker.cs</Link>
     </Compile>
-    <Compile Include="..\shared\networking\WakeOnLan.cs">
+    <Compile Include="..\Shared\Networking\WakeOnLan.cs">
       <Link>Networking\WakeOnLan.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Performance\MemoryDiagnosticsHelper.cs">
@@ -279,13 +279,13 @@
     <Compile Include="..\Shared\Utilities\AdditionalStreamExtensions.cs">
       <Link>Utilities\AdditionalStreamExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\shared\utilities\ColorUtility.cs">
+    <Compile Include="..\Shared\Utilities\ColorUtility.cs">
       <Link>Utilities\ColorUtility.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\DependencyObjectExtensions.cs">
       <Link>Utilities\DependencyObjectExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\shared\utilities\DependencyPropertyChangedEvent.cs">
+    <Compile Include="..\Shared\Utilities\DependencyPropertyChangedEvent.cs">
       <Link>Utilities\DependencyPropertyChangedEvent.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Utilities\EntityContainer.cs">
@@ -294,7 +294,7 @@
     <Compile Include="..\Shared\Utilities\ItemsControlExtensions.cs">
       <Link>Utilities\ItemsControlExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\shared\utilities\Xml.cs">
+    <Compile Include="..\Shared\Utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
     <Compile Include="Animation\Transitions\AnimatedPage.cs" />

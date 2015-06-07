@@ -64,8 +64,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\MyToolkit.Extended.WinRT\MVVM\ViewModelHelper.cs">
-      <Link>MVVM\ViewModelHelper.cs</Link>
+    <Compile Include="..\Shared\Mvvm\ViewModelHelper.cs">
+      <Link>Mvvm\ViewModelHelper.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
@@ -97,8 +97,8 @@
     <Compile Include="..\Shared\Multimedia\YouTube.cs">
       <Link>Multimedia\YouTube.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\MVVM\DependencyPropertyHelper.cs">
-      <Link>MVVM\DependencyPropertyHelper.cs</Link>
+    <Compile Include="..\Shared\Mvvm\DependencyPropertyHelper.cs">
+      <Link>Mvvm\DependencyPropertyHelper.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Networking\ClientBaseExtensions.cs">
       <Link>Networking\ClientBaseExtensions.cs</Link>
@@ -127,7 +127,7 @@
     <Compile Include="..\Shared\Utilities\ItemsControlExtensions.cs">
       <Link>Utilities\ItemsControlExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\shared\utilities\Xml.cs">
+    <Compile Include="..\Shared\Utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
     <Compile Include="Build\AssemblyReference.cs" />

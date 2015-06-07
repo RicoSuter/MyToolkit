@@ -96,7 +96,7 @@
     <Compile Include="..\Shared\UI\Designer.cs">
       <Link>UI\Designer.cs</Link>
     </Compile>
-    <Compile Include="..\shared\utilities\Xml.cs">
+    <Compile Include="..\Shared\Utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

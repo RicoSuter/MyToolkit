@@ -186,6 +186,9 @@
     <Compile Include="..\Shared\MVVM\DependencyPropertyHelper.cs">
       <Link>MVVM\DependencyPropertyHelper.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Mvvm\ViewModelHelper.cs">
+      <Link>Mvvm\ViewModelHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Networking\WakeOnLan.cs">
       <Link>Networking\WakeOnLan.cs</Link>
     </Compile>
@@ -219,7 +222,7 @@
     <Compile Include="..\Shared\Utilities\PropertyPathHelper.cs">
       <Link>Utilities\PropertyPathHelper.cs</Link>
     </Compile>
-    <Compile Include="..\shared\utilities\Xml.cs">
+    <Compile Include="..\Shared\Utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
     <Compile Include="Animations\Fading.cs" />
@@ -276,7 +279,6 @@
     <Compile Include="Environment\Machine.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Mvvm\IStateHandlingViewModel.cs" />
-    <Compile Include="Mvvm\ViewModelHelper.cs" />
     <Compile Include="Paging\Animations\PageInsertionMode.cs" />
     <Compile Include="Paging\Animations\PushPageAnimation.cs" />
     <Compile Include="Paging\Handlers\BackKeyPressedHandler.cs" />
