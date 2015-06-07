@@ -11,7 +11,7 @@ using System;
 namespace MyToolkit.Utilities
 {
     /// <summary>Provides methods to work with <see cref="Version"/> objects. </summary>
-    public class VersionUtilities
+    public static class VersionUtilities
     {
         /// <summary>Converts a string to a <see cref="Version"/> object. </summary>
         /// <param name="version">The version as string. </param>
@@ -27,11 +27,5 @@ namespace MyToolkit.Utilities
                 return new Version(0, 0, 0, 0);
             }
         }
-    }
-
-    [Obsolete("Use VersionUtilities instead. 9/25/2014")]
-    public class VersionHelper : VersionUtilities
-    {
-        // TODO: Make VersionUtilities class static
     }
 }

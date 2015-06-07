@@ -18,9 +18,9 @@ namespace MyToolkit.WorkflowEngine.Activities
         /// The method may be called multiple times when there are multiple incoming transitions. </summary>
         /// <param name="input">The input. </param>
         /// <returns>True when the activity should be automatically and immediately executed (with no args). </returns>
-        public override async Task<bool> PrepareAsync(WorkflowActivityInput input)
+        public override Task<bool> PrepareAsync(WorkflowActivityInput input)
         {
-            return true;
+            return Task.FromResult(true);
         }
     }
 }

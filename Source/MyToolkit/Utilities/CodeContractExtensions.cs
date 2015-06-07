@@ -38,7 +38,6 @@ namespace MyToolkit.Utilities
         }
 
         /// <summary>Throws an <see cref="ArgumentNullException" /> if the value is <c>null</c>.</summary>
-        /// <typeparam name="T">The type of the value. </typeparam>
         /// <param name="value">The value.</param>
         /// <param name="parameterName">The name of the parameter.</param>
         /// <exception cref="ArgumentNullException">The value cannot be null.</exception>
@@ -81,8 +80,8 @@ namespace MyToolkit.Utilities
                 throw new ArgumentNullException(parameterName);
         }
 
-        // This attribute is used to avoid (FxCop/VS) CA1062 
-        // See http://geekswithblogs.net/terje/archive/2010/10/14.aspx
+        /// <summary>Attribute is used to avoid (FxCop/VS) CA1062 errors.</summary>
+        /// <remarks>See http://geekswithblogs.net/terje/archive/2010/10/14.aspx. </remarks>
         [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false)]
         public sealed class ValidatedNotNullAttribute : Attribute
         {

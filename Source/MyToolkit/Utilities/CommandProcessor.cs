@@ -8,6 +8,8 @@ namespace MyToolkit.Utilities
 {
     // TODO: Improve these classes
 
+#pragma warning disable 1591
+
     public interface ICommandEx
     {
         Task<bool> Run();
@@ -120,4 +122,6 @@ namespace MyToolkit.Utilities
                 return XmlSerialization.Serialize(_commands.OfType<object>().ToList(), commandTypes);
         }
     }
+
+    #pragma warning restore 1591
 }

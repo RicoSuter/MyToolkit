@@ -229,8 +229,12 @@ namespace MyToolkit.Model
         }
     }
 
+    #pragma warning disable 1591
+
     [Obsolete("Use GraphObservableObject instead. 11/26/2014")]
     public class ExtendedObservableObject : GraphObservableObject
     {
     }
+
+    #pragma warning restore 1591
 }

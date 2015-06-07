@@ -4,7 +4,6 @@ using MyToolkit.Data;
 using MyToolkit.Model;
 using MyToolkit.Mvvm;
 using MyToolkit.Tests.WinRT.Mocks;
-using MyToolkit.Tests.WinRT.Model;
 
 namespace MyToolkit.Tests.WinRT.Data
 {

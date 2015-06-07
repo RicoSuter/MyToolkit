@@ -13,6 +13,7 @@ namespace MyToolkit.WorkflowEngine
     /// <summary>A container for accessing typed activity arguments. </summary>
     public class WorkflowActivityInput
     {
+        /// <summary>Gets the workflow instance.</summary>
         [XmlIgnore]
         public WorkflowInstance Instance { get; internal set; }
     }

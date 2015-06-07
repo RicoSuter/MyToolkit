@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 
 namespace MyToolkit.WorkflowEngine.Activities
 {
+    /// <summary>An automatic activity which does nothing.</summary>
     [XmlType("EmptyAutomatic")]
     public class EmptyAutomaticActivity : AutomaticWorkflowActivityBase
     {

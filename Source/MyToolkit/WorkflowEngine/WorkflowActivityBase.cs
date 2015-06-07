@@ -80,9 +80,9 @@ namespace MyToolkit.WorkflowEngine
         /// The method may be called multiple times when there are multiple incoming transitions. </summary>
         /// <param name="input">The input. </param>
         /// <returns>True when the activity should be automatically and immediately executed (with no args). </returns>
-        public virtual async Task<bool> PrepareAsync(TInputType input)
+        public virtual Task<bool> PrepareAsync(TInputType input)
         {
-            return false;
+            return Task.FromResult(false);
         }
 
         /// <summary>Called when the previous activity has been executed. 
@@ -99,9 +99,9 @@ namespace MyToolkit.WorkflowEngine
         /// <param name="input">The input. </param>
         /// <param name="cancellationToken">The cancellation token. </param>
         /// <returns>True when the activity has been completed. </returns>
-        public virtual async Task<TOutputType> CompleteAsync(TInputType input, CancellationToken cancellationToken)
+        public virtual Task<TOutputType> CompleteAsync(TInputType input, CancellationToken cancellationToken)
         {
-            return new TOutputType { Successful = true };
+            return Task.FromResult(new TOutputType { Successful = true });
         }
 
         async Task<WorkflowActivityOutput> IWorkflowActivityBase.CompleteAsync(WorkflowActivityInput input, CancellationToken cancellationToken)

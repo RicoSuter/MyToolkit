@@ -23,9 +23,10 @@ namespace MyToolkit.WorkflowEngine.Activities
         /// <param name="input">The input. </param>
         /// <param name="definition">The workflow definition. </param>
         /// <returns>True when the activity should be automatically and immediately executed (with no args). </returns>
-        internal override async Task<bool> PrepareAsync(WorkflowActivityInput input, WorkflowDefinition definition)
+        internal override Task<bool> PrepareAsync(WorkflowActivityInput input, WorkflowDefinition definition)
         {
-            return !HasCurrentActivityBeforeActivity(input, definition, this, new List<WorkflowTransition>());
+            var immediatelyExecute = !HasCurrentActivityBeforeActivity(input, definition, this, new List<WorkflowTransition>());
+            return Task.FromResult(immediatelyExecute);
         }
 
         private bool HasCurrentActivityBeforeActivity(WorkflowActivityInput input, WorkflowDefinition definition,

@@ -10,6 +10,7 @@ using System;
 
 namespace MyToolkit.Utilities
 {
+    /// <summary>A helper class to create custom using regions.</summary>
     public class DisposableProvider : IDisposable
     {
         private readonly Action _endAction;
@@ -30,6 +31,7 @@ namespace MyToolkit.Utilities
             _endAction = endAction;
         }
 
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
             _endAction();

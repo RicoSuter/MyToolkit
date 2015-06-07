@@ -73,6 +73,8 @@ namespace MyToolkit.Utilities
         //        }
     }
 
+#pragma warning disable 1591
+
     [Obsolete("Use ExpressionUtilities instead. 9/25/2014")]
     public class ExpressionHelper
     {
@@ -94,4 +96,6 @@ namespace MyToolkit.Utilities
             return ExpressionUtilities.GetPropertyName(expression);
         }
     }
+
+#pragma warning restore 1591
 }
