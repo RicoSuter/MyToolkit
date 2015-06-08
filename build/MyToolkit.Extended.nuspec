@@ -1,0 +1,68 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>MyToolkit.Extended</id>
+    <version>2.3.31.0</version>
+    <title>MyToolkit.Extended</title>
+    <authors>Rico Suter</authors>
+    <owners>Rico Suter</owners>
+    <projectUrl>https://github.com/MyToolkit/Core</projectUrl>
+    <licenseUrl>https://github.com/MyToolkit/Core/blob/master/README.md</licenseUrl>
+    <description>MyToolkit is a set of .NET libraries containing lots of useful classes for various .NET platforms like WinRT, Windows Phone, WPF and Silverlight. </description>
+    <releaseNotes/>
+    <iconUrl>http://rsuter.com/Projects/MyToolkit/NuGetIcon.png</iconUrl>
+    <dependencies>
+      <group>
+        <dependency id="MyToolkit" version="2.3.31.0" />
+      </group>
+      <group targetFramework="sl50">
+        <dependency id="MyToolkit" version="2.3.31.0" />
+      </group>
+      <group targetFramework="sl4-wp71">
+        <dependency id="MyToolkit" version="2.3.31.0" />
+        <dependency id="WPtoolkit" version="4.2013.08.16" />
+      </group>
+      <group targetFramework="wp80">
+        <dependency id="MyToolkit" version="2.3.31.0" />
+        <dependency id="WPtoolkit" version="4.2013.08.16" />
+      </group>
+      <group targetFramework="net40">
+        <dependency id="AsyncBridge" version="0.1.1" />
+      </group>
+      <group targetFramework="net45">
+        <dependency id="MyToolkit" version="2.3.31.0" />
+      </group>
+    </dependencies>
+  </metadata>
+
+  <files>
+    <file src="Output\MyToolkit.Extended.Wpf40\MyToolkit.Extended.dll" target="lib\net40\MyToolkit.Extended.dll" />
+    <file src="Output\MyToolkit.Extended.Wpf40\MyToolkit.Extended.xml" target="lib\net40\MyToolkit.Extended.xml" />
+
+    <file src="Output\MyToolkit.Extended.Wpf45\MyToolkit.Extended.dll" target="lib\net45\MyToolkit.Extended.dll" />
+    <file src="Output\MyToolkit.Extended.Wpf45\MyToolkit.Extended.xml" target="lib\net45\MyToolkit.Extended.xml" />
+
+    <file src="Output\MyToolkit.Extended.WinRT\Controls\DatePicker.xbf" target="lib\portable-wpa81+win8\MyToolkit.Extended\Controls\DatePicker.xbf" />
+    <file src="Output\MyToolkit.Extended.WinRT\Controls\TimePicker.xbf" target="lib\portable-wpa81+win8\MyToolkit.Extended\Controls\TimePicker.xbf" />
+    <file src="Output\MyToolkit.Extended.WinRT\Themes\generic.xbf" target="lib\portable-wpa81+win8\MyToolkit.Extended\Themes\generic.xbf" />
+    <file src="Output\MyToolkit.Extended.WinRT\UI\Popups\ListPickerBox.xbf" target="lib\portable-wpa81+win8\MyToolkit.Extended\UI\Popups\ListPickerBox.xbf" />
+    <file src="Output\MyToolkit.Extended.WinRT\MyToolkit.Extended.xr.xml" target="lib\portable-wpa81+win8\MyToolkit.Extended\MyToolkit.Extended.xr.xml" />
+    <file src="Output\MyToolkit.Extended.WinRT\MyToolkit.Extended.pdb" target="lib\portable-wpa81+win8\MyToolkit.Extended\MyToolkit.Extended.pdb" />
+    <file src="Output\MyToolkit.Extended.WinRT\MyToolkit.Extended.dll" target="lib\portable-wpa81+win8\MyToolkit.Extended.dll" />
+    <file src="Output\MyToolkit.Extended.WinRT\MyToolkit.Extended.pri" target="lib\portable-wpa81+win8\MyToolkit.Extended.pri" />
+    <file src="Output\MyToolkit.Extended.WinRT\MyToolkit.Extended.xml" target="lib\portable-wpa81+win8\MyToolkit.Extended.xml" />
+
+    <file src="Output\MyToolkit.Extended.Wp7\de\MyToolkit.Extended.resources.dll" target="lib\sl4-wp71\de\MyToolkit.Extended.resources.dll" />
+    <file src="Output\MyToolkit.Extended.Wp7\fr\MyToolkit.Extended.resources.dll" target="lib\sl4-wp71\fr\MyToolkit.Extended.resources.dll" />
+    <file src="Output\MyToolkit.Extended.Wp7\MyToolkit.Extended.dll" target="lib\sl4-wp71\MyToolkit.Extended.dll" />
+    <file src="Output\MyToolkit.Extended.Wp7\MyToolkit.Extended.xml" target="lib\sl4-wp71\MyToolkit.Extended.xml" />
+
+    <file src="Output\MyToolkit.Extended.Sl5\MyToolkit.Extended.dll" target="lib\sl50\MyToolkit.Extended.dll" />
+    <file src="Output\MyToolkit.Extended.Sl5\MyToolkit.Extended.xml" target="lib\sl50\MyToolkit.Extended.xml" />
+
+    <file src="Output\MyToolkit.Extended.Wp8\de\MyToolkit.Extended.resources.dll" target="lib\wp80\de\MyToolkit.Extended.resources.dll" />
+    <file src="Output\MyToolkit.Extended.Wp8\fr\MyToolkit.Extended.resources.dll" target="lib\wp80\fr\MyToolkit.Extended.resources.dll" />
+    <file src="Output\MyToolkit.Extended.Wp8\MyToolkit.Extended.dll" target="lib\wp80\MyToolkit.Extended.dll" />
+    <file src="Output\MyToolkit.Extended.Wp8\MyToolkit.Extended.xml" target="lib\wp80\MyToolkit.Extended.xml" />
+  </files>
+</package>

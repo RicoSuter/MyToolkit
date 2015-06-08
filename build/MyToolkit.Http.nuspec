@@ -1,0 +1,32 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>MyToolkit.Http</id>
+    <version>2.3.31.0</version>
+    <title>MyToolkit.Http</title>
+    <authors>Rico Suter</authors>
+    <owners>Rico Suter</owners>
+    <projectUrl>https://github.com/MyToolkit/Core</projectUrl>
+    <licenseUrl>https://github.com/MyToolkit/Core/blob/master/README.md</licenseUrl>
+    <description>MyToolkit is a set of .NET libraries containing lots of useful classes for various .NET platforms like WinRT, Windows Phone, WPF and Silverlight. </description>
+    <releaseNotes/>
+    <iconUrl>http://rsuter.com/Projects/MyToolkit/NuGetIcon.png</iconUrl>
+    <dependencies>
+      <group>
+        <dependency id="Microsoft.Net.Http" version="2.2.28" />
+      </group>
+
+      <group targetFramework="portable-sl5+wp71">
+        <dependency id="Microsoft.Bcl.Async" version="1.0.168" />
+        <dependency id="Microsoft.Net.Http" version="2.2.28" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Output\MyToolkit.Http\MyToolkit.Http.dll" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.Http.dll" />
+    <file src="Output\MyToolkit.Http\MyToolkit.Http.xml" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.Http.xml" />
+
+    <file src="Output\MyToolkit.Http.Legacy\MyToolkit.Http.dll" target="lib\portable-sl5+wp71\MyToolkit.Http.dll" />
+    <file src="Output\MyToolkit.Http.Legacy\MyToolkit.Http.xml" target="lib\portable-sl5+wp71\MyToolkit.Http.xml" />
+  </files>
+</package>
