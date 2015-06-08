@@ -66,13 +66,11 @@ The solutions can be found in the `src` directory:
 - MyToolkit.Http.Legacy (PCL: SL4, WP7SL, .NET 4)
 - MyToolkit.Legacy (PCL: SL4, WP7SL, .NET 4)
 
-## Supported frameworks
-
-![](https://rawgit.com/MyToolkit/Core/master/docs/LibraryMatrix.png)
-
-A list with the compiled libraries (VS projects) and their dependencies: 
+Also check out the following list with the Visual Studio projects and their dependencies: 
 
 - <https://github.com/MyToolkit/Core/blob/master/Dependencies.txt>
+
+![](https://rawgit.com/MyToolkit/Core/master/docs/LibraryMatrix.png)
 
 ## Sample applications
 There is a sample application for Windows Phone and WinRT which demonstrates various MyToolkit classes (MVVM, Paging, YouTube, etc...) as well as some Windows 8 features. 
