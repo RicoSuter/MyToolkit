@@ -68,7 +68,7 @@ The solutions can be found in the `src` directory:
 
 Also check out the following list with the Visual Studio projects and their dependencies: 
 
-- <https://github.com/MyToolkit/Core/blob/master/Dependencies.txt>
+- <https://github.com/MyToolkit/Core/blob/master/docs/Dependencies.md>
 
 ![](https://rawgit.com/MyToolkit/Core/master/docs/LibraryMatrix.png)
 
