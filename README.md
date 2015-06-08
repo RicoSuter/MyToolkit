@@ -19,18 +19,6 @@ If you found some bugs or have other comments, please create a Pull Request or G
 
 Check my blog for other programming stuff on my website at <http://blog.rsuter.com>. 
 
-## Visual Studio solutions
-
-The solutions can be found in the `src` directory: 
-
-**MyToolkit.VS2013.sln**
-
-- Contains the projects for Windows 8.1, Windows Phone 8.1, Windows Phone Silverlight 8.0, WPF and Web
-    
-**MyToolkit.VS2012.sln**
-
-- Contains the projects for Windows Phone 7 and Silverlight 5
-
 ## Installation
 
 ### Using NuGet (recommended)
@@ -50,6 +38,33 @@ Not available yet.
 ### Using ZIP download
 
 Download the [assemblies as ZIP file here](https://github.com/MyToolkit/Core/releases). 
+
+## Visual Studio solutions
+
+The solutions can be found in the `src` directory: 
+
+**MyToolkit.VS2015.sln**
+
+- MyToolkit.Extended.Uwp (W10, W10 mobile)
+
+**MyToolkit.VS2013.sln**
+
+- MyToolkit (PCL: W8, WP8.1, .NET 4.5, WP8SL)
+- MyToolkit.AspNet.Mvc (ASP.NET MVC 5.x)
+- MyToolkit.Extended.WinRT (PCL: W8.1, WP8.1)
+- MyToolkit.Extended.Wp8  (WP8SL)
+- MyToolkit.Extended.Wpf40 (.NET 4.0)
+- MyToolkit.Extended.Wpf45 (.NET 4.5)
+- MyToolkit.Extended.Http (PCL)
+- MyToolkit.Extended.MachineLearning.WinRT (PCL: W8.1, WP8.1)
+- MyToolkit.Web (.NET 4.5)
+
+**MyToolkit.VS2012.sln**
+
+- MyToolkit.Extended.Sl5 (Silverlight 5)
+- MyToolkit.Extended.Wp7 (WP7SL)
+- MyToolkit.Http.Legacy (PCL: SL4, WP7SL, .NET 4)
+- MyToolkit.Legacy (PCL: SL4, WP7SL, .NET 4)
 
 ## Supported frameworks
 
