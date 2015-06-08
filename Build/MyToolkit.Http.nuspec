@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>MyToolkit.Http</id>
-    <version>2.3.30.0</version>
+    <version>2.3.31.0</version>
     <title>MyToolkit.Http</title>
     <authors>Rico Suter</authors>
     <owners>Rico Suter</owners>
@@ -23,10 +23,10 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\Output\MyToolkit.Http\MyToolkit.Http.dll" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.Http.dll" />
-    <file src="..\Output\MyToolkit.Http\MyToolkit.Http.xml" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.Http.xml" />
+    <file src="Output\MyToolkit.Http\MyToolkit.Http.dll" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.Http.dll" />
+    <file src="Output\MyToolkit.Http\MyToolkit.Http.xml" target="lib\portable-net45+wp8+win8+wpa81\MyToolkit.Http.xml" />
 
-    <file src="..\Output\MyToolkit.Http.Legacy\MyToolkit.Http.dll" target="lib\portable-sl5+wp71\MyToolkit.Http.dll" />
-    <file src="..\Output\MyToolkit.Http.Legacy\MyToolkit.Http.xml" target="lib\portable-sl5+wp71\MyToolkit.Http.xml" />
+    <file src="Output\MyToolkit.Http.Legacy\MyToolkit.Http.dll" target="lib\portable-sl5+wp71\MyToolkit.Http.dll" />
+    <file src="Output\MyToolkit.Http.Legacy\MyToolkit.Http.xml" target="lib\portable-sl5+wp71\MyToolkit.Http.xml" />
   </files>
 </package>

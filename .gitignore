@@ -1,16 +1,18 @@
 *.suo
-/Output/**
+/build/Output/**
 **/bin/**
 **/obj/**
 **.user
 /*.sdf
 *.psess
 
-/Source/packages
-/Source/MyToolkit.sln.GhostDoc.xml
-/Source/MyToolkit.VS2012.sln.GhostDoc.xml
-/Source/MyToolkit.sln.ide
-/Source/MyToolkit.Tests.WinRT/AppPackages
-/Source/SampleUniversalPhoneApp/AppPackages
-/Source/SampleWindowsStoreApp/AppPackages
-/Source/SampleWindowsStoreApp/BundleArtifacts
+**/AppPackages/**
+/src/**/Packages/**
+
+/src/MyToolkit.sln.GhostDoc.xml
+/src/MyToolkit.VS2012.sln.GhostDoc.xml
+/src/MyToolkit.sln.ide
+/src/MyToolkit.Tests.WinRT/AppPackages
+/src/SampleUniversalPhoneApp/AppPackages
+/src/SampleWindowsStoreApp/AppPackages
+/src/SampleWindowsStoreApp/BundleArtifacts

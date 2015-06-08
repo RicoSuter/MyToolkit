@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>MyToolkit.Web</id>
-    <version>2.3.30.0</version>
+    <version>2.3.31.0</version>
     <title>MyToolkit.Web</title>
     <authors>Rico Suter</authors>
     <owners>Rico Suter</owners>
@@ -13,11 +13,11 @@
     <iconUrl>http://rsuter.com/Projects/MyToolkit/NuGetIcon.png</iconUrl>
     <dependencies>
       <group>
-        <dependency id="MyToolkit" version="2.3.30.0" />
+        <dependency id="MyToolkit" version="2.3.31.0" />
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="..\Output\MyToolkit.Web\MyToolkit.Web.dll" target="lib\net45\MyToolkit.Web.dll" />
+    <file src="Output\MyToolkit.Web\MyToolkit.Web.dll" target="lib\net45\MyToolkit.Web.dll" />
   </files>
 </package>

@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F01F49C0-5DA2-4757-B4E0-02EC7A187DED}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyToolkit</RootNamespace>
+    <AssemblyName>MyToolkit</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile259</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>True</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>True</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>True</CodeContractsRedundantAssumptions>
+    <CodeContractsAssertsToContractsCheckBox>True</CodeContractsAssertsToContractsCheckBox>
+    <CodeContractsRedundantTests>True</CodeContractsRedundantTests>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsMissingPublicEnsuresAsWarnings>False</CodeContractsMissingPublicEnsuresAsWarnings>
+    <CodeContractsInferRequires>True</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestAssumptionsForCallees>False</CodeContractsSuggestAssumptionsForCallees>
+    <CodeContractsSuggestRequires>False</CodeContractsSuggestRequires>
+    <CodeContractsNecessaryEnsures>True</CodeContractsNecessaryEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsSuggestReadonly>True</CodeContractsSuggestReadonly>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsSQLServerOption />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsSkipAnalysisIfCannotConnectToCache>False</CodeContractsSkipAnalysisIfCannotConnectToCache>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
+    <CodeContractsRuntimeCheckingLevel>None</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <DocumentationFile>bin\Debug\MyToolkit.XML</DocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\build\Output\MyToolkit\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\build\Output\MyToolkit\MyToolkit.xml</DocumentationFile>
+    <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>True</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>True</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>True</CodeContractsRedundantAssumptions>
+    <CodeContractsAssertsToContractsCheckBox>True</CodeContractsAssertsToContractsCheckBox>
+    <CodeContractsRedundantTests>True</CodeContractsRedundantTests>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsMissingPublicEnsuresAsWarnings>False</CodeContractsMissingPublicEnsuresAsWarnings>
+    <CodeContractsInferRequires>True</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestAssumptionsForCallees>False</CodeContractsSuggestAssumptionsForCallees>
+    <CodeContractsSuggestRequires>False</CodeContractsSuggestRequires>
+    <CodeContractsNecessaryEnsures>True</CodeContractsNecessaryEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsSuggestReadonly>True</CodeContractsSuggestReadonly>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>True</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsSQLServerOption />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsSkipAnalysisIfCannotConnectToCache>False</CodeContractsSkipAnalysisIfCannotConnectToCache>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
+    <CodeContractsRuntimeCheckingLevel>None</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+    <CodeContractsInferEnsuresAutoProperties>True</CodeContractsInferEnsuresAutoProperties>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Default.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\shared\encryption\SimpleEncryption.cs">
+      <Link>Encryption\SimpleEncryption.cs</Link>
+    </Compile>
+    <Compile Include="Collections\IObservableCollectionView.cs" />
+    <Compile Include="Collections\ObservableCollectionView.cs" />
+    <Compile Include="Collections\QueryObservableCollectionView.cs" />
+    <Compile Include="Composition\PartDescription.cs" />
+    <Compile Include="Data\CacheManager.cs" />
+    <Compile Include="Data\DataManagerBase.cs" />
+    <Compile Include="Collections\AlphaGroupCollection.cs" />
+    <Compile Include="Collections\BlockingQueue.cs" />
+    <Compile Include="Collections\TopItemsGroup.cs" />
+    <Compile Include="Collections\MtObservableCollection.cs" />
+    <Compile Include="Collections\Group.cs" />
+    <Compile Include="Collections\ObservableCollectionObserver.cs" />
+    <Compile Include="Collections\ObservableDictionary.cs" />
+    <Compile Include="Collections\ObservableCollectionViewBase.cs" />
+    <Compile Include="Collections\MtNotifyCollectionChangedEventArgs.cs" />
+    <Compile Include="Composition\Composition.cs" />
+    <Compile Include="Composition\CompositionContext.cs" />
+    <Compile Include="Composition\ExportAttribute.cs" />
+    <Compile Include="Composition\ICompositionContext.cs" />
+    <Compile Include="Composition\ImportAttribute.cs" />
+    <Compile Include="Composition\ImportManyAttribute.cs" />
+    <Compile Include="Composition\IServiceLocator.cs" />
+    <Compile Include="Composition\ServiceLocator.cs" />
+    <Compile Include="IO\Utf8StringWriter.cs" />
+    <Compile Include="Messaging\CallbackMessage.cs" />
+    <Compile Include="Messaging\GoBackMessage.cs" />
+    <Compile Include="Messaging\IMessenger.cs" />
+    <Compile Include="Messaging\IViewModelToViewMapper.cs" />
+    <Compile Include="Messaging\LoadingMessage.cs" />
+    <Compile Include="Messaging\Messenger.cs" />
+    <Compile Include="Messaging\MessengerExtensions.cs" />
+    <Compile Include="Messaging\NavigateMessage.cs" />
+    <Compile Include="Messaging\RegexViewModelToViewMapper.cs" />
+    <Compile Include="Messaging\TextMessage.cs" />
+    <Compile Include="Command\AsyncRelayCommand.cs" />
+    <Compile Include="Command\CommandBase.cs" />
+    <Compile Include="Model\AsyncValidatedObservableObject.cs" />
+    <Compile Include="Model\GraphObservableObject.cs" />
+    <Compile Include="Model\GraphPropertyChangedEventArgs.cs" />
+    <Compile Include="Mvvm\IDispatcher.cs" />
+    <Compile Include="Data\UndoRedoManager.cs" />
+    <Compile Include="Mvvm\ViewModelBase.cs" />
+    <Compile Include="Model\ObservableObject.cs" />
+    <Compile Include="Model\PropertyChangedEventArgsExtensions.cs" />
+    <Compile Include="Command\RelayCommand.cs" />
+    <Compile Include="Model\ValidatedObservableObject.cs" />
+    <Compile Include="Networking\AuthenticatedUri.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serialization\XmlSerialization.cs" />
+    <Compile Include="Storage\ApplicationSettings.cs" />
+    <Compile Include="Storage\ApplicationSettingsWinRt.cs" />
+    <Compile Include="Storage\ApplicationSettingsWp8.cs" />
+    <Compile Include="Storage\ApplicationSettingsWpf.cs" />
+    <Compile Include="Storage\IApplicationSettings.cs" />
+    <Compile Include="Utilities\CodeContractExtensions.cs" />
+    <Compile Include="Utilities\CommandProcessor.cs" />
+    <Compile Include="Utilities\DateTimeExtensions.cs" />
+    <Compile Include="Utilities\DateTimeUtilities.cs" />
+    <Compile Include="Utilities\DictionaryExtensions.cs" />
+    <Compile Include="Utilities\DisposableProvider.cs" />
+    <Compile Include="Utilities\EntityContainer.cs" />
+    <Compile Include="Utilities\EnumerableExtensions.cs" />
+    <Compile Include="Events\EventUtilities.cs" />
+    <Compile Include="Utilities\EventHandlerExtensions.cs" />
+    <Compile Include="Utilities\ExpressionUtilities.cs" />
+    <Compile Include="Utilities\GeolocationUtilities.cs" />
+    <Compile Include="Utilities\HttpUtilityExtensions.cs" />
+    <Compile Include="Utilities\IEntity.cs" />
+    <Compile Include="Utilities\EnumerableMathExtensions.cs" />
+    <Compile Include="Utilities\ReflectionExtensions.cs" />
+    <Compile Include="Utilities\StreamExtensions.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
+    <Compile Include="Utilities\TaskUtilities.cs" />
+    <Compile Include="Utilities\VersionUtilities.cs" />
+    <Compile Include="Events\WeakEvent.cs" />
+    <Compile Include="WorkflowEngine\IWorkflowActivityBase.cs" />
+    <Compile Include="WorkflowEngine\ActivityData.cs" />
+    <Compile Include="WorkflowEngine\WorkflowActivityOutput.cs" />
+    <Compile Include="WorkflowEngine\Activities\AutomaticWorkflowActivityBase.cs" />
+    <Compile Include="WorkflowEngine\Activities\EmptyActivity.cs" />
+    <Compile Include="WorkflowEngine\Activities\EmptyAutomaticActivity.cs" />
+    <Compile Include="WorkflowEngine\Activities\ForkActivity.cs" />
+    <Compile Include="WorkflowEngine\WorkflowActivityInput.cs" />
+    <Compile Include="WorkflowEngine\WorkflowActivityBase.cs" />
+    <Compile Include="WorkflowEngine\Activities\JoinActivity.cs" />
+    <Compile Include="WorkflowEngine\CurrentActivitiesChangedEventArgs.cs" />
+    <Compile Include="WorkflowEngine\Exceptions\WorkflowException.cs" />
+    <Compile Include="WorkflowEngine\WorkflowDefinition.cs" />
+    <Compile Include="WorkflowEngine\WorkflowInstance.cs" />
+    <Compile Include="WorkflowEngine\WorkflowRoute.cs" />
+    <Compile Include="WorkflowEngine\WorkflowTransition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Default.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
