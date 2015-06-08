@@ -53,7 +53,7 @@ Download the [assemblies as ZIP file here](https://github.com/MyToolkit/Core/rel
 
 ## Supported frameworks
 
-![](https://rawgit.com/MyToolkit/Core/master/docs/Library%20Matrix.png)
+![](https://rawgit.com/MyToolkit/Core/master/docs/LibraryMatrix.png)
 
 A list with the compiled libraries (VS projects) and their dependencies: 
 
