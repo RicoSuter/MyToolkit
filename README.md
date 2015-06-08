@@ -19,9 +19,11 @@ If you found some bugs or have other comments, please create a Pull Request or G
 
 Check my blog for other programming stuff on my website at <http://blog.rsuter.com>. 
 
-## Solutions
+## Visual Studio solutions
 
-**MyToolkit.sln**
+The solutions can be found in the `src` directory: 
+
+**MyToolkit.VS2013.sln**
 
 - Contains the projects for Windows 8.1, Windows Phone 8.1, Windows Phone Silverlight 8.0, WPF and Web
     
