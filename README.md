@@ -19,9 +19,11 @@ If you found some bugs or have other comments, please create a Pull Request or G
 
 Check my blog for other programming stuff on my website at <http://blog.rsuter.com>. 
 
-## Solutions
+## Visual Studio solutions
 
-**MyToolkit.sln**
+The solutions can be found in the `src` directory: 
+
+**MyToolkit.VS2013.sln**
 
 - Contains the projects for Windows 8.1, Windows Phone 8.1, Windows Phone Silverlight 8.0, WPF and Web
     
@@ -51,7 +53,7 @@ Download the [assemblies as ZIP file here](https://github.com/MyToolkit/Core/rel
 
 ## Supported frameworks
 
-![](https://rawgit.com/MyToolkit/Core/master/-%20Documents/Library%20Matrix.png)
+![](https://rawgit.com/MyToolkit/Core/master/docs/LibraryMatrix.png)
 
 A list with the compiled libraries (VS projects) and their dependencies: 
 
@@ -62,7 +64,7 @@ There is a sample application for Windows Phone and WinRT which demonstrates var
 
 Clone or download the [source code](https://github.com/MyToolkit/Core/tree/master) and open the **MyToolkit.sln** solution. 
 
-![](https://rawgit.com/MyToolkit/Core/master/-%20Documents/SampleWindowsStoreApp.png)
+![](https://rawgit.com/MyToolkit/Core/master/docs/SampleWindowsStoreApp.png)
 
 ## Projects which use MyToolkit libraries
 
