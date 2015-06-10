@@ -4,11 +4,11 @@ MyToolkit is a set of .NET libraries containing lots of useful classes for vario
 
 [Available classes and components](https://github.com/MyToolkit/Core/wiki)
 
-- MVVM classes (Messenger,  RelayCommand,  ViewModelBase,  ObservableObject) in portable class library 
-- Networking classes:  HTTP with GZIP support,  WakeOnLan 
-- XAML controls and converters, e.g.  MtPivot and  DataGrid for WinRT 
-- Improved  paging classes for Windows Phone and Windows 8 apps 
-- Additional collections like  ObservableDictionary,  MtObservableCollection or  ObservableCollectionView 
+- [MVVM](https://github.com/MyToolkit/Core/wiki/MVVM-Overview) classes ([RelayCommand](https://github.com/MyToolkit/Core/wiki/RelayCommand), [ViewModelBase](https://github.com/MyToolkit/Core/wiki/ViewModelBase), [ObservableObject](https://github.com/MyToolkit/Core/wiki/ObservableObject), [Messenger](https://github.com/MyToolkit/Core/wiki/Messenger)) in portable class library 
+- Networking classes: [HTTP](https://github.com/MyToolkit/Core/wiki/Http) with GZIP support,  WakeOnLan 
+- XAML controls and converters, e.g. [MtPivot](https://github.com/MyToolkit/Core/wiki/MtPivot) and [DataGrid](https://github.com/MyToolkit/Core/wiki/DataGrid) for WinRT 
+- Improved [paging](https://github.com/MyToolkit/Core/wiki/Paging-Overview) classes for Windows Phone and Windows 8 apps 
+- Additional collections like [ObservableDictionary](https://github.com/MyToolkit/Core/wiki/ObservableDictionary),  [MtObservableCollection](https://github.com/MyToolkit/Core/wiki/MtObservableCollection) or [ObservableCollectionView](https://github.com/MyToolkit/Core/wiki/ObservableCollectionView) 
 - And much more...
 
 **Coming soon: Full support for the Universal Windows Platform (Windows 10)**
