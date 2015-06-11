@@ -4,11 +4,11 @@ MyToolkit is a set of .NET libraries containing lots of useful classes for vario
 
 [Available classes and components](https://github.com/MyToolkit/Core/wiki)
 
-- MVVM classes (Messenger,  RelayCommand,  ViewModelBase,  ObservableObject) in portable class library 
-- Networking classes:  HTTP with GZIP support,  WakeOnLan 
-- XAML controls and converters, e.g.  MtPivot and  DataGrid for WinRT 
-- Improved  paging classes for Windows Phone and Windows 8 apps 
-- Additional collections like  ObservableDictionary,  MtObservableCollection or  ObservableCollectionView 
+- [MVVM](https://github.com/MyToolkit/Core/wiki/MVVM-Overview) classes ([RelayCommand](https://github.com/MyToolkit/Core/wiki/RelayCommand), [ViewModelBase](https://github.com/MyToolkit/Core/wiki/ViewModelBase), [ObservableObject](https://github.com/MyToolkit/Core/wiki/ObservableObject), [Messenger](https://github.com/MyToolkit/Core/wiki/Messenger)) in portable class library 
+- Networking classes: [HTTP](https://github.com/MyToolkit/Core/wiki/Http) with GZIP support,  WakeOnLan 
+- XAML controls and converters, e.g. [MtPivot](https://github.com/MyToolkit/Core/wiki/MtPivot) and [DataGrid](https://github.com/MyToolkit/Core/wiki/DataGrid) for WinRT 
+- Improved [paging](https://github.com/MyToolkit/Core/wiki/Paging-Overview) classes for Windows Phone and Windows 8 apps 
+- Additional collections like [ObservableDictionary](https://github.com/MyToolkit/Core/wiki/ObservableDictionary),  [MtObservableCollection](https://github.com/MyToolkit/Core/wiki/MtObservableCollection) or [ObservableCollectionView](https://github.com/MyToolkit/Core/wiki/ObservableCollectionView) 
 - And much more...
 
 **Coming soon: Full support for the Universal Windows Platform (Windows 10)**
@@ -18,18 +18,6 @@ MyToolkit is a set of .NET libraries containing lots of useful classes for vario
 If you found some bugs or have other comments, please create a Pull Request or GitHub issue. The library is free to use, but please put a link to this GitHub site in the source code or your application. 
 
 Check my blog for other programming stuff on my website at <http://blog.rsuter.com>. 
-
-## Visual Studio solutions
-
-The solutions can be found in the `src` directory: 
-
-**MyToolkit.VS2013.sln**
-
-- Contains the projects for Windows 8.1, Windows Phone 8.1, Windows Phone Silverlight 8.0, WPF and Web
-    
-**MyToolkit.VS2012.sln**
-
-- Contains the projects for Windows Phone 7 and Silverlight 5
 
 ## Installation
 
@@ -51,13 +39,38 @@ Not available yet.
 
 Download the [assemblies as ZIP file here](https://github.com/MyToolkit/Core/releases). 
 
-## Supported frameworks
+## Visual Studio solutions
+
+The solutions can be found in the `src` directory: 
+
+**MyToolkit.VS2015.sln**
+
+- MyToolkit.Extended.Uwp (W10, W10 mobile)
+
+**MyToolkit.VS2013.sln**
+
+- MyToolkit (PCL: W8, WP8.1, .NET 4.5, WP8SL)
+- MyToolkit.AspNet.Mvc (ASP.NET MVC 5.x)
+- MyToolkit.Extended.WinRT (PCL: W8.1, WP8.1)
+- MyToolkit.Extended.Wp8  (WP8SL)
+- MyToolkit.Extended.Wpf40 (.NET 4.0)
+- MyToolkit.Extended.Wpf45 (.NET 4.5)
+- MyToolkit.Extended.Http (PCL)
+- MyToolkit.Extended.MachineLearning.WinRT (PCL: W8.1, WP8.1)
+- MyToolkit.Web (.NET 4.5)
+
+**MyToolkit.VS2012.sln**
+
+- MyToolkit.Extended.Sl5 (Silverlight 5)
+- MyToolkit.Extended.Wp7 (WP7SL)
+- MyToolkit.Http.Legacy (PCL: SL4, WP7SL, .NET 4)
+- MyToolkit.Legacy (PCL: SL4, WP7SL, .NET 4)
+
+**Supported frameworks:**
 
 ![](https://rawgit.com/MyToolkit/Core/master/docs/LibraryMatrix.png)
 
-A list with the compiled libraries (VS projects) and their dependencies: 
-
-- <https://github.com/MyToolkit/Core/blob/master/Dependencies.txt>
+Also check out the [list with the Visual Studio projects and their dependencies](https://github.com/MyToolkit/Core/blob/master/docs/Dependencies.md). 
 
 ## Sample applications
 There is a sample application for Windows Phone and WinRT which demonstrates various MyToolkit classes (MVVM, Paging, YouTube, etc...) as well as some Windows 8 features. 
