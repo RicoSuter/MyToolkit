@@ -40,7 +40,7 @@ namespace SamplePhoneApp.Views
                 var msg = new TextMessage("Not valid", "Discard?", MessageButton.OKCancel); // TODO use strings from resource file
                 msg.SuccessCallback += result =>
 			    {
-			        if (result == MessageResult.OK)
+			        if (result == MessageResult.Ok)
 			        {
 			            App.Persons.Remove(Model.Person);
 			            NavigationService.GoBack();

@@ -93,7 +93,7 @@ namespace MyToolkit.Messaging
 
                 var index = msg.Commands.IndexOf(cmd); 
                 if (message.Button == MessageButton.OKCancel)
-                    message.CallSuccessCallback(index == 0 ? MessageResult.OK : MessageResult.Cancel);
+                    message.CallSuccessCallback(index == 0 ? MessageResult.Ok : MessageResult.Cancel);
                 else if (message.Button == MessageButton.YesNoCancel)
                     message.CallSuccessCallback(index == 0 ? MessageResult.Yes : 
                         (index == 1 ? MessageResult.No : MessageResult.Cancel));
@@ -128,7 +128,7 @@ namespace MyToolkit.Messaging
                 else if (result == MessageBoxResult.No)
                     message.CallSuccessCallback(MessageResult.No);
                 else if (result == MessageBoxResult.OK)
-                    message.CallSuccessCallback(MessageResult.OK);
+                    message.CallSuccessCallback(MessageResult.Ok);
                 else if (result == MessageBoxResult.Cancel)
                     message.CallSuccessCallback(MessageResult.Cancel);
             };

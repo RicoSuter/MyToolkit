@@ -43,19 +43,35 @@ namespace MyToolkit.Messaging
         public MessageButton Button { get; private set; }
 	}
 
+    /// <summary>Enumeration of the buttons to show of a text message.</summary>
     public enum MessageButton
     {
+        /// <summary>Shows only an OK button.</summary>
         OK,
+
+        /// <summary>Shows an OK and Cancel button.</summary>
         OKCancel,
+
+        /// <summary>Shows an Yes, No and Cancel button.</summary>
         YesNoCancel,
+
+        /// <summary>Shows an Yes and No button.</summary>
         YesNo
     }
 
+    /// <summary>Enumeration of the results of a text message.</summary>
     public enum MessageResult
     {
-        OK,
+        /// <summary>The OK button was pressed.</summary>
+        Ok,
+
+        /// <summary>The Cancel button was pressed.</summary>
         Cancel,
+
+        /// <summary>The Yes button was pressed.</summary>
         Yes,
+
+        /// <summary>The No button was pressed.</summary>
         No
     }
 }
