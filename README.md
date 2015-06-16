@@ -83,8 +83,8 @@ Clone or download the [source code](https://github.com/MyToolkit/Core/tree/maste
 
 List with some sample projects which use the MyToolkit libraries: 
 
-- [Project Dependency Browser](http://projectdependencybrowser.codeplex.com/)
-- [Visual JSON Editor](https://visualjsoneditor.codeplex.com/)
+- [Project Dependency Browser](http://projectdependencybrowser.org/)
+- [Visual JSON Editor](https://visualjsoneditor.org/)
 
 ## Donate
 
