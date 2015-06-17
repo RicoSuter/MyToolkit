@@ -119,16 +119,31 @@ namespace MyToolkit.Html
             return new CollectionItemNamePrefixScope(html.ViewData.TemplateInfo, collectionItemName);
         }
 
+        /// <summary>Generates the item path for the given index.</summary>
+        /// <param name="collectionPropertyName">The name of the collection property in the master view model.</param>
+        /// <param name="index">The index.</param>
+        /// <returns>The item path.</returns>
+        /// <exception cref="InvalidOperationException">Previous collection indices not available.</exception>
+        public static string GetItemPathByIndex(string collectionPropertyName, int index)
+        {
+            var previousIndicesValues = HttpContext.Current.Request[collectionPropertyName + ".Index"];
+            if (!String.IsNullOrWhiteSpace(previousIndicesValues))
+                return collectionPropertyName + "[" + previousIndicesValues.Split(',')[index] + "]";
+
+            throw new InvalidOperationException("Previous collection indices not available.");
+        }
+
         private static string GetCollectionItemIndex(string collectionIndexFieldName)
         {
-            Queue<string> previousIndices = (Queue<string>)HttpContext.Current.Items[collectionIndexFieldName];
+            var fieldKey = "MyToolkit.CollectionEditorExtensions:" + collectionIndexFieldName;
+            Queue<string> previousIndices = (Queue<string>)HttpContext.Current.Items[fieldKey];
 
             if (previousIndices == null)
             {
                 previousIndices = new Queue<string>();
-                HttpContext.Current.Items[collectionIndexFieldName] = new Queue<string>();
+                HttpContext.Current.Items[fieldKey] = new Queue<string>();
 
-                var previousIndicesValues = HttpContext.Current.Request[collectionIndexFieldName];
+                var previousIndicesValues = HttpContext.Current.Request[collectionIndexFieldName + ".Index"];
                 if (!String.IsNullOrWhiteSpace(previousIndicesValues))
                 {
                     foreach (var index in previousIndicesValues.Split(','))
