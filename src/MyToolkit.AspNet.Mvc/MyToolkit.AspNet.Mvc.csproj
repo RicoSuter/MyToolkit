@@ -81,6 +81,7 @@
     <Compile Include="Filters\OutputProcessorStream.cs" />
     <Compile Include="Html\Bootstrap.cs" />
     <Compile Include="Html\CollectionEditorExtensions.cs" />
+    <Compile Include="Html\CollectionEditorUtilities.cs" />
     <Compile Include="Html\ImageUploadExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

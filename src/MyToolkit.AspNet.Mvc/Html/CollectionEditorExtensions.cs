@@ -119,20 +119,6 @@ namespace MyToolkit.Html
             return new CollectionItemNamePrefixScope(html.ViewData.TemplateInfo, collectionItemName);
         }
 
-        /// <summary>Generates the item path for the given index.</summary>
-        /// <param name="collectionPropertyName">The name of the collection property in the master view model.</param>
-        /// <param name="index">The index.</param>
-        /// <returns>The item path.</returns>
-        /// <exception cref="InvalidOperationException">Previous collection indices not available.</exception>
-        public static string GetItemPathByIndex(string collectionPropertyName, int index)
-        {
-            var previousIndicesValues = HttpContext.Current.Request[collectionPropertyName + ".Index"];
-            if (!String.IsNullOrWhiteSpace(previousIndicesValues))
-                return collectionPropertyName + "[" + previousIndicesValues.Split(',')[index] + "]";
-
-            throw new InvalidOperationException("Previous collection indices not available.");
-        }
-
         private static string GetCollectionItemIndex(string collectionIndexFieldName)
         {
             var fieldKey = "MyToolkit.CollectionEditorExtensions:" + collectionIndexFieldName;
