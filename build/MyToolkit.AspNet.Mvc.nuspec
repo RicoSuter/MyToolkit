@@ -6,11 +6,11 @@
     <title>MyToolkit.AspNet.Mvc</title>
     <authors>Rico Suter</authors>
     <owners>Rico Suter</owners>
-    <projectUrl>https://github.com/MyToolkit/MyToolkit</projectUrl>
+    <projectUrl>http://mytoolkit.io</projectUrl>
     <licenseUrl>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</licenseUrl>
     <description>MyToolkit is a set of .NET libraries containing lots of useful classes for various .NET platforms like WinRT, Windows Phone, WPF and Silverlight. </description>
     <releaseNotes/>
-    <iconUrl>http://rsuter.com/Projects/MyToolkit/NuGetIcon.png</iconUrl>
+    <iconUrl>http://rsuter.com/Projects/MyToolkit/IconNuGet.png</iconUrl>
     <dependencies>
       <group>
         <dependency id="MyToolkit" version="2.3.31.0" />
