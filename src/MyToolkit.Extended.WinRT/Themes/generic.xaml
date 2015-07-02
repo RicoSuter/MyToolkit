@@ -467,8 +467,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Paging:MtFrame">
                     <Frame x:Name="Frame" 
-						   ContentTransitions="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTransitions}" 
-                           Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}" />
+                           Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
+						   ContentTransitions="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTransitions}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

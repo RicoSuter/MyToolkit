@@ -11,8 +11,8 @@
     <AssemblyName>MyToolkit.Extended</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10069.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10069.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.10158.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10158.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -23,16 +23,17 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UAP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UAP;WINRT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\MyToolkit.Extended.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\build\Output\MyToolkit.Extended.WinRT\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UAP</DefineConstants>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UAP;WINRT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\..\build\Output\MyToolkit.Extended.WinRT\MyToolkit.Extended.xml</DocumentationFile>
@@ -109,13 +110,6 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\MyToolkit\MyToolkit.csproj">
-      <Project>{F01F49C0-5DA2-4757-B4E0-02EC7A187DED}</Project>
-      <Name>MyToolkit</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Shared\Controls\MtListBox.cs">
       <Link>Controls\MtListBox.cs</Link>
@@ -255,6 +249,9 @@
     <Compile Include="..\Shared\MVVM\DependencyPropertyHelper.cs">
       <Link>MVVM\DependencyPropertyHelper.cs</Link>
     </Compile>
+    <Compile Include="..\Shared\Mvvm\ViewModelHelper.cs">
+      <Link>Mvvm\ViewModelHelper.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Networking\WakeOnLan.cs">
       <Link>Networking\WakeOnLan.cs</Link>
     </Compile>
@@ -345,7 +342,6 @@
     <Compile Include="Environment\Machine.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Mvvm\IStateHandlingViewModel.cs" />
-    <Compile Include="Mvvm\ViewModelHelper.cs" />
     <Compile Include="Paging\Animations\PageInsertionMode.cs" />
     <Compile Include="Paging\Animations\PushPageAnimation.cs" />
     <Compile Include="Paging\Handlers\BackKeyPressedHandler.cs" />
@@ -402,6 +398,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyToolkit\MyToolkit.csproj">
+      <Project>{f01f49c0-5da2-4757-b4e0-02ec7a187ded}</Project>
+      <Name>MyToolkit</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

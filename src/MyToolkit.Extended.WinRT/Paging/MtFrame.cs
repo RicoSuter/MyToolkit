@@ -35,6 +35,10 @@ namespace MyToolkit.Paging
         /// <summary>Initializes a new instance of the <see cref="MtFrame"/> class. </summary>
         public MtFrame()
         {
+#if WINDOWS_UAP
+            AutomaticBackButtonHandling = true;
+#endif
+
             HorizontalContentAlignment = HorizontalAlignment.Stretch;
             VerticalContentAlignment = VerticalAlignment.Stretch;
 
@@ -87,12 +91,32 @@ namespace MyToolkit.Paging
         public int CurrentIndex
         {
             get { return _currentIndex; }
+            private set
+            {
+                if (_currentIndex != value)
+                {
+                    _currentIndex = value;
+
+#if WINDOWS_UAP
+                    if (AutomaticBackButtonHandling)
+                    {
+                        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility =
+                            CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+                    }
+#endif
+                }
+            }
         }
+        
+#if WINDOWS_UAP
+        /// <summary>Gets or sets a value indicating whether the back button is automatically shown and hidden by the frame.</summary>
+        public bool AutomaticBackButtonHandling { get; set; }
+#endif
 
         /// <summary>Gets a value indicating whether the first/root page is visible. </summary>
         public bool IsFirstPage
         {
-            get { return _currentIndex == 0; }
+            get { return CurrentIndex == 0; }
         }
 
         /// <summary>Occurs when navigating to a page. </summary>
@@ -112,19 +136,19 @@ namespace MyToolkit.Paging
         /// <summary>Gets the page before the current page in the page stack or null if not available. </summary>
         public MtPageDescription PreviousPage
         {
-            get { return _currentIndex > 0 ? _pages[_currentIndex - 1] : null; }
+            get { return CurrentIndex > 0 ? _pages[CurrentIndex - 1] : null; }
         }
 
         /// <summary>Gets the current page. </summary>
         public MtPageDescription CurrentPage
         {
-            get { return _pages.Count > 0 ? _pages[_currentIndex] : null; }
+            get { return _pages.Count > 0 ? _pages[CurrentIndex] : null; }
         }
 
         /// <summary>Gets the page after the current page in the page stack or null if not available. </summary>
         public MtPageDescription NextPage
         {
-            get { return _currentIndex < _pages.Count - 1 ? _pages[_currentIndex + 1] : null; }
+            get { return CurrentIndex < _pages.Count - 1 ? _pages[CurrentIndex + 1] : null; }
         }
 
         /// <summary>Gets the current page animation. 
@@ -152,7 +176,7 @@ namespace MyToolkit.Paging
         public Frame InternalFrame { get; private set; }
 
         /// <summary>Gets a value indicating whether it is possible to navigate forward. </summary>
-        public bool CanGoForward { get { return _currentIndex < _pages.Count - 1; } }
+        public bool CanGoForward { get { return CurrentIndex < _pages.Count - 1; } }
 
         /// <summary>Tries to navigate forward to the next page. </summary>
         /// <remarks>After the task has completed the <see cref="Frame"/>'s current page has changed. </remarks>
@@ -167,7 +191,7 @@ namespace MyToolkit.Paging
         }
 
         /// <summary>Gets a value indicating whether it is possible to navigate back. </summary>
-        public bool CanGoBack { get { return _currentIndex > 0; } }
+        public bool CanGoBack { get { return CurrentIndex > 0; } }
 
         /// <summary>Gets a list of the pages in the page stack. </summary>
         public IReadOnlyList<MtPageDescription> Pages { get { return _pages; } }
@@ -175,7 +199,7 @@ namespace MyToolkit.Paging
         /// <summary>Gets the number of pages in the page back stack. </summary>
         public int BackStackDepth
         {
-            get { return _currentIndex + 1; }
+            get { return CurrentIndex + 1; }
         }
 
         private Grid ContentGrid
@@ -193,7 +217,7 @@ namespace MyToolkit.Paging
         /// <returns>The page or null if not found. </returns>
         public MtPageDescription GetNearestPageOfTypeInBackStack(Type pageType)
         {
-            var index = _currentIndex;
+            var index = CurrentIndex;
             while (index >= 0)
             {
                 if (_pages[index].Type == pageType)
@@ -224,10 +248,10 @@ namespace MyToolkit.Paging
         /// <returns>True if the navigation could be performed. </returns>
         public async Task<bool> GoBackToAsync(int newPageIndex)
         {
-            if (newPageIndex == _currentIndex)
+            if (newPageIndex == CurrentIndex)
                 return false;
 
-            if (newPageIndex < 0 || newPageIndex > _currentIndex)
+            if (newPageIndex < 0 || newPageIndex > CurrentIndex)
                 return false;
 
             if (await RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.Back))
@@ -265,12 +289,12 @@ namespace MyToolkit.Paging
         /// <exception cref="ArgumentException">The current page cannot be removed from the stack. </exception>
         public bool RemovePageFromStackAt(int pageIndex)
         {
-            if (pageIndex == _currentIndex)
+            if (pageIndex == CurrentIndex)
                 throw new ArgumentException("The current page cannot be removed from the stack. ");
 
             _pages.RemoveAt(pageIndex);
-            if (pageIndex < _currentIndex)
-                _currentIndex--;
+            if (pageIndex < CurrentIndex)
+                CurrentIndex--;
 
             return true;
         }
@@ -327,7 +351,7 @@ namespace MyToolkit.Paging
             RemoveForwardStack();
 
             var newPage = new MtPageDescription(pageType, parameter);
-            await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.New, currentPage, newPage, _currentIndex + 1);
+            await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.New, currentPage, newPage, CurrentIndex + 1);
 
             return true;
         }
@@ -339,9 +363,9 @@ namespace MyToolkit.Paging
             var frameDescription = DataContractSerialization.Deserialize<MtFrameDescription>(data, MtSuspensionManager.KnownTypes.ToArray());
 
             _pages = frameDescription.PageStack;
-            _currentIndex = frameDescription.PageIndex;
+            CurrentIndex = frameDescription.PageIndex;
 
-            if (_currentIndex != -1)
+            if (CurrentIndex != -1)
             {
                 ContentGrid.Children.Add(CurrentPage.GetPage(this).InternalPage);
                 RaisePageOnNavigatedTo(CurrentPage, NavigationMode.Back);
@@ -356,7 +380,7 @@ namespace MyToolkit.Paging
 
             // remove pages which do not support tombstoning
             var pagesToSerialize = _pages;
-            var currentIndexToSerialize = _currentIndex;
+            var currentIndexToSerialize = CurrentIndex;
             var firstPageToRemove = _pages.FirstOrDefault(p =>
             {
                 var page = p.GetPage(this);
@@ -405,7 +429,7 @@ namespace MyToolkit.Paging
             if (navigationMode == NavigationMode.Forward ? CanGoForward : CanGoBack)
             {
                 var currentPage = CurrentPage;
-                var nextPageIndex = _currentIndex + (navigationMode == NavigationMode.Forward ? 1 : -1);
+                var nextPageIndex = CurrentIndex + (navigationMode == NavigationMode.Forward ? 1 : -1);
                 var nextPage = _pages[nextPageIndex];
 
                 await NavigateWithAnimationsAndCallbacksAsync(navigationMode, currentPage, nextPage, nextPageIndex);
@@ -479,7 +503,7 @@ namespace MyToolkit.Paging
 
             if (navigationMode == NavigationMode.New)
                 _pages.Add(newPage);
-            _currentIndex = nextPageIndex;
+            CurrentIndex = nextPageIndex;
 
             RaisePageOnNavigatedTo(newPage, navigationMode);
             ((RelayCommand)GoBackCommand).RaiseCanExecuteChanged();
@@ -558,7 +582,7 @@ namespace MyToolkit.Paging
 
         private void RemoveForwardStack()
         {
-            for (var i = _pages.Count - 1; i > _currentIndex; i--)
+            for (var i = _pages.Count - 1; i > CurrentIndex; i--)
             {
                 var page = _pages[i];
                 page.ReleasePage();

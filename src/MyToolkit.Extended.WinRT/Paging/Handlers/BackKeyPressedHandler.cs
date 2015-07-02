@@ -4,6 +4,10 @@ using System.Linq;
 using System.Reflection;
 using MyToolkit.Events;
 
+#if WINDOWS_UAP
+using Windows.UI.Core;
+#endif
+
 namespace MyToolkit.Paging.Handlers
 {
     /// <summary>Registers for the hardware back key button on Windows Phone and calls the registered methods when the event occurs. </summary>
@@ -27,8 +31,8 @@ namespace MyToolkit.Paging.Handlers
         {
             if (!_isEventRegistered)
             {
-#if WINDOWS_UAP_UNUSED
-                HardwareButtons.BackPressed += OnBackKeyPressed;
+#if WINDOWS_UAP
+                SystemNavigationManager.GetForCurrentView().BackRequested += OnBackKeyPressed;
 #else
                 if (_hardwareButtonsType == null)
                 {
@@ -54,8 +58,8 @@ namespace MyToolkit.Paging.Handlers
 
             if (_handlers.Count == 0)
             {
-#if WINDOWS_UAP_UNUSED
-                HardwareButtons.BackPressed -= OnBackKeyPressed;
+#if WINDOWS_UAP
+                SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackKeyPressed;
 #else
                 EventUtilities.DeregisterStaticEvent(_hardwareButtonsType, "BackPressed", _registrationToken);
 #endif
@@ -63,11 +67,23 @@ namespace MyToolkit.Paging.Handlers
             }
         }
 
-#if WINDOWS_UAP_UNUSED
-        private void OnBackKeyPressed(object sender, BackPressedEventArgs args)
+#if WINDOWS_UAP
+        private void OnBackKeyPressed(object sender, BackRequestedEventArgs args)
+        {
+            var handled = args.Handled;
+            if (handled)
+                return;
+
+            foreach (var item in _handlers)
+            {
+                handled = item.Item2(sender);
+                args.Handled = handled;
+                if (handled)
+                    return;
+            }
+        }
 #else
         private void OnBackKeyPressed(object sender, object args)
-#endif
         {
             var property = args.GetType().GetRuntimeProperty("Handled");
             var handled = (bool)property.GetValue(args);
@@ -82,5 +98,6 @@ namespace MyToolkit.Paging.Handlers
                     return;
             }
         }
+#endif
     }
 }

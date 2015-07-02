@@ -67,21 +67,22 @@ namespace MyToolkit.Paging.Handlers
         private void OnPageLoaded(object sender, RoutedEventArgs e)
         {
             var page = (MtPage)sender;
+
+#if !WINDOWS_UAP
             if (Device.HasHardwareBackKey)
+#endif
             {
                 if (_handler == null)
                     _handler = new BackKeyPressedHandler();
 
                 _handler.Add(page, s => TryGoBackAsync());
             }
+#if !WINDOWS_UAP
             else
+#endif
             {
-                if (page.ActualHeight == Window.Current.Bounds.Height &&
-                    page.ActualWidth == Window.Current.Bounds.Width)
-                {
-                    Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += OnAcceleratorKeyActivated;
-                    Window.Current.CoreWindow.PointerPressed += OnPointerPressed;
-                }
+                Window.Current.CoreWindow.Dispatcher.AcceleratorKeyActivated += OnAcceleratorKeyActivated;
+                Window.Current.CoreWindow.PointerPressed += OnPointerPressed;
             }
         }
 
