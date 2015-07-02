@@ -23,7 +23,26 @@ namespace SampleUwpApp
 
         public override UIElement CreateWindowContentElement()
         {
-            return new HamburgerShell();
+            var hamburger = new HamburgerShell();
+            hamburger.TopItems.Add(new HamburgerItem
+            {
+                Label = "Home",
+                Icon = '\uE825'.ToString(),
+                PageType = typeof(MainPage)
+            });
+            hamburger.TopItems.Add(new HamburgerItem
+            {
+                Label = "Test",
+                Icon = '\uE825'.ToString(),
+                PageType = typeof(TestPage)
+            });
+            hamburger.BottomItems.Add(new HamburgerItem
+            {
+                Label = "Settings",
+                Icon = '\uE825'.ToString(),
+                PageType = typeof(MainPage)
+            });
+            return hamburger;
         }
 
         public override MtFrame GetFrame(UIElement windowContentElement)

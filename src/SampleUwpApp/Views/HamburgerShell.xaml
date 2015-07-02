@@ -5,11 +5,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:paging="using:MyToolkit.Paging"
+    xmlns:views="using:SampleUwpApp.Views"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
+    <Grid d:DataContext="{d:DesignInstance views:HamburgerShell}">
         <Grid.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
@@ -26,7 +27,7 @@
                         <Setter Target="Header.Margin" Value="0"></Setter>
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="320"></AdaptiveTrigger>
+                        <AdaptiveTrigger MinWindowWidth="400"></AdaptiveTrigger>
                     </VisualState.StateTriggers>
                 </VisualState>
                 <VisualState x:Name="Mobile">
@@ -54,7 +55,7 @@
 
                     <!-- hamburger -->
                     <RadioButton Content="Home" 
-                             Click="HamburgerButton_Click" 
+                             Click="OnTogglePane" 
                              Background="{StaticResource SystemControlBackgroundAccentBrush}" 
                              Style="{StaticResource SplitViewRadioButtonStyle}">
                         <RadioButton.Tag>
@@ -62,36 +63,40 @@
                         </RadioButton.Tag>
                     </RadioButton>
 
-                    <StackPanel Grid.Row="1">
-                        <!-- home -->
-                        <RadioButton Command="{Binding NavCommand}" Content="Home" GroupName="Nav" Style="{StaticResource SplitViewRadioButtonStyle}">
-                            <RadioButton.Tag>
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE825;" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            </RadioButton.Tag>
-                        </RadioButton>
-
-                        <!-- privacy -->
-                        <RadioButton Command="{Binding NavCommand}" Content="Privacy" GroupName="Nav" Style="{StaticResource SplitViewRadioButtonStyle}">
-                            <RadioButton.Tag>
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE10F;" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            </RadioButton.Tag>
-                        </RadioButton>
-
-                        <!-- about -->
-                        <RadioButton Command="{Binding NavCommand}" Content="About" GroupName="Nav" Style="{StaticResource SplitViewRadioButtonStyle}">
-                            <RadioButton.Tag>
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1D6;" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            </RadioButton.Tag>
-                        </RadioButton>
-                    </StackPanel>
-                    <StackPanel Grid.Row="2">
-                        <!-- config -->
-                        <RadioButton Command="{Binding NavCommand}" Content="About" GroupName="Nav" Style="{StaticResource SplitViewRadioButtonStyle}">
-                            <RadioButton.Tag>
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE1D6;" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            </RadioButton.Tag>
-                        </RadioButton>
-                    </StackPanel>
+                    <ItemsControl Grid.Row="1" ItemsSource="{Binding TopItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton GroupName="Nav" Checked="ToggleButton_OnChecked"
+                                             IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                                             Content="{Binding Label}" CommandParameter="{Binding}"
+                                             Style="{StaticResource SplitViewRadioButtonStyle}">
+                                    <RadioButton.Tag>
+                                        <TextBlock FontFamily="Segoe MDL2 Assets"
+                                                   Text="{Binding Icon}" 
+                                                   VerticalAlignment="Center" 
+                                                   HorizontalAlignment="Center" />
+                                    </RadioButton.Tag>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    
+                    <ItemsControl Grid.Row="2" ItemsSource="{Binding BottomItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <RadioButton GroupName="Nav" 
+                                             Content="{Binding Label}" 
+                                             Style="{StaticResource SplitViewRadioButtonStyle}">
+                                    <RadioButton.Tag>
+                                        <TextBlock FontFamily="Segoe MDL2 Assets"
+                                                   Text="{Binding Icon}" 
+                                                   VerticalAlignment="Center" 
+                                                   HorizontalAlignment="Center" />
+                                    </RadioButton.Tag>
+                                </RadioButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Grid>
             </SplitView.Pane>
             <SplitView.Content>
@@ -100,17 +105,14 @@
                         <RowDefinition Height="48" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-
-                    <Border Background="Red" Margin="48,0,0,0" x:Name="Header">
-
-                    </Border>
+                    <Border Background="{StaticResource SplitViewBackgroundBrush}" Margin="48,0,0,0" x:Name="Header" />
                     <paging:MtFrame x:Name="RootFrame" Grid.Row="1" />
                 </Grid>
             </SplitView.Content>
         </SplitView>
 
-        <RadioButton VerticalAlignment="Top" HorizontalAlignment="Left" Width="48" Height="48"
-                     Click="HamburgerButton_Click"
+        <RadioButton VerticalAlignment="Top" HorizontalAlignment="Left" 
+                     Width="48" Height="48" Click="OnTogglePane"
                      Background="{StaticResource SystemControlBackgroundAccentBrush}" 
                      Style="{StaticResource SplitViewRadioButtonStyle}">
             <RadioButton.Clip>
