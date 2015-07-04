@@ -251,7 +251,7 @@
                                                 <RadioButton GroupName="Nav" 
                                                              Command="{Binding ElementName=SplitView, Path=Tag}"
                                                              CommandParameter="{Binding}"
-                                                             IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                                                             IsChecked="{Binding IsSelected, Mode=TwoWay}"
                                                              Content="{Binding Label}"
                                                              Style="{StaticResource HamburgerItemButtonStyle}">
                                                     <RadioButton.Tag>
@@ -270,7 +270,7 @@
                                                 <RadioButton GroupName="Nav" 
                                                              Command="{Binding ElementName=SplitView, Path=Tag}"
                                                              CommandParameter="{Binding}"
-                                                             IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                                                             IsChecked="{Binding IsSelected, Mode=TwoWay}"
                                                              Content="{Binding Label}"
                                                              Style="{StaticResource HamburgerItemButtonStyle}">
                                                     <RadioButton.Tag>

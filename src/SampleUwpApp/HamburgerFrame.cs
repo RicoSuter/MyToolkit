@@ -1,6 +1,5 @@
 using System.Linq;
 using MyToolkit.Paging;
-using SampleUwpApp.Views;
 
 namespace SampleUwpApp
 {
@@ -23,7 +22,9 @@ namespace SampleUwpApp
 
         private void FrameOnNavigated(object sender, MtNavigationEventArgs args)
         {
-            var currentItem = Hamburger.TopItems.FirstOrDefault(i => i.PageType == Frame.CurrentPage.Type);
+            var currentItem = Hamburger.TopItems
+                .FirstOrDefault(i => i.PageType == Frame.CurrentPage.Type); 
+
             Hamburger.CurrentItem = currentItem;
         }
 
