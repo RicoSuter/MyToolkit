@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using Windows.ApplicationModel.Activation;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Microsoft.ApplicationInsights;
 using MyToolkit.Paging;
@@ -12,6 +11,7 @@ namespace SampleUwpApp
     sealed partial class App : MtApplication
     {
         public static TelemetryClient TelemetryClient;
+        private HamburgerFrame _hamburgerFrame;
 
         public App()
         {
@@ -19,40 +19,47 @@ namespace SampleUwpApp
             InitializeComponent();
         }
 
-        public override Type StartPageType => typeof (MainPage);
+        public override Type StartPageType => typeof(MainPage);
 
         public override UIElement CreateWindowContentElement()
         {
-            var hamburger = new HamburgerShell();
-            hamburger.TopItems.Add(new HamburgerItem
+            _hamburgerFrame = new HamburgerFrame();
+            _hamburgerFrame.Hamburger.Header = new HamburgerHeader();
+            _hamburgerFrame.Hamburger.TopItems = new ObservableCollection<HamburgerItem>
             {
-                Label = "Home",
-                Icon = '\uE825'.ToString(),
-                PageType = typeof(MainPage)
-            });
-            hamburger.TopItems.Add(new HamburgerItem
+                new HamburgerItem
+                {
+                    Label = "Home",
+                    Icon = '\uE825'.ToString(),
+                    PageType = typeof(MainPage)
+                },
+                new HamburgerItem
+                {
+                    Label = "Test",
+                    Icon = '\uE825'.ToString(),
+                    PageType = typeof(TestPage)
+                }
+            };
+            _hamburgerFrame.Hamburger.BottomItems = new ObservableCollection<HamburgerItem>
             {
-                Label = "Test",
-                Icon = '\uE825'.ToString(),
-                PageType = typeof(TestPage)
-            });
-            hamburger.BottomItems.Add(new HamburgerItem
-            {
-                Label = "Settings",
-                Icon = '\uE825'.ToString(),
-                PageType = typeof(MainPage)
-            });
-            return hamburger;
+                new HamburgerItem
+                {
+                    Label = "Settings",
+                    Icon = '\uE825'.ToString(),
+                    PageType = typeof(SettingsPage)
+                }
+            };
+            return _hamburgerFrame.Hamburger;
         }
 
         public override MtFrame GetFrame(UIElement windowContentElement)
         {
-            return ((HamburgerShell)windowContentElement).Frame;
+            return _hamburgerFrame.Frame;
         }
 
-        public override Task OnInitializedAsync(MtFrame frame, ApplicationExecutionState args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            return base.OnInitializedAsync(frame, args);
+            base.OnLaunched(args);
         }
     }
 }
