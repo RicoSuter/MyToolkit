@@ -299,7 +299,7 @@
     <Compile Include="Resources\ResourceDictionary.cs" />
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="Paging\MtFrame.cs" />
-    <Compile Include="Storage\ApplicationSettingsEx.cs" />
+    <Compile Include="Storage\StorageApplicationSettings.cs" />
     <Compile Include="Storage\StorageFolderExtensions.cs" />
     <Compile Include="UI\VisibilityManager.cs" />
     <Compile Include="UI\PopupBase.cs" />
@@ -320,9 +320,10 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\generic.xaml">
+    <Page Include="..\Shared\Themes\WinRT\Generic.xaml">
+      <Link>Themes\Generic.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\Popups\ListPickerBox.xaml">
       <Generator>MSBuild:Compile</Generator>

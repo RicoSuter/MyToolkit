@@ -22,7 +22,7 @@ namespace SampleUwpApp
 
         private void FrameOnNavigated(object sender, MtNavigationEventArgs args)
         {
-            var currentItem = Hamburger.TopItems
+            var currentItem = Hamburger.TopItems.Concat(Hamburger.BottomItems)
                 .FirstOrDefault(i => i.PageType == Frame.CurrentPage.Type); 
 
             Hamburger.CurrentItem = currentItem;

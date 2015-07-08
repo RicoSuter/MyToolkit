@@ -106,6 +106,8 @@ namespace SampleUwpApp
         public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register(
             "IsPaneOpen", typeof (bool), typeof (Hamburger), new PropertyMetadata(default(bool)));
 
+        private bool _isChanging;
+
         public bool IsPaneOpen
         {
             get { return (bool) GetValue(IsPaneOpenProperty); }
@@ -119,12 +121,25 @@ namespace SampleUwpApp
             get { return _currentItem; }
             set
             {
+                if (_isChanging)
+                    return;
+
                 if (_currentItem != value)
                 {
                     _currentItem = value;
 
+                    _isChanging = true; 
+
                     foreach (var item in TopItems.Concat(BottomItems))
-                        item.IsSelected = item == CurrentItem;
+                        item.IsSelected = false;
+
+                    if (_currentItem != null)
+                    {
+                        foreach (var item in TopItems.Concat(BottomItems).Where(i => i == _currentItem))
+                            item.IsSelected = true;
+                    }
+
+                    _isChanging = false;
                 }
             }
         }
@@ -147,6 +162,9 @@ namespace SampleUwpApp
 
         private void RaiseItemChanged(HamburgerItem item)
         {
+            if (_isChanging)
+                return; 
+
             if (item != CurrentItem)
             {
                 CurrentItem = item;

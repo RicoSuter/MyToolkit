@@ -2,15 +2,39 @@
     x:Class="SampleUwpApp.Views.TestPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:SampleUwpApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:paging="using:MyToolkit.Paging"
+    xmlns:controls="using:MyToolkit.Controls"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Margin="12">
-            <TextBlock Text="Test" />
-        </StackPanel>
+        <controls:DataGrid Margin="12" 
+                           ItemsSource="{Binding People}" 
+                           SelectionMode="Multiple" 
+                           SelectedItem="{Binding SelectedPerson, Mode=TwoWay}"
+                           DefaultOrderIndex="1">
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Width="200" Header="Firstname" Binding="{Binding Firstname}"
+                                                 d:DataContext="{d:DesignInstance Type=models:Person}" />
+                    <controls:DataGridTextColumn Width="200" Binding="{Binding Lastname}" IsAscendingDefault="False"
+                                                 d:DataContext="{d:DesignInstance Type=models:Person}">
+                        <controls:DataGridTextColumn.Header>
+                            <TextBlock Text="Lastname" Foreground="Green" />
+                        </controls:DataGridTextColumn.Header>
+                    </controls:DataGridTextColumn>
+                    <controls:DataGridTextColumn Width="200" Header="Category" Binding="{Binding Category}" 
+                                                 d:DataContext="{d:DesignInstance Type=models:Person}" />
+                </controls:DataGrid.Columns>
+                <controls:DataGrid.ItemDetailsTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="8,8,8,4">
+                            <TextBlock Text="Details: " FontWeight="Bold" />
+                            <TextBlock Text="{Binding Firstname}" />
+                            <TextBlock Text="{Binding Lastname}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </controls:DataGrid.ItemDetailsTemplate>
+            </controls:DataGrid>
     </Grid>
 </paging:MtPage>

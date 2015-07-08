@@ -32,11 +32,11 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\build\Output\MyToolkit.Extended.WinRT\</OutputPath>
+    <OutputPath>..\..\build\Output\MyToolkit.Extended.UWP\</OutputPath>
     <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UAP;WINRT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\build\Output\MyToolkit.Extended.WinRT\MyToolkit.Extended.xml</DocumentationFile>
+    <DocumentationFile>..\..\build\Output\MyToolkit.Extended.UWP\MyToolkit.Extended.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <PlatformTarget>ARM</PlatformTarget>
@@ -362,7 +362,7 @@
     <Compile Include="Resources\ResourceDictionary.cs" />
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="Paging\MtFrame.cs" />
-    <Compile Include="Storage\ApplicationSettingsEx.cs" />
+    <Compile Include="Storage\StorageApplicationSettings.cs" />
     <Compile Include="Storage\StorageFolderExtensions.cs" />
     <Compile Include="UI\VisibilityManager.cs" />
     <Compile Include="UI\PopupBase.cs" />
@@ -380,9 +380,10 @@
     <Compile Include="Validation\ValidatedNotifyPropertyChanged.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\generic.xaml">
+    <Page Include="..\Shared\Themes\UWP\Generic.xaml">
+      <Link>Themes\Generic.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\Popups\ListPickerBox.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -405,6 +406,7 @@
       <Name>MyToolkit</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

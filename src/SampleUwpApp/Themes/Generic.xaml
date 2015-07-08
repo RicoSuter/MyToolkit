@@ -228,7 +228,7 @@
                                                VerticalAlignment="Center" HorizontalAlignment="Center" />
                                 </RadioButton.Tag>
                             </RadioButton>
-                            
+
                             <!-- Header -->
                             <Border Grid.Column="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                                 <ContentPresenter Content="{TemplateBinding Header}" 
@@ -245,6 +245,8 @@
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
+
+                                    <!-- Top items -->
                                     <ItemsControl ItemsSource="{TemplateBinding TopItems}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
@@ -264,6 +266,8 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
+
+                                    <!-- Bottom items -->
                                     <ItemsControl Grid.Row="1" ItemsSource="{TemplateBinding BottomItems}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>

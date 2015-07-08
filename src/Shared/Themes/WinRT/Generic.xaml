@@ -11,6 +11,7 @@
     <converters:LongListSelectorBackgroundConverter x:Key="LongListSelectorBackgroundConverter"/>
     <converters:ColorConverter x:Key="ColorConverter"/>
 
+    <!-- LongListSelector -->
     <Style TargetType="controls:LongListSelector">
         <Setter Property="ItemTemplate">
             <Setter.Value>
@@ -75,6 +76,7 @@
         </Setter>
     </Style>
 
+    <!-- WatermarkedTextBox -->
     <Style TargetType="controls:WatermarkedTextBox">
 		<Setter Property="Template">
 			<Setter.Value>
@@ -85,6 +87,7 @@
 		</Setter>
 	</Style>
 
+    <!-- ScrollableItemsControl -->
     <Style TargetType="controls:ScrollableItemsControl">
         <Setter Property="ItemsPanel">
             <Setter.Value>
@@ -104,6 +107,7 @@
         </Setter>
     </Style>
 
+    <!-- DataGrid -->
     <Style TargetType="controls:DataGrid">
         <Setter Property="HeaderBackground" Value="{StaticResource ListBoxItemDisabledForegroundThemeBrush}" />
 		<Setter Property="Template">
@@ -156,6 +160,7 @@
 		</Setter>
 	</Style>
     
+    <!-- ImageButton -->
 	<Style TargetType="controls:ImageButton">
 		<Setter Property="Template">
 			<Setter.Value>
@@ -171,6 +176,7 @@
 		</Setter>
 	</Style>
 
+    <!-- TransparentListBox -->
 	<Style x:Key="TransparentListBox" TargetType="ListBox">
 		<Setter Property="Foreground" Value="{StaticResource ListBoxForegroundThemeBrush}"/>
 		<Setter Property="Background" Value="Transparent"/>
@@ -235,6 +241,7 @@
 		</Setter>
 	</Style>
 
+    <!-- MtListBox -->
 	<Style TargetType="controls:MtListBox">
 		<Setter Property="Foreground" Value="{StaticResource ListBoxForegroundThemeBrush}"/>
 		<Setter Property="Background" Value="Transparent"/>
@@ -299,6 +306,7 @@
 		</Setter>
 	</Style>
 
+    <!-- MtPivot -->
 	<Style TargetType="controls:MtPivot">
         <Setter Property="SelectedBrush" Value="#FFFFFFFF" />
         <Setter Property="UnselectedBrush" Value="#7FFFFFFF" />
@@ -448,6 +456,7 @@
         </Setter>
     </Style>
 
+    <!-- FadingImage -->
     <Style TargetType="controls:FadingImage">
 		<Setter Property="Stretch" Value="UniformToFill" />
         <Setter Property="Template">
@@ -462,6 +471,7 @@
         </Setter>
     </Style>
 
+    <!-- MtFrame -->
     <Style TargetType="Paging:MtFrame">
         <Setter Property="Template">
             <Setter.Value>
@@ -474,6 +484,7 @@
         </Setter>
     </Style>
 
+    <!-- AppBarToggleButton -->
 	<Style TargetType="controls:AppBarToggleButton">
 		<Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}"/>
 		<Setter Property="VerticalAlignment" Value="Stretch"/>
@@ -623,6 +634,7 @@
 		</Setter>
 	</Style>
 
+    <!-- AppBarButton -->
 	<Style TargetType="controls:AppBarButton">
 		<Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}"/>
 		<Setter Property="VerticalAlignment" Value="Stretch"/>
@@ -761,6 +773,7 @@
 		</Setter>
 	</Style>
 
+    <!-- TextButton -->
 	<Style TargetType="controls:TextButton">
 		<Setter Property="Foreground" Value="{StaticResource AppBarItemForegroundThemeBrush}"/>
 		<Setter Property="VerticalAlignment" Value="Stretch"/>
@@ -897,6 +910,7 @@
 		</Setter>
 	</Style>
 
+    <!-- MenuListBox -->
     <Style TargetType="controls:MenuListBox">
         <Setter Property="Template">
             <Setter.Value>
@@ -947,6 +961,7 @@
         </Setter>
     </Style>
 
+    <!-- ColorChooser -->
 	<Style TargetType="controls:ColorChooser">
 		<Setter Property="Template">
 			<Setter.Value>
@@ -968,6 +983,7 @@
 		</Setter>
 	</Style>
 
+    <!-- PanAndZoomViewer -->
 	<Style TargetType="controls:PanAndZoomViewer">
 		<Setter Property="Template">
 			<Setter.Value>
@@ -982,6 +998,7 @@
 		</Setter>
 	</Style>
 
+    <!-- PanAndZoomImage -->
 	<Style TargetType="controls:PanAndZoomImage">
 		<Setter Property="Stretch" Value="UniformToFill"/>
 		<Setter Property="Background" Value="Gray" />
@@ -1006,6 +1023,7 @@
 		</Setter>
 	</Style>
 
+    <!-- SettingsBackButtonStyle -->
 	<Style x:Key="SettingsBackButtonStyle" TargetType="Button">
 		<Setter Property="MinWidth" Value="0"/>
 		<Setter Property="FontFamily" Value="Segoe UI Symbol"/>
