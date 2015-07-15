@@ -19,19 +19,16 @@ using System.Windows.Documents;
 namespace MyToolkit.Controls.Html.Generators
 {
     /// <summary>Generates the UI element for an EM HTML tag.</summary>
-    public class EmGenerator : SingleControlGenerator
+    public class EmGenerator : IControlGenerator
 	{
-        /// <summary>Creates a single UI element for the given HTML node and HTML view.</summary>
-        /// <param name="node">The node.</param>
-        /// <param name="htmlView">The HTML view.</param>
-        /// <returns>The UI element.</returns>
-        public override DependencyObject GenerateSingle(HtmlNode node, IHtmlView htmlView)
-		{
-            foreach (var child in node.GetChildControls(htmlView))
-			{
-				var element = child as TextElement;
-			    if (element != null)
-			    {
+        public DependencyObject[] CreateControls(HtmlNode node, IHtmlView htmlView)
+        {
+            var controls = node.GetChildControls(htmlView);
+            foreach (var leave in controls)
+            {
+                var element = leave as TextElement;
+                if (element != null)
+                {
 #if WINRT
                     element.FontStyle = FontStyle.Italic;
 #else
@@ -39,8 +36,7 @@ namespace MyToolkit.Controls.Html.Generators
 #endif
                 }
             }
-
-			return null; 
-		}
-	}
+            return controls;
+        }
+    }
 }

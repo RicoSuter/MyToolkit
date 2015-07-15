@@ -20,8 +20,8 @@ namespace MyToolkit.Controls.Html
 	{
         /// <summary>Creates the UI elements for the given HTML node and HTML view.</summary>
         /// <param name="node">The HTML node.</param>
-        /// <param name="textBlock">The HTML view.</param>
+        /// <param name="htmlView">The HTML view.</param>
         /// <returns>The UI elements.</returns>
-        DependencyObject[] CreateControls(HtmlNode node, IHtmlView textBlock);
+        DependencyObject[] CreateControls(HtmlNode node, IHtmlView htmlView);
 	}
 }

@@ -6,6 +6,7 @@
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -47,6 +48,7 @@ namespace MyToolkit.Controls.Html
             return list.ToArray();
         }
 
+        /// <exception cref="InvalidOperationException">Control generator returned null.</exception>
         public static DependencyObject[] GetControls(this HtmlNode node, IHtmlView textBlock)
         {
             if (node.Data == null)
@@ -57,7 +59,13 @@ namespace MyToolkit.Controls.Html
                     (textBlock.Generators.ContainsKey("unknown") ? textBlock.Generators["unknown"] : null);
 
                 if (generator != null)
+                {
                     node.Data = generator.CreateControls(node, textBlock);
+                    if (node.Data == null)
+                        throw new InvalidOperationException("Control generator for " + value + " returned null.");
+                }
+                else
+                    node.Data = new DependencyObject[] { };
             }
 
             return (DependencyObject[]) node.Data;

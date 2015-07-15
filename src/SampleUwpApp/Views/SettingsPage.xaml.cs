@@ -38,10 +38,10 @@ namespace SampleUwpApp.Views
 <p>
     Lorem ipsum <strong>dolor sit amet, consetetur sadipscing elitr, sed</strong> diam nonumy eirmod tempor invidunt ut labore 
     et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
-    Stet clita kasd gubergren, no <a href=""http://rsuter.com"">sea takimata sanctus est Lorem ipsum dolor 
+    Stet clita kasd gubergren, no <a href=""http://rsuter.com"">sea takimata <strong>sanctus est Lorem ipsum dolor</strong> 
     sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam</a> nonumy eirmod tempor invidunt ut 
     labore et dolore magna aliquyam erat, sed diam voluptua. <em>At vero eos et accusam et justo</em> duo dolores et ea 
-    rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    rebum. Stet <strong>clita kasd <a href=""#"">gubergren</a></strong>, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 </p>
 <h2>Heading 2</h2>
 <p>

@@ -64,7 +64,7 @@ namespace MyToolkit.Controls.Html.Generators
 #endif                
                 foreach (var child in node.Children)
                 {
-                    var leaves = child.GetChildControls(htmlView).ToArray();
+                    var leaves = child.GetControls(htmlView).ToArray();
                     if (leaves.Length > 0)
                     {
                         foreach (var item in leaves)

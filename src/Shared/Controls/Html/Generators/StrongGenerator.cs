@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using MyToolkit.Html;
 #if WINRT
 using Windows.UI.Text;
@@ -11,21 +13,18 @@ using System.Windows.Documents;
 namespace MyToolkit.Controls.Html.Generators
 {
     /// <summary>Generates the UI element for a strong/b element.</summary>
-	public class StrongGenerator : SingleControlGenerator
-	{
-        /// <summary>Creates a single UI element for the given HTML node and HTML view.</summary>
-        /// <param name="node">The node.</param>
-        /// <param name="htmlView">The HTML view.</param>
-        /// <returns>The UI element.</returns>
-        public override DependencyObject GenerateSingle(HtmlNode node, IHtmlView htmlView)
-		{
-            foreach (var leave in node.GetChildControls(htmlView))
-			{
-				var element = leave as TextElement;
-				if (element != null)
-					element.FontWeight = FontWeights.Bold;
-			}
-			return null;
-		}
-	}
+	public class StrongGenerator : IControlGenerator
+    {
+        public DependencyObject[] CreateControls(HtmlNode node, IHtmlView htmlView)
+        {
+            var controls = node.GetChildControls(htmlView); 
+            foreach (var leave in controls)
+            {
+                var element = leave as TextElement;
+                if (element != null)
+                    element.FontWeight = FontWeights.Bold;
+            }
+            return controls;
+        }
+    }
 }
