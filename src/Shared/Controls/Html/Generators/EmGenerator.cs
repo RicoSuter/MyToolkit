@@ -21,6 +21,10 @@ namespace MyToolkit.Controls.Html.Generators
     /// <summary>Generates the UI element for an EM HTML tag.</summary>
     public class EmGenerator : IControlGenerator
 	{
+        /// <summary>Creates the UI elements for the given HTML node and HTML view.</summary>
+        /// <param name="node">The HTML node.</param>
+        /// <param name="htmlView">The HTML view.</param>
+        /// <returns>The UI elements.</returns>
         public DependencyObject[] CreateControls(HtmlNode node, IHtmlView htmlView)
         {
             var controls = node.GetChildControls(htmlView);

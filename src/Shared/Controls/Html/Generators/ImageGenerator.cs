@@ -27,7 +27,7 @@ namespace MyToolkit.Controls.Html.Generators
         /// <param name="node">The node.</param>
         /// <param name="htmlView">The text block.</param>
         /// <returns>The UI element.</returns>
-        public override DependencyObject GenerateSingle(HtmlNode node, IHtmlView htmlView)
+        public override DependencyObject CreateControl(HtmlNode node, IHtmlView htmlView)
         {
             try
             {

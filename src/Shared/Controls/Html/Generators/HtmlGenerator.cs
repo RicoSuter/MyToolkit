@@ -28,12 +28,11 @@ namespace MyToolkit.Controls.Html.Generators
         /// <returns>The UI elements.</returns>
         public DependencyObject[] CreateControls(HtmlNode node, IHtmlView textBlock)
         {
-            var leaves = node.GetChildControls(textBlock).ToList();
+            var leaves = node.GetChildControls(textBlock);
+            if (leaves.Length == 1 && leaves[0] is Panel)
+                leaves = new[] { leaves[0] };
 
-            if (leaves.Count == 1 && leaves[0] is Panel)
-                leaves = new List<DependencyObject> { leaves[0] };
-
-            if (leaves.Count > 0)
+            if (leaves.Length > 0)
             {
                 var element = leaves.First() as FrameworkElement;
                 if (element != null)
@@ -44,7 +43,7 @@ namespace MyToolkit.Controls.Html.Generators
                     element.Margin = new Thickness(element.Margin.Left, element.Margin.Top, element.Margin.Right, 0);
             }
 
-            return leaves.ToArray();
+            return leaves;
         }
     }
 }

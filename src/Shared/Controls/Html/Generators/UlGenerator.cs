@@ -49,14 +49,8 @@ namespace MyToolkit.Controls.Html.Generators
 				grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(20)});
 				grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-				var textBlock = new TextBlock();
-				textBlock.Foreground = htmlView.Foreground;
-				textBlock.FontSize = htmlView.FontSize;
-				textBlock.FontFamily = htmlView.FontFamily;
-				textBlock.Margin = new Thickness();
-				textBlock.Text = BulletSymbol;
-
-				grid.Children.Add(textBlock);
+				var textBlock = CreateBulletSymbol(htmlView);
+                			    grid.Children.Add(textBlock);
 				Grid.SetColumn(textBlock, 0);
 
 				var panel = new StackPanel();
@@ -80,6 +74,17 @@ namespace MyToolkit.Controls.Html.Generators
 			AdjustMargins(htmlView, controls);
             return controls.OfType<DependencyObject>().ToArray();
 		}
+
+        private TextBlock CreateBulletSymbol(IHtmlView htmlView)
+        {
+            var textBlock = new TextBlock();
+            textBlock.Foreground = htmlView.Foreground;
+            textBlock.FontSize = htmlView.FontSize;
+            textBlock.FontFamily = htmlView.FontFamily;
+            textBlock.Margin = new Thickness();
+            textBlock.Text = BulletSymbol;
+            return textBlock;
+        }
 
         private void AdjustMargins(IHtmlView htmlView, List<Grid> controls)
         {

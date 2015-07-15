@@ -175,6 +175,19 @@ namespace MyToolkit.Controls
             set { SetValue(ShowFooterProperty, value); }
         }
 
+        /// <summary>Gets the generator for the tag name or creates a new one.</summary>
+        /// <typeparam name="TGenerator">The type of the generator.</typeparam>
+        /// <param name="tagName">Name of the tag.</param>
+        /// <returns>The generator.</returns>
+        public TGenerator GetGenerator<TGenerator>(string tagName)
+            where TGenerator : IControlGenerator, new()
+        {
+            if (Generators.ContainsKey(tagName))
+                return (TGenerator)Generators[tagName];
+            Generators[tagName] = new TGenerator();
+            return (TGenerator)Generators[tagName];
+        }
+
 #if WINRT
         /// <summary>Attaches a binding to a FrameworkElement, using the provided binding object.</summary>
         protected override void OnApplyTemplate()

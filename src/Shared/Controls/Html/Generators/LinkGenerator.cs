@@ -116,10 +116,20 @@ namespace MyToolkit.Controls.Html.Generators
         /// <returns>The action</returns>
         protected virtual Action CreateLinkAction(Hyperlink hyperlink, string link, IHtmlView textBlock)
         {
-            return () => Launcher.LaunchUriAsync(new Uri(link));
+            return async () =>
+            {
+                try
+                {
+                    await Launcher.LaunchUriAsync(new Uri(link));
+                }
+                catch
+                {
+                    // Ignore malformed URIs. 
+                }
+            };
         }
 
-#else
+#else // WP7SL/WP8SL
         
         /// <summary>Creates the action to open the link after the user clicked on it.</summary>
         /// <param name="hyperlink">The hyperlink.</param>

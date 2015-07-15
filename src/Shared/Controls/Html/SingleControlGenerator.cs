@@ -20,20 +20,21 @@ namespace MyToolkit.Controls.Html
 	{
         /// <summary>Creates the UI elements for the given HTML node and HTML view.</summary>
         /// <param name="node">The HTML node.</param>
-        /// <param name="textBlock">The HTML view.</param>
+        /// <param name="htmlView">The HTML view.</param>
         /// <returns>The UI elements.</returns>
-        public DependencyObject[] CreateControls(HtmlNode node, IHtmlView textBlock)
+        public DependencyObject[] CreateControls(HtmlNode node, IHtmlView htmlView)
 		{
-			var ctrl = GenerateSingle(node, textBlock);
-			if (ctrl != null)
-				return new [] { ctrl };
-			return null; 
-		}
+			var control = CreateControl(node, htmlView);
+			if (control != null)
+				return new [] { control };
+
+            return new DependencyObject[] { };
+        }
 
         /// <summary>Creates a single UI element for the given HTML node and HTML view.</summary>
         /// <param name="node">The node.</param>
         /// <param name="htmlView">The HTML view.</param>
         /// <returns>The UI element.</returns>
-        public abstract DependencyObject GenerateSingle(HtmlNode node, IHtmlView htmlView);
+        public abstract DependencyObject CreateControl(HtmlNode node, IHtmlView htmlView);
 	}
 }
