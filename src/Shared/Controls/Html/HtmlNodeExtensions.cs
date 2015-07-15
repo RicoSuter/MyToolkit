@@ -19,7 +19,7 @@ using System.Windows;
 
 namespace MyToolkit.Controls.Html
 {
-    internal static class HtmlNodeExtensions
+    public static class HtmlNodeExtensions
     {
         public static void WrapWithHtmlTag(this HtmlNode node)
         {
