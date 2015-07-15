@@ -8,7 +8,7 @@
 
 using System;
 using System.Collections.Generic;
-using MyToolkit.Controls.HtmlTextBlockImplementation;
+using MyToolkit.Controls.Html;
 using MyToolkit.Mvvm;
 using MyToolkit.Utilities;
 #if WINRT
@@ -25,21 +25,38 @@ using MyToolkit.UI;
 
 namespace MyToolkit.Controls
 {
-    /// <summary>Renders HTML using native XAML controls in a scrollbar; use the control 
-    /// <see cref="FixedHtmlTextBlock"/> to render the HTML content without a <see cref="ScrollViewer"/>. </summary>
-    public class HtmlTextBlock : ScrollableItemsControl, IHtmlTextBlock
+    /// <summary>Renders HTML using native XAML controls in a scrollbar; use the control <see cref="HtmlView"/> 
+    /// to render the HTML content without a <see cref="ScrollViewer"/>. </summary>
+    public class ScrollableHtmlView : ScrollableItemsControl, IHtmlView
     {
         private bool _isLoaded = false;
 
         private ContentPresenter _headerPresenter;
         private ContentPresenter _footerPresenter;
 
-        private readonly IDictionary<string, IControlGenerator> _generators = HtmlParser.GetDefaultGenerators();
+        private readonly IDictionary<string, IControlGenerator> _generators;
 
-        /// <summary>Initializes a new instance of the <see cref="HtmlTextBlock"/> class. </summary>
-        public HtmlTextBlock()
+        /// <summary>Initializes a new instance of the <see cref="ScrollableHtmlView"/> class. </summary>
+        public ScrollableHtmlView()
         {
-#if !WINRT
+            _generators = HtmlViewHelper.GetDefaultGenerators(this);
+
+#if WINDOWS_UAP
+
+            InnerMargin = new Thickness(0, 0, 12, 0);
+
+            FontSize = (double)Resources["ControlContentThemeFontSize"];
+            Foreground = (Brush)Resources["ApplicationForegroundThemeBrush"];
+
+#elif WINRT
+
+            InnerMargin = new Thickness(0, 0, 20, 0);
+
+            FontSize = (double)Resources["ControlContentThemeFontSize"];
+            Foreground = (Brush)Resources["ApplicationForegroundThemeBrush"];
+
+#else
+
 			InnerMargin = new Thickness(24, 0, 24, 0);
 
 			if (Resources.Contains("PhoneFontSizeNormal"))
@@ -47,11 +64,7 @@ namespace MyToolkit.Controls
 
             if (Resources.Contains("PhoneForegroundBrush"))
                 Foreground = (Brush)Resources["PhoneForegroundBrush"];
-#else
-            InnerMargin = new Thickness(0, 0, 20, 0);
 
-            FontSize = (double)Resources["ControlContentThemeFontSize"];
-            Foreground = (Brush)Resources["ApplicationForegroundThemeBrush"];
 #endif
 
             Margin = new Thickness(0);
@@ -78,22 +91,27 @@ namespace MyToolkit.Controls
         public event EventHandler<EventArgs> HtmlLoaded;
 
         public static readonly DependencyProperty HtmlProperty =
-            DependencyProperty.Register("Html", typeof(String), typeof(HtmlTextBlock), new PropertyMetadata(default(String),
-                (obj, e) => ((HtmlTextBlock)obj).Generate()));
+            DependencyProperty.Register("Html", typeof(string), typeof(ScrollableHtmlView), new PropertyMetadata(default(string),
+                (obj, e) => ((ScrollableHtmlView)obj).Generate()));
 
         /// <summary>Gets or sets the HTML content to display. </summary>
-        public String Html
+        public string Html
         {
-            get { return (String)GetValue(HtmlProperty); }
+            get { return (string)GetValue(HtmlProperty); }
             set { SetValue(HtmlProperty, value); }
         }
 
 #if !WINRT
 		public static readonly DependencyProperty ParagraphMarginProperty =
-			DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(HtmlTextBlock), new PropertyMetadata(6));
+			DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(ScrollableHtmlView), new PropertyMetadata(6));
+#else
+#if WINDOWS_UAP
+        public static readonly DependencyProperty ParagraphMarginProperty =
+            DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(ScrollableHtmlView), new PropertyMetadata(6));
 #else
         public static readonly DependencyProperty ParagraphMarginProperty =
-            DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(HtmlTextBlock), new PropertyMetadata(10));
+            DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(ScrollableHtmlView), new PropertyMetadata(10));
+#endif
 #endif
 
         /// <summary>Gets or sets the margin for paragraphs (added at the bottom of the element). </summary>
@@ -104,7 +122,7 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty HtmlBaseUriProperty =
-            DependencyProperty.Register("HtmlBaseUri", typeof(Uri), typeof(HtmlTextBlock), new PropertyMetadata(default(Uri)));
+            DependencyProperty.Register("HtmlBaseUri", typeof(Uri), typeof(ScrollableHtmlView), new PropertyMetadata(default(Uri)));
 
         /// <summary>Gets or sets the base URI which is used to resolve relative URIs. </summary>
         public Uri HtmlBaseUri
@@ -114,8 +132,8 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty HeaderTemplateProperty =
-            DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(HtmlTextBlock), new PropertyMetadata(default(DataTemplate),
-                (d, e) => ((HtmlTextBlock)d).UpdateHeader()));
+            DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(ScrollableHtmlView), new PropertyMetadata(default(DataTemplate),
+                (d, e) => ((ScrollableHtmlView)d).UpdateHeader()));
 
         /// <summary>Gets or sets the header template. </summary>
         public DataTemplate HeaderTemplate
@@ -125,8 +143,8 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty ShowHeaderProperty =
-            DependencyProperty.Register("ShowHeader", typeof(bool), typeof(HtmlTextBlock),
-            new PropertyMetadata(true, (d, e) => ((HtmlTextBlock)d).UpdateShowHeader()));
+            DependencyProperty.Register("ShowHeader", typeof(bool), typeof(ScrollableHtmlView),
+            new PropertyMetadata(true, (d, e) => ((ScrollableHtmlView)d).UpdateShowHeader()));
 
         /// <summary>Gets or sets a value indicating whether the header should be shown. </summary>
         public bool ShowHeader
@@ -136,8 +154,8 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty FooterTemplateProperty =
-            DependencyProperty.Register("FooterTemplate", typeof(DataTemplate), typeof(HtmlTextBlock),
-            new PropertyMetadata(default(DataTemplate), (d, e) => ((HtmlTextBlock)d).UpdateFooter()));
+            DependencyProperty.Register("FooterTemplate", typeof(DataTemplate), typeof(ScrollableHtmlView),
+            new PropertyMetadata(default(DataTemplate), (d, e) => ((ScrollableHtmlView)d).UpdateFooter()));
 
         /// <summary>Gets or sets the footer template. </summary>
         public DataTemplate FooterTemplate
@@ -147,8 +165,8 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty ShowFooterProperty =
-            DependencyProperty.Register("ShowFooter", typeof(bool), typeof(HtmlTextBlock),
-            new PropertyMetadata(true, (d, e) => ((HtmlTextBlock)d).UpdateShowFooter()));
+            DependencyProperty.Register("ShowFooter", typeof(bool), typeof(ScrollableHtmlView),
+            new PropertyMetadata(true, (d, e) => ((ScrollableHtmlView)d).UpdateShowFooter()));
 
         /// <summary>Gets or sets a value indicating whether the footer should be shown. </summary>
         public bool ShowFooter
@@ -157,10 +175,12 @@ namespace MyToolkit.Controls
             set { SetValue(ShowFooterProperty, value); }
         }
 
-#if !WINRT
-		public override void OnApplyTemplate()
-#else
+#if WINRT
+        /// <summary>Attaches a binding to a FrameworkElement, using the provided binding object.</summary>
         protected override void OnApplyTemplate()
+#else
+        /// <summary>Attaches a binding to a FrameworkElement, using the provided binding object.</summary>
+		public override void OnApplyTemplate()
 #endif
         {
             base.OnApplyTemplate();
@@ -244,7 +264,7 @@ namespace MyToolkit.Controls
                 _footerPresenter.Visibility = ShowFooter && FooterTemplate != null ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        internal void CallHtmlLoaded()
+        internal void OnHtmlLoaded()
         {
             var copy = HtmlLoaded;
             if (copy != null)
@@ -256,5 +276,10 @@ namespace MyToolkit.Controls
             foreach (var control in SizeDependentControls)
                 control.Update(ActualWidth);
         }
+    }
+
+    [Obsolete("Use ScrollableHtmlView instead. 7/14/2015")]
+    public class HtmlTextBlock : ScrollableHtmlView
+    {
     }
 }

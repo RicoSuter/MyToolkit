@@ -48,6 +48,57 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Shared\Controls\Html\Generators\EmGenerator.cs">
+      <Link>Controls\Html\Generators\EmGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\Generators\EmptyGenerator.cs">
+      <Link>Controls\Html\Generators\EmptyGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\Generators\HtmlGenerator.cs">
+      <Link>Controls\Html\Generators\HtmlGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\Generators\ImageGenerator.cs">
+      <Link>Controls\Html\Generators\ImageGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\Generators\LinkGenerator.cs">
+      <Link>Controls\Html\Generators\LinkGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\Generators\ParagraphGenerator.cs">
+      <Link>Controls\Html\Generators\ParagraphGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\Generators\StrongGenerator.cs">
+      <Link>Controls\Html\Generators\StrongGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\Generators\TextGenerator.cs">
+      <Link>Controls\Html\Generators\TextGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\Generators\UlGenerator.cs">
+      <Link>Controls\Html\Generators\UlGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\HtmlNodeExtensions.cs">
+      <Link>Controls\Html\HtmlNodeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\HtmlView.cs">
+      <Link>Controls\Html\HtmlView.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\HtmlViewHelper.cs">
+      <Link>Controls\Html\HtmlViewHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\IControlGenerator.cs">
+      <Link>Controls\Html\IControlGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\IHtmlView.cs">
+      <Link>Controls\Html\IHtmlView.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\ISizeDependentControl.cs">
+      <Link>Controls\Html\ISizeDependentControl.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\ScrollableHtmlView.cs">
+      <Link>Controls\Html\ScrollableHtmlView.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Controls\Html\SingleControlGenerator.cs">
+      <Link>Controls\Html\SingleControlGenerator.cs</Link>
+    </Compile>
     <Compile Include="..\Shared\Controls\MtListBox.cs">
       <Link>Controls\MtListBox.cs</Link>
     </Compile>
@@ -56,63 +107,6 @@
     </Compile>
     <Compile Include="..\Shared\Controls\ScrollableItemsControl.cs">
       <Link>Controls\ScrollableItemsControl.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\FixedHtmlTextBlock.cs">
-      <Link>Controls\FixedHtmlTextBlock.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlock.cs">
-      <Link>Controls\HtmlTextBlock.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\EmGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\EmGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\EmptyGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\EmptyGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\HtmlGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\HtmlGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\ImageBlock.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\ImageBlock.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\ImageGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\ImageGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\LinkGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\LinkGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\ParagraphGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\ParagraphGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\StrongGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\StrongGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\TextGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\TextGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\Generators\UlGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\Generators\UlGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\HtmlNode.cs">
-      <Link>Controls\HtmlTextBlockImplementation\HtmlNode.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\HtmlParser.cs">
-      <Link>Controls\HtmlTextBlockImplementation\HtmlParser.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\HtmlTextBlockHelper.cs">
-      <Link>Controls\HtmlTextBlockImplementation\HtmlTextBlockHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\IControlGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\IControlGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\IHtmlTextBlock.cs">
-      <Link>Controls\HtmlTextBlockImplementation\IHtmlTextBlock.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\ISizeDependentControl.cs">
-      <Link>Controls\HtmlTextBlockImplementation\ISizeDependentControl.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\HtmlTextBlockImplementation\SingleControlGenerator.cs">
-      <Link>Controls\HtmlTextBlockImplementation\SingleControlGenerator.cs</Link>
     </Compile>
     <Compile Include="..\Shared\Controls\NavigationListEventArgs.cs">
       <Link>Controls\NavigationListEventArgs.cs</Link>

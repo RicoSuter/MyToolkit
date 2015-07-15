@@ -95,8 +95,10 @@ namespace MyToolkit.Controls
         }
 
 #if WINRT
+        /// <summary>Attaches a binding to a FrameworkElement, using the provided binding object.</summary>
         protected override void OnApplyTemplate()
 #else
+        /// <summary>Attaches a binding to a FrameworkElement, using the provided binding object.</summary>
         public override void OnApplyTemplate()
 #endif
         {

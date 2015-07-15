@@ -109,8 +109,10 @@ namespace MyToolkit.Paging
         }
         
 #if WINDOWS_UAP
-        /// <summary>Gets or sets a value indicating whether the back button is automatically shown and hidden by the frame.</summary>
+
+        /// <summary>Gets or sets a value indicating whether the back button is automatically shown and hidden by the frame (default: true).</summary>
         public bool AutomaticBackButtonHandling { get; set; }
+
 #endif
 
         /// <summary>Gets a value indicating whether the first/root page is visible. </summary>

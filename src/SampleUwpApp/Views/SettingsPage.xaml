@@ -6,11 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:paging="using:MyToolkit.Paging"
+    xmlns:ui="using:MyToolkit.UI"
+    xmlns:controls="using:MyToolkit.Controls"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Margin="12">
+        <!--<StackPanel Margin="12">
             <TextBlock Text="Settings" />
-        </StackPanel>
+            <TimePicker />
+            
+            <Border Width="50" Height="50" Background="Red" ui:TiltEffect.IsTiltEnabled="True" />
+        </StackPanel>-->
+        
+        <controls:ScrollableHtmlView x:Name="Html" InnerMargin="12" />
     </Grid>
 </paging:MtPage>

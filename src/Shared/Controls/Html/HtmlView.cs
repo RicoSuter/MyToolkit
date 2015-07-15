@@ -8,7 +8,7 @@
 
 using System;
 using System.Collections.Generic;
-using MyToolkit.Controls.HtmlTextBlockImplementation;
+using MyToolkit.Controls.Html;
 
 #if WINRT
 using Windows.UI.Xaml;
@@ -22,15 +22,17 @@ using System.Windows.Controls;
 
 namespace MyToolkit.Controls
 {
-    /// <summary>Renders HTML using native XAML controls without a scrollbar; use the control 
-    /// <see cref="HtmlTextBlock"/> to render the HTML content in a <see cref="ScrollViewer"/>. </summary>
-    public class FixedHtmlTextBlock : ItemsControl, IHtmlTextBlock
+    /// <summary>Renders HTML using native XAML controls without a scrollbar; use the  <see cref="ScrollableHtmlView"/> 
+    /// control to render the HTML content in a <see cref="ScrollViewer"/>. </summary>
+    public class HtmlView : ItemsControl, IHtmlView
     {
-        private readonly IDictionary<string, IControlGenerator> _generators = HtmlParser.GetDefaultGenerators();
+        private readonly IDictionary<string, IControlGenerator> _generators;
 
-        /// <summary>Initializes a new instance of the <see cref="FixedHtmlTextBlock"/> class. </summary>
-        public FixedHtmlTextBlock()
+        /// <summary>Initializes a new instance of the <see cref="HtmlView"/> class. </summary>
+        public HtmlView()
         {
+            _generators = HtmlViewHelper.GetDefaultGenerators(this);
+
 #if !WINRT
 			if (Resources.Contains("PhoneFontSizeNormal"))
 				FontSize = (double)Resources["PhoneFontSizeNormal"];
@@ -40,7 +42,7 @@ namespace MyToolkit.Controls
 
 			Margin = new Thickness(12, 0, 12, 0);
 #else
-            FontSize = (double)Resources["ControlContentThemeFontSize"];
+            FontSize = (double)Resources["ContentControlFontSize"];
             Foreground = (Brush)Resources["ApplicationForegroundThemeBrush"];
 #endif
 
@@ -55,13 +57,13 @@ namespace MyToolkit.Controls
         public List<ISizeDependentControl> SizeDependentControls { get; private set; }
 
         public static readonly DependencyProperty HtmlProperty =
-            DependencyProperty.Register("Html", typeof(String), typeof(FixedHtmlTextBlock), new PropertyMetadata(default(String),
-                (obj, e) => ((FixedHtmlTextBlock)obj).Generate()));
+            DependencyProperty.Register("Html", typeof(string), typeof(HtmlView), new PropertyMetadata(default(string), 
+                (obj, e) => ((HtmlView)obj).Generate()));
 
         /// <summary>Gets or sets the HTML content to display. </summary>
-        public String Html
+        public string Html
         {
-            get { return (String)GetValue(HtmlProperty); }
+            get { return (string)GetValue(HtmlProperty); }
             set { SetValue(HtmlProperty, value); }
         }
 
@@ -70,10 +72,10 @@ namespace MyToolkit.Controls
 
 #if !WINRT
 		public static readonly DependencyProperty ParagraphMarginProperty =
-			DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(FixedHtmlTextBlock), new PropertyMetadata(6));
+			DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(HtmlView), new PropertyMetadata(6));
 #else
         public static readonly DependencyProperty ParagraphMarginProperty =
-            DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(FixedHtmlTextBlock), new PropertyMetadata(10));
+            DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(HtmlView), new PropertyMetadata(10));
 #endif
 
         /// <summary>Gets or sets the margin for paragraphs (added at the bottom of the element). </summary>
@@ -84,7 +86,7 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty BaseUriProperty =
-            DependencyProperty.Register("HtmlBaseUri", typeof(Uri), typeof(FixedHtmlTextBlock), new PropertyMetadata(default(Uri)));
+            DependencyProperty.Register("HtmlBaseUri", typeof(Uri), typeof(HtmlView), new PropertyMetadata(default(Uri)));
 
         /// <summary>Gets or sets the base URI which is used to resolve relative URIs. </summary>
         public Uri HtmlBaseUri
@@ -94,7 +96,7 @@ namespace MyToolkit.Controls
         }
 
         /// <summary>Calls the <see cref="HtmlLoaded"/> event. </summary>
-        internal void CallHtmlLoaded()
+        internal void OnHtmlLoaded()
         {
             var copy = HtmlLoaded;
             if (copy != null)
@@ -106,5 +108,10 @@ namespace MyToolkit.Controls
             foreach (var ctrl in SizeDependentControls)
                 ctrl.Update(ActualWidth);
         }
+    }
+
+    [Obsolete("Use HtmlView instead. 7/14/2015")]
+    public class FixedHtmlTextBlock : HtmlView
+    {
     }
 }

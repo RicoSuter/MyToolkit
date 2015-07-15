@@ -162,6 +162,10 @@
     <Compile Include="Composition\ImportManyAttribute.cs" />
     <Compile Include="Composition\IServiceLocator.cs" />
     <Compile Include="Composition\ServiceLocator.cs" />
+    <Compile Include="Html\HtmlNode.cs" />
+    <Compile Include="Html\HtmlParser.cs" />
+    <Compile Include="Html\HtmlTagNode.cs" />
+    <Compile Include="Html\HtmlTextNode.cs" />
     <Compile Include="IO\Utf8StringWriter.cs" />
     <Compile Include="Messaging\CallbackMessage.cs" />
     <Compile Include="Messaging\GoBackMessage.cs" />

@@ -79,6 +79,12 @@ Clone or download the [source code](https://github.com/MyToolkit/Core/tree/maste
 
 ![](https://rawgit.com/MyToolkit/Core/master/docs/SampleWindowsStoreApp.png)
 
+## How to build the library
+
+You need the Windows Phone 8.0 SDK to build the WP7SL project: 
+
+https://www.microsoft.com/en-us/download/confirmation.aspx?id=35471
+
 ## Projects which use MyToolkit libraries
 
 List with some sample projects which use the MyToolkit libraries: 

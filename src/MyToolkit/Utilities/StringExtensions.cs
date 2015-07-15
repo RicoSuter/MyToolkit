@@ -192,8 +192,9 @@ namespace MyToolkit.Utilities
         /// <returns>The transformed string. </returns>
         public static string RemoveHtmlWhitespaces(this string html)
         {
-            html = new Regex(@"\n\s+").Replace(html, string.Empty);
-            html = new Regex(@">\s+<").Replace(html, "> <");
+            html = new Regex(@"\n\s+").Replace(html, " ");
+            html = html.Replace("\n", " ").Replace("\r", "");
+            html = new Regex(@">(\s|\t)+<").Replace(html, "><");
             return html;
         }
 

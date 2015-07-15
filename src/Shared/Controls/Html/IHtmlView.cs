@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IHtmlTextBlock.cs" company="MyToolkit">
+// <copyright file="IHtmlView.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
 // <license>http://mytoolkit.codeplex.com/license</license>
@@ -15,10 +15,10 @@ using Windows.UI.Xaml.Media;
 using System.Windows.Media;
 #endif
 
-namespace MyToolkit.Controls.HtmlTextBlockImplementation
+namespace MyToolkit.Controls.Html
 {
     /// <summary>Describes the interface of a HTML rendering control. </summary>
-	public interface IHtmlTextBlock
+	public interface IHtmlView
 	{
         /// <summary>Gets or sets the HTML content to display. </summary>
         string Html { get; }

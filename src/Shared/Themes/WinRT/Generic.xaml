@@ -99,7 +99,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ItemsControl">
-                    <ScrollViewer x:Name="ScrollViewer">
+                    <ScrollViewer x:Name="ScrollViewer" ZoomMode="Disabled">
                         <ItemsPresenter />
                     </ScrollViewer>
                 </ControlTemplate>
