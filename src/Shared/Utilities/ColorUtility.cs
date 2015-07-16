@@ -8,7 +8,6 @@
 
 using System;
 using System.Globalization;
-
 #if !WINRT
 using System.Windows.Media;
 #else
