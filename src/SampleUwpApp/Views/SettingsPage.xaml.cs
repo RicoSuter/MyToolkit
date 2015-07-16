@@ -31,7 +31,7 @@ namespace SampleUwpApp.Views
             Html.GetGenerator<ParagraphGenerator>("h1").Foreground = new SolidColorBrush(Colors.DarkBlue);
             Html.GetGenerator<LinkGenerator>("a").Foreground = new SolidColorBrush(Colors.DarkGreen);
 
-            Html.Html =
+            var html =
 @"<h1>Heading 1</h1>
 <h2>Heading 2</h2>
 <p>
@@ -55,10 +55,14 @@ namespace SampleUwpApp.Views
     Stet clita kasd gubergren.
 </p>
 <ul>
-    <li>Item1</li>
-    <li>Item2</li>
-    <li>Item3</li>
-    <li>Item4</li>
+    <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore 
+    et dolore magna aliquyam erat</li>
+    <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore 
+    et dolore magna aliquyam erat</li>
+    <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore 
+    et dolore magna aliquyam erat</li>
+    <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore 
+    et dolore magna aliquyam erat</li>
 </ul>
 <p>
     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore 
@@ -105,6 +109,8 @@ namespace SampleUwpApp.Views
     Stet clita kasd gubergren.
 </p>
 ";
+
+            Html.Html = html + html + html + html;
         }
     }
 }

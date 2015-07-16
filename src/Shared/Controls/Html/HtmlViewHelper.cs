@@ -110,7 +110,10 @@ namespace MyToolkit.Controls.Html
                         if (scrollableHtmlView != null)
                             scrollableHtmlView.UpdateFooter();
                     }
-                    catch { }
+                    catch
+                    {
+                        
+                    }
                 }
 
                 if (htmlView is ScrollableHtmlView)

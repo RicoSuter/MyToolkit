@@ -120,11 +120,11 @@ namespace MyToolkit.Networking
                             HttpStatusCode = result.HttpStatusCode
                         };
                 }
-                catch (Exception ex)
+                catch (Exception exception)
                 {
                     if (result.Exception == null)
                     {
-                        result.Exception = ex;
+                        result.Exception = exception;
                         throw;
                     }
                 }
@@ -136,6 +136,7 @@ namespace MyToolkit.Networking
 
                 if (result.Exception != null)
                     throw result.Exception;
+
                 return result;
             }
         }

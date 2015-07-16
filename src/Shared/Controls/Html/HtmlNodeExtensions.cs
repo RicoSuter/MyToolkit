@@ -62,7 +62,7 @@ namespace MyToolkit.Controls.Html
                 {
                     node.Data = generator.CreateControls(node, textBlock);
                     if (node.Data == null)
-                        throw new InvalidOperationException("Control generator for " + value + " returned null.");
+                        node.Data = new DependencyObject[] { };
                 }
                 else
                     node.Data = new DependencyObject[] { };

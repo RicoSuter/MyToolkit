@@ -80,6 +80,7 @@ namespace MyToolkit.Html
                 html = "";
 
             html = html.RemoveHtmlWhitespaces();
+            html = html.RemoveHtmlComments();
             html = html.ConvertUtf8Characters();
             html = html.ConvertHtmlCharacters();
 

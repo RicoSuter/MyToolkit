@@ -12,6 +12,7 @@
         <StackPanel Margin="12">
             <TextBlock Text="Test" x:Name="Test" />
             <Button Content="Go" Click="ButtonBase_OnClick"></Button>
+            <TextBox x:Name="MyTextBox" />
         </StackPanel>
     </Grid>
 </paging:MtPage>

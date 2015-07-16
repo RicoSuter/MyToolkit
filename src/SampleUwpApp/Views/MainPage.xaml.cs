@@ -1,4 +1,5 @@
 ﻿using Windows.UI.Xaml;
+using MyToolkit.Paging;
 
 namespace SampleUwpApp.Views
 {
@@ -19,6 +20,16 @@ namespace SampleUwpApp.Views
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof (MainPage));
+        }
+
+        protected override void OnSaveState(MtSaveStateEventArgs pageState)
+        {
+            pageState.Set("MyTextBox", MyTextBox.Text);
+        }
+
+        protected override void OnLoadState(MtLoadStateEventArgs pageState)
+        {
+            MyTextBox.Text = pageState.Get<string>("MyTextBox");
         }
     }
 }

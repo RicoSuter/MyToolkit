@@ -193,9 +193,18 @@ namespace MyToolkit.Utilities
         public static string RemoveHtmlWhitespaces(this string html)
         {
             html = new Regex(@"\n\s+").Replace(html, " ");
+            html = new Regex(@"<br />\s+").Replace(html, "<br />");
             html = html.Replace("\n", " ").Replace("\r", "");
             html = new Regex(@">(\s|\t)+<").Replace(html, "><");
             return html;
+        }
+
+        /// <summary>Removes the HTML comments from the given HTML.</summary>
+        /// <param name="html">The HTML.</param>
+        /// <returns>The HTML without comments.</returns>
+        public static string RemoveHtmlComments(this string html)
+        {
+            return new Regex(@"<!--(.*?)-->").Replace(html, string.Empty);
         }
 
         /// <summary>Truncates a string without chopping whole words. </summary>
