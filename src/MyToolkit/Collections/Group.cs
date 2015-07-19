@@ -18,7 +18,7 @@ namespace MyToolkit.Collections
         string Title { get; }
     }
 
-    /// <summary>An group implementation with a title and a list of items. </summary>
+    /// <summary>A group implementation with a title and a list of items. </summary>
     /// <typeparam name="T">The item type. </typeparam>
     public class Group<T> : ObservableCollection<T>, IGroup
     {

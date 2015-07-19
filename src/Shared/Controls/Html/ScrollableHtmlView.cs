@@ -76,6 +76,7 @@ namespace MyToolkit.Controls
             DependencyPropertyChangedEvent.Register(this, FontFamilyProperty, delegate { this.Generate(); });
             DependencyPropertyChangedEvent.Register(this, ForegroundProperty, delegate { this.Generate(); });
             DependencyPropertyChangedEvent.Register(this, BackgroundProperty, delegate { this.Generate(); });
+            DependencyPropertyChangedEvent.Register(this, InnerMaxWidthProperty, delegate { this.Generate(); });
         }
 
         /// <summary>Gets the list of HTML element generators. </summary>
@@ -162,6 +163,16 @@ namespace MyToolkit.Controls
         {
             get { return (DataTemplate)GetValue(FooterTemplateProperty); }
             set { SetValue(FooterTemplateProperty, value); }
+        }
+
+        public static readonly DependencyProperty InnerMaxWidthProperty = DependencyProperty.Register(
+            "InnerMaxWidth", typeof (double), typeof (ScrollableHtmlView), new PropertyMetadata(default(double)));
+
+        /// <summary>Gets or sets the maximum width of the elements in the scroll viewer.</summary>
+        public double InnerMaxWidth
+        {
+            get { return (double) GetValue(InnerMaxWidthProperty); }
+            set { SetValue(InnerMaxWidthProperty, value); }
         }
 
         public static readonly DependencyProperty ShowFooterProperty =

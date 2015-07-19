@@ -294,6 +294,7 @@
     <Compile Include="Controls\DataGridTemplatedCell.cs" />
     <Compile Include="Controls\DataGridTemplatedColumn.cs" />
     <Compile Include="Controls\DefaultDataGridCell.cs" />
+    <Compile Include="Controls\ItemsWrapGridExtensions.cs" />
     <Compile Include="Controls\MtGridView.cs" />
     <Compile Include="Controls\GenericDataTemplateSelector.cs" />
     <Compile Include="Controls\HorizontalHtmlGenerator.cs" />

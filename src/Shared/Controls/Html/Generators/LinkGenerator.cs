@@ -39,12 +39,6 @@ namespace MyToolkit.Controls.Html.Generators
         /// <summary>Gets or sets the text foreground brush (default: blue).</summary>
         public Brush Foreground { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="LinkGenerator"/> class.</summary>
-        public LinkGenerator()
-        {
-            Foreground = new SolidColorBrush(Colors.Blue);
-        }
-
         /// <summary>Creates the UI elements for the given HTML node and HTML view.</summary>
         /// <param name="node">The HTML node.</param>
         /// <param name="htmlView">The HTML view.</param>
@@ -54,9 +48,10 @@ namespace MyToolkit.Controls.Html.Generators
             try
             {
                 var link = node.Attributes["href"];
-
                 var hyperlink = new Hyperlink();
-                hyperlink.Foreground = Foreground;
+
+                if (Foreground != null)
+                    hyperlink.Foreground = Foreground;
 
 #if !WINRT
                 hyperlink.MouseOverForeground = htmlView.Foreground;

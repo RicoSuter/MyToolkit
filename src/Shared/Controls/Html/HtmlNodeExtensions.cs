@@ -65,7 +65,7 @@ namespace MyToolkit.Controls.Html
                         node.Data = new DependencyObject[] { };
                 }
                 else
-                    node.Data = new DependencyObject[] { };
+                    node.Data = node.GetChildControls(textBlock);
             }
 
             return (DependencyObject[]) node.Data;

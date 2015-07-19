@@ -32,7 +32,10 @@ namespace MyToolkit.Controls.Html
         public static Dictionary<string, IControlGenerator> GetDefaultGenerators(FrameworkElement view)
         {
             var list = new Dictionary<string, IControlGenerator>();
+
             list.Add("p", new ParagraphGenerator());
+            list.Add("div", new ParagraphGenerator());
+            list.Add("blockquote", new ParagraphGenerator());
             list.Add("h1", new ParagraphGenerator { FontSize = 1.6 });
             list.Add("h2", new ParagraphGenerator { FontSize = 1.4 });
             list.Add("h3", new ParagraphGenerator { FontSize = 1.2 });
@@ -105,7 +108,12 @@ namespace MyToolkit.Controls.Html
                             scrollableHtmlView.UpdateHeader();
 
                         foreach (var control in node.GetControls(htmlView))
+                        {
+                            if (scrollableHtmlView != null && scrollableHtmlView.InnerMaxWidth != 0)
+                                ((FrameworkElement)control).MaxWidth = scrollableHtmlView.InnerMaxWidth;
+
                             itemsControl.Items.Add(control);
+                        }
 
                         if (scrollableHtmlView != null)
                             scrollableHtmlView.UpdateFooter();

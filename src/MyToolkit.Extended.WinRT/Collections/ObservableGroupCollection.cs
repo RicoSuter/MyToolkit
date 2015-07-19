@@ -18,12 +18,26 @@ namespace MyToolkit.Collections
 	public class ObservableGroupCollection<TItem> : ObservableCollection<IGroup>
 	{
         private CollectionViewSource _view;
-        
+
+        /// <summary>Gets the items path (default: TopItems).</summary>
+        public string ItemsPath { get; private set; }
+
+        /// <summary>Initializes a new instance of the <see cref="ObservableGroupCollection{TItem}"/> class.</summary>
+        public ObservableGroupCollection() : this("TopItems")
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="ObservableGroupCollection{TItem}"/> class.</summary>
+        public ObservableGroupCollection(string itemsPath = "TopItems")
+        {
+            ItemsPath = itemsPath;
+        }
+
         /// <summary>Creates and adds a group to the collection. </summary>
         /// <param name="title">The title of the group. </param>
         /// <param name="topItemsCount">The top items count. </param>
         /// <returns>The created <see cref="TopItemsGroup{T}"/></returns>
-		public TopItemsGroup<TItem> AddGroup(string title, int topItemsCount = -1)
+        public TopItemsGroup<TItem> AddGroup(string title, int topItemsCount = -1)
 		{
 			return AddGroup(title, new List<TItem>(), topItemsCount);
 		}
@@ -49,7 +63,7 @@ namespace MyToolkit.Collections
 				{
 					_view = new CollectionViewSource();
 					_view.IsSourceGrouped = true;
-					_view.ItemsPath = new PropertyPath("TopItems");
+					_view.ItemsPath = new PropertyPath(ItemsPath);
 					_view.Source = this; 
 				}
 				return _view; 

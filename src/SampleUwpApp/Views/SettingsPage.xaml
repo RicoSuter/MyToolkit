@@ -18,6 +18,6 @@
             <Border Width="50" Height="50" Background="Red" ui:TiltEffect.IsTiltEnabled="True" />
         </StackPanel>-->
         
-        <controls:ScrollableHtmlView x:Name="Html" InnerMargin="12" />
+        <controls:ScrollableHtmlView x:Name="Html" InnerMargin="12" InnerMaxWidth="720" />
     </Grid>
 </paging:MtPage>
