@@ -28,7 +28,7 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty ItemsMinHeight = DependencyProperty.RegisterAttached(
-            "ItemsMaxWidth", typeof(double), typeof(ItemsWrapGridExtensions), new PropertyMetadata(default(double)));
+            "ItemsMaxWidth", typeof(double), typeof(ItemsWrapGridExtensions), new PropertyMetadata(default(double), OnValueChanged));
 
         public static void SetItemsMinHeight(DependencyObject element, double value)
         {
@@ -42,22 +42,18 @@ namespace MyToolkit.Controls
 
         private static void OnValueChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            var element = obj as FrameworkElement;
-            if (element != null)
+            var grid = (ItemsWrapGrid)obj;
+            if (grid != null)
             {
-                var eventRegistration = new SizeChangedRegistration(element);
-                element.Loaded += delegate
-                {
-                    UpdateElement(element);
-                    element.SizeChanged += eventRegistration.OnSizeChanged;
-                };
+                var eventRegistration = new GridSizeChangedRegistration(grid);
 
-                element.Unloaded += delegate
-                {
-                    element.SizeChanged -= eventRegistration.OnSizeChanged;
-                };
+                grid.Loaded -= eventRegistration.OnLoaded;
+                grid.Loaded += eventRegistration.OnLoaded;
 
-                UpdateElement(element);
+                grid.Unloaded -= eventRegistration.OnUnloaded;
+                grid.Unloaded += eventRegistration.OnUnloaded;
+
+                UpdateElement(grid);
             }
         }
 
@@ -95,13 +91,23 @@ namespace MyToolkit.Controls
             }
         }
 
-        private class SizeChangedRegistration
+        private class GridSizeChangedRegistration
         {
             private readonly FrameworkElement _element;
 
-            public SizeChangedRegistration(FrameworkElement element)
+            public GridSizeChangedRegistration(FrameworkElement element)
             {
                 _element = element;
+            }
+
+            public void OnLoaded(object sender, RoutedEventArgs e)
+            {
+                _element.SizeChanged += OnSizeChanged;
+            }
+
+            public void OnUnloaded(object sender, RoutedEventArgs e)
+            {
+                _element.SizeChanged -= OnSizeChanged;
             }
 
             public void OnSizeChanged(object sender, SizeChangedEventArgs e)
