@@ -68,12 +68,19 @@ namespace MyToolkit.Controls
             var minimumWidth = GetItemsMinWidth(element);
             if (minimumWidth > 0)
             {
+                var maximumRowsOrColumns = ((ItemsWrapGrid)element).MaximumRowsOrColumns;
+
                 var width = element.ActualWidth;
                 var columnCount = (int)(width / minimumWidth);
                 var difference = width - columnCount * minimumWidth;
 
                 if (width > minimumWidth)
-                    ((ItemsWrapGrid)element).ItemWidth = minimumWidth + difference / columnCount;
+                {
+                    if (maximumRowsOrColumns > 0 && columnCount > maximumRowsOrColumns)
+                        ((ItemsWrapGrid)element).ItemWidth = minimumWidth + minimumWidth / maximumRowsOrColumns;
+                    else
+                        ((ItemsWrapGrid)element).ItemWidth = minimumWidth + difference / columnCount;
+                }
             }
         }
 
@@ -82,12 +89,19 @@ namespace MyToolkit.Controls
             var minimumHeight = GetItemsMinHeight(element);
             if (minimumHeight > 0)
             {
+                var maximumRowsOrColumns = ((ItemsWrapGrid) element).MaximumRowsOrColumns;
+
                 var height = element.ActualHeight;
-                var columnCount = (int)(height / minimumHeight);
-                var difference = height - columnCount * minimumHeight;
+                var rowCount = (int)(height / minimumHeight);
+                var difference = height - rowCount * minimumHeight;
 
                 if (height > minimumHeight)
-                    ((ItemsWrapGrid)element).ItemHeight = minimumHeight + difference / columnCount;
+                {
+                    if (maximumRowsOrColumns > 0 && rowCount > maximumRowsOrColumns)
+                        ((ItemsWrapGrid)element).ItemHeight = minimumHeight + minimumHeight / maximumRowsOrColumns;
+                    else
+                        ((ItemsWrapGrid)element).ItemHeight = minimumHeight + difference / rowCount;
+                }
             }
         }
 
