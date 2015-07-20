@@ -89,7 +89,7 @@ namespace MyToolkit.Paging
         /// <param name="viewModel">The view model. </param>
         /// <param name="registerForStateHandling">Registers the view model also for state handling
         /// The view model has to implement <see cref="IStateHandlingViewModel"/> and the view must be a <see cref="MtPage"/>. </param>
-        public void RegisterViewModel(ViewModelBase viewModel, bool registerForStateHandling)
+        public void RegisterViewModel(ViewModelBase viewModel, bool registerForStateHandling = true)
         {
             ViewModelHelper.RegisterViewModel(viewModel, this, registerForStateHandling);
         }

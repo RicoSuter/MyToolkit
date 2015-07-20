@@ -9,32 +9,34 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <controls:DataGrid Margin="12" 
+        <!--<controls:DataGrid Margin="12" 
                            ItemsSource="{Binding People}" 
                            SelectionMode="Multiple" 
                            SelectedItem="{Binding SelectedPerson, Mode=TwoWay}"
                            DefaultOrderIndex="1">
-                <controls:DataGrid.Columns>
-                    <controls:DataGridTextColumn Width="200" Header="Firstname" Binding="{Binding Firstname}"
+            <controls:DataGrid.Columns>
+                <controls:DataGridTextColumn Width="200" Header="Firstname" Binding="{Binding Firstname}"
                                                  d:DataContext="{d:DesignInstance Type=models:Person}" />
-                    <controls:DataGridTextColumn Width="200" Binding="{Binding Lastname}" IsAscendingDefault="False"
+                <controls:DataGridTextColumn Width="200" Binding="{Binding Lastname}" IsAscendingDefault="False"
                                                  d:DataContext="{d:DesignInstance Type=models:Person}">
-                        <controls:DataGridTextColumn.Header>
-                            <TextBlock Text="Lastname" Foreground="Green" />
-                        </controls:DataGridTextColumn.Header>
-                    </controls:DataGridTextColumn>
-                    <controls:DataGridTextColumn Width="200" Header="Category" Binding="{Binding Category}" 
+                    <controls:DataGridTextColumn.Header>
+                        <TextBlock Text="Lastname" Foreground="Green" />
+                    </controls:DataGridTextColumn.Header>
+                </controls:DataGridTextColumn>
+                <controls:DataGridTextColumn Width="200" Header="Category" Binding="{Binding Category}" 
                                                  d:DataContext="{d:DesignInstance Type=models:Person}" />
-                </controls:DataGrid.Columns>
-                <controls:DataGrid.ItemDetailsTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="8,8,8,4">
-                            <TextBlock Text="Details: " FontWeight="Bold" />
-                            <TextBlock Text="{Binding Firstname}" />
-                            <TextBlock Text="{Binding Lastname}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </controls:DataGrid.ItemDetailsTemplate>
-            </controls:DataGrid>
+            </controls:DataGrid.Columns>
+            <controls:DataGrid.ItemDetailsTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="8,8,8,4">
+                        <TextBlock Text="Details: " FontWeight="Bold" />
+                        <TextBlock Text="{Binding Firstname}" />
+                        <TextBlock Text="{Binding Lastname}" />
+                    </StackPanel>
+                </DataTemplate>
+            </controls:DataGrid.ItemDetailsTemplate>
+        </controls:DataGrid>-->
+        
+        <MediaElement x:Name="MediaElement" Width="320" Height="240" />
     </Grid>
 </paging:MtPage>

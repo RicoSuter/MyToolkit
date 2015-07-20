@@ -58,14 +58,15 @@ namespace MyToolkit.Mvvm
         /// <param name="view">The view. </param>
         /// <param name="registerForStateHandling">Registers the view model also for state handling
         /// The view model has to implement <see cref="IStateHandlingViewModel"/> and the view must be a <see cref="MtPage"/>. </param>
-        public static void RegisterViewModel(ViewModelBase viewModel, FrameworkElement view, bool registerForStateHandling)
+        public static void RegisterViewModel(ViewModelBase viewModel, FrameworkElement view, bool registerForStateHandling = true)
         {
             viewModel.Initialize();
 
             view.Loaded += (sender, args) => viewModel.CallOnLoaded();
             view.Unloaded += (sender, args) => viewModel.CallOnUnloaded();
 
-            RegisterViewModelForStateHandling((IStateHandlingViewModel) viewModel, (MtPage) view);
+            if (registerForStateHandling && viewModel is IStateHandlingViewModel)
+                RegisterViewModelForStateHandling((IStateHandlingViewModel) viewModel, (MtPage) view);
         }
 
         /// <summary>Registers the view model for state handling. </summary>
