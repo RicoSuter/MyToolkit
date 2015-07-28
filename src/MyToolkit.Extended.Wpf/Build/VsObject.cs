@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Build.Evaluation;
 
 namespace MyToolkit.Build
 {
@@ -66,7 +67,7 @@ namespace MyToolkit.Build
             return System.IO.Path.GetFullPath(path).ToLower();
         }
 
-        internal static Task<List<T>> LoadAllFromDirectoryAsync<T>(string path, bool ignoreExceptions, string extension, Func<string, T> creator)
+        internal static Task<List<T>> LoadAllFromDirectoryAsync<T>(string path, bool ignoreExceptions, ProjectCollection projectCollection, string extension, Func<string, ProjectCollection, T> creator)
         {
             return Task.Run(async () =>
             {
@@ -86,7 +87,7 @@ namespace MyToolkit.Build
                             {
                                 try
                                 {
-                                    return creator(lFile);
+                                    return creator(lFile, projectCollection);
                                 }
                                 catch (Exception)
                                 {

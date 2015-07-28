@@ -8,6 +8,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Build.Evaluation;
 
 namespace MyToolkit.Build
 {
@@ -16,18 +17,22 @@ namespace MyToolkit.Build
     {
         /// <summary>Gets all referenced project files of a given Visual Studio project file. </summary>
         /// <param name="projectPath">The project file path. </param>
+        /// <param name="projectCollection">The project collection.</param>
         /// <returns>The referenced project files. </returns>
-        public static IEnumerable<string> GetProjectReferences(string projectPath)
+        public static IEnumerable<string> GetProjectReferences(string projectPath, ProjectCollection projectCollection)
         {
-            return VsProject.Load(projectPath).ProjectReferences.Select(p => p.Path);
+            return VsProject.Load(projectPath, projectCollection)
+                .ProjectReferences.Select(p => p.Path);
         }
 
         /// <summary>Sorts the given projects in their required build order. </summary>
         /// <param name="projectPaths">The project files. </param>
+        /// <param name="projectCollection">The project collection.</param>
         /// <returns>The project file paths in the correct build order. </returns>
-        public static IEnumerable<string> GetBuildOrder(IEnumerable<string> projectPaths)
+        public static IEnumerable<string> GetBuildOrder(IEnumerable<string> projectPaths, ProjectCollection projectCollection)
         {
-            return projectPaths.Select(VsProject.Load).SortByBuildOrder().Select(p => p.Path);
+            return projectPaths.Select(p => VsProject.Load(p, projectCollection))
+                .SortByBuildOrder().Select(p => p.Path);
         }
     }
 }

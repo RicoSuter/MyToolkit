@@ -6,11 +6,9 @@
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Microsoft.Build.Evaluation;
@@ -22,35 +20,25 @@ namespace MyToolkit.Build
     /// <summary>Describes a Visual Studio project. </summary>
     public class VsProject : VsObject
     {
-        private readonly static object _lock = new Object();
-        private readonly static Dictionary<string, Task<VsProject>> _projects = new Dictionary<string, Task<VsProject>>();
-
         private List<VsProjectReference> _projectReferences;
         private List<AssemblyReference> _assemblyReferences;
         private List<NuGetPackageReference> _nuGetReferences;
 
         /// <exception cref="InvalidProjectFileException">The project file could not be found. </exception>
-        private VsProject(string path)
-            : base(path)
+        private VsProject(string filePath, ProjectCollection projectCollection)
+            : base(filePath)
         {
-            Project = new Project(path);
+            Project = projectCollection.LoadProject(filePath);
         }
 
-        /// <summary>Loads a project from a given file path, if the project has already been loaded before, the same reference is returned. </summary>
-        /// <param name="filePath">The project file path. </param>
-        /// <returns>The project. </returns>
-        /// <exception cref="InvalidProjectFileException">The project file could not be found. </exception>
-        public static VsProject Load(string filePath)
+        /// <summary>Loads a project from a given file path, if the project has already been loaded before, the same reference is returned.</summary>
+        /// <param name="filePath">The project file path.</param>
+        /// <param name="projectCollection">The project collection.</param>
+        /// <returns>The project.</returns>
+        /// <exception cref="InvalidProjectFileException">The project file could not be found.</exception>
+        public static VsProject Load(string filePath, ProjectCollection projectCollection)
         {
-            var id = GetIdFromPath(filePath);
-            lock (_lock)
-            {
-                if (_projects.ContainsKey(id))
-                    return _projects[id].Result;
-
-                _projects[id] = Task.Run(() => new VsProject(filePath));
-                return _projects[id].Result;
-            }
+            return new VsProject(filePath, projectCollection);
         }
 
         /// <summary>Gets the internal MSBuild project. </summary>
@@ -150,9 +138,9 @@ namespace MyToolkit.Build
         /// <param name="path">The directory path. </param>
         /// <param name="ignoreExceptions">Specifies whether to ignore exceptions (projects with exceptions are not returned). </param>
         /// <returns>The projects. </returns>
-        public static Task<List<VsProject>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions)
+        public static Task<List<VsProject>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions, ProjectCollection projectCollection)
         {
-            return LoadAllFromDirectoryAsync(path, ignoreExceptions, ".csproj", Load);
+            return LoadAllFromDirectoryAsync(path, ignoreExceptions, projectCollection, ".csproj", Load);
         }
 
         /// <summary>Loads the project's referenced assemblies, projects and NuGet packages. </summary>
@@ -209,7 +197,7 @@ namespace MyToolkit.Build
         {
             return string.Format("{0}", Name);
         }
-        
+
         public void LoadProjectReferences()
         {
             _projectReferences = Project.Items

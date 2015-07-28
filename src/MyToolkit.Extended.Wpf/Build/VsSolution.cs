@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.Build.Evaluation;
 
 namespace MyToolkit.Build
 {
@@ -22,12 +23,14 @@ namespace MyToolkit.Build
         private readonly string _name;
         private readonly object _solutionParser;
         private List<VsProject> _projects;
+        private ProjectCollection _projectCollection;
 
         /// <summary>Initializes a new instance of the <see cref="VsSolution"/> class. </summary>
         /// <param name="path">The solution path. </param>
-        private VsSolution(string path)
+        private VsSolution(string path, ProjectCollection projectCollection)
             : base(path)
         {
+            _projectCollection = projectCollection; 
             _name = System.IO.Path.GetFileNameWithoutExtension(path);
 
             _solutionParser = SolutionParserType.GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic).First().Invoke(null);
@@ -38,13 +41,14 @@ namespace MyToolkit.Build
             }
         }
 
-        /// <summary>Loads a solution from a given file path. </summary>
-        /// <param name="filePath">The solution file path. </param>
-        /// <returns>The solution. </returns>
-        public static VsSolution Load(string filePath)
+        /// <summary>Loads a solution from a given file path.</summary>
+        /// <param name="filePath">The solution file path.</param>
+        /// <param name="projectCollection">The project collection.</param>
+        /// <returns>The solution.</returns>
+        public static VsSolution Load(string filePath, ProjectCollection projectCollection)
         {
             var path = System.IO.Path.GetFullPath(filePath);
-            return new VsSolution(path);
+            return new VsSolution(path, projectCollection);
         }
 
         /// <summary>Gets the name of the project. </summary>
@@ -88,7 +92,7 @@ namespace MyToolkit.Build
                         if (projectCache != null && projectCache.ContainsKey(projectPath))
                             projects.Add(projectCache[projectPath]);
                         else
-                            projects.Add(VsProject.Load(projectPath));
+                            projects.Add(VsProject.Load(projectPath, _projectCollection));
                     }
                 }
                 catch (Exception)
@@ -105,9 +109,9 @@ namespace MyToolkit.Build
         /// <param name="path">The directory path. </param>
         /// <param name="ignoreExceptions">Specifies whether to ignore exceptions (solutions with exceptions are not returned). </param>
         /// <returns>The solutions. </returns>
-        public static Task<List<VsSolution>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions)
+        public static Task<List<VsSolution>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions, ProjectCollection projectCollection)
         {
-            return LoadAllFromDirectoryAsync(path, ignoreExceptions, ".sln", Load);
+            return LoadAllFromDirectoryAsync(path, ignoreExceptions, projectCollection, ".sln", Load);
         }
 
         private static Type SolutionParserType
