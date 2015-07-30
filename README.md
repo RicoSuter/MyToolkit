@@ -83,7 +83,7 @@ Clone or download the [source code](https://github.com/MyToolkit/Core/tree/maste
 
 - MyToolkit.Extended.Wp7
 - MyToolkit.Extended.Wp8
-    - You need the Windows Phone 8.0 SDK to build the WP7SL project:
+    - You need the Windows Phone 8.0 SDK to build a Windows Phone 7 or 8 Silverlight project:
     - https://www.microsoft.com/en-us/download/confirmation.aspx?id=35471
 - MyToolkit
     - Code Contracts Visual Studio extension: 
