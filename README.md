@@ -81,13 +81,13 @@ Clone or download the [source code](https://github.com/MyToolkit/Core/tree/maste
 
 ## How to build the library
 
-You need the Windows Phone 8.0 SDK to build the WP7SL project: 
-
-https://www.microsoft.com/en-us/download/confirmation.aspx?id=35471
-
-Code Contracts Visual Studio extension: 
-
-https://visualstudiogallery.msdn.microsoft.com/1ec7db13-3363-46c9-851f-1ce455f66970
+- MyToolkit.Extended.Wp7
+- MyToolkit.Extended.Wp8
+    - You need the Windows Phone 8.0 SDK to build the WP7SL project:
+    - https://www.microsoft.com/en-us/download/confirmation.aspx?id=35471
+- MyToolkit
+    - Code Contracts Visual Studio extension: 
+    - https://visualstudiogallery.msdn.microsoft.com/1ec7db13-3363-46c9-851f-1ce455f66970
 
 ## Projects which use MyToolkit libraries
 
