@@ -11,8 +11,6 @@ MyToolkit is a set of .NET libraries containing lots of useful classes for vario
 - Additional collections like [ObservableDictionary](https://github.com/MyToolkit/Core/wiki/ObservableDictionary),  [MtObservableCollection](https://github.com/MyToolkit/Core/wiki/MtObservableCollection) or [ObservableCollectionView](https://github.com/MyToolkit/Core/wiki/ObservableCollectionView) 
 - And much more...
 
-**Coming soon: Full support for the Universal Windows Platform (Windows 10)**
-
 (This project has originally been hosted on [CodePlex](http://mytoolkit.codeplex.com))
 
 If you found some bugs or have other comments, please create a Pull Request or GitHub issue. The library is free to use, but please put a link to this GitHub site in the source code or your application. 
@@ -26,7 +24,7 @@ Check my blog for other programming stuff on my website at <http://blog.rsuter.c
 The MyToolkit project is separated into the following packages:
 
 - [MyToolkit](https://nuget.org/packages/MyToolkit) (PCL): MVVM classes, collections, everything which can be portable... 
-- [MyToolkit.Extended](https://nuget.org/packages/MyToolkit.Extended) (WinRT/WP7/WP8/SL4/SL5/.Net4.5/(.NET4)): UI (e.g. controls) and framework dependent classes (e.g. Wake-On-Lan class). Don't use this assembly in Windows Phone background agents as some classes are not allowed in these projects. The  YouTube classes can be found in this package... 
+- [MyToolkit.Extended](https://nuget.org/packages/MyToolkit.Extended) (UWP/WinRT/WP7/WP8/SL4/SL5/.Net4.5/(.NET4)): UI (e.g. controls) and framework dependent classes (e.g. Wake-On-Lan class). Don't use this assembly in Windows Phone background agents as some classes are not allowed in these projects. The  YouTube classes can be found in this package... 
 - [MyToolkit.Http](https://nuget.org/packages/MyToolkit.Http) (PCL): Portable  HTTP classes with GZIP and file upload support. 
 - [MyToolkit.Web](https://nuget.org/packages/MyToolkit.Web) (.NET4.5): .NET classes for Web/Server projects. 
 - [MyToolkit.AspNet.Mvc](https://nuget.org/packages/MyToolkit.AspNet.Mvc) (.NET4.5): .NET classes for ASP.NET MVC projects. 
@@ -45,11 +43,11 @@ The solutions can be found in the `src` directory:
 
 **MyToolkit.VS2015.sln**
 
-- MyToolkit.Extended.Uwp (W10, W10 mobile)
+- MyToolkit.Extended.Uwp (Universal Windows Platform: Windows 10, Windows 10 Mobile)
 
 **MyToolkit.VS2013.sln**
 
-- MyToolkit (PCL: W8, WP8.1, .NET 4.5, WP8SL)
+- MyToolkit (PCL: UWP, W8, WP8.1, .NET 4.5, WP8SL)
 - MyToolkit.AspNet.Mvc (ASP.NET MVC 5.x)
 - MyToolkit.Extended.WinRT (PCL: W8.1, WP8.1)
 - MyToolkit.Extended.Wp8  (WP8SL)
