@@ -59,12 +59,12 @@
     <file src="Output\MyToolkit.Extended.WinRT\MyToolkit.Extended.xml" target="lib\portable-wpa81+win8\MyToolkit.Extended.xml" />
 
 	<!-- UWP -->
-    <file src="Output\MyToolkit.Extended.UWP\Themes\Generic.xbf" target="lib\win50\MyToolkit.Extended\Themes\Generic.xbf" />
-    <file src="Output\MyToolkit.Extended.UWP\MyToolkit.Extended.xr.xml" target="lib\win50\MyToolkit.Extended\MyToolkit.Extended.xr.xml" />
-    <file src="Output\MyToolkit.Extended.UWP\MyToolkit.Extended.pdb" target="lib\win50\MyToolkit.Extended\MyToolkit.Extended.pdb" />
-    <file src="Output\MyToolkit.Extended.UWP\MyToolkit.Extended.dll" target="lib\win50\MyToolkit.Extended.dll" />
-    <file src="Output\MyToolkit.Extended.UWP\MyToolkit.Extended.pri" target="lib\win50\MyToolkit.Extended.pri" />
-    <file src="Output\MyToolkit.Extended.UWP\MyToolkit.Extended.xml" target="lib\win50\MyToolkit.Extended.xml" />
+    <file src="Output\MyToolkit.Extended.UWP\Themes\Generic.xbf" target="lib\uap10.0\MyToolkit.Extended\Themes\Generic.xbf" />
+    <file src="Output\MyToolkit.Extended.UWP\MyToolkit.Extended.xr.xml" target="lib\uap10.0\MyToolkit.Extended\MyToolkit.Extended.xr.xml" />
+    <file src="Output\MyToolkit.Extended.UWP\MyToolkit.Extended.pdb" target="lib\uap10.0\MyToolkit.Extended\MyToolkit.Extended.pdb" />
+    <file src="Output\MyToolkit.Extended.UWP\MyToolkit.Extended.dll" target="lib\uap10.0\MyToolkit.Extended.dll" />
+    <file src="Output\MyToolkit.Extended.UWP\MyToolkit.Extended.pri" target="lib\uap10.0\MyToolkit.Extended.pri" />
+    <file src="Output\MyToolkit.Extended.UWP\MyToolkit.Extended.xml" target="lib\uap10.0\MyToolkit.Extended.xml" />
 
 	<!-- WP7 -->
     <file src="Output\MyToolkit.Extended.Wp7\de\MyToolkit.Extended.resources.dll" target="lib\sl4-wp71\de\MyToolkit.Extended.resources.dll" />

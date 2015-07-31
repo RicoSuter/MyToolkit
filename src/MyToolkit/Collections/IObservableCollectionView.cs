@@ -35,5 +35,8 @@ namespace MyToolkit.Collections
 
         /// <summary>Gets or sets the order (a Func{TItem, object} object). </summary>
         object Order { get; set; }
+
+        /// <summary>Refreshes the view. </summary>
+        void Refresh();
     }
 }

@@ -13,7 +13,7 @@ using System.Threading;
 using System.Xml;
 using System.Xml.Serialization;
 
-#if WINRT
+#if WINRT && !WINDOWS_UAP
 using Windows.Data.Xml.Dom;
 #endif
 
@@ -27,7 +27,7 @@ namespace MyToolkit.Utilities
     public static class Xml
     {
 
-#if WINRT
+#if WINRT && !WINDOWS_UAP
 
         public static string XmlEscape(string unescaped)
         {

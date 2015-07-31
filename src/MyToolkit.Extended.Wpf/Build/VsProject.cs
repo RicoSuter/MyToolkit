@@ -134,10 +134,11 @@ namespace MyToolkit.Build
             return System.IO.Path.GetFullPath(projectPath1).ToLower() == System.IO.Path.GetFullPath(projectPath2).ToLower();
         }
 
-        /// <summary>Recursively loads all Visual Studio projects from the given directory. </summary>
-        /// <param name="path">The directory path. </param>
-        /// <param name="ignoreExceptions">Specifies whether to ignore exceptions (projects with exceptions are not returned). </param>
-        /// <returns>The projects. </returns>
+        /// <summary>Recursively loads all Visual Studio projects from the given directory.</summary>
+        /// <param name="path">The directory path.</param>
+        /// <param name="ignoreExceptions">Specifies whether to ignore exceptions (projects with exceptions are not returned).</param>
+        /// <param name="projectCollection">The project collection.</param>
+        /// <returns>The projects.</returns>
         public static Task<List<VsProject>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions, ProjectCollection projectCollection)
         {
             return LoadAllFromDirectoryAsync(path, ignoreExceptions, projectCollection, ".csproj", Load);

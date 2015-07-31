@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
-using Microsoft.ApplicationInsights;
 using MyToolkit.Paging;
 using SampleUwpApp.Views;
 
@@ -10,12 +9,10 @@ namespace SampleUwpApp
 {
     sealed partial class App : MtApplication
     {
-        public static TelemetryClient TelemetryClient;
         private HamburgerFrame _hamburgerFrame;
 
         public App()
         {
-            TelemetryClient = new TelemetryClient();
             InitializeComponent();
         }
 
@@ -55,11 +52,6 @@ namespace SampleUwpApp
         public override MtFrame GetFrame(UIElement windowContentElement)
         {
             return _hamburgerFrame.Frame;
-        }
-
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
-        {
-            base.OnLaunched(args);
         }
     }
 }

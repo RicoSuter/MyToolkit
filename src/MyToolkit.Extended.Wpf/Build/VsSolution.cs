@@ -23,10 +23,11 @@ namespace MyToolkit.Build
         private readonly string _name;
         private readonly object _solutionParser;
         private List<VsProject> _projects;
-        private ProjectCollection _projectCollection;
+        private readonly ProjectCollection _projectCollection;
 
-        /// <summary>Initializes a new instance of the <see cref="VsSolution"/> class. </summary>
-        /// <param name="path">The solution path. </param>
+        /// <summary>Initializes a new instance of the <see cref="VsSolution" /> class.</summary>
+        /// <param name="path">The solution path.</param>
+        /// <param name="projectCollection">The project collection.</param>
         private VsSolution(string path, ProjectCollection projectCollection)
             : base(path)
         {
@@ -105,10 +106,11 @@ namespace MyToolkit.Build
             _projects = projects.OrderBy(p => p.Name).ToList();
         }
 
-        /// <summary>Recursively loads all Visual Studio solutions from the given directory. </summary>
-        /// <param name="path">The directory path. </param>
-        /// <param name="ignoreExceptions">Specifies whether to ignore exceptions (solutions with exceptions are not returned). </param>
-        /// <returns>The solutions. </returns>
+        /// <summary>Recursively loads all Visual Studio solutions from the given directory.</summary>
+        /// <param name="path">The directory path.</param>
+        /// <param name="ignoreExceptions">Specifies whether to ignore exceptions (solutions with exceptions are not returned).</param>
+        /// <param name="projectCollection">The project collection.</param>
+        /// <returns>The solutions.</returns>
         public static Task<List<VsSolution>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions, ProjectCollection projectCollection)
         {
             return LoadAllFromDirectoryAsync(path, ignoreExceptions, projectCollection, ".sln", Load);

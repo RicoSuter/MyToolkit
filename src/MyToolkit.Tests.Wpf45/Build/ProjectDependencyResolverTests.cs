@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Build.Evaluation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MyToolkit.Build;
 
@@ -15,7 +16,7 @@ namespace MyToolkit.Tests.Wpf45.Build
             var path = "../../../MyToolkit.Extended.Wp8/MyToolkit.Extended.Wp8.csproj";
 
             //// Act
-            var projects = ProjectDependencyResolver.GetProjectReferences(path);
+            var projects = ProjectDependencyResolver.GetProjectReferences(path, new ProjectCollection());
 
             //// Assert
             Assert.AreEqual(1, projects.Count());
@@ -28,7 +29,7 @@ namespace MyToolkit.Tests.Wpf45.Build
             var path = "../../../MyToolkit.sln";
 
             //// Act
-            var solution = VsSolution.Load(path);
+            var solution = VsSolution.Load(path, new ProjectCollection());
 
             //// Assert
             Assert.IsTrue(solution.Projects.Any(p => p.Path.EndsWith("\\MyToolkit.csproj")));
@@ -41,7 +42,7 @@ namespace MyToolkit.Tests.Wpf45.Build
             var path = "../../../MyToolkit.Extended.Wp8/MyToolkit.Extended.Wp8.csproj";
 
             //// Act
-            var project = VsProject.Load(path);
+            var project = VsProject.Load(path, new ProjectCollection());
 
             //// Assert
             Assert.AreEqual(1, project.NuGetReferences.Count());
@@ -55,7 +56,7 @@ namespace MyToolkit.Tests.Wpf45.Build
             var path = "../../../";
 
             //// Act
-            var projects = await VsProject.LoadAllFromDirectoryAsync(path, false);
+            var projects = await VsProject.LoadAllFromDirectoryAsync(path, false, new ProjectCollection());
 
             //// Assert
             Assert.IsTrue(projects.Any());
@@ -72,7 +73,7 @@ namespace MyToolkit.Tests.Wpf45.Build
             };
 
             //// Act
-            var buildOrder = ProjectDependencyResolver.GetBuildOrder(paths).ToArray();
+            var buildOrder = ProjectDependencyResolver.GetBuildOrder(paths, new ProjectCollection()).ToArray();
 
             //// Assert
             Assert.AreEqual(2, buildOrder.Length);

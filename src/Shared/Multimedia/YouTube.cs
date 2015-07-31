@@ -56,7 +56,7 @@ namespace MyToolkit.Multimedia
                 throw new YouTubeUriNotFoundException();
             return uri;
         }
-        
+
         /// <summary>Returns the best matching YouTube stream URI which has an audio and video channel and is not 3D. </summary>
         /// <returns>The best matching <see cref="YouTubeUri"/> of the video. </returns>
         /// <exception cref="YouTubeUriNotFoundException">The <see cref="YouTubeUri"/> could not be found. </exception>
@@ -183,7 +183,7 @@ namespace MyToolkit.Multimedia
             var parameterName = Regex.Escape(functionMath.Groups[1].ToString());
             var functionBody = functionMath.Groups[2].ToString();
 
-            Dictionary<string, Func<string, int, string>> methods = null; 
+            Dictionary<string, Func<string, int, string>> methods = null;
 
             foreach (var line in functionBody.Split(';').Select(l => l.Trim()))
             {
@@ -210,7 +210,7 @@ namespace MyToolkit.Multimedia
                             methods = new Dictionary<string, Func<string, int, string>>();
 
                             var code = Regex.Match(javaScriptCode, "var " + Regex.Escape(root) + "={(.*?)};function").Groups[1].ToString();
-                            var methodsArray = code.Split(new[] {"},"}, StringSplitOptions.None);
+                            var methodsArray = code.Split(new[] { "}," }, StringSplitOptions.None);
                             foreach (var m in methodsArray)
                             {
                                 var arr = m.Split(':');
@@ -260,10 +260,11 @@ namespace MyToolkit.Multimedia
         /// <exception cref="WebException">An error occurred while downloading the resource. </exception>
         private static async Task<string> HttpGetAsync(string uri)
         {
-            using (var client = new HttpClient())
+            var handler = new HttpClientHandler { AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip };
+            using (var client = new HttpClient(handler))
             {
                 client.DefaultRequestHeaders.Add("User-Agent", BotUserAgent);
-                var response = await client.GetAsync(uri);
+                var response = await client.GetAsync(new Uri(uri, UriKind.Absolute));
                 return await response.Content.ReadAsStringAsync();
             }
         }
