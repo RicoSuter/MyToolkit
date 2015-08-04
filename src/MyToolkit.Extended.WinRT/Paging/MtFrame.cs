@@ -205,7 +205,7 @@ namespace MyToolkit.Paging
             get { return CurrentIndex + 1; }
         }
 
-        private Grid ContentGrid
+        internal Grid ContentGrid
         {
             get
             {
