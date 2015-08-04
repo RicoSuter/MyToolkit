@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+ï»¿//-----------------------------------------------------------------------
 // <copyright file="AlphaGroups.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
@@ -122,15 +122,15 @@ namespace MyToolkit.Collections
             {
                 switch (firstCharacter)
                 {
-                    case "é": return "e";
-                    case "è": return "e";
-                    case "ê": return "e";
-                    case "à": return "a";
-                    case "â": return "a";
-                    case "ü": return "u";
-                    case "ä": return "a";
-                    case "ö": return "o";
-                    case "î": return "i";
+                    case "Ã©": return "e";
+                    case "Ã¨": return "e";
+                    case "Ãª": return "e";
+                    case "Ã ": return "a";
+                    case "Ã¢": return "a";
+                    case "Ã¼": return "u";
+                    case "Ã¤": return "a";
+                    case "Ã¶": return "o";
+                    case "Ã®": return "i";
                     default: return "#";
                 }
             }
