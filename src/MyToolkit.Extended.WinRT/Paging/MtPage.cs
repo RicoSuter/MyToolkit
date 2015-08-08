@@ -392,7 +392,7 @@ namespace MyToolkit.Paging
             PageStateHandler.OnNavigatedTo(e);
         }
 
-        internal virtual async Task OnNavigatingFromCoreAsync(MtNavigatingCancelEventArgs e)
+        protected internal virtual async Task OnNavigatingFromCoreAsync(MtNavigatingCancelEventArgs e)
         {
             OnNavigatingFrom(e);
 
