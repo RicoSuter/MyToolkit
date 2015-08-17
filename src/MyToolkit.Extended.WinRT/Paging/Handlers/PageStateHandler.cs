@@ -62,6 +62,9 @@ namespace MyToolkit.Paging.Handlers
 
         public void OnNavigatedFrom(MtNavigationEventArgs e)
         {
+            if (_page.Frame.DisableForwardStack && e.NavigationMode == NavigationMode.Back)
+                return;
+
             var frameState = MtSuspensionManager.SessionStateForFrame(_page.Frame);
             var pageState = new Dictionary<String, Object>();
             var args = new MtSaveStateEventArgs(pageState);
@@ -72,6 +75,7 @@ namespace MyToolkit.Paging.Handlers
 
             _page.SaveState(pageState);
             _page.OnSaveState(args);
+
             frameState[PageKey] = pageState;
         }
     }

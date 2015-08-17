@@ -25,6 +25,7 @@ using MyToolkit.Environment;
 namespace MyToolkit.Paging
 {
     public delegate void NavigatedEventHandler(object sender, MtNavigationEventArgs e);
+    public delegate void NavigatingEventHandler(object sender, MtNavigatingCancelEventArgs e);
 
     /// <summary>Navigation container for pages. </summary>
     public class MtFrame : Control, INavigate
@@ -48,7 +49,7 @@ namespace MyToolkit.Paging
             Loaded += delegate { Window.Current.VisibilityChanged += OnVisibilityChanged; };
             Unloaded += delegate { Window.Current.VisibilityChanged -= OnVisibilityChanged; };
 
-            GoBackCommand = new RelayCommand(() => GoBackAsync(), () => CanGoBack);
+            GoBackCommand = new AsyncRelayCommand(GoBackAsync, () => CanGoBack);
 
             DefaultStyleKey = typeof(MtFrame);
 
@@ -121,8 +122,11 @@ namespace MyToolkit.Paging
             get { return CurrentIndex == 0; }
         }
 
-        /// <summary>Occurs when navigating to a page. </summary>
+        /// <summary>Occurs when the frame navigated to another page. </summary>
         public event NavigatedEventHandler Navigated;
+
+        /// <summary>Occurs when the frame navigates to another page. </summary>
+        public event NavigatingEventHandler Navigating;
 
         /// <summary>Gets a command to navigate to the previous page. </summary>
         public ICommand GoBackCommand { get; private set; }
@@ -185,11 +189,20 @@ namespace MyToolkit.Paging
         /// <returns>Returns true if navigating forward, false if cancelled</returns>
         public async Task<bool> GoForwardAsync()
         {
-            if (await RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.Forward))
-                return false;
+            try
+            {
+                IsNavigating = true;
 
-            await GoForwardOrBackAsync(NavigationMode.Forward);
-            return true;
+                if (await RaisePageOnNavigatingFromAsync(CurrentPage, null, NavigationMode.Forward))
+                    return false;
+
+                await GoForwardOrBackAsync(NavigationMode.Forward);
+                return true;
+            }
+            finally
+            {
+                IsNavigating = false; 
+            }
         }
 
         /// <summary>Gets a value indicating whether it is possible to navigate back. </summary>
@@ -256,18 +269,27 @@ namespace MyToolkit.Paging
             if (newPageIndex < 0 || newPageIndex > CurrentIndex)
                 return false;
 
-            if (await RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.Back))
-                return false;
-            
-            var currentPage = CurrentPage;
-            var nextPage = _pages[newPageIndex];
+            try
+            {
+                IsNavigating = true;
 
-            await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.Back, currentPage, nextPage, newPageIndex);
+                if (await RaisePageOnNavigatingFromAsync(CurrentPage, _pages[newPageIndex], NavigationMode.Back))
+                    return false;
 
-            if (DisableForwardStack)
-                RemoveForwardStack();
+                var currentPage = CurrentPage;
+                var nextPage = _pages[newPageIndex];
 
-            return true;
+                await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.Back, currentPage, nextPage, newPageIndex);
+
+                if (DisableForwardStack)
+                    RemoveForwardStack();
+
+                return true;
+            }
+            finally
+            {
+                IsNavigating = false;
+            }
         }
 
         /// <summary>Removes a page from the page stack. </summary>
@@ -309,11 +331,20 @@ namespace MyToolkit.Paging
         /// <returns>Returns true if navigating back, false if cancelled or CanGoBack is false. </returns>
         public async Task<bool> GoBackAsync()
         {
-            if (await RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.Back))
-                return false;
+            try
+            {
+                IsNavigating = true;
 
-            await GoForwardOrBackAsync(NavigationMode.Back);
-            return true;
+                if (await RaisePageOnNavigatingFromAsync(CurrentPage, PreviousPage, NavigationMode.Back))
+                    return false;
+
+                await GoForwardOrBackAsync(NavigationMode.Back);
+                return true;
+            }
+            finally
+            {
+                IsNavigating = false;
+            }
         }
 
         /// <summary>Initializes the frame and navigates to the given first page. </summary>
@@ -346,16 +377,40 @@ namespace MyToolkit.Paging
         /// <returns>Returns true if the navigation process has not been cancelled. </returns>
         public async Task<bool> NavigateAsync(Type pageType, object parameter)
         {
-            var currentPage = CurrentPage;
-            if (currentPage != null && await RaisePageOnNavigatingFromAsync(CurrentPage, NavigationMode.New))
-                return false;
+            try
+            {
+                IsNavigating = true;
 
-            RemoveForwardStack();
+                var newPage = new MtPageDescription(pageType, parameter);
 
-            var newPage = new MtPageDescription(pageType, parameter);
-            await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.New, currentPage, newPage, CurrentIndex + 1);
+                var currentPage = CurrentPage;
+                if (currentPage != null)
+                {
+                    if (await RaisePageOnNavigatingFromAsync(CurrentPage, newPage, NavigationMode.New))
+                        return false;
+                }
 
-            return true;
+                RemoveForwardStack();
+                await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.New, currentPage, newPage, CurrentIndex + 1);
+
+                return true;
+            }
+            finally
+            {
+                IsNavigating = false;
+            }
+        }
+
+        /// <summary>Clears all pages from the page back stack.</summary>
+        public void ClearBackStack()
+        {
+            var pages = _pages.ToArray();
+            for (var i = 0; i < _currentIndex; i++)
+            {
+                var page = pages[i];
+                _pages.Remove(page);
+            }
+            _currentIndex = 0;
         }
 
         /// <summary>Used set the serialized the current page stack (used in the SuspensionManager). </summary>
@@ -508,7 +563,7 @@ namespace MyToolkit.Paging
             CurrentIndex = nextPageIndex;
 
             RaisePageOnNavigatedTo(newPage, navigationMode);
-            ((RelayCommand)GoBackCommand).RaiseCanExecuteChanged();
+            ((CommandBase)GoBackCommand).RaiseCanExecuteChanged();
         }
 
         private void SwitchPagesIfSequential(PageInsertionMode insertionMode, MtPageDescription currentPage, MtPageDescription newPage)
@@ -593,7 +648,7 @@ namespace MyToolkit.Paging
             }
         }
 
-        internal void RaisePageOnNavigatedFrom(MtPageDescription description, NavigationMode mode)
+        private void RaisePageOnNavigatedFrom(MtPageDescription description, NavigationMode mode)
         {
             var page = description.GetPage(this);
 
@@ -606,18 +661,32 @@ namespace MyToolkit.Paging
             page.OnNavigatedFromCore(args);
         }
 
-        private async Task<bool> RaisePageOnNavigatingFromAsync(MtPageDescription description, NavigationMode mode)
+        private async Task<bool> RaisePageOnNavigatingFromAsync(MtPageDescription currentPage, MtPageDescription targetPage, NavigationMode mode)
         {
-            var page = description.GetPage(this);
+            var page = currentPage.GetPage(this);
 
             var args = new MtNavigatingCancelEventArgs();
             args.Content = page;
-            args.SourcePageType = description.Type;
+            args.SourcePageType = currentPage.Type;
             args.NavigationMode = mode;
+            args.Parameter = currentPage.Parameter;
 
-            IsNavigating = true;
             await page.OnNavigatingFromCoreAsync(args);
-            IsNavigating = false;
+
+            if (!args.Cancel && targetPage != null)
+            {
+                var args2 = new MtNavigatingCancelEventArgs();
+                args2.SourcePageType = targetPage.Type;
+                args2.NavigationMode = mode;
+                args2.Parameter = targetPage.Parameter;
+
+                var copy = Navigating;
+                if (copy != null)
+                {
+                    copy(this, args2);
+                    args.Cancel = args2.Cancel;
+                }
+            }
 
             return args.Cancel;
         }

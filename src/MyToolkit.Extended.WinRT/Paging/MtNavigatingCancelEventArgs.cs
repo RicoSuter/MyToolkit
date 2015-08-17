@@ -24,5 +24,8 @@ namespace MyToolkit.Paging
         /// Gets the type of the page. 
         /// </summary>
         public Type SourcePageType { get; internal set; }
+
+        /// <summary>Gets the navigation parameter.</summary>
+        public object Parameter { get; internal set; }
     }
 }

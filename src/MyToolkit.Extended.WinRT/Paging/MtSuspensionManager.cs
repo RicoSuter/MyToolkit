@@ -14,13 +14,17 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Navigation;
 
 namespace MyToolkit.Paging
 {
+    public delegate void SessionStateRestoredEventHandler(object sender, Dictionary<string, object> e);
+
     /// <summary>Stores and loads global session state for application life cycle management. </summary>
-    public sealed class MtSuspensionManager
+    public static class MtSuspensionManager
     {
+        /// <summary>Occurs when the session state has been restored.</summary>
+        public static event SessionStateRestoredEventHandler SessionStateRestored;
+
         private const string SessionStateFilename = "_sessionState.xml";
 
         private static readonly HashSet<Type> _knownTypes = new HashSet<Type>();
@@ -69,7 +73,11 @@ namespace MyToolkit.Paging
             using (var stream = await folder.OpenStreamForReadAsync(SessionStateFilename))
             {
                 var serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
-                _sessionState = (Dictionary<string, object>)serializer.ReadObject(stream);    
+                _sessionState = (Dictionary<string, object>)serializer.ReadObject(stream);
+
+                var copy = SessionStateRestored;
+                if (copy != null)
+                    copy(null, _sessionState);
             }
             
             foreach (var weakFrameReference in _registeredFrames)

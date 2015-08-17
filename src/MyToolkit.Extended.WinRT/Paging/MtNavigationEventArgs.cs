@@ -21,10 +21,8 @@ namespace MyToolkit.Paging
         /// </summary>
         public object Content { get; internal set; }
 
-        /// <summary>
-        /// Gets the navigation parameter. 
-        /// </summary>
-		public object Parameter { get; internal set; }
+        /// <summary>Gets the navigation parameter.</summary>
+        public object Parameter { get; internal set; }
 
         /// <summary>
         /// Gets the type of the page. 

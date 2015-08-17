@@ -148,13 +148,16 @@ namespace MyToolkit.Multimedia
                     }
                 }
 
-                if (url.Contains("&signature=") || url.Contains("?signature="))
-                    tuple.Uri = new Uri(url, UriKind.Absolute);
-                else
-                    tuple.Uri = new Uri(url + "&signature=" + signature, UriKind.Absolute);
+                if (!string.IsNullOrEmpty(url))
+                {
+                    if (url.Contains("&signature=") || url.Contains("?signature="))
+                        tuple.Uri = new Uri(url, UriKind.Absolute);
+                    else
+                        tuple.Uri = new Uri(url + "&signature=" + signature, UriKind.Absolute);
 
-                if (tuple.IsValid)
-                    urls.Add(tuple);
+                    if (tuple.IsValid)
+                        urls.Add(tuple);
+                }
             }
 
             return urls.ToArray();
@@ -559,7 +562,10 @@ namespace MyToolkit.Multimedia
     /// <summary>Exception which occurs when no <see cref="YouTubeUri"/> could be found. </summary>
     public class YouTubeUriNotFoundException : Exception
     {
-        internal YouTubeUriNotFoundException() : base("No matching YouTube video or audio stream URI could be found. ") { }
+        internal YouTubeUriNotFoundException()
+            : base("No matching YouTube video or audio stream URI could be found. " +
+                   "The video may not be available in your country, " +
+                   "is private or uses RTMPE (protected streaming).") { }
     }
 
     /// <summary>An URI to a YouTube MP4 video or audio stream. </summary>

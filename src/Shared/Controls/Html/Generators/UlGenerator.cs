@@ -1,4 +1,4 @@
-//-----------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------
 // <copyright file="UlGenerator.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
@@ -30,7 +30,7 @@ namespace MyToolkit.Controls.Html.Generators
         /// <summary>Initializes a new instance of the <see cref="UlGenerator"/> class.</summary>
         public UlGenerator()
 	    {
-	        BulletSymbol = "�";
+            BulletSymbol = "•";
 	    }
 
         /// <summary>Gets or sets the bullet symbol for a list element.</summary>

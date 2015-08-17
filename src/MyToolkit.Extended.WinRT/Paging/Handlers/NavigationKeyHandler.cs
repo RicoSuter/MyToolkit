@@ -23,7 +23,7 @@ using MyToolkit.UI;
 
 namespace MyToolkit.Paging.Handlers
 {
-    public class NavigationKeyHandler
+    internal class NavigationKeyHandler
     {
         private static BackKeyPressedHandler _handler;
 
