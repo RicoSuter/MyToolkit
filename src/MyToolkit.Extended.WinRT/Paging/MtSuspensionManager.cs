@@ -21,6 +21,7 @@ namespace MyToolkit.Paging
     /// <summary>Stores and loads global session state for application life cycle management. </summary>
     public sealed class MtSuspensionManager
     {
+        public static event EventHandler<Dictionary<string, object>> SessionStateRestored; 
         private const string SessionStateFilename = "_sessionState.xml";
 
         private static readonly HashSet<Type> _knownTypes = new HashSet<Type>();
@@ -70,6 +71,8 @@ namespace MyToolkit.Paging
             {
                 var serializer = new DataContractSerializer(typeof(Dictionary<string, object>), _knownTypes);
                 _sessionState = (Dictionary<string, object>)serializer.ReadObject(stream);    
+				if (SessionStateRestored != null)
+                	SessionStateRestored(null, _sessionState);
             }
             
             foreach (var weakFrameReference in _registeredFrames)

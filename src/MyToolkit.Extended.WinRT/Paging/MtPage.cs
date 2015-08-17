@@ -21,13 +21,13 @@ using MyToolkit.Paging.Handlers;
 
 namespace MyToolkit.Paging
 {
-    public class MtPage : ContentControl
+    public class MtPage : UserControl
     {
         // needed for correct app bar behaviour (otherwise wrong app bar from previous page will be shown)
         //private AppBar _topAppBar;
         //private AppBar _bottomAppBar;
 
-        internal PageStateHandler PageStateHandler { get; private set; }
+        protected internal PageStateHandler PageStateHandler { get; private set; }
         internal NavigationKeyHandler NavigationKeyHandler { get; private set; }
 
         /// <summary>
@@ -160,7 +160,22 @@ namespace MyToolkit.Paging
         public NavigationCacheMode NavigationCacheMode { get; set; }
 
         public static readonly DependencyProperty TopAppBarProperty =
-            DependencyProperty.Register("TopAppBar", typeof(AppBar), typeof(MtPage), new PropertyMetadata(default(AppBar)));
+            DependencyProperty.Register("TopAppBar", typeof(AppBar), typeof(MtPage), new PropertyMetadata(default(AppBar), OnTopAppBarPropertyChanged));
+
+        private static void OnTopAppBarPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((MtPage)d).OnTopAppBarPropertyChanged(e);
+        }
+
+        private void OnTopAppBarPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if (TopAppBar != null)
+            {
+                InternalPage.TopAppBar = TopAppBar;
+                foreach (var item in Resources.Where(item => !(item.Value is DependencyObject)))
+                    InternalPage.TopAppBar.Resources[item.Key] = item.Value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the top app bar. 
@@ -172,7 +187,22 @@ namespace MyToolkit.Paging
         }
 
         public static readonly DependencyProperty BottomAppBarProperty =
-            DependencyProperty.Register("BottomAppBar", typeof(AppBar), typeof(MtPage), new PropertyMetadata(default(AppBar)));
+            DependencyProperty.Register("BottomAppBar", typeof(AppBar), typeof(MtPage), new PropertyMetadata(default(AppBar), OnBottomAppBarPropertyChanged));
+
+        private static void OnBottomAppBarPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((MtPage)d).OnBottomAppBarPropertyChanged(e);
+        }
+
+        private void OnBottomAppBarPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if (BottomAppBar != null)
+            {
+                InternalPage.BottomAppBar = BottomAppBar;
+                foreach (var item in Resources.Where(item => !(item.Value is DependencyObject)))
+                    InternalPage.BottomAppBar.Resources[item.Key] = item.Value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the bottom app bar. 
@@ -316,7 +346,7 @@ namespace MyToolkit.Paging
         protected void GoBack(object sender, RoutedEventArgs e)
         {
             if (Frame != null && Frame.CanGoBack)
-                Frame.GoBackAsync();
+                Frame.GoBack();
         }
 
         /// <summary>
@@ -342,19 +372,6 @@ namespace MyToolkit.Paging
 
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            if (TopAppBar != null)
-            {
-                InternalPage.TopAppBar = TopAppBar;
-                foreach (var item in Resources.Where(item => !(item.Value is DependencyObject)))
-                    InternalPage.TopAppBar.Resources[item.Key] = item.Value;
-            }
-
-            if (BottomAppBar != null)
-            {
-                InternalPage.BottomAppBar = BottomAppBar;
-                foreach (var item in Resources.Where(item => !(item.Value is DependencyObject)))
-                    InternalPage.BottomAppBar.Resources[item.Key] = item.Value;
-            }
         }
 
         private void OnUnloaded(object sender, RoutedEventArgs routedEventArgs)
@@ -369,13 +386,13 @@ namespace MyToolkit.Paging
         // internal methods ensure that base implementations of InternalOn* is always called
         // even if user does not call base.InternalOn* in the overridden On* method. 
 
-        internal virtual void OnNavigatedToCore(MtNavigationEventArgs e)
+        protected internal virtual void OnNavigatedToCore(MtNavigationEventArgs e)
         {
             OnNavigatedTo(e);
             PageStateHandler.OnNavigatedTo(e);
         }
 
-        internal virtual async Task OnNavigatingFromCoreAsync(MtNavigatingCancelEventArgs e)
+        protected internal virtual async Task OnNavigatingFromCoreAsync(MtNavigatingCancelEventArgs e)
         {
             OnNavigatingFrom(e);
 
@@ -384,7 +401,7 @@ namespace MyToolkit.Paging
                 await task;
         }
 
-        internal void OnNavigatedFromCore(MtNavigationEventArgs e)
+        protected internal void OnNavigatedFromCore(MtNavigationEventArgs e)
         {
             OnNavigatedFrom(e);
             PageStateHandler.OnNavigatedFrom(e);

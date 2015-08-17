@@ -246,7 +246,7 @@ namespace MyToolkit.Paging.Handlers
         {
             _page.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async delegate
             {
-                if (_page.Frame.CanGoBack && !_page.Frame.IsNavigating)
+                if (_page.Frame.CanGoBack && !_page.Frame.IsNavigating && _page.Frame.ContentGrid.IsHitTestVisible)
                     await _page.Frame.GoBackAsync();
                 else
                 {
