@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Core;
@@ -255,13 +256,6 @@ namespace MyToolkit.Paging
             // Must be empty
         }
 
-        /// <summary>Called when navigated to this page. </summary>
-        /// <param name="args">The event arguments. </param>
-        protected internal virtual void OnNavigatedTo(MtNavigationEventArgs args)
-        {
-            // Leave empty!
-        }
-
         /// <summary>Called when navigating from this page. </summary>
         /// <param name="args">The event arguments. </param>
         protected internal virtual void OnNavigatingFrom(MtNavigatingCancelEventArgs args)
@@ -285,6 +279,13 @@ namespace MyToolkit.Paging
         protected internal virtual void OnNavigatedFrom(MtNavigationEventArgs args)
         {
             // Must be empty
+        }
+
+        /// <summary>Called when navigated to this page. </summary>
+        /// <param name="args">The event arguments. </param>
+        protected internal virtual void OnNavigatedTo(MtNavigationEventArgs args)
+        {
+            // Leave empty!
         }
 
         /// <summary>Called when the page visibility has changed (e.g. the app has been suspended and it is no longer visible to the user). </summary>
@@ -374,17 +375,12 @@ namespace MyToolkit.Paging
                 InternalPage.BottomAppBar = null;
         }
 
-        // internal methods ensure that base implementations of InternalOn* is always called
-        // even if user does not call base.InternalOn* in the overridden On* method. 
-
-        protected internal virtual void OnNavigatedToCore(MtNavigationEventArgs e)
-        {
-            OnNavigatedTo(e);
-            PageStateHandler.OnNavigatedTo(e);
-        }
-
         protected internal virtual async Task OnNavigatingFromCoreAsync(MtNavigatingCancelEventArgs e)
         {
+#if DEBUG
+            Debug.WriteLine("1. OnNavigatingFrom:" + GetType().FullName);
+#endif
+
             OnNavigatingFrom(e);
 
             var task = OnNavigatingFromAsync(e);
@@ -394,8 +390,25 @@ namespace MyToolkit.Paging
 
         protected internal void OnNavigatedFromCore(MtNavigationEventArgs e)
         {
+#if DEBUG
+            Debug.WriteLine("2. OnNavigatedFrom:" + GetType().FullName);
+#endif
+
             OnNavigatedFrom(e);
             PageStateHandler.OnNavigatedFrom(e);
+        }
+
+        // internal methods ensure that base implementations of InternalOn* is always called
+        // even if user does not call base.InternalOn* in the overridden On* method. 
+
+        protected internal virtual void OnNavigatedToCore(MtNavigationEventArgs e)
+        {
+#if DEBUG
+            Debug.WriteLine("3. OnNavigatedTo:" + GetType().FullName);
+#endif
+
+            OnNavigatedTo(e);
+            PageStateHandler.OnNavigatedTo(e);
         }
     }
 }

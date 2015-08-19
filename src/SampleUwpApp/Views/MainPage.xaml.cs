@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Diagnostics;
+using Windows.UI.Xaml;
 using MyToolkit.Paging;
 
 namespace SampleUwpApp.Views
