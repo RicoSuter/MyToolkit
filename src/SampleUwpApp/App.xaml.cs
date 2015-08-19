@@ -26,13 +26,13 @@ namespace SampleUwpApp
             {
                 new HamburgerItem
                 {
-                    Label = "Home",
+                    Content = "Home",
                     Icon = '\uE825'.ToString(),
                     PageType = typeof(MainPage)
                 },
                 new HamburgerItem
                 {
-                    Label = "Test",
+                    Content = "Test",
                     Icon = '\uE825'.ToString(),
                     PageType = typeof(TestPage)
                 }
@@ -41,7 +41,7 @@ namespace SampleUwpApp
             {
                 new HamburgerItem
                 {
-                    Label = "Settings",
+                    Content = "Settings",
                     Icon = '\uE825'.ToString(),
                     PageType = typeof(SettingsPage)
                 }

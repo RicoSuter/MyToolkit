@@ -31,7 +31,18 @@ namespace SampleUwpApp
         private async void HamburgerOnItemChanged(object sender, HamburgerItem item)
         {
             if (item != null)
-                await Frame.NavigateAsync(item.PageType, item.PageParameter);
+            {
+                if (item.FindPageType)
+                {
+                    var existingPage = Frame.GetNearestPageOfTypeInBackStack(item.PageType);
+                    if (existingPage != null)
+                        await Frame.MovePageToTopOfStackAsync(existingPage);
+                    else
+                        await Frame.NavigateAsync(item.PageType, item.PageParameter);
+                }
+                else
+                    await Frame.NavigateAsync(item.PageType, item.PageParameter);
+            }
         }
     }
 }

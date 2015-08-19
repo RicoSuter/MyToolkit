@@ -254,7 +254,7 @@
                                                              Command="{Binding ElementName=SplitView, Path=Tag}"
                                                              CommandParameter="{Binding}"
                                                              IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                                             Content="{Binding Label}"
+                                                             Content="{Binding Content}"
                                                              Style="{StaticResource HamburgerItemButtonStyle}">
                                                     <RadioButton.Tag>
                                                         <TextBlock FontFamily="Segoe MDL2 Assets"
@@ -275,7 +275,7 @@
                                                              Command="{Binding ElementName=SplitView, Path=Tag}"
                                                              CommandParameter="{Binding}"
                                                              IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                                             Content="{Binding Label}"
+                                                             Content="{Binding Content}"
                                                              Style="{StaticResource HamburgerItemButtonStyle}">
                                                     <RadioButton.Tag>
                                                         <TextBlock FontFamily="Segoe MDL2 Assets"

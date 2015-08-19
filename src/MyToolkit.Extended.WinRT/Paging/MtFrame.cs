@@ -108,7 +108,7 @@ namespace MyToolkit.Paging
                 }
             }
         }
-        
+
 #if WINDOWS_UAP
 
         /// <summary>Gets or sets a value indicating whether the back button is automatically shown and hidden by the frame (default: true).</summary>
@@ -377,28 +377,30 @@ namespace MyToolkit.Paging
         /// <returns>Returns true if the navigation process has not been cancelled. </returns>
         public async Task<bool> NavigateAsync(Type pageType, object parameter)
         {
-            try
-            {
-                IsNavigating = true;
+            var newPage = new MtPageDescription(pageType, parameter);
+            return await NavigateAsync(newPage);
+        }
 
-                var newPage = new MtPageDescription(pageType, parameter);
-
-                var currentPage = CurrentPage;
-                if (currentPage != null)
-                {
-                    if (await RaisePageOnNavigatingFromAsync(CurrentPage, newPage, NavigationMode.New))
-                        return false;
-                }
-
-                RemoveForwardStack();
-                await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.New, currentPage, newPage, CurrentIndex + 1);
-
+        /// <summary>Moves and navigates the page to the top of the page stack and removes it from the current position.</summary>
+        /// <param name="page">The page.</param>
+        /// <returns>True if page is now on top of the stack (failed when navigation from the current page failed).</returns>
+        public async Task<bool> MovePageToTopOfStackAsync(MtPageDescription page)
+        {
+            if (CurrentPage == page)
                 return true;
-            }
-            finally
+
+            var index = _pages.IndexOf(page);
+            if (index != -1)
             {
-                IsNavigating = false;
+                _pages.RemoveAt(index);
+                _currentIndex--;
+
+                if (await NavigateAsync(page))
+                    return true;
+
+                _pages.Insert(index, page);
             }
+            return false;
         }
 
         /// <summary>Clears all pages from the page back stack.</summary>
@@ -478,6 +480,30 @@ namespace MyToolkit.Paging
         {
             base.OnApplyTemplate();
             InternalFrame = (Frame)GetTemplateChild("Frame");
+        }
+
+        private async Task<bool> NavigateAsync(MtPageDescription newPage)
+        {
+            try
+            {
+                IsNavigating = true;
+
+                var currentPage = CurrentPage;
+                if (currentPage != null)
+                {
+                    if (await RaisePageOnNavigatingFromAsync(CurrentPage, newPage, NavigationMode.New))
+                        return false;
+                }
+
+                RemoveForwardStack();
+                await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.New, currentPage, newPage, CurrentIndex + 1);
+
+                return true;
+            }
+            finally
+            {
+                IsNavigating = false;
+            }
         }
 
         /// <exception cref="InvalidOperationException">The frame cannot go forward or back</exception>
