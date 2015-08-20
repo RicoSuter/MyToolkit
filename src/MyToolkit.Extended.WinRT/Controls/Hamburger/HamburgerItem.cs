@@ -50,8 +50,17 @@ namespace MyToolkit.Controls
             set { SetValue(IsSelectedProperty, value); }
         }
 
+        public static readonly DependencyProperty IsEnabledProperty = DependencyProperty.Register(
+            "IsEnabled", typeof (bool), typeof (HamburgerItem), new PropertyMetadata(true));
+
+        public bool IsEnabled
+        {
+            get { return (bool) GetValue(IsEnabledProperty); }
+            set { SetValue(IsEnabledProperty, value); }
+        }
+
         public static readonly DependencyProperty CanBeSelectedProperty = DependencyProperty.Register(
-            "CanBeSelected", typeof (bool), typeof (HamburgerItem), new PropertyMetadata(false));
+            "CanBeSelected", typeof (bool), typeof (HamburgerItem), new PropertyMetadata(true));
 
         public bool CanBeSelected
         {

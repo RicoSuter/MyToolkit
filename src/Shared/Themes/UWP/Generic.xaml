@@ -1267,9 +1267,10 @@
 
     <DataTemplate x:Key="HamburgerItemTemplate">
         <RadioButton GroupName="Nav" 
+                     IsEnabled="{Binding IsEnabled}"
+                     IsChecked="{Binding IsSelected, Mode=TwoWay}"
                      Command="{Binding ElementName=SplitView, Path=Tag}"
                      CommandParameter="{Binding}"
-                     IsChecked="{Binding IsSelected, Mode=TwoWay}"
                      Content="{Binding Content}"
                      HorizontalContentAlignment="Stretch"
                      Style="{StaticResource HamburgerItemButtonStyle}">

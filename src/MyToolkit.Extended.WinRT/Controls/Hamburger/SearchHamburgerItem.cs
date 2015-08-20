@@ -19,6 +19,7 @@ namespace MyToolkit.Controls
             _textBox.KeyUp += OnTextBoxKeyUp;
             _textBox.GotFocus += OnTextBoxGotFocus;
 
+            CanBeSelected = false; // TODO: Implement this
             Content = _textBox;
             Icon = '\uE11A'.ToString();
             ShowIconWhenPaneIsOpen = false;
