@@ -1,7 +1,7 @@
 using System.Linq;
-using MyToolkit.Paging;
+using MyToolkit.Controls;
 
-namespace SampleUwpApp
+namespace MyToolkit.Paging
 {
     public class HamburgerFrame
     {
@@ -22,26 +22,29 @@ namespace SampleUwpApp
 
         private void FrameOnNavigated(object sender, MtNavigationEventArgs args)
         {
-            var currentItem = Hamburger.TopItems.Concat(Hamburger.BottomItems)
+            var currentItem = Hamburger.TopItems
+                .Concat(Hamburger.BottomItems)
+                .OfType<PageHamburgerItem>()
                 .FirstOrDefault(i => i.PageType == Frame.CurrentPage.Type); 
 
             Hamburger.CurrentItem = currentItem;
         }
 
-        private async void HamburgerOnItemChanged(object sender, HamburgerItem item)
+        private async void HamburgerOnItemChanged(object sender, HamburgerItemChangedEventArgs args)
         {
-            if (item != null)
+            if (args.Item is PageHamburgerItem)
             {
-                if (item.FindPageType)
+                var pageItem = (PageHamburgerItem)args.Item;
+                if (pageItem.FindPageType)
                 {
-                    var existingPage = Frame.GetNearestPageOfTypeInBackStack(item.PageType);
+                    var existingPage = Frame.GetNearestPageOfTypeInBackStack(pageItem.PageType);
                     if (existingPage != null)
                         await Frame.MovePageToTopOfStackAsync(existingPage);
                     else
-                        await Frame.NavigateAsync(item.PageType, item.PageParameter);
+                        await Frame.NavigateAsync(pageItem.PageType, pageItem.PageParameter);
                 }
                 else
-                    await Frame.NavigateAsync(item.PageType, item.PageParameter);
+                    await Frame.NavigateAsync(pageItem.PageType, pageItem.PageParameter);
             }
         }
     }

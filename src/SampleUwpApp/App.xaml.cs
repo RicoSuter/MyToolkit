@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using MyToolkit.Controls;
 using MyToolkit.Paging;
 using SampleUwpApp.Views;
 
@@ -24,25 +27,26 @@ namespace SampleUwpApp
             _hamburgerFrame.Hamburger.Header = new HamburgerHeader();
             _hamburgerFrame.Hamburger.TopItems = new ObservableCollection<HamburgerItem>
             {
-                new HamburgerItem
+                new PageHamburgerItem
                 {
                     Content = "Home",
-                    Icon = '\uE825'.ToString(),
+                    Icon = '\uE10F'.ToString(),
                     PageType = typeof(MainPage)
                 },
-                new HamburgerItem
+                new PageHamburgerItem
                 {
                     Content = "Test",
-                    Icon = '\uE825'.ToString(),
+                    Icon = '\uE13D'.ToString(),
                     PageType = typeof(TestPage)
                 }
             };
             _hamburgerFrame.Hamburger.BottomItems = new ObservableCollection<HamburgerItem>
             {
-                new HamburgerItem
+                new SearchHamburgerItem(),
+                new PageHamburgerItem
                 {
                     Content = "Settings",
-                    Icon = '\uE825'.ToString(),
+                    Icon = '\uE115'.ToString(),
                     PageType = typeof(SettingsPage)
                 }
             };

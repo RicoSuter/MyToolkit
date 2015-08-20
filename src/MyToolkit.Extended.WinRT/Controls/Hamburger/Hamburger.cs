@@ -6,13 +6,14 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using MyToolkit.Command;
 
-namespace SampleUwpApp
+namespace MyToolkit.Controls
 {
     public sealed class Hamburger : Control
     {
         private RadioButton _hamburgerButton;
         private SplitView _splitView;
         private HamburgerItem _currentItem;
+        private bool _isChanging;
 
         public Hamburger()
         {
@@ -106,15 +107,13 @@ namespace SampleUwpApp
         public static readonly DependencyProperty IsPaneOpenProperty = DependencyProperty.Register(
             "IsPaneOpen", typeof (bool), typeof (Hamburger), new PropertyMetadata(default(bool)));
 
-        private bool _isChanging;
-
         public bool IsPaneOpen
         {
             get { return (bool) GetValue(IsPaneOpenProperty); }
             set { SetValue(IsPaneOpenProperty, value); }
         }
 
-        public event EventHandler<HamburgerItem> ItemChanged;
+        public event EventHandler<HamburgerItemChangedEventArgs> ItemChanged;
 
         public HamburgerItem CurrentItem
         {
@@ -127,7 +126,6 @@ namespace SampleUwpApp
                 if (_currentItem != value)
                 {
                     _currentItem = value;
-
                     _isChanging = true; 
 
                     foreach (var item in TopItems.Concat(BottomItems))
@@ -150,6 +148,11 @@ namespace SampleUwpApp
 
             _splitView = (SplitView)GetTemplateChild("SplitView");
             _splitView.Tag = new RelayCommand<HamburgerItem>(RaiseItemChanged);
+            _splitView.PaneClosed += (sender, args) =>
+            {
+                if (!IsPaneOpen)
+                    IsPaneOpen = false;
+            };
 
             _hamburgerButton = (RadioButton)GetTemplateChild("HamburgerButton");
             _hamburgerButton.Click += OnTogglePane;
@@ -171,10 +174,13 @@ namespace SampleUwpApp
 
                 var copy = ItemChanged;
                 if (copy != null)
-                    copy(this, item);
+                    copy(this, new HamburgerItemChangedEventArgs(item));
+
+                item.RaiseSelected(this);
             }
 
-            IsPaneOpen = false;
+            if (item.AutoClosePane)
+                IsPaneOpen = false;
         }
     }
 }
