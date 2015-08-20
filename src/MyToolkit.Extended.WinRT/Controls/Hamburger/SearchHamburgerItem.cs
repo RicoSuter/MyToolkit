@@ -21,8 +21,8 @@ namespace MyToolkit.Controls
 
             CanBeSelected = false; // TODO: Implement this
             Content = _textBox;
-            Icon = '\uE11A'.ToString();
-            ShowIconWhenPaneIsOpen = false;
+            Icon = new SymbolIcon(Symbol.Find);
+            ShowContentIcon = false;
             Selected += async (sender, args) =>
             {
                 args.Hamburger.IsPaneOpen = true;

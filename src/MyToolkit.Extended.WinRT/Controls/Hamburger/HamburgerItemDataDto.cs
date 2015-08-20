@@ -14,12 +14,21 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty IconProperty = DependencyProperty.Register(
-            "Icon", typeof (string), typeof (HamburgerItemDataDto), new PropertyMetadata(default(string)));
+            "Icon", typeof (object), typeof (HamburgerItemDataDto), new PropertyMetadata(default(object)));
 
-        public string Icon
+        public object Icon
         {
-            get { return (string) GetValue(IconProperty); }
+            get { return (object) GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
+        }
+
+        public static readonly DependencyProperty ContentIconProperty = DependencyProperty.Register(
+            "ContentIcon", typeof (object), typeof (HamburgerItemDataDto), new PropertyMetadata(default(object)));
+
+        public object ContentIcon
+        {
+            get { return (object) GetValue(ContentIconProperty); }
+            set { SetValue(ContentIconProperty, value); }
         }
     }
 }

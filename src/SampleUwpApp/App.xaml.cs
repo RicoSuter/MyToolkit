@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Controls;
 using MyToolkit.Controls;
 using MyToolkit.Paging;
 using SampleUwpApp.Views;
+using AppBarButton = Windows.UI.Xaml.Controls.AppBarButton;
 
 namespace SampleUwpApp
 {
@@ -30,13 +31,15 @@ namespace SampleUwpApp
                 new PageHamburgerItem
                 {
                     Content = "Home",
-                    Icon = ((char)Symbol.Home).ToString(),
+                    ContentIcon = new SymbolIcon(Symbol.Home),
+                    Icon = new SymbolIcon(Symbol.Home),
                     PageType = typeof(MainPage)
                 },
                 new PageHamburgerItem
                 {
                     Content = "Movie",
-                    Icon = '\uE116'.ToString(),
+                    ContentIcon = new SymbolIcon(Symbol.Video),
+                    Icon = new SymbolIcon(Symbol.Video),
                     PageType = typeof(MoviePage)
                 }
             };
@@ -46,7 +49,8 @@ namespace SampleUwpApp
                 new PageHamburgerItem
                 {
                     Content = "Settings",
-                    Icon = '\uE115'.ToString(),
+                    ContentIcon = new SymbolIcon(Symbol.Setting),
+                    Icon = new SymbolIcon(Symbol.Setting),
                     PageType = typeof(SettingsPage)
                 }
             };
