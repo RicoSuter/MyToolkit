@@ -7,20 +7,20 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="db9e441d-c089-42e3-be63-31785205e5e1"
-    Publisher="CN=mail"
+    Name="2b0574a8-20fa-46b5-8c93-7ef17815c639"
+    Publisher="CN=Rico"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="db9e441d-c089-42e3-be63-31785205e5e1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="2b0574a8-20fa-46b5-8c93-7ef17815c639" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>SampleUwpApp</DisplayName>
-    <PublisherDisplayName>mail</PublisherDisplayName>
+    <PublisherDisplayName>Rico</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.10069.0" MaxVersionTested="10.0.10069.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
 
   <Resources>
@@ -33,10 +33,11 @@
       EntryPoint="SampleUwpApp.App">
       <uap:VisualElements
         DisplayName="SampleUwpApp"
-        Square150x150Logo="Assets\Logo.png"
-        Square44x44Logo="Assets\SmallLogo.png"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
         Description="SampleUwpApp"
-        BackgroundColor="#464646">
+        BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>

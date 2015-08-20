@@ -35,9 +35,9 @@ namespace SampleUwpApp
                 },
                 new PageHamburgerItem
                 {
-                    Content = "Test",
-                    Icon = '\uE13D'.ToString(),
-                    PageType = typeof(TestPage)
+                    Content = "Movie",
+                    Icon = '\uE116'.ToString(),
+                    PageType = typeof(MoviePage)
                 }
             };
             _hamburgerFrame.Hamburger.BottomItems = new ObservableCollection<HamburgerItem>

@@ -150,7 +150,7 @@ namespace MyToolkit.Controls
             _splitView.Tag = new RelayCommand<HamburgerItem>(RaiseItemChanged);
             _splitView.PaneClosed += (sender, args) =>
             {
-                if (!IsPaneOpen)
+                if (IsPaneOpen)
                     IsPaneOpen = false;
             };
 
