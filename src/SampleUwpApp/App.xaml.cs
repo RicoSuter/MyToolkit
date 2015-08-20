@@ -30,7 +30,7 @@ namespace SampleUwpApp
                 new PageHamburgerItem
                 {
                     Content = "Home",
-                    Icon = '\uE10F'.ToString(),
+                    Icon = ((char)Symbol.Home).ToString(),
                     PageType = typeof(MainPage)
                 },
                 new PageHamburgerItem
