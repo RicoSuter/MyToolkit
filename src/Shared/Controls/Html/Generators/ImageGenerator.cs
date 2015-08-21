@@ -70,7 +70,7 @@ namespace MyToolkit.Controls.Html.Generators
                     image.Height = height;
 
                 htmlView.SizeDependentControls.Add(imageBlock);
-                return image;
+                return new ContentPresenter { Content = image };
             }
             catch
             {

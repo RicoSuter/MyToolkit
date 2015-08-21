@@ -23,6 +23,7 @@ namespace MyToolkit.Controls
         public SearchHamburgerItem()
         {
             _searchBox = new SearchBox();
+            _searchBox.Loaded += delegate { _searchBox.PlaceholderText = PlaceholderText; };
             _searchBox.QuerySubmitted += OnQuerySubmitted;
             _searchBox.GotFocus += OnGotFocus;
 
@@ -41,6 +42,9 @@ namespace MyToolkit.Controls
                 });
             };
         }
+
+        /// <summary>Gets or sets the text that is displayed in the control until the value is changed by a user action or some other operation.</summary>
+        public string PlaceholderText { get; set; }
 
         /// <summary>Occurs when the user submits a search query.</summary>
         public event TypedEventHandler<SearchBox, SearchBoxQuerySubmittedEventArgs> QuerySubmitted

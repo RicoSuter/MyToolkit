@@ -35,6 +35,10 @@ namespace SampleUwpApp
                     Icon = new SymbolIcon(Symbol.Home),
                     PageType = typeof(MainPage)
                 },
+                new SearchHamburgerItem
+                {
+                    PlaceholderText = "Search"
+                },
                 new PageHamburgerItem
                 {
                     Content = "Movie",
@@ -45,7 +49,6 @@ namespace SampleUwpApp
             };
             _hamburgerFrameFactory.Hamburger.BottomItems = new ObservableCollection<HamburgerItem>
             {
-                new SearchHamburgerItem(),
                 new PageHamburgerItem
                 {
                     Content = "Settings",
