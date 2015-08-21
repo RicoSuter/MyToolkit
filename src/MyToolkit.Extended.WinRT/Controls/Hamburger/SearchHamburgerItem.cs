@@ -1,55 +1,69 @@
-using System;
-using Windows.System;
+//-----------------------------------------------------------------------
+// <copyright file="SearchHamburgerItem.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>http://mytoolkit.codeplex.com/license</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
+using MyToolkit.UI;
 
 namespace MyToolkit.Controls
 {
-    public class SearchHamburgerItem : HamburgerItem
+    /// <summary>A hamburger item which shows a search box.</summary>
+    public class SearchHamburgerItem : PageHamburgerItem
     {
-        private readonly TextBox _textBox;
+        private readonly SearchBox _searchBox;
 
-        public event EventHandler<HamburgerItemSearchEventArgs> Search;
-
+        /// <summary>Initializes a new instance of the <see cref="SearchHamburgerItem"/> class.</summary>
         public SearchHamburgerItem()
         {
-            _textBox = new TextBox(); 
-            _textBox.KeyUp += OnTextBoxKeyUp;
-            _textBox.GotFocus += OnTextBoxGotFocus;
+            _searchBox = new SearchBox();
+            _searchBox.QuerySubmitted += OnQuerySubmitted;
+            _searchBox.GotFocus += OnGotFocus;
 
-            CanBeSelected = false; // TODO: Implement this
-            Content = _textBox;
+            Content = _searchBox;
             Icon = new SymbolIcon(Symbol.Find);
+
+            CanBeSelected = false;
             ShowContentIcon = false;
-            Selected += async (sender, args) =>
+
+            Click += (sender, args) =>
             {
                 args.Hamburger.IsPaneOpen = true;
-                await args.Hamburger.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                args.Hamburger.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    ((TextBox)Content).Focus(FocusState.Programmatic);
+                    _searchBox.Focus(FocusState.Programmatic);
                 });
             };
         }
 
-        private void OnTextBoxGotFocus(object sender, RoutedEventArgs routedEventArgs)
+        /// <summary>Occurs when the user submits a search query.</summary>
+        public event TypedEventHandler<SearchBox, SearchBoxQuerySubmittedEventArgs> QuerySubmitted
         {
-            // TODO: Not working
-            IsSelected = true;
+            add { _searchBox.QuerySubmitted += value; }
+            remove { _searchBox.QuerySubmitted -= value; }
         }
 
-        private void OnTextBoxKeyUp(object sender, KeyRoutedEventArgs args)
+        private void OnGotFocus(object sender, RoutedEventArgs routedEventArgs)
         {
-            if (args.Key == VirtualKey.Enter)
+            if (CanBeSelected)
             {
-                var copy = Search;
-                if (copy != null)
-                    copy(this, new HamburgerItemSearchEventArgs());
-
-                _textBox.Text = "";
-                // TODO: Close pane...
+                var hamburger = _searchBox.GetVisualParentOfType<Hamburger>();
+                hamburger.SelectedItem = this; 
             }
+        }
+
+        private void OnQuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
+        {
+            _searchBox.QueryText = "";
+
+            var hamburger = sender.GetVisualParentOfType<Hamburger>();
+            hamburger.IsPaneOpen = false;
         }
     }
 }

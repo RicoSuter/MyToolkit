@@ -266,7 +266,7 @@ namespace MyToolkit.UI
         }
 
 
-        /// <summary>Returns the visual parent of an element. </summary>
+        /// <summary>Gets the visual parent of an element. </summary>
         /// <param name="node">The element whose parent is desired</param>
         /// <returns>The visual parent, or null if not found (usually means visual tree is not ready)</returns>
         public static FrameworkElement GetVisualParent(this FrameworkElement node)
@@ -278,6 +278,23 @@ namespace MyToolkit.UI
             catch (Exception ex)
             {
                 Debug.WriteLine("Exception while trying to get parent. " + ex.Message);
+            }
+            return null;
+        }
+
+        /// <summary>Gets the visual parent of an element and a given type. </summary>
+        /// <param name="element">The element whose parent is desired</param>
+        /// <returns>The visual parent, or null if not found (usually means visual tree is not ready)</returns>
+        public static TParent GetVisualParentOfType<TParent>(this FrameworkElement element)
+            where TParent : FrameworkElement
+        {
+            var parent = VisualTreeHelper.GetParent(element);
+            while (parent != null)
+            {
+                if (parent is TParent)
+                    return (TParent)parent;
+
+                parent = VisualTreeHelper.GetParent(parent);
             }
             return null;
         }

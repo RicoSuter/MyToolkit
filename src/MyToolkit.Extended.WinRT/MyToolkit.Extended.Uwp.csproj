@@ -296,14 +296,13 @@
     <Compile Include="Controls\DataGridTemplatedColumn.cs" />
     <Compile Include="Controls\DefaultDataGridCell.cs" />
     <Compile Include="Controls\Hamburger\Hamburger.cs" />
-    <Compile Include="Paging\HamburgerFrame.cs" />
+    <Compile Include="Controls\Hamburger\HamburgerItemClickedEventArgs.cs" />
+    <Compile Include="Paging\HamburgerFrameFactory.cs" />
     <Compile Include="Controls\Hamburger\HamburgerItem.cs" />
     <Compile Include="Controls\Hamburger\HamburgerItemChangedEventArgs.cs" />
-    <Compile Include="Controls\Hamburger\HamburgerItemSearchEventArgs.cs" />
     <Compile Include="Controls\Hamburger\HamburgerItemSelectedEventArgs.cs" />
     <Compile Include="Controls\Hamburger\PageHamburgerItem.cs" />
     <Compile Include="Controls\Hamburger\SearchHamburgerItem.cs" />
-    <Compile Include="Controls\Hamburger\HamburgerItemDataDto.cs" />
     <Compile Include="Controls\ItemsWrapGridExtensions.cs" />
     <Compile Include="Controls\MtGridView.cs" />
     <Compile Include="Controls\GenericDataTemplateSelector.cs" />

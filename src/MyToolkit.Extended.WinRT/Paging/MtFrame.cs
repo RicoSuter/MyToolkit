@@ -422,7 +422,7 @@ namespace MyToolkit.Paging
             var frameDescription = DataContractSerialization.Deserialize<MtFrameDescription>(data, MtSuspensionManager.KnownTypes.ToArray());
 
             _pages = frameDescription.PageStack;
-            CurrentIndex = frameDescription.PageIndex;
+            CurrentIndex = frameDescription.CurrentPageIndex;
 
             if (CurrentIndex != -1)
             {
@@ -454,7 +454,7 @@ namespace MyToolkit.Paging
             }
 
             var output = DataContractSerialization.Serialize(
-                new MtFrameDescription { PageIndex = currentIndexToSerialize, PageStack = pagesToSerialize },
+                new MtFrameDescription { CurrentPageIndex = currentIndexToSerialize, PageStack = pagesToSerialize },
                 true, MtSuspensionManager.KnownTypes.ToArray());
 
             return output;

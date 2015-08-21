@@ -1163,12 +1163,65 @@
     </Style>-->
 
     <!-- Hamburger -->
-    <SolidColorBrush x:Key="NavButtonPressedBackgroundBrush" Color="{ThemeResource SystemListMediumColor}" />
+    <!--<SolidColorBrush x:Key="NavButtonPressedBackgroundBrush" Color="{ThemeResource SystemListMediumColor}" />
     <SolidColorBrush x:Key="NavButtonHoverBackgroundBrush" Color="{ThemeResource SystemListLowColor}" />
     <SolidColorBrush x:Key="NavButtonCheckedBackgroundBrush" Color="{ThemeResource SystemListAccentLowColor}" />
 
     <SolidColorBrush x:Key="NavButtonCheckedPressedBackgroundBrush" Color="{ThemeResource SystemListAccentMediumColor}" />
-    <SolidColorBrush x:Key="NavButtonCheckedHoverBackgroundBrush" Color="{ThemeResource SystemListAccentHighColor}" />
+    <SolidColorBrush x:Key="NavButtonCheckedHoverBackgroundBrush" Color="{ThemeResource SystemListAccentHighColor}" />-->
+
+    <DataTemplate x:Key="HamburgerItemTemplate">
+        <Grid Margin="-12">
+            <!-- closed -->
+            <ContentPresenter Width="48" Height="48" 
+                              HorizontalAlignment="Left" VerticalAlignment="Center" 
+                              Visibility="{Binding ElementName=SplitView, Path=IsPaneOpen, Converter={StaticResource nc}}">
+                <ContentPresenter.Content>
+                    <!-- icon -->
+                    <ContentPresenter FontSize="16" 
+                                      Width="48" Height="48" 
+                                      FontFamily="Segoe MDL2 Assets" 
+                                      UseLayoutRounding="True"
+                                      VerticalAlignment="Center" 
+                                      HorizontalAlignment="Center"
+                                      Content="{Binding Icon}">
+                    </ContentPresenter>
+                </ContentPresenter.Content>
+            </ContentPresenter>
+
+            <!-- open -->
+            <Grid Height="48" 
+                  Visibility="{Binding ElementName=SplitView, Path=IsPaneOpen, Converter={StaticResource vc}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- icon -->
+                <ContentPresenter Width="48" HorizontalAlignment="Left"
+                                             Visibility="{Binding ShowContentIcon, Converter={StaticResource vc}}">
+                    <ContentPresenter.Content>
+                        <ContentPresenter FontSize="16" 
+                                          FontFamily="Segoe MDL2 Assets" 
+                                          UseLayoutRounding="True"
+                                          VerticalAlignment="Center" 
+                                          HorizontalAlignment="Center"
+                                          Content="{Binding ContentIcon}">
+                        </ContentPresenter>
+                    </ContentPresenter.Content>
+                </ContentPresenter>
+
+                <!-- label -->
+                <ContentPresenter Grid.Column="1"
+                                  Margin="10,-1,10,0"
+                                  Content="{Binding Content}"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Stretch"
+                        		  AutomationProperties.AccessibilityView="Raw" />
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
 
     <Style TargetType="controls:Hamburger">
         <Setter Property="DisplayMode" Value="CompactOverlay" />
@@ -1215,18 +1268,18 @@
                             </Grid.ColumnDefinitions>
 
                             <!-- Hamburger button -->
-                            <RadioButton x:Name="HamburgerButton"
-                                         FontSize="16"
-                                         VerticalAlignment="Top" 
-                                         HorizontalAlignment="Left"
-                                         UseLayoutRounding="True" 
-                                         Foreground="{TemplateBinding HamburgerForegroundBrush}"
-                                         Background="{TemplateBinding HamburgerBackgroundBrush}" 
-                                         Style="{StaticResource HamburgerItemButtonStyle}">
-                                <RadioButton.Tag>
-                                    <controls:HamburgerItemDataDto SplitView="{Binding ElementName=SplitView}" Icon="&#xE700;" />
-                                </RadioButton.Tag>
-                            </RadioButton>
+                            <Button x:Name="HamburgerButton"
+                                    BorderThickness="0"
+                                    FontSize="16" 
+                                    Width="48" Height="48" 
+                                    FontFamily="Segoe MDL2 Assets" 
+                                    UseLayoutRounding="True"
+                                    VerticalAlignment="Center" 
+                                    HorizontalAlignment="Center"
+                                    Content="&#xE700;"
+                                    Foreground="{TemplateBinding HamburgerForegroundBrush}"
+                                    Background="{TemplateBinding HamburgerBackgroundBrush}">
+                            </Button>
 
                             <!-- Header -->
                             <Border Grid.Column="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -1240,6 +1293,7 @@
                                    DisplayMode="{TemplateBinding DisplayMode}" 
                                    IsPaneOpen="{TemplateBinding IsPaneOpen}" 
                                    OpenPaneLength="{TemplateBinding PaneWidth}">
+
                             <SplitView.Pane>
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -1248,13 +1302,27 @@
                                     </Grid.RowDefinitions>
 
                                     <!-- Top items -->
-                                    <ItemsControl ItemsSource="{TemplateBinding TopItems}" 
-                                                  ItemTemplate="{StaticResource HamburgerItemTemplate}" />
+                                    <ListBox ItemsSource="{TemplateBinding TopItems}"
+                                             SelectedItem="{Binding Path=SelectedTopItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                             ItemTemplate="{StaticResource HamburgerItemTemplate}">
+                                        <ListBox.ItemContainerStyle>
+                                            <Style TargetType="ListBoxItem">
+                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            </Style>
+                                        </ListBox.ItemContainerStyle>
+                                    </ListBox>
 
                                     <!-- Bottom items -->
-                                    <ItemsControl Grid.Row="1" 
-                                                  ItemsSource="{TemplateBinding BottomItems}" 
-                                                  ItemTemplate="{StaticResource HamburgerItemTemplate}" />
+                                    <ListBox Grid.Row="1" 
+                                             ItemsSource="{TemplateBinding BottomItems}" 
+                                             SelectedItem="{Binding Path=SelectedBottomItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                             ItemTemplate="{StaticResource HamburgerItemTemplate}">
+                                        <ListBox.ItemContainerStyle>
+                                            <Style TargetType="ListBoxItem">
+                                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            </Style>
+                                        </ListBox.ItemContainerStyle>
+                                    </ListBox>
                                 </Grid>
                             </SplitView.Pane>
                             <SplitView.Content>
@@ -1266,220 +1334,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <DataTemplate x:Key="HamburgerItemTemplate">
-        <RadioButton GroupName="Nav" 
-                     IsEnabled="{Binding IsEnabled}"
-                     IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                     Command="{Binding ElementName=SplitView, Path=Tag}"
-                     CommandParameter="{Binding}"
-                     Content="{Binding Content}"
-                     HorizontalContentAlignment="Stretch"
-                     Style="{StaticResource HamburgerItemButtonStyle}">
-            <RadioButton.Tag>
-                <controls:HamburgerItemDataDto SplitView="{Binding ElementName=SplitView}" 
-                                               ContentIcon="{Binding ContentIcon}"
-                                               Icon="{Binding Icon}" />
-            </RadioButton.Tag>
-        </RadioButton>
-    </DataTemplate>
-
-    <Style x:Key="HamburgerItemButtonStyle" TargetType="RadioButton">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{ThemeResource SystemBaseHighColor}" />
-        <Setter Property="Padding" Value="1,4,0,0" />
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="RadioButton">
-                    <Border Background="{TemplateBinding Background}" 
-                            BorderBrush="{TemplateBinding BorderBrush}" 
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="PointerOver">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
-                                                                       Storyboard.TargetName="HoverBackground">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
-                                                                       Storyboard.TargetName="CheckedHoverBackground">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
-                                                                       Storyboard.TargetName="PressedBackground">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
-                                                                       Storyboard.TargetName="CheckedPressedBackground">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NixonGlyph" 
-                                                                       Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" 
-                                                                    Value="{ThemeResource RadioButtonContentDisabledForegroundThemeBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" 
-                                                                       Storyboard.TargetProperty="Foreground">
-                                            <DiscreteObjectKeyFrame KeyTime="0" 
-                                                                    Value="{ThemeResource RadioButtonContentDisabledForegroundThemeBrush}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="CheckStates">
-                                <VisualState x:Name="Checked">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
-                                                                       Storyboard.TargetName="CheckedBackground">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Unchecked" />
-                                <VisualState x:Name="Indeterminate" />
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="FocusStates">
-                                <VisualState x:Name="Focused">
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0" 
-                                                         Storyboard.TargetName="FocusVisualWhite" 
-                                                         Storyboard.TargetProperty="Opacity" To="1" />
-                                        <DoubleAnimation Duration="0" 
-                                                         Storyboard.TargetName="FocusVisualBlack" 
-                                                         Storyboard.TargetProperty="Opacity" To="1" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Unfocused" />
-                                <VisualState x:Name="PointerFocused" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="48" />
-                            </Grid.RowDefinitions>
-
-                            <!--<Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="48" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>-->
-
-                            <Grid.Resources>
-                                <Style TargetType="Rectangle" x:Key="FocusVisual">
-                                    <Setter Property="Opacity" Value="0" />
-                                    <Setter Property="StrokeDashArray" Value="1,1" />
-                                    <Setter Property="StrokeEndLineCap" Value="Square" />
-                                </Style>
-                            </Grid.Resources>
-
-                            <!-- background -->
-                            <Grid x:Name="NotCheckedBackground" Grid.ColumnSpan="4">
-                                <Rectangle x:Name="PressedBackground" Visibility="Collapsed" 
-                                           Fill="{StaticResource NavButtonPressedBackgroundBrush}"/>
-                                <Rectangle x:Name="HoverBackground" Visibility="Collapsed" 
-                                           Fill="{StaticResource NavButtonHoverBackgroundBrush}"/>
-                            </Grid>
-
-                            <Grid x:Name="CheckedBackground" 
-                                  Grid.ColumnSpan="4" 
-                                  Visibility="Collapsed" 
-                                  Background="{StaticResource NavButtonCheckedBackgroundBrush}">
-                                <Rectangle x:Name="CheckedPressedBackground" Visibility="Collapsed" 
-                                           Fill="{StaticResource NavButtonCheckedPressedBackgroundBrush}"/>
-                                <Rectangle x:Name="CheckedHoverBackground" Visibility="Collapsed" 
-                                           Fill="{StaticResource NavButtonCheckedHoverBackgroundBrush}"/>
-                            </Grid>
-
-                            <!-- focus -->
-                            <Rectangle x:Name="FocusVisualWhite" Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}"
-                                       StrokeDashOffset="1.5" Style="{StaticResource FocusVisual}" />
-                            <Rectangle x:Name="FocusVisualBlack" Stroke="{ThemeResource FocusVisualBlackStrokeThemeBrush}" 
-                                       StrokeDashOffset="0.5" Style="{StaticResource FocusVisual}" />
-
-                            <!-- icon -->
-                            <ContentPresenter x:Name="NixonGlyph" Width="48" HorizontalAlignment="Left" 
-                                              Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, 
-                                                                   Path=Tag.SplitView.IsPaneOpen, Converter={StaticResource nc}}">
-                                <ContentPresenter.Content>
-                                    <ContentPresenter FontSize="16" 
-                                                      FontFamily="Segoe MDL2 Assets" 
-                                                      UseLayoutRounding="True"
-                                                      VerticalAlignment="Center" 
-                                                      HorizontalAlignment="Center"
-                                                      Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag.Icon}">
-                                    </ContentPresenter>
-                                </ContentPresenter.Content>
-                            </ContentPresenter>
-
-                            <!-- content -->
-                            <Grid Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag.SplitView.IsPaneOpen, Converter={StaticResource vc}}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                </Grid.ColumnDefinitions>
-
-                                <ContentPresenter Width="48" HorizontalAlignment="Left"
-                                                  Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, 
-                                                                       Path=CommandParameter.ShowContentIcon, Converter={StaticResource vc}}">
-                                    <ContentPresenter.Content>
-                                        <ContentPresenter FontSize="16" 
-                                                          FontFamily="Segoe MDL2 Assets" 
-                                                          UseLayoutRounding="True"
-                                                          VerticalAlignment="Center" 
-                                                          HorizontalAlignment="Center"
-                                                          Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag.ContentIcon}">
-                                        </ContentPresenter>
-                                    </ContentPresenter.Content>
-                                </ContentPresenter>
-
-                                <ContentPresenter Grid.Column="1"
-                                                  x:Name="ContentPresenter" 
-                                                  Margin="10,-1,10,0"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                        			              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                        			              AutomationProperties.AccessibilityView="Raw"
-                        			              Content="{TemplateBinding Content}"
-                        			              ContentTemplate="{TemplateBinding ContentTemplate}"
-                        			              ContentTransitions="{TemplateBinding ContentTransitions}" />
-                            </Grid>
-                        </Grid>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 </ResourceDictionary>
-  

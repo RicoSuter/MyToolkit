@@ -7,7 +7,7 @@ namespace MyToolkit.Paging
     internal class MtFrameDescription
     {
         [DataMember]
-        public int PageIndex { get; set; }
+        public int CurrentPageIndex { get; set; }
 
         [DataMember]
         public List<MtPageDescription> PageStack { get; set; }

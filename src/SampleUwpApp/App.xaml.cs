@@ -13,7 +13,7 @@ namespace SampleUwpApp
 {
     sealed partial class App : MtApplication
     {
-        private HamburgerFrame _hamburgerFrame;
+        private HamburgerFrameFactory _hamburgerFrameFactory;
 
         public App()
         {
@@ -24,9 +24,9 @@ namespace SampleUwpApp
 
         public override UIElement CreateWindowContentElement()
         {
-            _hamburgerFrame = new HamburgerFrame();
-            _hamburgerFrame.Hamburger.Header = new HamburgerHeader();
-            _hamburgerFrame.Hamburger.TopItems = new ObservableCollection<HamburgerItem>
+            _hamburgerFrameFactory = new HamburgerFrameFactory();
+            _hamburgerFrameFactory.Hamburger.Header = new HamburgerHeader();
+            _hamburgerFrameFactory.Hamburger.TopItems = new ObservableCollection<HamburgerItem>
             {
                 new PageHamburgerItem
                 {
@@ -43,7 +43,7 @@ namespace SampleUwpApp
                     PageType = typeof(MoviePage)
                 }
             };
-            _hamburgerFrame.Hamburger.BottomItems = new ObservableCollection<HamburgerItem>
+            _hamburgerFrameFactory.Hamburger.BottomItems = new ObservableCollection<HamburgerItem>
             {
                 new SearchHamburgerItem(),
                 new PageHamburgerItem
@@ -54,12 +54,12 @@ namespace SampleUwpApp
                     PageType = typeof(SettingsPage)
                 }
             };
-            return _hamburgerFrame.Hamburger;
+            return _hamburgerFrameFactory.Hamburger;
         }
 
         public override MtFrame GetFrame(UIElement windowContentElement)
         {
-            return _hamburgerFrame.Frame;
+            return _hamburgerFrameFactory.Frame;
         }
     }
 }
