@@ -10,7 +10,7 @@ namespace MyToolkit.Controls
             OnlyVisibleOnSelection = onlyVisibleOnSelection;
         }
 
-        /// <summary>Gets or sets a value indicating whether the cell is only visible when the row is selected.  </summary>
+        /// <summary>Gets or sets a value indicating whether the cell is only visible when the row is selected.</summary>
         public bool OnlyVisibleOnSelection { get; set; }
 
         /// <summary>Called when the cell's row gets selected or unselected. </summary>

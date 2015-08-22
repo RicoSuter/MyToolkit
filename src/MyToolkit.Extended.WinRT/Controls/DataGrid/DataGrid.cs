@@ -91,9 +91,6 @@ namespace MyToolkit.Controls
         public static readonly DependencyProperty HeaderTemplateProperty =
             DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
 
-        public static readonly DependencyProperty CellTemplateProperty =
-            DependencyProperty.Register("CellTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
-
         public static readonly DependencyProperty ColumnsProperty = DependencyProperty.RegisterAttached("Columns",
             typeof(ObservableCollection<DataGridColumnBase>), typeof(DataGrid), new PropertyMetadata(null, OnColumnsPropertyChanged));
 
@@ -151,13 +148,6 @@ namespace MyToolkit.Controls
         {
             get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
             set { SetValue(HeaderTemplateProperty, value); }
-        }
-
-        /// <summary>Gets or sets the cell data template (currently not working). </summary>
-        public DataTemplate CellTemplate
-        {
-            get { return (DataTemplate)GetValue(CellTemplateProperty); }
-            set { SetValue(CellTemplateProperty, value); }
         }
 
         /// <summary>Gets the column description of the <see cref="DataGrid"/>. </summary>
@@ -308,13 +298,10 @@ namespace MyToolkit.Controls
             });
         }
 
-        private void OnPrepareContainerForItem(object sender, PrepareContainerForItemEventArgs e)
+        private void OnPrepareContainerForItem(object sender, PrepareContainerForItemEventArgs args)
         {
-            var row = new DataGridRow(this, e.Item);
-            row.IsSelected = e.Item == SelectedItem;
-
-            var item = (ListBoxItem)e.Element;
-            item.Content = row;
+            var item = (ListBoxItem)args.Element;
+            item.Content = new DataGridRow(this, args.Item);
             item.ContentTemplate = null;
             item.HorizontalContentAlignment = HorizontalAlignment.Stretch;
             item.VerticalContentAlignment = VerticalAlignment.Stretch;

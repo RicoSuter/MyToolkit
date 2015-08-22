@@ -109,7 +109,7 @@
 
     <!-- DataGrid -->
     <Style TargetType="controls:DataGrid">
-        <Setter Property="HeaderBackground" Value="{StaticResource ListBoxItemDisabledForegroundThemeBrush}" />
+        <Setter Property="HeaderBackground" Value="{ThemeResource SystemControlHighlightChromeHighBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:DataGrid">
@@ -126,10 +126,13 @@
                             </ContentPresenter>
                         </Grid>
 
-                        <controls:MtListBox BorderThickness="0" Grid.Row="1" ItemContainerStyle="{TemplateBinding RowStyle}"
-											HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                                            Foreground="{StaticResource ApplicationForegroundThemeBrush}"
-											Style="{StaticResource TransparentListBox}" Margin="0" x:Name="Rows" />
+                        <controls:MtListBox BorderThickness="0" Grid.Row="1"
+                                            ItemContainerStyle="{TemplateBinding RowStyle}"
+											HorizontalContentAlignment="Stretch" 
+                                            VerticalContentAlignment="Stretch"
+                                            Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+											Style="{StaticResource TransparentListBox}" 
+                                            Margin="0" x:Name="Rows" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -143,23 +146,20 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <ContentPresenter Grid.Column="0" VerticalAlignment="Center" 
-                                          FontSize="26.667" Margin="12,0,12,0" 
-                                          Content="{data:Binding Header}" />
+                        <ContentPresenter Grid.Column="0" 
+                                          Margin="12,0,12,2" 
+                                          VerticalAlignment="Center" 
+                                          FontSize="{ThemeResource TextStyleLargeFontSize}" 
+                                          Content="{Binding Header}" />
 
-                        <StackPanel Grid.Column="1" Visibility="{Binding IsSelected, Converter={StaticResource vc}}" 
-									VerticalAlignment="Center" HorizontalAlignment="Left">
+                        <StackPanel Grid.Column="1" 
+                                    Visibility="{Binding IsSelected, Converter={StaticResource vc}}" 
+									VerticalAlignment="Center" 
+                                    HorizontalAlignment="Left">
                             <Path Data="M4,0 L0,8 L8,8 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource vc}}"/>
                             <Path Data="M0,0 L4,8 L8,0 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource nc}}"/>
                         </StackPanel>
                     </Grid>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="CellTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <ContentPresenter Margin="8,0,0,3" Content="{Binding}" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>

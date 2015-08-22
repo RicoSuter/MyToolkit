@@ -1,5 +1,6 @@
 ﻿using System;
 using MyToolkit.Multimedia;
+using MyToolkit.Paging;
 
 namespace SampleUwpApp.Views
 {
@@ -8,6 +9,17 @@ namespace SampleUwpApp.Views
         public MoviePage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(MtNavigationEventArgs args)
+        {
+            if (MediaElement.Source != null)
+                MediaElement.Play();
+        }
+
+        protected override void OnNavigatingFrom(MtNavigatingCancelEventArgs args)
+        {
+            MediaElement.Pause();
         }
 
         private async void OnPlayMovie(object sender, Windows.UI.Xaml.RoutedEventArgs e)

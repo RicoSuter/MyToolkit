@@ -110,6 +110,13 @@
     <!-- DataGrid -->
     <Style TargetType="controls:DataGrid">
         <Setter Property="HeaderBackground" Value="{StaticResource ListBoxItemDisabledForegroundThemeBrush}" />
+        <Setter Property="RowStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Padding" Value="20,15,20,15" />
+                </Style>
+            </Setter.Value>
+        </Setter>
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:DataGrid">
@@ -133,32 +140,25 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
-		<Setter Property="HeaderTemplate">
-			<Setter.Value>
-				<DataTemplate>
-					<Grid Background="Transparent">
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="Auto" />
-							<ColumnDefinition Width="*" />
-						</Grid.ColumnDefinitions>
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
                         <ContentPresenter Grid.Column="0" VerticalAlignment="Center" FontSize="26.667" Margin="15,0,15,0" Content="{data:Binding Header}" />
-						<StackPanel Grid.Column="1" Visibility="{Binding IsSelected, Converter={StaticResource vc}}" 
+                        <StackPanel Grid.Column="1" Visibility="{Binding IsSelected, Converter={StaticResource vc}}" 
 									VerticalAlignment="Center" HorizontalAlignment="Left">
-							<Path Data="M5,0 L0,10 L10,10 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource vc}}"/>
-							<Path Data="M0,0 L5,10 L10,0 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource nc}}"/>
-						</StackPanel>
-					</Grid>
-				</DataTemplate>
-			</Setter.Value>
-		</Setter>
-		<Setter Property="CellTemplate">
-			<Setter.Value>
-				<DataTemplate>
-                    <ContentPresenter Margin="10,0,0,5" Content="{Binding}" />
+                            <Path Data="M5,0 L0,10 L10,10 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource vc}}"/>
+                            <Path Data="M0,0 L5,10 L10,0 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource nc}}"/>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
     
     <!-- ImageButton -->
 	<Style TargetType="controls:ImageButton">

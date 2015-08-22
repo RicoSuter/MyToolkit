@@ -11,13 +11,5 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <!--<StackPanel Margin="12">
-            <TextBlock Text="Settings" />
-            <TimePicker />
-            
-            <Border Width="50" Height="50" Background="Red" ui:TiltEffect.IsTiltEnabled="True" />
-        </StackPanel>-->
-        
-        <controls:ScrollableHtmlView x:Name="Html" InnerMargin="12" InnerMaxWidth="720" />
     </Grid>
 </paging:MtPage>

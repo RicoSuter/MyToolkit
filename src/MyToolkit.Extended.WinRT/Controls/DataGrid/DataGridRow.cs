@@ -6,6 +6,7 @@
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
@@ -24,47 +25,10 @@ namespace MyToolkit.Controls
             Item = item;
             DataGrid = dataGrid;
 
-            var x = 0;
-            var hasStar = false;
-            foreach (var c in dataGrid.Columns)
-            {
-                var cell = c.GenerateElement(item);
+            var hasStar = CreateCells(item);
+            CreateColumnAndRowDefinitions(hasStar);
 
-                var content = new ContentPresenter();
-                content.Content = cell.Control;
-                //content.ContentTemplate = dataGrid.CellTemplate;
-                content.Margin = new Thickness(10, 0, 0, 5); // TODO: Use template and remove margin
-                content.Tag = cell;
-
-                SetColumn(content, x++);
-                Children.Add(content);
-
-                var def = c.CreateGridColumnDefinition();
-                hasStar = hasStar || def.Width.IsStar;
-
-                ColumnDefinitions.Add(def);
-            }
-
-            if (!hasStar)
-                ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-
-            // second row used for details view
-            RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-            RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-
-            Loaded += delegate
-            {
-                if (DataGrid.SelectionMode == SelectionMode.Single)
-                {
-                    if (DataGrid.SelectedItem != null)
-                        IsSelected = DataGrid.SelectedItem.Equals(item);
-                }
-                else
-                {
-                    if (DataGrid.SelectedItems != null)
-                        IsSelected = DataGrid.SelectedItems.Contains(item);
-                }
-            };
+            Loaded += OnLoaded;
         }
 
         /// <summary>Gets the parent <see cref="DataGrid"/>. </summary>
@@ -93,14 +57,58 @@ namespace MyToolkit.Controls
             get
             {
                 return Children
-                    .OfType<ContentPresenter>()
+                    .OfType<FrameworkElement>()
                     .Where(c => c.Tag is DataGridCellBase)
                     .Select(c => (DataGridCellBase)c.Tag)
                     .ToList();
             }
         }
 
-        internal void UpdateItemDetails()
+        private bool CreateCells(object item)
+        {
+            var columnIndex = 0;
+            var hasStar = false;
+            foreach (var column in DataGrid.Columns)
+            {
+                var cell = column.CreateCell(item);
+                cell.Control.Tag = cell;
+
+                SetColumn(cell.Control, columnIndex++);
+                Children.Add(cell.Control);
+
+                var def = column.CreateGridColumnDefinition();
+                hasStar = hasStar || def.Width.IsStar;
+
+                ColumnDefinitions.Add(def);
+            }
+            return hasStar;
+        }
+
+        private void CreateColumnAndRowDefinitions(bool hasStar)
+        {
+            if (!hasStar)
+                ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+            // second row used for details view
+            RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs args)
+        {
+            if (DataGrid.SelectionMode == SelectionMode.Single)
+            {
+                if (DataGrid.SelectedItem != null)
+                    IsSelected = DataGrid.SelectedItem.Equals(Item);
+            }
+            else
+            {
+                if (DataGrid.SelectedItems != null)
+                    IsSelected = DataGrid.SelectedItems.Contains(Item);
+            }
+        }
+
+        private void UpdateItemDetails()
         {
             if (DataGrid.ItemDetailsTemplate != null)
             {

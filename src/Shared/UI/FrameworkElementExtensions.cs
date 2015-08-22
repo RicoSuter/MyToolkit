@@ -425,6 +425,32 @@ namespace MyToolkit.UI
             return GetVisualDescendantsAndSelfIterator(element).Skip(1);
         }
 
+        /// <summary>Get the visual tree descendants of an element.</summary>
+        /// <param name="element">The element.</param>
+        /// <returns>The visual tree descendants of an element.</returns>
+        /// <exception cref="ArgumentNullException">The value of 'element' cannot be null. </exception>
+        public static IEnumerable<TDescendant> GetVisualDescendantsOfType<TDescendant>(this DependencyObject element)
+            where TDescendant : DependencyObject
+        {
+            if (element == null)
+                throw new ArgumentNullException("element");
+
+            return GetVisualDescendantsAndSelfIterator(element).Skip(1).OfType<TDescendant>();
+        }
+
+        /// <summary>Get the first visual tree descendant of an element.</summary>
+        /// <param name="element">The element.</param>
+        /// <returns>The visual tree descendants of an element.</returns>
+        /// <exception cref="ArgumentNullException">The value of 'element' cannot be null. </exception>
+        public static TDescendant GetFirstVisualDescendantOfType<TDescendant>(this DependencyObject element)
+            where TDescendant : DependencyObject
+        {
+            if (element == null)
+                throw new ArgumentNullException("element");
+
+            return GetVisualDescendantsAndSelfIterator(element).Skip(1).OfType<TDescendant>().First();
+        }
+
         /// <summary>Get the visual tree descendants of an element and the element itself. </summary>
         /// <param name="element">The element.</param>
         /// <returns>The visual tree descendants of an element and the element itself.</returns>

@@ -54,7 +54,7 @@ namespace MyToolkit.Controls
         /// <summary>Generates the cell for the given item. </summary>
         /// <param name="dataItem">The item to generate the cell for. </param>
         /// <returns>The <see cref="DataGridCellBase"/>. </returns>
-        public override DataGridCellBase GenerateElement(object dataItem)
+        public override DataGridCellBase CreateCell(object dataItem)
         {
             var block = new TextBlock();
             block.VerticalAlignment = VerticalAlignment.Center;

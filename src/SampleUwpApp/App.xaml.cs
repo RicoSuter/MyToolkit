@@ -45,6 +45,20 @@ namespace SampleUwpApp
                     ContentIcon = new SymbolIcon(Symbol.Video),
                     Icon = new SymbolIcon(Symbol.Video),
                     PageType = typeof(MoviePage)
+                },
+                new PageHamburgerItem
+                {
+                    Content = "Article",
+                    ContentIcon = new SymbolIcon(Symbol.PreviewLink),
+                    Icon = new SymbolIcon(Symbol.PreviewLink),
+                    PageType = typeof(ArticlePage)
+                }, 
+                new PageHamburgerItem
+                {
+                    Content = "DataGrid",
+                    ContentIcon = new SymbolIcon(Symbol.ViewAll),
+                    Icon = new SymbolIcon(Symbol.ViewAll),
+                    PageType = typeof(DataGridPage)
                 }
             };
             _hamburgerFrameFactory.Hamburger.BottomItems = new ObservableCollection<HamburgerItem>

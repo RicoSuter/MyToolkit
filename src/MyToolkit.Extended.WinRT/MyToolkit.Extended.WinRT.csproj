@@ -225,12 +225,17 @@
     <Compile Include="Controls\AppBarButton.cs" />
     <Compile Include="Controls\AppBarToggleButton.cs" />
     <Compile Include="Controls\ColorChooser.cs" />
-    <Compile Include="Controls\DataGridBoundColumn.cs" />
-    <Compile Include="Controls\DataGridColumnCollection.cs" />
-    <Compile Include="Controls\DataGridExtensions.cs" />
-    <Compile Include="Controls\DataGridTemplatedCell.cs" />
-    <Compile Include="Controls\DataGridTemplatedColumn.cs" />
-    <Compile Include="Controls\DefaultDataGridCell.cs" />
+    <Compile Include="Controls\DataGrid\DataGrid.cs" />
+    <Compile Include="Controls\DataGrid\DataGridBoundColumn.cs" />
+    <Compile Include="Controls\DataGrid\DataGridCellBase.cs" />
+    <Compile Include="Controls\DataGrid\DataGridColumnBase.cs" />
+    <Compile Include="Controls\DataGrid\DataGridColumnCollection.cs" />
+    <Compile Include="Controls\DataGrid\DataGridExtensions.cs" />
+    <Compile Include="Controls\DataGrid\DataGridRow.cs" />
+    <Compile Include="Controls\DataGrid\DataGridTemplatedCell.cs" />
+    <Compile Include="Controls\DataGrid\DataGridTemplatedColumn.cs" />
+    <Compile Include="Controls\DataGrid\DataGridTextColumn.cs" />
+    <Compile Include="Controls\DataGrid\DefaultDataGridCell.cs" />
     <Compile Include="Controls\ItemsWrapGridExtensions.cs" />
     <Compile Include="Controls\MtGridView.cs" />
     <Compile Include="Controls\GenericDataTemplateSelector.cs" />
@@ -253,11 +258,6 @@
     <Compile Include="Controls\TimePicker.xaml.cs">
       <DependentUpon>TimePicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DataGrid.cs" />
-    <Compile Include="Controls\DataGridColumnBase.cs" />
-    <Compile Include="Controls\DataGridRow.cs" />
-    <Compile Include="Controls\DataGridTextCell.cs" />
-    <Compile Include="Controls\DataGridTextColumn.cs" />
     <Compile Include="Controls\DatePicker.xaml.cs">
       <DependentUpon>DatePicker.xaml</DependentUpon>
     </Compile>
