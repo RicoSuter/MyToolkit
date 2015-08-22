@@ -18,7 +18,7 @@
             <CheckBox />
         </StackPanel>-->
         
-        <controls:DataGrid x:Name="DataGrid" Grid.Row="1"
+        <controls:DataGrid x:Name="DataGrid" Grid.Row="1" 
                            ItemsSource="{Binding People}" 
                            SelectionMode="Multiple" 
                            SelectedItem="{Binding SelectedPerson, Mode=TwoWay}"

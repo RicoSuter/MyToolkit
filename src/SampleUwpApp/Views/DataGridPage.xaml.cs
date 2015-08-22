@@ -16,7 +16,7 @@ namespace SampleUwpApp.Views
             };
 
             for (int i = 0; i < 30; i++)
-                list.Add(new { FirstName = "Foo", LastName = "Bar", Category = "C" });
+                list.Add(new { FirstName = "Foo", LastName = "Bar", Category = "C" + i });
 
             DataGrid.ItemsSource = list;
         }

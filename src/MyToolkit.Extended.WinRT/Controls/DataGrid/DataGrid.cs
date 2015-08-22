@@ -157,6 +157,24 @@ namespace MyToolkit.Controls
             set { SetValue(ColumnsProperty, value); }
         }
 
+        public static readonly DependencyProperty RowBackgroundOddBrushProperty = DependencyProperty.Register(
+            "RowBackgroundOddBrush", typeof(Brush), typeof(DataGrid), new PropertyMetadata(default(Brush)));
+
+        public Brush RowBackgroundOddBrush
+        {
+            get { return (Brush)GetValue(RowBackgroundOddBrushProperty); }
+            set { SetValue(RowBackgroundOddBrushProperty, value); }
+        }
+
+        public static readonly DependencyProperty RowBackgroundEvenBrushProperty = DependencyProperty.Register(
+            "RowBackgroundEvenBrush", typeof (Brush), typeof (DataGrid), new PropertyMetadata(default(Brush)));
+
+        public Brush RowBackgroundEvenBrush
+        {
+            get { return (Brush) GetValue(RowBackgroundEvenBrushProperty); }
+            set { SetValue(RowBackgroundEvenBrushProperty, value); }
+        }
+
         #endregion
 
         /// <summary>Selects a column for ordering. 

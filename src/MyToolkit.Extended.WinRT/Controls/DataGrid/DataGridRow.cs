@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using MyToolkit.UI;
 
 namespace MyToolkit.Controls
 {
@@ -46,6 +47,8 @@ namespace MyToolkit.Controls
                 if (_isSelected != value)
                 {
                     _isSelected = value;
+
+                    UpdateRowBackgroundBrush();
                     UpdateItemDetails();
                 }
             }
@@ -106,6 +109,18 @@ namespace MyToolkit.Controls
                 if (DataGrid.SelectedItems != null)
                     IsSelected = DataGrid.SelectedItems.Contains(Item);
             }
+
+            UpdateRowBackgroundBrush();
+        }
+
+        private void UpdateRowBackgroundBrush()
+        {
+            // TODO: Update row backgrounds when DataGrid.Items changed
+            var listBoxItem = this.GetVisualParentOfType<ListBoxItem>();
+            if (IsSelected)
+                listBoxItem.Background = null;
+            else
+                listBoxItem.Background = DataGrid.Items.IndexOf(Item) % 2 == 0 ? DataGrid.RowBackgroundEvenBrush : DataGrid.RowBackgroundOddBrush;
         }
 
         private void UpdateItemDetails()
