@@ -13,7 +13,7 @@ namespace SampleUwpApp
 {
     sealed partial class App : MtApplication
     {
-        private HamburgerFrameFactory _hamburgerFrameFactory;
+        private HamburgerFrameBuilder _hamburgerFrameBuilder;
 
         public App()
         {
@@ -24,9 +24,21 @@ namespace SampleUwpApp
 
         public override UIElement CreateWindowContentElement()
         {
-            _hamburgerFrameFactory = new HamburgerFrameFactory();
-            _hamburgerFrameFactory.Hamburger.Header = new HamburgerHeader();
-            _hamburgerFrameFactory.Hamburger.TopItems = new ObservableCollection<HamburgerItem>
+            _hamburgerFrameBuilder = new HamburgerFrameBuilder();
+
+            var searchItem = new SearchHamburgerItem
+            {
+                PlaceholderText = "Search",
+            };
+            searchItem.QuerySubmitted += async (sender, args) =>
+            {
+                await _hamburgerFrameBuilder.MoveOrNavigateToPageAsync(typeof (DataGridPage));
+                var dataGridPage = (DataGridPage) _hamburgerFrameBuilder.Frame.CurrentPage.Page;
+                dataGridPage.Model.Filter = args.QueryText;
+            };
+            
+            _hamburgerFrameBuilder.Hamburger.Header = new HamburgerHeader();
+            _hamburgerFrameBuilder.Hamburger.TopItems = new ObservableCollection<HamburgerItem>
             {
                 new PageHamburgerItem
                 {
@@ -35,10 +47,7 @@ namespace SampleUwpApp
                     Icon = new SymbolIcon(Symbol.Home),
                     PageType = typeof(MainPage)
                 },
-                new SearchHamburgerItem
-                {
-                    PlaceholderText = "Search"
-                },
+                searchItem,
                 new PageHamburgerItem
                 {
                     Content = "Movie",
@@ -61,7 +70,7 @@ namespace SampleUwpApp
                     PageType = typeof(DataGridPage)
                 }
             };
-            _hamburgerFrameFactory.Hamburger.BottomItems = new ObservableCollection<HamburgerItem>
+            _hamburgerFrameBuilder.Hamburger.BottomItems = new ObservableCollection<HamburgerItem>
             {
                 new PageHamburgerItem
                 {
@@ -71,12 +80,12 @@ namespace SampleUwpApp
                     PageType = typeof(SettingsPage)
                 }
             };
-            return _hamburgerFrameFactory.Hamburger;
+            return _hamburgerFrameBuilder.Hamburger;
         }
 
         public override MtFrame GetFrame(UIElement windowContentElement)
         {
-            return _hamburgerFrameFactory.Frame;
+            return _hamburgerFrameBuilder.Frame;
         }
     }
 }

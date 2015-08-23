@@ -32,6 +32,7 @@ namespace MyToolkit.Controls
         private MtListBox _listControl;
         private bool _initialized = false;
         private object _initialSelectedItem;
+        private object _initialFilter;
 
         /// <summary>Initializes a new instance of the <see cref="DataGrid"/> class. </summary>
         public DataGrid()
@@ -214,13 +215,20 @@ namespace MyToolkit.Controls
         /// <param name="filter"></param>
         public void SetFilter<TItem>(Func<TItem, bool> filter)
         {
-            Items.Filter = filter;
+            if (_listControl == null)
+                _initialFilter = filter;
+            else
+            {
+                if (Items != null)
+                    Items.Filter = filter;
+            }
         }
 
         /// <summary>Removes the current filter. </summary>
         public void RemoveFilter()
         {
-            Items.Filter = null;
+            if (Items != null)
+                Items.Filter = null;
         }
 
         protected override void OnApplyTemplate()
@@ -451,6 +459,12 @@ namespace MyToolkit.Controls
                 }
                 else
                     _listControl.ItemsSource = ItemsSource;
+
+                if (_initialFilter != null)
+                {
+                    Items.Filter = _initialFilter;
+                    _initialFilter = null; 
+                }
             }
         }
     }

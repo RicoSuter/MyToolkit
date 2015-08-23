@@ -381,10 +381,10 @@ namespace MyToolkit.Paging
             return await NavigateAsync(newPage);
         }
 
-        /// <summary>Moves and navigates the page to the top of the page stack and removes it from the current position.</summary>
+        /// <summary>Navigates to the given page and removes the page from the previous position in the page stack.</summary>
         /// <param name="page">The page.</param>
-        /// <returns>True if page is now on top of the stack (failed when navigation from the current page failed).</returns>
-        public async Task<bool> MovePageToTopOfStackAsync(MtPageDescription page)
+        /// <returns>True if page is now on top of the stack, false when navigation from the current page failed.</returns>
+        public async Task<bool> MoveToTopAndNavigateAsync(MtPageDescription page)
         {
             if (CurrentPage == page)
                 return true;

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
-using Windows.UI.Xaml.Controls;
+﻿using System.ComponentModel;
+using MyToolkit.Model;
+using MyToolkit.Paging;
+using SampleUwpApp.ViewModels;
 
 namespace SampleUwpApp.Views
 {
@@ -8,17 +10,31 @@ namespace SampleUwpApp.Views
         public DataGridPage()
         {
             InitializeComponent();
-
-            var list = new List<object>
+            Model.PropertyChanged += (sender, args) =>
             {
-                new {FirstName = "John", LastName = "Doe", Category = "A"},
-                new {FirstName = "Max", LastName = "Muster", Category = "B"},
+                if (args.IsProperty<DataGridPageModel>(m => m.Filter))
+                {
+                    DataGrid.SetFilter<Person>(p =>
+                        p.FirstName.ToLower().Contains(Model.Filter.ToLower()) ||
+                        p.LastName.ToLower().Contains(Model.Filter.ToLower()) ||
+                        p.Category.ToLower().Contains(Model.Filter.ToLower()));
+                }
             };
+        }
 
-            for (int i = 0; i < 30; i++)
-                list.Add(new { FirstName = "Foo", LastName = "Bar", Category = "C" + i });
+        public DataGridPageModel Model
+        {
+            get { return (DataGridPageModel) Resources["ViewModel"]; }
+        }
 
-            DataGrid.ItemsSource = list;
+        protected override void OnSaveState(MtSaveStateEventArgs pageState)
+        {
+            pageState.Set("Filter", Model.Filter);
+        }
+
+        protected override void OnLoadState(MtLoadStateEventArgs pageState)
+        {
+            Model.Filter = pageState.Get<string>("Filter");
         }
     }
 }

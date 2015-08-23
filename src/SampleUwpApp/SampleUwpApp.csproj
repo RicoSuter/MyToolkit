@@ -100,6 +100,7 @@
     <Compile Include="HamburgerHeader.xaml.cs">
       <DependentUpon>HamburgerHeader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\DataGridPageModel.cs" />
     <Compile Include="Views\ArticlePage.xaml.cs">
       <DependentUpon>ArticlePage.xaml</DependentUpon>
     </Compile>

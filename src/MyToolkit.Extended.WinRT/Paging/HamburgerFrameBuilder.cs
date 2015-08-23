@@ -1,21 +1,23 @@
 //-----------------------------------------------------------------------
-// <copyright file="HamburgerFrameFactory.cs" company="MyToolkit">
+// <copyright file="HamburgerFrameBuilder.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
 // <license>http://mytoolkit.codeplex.com/license</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 using MyToolkit.Controls;
 
 namespace MyToolkit.Paging
 {
     /// <summary>A factory to create a <see cref="Hamburger"/> which works in conjunction with a <see cref="MtFrame"/>.</summary>
-    public class HamburgerFrameFactory
+    public class HamburgerFrameBuilder
     {
-        /// <summary>Initializes a new instance of the <see cref="HamburgerFrameFactory"/> class.</summary>
-        public HamburgerFrameFactory()
+        /// <summary>Initializes a new instance of the <see cref="HamburgerFrameBuilder"/> class.</summary>
+        public HamburgerFrameBuilder()
         {
             DeselectWhenPageNotFound = true; 
                  
@@ -37,12 +39,23 @@ namespace MyToolkit.Paging
         /// <summary>Gets or sets the hamburger control.</summary>
         public Hamburger Hamburger { get; set; }
 
+        public async Task<bool> MoveOrNavigateToPageAsync(Type pageType, object pageParamter = null)
+        {
+            var existingPage = Frame.GetNearestPageOfTypeInBackStack(pageType);
+            if (existingPage != null)
+            {
+                existingPage.Parameter = pageParamter;
+                return await Frame.MoveToTopAndNavigateAsync(existingPage);
+            }
+            return await Frame.NavigateAsync(pageType, pageParamter);
+        }
+
         private void FrameOnNavigated(object sender, MtNavigationEventArgs args)
         {
             var currentItem = Hamburger.TopItems
                 .Concat(Hamburger.BottomItems)
                 .OfType<PageHamburgerItem>()
-                .FirstOrDefault(i => i.PageType == Frame.CurrentPage.Type); 
+                .FirstOrDefault(i => i.PageType == Frame.CurrentPage.Type);
 
             if (DeselectWhenPageNotFound || currentItem != null)
                 Hamburger.SelectedItem = currentItem;
@@ -56,13 +69,7 @@ namespace MyToolkit.Paging
                 if (pageItem.PageType != null)
                 {
                     if (pageItem.FindPageType)
-                    {
-                        var existingPage = Frame.GetNearestPageOfTypeInBackStack(pageItem.PageType);
-                        if (existingPage != null)
-                            await Frame.MovePageToTopOfStackAsync(existingPage);
-                        else
-                            await Frame.NavigateAsync(pageItem.PageType, pageItem.PageParameter);
-                    }
+                        await MoveOrNavigateToPageAsync(pageItem.PageType, pageItem.PageParameter);
                     else
                         await Frame.NavigateAsync(pageItem.PageType, pageItem.PageParameter);
                 }

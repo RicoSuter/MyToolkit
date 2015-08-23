@@ -297,7 +297,7 @@
     <Compile Include="Controls\DataGrid\DefaultDataGridCell.cs" />
     <Compile Include="Controls\Hamburger\Hamburger.cs" />
     <Compile Include="Controls\Hamburger\HamburgerItemClickedEventArgs.cs" />
-    <Compile Include="Paging\HamburgerFrameFactory.cs" />
+    <Compile Include="Paging\HamburgerFrameBuilder.cs" />
     <Compile Include="Controls\Hamburger\HamburgerItem.cs" />
     <Compile Include="Controls\Hamburger\HamburgerItemChangedEventArgs.cs" />
     <Compile Include="Controls\Hamburger\HamburgerItemSelectedEventArgs.cs" />

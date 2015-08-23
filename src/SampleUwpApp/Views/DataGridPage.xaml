@@ -6,47 +6,56 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:paging="using:MyToolkit.Paging"
     xmlns:controls="using:MyToolkit.Controls"
+    xmlns:viewModels="using:SampleUwpApp.ViewModels"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        
-        <!--<StackPanel>
-            <CheckBox />
-        </StackPanel>-->
-        
-        <controls:DataGrid x:Name="DataGrid" Grid.Row="1" 
+    <paging:MtPage.Resources>
+        <viewModels:DataGridPageModel x:Key="ViewModel" />
+    </paging:MtPage.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DataContext="{StaticResource ViewModel}">
+        <Grid Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel>
+                <TextBlock Text="Filter" FontWeight="Bold" Margin="0,0,0,2" />
+                <SearchBox QueryText="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                           PlaceholderText="Filter" Margin="0,0,0,16" />
+            </StackPanel>
+
+            <controls:DataGrid x:Name="DataGrid" Grid.Row="1" 
                            ItemsSource="{Binding People}" 
                            SelectionMode="Multiple" 
                            SelectedItem="{Binding SelectedPerson, Mode=TwoWay}"
                            DefaultOrderIndex="1">
-            <controls:DataGrid.Columns>
-                <controls:DataGridTextColumn Width="200" Header="Firstname" Binding="{Binding FirstName}" />
-                <controls:DataGridTextColumn Width="200" Binding="{Binding LastName}" IsAscendingDefault="False">
-                    <controls:DataGridTextColumn.Header>
-                        <TextBlock Text="Lastname" Foreground="Green" />
-                    </controls:DataGridTextColumn.Header>
-                </controls:DataGridTextColumn>
-                <controls:DataGridTextColumn Width="*" Header="Category" Binding="{Binding Category}" />
-            </controls:DataGrid.Columns>
-            <controls:DataGrid.ItemDetailsTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="0,4,0,0">
-                        <TextBlock Text="Details: " FontWeight="Bold" />
-                        <TextBlock Text="{Binding FirstName}" />
-                        <TextBlock Text="{Binding LastName}" />
-                        <TextBlock Text="{Binding Category}" />
-                    </StackPanel>
-                </DataTemplate>
-            </controls:DataGrid.ItemDetailsTemplate>
-            <!--<controls:DataGrid.RowStyle>
+                <controls:DataGrid.Columns>
+                    <controls:DataGridTextColumn Width="200" Header="Firstname" Binding="{Binding FirstName}" />
+                    <controls:DataGridTextColumn Width="200" Binding="{Binding LastName}" IsAscendingDefault="False">
+                        <controls:DataGridTextColumn.Header>
+                            <TextBlock Text="Lastname" Foreground="Green" />
+                        </controls:DataGridTextColumn.Header>
+                    </controls:DataGridTextColumn>
+                    <controls:DataGridTextColumn Width="*" Header="Category" Binding="{Binding Category}" />
+                </controls:DataGrid.Columns>
+                <controls:DataGrid.ItemDetailsTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,4,0,0">
+                            <TextBlock Text="Details: " FontWeight="Bold" />
+                            <TextBlock Text="{Binding FirstName}" />
+                            <TextBlock Text="{Binding LastName}" />
+                            <TextBlock Text="{Binding Category}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </controls:DataGrid.ItemDetailsTemplate>
+                <!--<controls:DataGrid.RowStyle>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Padding" Value="0"></Setter>
                 </Style>
             </controls:DataGrid.RowStyle>-->
-        </controls:DataGrid>
+            </controls:DataGrid>
+        </Grid>
     </Grid>
 </paging:MtPage>

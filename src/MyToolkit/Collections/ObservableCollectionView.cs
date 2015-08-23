@@ -85,11 +85,8 @@ namespace MyToolkit.Collections
             get { return _filter; }
             set
             {
-                if (_filter != value)
-                {
-                    _filter = value;
-                    Refresh();
-                }
+                _filter = value;
+                Refresh();
             }
         }
 
@@ -106,11 +103,8 @@ namespace MyToolkit.Collections
             get { return _order; }
             set
             {
-                if (_order != value)
-                {
-                    _order = value;
-                    Refresh();
-                }
+                _order = value;
+                Refresh();
             }
         }
 
