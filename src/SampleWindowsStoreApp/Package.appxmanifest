@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="f93d485b-76dc-43f3-bd42-1461df511c0a" Publisher="CN=Rico Suter" Version="1.1.0.0" />
+  <Identity Name="f93d485b-76dc-43f3-bd42-1461df511c0a" Publisher="CN=mail" Version="1.1.0.0" />
   <Properties>
     <DisplayName>SampleWindowsStoreApp</DisplayName>
     <PublisherDisplayName>Rico</PublisherDisplayName>

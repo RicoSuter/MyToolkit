@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="98c2184a-8505-4e52-989a-8d415b1fa7db" Publisher="CN=Rico Suter" Version="1.0.0.0" />
+  <Identity Name="98c2184a-8505-4e52-989a-8d415b1fa7db" Publisher="CN=mail" Version="1.0.0.0" />
   <Properties>
     <DisplayName>MyToolkit.Tests</DisplayName>
     <PublisherDisplayName>Rico</PublisherDisplayName>
