@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Windows.UI.Xaml;
 using MyToolkit.Mvvm;
 
@@ -17,8 +18,16 @@ namespace SampleUwpApp.ViewModels
                 new Person{FirstName = "Max", LastName = "Muster", Category = "B"},
             };
 
+            var random = new Random();
             for (int i = 0; i < 30; i++)
-                list.Add(new Person { FirstName = "Foo", LastName = "Bar", Category = "C" + i });
+            {
+                list.Add(new Person
+                {
+                    FirstName = "Foo" + random.Next(0, 99999),
+                    LastName = "Bar" + random.Next(0, 99999),
+                    Category = "C" + i
+                });
+            }
 
             People = list.ToArray();
         }

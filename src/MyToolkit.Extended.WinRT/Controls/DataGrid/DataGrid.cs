@@ -116,35 +116,35 @@ namespace MyToolkit.Controls
             set { SetValue(SelectedItemProperty, value); }
         }
 
-        /// <summary>Gets or sets the items collection to show in the <see cref="DataGrid"/>. </summary>
+        /// <summary>Gets or sets the items collection to show in the <see cref="DataGrid"/>.</summary>
         public object ItemsSource
         {
             get { return (object)GetValue(ItemsSourceProperty); }
             set { SetValue(ItemsSourceProperty, value); }
         }
 
-        /// <summary>Gets or sets the index of the column which is initially ordered. </summary>
+        /// <summary>Gets or sets the index of the column which is initially ordered.</summary>
         public int DefaultOrderIndex
         {
             get { return (int)GetValue(DefaultOrderIndexProperty); }
             set { SetValue(DefaultOrderIndexProperty, value); }
         }
 
-        /// <summary>Used to change the row style, the ItemContainerStyle of the internal ListBox; use ListBoxItem as style target type. </summary>
+        /// <summary>Used to change the row style, the ItemContainerStyle of the internal ListBox; use ListBoxItem as style target type.</summary>
         public Style RowStyle
         {
             get { return (Style)GetValue(RowStyleProperty); }
             set { SetValue(RowStyleProperty, value); }
         }
 
-        /// <summary>Gets or sets the data template for item details (shown when an item is selected). When null then no details are shown. </summary>
+        /// <summary>Gets or sets the data template for item details (shown when an item is selected). When null then no details are shown.</summary>
         public DataTemplate ItemDetailsTemplate
         {
             get { return (DataTemplate)GetValue(ItemDetailsTemplateProperty); }
             set { SetValue(ItemDetailsTemplateProperty, value); }
         }
 
-        /// <summary>Gets or sets the header data template (styling of column container). </summary>
+        /// <summary>Gets or sets the header data template (styling of column container).</summary>
         public DataTemplate HeaderTemplate
         {
             get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
@@ -250,7 +250,7 @@ namespace MyToolkit.Controls
 
             if (DefaultOrderIndex == -1)
             {
-                var currentOrdered = Columns.Cast<DataGridColumnBase>().FirstOrDefault(c => c.CanSort);
+                var currentOrdered = Columns.FirstOrDefault(c => c.CanSort);
                 if (currentOrdered != null)
                     DefaultOrderIndex = Columns.IndexOf(currentOrdered);
                 else
