@@ -18,7 +18,7 @@
     <TargetFrameworkVersion />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <PackageCertificateThumbprint>98F3EB1A0AF964DE8832E2342F44AF886D2D500F</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>623DAF154039DCCD7FD2DB1158369CCFC3788C21</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
