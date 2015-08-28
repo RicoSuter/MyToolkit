@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,7 +13,6 @@ namespace MyToolkit.Controls
     public class FilterListBox : Control
     {
         private ListBox _listBox;
-        private IObservableCollectionView _filteredView;
 
         static FilterListBox()
         {
@@ -81,10 +82,20 @@ namespace MyToolkit.Controls
             set { SetValue(FilterPathProperty, value); }
         }
 
+        public static readonly DependencyProperty FilteredItemsProperty = DependencyProperty.Register(
+            "FilteredItems", typeof (IObservableCollectionView), typeof (FilterListBox), new PropertyMetadata(default(IObservableCollectionView)));
+
+        public IObservableCollectionView FilteredItems
+        {
+            get { return (IObservableCollectionView) GetValue(FilteredItemsProperty); }
+            private set { SetValue(FilteredItemsProperty, value); }
+        }
+        
+
         private void OnFilterChanged()
         {
-            if (_filteredView != null)
-                _filteredView.Refresh();
+            if (FilteredItems != null)
+                FilteredItems.Refresh();
         }
 
         private void OnItemsSourceChanged()
@@ -93,13 +104,15 @@ namespace MyToolkit.Controls
             {
                 if (ItemsSource != null)
                 {
-                    _filteredView = (IObservableCollectionView)typeof(ObservableCollectionView<>)
+                    FilteredItems = (IObservableCollectionView)typeof(ObservableCollectionView<>)
                         .CreateGenericObject(ItemsSource.GetType().GenericTypeArguments[0], ItemsSource);
-                    _filteredView.Filter = new Func<object, bool>(ApplyFilter);
-                    _listBox.ItemsSource = _filteredView;
+                    FilteredItems.Filter = new Func<object, bool>(ApplyFilter);
+                    _listBox.ItemsSource = FilteredItems;
                 }
                 else
                     _listBox.ItemsSource = null;
+
+                
             }
         }
 
