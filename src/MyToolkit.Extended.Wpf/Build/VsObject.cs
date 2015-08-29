@@ -67,7 +67,7 @@ namespace MyToolkit.Build
             return System.IO.Path.GetFullPath(path).ToLower();
         }
 
-        internal static Task<List<T>> LoadAllFromDirectoryAsync<T>(string path, bool ignoreExceptions, ProjectCollection projectCollection, string extension, Func<string, ProjectCollection, T> creator)
+        internal static Task<List<T>> LoadAllFromDirectoryAsync<T>(string path, bool ignoreExceptions, ProjectCollection projectCollection, string extension, Func<string, ProjectCollection, T> creator, Dictionary<string, Exception> errors)
         {
             return Task.Run(async () =>
             {
@@ -89,10 +89,13 @@ namespace MyToolkit.Build
                                 {
                                     return creator(lFile, projectCollection);
                                 }
-                                catch (Exception)
+                                catch (Exception exception)
                                 {
                                     if (!ignoreExceptions)
                                         throw;
+
+                                    if (errors != null)
+                                        errors[lFile] = exception;
                                 }
                                 return default(T);
                             }));

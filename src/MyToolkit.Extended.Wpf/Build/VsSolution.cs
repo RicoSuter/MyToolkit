@@ -75,10 +75,11 @@ namespace MyToolkit.Build
             LoadProjects(false, null);
         }
 
-        /// <summary>Loads all projects of the solution. </summary>
-        /// <param name="ignoreExceptions">Specifies whether to ignore exceptions. </param>
-        /// <param name="projectCache">The project cache with already loaded projects. </param>
-        public void LoadProjects(bool ignoreExceptions, Dictionary<string, VsProject> projectCache)
+        /// <summary>Loads all projects of the solution.</summary>
+        /// <param name="ignoreExceptions">Specifies whether to ignore exceptions.</param>
+        /// <param name="projectCache">The project cache with already loaded projects.</param>
+        /// <param name="errors">The loading errors (out param).</param>
+        public void LoadProjects(bool ignoreExceptions, Dictionary<string, VsProject> projectCache, Dictionary<string, Exception> errors = null)
         {
             var projects = new List<VsProject>();
             var array = (Array)_solutionParser.GetPropertyValue("Projects");
@@ -88,15 +89,25 @@ namespace MyToolkit.Build
                 {
                     var relativePath = projectObject.GetPropertyValue("RelativePath").ToString();
                     var projectPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Path), relativePath));
-                    if (projectPath.ToLower().EndsWith(".csproj") && File.Exists(projectPath))
+                    try
                     {
-                        if (projectCache != null && projectCache.ContainsKey(projectPath))
-                            projects.Add(projectCache[projectPath]);
-                        else
-                            projects.Add(VsProject.Load(projectPath, _projectCollection));
+                        if (projectPath.ToLower().EndsWith(".csproj") && File.Exists(projectPath))
+                        {
+                            if (projectCache != null && projectCache.ContainsKey(projectPath))
+                                projects.Add(projectCache[projectPath]);
+                            else
+                                projects.Add(VsProject.Load(projectPath, _projectCollection));
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        if (!ignoreExceptions)
+                            throw;
+                        if (errors != null)
+                            errors[projectPath] = exception;
                     }
                 }
-                catch (Exception)
+                catch
                 {
                     if (!ignoreExceptions)
                         throw;
@@ -110,10 +121,11 @@ namespace MyToolkit.Build
         /// <param name="path">The directory path.</param>
         /// <param name="ignoreExceptions">Specifies whether to ignore exceptions (solutions with exceptions are not returned).</param>
         /// <param name="projectCollection">The project collection.</param>
+        /// <param name="errors">The loading errors (out param).</param>
         /// <returns>The solutions.</returns>
-        public static Task<List<VsSolution>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions, ProjectCollection projectCollection)
+        public static Task<List<VsSolution>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions, ProjectCollection projectCollection, Dictionary<string, Exception> errors)
         {
-            return LoadAllFromDirectoryAsync(path, ignoreExceptions, projectCollection, ".sln", Load);
+            return LoadAllFromDirectoryAsync(path, ignoreExceptions, projectCollection, ".sln", Load, errors);
         }
 
         private static Type SolutionParserType

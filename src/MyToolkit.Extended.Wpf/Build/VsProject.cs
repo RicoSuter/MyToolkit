@@ -6,6 +6,7 @@
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -138,10 +139,11 @@ namespace MyToolkit.Build
         /// <param name="path">The directory path.</param>
         /// <param name="ignoreExceptions">Specifies whether to ignore exceptions (projects with exceptions are not returned).</param>
         /// <param name="projectCollection">The project collection.</param>
+        /// <param name="errors">The loading errors (out param).</param>
         /// <returns>The projects.</returns>
-        public static Task<List<VsProject>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions, ProjectCollection projectCollection)
+        public static Task<List<VsProject>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions, ProjectCollection projectCollection, Dictionary<string, Exception> errors = null)
         {
-            return LoadAllFromDirectoryAsync(path, ignoreExceptions, projectCollection, ".csproj", Load);
+            return LoadAllFromDirectoryAsync(path, ignoreExceptions, projectCollection, ".csproj", Load, errors);
         }
 
         /// <summary>Loads the project's referenced assemblies, projects and NuGet packages. </summary>
