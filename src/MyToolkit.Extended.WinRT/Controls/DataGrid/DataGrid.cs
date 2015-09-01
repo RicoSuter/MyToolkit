@@ -204,7 +204,7 @@ namespace MyToolkit.Controls
                 SelectedColumn.IsSelected = true;
                 SelectedColumn.IsAscending = ascending;
 
-                UpdateOrder();
+                UpdateItemsOrder();
                 return true;
             }
             return false;
@@ -355,7 +355,7 @@ namespace MyToolkit.Controls
                 if (_listControl.ItemsSource == null)
                     UpdateItemsSource();
 
-                UpdateOrder();
+                UpdateItemsOrder();
             }
         }
 
@@ -410,16 +410,19 @@ namespace MyToolkit.Controls
                 SelectColumn(column);
         }
 
-        private void UpdateOrder()
+        private void UpdateItemsOrder()
         {
             if (Items != null)
             {
                 RunWithSelectedItemRestore(() =>
                 {
-                    Items.IsTracking = false;
-                    Items.Order = new Func<object, object>(o => PropertyPathHelper.Evaluate(o, SelectedColumn.OrderPropertyPath));
-                    Items.Ascending = SelectedColumn.IsAscending;
-                    Items.IsTracking = true;
+                    if (SelectedColumn != null)
+                    {
+                        Items.IsTracking = false;
+                        Items.Order = new Func<object, object>(o => PropertyPathHelper.Evaluate(o, SelectedColumn.OrderPropertyPath));
+                        Items.Ascending = SelectedColumn.IsAscending;
+                        Items.IsTracking = true;
+                    }
                 });
             }
         }
