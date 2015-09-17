@@ -10,8 +10,8 @@ using System.Reflection;
 
 namespace MyToolkit.Build
 {
-	internal static class ReflectionExtensions
-	{
+    internal static class ReflectionExtensions
+    {
         public static object GetPropertyValue(this object obj, string name)
         {
             return obj.GetType()
@@ -32,5 +32,6 @@ namespace MyToolkit.Build
                 .GetMethod(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                 .Invoke(obj, args);
         }
-	}
+    }
+
 }

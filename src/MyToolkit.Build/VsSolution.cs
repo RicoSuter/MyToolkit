@@ -13,6 +13,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Build.Evaluation;
+using MyToolkit.Utilities;
 
 namespace MyToolkit.Build
 {
@@ -115,17 +116,24 @@ namespace MyToolkit.Build
             }
 
             _projects = projects.OrderBy(p => p.Name).ToList();
+
+            foreach (var project in _projects)
+            {
+                if (!project.Solutions.Contains(this))
+                    project.Solutions.Add(this);
+            }
         }
 
         /// <summary>Recursively loads all Visual Studio solutions from the given directory.</summary>
         /// <param name="path">The directory path.</param>
+        /// <param name="pathFilter">The path filter.</param>
         /// <param name="ignoreExceptions">Specifies whether to ignore exceptions (solutions with exceptions are not returned).</param>
         /// <param name="projectCollection">The project collection.</param>
         /// <param name="errors">The loading errors (out param).</param>
         /// <returns>The solutions.</returns>
-        public static Task<List<VsSolution>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions, ProjectCollection projectCollection, Dictionary<string, Exception> errors)
+        public static Task<List<VsSolution>> LoadAllFromDirectoryAsync(string path, string pathFilter, bool ignoreExceptions, ProjectCollection projectCollection, Dictionary<string, Exception> errors)
         {
-            return LoadAllFromDirectoryAsync(path, ignoreExceptions, projectCollection, ".sln", Load, errors);
+            return LoadAllFromDirectoryAsync(path, pathFilter, ignoreExceptions, projectCollection, ".sln", Load, errors);
         }
 
         private static Type SolutionParserType

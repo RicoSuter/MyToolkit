@@ -50,6 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
@@ -131,19 +132,6 @@
     <Compile Include="..\Shared\Utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
-    <Compile Include="Build\AssemblyReference.cs" />
-    <Compile Include="Build\Exceptions\BuildOrderException.cs" />
-    <Compile Include="Build\Exceptions\NuGetPackageNotFoundException.cs" />
-    <Compile Include="Build\NuGetPackageReference.cs" />
-    <Compile Include="Build\ProjectDependencyResolver.cs" />
-    <Compile Include="Build\ProjectTypeGuidMapper.cs" />
-    <Compile Include="Build\ReflectionExtensions.cs" />
-    <Compile Include="Build\VsObject.cs" />
-    <Compile Include="Build\VsProject.cs" />
-    <Compile Include="Build\VsProjectEnumerableExtensions.cs" />
-    <Compile Include="Build\VsProjectReference.cs" />
-    <Compile Include="Build\VsReferenceBase.cs" />
-    <Compile Include="Build\VsSolution.cs" />
     <Compile Include="Controls\FilterListBox.cs" />
     <Compile Include="Controls\TreeViewExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -169,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Default.snk" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Themes\Generic.xaml">

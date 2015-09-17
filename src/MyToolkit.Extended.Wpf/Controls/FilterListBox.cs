@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using MyToolkit.Build;
 using MyToolkit.Collections;
 using MyToolkit.Utilities;
 
@@ -121,7 +120,7 @@ namespace MyToolkit.Controls
             if (!string.IsNullOrEmpty(FilterPath) && !string.IsNullOrEmpty(Filter))
             {
                 var terms = Filter.ToLower().Split(' ');
-                var value = item.GetPropertyValue(FilterPath);
+                var value = item.GetType().GetProperty(FilterPath).GetValue(item);
                 if (value != null)
                     return terms.All(t => value.ToString().ToLower().Contains(t));
                 else

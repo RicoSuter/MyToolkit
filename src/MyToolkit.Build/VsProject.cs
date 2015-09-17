@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using System.Xml.Linq;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Exceptions;
 using MyToolkit.Utilities;
+using NuGet.Packaging;
 
 namespace MyToolkit.Build
 {
@@ -25,11 +27,16 @@ namespace MyToolkit.Build
         private List<AssemblyReference> _assemblyReferences;
         private List<NuGetPackageReference> _nuGetReferences;
 
-        /// <exception cref="InvalidProjectFileException">The project file could not be found. </exception>
+        /// <summary>Initializes a new instance of the <see cref="VsProject" /> class.</summary>
+        /// <param name="filePath">The file path.</param>
+        /// <param name="projectCollection">The project collection.</param>
+        /// <exception cref="InvalidProjectFileException">The project file could not be found.</exception>
         private VsProject(string filePath, ProjectCollection projectCollection)
             : base(filePath)
         {
             Project = projectCollection.LoadProject(filePath);
+            Solutions = new ObservableCollection<VsSolution>();
+            LoadNuSpecFile(filePath);
         }
 
         /// <summary>Loads a project from a given file path, if the project has already been loaded before, the same reference is returned.</summary>
@@ -44,6 +51,12 @@ namespace MyToolkit.Build
 
         /// <summary>Gets the internal MSBuild project. </summary>
         public Project Project { get; private set; }
+
+        /// <summary>Gets or sets the file path to the project's NuSpec file if available.</summary>
+        public string NuSpecFilePath { get; set; }
+
+        /// <summary>Gets or sets the NuGet package identifier if a NuSpec file could be found.</summary>
+        public string NuGetPackageId { get; set; }
 
         /// <summary>Gets the list of referenced projects. </summary>
         public List<VsProjectReference> ProjectReferences
@@ -108,6 +121,24 @@ namespace MyToolkit.Build
             get { return Project.GetPropertyValue("ProjectGuid"); }
         }
 
+        /// <summary>Gets the .NET target framework version.</summary>
+        public string TargetFrameworkVersion
+        {
+            get { return Project.GetPropertyValue("TargetFrameworkVersion"); }
+        }
+        
+        /// <summary>Gets the output path.</summary>
+        public string OutputPath
+        {
+            get { return Project.GetPropertyValue("OutputPath"); }
+        }
+
+        /// <summary>Gets the output type (Exe, Library, ...).</summary>
+        public string OutputType
+        {
+            get { return Project.GetPropertyValue("OutputType"); }
+        }
+
         /// <summary>Gets the project type GUIDs. </summary>
         public string[] ProjectTypeGuids
         {
@@ -125,6 +156,10 @@ namespace MyToolkit.Build
         {
             get { return ProjectTypeGuids.Select(ProjectTypeGuidMapper.ResolveGuid).ToArray(); }
         }
+        
+        /// <summary>Gets the solutions of the project (filled by <see cref="VsSolution.LoadProjects()"/>).</summary>
+        public IList<VsSolution> Solutions { get; internal set; }
+
 
         /// <summary>Checks whether the two project file paths are the same files. </summary>
         /// <param name="projectPath1">The first project file path. </param>
@@ -137,13 +172,14 @@ namespace MyToolkit.Build
 
         /// <summary>Recursively loads all Visual Studio projects from the given directory.</summary>
         /// <param name="path">The directory path.</param>
+        /// <param name="pathFilter">The path filter.</param>
         /// <param name="ignoreExceptions">Specifies whether to ignore exceptions (projects with exceptions are not returned).</param>
         /// <param name="projectCollection">The project collection.</param>
         /// <param name="errors">The loading errors (out param).</param>
         /// <returns>The projects.</returns>
-        public static Task<List<VsProject>> LoadAllFromDirectoryAsync(string path, bool ignoreExceptions, ProjectCollection projectCollection, Dictionary<string, Exception> errors = null)
+        public static Task<List<VsProject>> LoadAllFromDirectoryAsync(string path, string pathFilter, bool ignoreExceptions, ProjectCollection projectCollection, Dictionary<string, Exception> errors = null)
         {
-            return LoadAllFromDirectoryAsync(path, ignoreExceptions, projectCollection, ".csproj", Load, errors);
+            return LoadAllFromDirectoryAsync(path, pathFilter, ignoreExceptions, projectCollection, ".csproj", Load, errors);
         }
 
         /// <summary>Loads the project's referenced assemblies, projects and NuGet packages. </summary>
@@ -222,6 +258,20 @@ namespace MyToolkit.Build
                 .Select(reference => new AssemblyReference(reference))
                 .OrderByThenBy(r => r.Name, r => VersionUtilities.FromString(r.Version))
                 .ToList();
+        }
+
+        private void LoadNuSpecFile(string filePath)
+        {
+            NuSpecFilePath = Directory.GetFiles(System.IO.Path.GetDirectoryName(filePath), "*.nuspec", SearchOption.AllDirectories).FirstOrDefault();
+
+            if (NuSpecFilePath != null)
+            {
+                using (var stream = File.Open(NuSpecFilePath, FileMode.Open))
+                {
+                    var reader = new NuspecReader(stream);
+                    NuGetPackageId = reader.GetId();
+                }
+            }
         }
 
         private void LoadNuGetReferences()

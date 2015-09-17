@@ -67,8 +67,10 @@ namespace MyToolkit.Build
             return System.IO.Path.GetFullPath(path).ToLower();
         }
 
-        internal static Task<List<T>> LoadAllFromDirectoryAsync<T>(string path, bool ignoreExceptions, ProjectCollection projectCollection, string extension, Func<string, ProjectCollection, T> creator, Dictionary<string, Exception> errors)
+        internal static Task<List<T>> LoadAllFromDirectoryAsync<T>(string path, string pathFilter, bool ignoreExceptions, ProjectCollection projectCollection, string extension, Func<string, ProjectCollection, T> creator, Dictionary<string, Exception> errors)
         {
+            var pathFilterTerms = pathFilter.ToLower().Split(' ');
+
             return Task.Run(async () =>
             {
                 var tasks = new List<Task<T>>();
@@ -77,7 +79,7 @@ namespace MyToolkit.Build
                 try
                 {
                     var files = Directory.GetFiles(path, "*" + extension, SearchOption.AllDirectories);
-                    foreach (var file in files.Distinct())
+                    foreach (var file in files.Distinct().Where(s => pathFilterTerms.All(s.ToLower().Contains)))
                     {
                         var ext = System.IO.Path.GetExtension(file);
                         if (ext != null && ext.ToLower() == extension)
