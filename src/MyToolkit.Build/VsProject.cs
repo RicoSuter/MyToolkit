@@ -91,7 +91,7 @@ namespace MyToolkit.Build
             }
         }
 
-        /// <summary>Gets the name of the project. </summary>
+        /// <summary>Gets the assembly name of the project. </summary>
         public override string Name
         {
             get { return Project.GetPropertyValue("AssemblyName"); }
@@ -269,7 +269,12 @@ namespace MyToolkit.Build
                 using (var stream = File.Open(NuSpecFilePath, FileMode.Open))
                 {
                     var reader = new NuspecReader(stream);
-                    NuGetPackageId = reader.GetId();
+
+                    var packageId = reader.GetId();
+                    if (packageId != null && packageId.ToLower() == "$id$")
+                        packageId = Name;
+
+                    NuGetPackageId = packageId; 
                 }
             }
         }
