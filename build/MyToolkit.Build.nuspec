@@ -1,0 +1,28 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>MyToolkit.Build</id>
+    <version>2.4.2.0</version>
+    <title>MyToolkit.Build</title>
+    <authors>Rico Suter</authors>
+    <owners>Rico Suter</owners>
+    <projectUrl>http://mytoolkit.io</projectUrl>
+    <licenseUrl>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</licenseUrl>
+    <description>MyToolkit is a set of .NET libraries containing lots of useful classes for various .NET platforms like WinRT, Windows Phone, WPF and Silverlight. </description>
+    <releaseNotes/>
+    <iconUrl>http://rsuter.com/Projects/MyToolkit/IconNuGet.png</iconUrl>
+    <dependencies>
+      <group>
+        <dependency id="NuGet.Frameworks" version="3.2.0" />
+        <dependency id="NuGet.Logging" version="3.2.0" />
+        <dependency id="NuGet.Packaging" version="3.2.0" />
+        <dependency id="NuGet.Packaging.Core" version="3.2.0" />
+        <dependency id="NuGet.Packaging.Core.Types" version="3.2.0" />
+        <dependency id="NuGet.Versioning" version="3.2.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Output\MyToolkit.Build\MyToolkit.Build.dll" target="lib\net45\MyToolkit.Build.dll" />
+  </files>
+</package>
