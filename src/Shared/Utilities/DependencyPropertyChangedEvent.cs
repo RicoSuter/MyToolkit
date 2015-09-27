@@ -59,35 +59,36 @@ namespace MyToolkit.Utilities
                 .Single(h => 
                     h.FrameworkElement == frameworkElement && 
                     h.DependencyProperty == property && 
-                    h.ChangedAction == handler);
+                    h.PropertyChangedCallback == handler);
 
-			helper.ChangedAction = null; 
+			helper.PropertyChangedCallback = null; 
 		}
 
         internal class DependencyPropertyRegistration
         {
             private object _currentValue;
 
-            public DependencyPropertyRegistration(FrameworkElement frameworkElement, DependencyProperty dependencyProperty, Action<object, object> changedAction, object currentValue)
+            public DependencyPropertyRegistration(FrameworkElement frameworkElement, DependencyProperty dependencyProperty, Action<object, object> propertyChangedCallback, object currentValue)
             {
                 FrameworkElement = frameworkElement;
                 DependencyProperty = dependencyProperty;
-                ChangedAction = changedAction;
+                PropertyChangedCallback = propertyChangedCallback;
 
                 _currentValue = currentValue;
             }
 
             public FrameworkElement FrameworkElement { get; private set; }
             public DependencyProperty DependencyProperty { get; private set; }
-            public Action<object, object> ChangedAction { get; set; }
+            public Action<object, object> PropertyChangedCallback { get; set; }
 
             public object Property
             {
                 get { return _currentValue; }
                 set
                 {
-                    if (ChangedAction != null)
-                        ChangedAction(FrameworkElement, value);
+                    if (PropertyChangedCallback != null)
+                        PropertyChangedCallback(FrameworkElement, value);
+
                     _currentValue = value;
                 }
             }

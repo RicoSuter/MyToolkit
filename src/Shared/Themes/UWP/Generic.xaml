@@ -1285,7 +1285,10 @@
                             <!-- Header -->
                             <Border Grid.Column="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                                 <ContentPresenter Content="{TemplateBinding Header}" 
-                                                  ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                                  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                </ContentPresenter>
                             </Border>
                         </Grid>
 
@@ -1327,7 +1330,9 @@
                                 </Grid>
                             </SplitView.Pane>
                             <SplitView.Content>
-                                <ContentPresenter Content="{TemplateBinding Content}" Grid.Row="1" />
+                                <ContentPresenter Content="{TemplateBinding Content}" 
+                                                  Margin="{TemplateBinding ContentMargin}" 
+                                                  Grid.Row="1" />
                             </SplitView.Content>
                         </SplitView>
                     </Grid>

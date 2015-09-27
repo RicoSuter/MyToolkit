@@ -32,6 +32,7 @@ namespace MyToolkit.Controls
 
             CanBeSelected = false;
             ShowContentIcon = false;
+            PlaceholderText = string.Empty; 
 
             Click += (sender, args) =>
             {

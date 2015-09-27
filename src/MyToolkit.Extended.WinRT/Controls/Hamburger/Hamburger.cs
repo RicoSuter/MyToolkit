@@ -81,6 +81,16 @@ namespace MyToolkit.Controls
             set { SetValue(ContentProperty, value); }
         }
 
+        public static readonly DependencyProperty ContentMarginProperty = DependencyProperty.Register(
+            "ContentMargin", typeof (Thickness), typeof (Hamburger), new PropertyMetadata(default(Thickness)));
+
+        /// <summary>Gets or sets the content margin.</summary>
+        public Thickness ContentMargin
+        {
+            get { return (Thickness) GetValue(ContentMarginProperty); }
+            set { SetValue(ContentMarginProperty, value); }
+        }
+
         public static readonly DependencyProperty TopItemsProperty = DependencyProperty.Register(
             "TopItems", typeof(object), typeof(Hamburger), new PropertyMetadata(default(object)));
 
