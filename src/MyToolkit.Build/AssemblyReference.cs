@@ -7,7 +7,9 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.Linq;
+using System.Xml.XPath;
 using Microsoft.Build.Evaluation;
 
 namespace MyToolkit.Build
@@ -19,8 +21,9 @@ namespace MyToolkit.Build
         private readonly string _version;
 
         /// <summary>Initializes a new instance of the <see cref="AssemblyReference" /> class.</summary>
+        /// <param name="project">The project.</param>
         /// <param name="projectItem">The raw name.</param>
-        internal AssemblyReference(ProjectItem projectItem)
+        internal AssemblyReference(VsProject project, ProjectItem projectItem)
         {
             ProjectItem = projectItem;
 
@@ -29,7 +32,7 @@ namespace MyToolkit.Build
             _name = array[0];
             _version = "Any";
 
-            LoadHintPath(projectItem);
+            LoadHintPath(project, projectItem);
 
             foreach (var tuple in array.Skip(1)
                 .Select(n => n.Trim().Split('='))
@@ -71,16 +74,15 @@ namespace MyToolkit.Build
         /// <summary>Gets the NuGet package version.</summary>
         public string NuGetPackageVersion { get; private set; }
 
-        private void LoadHintPath(ProjectItem projectItem)
+        private void LoadHintPath(VsProject project, ProjectItem projectItem)
         {
             HintPath = projectItem.Metadata.Any(m => m.Name == "HintPath") ? projectItem.Metadata.Single(m => m.Name == "HintPath").EvaluatedValue : null;
-
             if (HintPath != null)
             {
-                var startIndex = HintPath.IndexOf("\\packages\\", StringComparison.InvariantCulture);
-                if (startIndex != -1)
+                var packagesPath = project.NuGetPackagesPath;
+                if (HintPath.StartsWith(packagesPath))
                 {
-                    startIndex += "\\packages\\".Length;
+                    var startIndex = packagesPath.Length;
                     var endIndex = HintPath.IndexOf("\\", startIndex, StringComparison.InvariantCulture);
                     if (endIndex != -1)
                     {
@@ -116,5 +118,7 @@ namespace MyToolkit.Build
                 }
             }
         }
+
+        
     }
 }

@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Exceptions;
 using MyToolkit.Utilities;
@@ -26,6 +27,7 @@ namespace MyToolkit.Build
         private List<VsProjectReference> _projectReferences;
         private List<AssemblyReference> _assemblyReferences;
         private List<NuGetPackageReference> _nuGetReferences;
+        private string _nuGetPackagesPath;
 
         /// <summary>Initializes a new instance of the <see cref="VsProject" /> class.</summary>
         /// <param name="filePath">The file path.</param>
@@ -246,6 +248,48 @@ namespace MyToolkit.Build
                 .ToList();
         }
 
+        /// <summary>Gets the NuGet packages directory path relative to the project file.</summary>
+        public string NuGetPackagesPath
+        {
+            get
+            {
+                if (_nuGetPackagesPath == null)
+                    _nuGetPackagesPath = FindNuGetPackagesPath(System.IO.Path.GetDirectoryName(Path), string.Empty, null);
+                return _nuGetPackagesPath;
+            }
+        }
+        
+        private string FindNuGetPackagesPath(string directory, string prefix, string fallbackDirectory)
+        {
+            var configFile = System.IO.Path.Combine(directory, "nuget.config");
+            if (File.Exists(configFile))
+            {
+                using (var stream = File.Open(configFile, FileMode.Open))
+                {
+                    var document = new XPathDocument(stream);
+                    var navigator = document.CreateNavigator();
+                    var packagesPath = navigator.Select("configuration/config/add[@key = \"repositorypath\"]/@value");
+                    if (packagesPath.Count == 1)
+                    {
+                        packagesPath.MoveNext();
+                        return prefix + packagesPath.Current.Value + "\\";
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(fallbackDirectory))
+            {
+                if (Directory.GetFiles(directory).Any(f => f.EndsWith(".sln")))
+                    fallbackDirectory = prefix + "packages\\";
+            }
+
+            directory = System.IO.Path.GetDirectoryName(directory);
+            if (!string.IsNullOrEmpty(directory))
+                return FindNuGetPackagesPath(directory, prefix + "..\\", fallbackDirectory);
+
+            return fallbackDirectory;
+        }
+
         private string NuGetPackagesFile
         {
             get { return System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Path), "packages.config"); }
@@ -255,7 +299,7 @@ namespace MyToolkit.Build
         {
             _assemblyReferences = Project.Items
                 .Where(i => i.ItemType == "Reference")
-                .Select(reference => new AssemblyReference(reference))
+                .Select(reference => new AssemblyReference(this, reference))
                 .OrderByThenBy(r => r.Name, r => VersionUtilities.FromString(r.Version))
                 .ToList();
         }
