@@ -55,10 +55,10 @@ namespace MyToolkit.Build
         public Project Project { get; private set; }
 
         /// <summary>Gets or sets the file path to the project's NuSpec file if available.</summary>
-        public string NuSpecFilePath { get; set; }
+        public string NuSpecFilePath { get; private set; }
 
         /// <summary>Gets or sets the NuGet package identifier if a NuSpec file could be found.</summary>
-        public string NuGetPackageId { get; set; }
+        public string NuGetPackageId { get; private set; }
 
         /// <summary>Gets the list of referenced projects. </summary>
         public List<VsProjectReference> ProjectReferences
