@@ -49,6 +49,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWpfApplication", "Sam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWindowsStoreApp.BackgroundTask", "SampleWindowsStoreApp.BackgroundTask\SampleWindowsStoreApp.BackgroundTask.csproj", "{D219F086-226D-4526-A06E-B2655CAE19B9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuSpecs", "NuSpecs", "{DB6096DD-F086-4817-AD0B-C2096C3AAEF6}"
+	ProjectSection(SolutionItems) = preProject
+		..\build\MyToolkit.AspNet.Mvc.nuspec = ..\build\MyToolkit.AspNet.Mvc.nuspec
+		..\build\MyToolkit.Build.nuspec = ..\build\MyToolkit.Build.nuspec
+		..\build\MyToolkit.Extended.nuspec = ..\build\MyToolkit.Extended.nuspec
+		..\build\MyToolkit.Http.nuspec = ..\build\MyToolkit.Http.nuspec
+		..\build\MyToolkit.nuspec = ..\build\MyToolkit.nuspec
+		..\build\MyToolkit.Web.nuspec = ..\build\MyToolkit.Web.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		MyToolkit.Extended\MyToolkit.Extended.projitems*{165d7bf6-152c-427f-97ae-f09a69f646ab}*SharedItemsImports = 4

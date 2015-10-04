@@ -15,8 +15,8 @@ namespace MyToolkit.MachineLearning.WinRT.Feedforward.Training.Annealing
         {
             Network = network;
 
-            this._input = input;
-            this._ideal = ideal;
+            _input = input;
+            _ideal = ideal;
             
 			Temperature = startTemperature;
             StartTemperature = startTemperature;

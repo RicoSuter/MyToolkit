@@ -6,6 +6,7 @@ namespace MyToolkit.MachineLearning.WinRT.Feedforward.Training.Backpropagation
     public class Backpropagation : ITrainable
     {
 	    public FeedforwardNetwork Network { get; private set; }
+
 		public double Error { get; private set; }
 
 		private readonly IDictionary<FeedforwardLayer, BackpropagationLayer> _layerMapping =

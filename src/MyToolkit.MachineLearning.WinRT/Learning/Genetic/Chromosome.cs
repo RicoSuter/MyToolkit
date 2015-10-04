@@ -57,14 +57,11 @@ namespace MyToolkit.MachineLearning.WinRT.Learning.Genetic
 
             for (int i = 0; i < geneLength; i++)
             {
-                if ((i < cutpoint1) || (i > cutpoint2))
-                {
-
-                }
-                else
+                if ((i >= cutpoint1) && (i <= cutpoint2))
                 {
                     offspring1.SetGene(i, father.GetGene(i));
                     offspring2.SetGene(i, GetGene(i));
+
                     taken1.Add(offspring1.GetGene(i));
                     taken2.Add(offspring2.GetGene(i));
                 }
