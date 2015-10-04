@@ -305,9 +305,9 @@ namespace MyToolkit.Controls
 
         private void ChangeItemSelection(object item, bool isSelected)
         {
-            var lbItem = _listControl.GetListBoxItemFromItem(item);
-            if (lbItem != null && lbItem.Content != null)
-                ((DataGridRow)lbItem.Content).IsSelected = isSelected;
+            var listBoxItem = _listControl.GetListBoxItemFromItem(item);
+            if (listBoxItem != null && listBoxItem.Content != null)
+                ((DataGridRow)listBoxItem.Content).IsSelected = isSelected;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

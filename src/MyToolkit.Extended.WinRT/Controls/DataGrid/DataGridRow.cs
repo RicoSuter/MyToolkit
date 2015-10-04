@@ -117,10 +117,13 @@ namespace MyToolkit.Controls
         {
             // TODO: Update row backgrounds when DataGrid.Items changed
             var listBoxItem = this.GetVisualParentOfType<ListBoxItem>();
-            if (IsSelected)
-                listBoxItem.Background = null;
-            else
-                listBoxItem.Background = DataGrid.Items.IndexOf(Item) % 2 == 0 ? DataGrid.RowBackgroundEvenBrush : DataGrid.RowBackgroundOddBrush;
+            if (listBoxItem != null)
+            {
+                if (IsSelected)
+                    listBoxItem.Background = null;
+                else
+                    listBoxItem.Background = DataGrid.Items.IndexOf(Item) % 2 == 0 ? DataGrid.RowBackgroundEvenBrush : DataGrid.RowBackgroundOddBrush;
+            }
         }
 
         private void UpdateItemDetails()
