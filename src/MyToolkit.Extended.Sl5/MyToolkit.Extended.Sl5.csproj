@@ -72,17 +72,18 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.IO, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\sl5\System.IO.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.IO.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Runtime">
-      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\sl5\System.Runtime.dll</HintPath>
+    <Reference Include="System.Runtime, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.Runtime.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel.DomainServices.Client, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Threading.Tasks, Version=2.6.9.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\sl5\System.Threading.Tasks.dll</HintPath>
+    <Reference Include="System.Threading.Tasks, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\sl5\System.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -96,85 +97,85 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Shared\Controls\DataTemplateSelector.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\DataTemplateSelector.cs">
       <Link>Controls\DataTemplateSelector.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\MtListBox.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\MtListBox.cs">
       <Link>Controls\MtListBox.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\PrepareContainerForItemEventArgs.cs">
       <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\UniformGrid.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\UniformGrid.cs">
       <Link>Controls\UniformGrid.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\WatermarkedTextBox.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\WatermarkedTextBox.cs">
       <Link>Controls\WatermarkedTextBox.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\ByteArrayToImageConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\ByteArrayToImageConverter.cs">
       <Link>Converters\ByteArrayToImageConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\NotConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\NotConverter.cs">
       <Link>Converters\NotConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\TruncateConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\TruncateConverter.cs">
       <Link>Converters\TruncateConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\TypeCountConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\TypeCountConverter.cs">
       <Link>Converters\TypeCountConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\TypeVisibilityConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\TypeVisibilityConverter.cs">
       <Link>Converters\TypeVisibilityConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\UpperTextConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\UpperTextConverter.cs">
       <Link>Converters\UpperTextConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\VisibilityConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\VisibilityConverter.cs">
       <Link>Converters\VisibilityConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Events\SingleEvent.cs">
+    <Compile Include="..\MyToolkit.Extended\Events\SingleEvent.cs">
       <Link>Events\SingleEvent.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messaging\DefaultActions.cs">
+    <Compile Include="..\MyToolkit.Extended\Messaging\DefaultActions.cs">
       <Link>Messaging\DefaultActions.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\MVVM\DependencyPropertyHelper.cs">
+    <Compile Include="..\MyToolkit.Extended\MVVM\DependencyPropertyHelper.cs">
       <Link>MVVM\DependencyPropertyHelper.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Networking\WakeOnLan.cs">
+    <Compile Include="..\MyToolkit.Extended\Networking\WakeOnLan.cs">
       <Link>Networking\WakeOnLan.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Serialization\DataContractSerialization.cs">
+    <Compile Include="..\MyToolkit.Extended\Serialization\DataContractSerialization.cs">
       <Link>Serialization\DataContractSerialization.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\UI\Designer.cs">
+    <Compile Include="..\MyToolkit.Extended\UI\Designer.cs">
       <Link>UI\Designer.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\UI\Element.cs">
+    <Compile Include="..\MyToolkit.Extended\UI\Element.cs">
       <Link>UI\Element.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\UI\FrameworkElementExtensions.cs">
+    <Compile Include="..\MyToolkit.Extended\UI\FrameworkElementExtensions.cs">
       <Link>UI\FrameworkElementExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\UI\TextBinding.cs">
+    <Compile Include="..\MyToolkit.Extended\UI\TextBinding.cs">
       <Link>UI\TextBinding.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Utilities\ColorUtility.cs">
-      <Link>Utilities\ColorUtility.cs</Link>
+    <Compile Include="..\MyToolkit.Extended\Utilities\ColorUtilities.cs">
+      <Link>Utilities\ColorUtilities.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Utilities\DependencyObjectExtensions.cs">
+    <Compile Include="..\MyToolkit.Extended\Utilities\DependencyObjectExtensions.cs">
       <Link>Utilities\DependencyObjectExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Utilities\EntityContainer.cs">
+    <Compile Include="..\MyToolkit.Extended\Utilities\EntityContainer.cs">
       <Link>Utilities\EntityContainer.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Utilities\ItemsControlExtensions.cs">
+    <Compile Include="..\MyToolkit.Extended\Utilities\ItemsControlExtensions.cs">
       <Link>Utilities\ItemsControlExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\shared\utilities\Xml.cs">
+    <Compile Include="..\MyToolkit.Extended\utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

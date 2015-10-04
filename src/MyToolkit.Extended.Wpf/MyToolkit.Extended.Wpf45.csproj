@@ -66,72 +66,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Shared\Mvvm\ViewModelHelper.cs">
-      <Link>Mvvm\ViewModelHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
-      <Link>Converters\DateTimeConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\NotConverter.cs">
-      <Link>Converters\NotConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\TruncateConverter.cs">
-      <Link>Converters\TruncateConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\TypeVisibilityConverter.cs">
-      <Link>Converters\TypeVisibilityConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\UpperTextConverter.cs">
-      <Link>Converters\UpperTextConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\VisibilityConverter.cs">
-      <Link>Converters\VisibilityConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Encryption\RijndaelEncryption.cs">
-      <Link>Encryption\RijndaelEncryption.cs</Link>
-    </Compile>
-    <Compile Include="..\shared\events\SingleEvent.cs">
-      <Link>Events\SingleEvent.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Messaging\DefaultActions.cs">
-      <Link>Messaging\DefaultActions.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Multimedia\YouTube.cs">
-      <Link>Multimedia\YouTube.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Mvvm\DependencyPropertyHelper.cs">
-      <Link>Mvvm\DependencyPropertyHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Networking\ClientBaseExtensions.cs">
-      <Link>Networking\ClientBaseExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Serialization\DataContractSerialization.cs">
-      <Link>Serialization\DataContractSerialization.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\UI\Designer.cs">
-      <Link>UI\Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\UI\FrameworkElementExtensions.cs">
-      <Link>UI\FrameworkElementExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\ColorUtility.cs">
-      <Link>Utilities\ColorUtility.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\DependencyObjectExtensions.cs">
-      <Link>Utilities\DependencyObjectExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\DependencyPropertyChangedEvent.cs">
-      <Link>Utilities\DependencyPropertyChangedEvent.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\ExpressionHelper.cs">
-      <Link>Utilities\ExpressionHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\ItemsControlExtensions.cs">
-      <Link>Utilities\ItemsControlExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\Xml.cs">
-      <Link>Utilities\Xml.cs</Link>
-    </Compile>
     <Compile Include="Controls\FilterListBox.cs" />
     <Compile Include="Controls\TreeViewExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -169,6 +103,15 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="README_FIRST.txt" />
+    <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
+  </ItemGroup>
+  <Import Project="..\MyToolkit.Extended\MyToolkit.Extended.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!--<Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

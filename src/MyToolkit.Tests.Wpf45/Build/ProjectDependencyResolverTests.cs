@@ -56,7 +56,7 @@ namespace MyToolkit.Tests.Wpf45.Build
             var path = "../../../";
 
             //// Act
-            var projects = await VsProject.LoadAllFromDirectoryAsync(path, false, new ProjectCollection());
+            var projects = await VsProject.LoadAllFromDirectoryAsync(path, string.Empty, false, new ProjectCollection());
 
             //// Assert
             Assert.IsTrue(projects.Any());

@@ -48,290 +48,32 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Shared\Controls\Html\Generators\EmGenerator.cs">
-      <Link>Controls\Html\Generators\EmGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\EmptyGenerator.cs">
-      <Link>Controls\Html\Generators\EmptyGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\HtmlGenerator.cs">
-      <Link>Controls\Html\Generators\HtmlGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\ImageGenerator.cs">
-      <Link>Controls\Html\Generators\ImageGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\LinkGenerator.cs">
-      <Link>Controls\Html\Generators\LinkGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\ParagraphGenerator.cs">
-      <Link>Controls\Html\Generators\ParagraphGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\StrongGenerator.cs">
-      <Link>Controls\Html\Generators\StrongGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\TextGenerator.cs">
-      <Link>Controls\Html\Generators\TextGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\UlGenerator.cs">
-      <Link>Controls\Html\Generators\UlGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\HtmlNodeExtensions.cs">
-      <Link>Controls\Html\HtmlNodeExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\HtmlView.cs">
-      <Link>Controls\Html\HtmlView.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\HtmlViewHelper.cs">
-      <Link>Controls\Html\HtmlViewHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\IControlGenerator.cs">
-      <Link>Controls\Html\IControlGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\IHtmlView.cs">
-      <Link>Controls\Html\IHtmlView.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\ISizeDependentControl.cs">
-      <Link>Controls\Html\ISizeDependentControl.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\ScrollableHtmlView.cs">
-      <Link>Controls\Html\ScrollableHtmlView.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\Html\SingleControlGenerator.cs">
-      <Link>Controls\Html\SingleControlGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\MtListBox.cs">
-      <Link>Controls\MtListBox.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Media\ImageHelper.cs">
-      <Link>Media\ImageHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\ScrollableItemsControl.cs">
-      <Link>Controls\ScrollableItemsControl.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\NavigationListEventArgs.cs">
-      <Link>Controls\NavigationListEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\PanAndZoomImage.cs">
-      <Link>Controls\PanAndZoomImage.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\PanAndZoomViewer.cs">
-      <Link>Controls\PanAndZoomViewer.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
-      <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\UniformGrid.cs">
-      <Link>Controls\UniformGrid.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Controls\WatermarkedTextBox.cs">
-      <Link>Controls\WatermarkedTextBox.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
-      <Link>Converters\DateTimeConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\DictionaryItemConverter.cs">
-      <Link>Converters\DictionaryItemConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\EqualityConverter.cs">
-      <Link>Converters\EqualityConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\NotConverter.cs">
-      <Link>Converters\NotConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\TimeSpanConverter.cs">
-      <Link>Converters\TimeSpanConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\TruncateConverter.cs">
-      <Link>Converters\TruncateConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\TypeVisibilityConverter.cs">
-      <Link>Converters\TypeVisibilityConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\UpperTextConverter.cs">
-      <Link>Converters\UpperTextConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\VisibilityConverter.cs">
-      <Link>Converters\VisibilityConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Events\SingleEvent.cs">
-      <Link>Events\SingleEvent.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Mathematics\GeometryMath.cs">
-      <Link>Mathematics\GeometryMath.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Mathematics\Matrix.cs">
-      <Link>Mathematics\Matrix.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Mathematics\MatrixMath.cs">
-      <Link>Mathematics\MatrixMath.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Mathematics\TrigonometryMath.cs">
-      <Link>Mathematics\TrigonometryMath.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Mathematics\VectorMath.cs">
-      <Link>Mathematics\VectorMath.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Messaging\DefaultActions.cs">
-      <Link>Messaging\DefaultActions.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Multimedia\YouTube.cs">
-      <Link>Multimedia\YouTube.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\MVVM\DependencyPropertyHelper.cs">
-      <Link>MVVM\DependencyPropertyHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Mvvm\ViewModelHelper.cs">
-      <Link>Mvvm\ViewModelHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Networking\WakeOnLan.cs">
-      <Link>Networking\WakeOnLan.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Serialization\DataContractSerialization.cs">
-      <Link>Serialization\DataContractSerialization.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Storage\FileUtilities.cs">
-      <Link>Storage\FileUtilities.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\UI\Designer.cs">
-      <Link>UI\Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\UI\FrameworkElementExtensions.cs">
-      <Link>UI\FrameworkElementExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\ColorUtility.cs">
-      <Link>Utilities\ColorUtility.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\DependencyObjectExtensions.cs">
-      <Link>Utilities\DependencyObjectExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\DependencyPropertyChangedEvent.cs">
-      <Link>Utilities\DependencyPropertyChangedEvent.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\EntityContainer.cs">
-      <Link>Utilities\EntityContainer.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\ItemsControlExtensions.cs">
-      <Link>Utilities\ItemsControlExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\PropertyPathHelper.cs">
-      <Link>Utilities\PropertyPathHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\Xml.cs">
-      <Link>Utilities\Xml.cs</Link>
-    </Compile>
-    <Compile Include="Animations\Fading.cs" />
-    <Compile Include="Animations\Flipping.cs" />
-    <Compile Include="Collections\ObservableGroupCollection.cs" />
-    <Compile Include="Controls\AppBarButton.cs" />
-    <Compile Include="Controls\AppBarToggleButton.cs" />
-    <Compile Include="Controls\ColorChooser.cs" />
-    <Compile Include="Controls\DataGrid\DataGrid.cs" />
-    <Compile Include="Controls\DataGrid\DataGridBoundColumn.cs" />
-    <Compile Include="Controls\DataGrid\DataGridCellBase.cs" />
-    <Compile Include="Controls\DataGrid\DataGridColumnBase.cs" />
-    <Compile Include="Controls\DataGrid\DataGridColumnCollection.cs" />
-    <Compile Include="Controls\DataGrid\DataGridExtensions.cs" />
-    <Compile Include="Controls\DataGrid\DataGridRow.cs" />
-    <Compile Include="Controls\DataGrid\DataGridTemplatedCell.cs" />
-    <Compile Include="Controls\DataGrid\DataGridTemplatedColumn.cs" />
-    <Compile Include="Controls\DataGrid\DataGridTextColumn.cs" />
-    <Compile Include="Controls\DataGrid\DefaultDataGridCell.cs" />
-    <Compile Include="Controls\ItemsWrapGridExtensions.cs" />
-    <Compile Include="Controls\MtGridView.cs" />
-    <Compile Include="Controls\GenericDataTemplateSelector.cs" />
-    <Compile Include="Controls\HorizontalHtmlGenerator.cs" />
-    <Compile Include="Controls\MtItemsControl.cs" />
-    <Compile Include="Controls\MtListView.cs" />
-    <Compile Include="Controls\FadingImage.cs" />
-    <Compile Include="Controls\GridControl.cs" />
-    <Compile Include="Controls\LongListSelector.cs" />
-    <Compile Include="Controls\LongListView.cs" />
-    <Compile Include="Controls\MenuListBox.cs" />
-    <Compile Include="Controls\NavigationGridView.cs" />
-    <Compile Include="Controls\NavigationListView.cs" />
-    <Compile Include="Controls\OrientedSize.cs" />
-    <Compile Include="Controls\MtPivot.cs" />
-    <Compile Include="Controls\MtPivotItem.cs" />
-    <Compile Include="Controls\PivotExtensions.cs" />
-    <Compile Include="Controls\SuppressTappedPresenter.cs" />
-    <Compile Include="Controls\TextButton.cs" />
-    <Compile Include="Controls\TimePicker.xaml.cs">
-      <DependentUpon>TimePicker.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\DatePicker.xaml.cs">
       <DependentUpon>DatePicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ImageButton.cs" />
-    <Compile Include="Controls\NavigationList.cs" />
-    <Compile Include="Controls\RolloverButton.cs" />
-    <Compile Include="Controls\WrapPanel.cs" />
-    <Compile Include="Converters\ChainedConverter.cs" />
-    <Compile Include="Converters\ColorConverter.cs" />
-    <Compile Include="Converters\LongListSelectorBackgroundConverter.cs" />
-    <Compile Include="Converters\NumberConverter.cs" />
-    <Compile Include="Encryption\Sha256.cs" />
-    <Compile Include="Environment\Device.cs" />
-    <Compile Include="Environment\Machine.cs" />
-    <Compile Include="Input\Keyboard.cs" />
-    <Compile Include="Mvvm\IStateHandlingViewModel.cs" />
-    <Compile Include="Paging\Animations\PageInsertionMode.cs" />
-    <Compile Include="Paging\Animations\PushPageAnimation.cs" />
-    <Compile Include="Paging\Handlers\BackKeyPressedHandler.cs" />
-    <Compile Include="Paging\Handlers\NavigationKeyHandler.cs" />
-    <Compile Include="Paging\Handlers\PageStateHandler.cs" />
-    <Compile Include="Paging\Animations\IPageAnimation.cs" />
-    <Compile Include="Paging\MtApplication.cs" />
-    <Compile Include="Paging\MtFrameDescription.cs" />
-    <Compile Include="Paging\MtLoadStateEventArgs.cs" />
-    <Compile Include="Paging\MtNavigatingCancelEventArgs.cs" />
-    <Compile Include="Paging\MtNavigationEventArgs.cs" />
-    <Compile Include="Paging\MtPage.cs" />
-    <Compile Include="Paging\MtPageDescription.cs" />
-    <Compile Include="Paging\MtSaveStateEventArgs.cs" />
-    <Compile Include="Paging\MtSuspensionManager.cs" />
-    <Compile Include="Paging\Animations\TurnstilePageAnimation.cs" />
+    <Compile Include="Controls\TimePicker.xaml.cs">
+      <DependentUpon>TimePicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\ResourceDictionary.cs" />
-    <Compile Include="Resources\Strings.cs" />
-    <Compile Include="Paging\MtFrame.cs" />
-    <Compile Include="Storage\StorageApplicationSettings.cs" />
-    <Compile Include="Storage\StorageFolderExtensions.cs" />
-    <Compile Include="UI\VisibilityManager.cs" />
-    <Compile Include="UI\PopupBase.cs" />
-    <Compile Include="UI\PopupHelper.cs" />
     <Compile Include="UI\Popups\ListPickerBox.xaml.cs">
       <DependentUpon>ListPickerBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\TemplatedVisualTreeExtensions.cs" />
-    <Compile Include="UI\TiltEffect.cs" />
-    <Compile Include="Utilities\PageUtilities.cs" />
-    <Compile Include="Utilities\ThreadUtilities.cs" />
-    <Compile Include="Utilities\ToastNotificationUtilities.cs" />
-    <Compile Include="Validation\IValidationControl.cs" />
-    <Compile Include="Validation\ValidationContainer.cs" />
-    <Compile Include="Validation\ValidatedNotifyPropertyChanged.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="..\Shared\Themes\WinRT\Generic.xaml">
-      <Link>Themes\Generic.xaml</Link>
+    <Page Include="Controls\DatePicker.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\TimePicker.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\Popups\ListPickerBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Controls\TimePicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\DatePicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
@@ -345,6 +87,7 @@
   <ItemGroup>
     <None Include="Default.snk" />
   </ItemGroup>
+  <Import Project="..\MyToolkit.Extended\MyToolkit.Extended.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

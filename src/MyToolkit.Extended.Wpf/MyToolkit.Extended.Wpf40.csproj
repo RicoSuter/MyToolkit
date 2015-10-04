@@ -69,36 +69,6 @@
     <Compile Include="..\MyToolkit\Utilities\StreamExtensions.cs">
       <Link>Utilities\StreamExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
-      <Link>Converters\DateTimeConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\NotConverter.cs">
-      <Link>Converters\NotConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\TypeVisibilityConverter.cs">
-      <Link>Converters\TypeVisibilityConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\UpperTextConverter.cs">
-      <Link>Converters\UpperTextConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Converters\VisibilityConverter.cs">
-      <Link>Converters\VisibilityConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Encryption\RijndaelEncryption.cs">
-      <Link>Encryption\RijndaelEncryption.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Multimedia\YouTube.cs">
-      <Link>Multimedia\YouTube.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Networking\ClientBaseExtensions.cs">
-      <Link>Networking\ClientBaseExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\UI\Designer.cs">
-      <Link>UI\Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Utilities\Xml.cs">
-      <Link>Utilities\Xml.cs</Link>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -137,9 +137,6 @@
     <AssemblyOriginatorKeyFile>Default.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\shared\encryption\SimpleEncryption.cs">
-      <Link>Encryption\SimpleEncryption.cs</Link>
-    </Compile>
     <Compile Include="Collections\IObservableCollectionView.cs" />
     <Compile Include="Collections\ObservableCollectionView.cs" />
     <Compile Include="Collections\QueryObservableCollectionView.cs" />
@@ -165,6 +162,7 @@
     <Compile Include="Composition\IServiceLocator.cs" />
     <Compile Include="Composition\ServiceLocator.cs" />
     <Compile Include="Data\IAsyncCacheManager.cs" />
+    <Compile Include="Encryption\SimpleEncryption.cs" />
     <Compile Include="Html\HtmlNode.cs" />
     <Compile Include="Html\HtmlParser.cs" />
     <Compile Include="Html\HtmlTagNode.cs" />

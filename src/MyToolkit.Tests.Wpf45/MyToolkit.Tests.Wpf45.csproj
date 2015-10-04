@@ -59,6 +59,10 @@
     <Compile Include="Utilities\EventHandlerExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MyToolkit.Build\MyToolkit.Build.csproj">
+      <Project>{d4a90f68-417f-4e5d-9f25-d184d8be94d4}</Project>
+      <Name>MyToolkit.Build</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyToolkit.Extended.Wpf\MyToolkit.Extended.Wpf45.csproj">
       <Project>{0D8F527D-868F-4DE3-8559-EA3597D9D079}</Project>
       <Name>MyToolkit.Extended.Wpf45</Name>

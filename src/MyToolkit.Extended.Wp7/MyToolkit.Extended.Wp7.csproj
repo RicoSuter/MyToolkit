@@ -63,16 +63,17 @@
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
     </Reference>
     <Reference Include="System.IO, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\sl4-windowsphone71\System.IO.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\sl4-windowsphone71\System.IO.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\sl4-windowsphone71\System.Runtime.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\sl4-windowsphone71\System.Runtime.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Threading.Tasks">
-      <HintPath>..\packages\Microsoft.Bcl.1.1.9\lib\sl4-windowsphone71\System.Threading.Tasks.dll</HintPath>
+    <Reference Include="System.Threading.Tasks, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\sl4-windowsphone71\System.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -197,61 +198,61 @@
     <Compile Include="..\MyToolkit.Extended.Wp8\Controls\NavigationList.cs">
       <Link>Controls\NavigationList.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\EmGenerator.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\Generators\EmGenerator.cs">
       <Link>Controls\Html\Generators\EmGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\EmptyGenerator.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\Generators\EmptyGenerator.cs">
       <Link>Controls\Html\Generators\EmptyGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\HtmlGenerator.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\Generators\HtmlGenerator.cs">
       <Link>Controls\Html\Generators\HtmlGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\ImageGenerator.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\Generators\ImageGenerator.cs">
       <Link>Controls\Html\Generators\ImageGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\LinkGenerator.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\Generators\LinkGenerator.cs">
       <Link>Controls\Html\Generators\LinkGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\ParagraphGenerator.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\Generators\ParagraphGenerator.cs">
       <Link>Controls\Html\Generators\ParagraphGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\StrongGenerator.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\Generators\StrongGenerator.cs">
       <Link>Controls\Html\Generators\StrongGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\TextGenerator.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\Generators\TextGenerator.cs">
       <Link>Controls\Html\Generators\TextGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\Generators\UlGenerator.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\Generators\UlGenerator.cs">
       <Link>Controls\Html\Generators\UlGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\HtmlNodeExtensions.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\HtmlNodeExtensions.cs">
       <Link>Controls\Html\HtmlNodeExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\HtmlView.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\HtmlView.cs">
       <Link>Controls\Html\HtmlView.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\HtmlViewHelper.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\HtmlViewHelper.cs">
       <Link>Controls\Html\HtmlViewHelper.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\IControlGenerator.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\IControlGenerator.cs">
       <Link>Controls\Html\IControlGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\IHtmlView.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\IHtmlView.cs">
       <Link>Controls\Html\IHtmlView.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\ISizeDependentControl.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\ISizeDependentControl.cs">
       <Link>Controls\Html\ISizeDependentControl.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\ScrollableHtmlView.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\ScrollableHtmlView.cs">
       <Link>Controls\Html\ScrollableHtmlView.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\Html\SingleControlGenerator.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\Html\SingleControlGenerator.cs">
       <Link>Controls\Html\SingleControlGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\MtListBox.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\MtListBox.cs">
       <Link>Controls\MtListBox.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\ScrollableItemsControl.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\ScrollableItemsControl.cs">
       <Link>Controls\ScrollableItemsControl.cs</Link>
     </Compile>
     <Compile Include="..\MyToolkit.Extended.Wp8\Controls\TranslatedToggleSwitch.cs">
@@ -344,140 +345,142 @@
     <Compile Include="..\MyToolkit.Extended.Wp8\Utilities\TaskHelperEx.cs">
       <Link>Utilities\TaskHelperEx.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Animation\Fading.cs">
+    <Compile Include="..\MyToolkit.Extended\Animation\Fading.cs">
       <Link>Animation\Fading.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Animation\Flipping.cs">
+    <Compile Include="..\MyToolkit.Extended\Animation\Flipping.cs">
       <Link>Animation\Flipping.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\NavigationListEventArgs.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\NavigationListEventArgs.cs">
       <Link>Controls\NavigationListEventArgs.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\PanAndZoomImage.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\PanAndZoomImage.cs">
       <Link>Controls\PanAndZoomImage.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\PanAndZoomViewer.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\PanAndZoomViewer.cs">
       <Link>Controls\PanAndZoomViewer.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\PrepareContainerForItemEventArgs.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\PrepareContainerForItemEventArgs.cs">
       <Link>Controls\PrepareContainerForItemEventArgs.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\UniformGrid.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\UniformGrid.cs">
       <Link>Controls\UniformGrid.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Controls\WatermarkedTextBox.cs">
+    <Compile Include="..\MyToolkit.Extended\Controls\WatermarkedTextBox.cs">
       <Link>Controls\WatermarkedTextBox.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\ControlClippingConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\ControlClippingConverter.cs">
       <Link>Converters\ControlClippingConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\DateTimeConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\DateTimeConverter.cs">
       <Link>Converters\DateTimeConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\ImageBackgroundColorConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\ImageBackgroundColorConverter.cs">
       <Link>Converters\ImageBackgroundColorConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\JoinConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\JoinConverter.cs">
       <Link>Converters\JoinConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\NotConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\NotConverter.cs">
       <Link>Converters\NotConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\RemoveColorAlphaConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\RemoveColorAlphaConverter.cs">
       <Link>Converters\RemoveColorAlphaConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\TimeSpanConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\TimeSpanConverter.cs">
       <Link>Converters\TimeSpanConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\TruncateConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\TruncateConverter.cs">
       <Link>Converters\TruncateConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\TypeCountConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\TypeCountConverter.cs">
       <Link>Converters\TypeCountConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\TypeVisibilityConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\TypeVisibilityConverter.cs">
       <Link>Converters\TypeVisibilityConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\UpperTextConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\UpperTextConverter.cs">
       <Link>Converters\UpperTextConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Converters\VisibilityConverter.cs">
+    <Compile Include="..\MyToolkit.Extended\Converters\VisibilityConverter.cs">
       <Link>Converters\VisibilityConverter.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Events\SingleEvent.cs">
+    <Compile Include="..\MyToolkit.Extended\Events\SingleEvent.cs">
       <Link>Events\SingleEvent.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Mathematics\GeometryMath.cs">
+    <Compile Include="..\MyToolkit.Extended\Mathematics\GeometryMath.cs">
       <Link>Mathematics\GeometryMath.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Mathematics\Matrix.cs">
+    <Compile Include="..\MyToolkit.Extended\Mathematics\Matrix.cs">
       <Link>Mathematics\Matrix.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Mathematics\MatrixMath.cs">
+    <Compile Include="..\MyToolkit.Extended\Mathematics\MatrixMath.cs">
       <Link>Mathematics\MatrixMath.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Mathematics\TrigonometryMath.cs">
+    <Compile Include="..\MyToolkit.Extended\Mathematics\TrigonometryMath.cs">
       <Link>Mathematics\TrigonometryMath.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Mathematics\VectorMath.cs">
+    <Compile Include="..\MyToolkit.Extended\Mathematics\VectorMath.cs">
       <Link>Mathematics\VectorMath.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Messaging\DefaultActions.cs">
+    <Compile Include="..\MyToolkit.Extended\Media\ImageHelper.cs">
+      <Link>Media\ImageHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\MyToolkit.Extended\Messaging\DefaultActions.cs">
       <Link>Messaging\DefaultActions.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Multimedia\YouTube.cs">
+    <Compile Include="..\MyToolkit.Extended\Multimedia\YouTube.cs">
       <Link>Multimedia\YouTube.cs</Link>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="..\Shared\Mvvm\DependencyPropertyHelper.cs">
+    <Compile Include="..\MyToolkit.Extended\Mvvm\DependencyPropertyHelper.cs">
       <Link>MVVM\DependencyPropertyHelper.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Networking\NetworkState.cs">
+    <Compile Include="..\MyToolkit.Extended\Networking\NetworkState.cs">
       <Link>Networking\NetworkState.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Networking\NetworkStateTracker.cs">
+    <Compile Include="..\MyToolkit.Extended\Networking\NetworkStateTracker.cs">
       <Link>Networking\NetworkStateTracker.cs</Link>
     </Compile>
-    <Compile Include="..\shared\networking\WakeOnLan.cs">
+    <Compile Include="..\MyToolkit.Extended\networking\WakeOnLan.cs">
       <Link>Networking\WakeOnLan.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Performance\MemoryDiagnosticsHelper.cs">
+    <Compile Include="..\MyToolkit.Extended\Performance\MemoryDiagnosticsHelper.cs">
       <Link>Performance\MemoryDiagnosticsHelper.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Serialization\DataContractSerialization.cs">
+    <Compile Include="..\MyToolkit.Extended\Serialization\DataContractSerialization.cs">
       <Link>Serialization\DataContractSerialization.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Storage\FileUtilities.cs">
+    <Compile Include="..\MyToolkit.Extended\Storage\FileUtilities.cs">
       <Link>Storage\FileUtilities.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\UI\Designer.cs">
+    <Compile Include="..\MyToolkit.Extended\UI\Designer.cs">
       <Link>UI\Designer.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\UI\FrameworkElementExtensions.cs">
+    <Compile Include="..\MyToolkit.Extended\UI\FrameworkElementExtensions.cs">
       <Link>UI\FrameworkElementExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\UI\TextBinding.cs">
+    <Compile Include="..\MyToolkit.Extended\UI\TextBinding.cs">
       <Link>UI\TextBinding.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Utilities\ColorUtility.cs">
-      <Link>Utilities\ColorUtility.cs</Link>
+    <Compile Include="..\MyToolkit.Extended\Utilities\ColorUtilities.cs">
+      <Link>Utilities\ColorUtilities.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Utilities\DependencyObjectExtensions.cs">
+    <Compile Include="..\MyToolkit.Extended\Utilities\DependencyObjectExtensions.cs">
       <Link>Utilities\DependencyObjectExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Utilities\DependencyPropertyChangedEvent.cs">
+    <Compile Include="..\MyToolkit.Extended\Utilities\DependencyPropertyChangedEvent.cs">
       <Link>Utilities\DependencyPropertyChangedEvent.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Utilities\EntityContainer.cs">
+    <Compile Include="..\MyToolkit.Extended\Utilities\EntityContainer.cs">
       <Link>Utilities\EntityContainer.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Utilities\ItemsControlExtensions.cs">
+    <Compile Include="..\MyToolkit.Extended\Utilities\ItemsControlExtensions.cs">
       <Link>Utilities\ItemsControlExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\Shared\Utilities\Xml.cs">
+    <Compile Include="..\MyToolkit.Extended\Utilities\Xml.cs">
       <Link>Utilities\Xml.cs</Link>
     </Compile>
-    <Compile Include="Media\ImageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -560,10 +563,12 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
-  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -8,6 +8,7 @@ namespace MyToolkit.Controls
 	public sealed partial class DatePicker
 	{
 		private bool initializing = true; 
+
 		public DatePicker()
 		{
 			InitializeComponent();

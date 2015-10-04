@@ -166,7 +166,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MyToolkit.Extended.WinRT\MyToolkit.Extended.Uwp.csproj">
+    <ProjectReference Include="..\MyToolkit.Extended.Uwp\MyToolkit.Extended.Uwp.csproj">
       <Project>{28cdf611-02d2-474c-ac37-616024caf0c1}</Project>
       <Name>MyToolkit.Extended.Uwp</Name>
     </ProjectReference>
