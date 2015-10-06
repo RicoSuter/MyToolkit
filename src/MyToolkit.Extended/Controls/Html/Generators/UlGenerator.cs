@@ -2,7 +2,7 @@
 // <copyright file="UlGenerator.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -28,12 +28,12 @@ namespace MyToolkit.Controls.Html.Generators
 {
     /// <summary>Generator for the UL HTML element (unordered list).</summary>
     public class UlGenerator : IControlGenerator
-	{
+    {
         /// <summary>Initializes a new instance of the <see cref="UlGenerator"/> class.</summary>
         public UlGenerator()
-	    {
+        {
             BulletSymbol = "•";
-	    }
+        }
 
         /// <summary>Gets or sets the bullet symbol for a list element.</summary>
         public string BulletSymbol { get; set; }
@@ -43,39 +43,39 @@ namespace MyToolkit.Controls.Html.Generators
         /// <param name="htmlView">The HTML view.</param>
         /// <returns>The UI elements.</returns>
         public DependencyObject[] CreateControls(HtmlNode node, IHtmlView htmlView)
-		{
-			var controls = new List<Grid>();
-			foreach (var child in node.Children.OfType<HtmlTagNode>().Where(c => c.Name == "li"))
-			{
-				var grid = new Grid();
-				grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(20)});
-				grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        {
+            var controls = new List<Grid>();
+            foreach (var child in node.Children.OfType<HtmlTagNode>().Where(c => c.Name == "li"))
+            {
+                var grid = new Grid();
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(20)});
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-				var textBlock = CreateBulletSymbol(htmlView);
-                			    grid.Children.Add(textBlock);
-				Grid.SetColumn(textBlock, 0);
+                var textBlock = CreateBulletSymbol(htmlView);
+                                grid.Children.Add(textBlock);
+                Grid.SetColumn(textBlock, 0);
 
-				var panel = new StackPanel();
+                var panel = new StackPanel();
 
-				child.WrapWithHtmlTag();
-				foreach (var c in child.GetChildControls(htmlView).OfType<UIElement>())
-				{
-					var frameworkElement = c as FrameworkElement;
-					if (frameworkElement != null)
-						frameworkElement.HorizontalAlignment = HorizontalAlignment.Stretch;
+                child.WrapWithHtmlTag();
+                foreach (var c in child.GetChildControls(htmlView).OfType<UIElement>())
+                {
+                    var frameworkElement = c as FrameworkElement;
+                    if (frameworkElement != null)
+                        frameworkElement.HorizontalAlignment = HorizontalAlignment.Stretch;
 
-					panel.Children.Add(c);
-				}
+                    panel.Children.Add(c);
+                }
 
-				grid.Children.Add(panel);
-				Grid.SetColumn(panel, 1);
+                grid.Children.Add(panel);
+                Grid.SetColumn(panel, 1);
 
-				controls.Add(grid);
-			}
+                controls.Add(grid);
+            }
 
-			AdjustMargins(htmlView, controls);
+            AdjustMargins(htmlView, controls);
             return controls.OfType<DependencyObject>().ToArray();
-		}
+        }
 
         private TextBlock CreateBulletSymbol(IHtmlView htmlView)
         {
@@ -98,7 +98,7 @@ namespace MyToolkit.Controls.Html.Generators
             if (lastControl != null)
                 lastControl.Margin = new Thickness(0, 0, 0, htmlView.ParagraphMargin);
         }
-	}
+    }
 }
 
 #endif

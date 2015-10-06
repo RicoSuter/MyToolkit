@@ -1,4 +1,12 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="NumberConverter.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 
 #if !WINRT
 using System.Windows.Data;
@@ -8,7 +16,7 @@ using Windows.UI.Xaml.Data;
 
 namespace MyToolkit.Converters
 {
-	public class NumberConverter : IValueConverter
+    public class NumberConverter : IValueConverter
     {
 #if WINRT
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -50,6 +58,6 @@ namespace MyToolkit.Converters
 #endif
         {
             throw new NotSupportedException();
-		}
+        }
     }
 }

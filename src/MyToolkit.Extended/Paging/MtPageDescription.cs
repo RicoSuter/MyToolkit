@@ -2,7 +2,7 @@
 // <copyright file="MtPageDescription.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -15,9 +15,9 @@ using MyToolkit.Serialization;
 namespace MyToolkit.Paging
 {
     /// <summary>Describes a page in the page stack. </summary>
-	[DataContract]
-	public class MtPageDescription
-	{
+    [DataContract]
+    public class MtPageDescription
+    {
         private Type _type;
 
         /// <summary>Initializes a new instance of the <see cref="MtPageDescription"/> class.</summary>
@@ -26,13 +26,13 @@ namespace MyToolkit.Paging
         /// <summary>Initializes a new instance of the <see cref="MtPageDescription"/> class.</summary>
         /// <param name="pageType">Type of the page.</param>
         /// <param name="parameter">The parameter.</param>
-		public MtPageDescription(Type pageType, object parameter)
-		{
-			_type = pageType;
+        public MtPageDescription(Type pageType, object parameter)
+        {
+            _type = pageType;
 
-			SerializationType = pageType.AssemblyQualifiedName;
-			Parameter = parameter;
-		}
+            SerializationType = pageType.AssemblyQualifiedName;
+            Parameter = parameter;
+        }
 
         /// <summary>Gets a value indicating whether the page is instantiated. </summary>
         public bool IsInstantiated
@@ -52,10 +52,10 @@ namespace MyToolkit.Paging
         }
 
         /// <summary>Gets or sets the page parameter. </summary>
-		public object Parameter { get; internal set; }
+        public object Parameter { get; internal set; }
 
         /// <summary>Gets the page object or null if the page is not instantiated. </summary>
-		public MtPage Page { get; private set; }
+        public MtPage Page { get; private set; }
 
         [DataMember]
         internal string SerializationType { get; set; }
@@ -94,7 +94,7 @@ namespace MyToolkit.Paging
         {
             Page = null; 
         }
-	}
+    }
 }
 
 #endif

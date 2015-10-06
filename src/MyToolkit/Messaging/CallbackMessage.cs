@@ -2,7 +2,7 @@
 // <copyright file="CallbackMessage.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -50,7 +50,7 @@ namespace MyToolkit.Messaging
     /// <summary>Provides a message with a callback with argument. </summary>
     /// <typeparam name="T">The type of the first parameter of the callback. </typeparam>
     public abstract class CallbackMessage<T>
-	{
+    {
         private readonly TaskCompletionSource<CallbackMessageResult<T>> _taskSource = new TaskCompletionSource<CallbackMessageResult<T>>();
 
         /// <summary>Gets the task to await for the callback call. </summary>

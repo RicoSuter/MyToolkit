@@ -2,7 +2,7 @@
 // <copyright file="FixedHtmlTextBlock.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -36,13 +36,13 @@ namespace MyToolkit.Controls
             _generators = HtmlViewHelper.GetDefaultGenerators(this);
 
 #if !WINRT
-			if (Resources.Contains("PhoneFontSizeNormal"))
-				FontSize = (double)Resources["PhoneFontSizeNormal"];
+            if (Resources.Contains("PhoneFontSizeNormal"))
+                FontSize = (double)Resources["PhoneFontSizeNormal"];
 
-			if (Resources.Contains("PhoneForegroundBrush"))
-				Foreground = (Brush)Resources["PhoneForegroundBrush"];
+            if (Resources.Contains("PhoneForegroundBrush"))
+                Foreground = (Brush)Resources["PhoneForegroundBrush"];
 
-			Margin = new Thickness(12, 0, 12, 0);
+            Margin = new Thickness(12, 0, 12, 0);
 #else
             FontSize = (double)Resources["ContentControlFontSize"];
             Foreground = (Brush)Resources["ApplicationForegroundThemeBrush"];
@@ -73,8 +73,8 @@ namespace MyToolkit.Controls
         public event EventHandler<EventArgs> HtmlLoaded;
 
 #if !WINRT
-		public static readonly DependencyProperty ParagraphMarginProperty =
-			DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(HtmlView), new PropertyMetadata(6));
+        public static readonly DependencyProperty ParagraphMarginProperty =
+            DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(HtmlView), new PropertyMetadata(6));
 #else
         public static readonly DependencyProperty ParagraphMarginProperty =
             DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(HtmlView), new PropertyMetadata(10));

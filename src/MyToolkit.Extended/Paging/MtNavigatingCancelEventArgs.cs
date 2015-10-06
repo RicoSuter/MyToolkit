@@ -1,3 +1,11 @@
+//-----------------------------------------------------------------------
+// <copyright file="MtNavigatingCancelEventArgs.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
 #if WINRT
 
 using System;

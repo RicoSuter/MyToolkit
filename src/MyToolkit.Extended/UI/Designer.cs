@@ -2,7 +2,7 @@
 // <copyright file="Designer.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -21,17 +21,17 @@ namespace MyToolkit.UI
     {
 #if WINRT
 
-		public static bool IsInDesignMode
-		{
-			get { return Windows.ApplicationModel.DesignMode.DesignModeEnabled; }
-		}
+        public static bool IsInDesignMode
+        {
+            get { return Windows.ApplicationModel.DesignMode.DesignModeEnabled; }
+        }
 
 #elif SL4 || SL5
 
-		public static bool IsInDesignMode
-		{
-			get { return DesignerProperties.IsInDesignTool; }
-		}
+        public static bool IsInDesignMode
+        {
+            get { return DesignerProperties.IsInDesignTool; }
+        }
 #else
         private static bool? _isInDesignMode = null;
 

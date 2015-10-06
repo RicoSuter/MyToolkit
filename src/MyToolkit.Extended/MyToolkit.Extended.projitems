@@ -9,15 +9,10 @@
     <Import_RootNamespace>MyToolkit.Extended</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Animation\Background.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Animation\Control.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animation\Fading.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Animation\Flipping.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Caching\CacheManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Caching\DataManagerBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Collections\ExtendedNotifyCollectionChangedEventArgs.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Collections\ExtendedObservableCollection.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Collections\ObservableCollectionObserver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Collections\ObservableGroupCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AppBarButton.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\AppBarToggleButton.cs" />
@@ -124,13 +119,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Media\ImageHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messaging\ActionMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messaging\DefaultActions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Messaging\GoBackMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Messaging\LoadingMessage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Multimedia\YouTube.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Mvvm\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Mvvm\DependencyPropertyHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Mvvm\IStateHandlingViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Mvvm\NotifyPropertyChanged.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Mvvm\ViewModelHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\ClientBaseExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Networking\NetworkState.cs" />
@@ -161,7 +153,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Storage\StorageApplicationSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Storage\StorageFolderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\Designer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)UI\Element.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UI\UIElementExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\FrameworkElementExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\PopupBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\PopupHelper.cs" />
@@ -173,9 +165,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ColorUtilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DependencyObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DependencyPropertyChangedEvent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utilities\DictionaryExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utilities\EntityContainer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utilities\ExpressionHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\EntityContainerExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\HttpUtilityExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\IdentityGenerator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ItemsControlExtensions.cs" />

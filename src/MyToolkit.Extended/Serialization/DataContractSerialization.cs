@@ -2,7 +2,7 @@
 // <copyright file="DataContractSerialization.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -83,32 +83,32 @@ namespace MyToolkit.Serialization
         /// <param name="preserveReferences">Specifies whether to preserve references. </param>
         /// <param name="extraTypes">The additional types. </param>
         /// <returns>The XML string. </returns>
-		public static string Serialize<T>(T obj, bool preserveReferences = false, Type[] extraTypes = null)
-		{
-			if (preserveReferences)
-				throw new ArgumentException("preserveReferences cannot be true (not supported)");
+        public static string Serialize<T>(T obj, bool preserveReferences = false, Type[] extraTypes = null)
+        {
+            if (preserveReferences)
+                throw new ArgumentException("preserveReferences cannot be true (not supported)");
 
-			var serializer = extraTypes != null ? new DataContractSerializer(obj.GetType(), extraTypes) : new DataContractSerializer(obj.GetType());
-			var sb = new StringBuilder();
-			using (var writer = XmlWriter.Create(sb))
-			{
-				serializer.WriteObject(writer, obj);
-				writer.Flush();
-				return sb.ToString();
-			}
-		}
+            var serializer = extraTypes != null ? new DataContractSerializer(obj.GetType(), extraTypes) : new DataContractSerializer(obj.GetType());
+            var sb = new StringBuilder();
+            using (var writer = XmlWriter.Create(sb))
+            {
+                serializer.WriteObject(writer, obj);
+                writer.Flush();
+                return sb.ToString();
+            }
+        }
 
         /// <summary>Deserializes an object from a XML string. </summary>
         /// <typeparam name="T">The type of the resulting object. </typeparam>
         /// <param name="xml">The XML string. </param>
         /// <param name="extraTypes">The addional types. </param>
         /// <returns>The deserialized object. </returns>
-		public static T Deserialize<T>(string xml, Type[] extraTypes = null)
-		{
-			var serializer = extraTypes != null ? new DataContractSerializer(typeof(T), extraTypes) : new DataContractSerializer(typeof(T));
-			using (var reader = XmlReader.Create(new StringReader(xml)))
-				return (T)serializer.ReadObject(reader);
-		}
+        public static T Deserialize<T>(string xml, Type[] extraTypes = null)
+        {
+            var serializer = extraTypes != null ? new DataContractSerializer(typeof(T), extraTypes) : new DataContractSerializer(typeof(T));
+            using (var reader = XmlReader.Create(new StringReader(xml)))
+                return (T)serializer.ReadObject(reader);
+        }
 
 #else
 #if WINRT

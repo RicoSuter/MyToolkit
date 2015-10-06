@@ -2,11 +2,13 @@
 // <copyright file="ReflectionExtensions.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace MyToolkit.Utilities
@@ -23,6 +25,7 @@ namespace MyToolkit.Utilities
             var index = fullName.LastIndexOf('.');
             if (index != -1)
                 return fullName.Substring(index + 1);
+
             return fullName;
         }
 
@@ -43,6 +46,7 @@ namespace MyToolkit.Utilities
         public static void Merge<T>(this T source, T target)
         {
             var targetType = target.GetType();
+
 #if !LEGACY
             foreach (var p in source.GetType().GetRuntimeProperties())
             {
@@ -64,6 +68,61 @@ namespace MyToolkit.Utilities
                 }
             }
 #endif
+        }
+        
+        public static IEnumerable<PropertyInfo> GetInheritedProperties(this Type type)
+        {
+            var typeInfo = type.GetTypeInfo();
+            var list = typeInfo.DeclaredProperties.ToList();
+
+            var subtype = typeInfo.BaseType;
+            if (subtype != null)
+                list.AddRange(subtype.GetRuntimeProperties());
+
+            foreach (var i in typeInfo.ImplementedInterfaces)
+                list.AddRange(i.GetRuntimeProperties());
+
+            return list.ToArray();
+        }
+
+        public static PropertyInfo GetInheritedProperty(this Type type, string name)
+        {
+            var typeInfo = type.GetTypeInfo();
+
+            var property = typeInfo.GetDeclaredProperty(name);
+            if (property != null)
+                return property;
+
+            foreach (var i in typeInfo.ImplementedInterfaces)
+            {
+                property = i.GetRuntimeProperty(name);
+                if (property != null)
+                    return property;
+            }
+
+            var subtype = typeInfo.BaseType;
+            if (subtype != null)
+            {
+                property = subtype.GetRuntimeProperty(name);
+                if (property != null)
+                    return property;
+            }
+
+            return null;
+        }
+
+        public static void Clone(this object source, object target)
+        {
+            var targetType = target.GetType();
+            foreach (var p in source.GetType().GetInheritedProperties())
+            {
+                var tp = targetType.GetInheritedProperty(p.Name);
+                if (tp != null && p.CanWrite)
+                {
+                    var value = p.GetValue(source, null);
+                    tp.SetValue(target, value, null);
+                }
+            }
         }
     }
 }

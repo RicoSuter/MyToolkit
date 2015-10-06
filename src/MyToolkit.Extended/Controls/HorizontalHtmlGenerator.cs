@@ -1,12 +1,14 @@
-﻿#if WINRT
+﻿//-----------------------------------------------------------------------
+// <copyright file="HorizontalHtmlGenerator.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+#if WINRT
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
 using MyToolkit.Utilities;
 using Windows.System;
 using Windows.UI;
@@ -18,7 +20,7 @@ namespace MyToolkit.Controls
 {
     public class HorizontalHtmlGenerator
     {
-        private readonly WebView webView;
+        private readonly WebView _webView;
         //private readonly MethodInfo method;
 
         public Color Foreground { get; set; }
@@ -33,7 +35,7 @@ namespace MyToolkit.Controls
 
         public HorizontalHtmlGenerator(WebView webView)
         {
-            this.webView = webView;
+            this._webView = webView;
 
             Foreground = ((SolidColorBrush)webView.Resources["ApplicationForegroundThemeBrush"]).Color;
             Background = ((SolidColorBrush)webView.Resources["ApplicationPageBackgroundThemeBrush"]).Color;
@@ -67,10 +69,10 @@ namespace MyToolkit.Controls
 
         public void Update()
         {
-            if (webView.ActualHeight > 0)
+            if (_webView.ActualHeight > 0)
             {
                 var html = GenerateHtml();
-                webView.NavigateToString(html);
+                _webView.NavigateToString(html);
             }
         }
 
@@ -98,22 +100,22 @@ namespace MyToolkit.Controls
         {
             var linkTransform = @"<script type=""text/javascript"">
 for (var i = 0; i < document.links.length; i++) { 
-	document.links[i].onclick = function() { 
-		window.external.notify('LaunchLink: ' + this.href); return false; 
-	} 
+    document.links[i].onclick = function() { 
+        window.external.notify('LaunchLink: ' + this.href); return false; 
+    } 
 }</script>";
 
             var head = @"<!DOCTYPE html>
-				<head>
-					<style type=""text/css"">
-						body {
-							margin: 0; padding: 0;
-							font-family: 'Segoe UI'; -ms-font-feature-settings: 'ss01' 1;
-							font-size: 11pt;
-							background-color: " + ColorUtilities.ToHex(Background) + @";
-						}
-					</style>
-					<meta name=""viewport"" content=""initial-scale=1, maximum-scale=1, user-scalable=0""/>" +
+                <head>
+                    <style type=""text/css"">
+                        body {
+                            margin: 0; padding: 0;
+                            font-family: 'Segoe UI'; -ms-font-feature-settings: 'ss01' 1;
+                            font-size: 11pt;
+                            background-color: " + ColorUtilities.ToHex(Background) + @";
+                        }
+                    </style>
+                    <meta name=""viewport"" content=""initial-scale=1, maximum-scale=1, user-scalable=0""/>" +
                 "<script type=\"text/javascript\">document.documentElement.style.msScrollTranslation = 'vertical-to-horizontal';</script>" +
                 "</head>";
 
@@ -123,13 +125,13 @@ for (var i = 0; i < document.links.length; i++) {
                         "<body style='margin-left:-16px;margin-top:0px;'>" +
                             "<div style='position: absolute; column-width: " + ColumnWidth + "px; column-fill: auto; " +
                     //"column-rule-width: " + RuleWidth + "px; " +
-                                "height:" + (webView.ActualHeight - Padding.Bottom) + "px; " +
+                                "height:" + (_webView.ActualHeight - Padding.Bottom) + "px; " +
                                 "color:" + ColorUtilities.ToHex(Foreground) + "; margin-left:" + Padding.Left + "px; " +
                                 "margin-right:" + Padding.Right + "px'>" +
                                     "<div style='margin-right:" + RuleWidth + "px'" +
                                     bodyHtml +
                                     "</div>" +
-                                "<div style='height:" + webView.ActualHeight + "px'>&nbsp;</div>" + // <= used to have margin right => find better solution
+                                "<div style='height:" + _webView.ActualHeight + "px'>&nbsp;</div>" + // <= used to have margin right => find better solution
                             "</div>" +
                         "</body>" +
                 (LaunchExternalBrowser ? linkTransform : "") +
@@ -147,7 +149,7 @@ for (var i = 0; i < document.links.length; i++) {
                             "<td>" +
                                 "<div style='position: absolute; column-width: " + ColumnWidth + "px; top:" + Padding.Top + "px; column-fill: auto; " +
                 //"column-rule-width: " + RuleWidth + "px; " +
-                                    "height:" + (webView.ActualHeight - Padding.Bottom - Padding.Top) + "px; " +
+                                    "height:" + (_webView.ActualHeight - Padding.Bottom - Padding.Top) + "px; " +
                                     "color:" + ColorUtilities.ToHex(Foreground) + "; " +
                                     "margin-left:" + RuleWidth + "px'>" +
                                         "<div style='margin-right:" + RuleWidth + "px; " +

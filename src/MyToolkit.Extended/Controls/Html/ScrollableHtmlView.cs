@@ -2,7 +2,7 @@
 // <copyright file="HtmlTextBlock.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -59,10 +59,10 @@ namespace MyToolkit.Controls
 
 #else
 
-			InnerMargin = new Thickness(24, 0, 24, 0);
+            InnerMargin = new Thickness(24, 0, 24, 0);
 
-			if (Resources.Contains("PhoneFontSizeNormal"))
-				FontSize = (double)Resources["PhoneFontSizeNormal"];
+            if (Resources.Contains("PhoneFontSizeNormal"))
+                FontSize = (double)Resources["PhoneFontSizeNormal"];
 
             if (Resources.Contains("PhoneForegroundBrush"))
                 Foreground = (Brush)Resources["PhoneForegroundBrush"];
@@ -105,8 +105,8 @@ namespace MyToolkit.Controls
         }
 
 #if !WINRT
-		public static readonly DependencyProperty ParagraphMarginProperty =
-			DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(ScrollableHtmlView), new PropertyMetadata(6));
+        public static readonly DependencyProperty ParagraphMarginProperty =
+            DependencyProperty.Register("ParagraphMargin", typeof(int), typeof(ScrollableHtmlView), new PropertyMetadata(6));
 #else
 #if WINDOWS_UAP
         public static readonly DependencyProperty ParagraphMarginProperty =
@@ -206,7 +206,7 @@ namespace MyToolkit.Controls
         protected override void OnApplyTemplate()
 #else
         /// <summary>Attaches a binding to a FrameworkElement, using the provided binding object.</summary>
-		public override void OnApplyTemplate()
+        public override void OnApplyTemplate()
 #endif
         {
             base.OnApplyTemplate();

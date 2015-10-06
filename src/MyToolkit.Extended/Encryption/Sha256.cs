@@ -1,4 +1,12 @@
-﻿#if !WP8 && !WPF
+﻿//-----------------------------------------------------------------------
+// <copyright file="Sha256.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+#if !WP8 && !WPF
 
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;

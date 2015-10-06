@@ -1,4 +1,12 @@
-﻿#if WINRT
+﻿//-----------------------------------------------------------------------
+// <copyright file="TemplatedVisualTreeExtensions.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+#if WINRT
 
 // (c) Copyright Microsoft Corporation.
 // This source is subject to the Microsoft Public License (Ms-PL).

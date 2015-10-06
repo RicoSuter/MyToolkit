@@ -2,7 +2,7 @@
 // <copyright file="IHtmlView.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -20,8 +20,8 @@ using System.Windows.Media;
 namespace MyToolkit.Controls.Html
 {
     /// <summary>Describes the interface of a HTML rendering control. </summary>
-	public interface IHtmlView
-	{
+    public interface IHtmlView
+    {
         /// <summary>Gets or sets the HTML content to display. </summary>
         string Html { get; }
 
@@ -38,20 +38,20 @@ namespace MyToolkit.Controls.Html
         int ParagraphMargin { get; }
 
         /// <summary>Gets or sets a brush that describes the foreground color. </summary>
-		Brush Foreground { get; }
+        Brush Foreground { get; }
 
         /// <summary>Gets or sets a brush that describes the background of a control. </summary>
-		Brush Background { get; }
+        Brush Background { get; }
 
         /// <summary>Gets or sets the font size. </summary>
-		double FontSize { get; }
+        double FontSize { get; }
 
         /// <summary>Gets or sets the font family of the control. </summary>
-		FontFamily FontFamily { get; }
+        FontFamily FontFamily { get; }
 
         /// <summary>Gets the rendered width of this element. </summary>
-		double ActualWidth { get; }
-	}
+        double ActualWidth { get; }
+    }
 }
 
 #endif

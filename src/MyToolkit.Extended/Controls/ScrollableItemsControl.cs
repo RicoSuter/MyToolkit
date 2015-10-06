@@ -2,7 +2,7 @@
 // <copyright file="ScrollableItemsControl.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -398,7 +398,7 @@ namespace MyToolkit.Controls
         }
 
 #if WINRT
-		private void RegisterScrollEvent(object s, object o)
+        private void RegisterScrollEvent(object s, object o)
 #else
         private void RegisterScrollEvent(object s, EventArgs eventArgs)
 #endif

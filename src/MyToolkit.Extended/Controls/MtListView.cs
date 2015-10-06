@@ -2,7 +2,7 @@
 // <copyright file="MtListView.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -24,8 +24,8 @@ namespace MyToolkit.Controls
         {
             ItemContainerStyle = (Style)XamlReader.Load(
                 @"<Style TargetType=""ListViewItem"" xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
-					<Setter Property=""HorizontalContentAlignment"" Value=""Stretch""/>
-				</Style>");
+                    <Setter Property=""HorizontalContentAlignment"" Value=""Stretch""/>
+                </Style>");
         }
     }
 

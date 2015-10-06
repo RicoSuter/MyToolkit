@@ -2,7 +2,7 @@
 // <copyright file="EmGenerator.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ namespace MyToolkit.Controls.Html.Generators
 {
     /// <summary>Generates the UI element for an EM HTML tag.</summary>
     public class EmGenerator : IControlGenerator
-	{
+    {
         /// <summary>Creates the UI elements for the given HTML node and HTML view.</summary>
         /// <param name="node">The HTML node.</param>
         /// <param name="htmlView">The HTML view.</param>

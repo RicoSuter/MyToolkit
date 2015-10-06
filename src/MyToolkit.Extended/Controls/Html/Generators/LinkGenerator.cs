@@ -2,7 +2,7 @@
 // <copyright file="LinkGenerator.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -133,26 +133,26 @@ namespace MyToolkit.Controls.Html.Generators
         /// <param name="link">The link.</param>
         /// <param name="textBlock">The text block.</param>
         /// <returns>The action</returns>
-		protected virtual Action CreateLinkAction(Hyperlink hyperlink, string link, IHtmlView textBlock)
-		{
-			if (link.StartsWith("mailto:"))
-				return () => new EmailComposeTask {To = link.Substring(7)}.Show();
-			
+        protected virtual Action CreateLinkAction(Hyperlink hyperlink, string link, IHtmlView textBlock)
+        {
+            if (link.StartsWith("mailto:"))
+                return () => new EmailComposeTask {To = link.Substring(7)}.Show();
+            
             // 'tel:' removed because it needs CAP_PHONEDIALER capability! Use PhoneLinkGenerator from "- Other" directory. 
 
-			try
-			{
-				var uri = link.StartsWith("http://") || link.StartsWith("https://") ?
-					new Uri(link, UriKind.Absolute) : new Uri(textBlock.HtmlBaseUri, link);
-				return () => new WebBrowserTask { Uri = uri }.Show();
-			}
-			catch (Exception)
-			{
+            try
+            {
+                var uri = link.StartsWith("http://") || link.StartsWith("https://") ?
+                    new Uri(link, UriKind.Absolute) : new Uri(textBlock.HtmlBaseUri, link);
+                return () => new WebBrowserTask { Uri = uri }.Show();
+            }
+            catch (Exception)
+            {
 
-			}
+            }
 
-			return () => { };
-		}
+            return () => { };
+        }
 #endif
     }
 }

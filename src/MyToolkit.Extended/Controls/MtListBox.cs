@@ -2,7 +2,7 @@
 // <copyright file="MtListBox.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -56,16 +56,16 @@ namespace MyToolkit.Controls
 #if WINRT
             DefaultStyleKey = typeof(MtListBox);
 #else
-			ItemContainerStyle = (Style)XamlReader.Load(
-				@"<Style TargetType=""ListBoxItem"" xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
-					<Setter Property=""Template"">
-						<Setter.Value>
-							<ControlTemplate>
-								<ContentPresenter HorizontalAlignment=""Stretch"" VerticalAlignment=""Stretch""/>
-							</ControlTemplate>
-						</Setter.Value>
-					</Setter>
-				</Style>");
+            ItemContainerStyle = (Style)XamlReader.Load(
+                @"<Style TargetType=""ListBoxItem"" xmlns=""http://schemas.microsoft.com/winfx/2006/xaml/presentation"">
+                    <Setter Property=""Template"">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <ContentPresenter HorizontalAlignment=""Stretch"" VerticalAlignment=""Stretch""/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>");
 #endif
         }
 
@@ -127,26 +127,26 @@ namespace MyToolkit.Controls
 
 #if WP8 || WP7
 
-		public static readonly DependencyProperty UseScrollFixProperty =
-			DependencyProperty.Register("UseScrollFix", typeof(bool), typeof(MtListBox), new PropertyMetadata(true));
+        public static readonly DependencyProperty UseScrollFixProperty =
+            DependencyProperty.Register("UseScrollFix", typeof(bool), typeof(MtListBox), new PropertyMetadata(true));
 
         /// <summary>Gets or sets a value indicating whether the scroll fix sould be applied. </summary>
-		public bool UseScrollFix
-		{
-			get { return (bool) GetValue(UseScrollFixProperty); }
-			set { SetValue(UseScrollFixProperty, value); }
-		}
+        public bool UseScrollFix
+        {
+            get { return (bool) GetValue(UseScrollFixProperty); }
+            set { SetValue(UseScrollFixProperty, value); }
+        }
 
-		protected override void OnManipulationCompleted(ManipulationCompletedEventArgs e)
-		{
-			if (UseScrollFix)
-			{
-				var page = (PhoneApplicationPage)((PhoneApplicationFrame)Application.Current.RootVisual).Content;
-				page.Focus();
-			}
+        protected override void OnManipulationCompleted(ManipulationCompletedEventArgs e)
+        {
+            if (UseScrollFix)
+            {
+                var page = (PhoneApplicationPage)((PhoneApplicationFrame)Application.Current.RootVisual).Content;
+                page.Focus();
+            }
 
-			base.OnManipulationCompleted(e);
-		}
+            base.OnManipulationCompleted(e);
+        }
 
 #endif
 
@@ -248,29 +248,29 @@ namespace MyToolkit.Controls
 
 #elif WP7 || WP8 || SL5
 
-		private void UpdateInnerMargin()
-		{
+        private void UpdateInnerMargin()
+        {
             AddLastItemMargin();
 
             if (_scrollViewer != null)
-			{
-				var itemsPresenter = (ItemsPresenter)_scrollViewer.Content;
-				if (itemsPresenter != null)
+            {
+                var itemsPresenter = (ItemsPresenter)_scrollViewer.Content;
+                if (itemsPresenter != null)
                     itemsPresenter.Margin = InnerMargin;
-			}
-		}
+            }
+        }
 
-	    protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
-	    {
-	        base.OnItemsChanged(e);
+        protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
+        {
+            base.OnItemsChanged(e);
 
             if (InnerMargin.Top > 0.0 || InnerMargin.Bottom > 0.0)
-	        {
-	            if (Items != null && Items.Count > 0)
-	            {
+            {
+                if (Items != null && Items.Count > 0)
+                {
                     var currentLastElement = ItemContainerGenerator.ContainerFromItem(Items.Last());
                     if (currentLastElement != null && currentLastElement != _lastElement)
-	                {
+                    {
                         if (_lastElement != null && ItemContainerGenerator.ItemFromContainer(_lastElement) != null)
                             RestoreLastItemMargin();
 
@@ -279,36 +279,36 @@ namespace MyToolkit.Controls
 
                         AddLastItemMargin();
                     }
-	            }
-	        }
-	    }
+                }
+            }
+        }
 
-	    protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
-		{
-			base.PrepareContainerForItemOverride(element, item);
+        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+        {
+            base.PrepareContainerForItemOverride(element, item);
 
-			OnPrepareContainerForItem(new PrepareContainerForItemEventArgs(element, item));
+            OnPrepareContainerForItem(new PrepareContainerForItemEventArgs(element, item));
 
             if (Items != null && (InnerMargin.Top > 0.0 || InnerMargin.Bottom > 0.0))
-			{
-				if (Items.IndexOf(item) == Items.Count - 1) // is last element of list
-				{
-					if (_lastElement != element) // check that margin is not already set
-					{
+            {
+                if (Items.IndexOf(item) == Items.Count - 1) // is last element of list
+                {
+                    if (_lastElement != element) // check that margin is not already set
+                    {
                         RestoreLastItemMargin();
 
-						_lastElement = (FrameworkElement)element;
-						_lastElementMargin = _lastElement.Margin;
+                        _lastElement = (FrameworkElement)element;
+                        _lastElementMargin = _lastElement.Margin;
 
-						AddLastItemMargin();
-					}
-				}
-				else if (_lastElement == element) // if last element is not last anymore => recycled 
+                        AddLastItemMargin();
+                    }
+                }
+                else if (_lastElement == element) // if last element is not last anymore => recycled 
                     RestoreLastItemMargin();
                 else if (_lastElement != null && Items.IndexOf(_lastElement) != Items.Count - 1) // last element is not last element anymore => items added
                     RestoreLastItemMargin();
             }
-		}
+        }
 
         private void AddLastItemMargin()
         {
@@ -410,7 +410,7 @@ namespace MyToolkit.Controls
         }
 
 #if WINRT
-		private void RegisterScrollEvent(object s, object o)
+        private void RegisterScrollEvent(object s, object o)
 #else
         private void RegisterScrollEvent(object s, EventArgs eventArgs)
 #endif

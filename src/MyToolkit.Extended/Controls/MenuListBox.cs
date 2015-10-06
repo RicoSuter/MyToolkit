@@ -1,4 +1,12 @@
-﻿#if WINRT
+﻿//-----------------------------------------------------------------------
+// <copyright file="MenuListBox.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+#if WINRT
 
 using System;
 using Windows.UI.Xaml;

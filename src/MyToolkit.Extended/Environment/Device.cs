@@ -1,4 +1,12 @@
-﻿#if !WP8 && !WP7 && !WPF
+﻿//-----------------------------------------------------------------------
+// <copyright file="Device.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+#if !WP8 && !WP7 && !WPF
 
 using System;
 using System.Linq;
@@ -7,8 +15,8 @@ using Windows.Networking.Connectivity;
 
 namespace MyToolkit.Environment
 {
-	public class Device
-	{
+    public class Device
+    {
         static Device()
         {
             _hardwareButtonsType = Type.GetType(
@@ -23,21 +31,21 @@ namespace MyToolkit.Environment
         /// <summary>
         /// Gets a unique ID which can be used to identify the current device. 
         /// </summary>
-		public static string DeviceId
-		{
-			get
-			{
+        public static string DeviceId
+        {
+            get
+            {
                 if (_deviceId == null)
-				{
-					_deviceId = NetworkInformation.GetConnectionProfiles().
-						Where(p => p.GetNetworkConnectivityLevel() != NetworkConnectivityLevel.ConstrainedInternetAccess).
-						Select(p => p.NetworkAdapter.NetworkAdapterId).
-						OrderBy(p => p).First().ToString();
-				}
+                {
+                    _deviceId = NetworkInformation.GetConnectionProfiles().
+                        Where(p => p.GetNetworkConnectivityLevel() != NetworkConnectivityLevel.ConstrainedInternetAccess).
+                        Select(p => p.NetworkAdapter.NetworkAdapterId).
+                        OrderBy(p => p).First().ToString();
+                }
 
-				return _deviceId;
-			}
-		}
+                return _deviceId;
+            }
+        }
 
         internal static Type HardwareButtonsType
         {
@@ -56,10 +64,10 @@ namespace MyToolkit.Environment
     }
     
     [Obsolete("Use Device class instead. 5/17/2014")]
-	public class Machine : Device
-	{
+    public class Machine : Device
+    {
         
-	}
+    }
 }
 
 #endif

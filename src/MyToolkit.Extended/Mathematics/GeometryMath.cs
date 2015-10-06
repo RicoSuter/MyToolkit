@@ -1,4 +1,12 @@
-﻿using System.Linq;
+﻿//-----------------------------------------------------------------------
+// <copyright file="GeometryMath.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System.Linq;
 
 #if WP8 || WP7
 using System.Windows;

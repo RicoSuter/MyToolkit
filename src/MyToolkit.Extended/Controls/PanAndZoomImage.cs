@@ -2,7 +2,7 @@
 // <copyright file="PanAndZoomImage.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -37,15 +37,15 @@ namespace MyToolkit.Controls
         public event RoutedEventHandler ImageOpened;
         public event ExceptionRoutedEventHandler ImageFailed;
 #else
-		public event EventHandler<RoutedEventArgs> ImageOpened;
-		public event EventHandler<ExceptionRoutedEventArgs> ImageFailed;
+        public event EventHandler<RoutedEventArgs> ImageOpened;
+        public event EventHandler<ExceptionRoutedEventArgs> ImageFailed;
 
 #endif
 
 #if WINRT
         protected override void OnApplyTemplate()
 #else
-		public override void OnApplyTemplate()
+        public override void OnApplyTemplate()
 #endif
         {
             base.OnApplyTemplate();

@@ -2,7 +2,7 @@
 // <copyright file="FadingImage.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -42,9 +42,6 @@ namespace MyToolkit.Controls
             _canvas = (Grid)GetTemplateChild("canvas");
             UpdateSource();
         }
-
-
-#region dependency properties
 
         public static readonly DependencyProperty FadingOpacityProperty =
             DependencyProperty.Register("FadingOpacity", typeof(double), typeof(FadingImage), new PropertyMetadata(1.0));
@@ -100,8 +97,6 @@ namespace MyToolkit.Controls
             set { SetValue(SourceProperty, value); }
         }
 
-#endregion
-
         private async void UpdateSource()
         {
             if (_canvas == null || _isAnimating || _lastSource == Source) // is animating or no change
@@ -151,10 +146,10 @@ namespace MyToolkit.Controls
                 {
                     if (WaitForNextImage)
                         await Task.WhenAll(new[]
-							{
-								Fading.FadeInAsync(BackgroundImage, FadingDuration, FadingOpacity),
-								Fading.FadeOutAsync(ForegroundImage, FadingDuration)
-							});
+                            {
+                                Fading.FadeInAsync(BackgroundImage, FadingDuration, FadingOpacity),
+                                Fading.FadeOutAsync(ForegroundImage, FadingDuration)
+                            });
                     else
                         await Fading.FadeInAsync(BackgroundImage, FadingDuration, FadingOpacity);
 

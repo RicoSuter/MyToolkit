@@ -1,4 +1,12 @@
-﻿#if WINRT
+﻿//-----------------------------------------------------------------------
+// <copyright file="TextBinding.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+#if WINRT
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
@@ -26,29 +34,29 @@ namespace MyToolkit.UI
     /// </summary>
     public class TextBinding
     {
-		public static void ForceTextUpdate(object sender)
-		{
-			var type = sender.GetType();
+        public static void ForceTextUpdate(object sender)
+        {
+            var type = sender.GetType();
             if (type == typeof (TextBox))
             {
-				var textBox = sender as TextBox;
-				if (textBox != null)
-				{
-					var bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
-					if (bindingExpression != null)
-						bindingExpression.UpdateSource();
-				}
-			}
+                var textBox = sender as TextBox;
+                if (textBox != null)
+                {
+                    var bindingExpression = textBox.GetBindingExpression(TextBox.TextProperty);
+                    if (bindingExpression != null)
+                        bindingExpression.UpdateSource();
+                }
+            }
             else
             {
 #if !WPF
-				var textBox = sender as PasswordBox;
-				if (textBox != null)
-				{
-					var bindingExpression = textBox.GetBindingExpression(PasswordBox.PasswordProperty);
-					if (bindingExpression != null)
-						bindingExpression.UpdateSource();
-				}
+                var textBox = sender as PasswordBox;
+                if (textBox != null)
+                {
+                    var bindingExpression = textBox.GetBindingExpression(PasswordBox.PasswordProperty);
+                    if (bindingExpression != null)
+                        bindingExpression.UpdateSource();
+                }
 #else
                 throw new NotSupportedException("ForceTextUpdate is not supported for PasswordBox in WPF.");
 #endif
@@ -69,7 +77,7 @@ namespace MyToolkit.UI
             DependencyProperty.RegisterAttached( "UpdateSourceOnChange", typeof(bool), typeof(TextBinding),
                 new PropertyMetadata(false, OnUpdateSourceOnChangePropertyChanged));
 
-		private static void OnUpdateSourceOnChangePropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        private static void OnUpdateSourceOnChangePropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue == e.OldValue)
                 return;
@@ -115,7 +123,7 @@ namespace MyToolkit.UI
             if (dp == null)
                 return;
 
-			var bind = ((FrameworkElement)sender).GetBindingExpression(dp);
+            var bind = ((FrameworkElement)sender).GetBindingExpression(dp);
             if (bind != null)
                 bind.UpdateSource();
         }

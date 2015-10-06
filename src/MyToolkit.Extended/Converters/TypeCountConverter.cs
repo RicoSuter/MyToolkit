@@ -1,4 +1,12 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="TypeCountConverter.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 using System.Collections;
 using System.Linq;
 
@@ -11,36 +19,35 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml;
 #endif
 
-
 namespace MyToolkit.Converters
 {
-	public class TypeCountConverter : IValueConverter
-	{
+    public class TypeCountConverter : IValueConverter
+    {
 #if !WINRT
-		public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 #else
         public object Convert(object value, Type targetType, object parameter, string language)
 #endif
-		{
-			var type = parameter.ToString().ToLower().Split(',');
-			if (value is IEnumerable)
-			{
-				var list = (IEnumerable) value;
-				var count = list.OfType<object>().Count(i => type.Contains(i.GetType().Name.ToLower()));
-				if (targetType == typeof (Visibility))
-					return count > 0 ? Visibility.Visible : Visibility.Collapsed;
-				return count;
-			}
-			return null; 
-		}
+        {
+            var type = parameter.ToString().ToLower().Split(',');
+            if (value is IEnumerable)
+            {
+                var list = (IEnumerable) value;
+                var count = list.OfType<object>().Count(i => type.Contains(i.GetType().Name.ToLower()));
+                if (targetType == typeof (Visibility))
+                    return count > 0 ? Visibility.Visible : Visibility.Collapsed;
+                return count;
+            }
+            return null; 
+        }
 
 #if !WINRT
-		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 #else
         public object ConvertBack(object value, Type typeName, object parameter, string language)
 #endif
-		{
-			throw new NotSupportedException();
-		}
-	}
+        {
+            throw new NotSupportedException();
+        }
+    }
 }

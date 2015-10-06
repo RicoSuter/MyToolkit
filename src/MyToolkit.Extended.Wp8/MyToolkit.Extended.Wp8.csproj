@@ -170,7 +170,6 @@
       <DependentUpon>YouTubeButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\DataTemplateSelector.cs" />
     <Compile Include="Controls\ExtendedImage.xaml.cs">
       <DependentUpon>ExtendedImage.xaml</DependentUpon>
     </Compile>

@@ -2,7 +2,7 @@
 // <copyright file="StreamExtensions.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -14,10 +14,10 @@ using System.Threading.Tasks;
 namespace MyToolkit.Utilities
 {
 #if WPF40
-	public interface IProgress<T>
-	{
-		void Report(T value);
-	}
+    public interface IProgress<T>
+    {
+        void Report(T value);
+    }
 #endif
 
     /// <summary>Provides methods to handle streams. </summary>

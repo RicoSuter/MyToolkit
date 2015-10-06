@@ -1,4 +1,12 @@
-﻿#if WP8 || WP7
+﻿//-----------------------------------------------------------------------
+// <copyright file="TrigonometryMath.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+#if WP8 || WP7
 using System.Windows;
 #elif WPF
 using System.Windows;

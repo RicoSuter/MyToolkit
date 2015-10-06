@@ -1,11 +1,18 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="UpperTextConverter.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+using System;
 
 #if !WINRT
 using System.Windows.Data;
 #else
 using Windows.UI.Xaml.Data;
 #endif
-
 
 namespace MyToolkit.Converters
 {

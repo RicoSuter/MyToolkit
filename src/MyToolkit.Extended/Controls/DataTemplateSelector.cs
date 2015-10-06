@@ -1,4 +1,12 @@
-﻿#if WINRT
+﻿//-----------------------------------------------------------------------
+// <copyright file="DataTemplateSelector.cs" company="MyToolkit">
+//     Copyright (c) Rico Suter. All rights reserved.
+// </copyright>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
+// <author>Rico Suter, mail@rsuter.com</author>
+//-----------------------------------------------------------------------
+
+#if WINRT
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 #else

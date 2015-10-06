@@ -2,7 +2,7 @@
 // <copyright file="DependencyPropertyChangedEvent.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
-// <license>http://mytoolkit.codeplex.com/license</license>
+// <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
@@ -23,46 +23,46 @@ using System.Windows.Data;
 namespace MyToolkit.Utilities
 {
     /// <summary>Provides methods to register to dependency property handler events. </summary>
-	public static class DependencyPropertyChangedEvent
-	{
-		private static List<DependencyPropertyRegistration> _dependencyPropertyRegistrations;
+    public static class DependencyPropertyChangedEvent
+    {
+        private static List<DependencyPropertyRegistration> _dependencyPropertyRegistrations;
 
         /// <summary>Registers an event callback on a given dependency property. </summary>
         /// <param name="frameworkElement">The source framework element. </param>
         /// <param name="property">The property to register the callback for. </param>
         /// <param name="handler">The event handler. </param>
-		public static void Register(FrameworkElement frameworkElement, DependencyProperty property, Action<object, object> handler)
-		{
-			if (_dependencyPropertyRegistrations == null)
-				_dependencyPropertyRegistrations = new List<DependencyPropertyRegistration>();
+        public static void Register(FrameworkElement frameworkElement, DependencyProperty property, Action<object, object> handler)
+        {
+            if (_dependencyPropertyRegistrations == null)
+                _dependencyPropertyRegistrations = new List<DependencyPropertyRegistration>();
 
-			var helper = new DependencyPropertyRegistration(
+            var helper = new DependencyPropertyRegistration(
                 frameworkElement, property, handler, frameworkElement.GetValue(property));
-			
+            
             var binding = new Binding();
-			binding.Path = new PropertyPath("Property");
-			binding.Source = helper;
-			binding.Mode = BindingMode.TwoWay;
-			
+            binding.Path = new PropertyPath("Property");
+            binding.Source = helper;
+            binding.Mode = BindingMode.TwoWay;
+            
             frameworkElement.SetBinding(property, binding);
-			
-			_dependencyPropertyRegistrations.Add(helper);
-		}
+            
+            _dependencyPropertyRegistrations.Add(helper);
+        }
 
         /// <summary>Deregisters an event callback from a given dependency property. </summary>
         /// <param name="frameworkElement">The source framework element. </param>
         /// <param name="property">The property to register the callback for. </param>
         /// <param name="handler">The event handler. </param>
         public static void Deregister(FrameworkElement frameworkElement, DependencyProperty property, Action<object, object> handler)
-		{
-			var helper = _dependencyPropertyRegistrations
+        {
+            var helper = _dependencyPropertyRegistrations
                 .Single(h => 
                     h.FrameworkElement == frameworkElement && 
                     h.DependencyProperty == property && 
                     h.PropertyChangedCallback == handler);
 
-			helper.PropertyChangedCallback = null; 
-		}
+            helper.PropertyChangedCallback = null; 
+        }
 
         internal class DependencyPropertyRegistration
         {
@@ -93,5 +93,5 @@ namespace MyToolkit.Utilities
                 }
             }
         }
-	}
+    }
 }
