@@ -24,8 +24,8 @@ using System.Windows.Media.Imaging;
 
 namespace MyToolkit.Animations
 {
-	public static class Fading
-	{
+    public static class Fading
+    {
 #if WINRT || WP8
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace MyToolkit.Animations
         /// <param name="duration">The animation duration. </param>
         /// <param name="endOpacity">The opacity at the end of the animation. </param>
         /// <returns>Returns a task. </returns>
-		public static void FadeIn(UIElement obj, TimeSpan duration, double endOpacity = 1.0, Action completed = null)
+        public static void FadeIn(UIElement obj, TimeSpan duration, double endOpacity = 1.0, Action completed = null)
         {
             var animation = new DoubleAnimation();
             animation.EasingFunction = new ExponentialEase() { EasingMode = EasingMode.EaseInOut, Exponent = 1 };
@@ -75,7 +75,7 @@ namespace MyToolkit.Animations
 #if WINRT
             Storyboard.SetTargetProperty(animation, "Opacity");
 #else
-			Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
+            Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
 #endif
             if (completed != null)
                 story.Completed += delegate { completed(); };
@@ -89,7 +89,7 @@ namespace MyToolkit.Animations
         /// <param name="duration">The animation duration. </param>
         /// <param name="endOpacity">The opacity at the end of the animation. </param>
         /// <returns>Returns a task. </returns>
-		public static void FadeOut(UIElement obj, TimeSpan duration, double endOpacity = 0.0, Action completed = null)
+        public static void FadeOut(UIElement obj, TimeSpan duration, double endOpacity = 0.0, Action completed = null)
         {
             var animation = new DoubleAnimation();
             animation.EasingFunction = new ExponentialEase() { EasingMode = EasingMode.EaseInOut, Exponent = 1 };
@@ -104,7 +104,7 @@ namespace MyToolkit.Animations
 #if WINRT
             Storyboard.SetTargetProperty(animation, "Opacity");
 #else
-			Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
+            Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
 #endif
             if (completed != null)
                 story.Completed += delegate { completed(); };
@@ -112,67 +112,67 @@ namespace MyToolkit.Animations
         }
 
 #if !WINRT
-		public static bool FadeInBackground(Panel panel, Uri backgroundSourceUri, double opacity, 
-			int msecs, Action completed = null)
-		{
-			if (backgroundSourceUri == null)
-				return false;
+        public static bool FadeInBackground(Panel panel, Uri backgroundSourceUri, double opacity, 
+            int msecs, Action completed = null)
+        {
+            if (backgroundSourceUri == null)
+                return false;
 
-			var brush = new ImageBrush();
-			var image = new BitmapImage { UriSource = backgroundSourceUri };
-			brush.Opacity = panel.Background != null ? panel.Background.Opacity : 0.0;
-			brush.Stretch = Stretch.UniformToFill;
-			brush.ImageSource = image;
+            var brush = new ImageBrush();
+            var image = new BitmapImage { UriSource = backgroundSourceUri };
+            brush.Opacity = panel.Background != null ? panel.Background.Opacity : 0.0;
+            brush.Stretch = Stretch.UniformToFill;
+            brush.ImageSource = image;
 
-			panel.Background = brush;
-			brush.ImageOpened += delegate
-			{
-				var animation = new DoubleAnimation();
-				animation.From = panel.Background != null ? panel.Background.Opacity : 0.0;
-				animation.To = opacity;
-				animation.Duration = new Duration(new TimeSpan(0, 0, 0, 0, msecs));
+            panel.Background = brush;
+            brush.ImageOpened += delegate
+            {
+                var animation = new DoubleAnimation();
+                animation.From = panel.Background != null ? panel.Background.Opacity : 0.0;
+                animation.To = opacity;
+                animation.Duration = new Duration(new TimeSpan(0, 0, 0, 0, msecs));
 
-				var story = new Storyboard();
-				story.Children.Add(animation);
+                var story = new Storyboard();
+                story.Children.Add(animation);
 
-				Storyboard.SetTarget(animation, brush);
-				Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
+                Storyboard.SetTarget(animation, brush);
+                Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
 
-				if (completed != null)
-					story.Completed += delegate { completed(); };
-				story.Begin();
-			};
-			return true; 
-		}
+                if (completed != null)
+                    story.Completed += delegate { completed(); };
+                story.Begin();
+            };
+            return true; 
+        }
 
-		public static bool FadeOutBackground(Panel panel, int msecs, Action completed = null)
-		{
-			if (panel.Background == null || panel.Background.Opacity == 0.0)
-				return false;
+        public static bool FadeOutBackground(Panel panel, int msecs, Action completed = null)
+        {
+            if (panel.Background == null || panel.Background.Opacity == 0.0)
+                return false;
 
-			var animation = new DoubleAnimation();
-			animation.From = panel.Background.Opacity;
-			animation.To = 0.0;
-			animation.Duration = new Duration(new TimeSpan(0, 0, 0, 0, msecs));
+            var animation = new DoubleAnimation();
+            animation.From = panel.Background.Opacity;
+            animation.To = 0.0;
+            animation.Duration = new Duration(new TimeSpan(0, 0, 0, 0, msecs));
 
-			var story = new Storyboard();
-			story.Children.Add(animation);
+            var story = new Storyboard();
+            story.Children.Add(animation);
 
-			Storyboard.SetTarget(animation, panel.Background);
-			Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
+            Storyboard.SetTarget(animation, panel.Background);
+            Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
 
-			story.Completed += delegate
-			{
-				panel.Background = null;
-				if (completed != null)
-					completed();
-			};
+            story.Completed += delegate
+            {
+                panel.Background = null;
+                if (completed != null)
+                    completed();
+            };
 
-			story.Begin();
-			return true; 
-		}
+            story.Begin();
+            return true; 
+        }
 #endif
-	}
+    }
 }
 
 #endif

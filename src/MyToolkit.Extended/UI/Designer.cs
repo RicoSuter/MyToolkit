@@ -7,6 +7,7 @@
 //-----------------------------------------------------------------------
 
 using System.ComponentModel;
+
 #if WINRT
 using Windows.UI.Xaml;
 #else

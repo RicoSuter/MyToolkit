@@ -8,6 +8,7 @@
 
 using System;
 using System.Threading.Tasks;
+
 #if WINRT
 using Windows.UI.Xaml;
 #else

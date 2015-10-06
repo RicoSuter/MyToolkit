@@ -171,7 +171,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ItemsControlExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\PageUtilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\PropertyPathHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utilities\ReflectionExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ThreadUtilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ToastNotificationUtilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\Xml.cs" />

@@ -17,8 +17,8 @@ namespace MyToolkit.Collections
 {
     /// <summary>Provides a collection of groups which is useful in Windows 8's GridView control. </summary>
     /// <typeparam name="TItem">The item type. </typeparam>
-	public class ObservableGroupCollection<TItem> : ObservableCollection<IGroup>
-	{
+    public class ObservableGroupCollection<TItem> : ObservableCollection<IGroup>
+    {
         private CollectionViewSource _view;
 
         /// <summary>Gets the items path (default: TopItems).</summary>
@@ -40,9 +40,9 @@ namespace MyToolkit.Collections
         /// <param name="topItemsCount">The top items count. </param>
         /// <returns>The created <see cref="TopItemsGroup{T}"/></returns>
         public TopItemsGroup<TItem> AddGroup(string title, int topItemsCount = -1)
-		{
-			return AddGroup(title, new List<TItem>(), topItemsCount);
-		}
+        {
+            return AddGroup(title, new List<TItem>(), topItemsCount);
+        }
 
         /// <summary>Creates and adds a group to the collection. </summary>
         /// <param name="title">The title of the group. </param>
@@ -50,28 +50,28 @@ namespace MyToolkit.Collections
         /// <param name="topItemsCount">The top items count. </param>
         /// <returns>The created <see cref="TopItemsGroup{T}"/></returns>
         public TopItemsGroup<TItem> AddGroup(string title, IEnumerable<TItem> items, int topItemsCount = -1)
-		{
-			var group = new TopItemsGroup<TItem>(title, items, topItemsCount);
-			Add(group);
-			return group;
-		}
+        {
+            var group = new TopItemsGroup<TItem>(title, items, topItemsCount);
+            Add(group);
+            return group;
+        }
 
         /// <summary>The <see cref="CollectionViewSource"/> to use in XAML. </summary>
-		public CollectionViewSource View
-		{
-			get
-			{
-				if (_view == null)
-				{
-					_view = new CollectionViewSource();
-					_view.IsSourceGrouped = true;
-					_view.ItemsPath = new PropertyPath(ItemsPath);
-					_view.Source = this; 
-				}
-				return _view; 
-			}
-		}
-	}
+        public CollectionViewSource View
+        {
+            get
+            {
+                if (_view == null)
+                {
+                    _view = new CollectionViewSource();
+                    _view.IsSourceGrouped = true;
+                    _view.ItemsPath = new PropertyPath(ItemsPath);
+                    _view.Source = this; 
+                }
+                return _view; 
+            }
+        }
+    }
 }
 
 #endif

@@ -6,7 +6,7 @@
 // <author>Rico Suter, mail@rsuter.com</author>
 //-----------------------------------------------------------------------
 
-#if WINRT
+#if WINRT || WPF
 
 // (c) Copyright Microsoft Corporation.
 // This source is subject to the Microsoft Public License (Ms-PL).
@@ -16,8 +16,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+
+#if WPF
+using System.Windows;
+using System.Windows.Controls;
+#else
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+#endif
 
 namespace MyToolkit.UI
 {
@@ -27,7 +33,6 @@ namespace MyToolkit.UI
 	public static class TemplatedVisualTreeExtensions
 	{
 
-#region GetFirstLogicalChildByType<T>(...)
 		/// <summary>
 		/// Retrieves the first logical child of a specified type using a 
 		/// breadth-first search.  A visual element is assumed to be a logical 
@@ -68,9 +73,7 @@ namespace MyToolkit.UI
 
 			return null;
 		}
-#endregion
 
-#region GetLogicalChildrenByType<T>(...)
 		/// <summary>
 		/// Retrieves all the logical children of a specified type using a 
 		/// breadth-first search.  A visual element is assumed to be a logical 
@@ -113,8 +116,6 @@ namespace MyToolkit.UI
 				}
 			}
 		}
-#endregion
-
 	}
 }
 

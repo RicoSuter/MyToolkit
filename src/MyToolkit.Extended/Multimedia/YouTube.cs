@@ -18,14 +18,14 @@ using System.Threading;
 using System.Windows;
 using System.Threading.Tasks;
 using MyToolkit.Utilities;
+
 #if WP8 || WP7 || WP8
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using MyToolkit.Paging;
 using MyToolkit.UI;
 using Microsoft.Phone.Controls;
-#endif
-#if WINRT
+#elif WINRT
 using System.Net.Http.Headers;
 using System.Net.Http;
 #endif

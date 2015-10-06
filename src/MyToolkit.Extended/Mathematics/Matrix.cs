@@ -14,6 +14,7 @@ namespace MyToolkit.Mathematics
     public class Matrix
     {
         public int Columns;
+
         public int Rows;
 
         internal Matrix() { } // Serialization only
@@ -55,7 +56,6 @@ namespace MyToolkit.Mathematics
             Columns = cols;
             Rows = rows;
         }
-
 
         public Matrix(double[] array, int rows) : this(rows, array.Length / rows)
         {
@@ -121,6 +121,7 @@ namespace MyToolkit.Mathematics
 
         [XmlIgnore]
         public double[,] Data;
+
         public double[] RawData // used for serialization
         {
             get

@@ -10,6 +10,7 @@ using System;
 using System.Reflection;
 using MyToolkit.Model;
 using MyToolkit.MVVM;
+
 #if WINRT
 using MyToolkit.Paging;
 using Windows.UI.Xaml;

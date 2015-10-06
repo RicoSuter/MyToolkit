@@ -9,13 +9,13 @@
 namespace MyToolkit.Utilities
 {
     /// <summary>Provides thread related utility methods. </summary>
-	public class ThreadUtilities
-	{
+    public class ThreadUtilities
+    {
         /// <summary>Blocks the thread for multiple milliseconds. </summary>
         /// <param name="ms">The wait time in milliseconds. </param>
-		public static void Sleep(int ms)
-		{
-			new System.Threading.ManualResetEvent(false).WaitOne(ms);
-		}
-	}
+        public static void Sleep(int ms)
+        {
+            new System.Threading.ManualResetEvent(false).WaitOne(ms);
+        }
+    }
 }
