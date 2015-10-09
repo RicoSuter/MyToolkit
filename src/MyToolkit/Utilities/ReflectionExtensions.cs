@@ -29,6 +29,24 @@ namespace MyToolkit.Utilities
             return fullName;
         }
 
+        /// <summary>Checks whether the given type inherits from a type with the given class name.</summary>
+        /// <param name="type">The type.</param>
+        /// <param name="typeName">THe class name of the type (not the full class name).</param>
+        /// <returns>True when inheriting from the type name.</returns>
+        public static bool InheritsFromTypeName(this Type type, string typeName)
+        {
+            var baseType = ReflectionUtilities.GetBaseType(type);
+            while (baseType != null)
+            {
+                if (baseType.Name == typeName)
+                    return true;
+
+                baseType = ReflectionUtilities.GetBaseType(baseType);
+            }
+            return false;
+        }
+
+
         /// <summary>Instantiates an object of a generic type. </summary>
         /// <param name="type">The type. </param>
         /// <param name="innerType">The first generic type. </param>

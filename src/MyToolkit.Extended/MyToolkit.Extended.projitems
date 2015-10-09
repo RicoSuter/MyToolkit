@@ -162,6 +162,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UI\TiltEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UI\VisibilityManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\AdditionalStreamExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\AppDomainIsolation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ColorUtilities.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DependencyObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DependencyPropertyChangedEvent.cs" />
