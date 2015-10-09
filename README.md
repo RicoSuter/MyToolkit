@@ -45,12 +45,10 @@ The solutions can be found in the `src` directory:
 
 **MyToolkit.VS2015.sln**
 
-- MyToolkit.Extended.Uwp (Universal Windows Platform: Windows 10, Windows 10 Mobile)
-
-**MyToolkit.VS2013.sln**
-
 - MyToolkit (PCL: UWP, W8, WP8.1, .NET 4.5, WP8SL)
 - MyToolkit.AspNet.Mvc (ASP.NET MVC 5.x)
+- MyToolkit.Extended (Shared Project)
+- MyToolkit.Extended.Uwp (Universal Windows Platform: Windows 10, Windows 10 Mobile)
 - MyToolkit.Extended.WinRT (PCL: W8.1, WP8.1)
 - MyToolkit.Extended.Wp8  (WP8SL)
 - MyToolkit.Extended.Wpf40 (.NET 4.0)
