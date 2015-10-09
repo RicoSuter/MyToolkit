@@ -73,7 +73,7 @@ Also check out the [list with the Visual Studio projects and their dependencies]
 ## Sample applications
 There is a sample application for Windows Phone and WinRT which demonstrates various MyToolkit classes (MVVM, Paging, YouTube, etc...) as well as some Windows 8 features. 
 
-Clone or download the [source code](https://github.com/MyToolkit/Core/tree/master), open the **MyToolkit.VS2015.sln** and start the SampleUwpApp or SampleWindowsStoreApp application. 
+Clone or download the [source code](https://github.com/MyToolkit/Core/tree/master), open the **MyToolkit.VS2015.sln** and start the **SampleUwpApp** or **SampleWindowsStoreApp** application. 
 
 ![](https://rawgit.com/MyToolkit/Core/master/docs/SampleWindowsStoreApp.png)
 
