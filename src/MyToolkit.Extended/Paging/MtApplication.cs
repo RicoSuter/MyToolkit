@@ -24,6 +24,12 @@ namespace MyToolkit.Paging
             Suspending += OnSuspending;
         }
 
+        /// <summary>Gets the root frame.</summary>
+        public MtFrame RootFrame { get; private set; }
+
+        /// <summary>Gets the content of the window.</summary>
+        public FrameworkElement WindowContent { get; private set; }
+
         /// <summary>Gets the type of the start page (first page when launching application). </summary>
         public abstract Type StartPageType { get; }
 
@@ -37,7 +43,7 @@ namespace MyToolkit.Paging
 
         /// <summary>Creates the window content element. </summary>
         /// <returns>The element. </returns>
-        public virtual UIElement CreateWindowContentElement()
+        public virtual FrameworkElement CreateWindowContentElement()
         {
             return new MtFrame();
         }
@@ -66,28 +72,27 @@ namespace MyToolkit.Paging
         /// <returns>The task. </returns>
         protected async Task InitializeFrameAsync(ApplicationExecutionState executionState)
         {
-            MtFrame rootFrame;
             if (Window.Current.Content == null)
             {
-                var contentControl = CreateWindowContentElement();
-                rootFrame = GetFrame(contentControl);
+                WindowContent = CreateWindowContentElement();
+                RootFrame = GetFrame(WindowContent);
 
-                MtSuspensionManager.RegisterFrame(rootFrame, "AppFrame");
+                MtSuspensionManager.RegisterFrame(RootFrame, "AppFrame");
                 if (executionState == ApplicationExecutionState.Terminated)
                     await RestoreStateAsync();
 
-                var task = OnInitializedAsync(rootFrame, executionState);
+                var task = OnInitializedAsync(RootFrame, executionState);
                 if (task != null)
                     await task;
 
-                Window.Current.Content = contentControl;
+                Window.Current.Content = WindowContent;
             }
             else
-                rootFrame = GetFrame(Window.Current.Content);
+                RootFrame = GetFrame(Window.Current.Content);
 
-            if (rootFrame.Content == null)
-                rootFrame.Initialize(StartPageType);
-            
+            if (RootFrame.Content == null)
+                RootFrame.Initialize(StartPageType);
+
             Window.Current.Activate();
         }
 
