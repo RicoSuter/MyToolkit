@@ -11,12 +11,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Exceptions;
 using MyToolkit.Utilities;
+using Newtonsoft.Json.Linq;
 using NuGet.Packaging;
 
 namespace MyToolkit.Build
@@ -290,9 +292,24 @@ namespace MyToolkit.Build
             return fallbackDirectory;
         }
 
+        private bool HasNuGetPackagesFile
+        {
+            get { return File.Exists(NuGetPackagesFile); }
+        }
+
+        private bool HasNuGetProjectFile
+        {
+            get { return File.Exists(NuGetProjectFile); }
+        }
+
         private string NuGetPackagesFile
         {
             get { return System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Path), "packages.config"); }
+        }
+
+        private string NuGetProjectFile
+        {
+            get { return System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Path), "project.json"); }
         }
 
         private void LoadAssemblyReferences()
@@ -325,14 +342,26 @@ namespace MyToolkit.Build
 
         private void LoadNuGetReferences()
         {
-            var configurationPath = NuGetPackagesFile;
             var references = new List<NuGetPackageReference>();
-            if (File.Exists(configurationPath))
+
+            if (HasNuGetPackagesFile)
             {
-                var document = XDocument.Load(configurationPath);
+                var document = XDocument.Load(NuGetPackagesFile);
                 foreach (var element in document.Descendants("package"))
                     references.Add(new NuGetPackageReference(element.Attribute("id").Value, element.Attribute("version").Value));
             }
+
+            if (HasNuGetProjectFile)
+            {
+                var document = JToken.Parse(File.ReadAllText(NuGetProjectFile, Encoding.UTF8));
+                var dependencies = document["dependencies"];
+                if (dependencies != null)
+                {
+                    foreach (var dependency in dependencies.OfType<JProperty>())
+                        references.Add(new NuGetPackageReference(dependency.Name, dependency.Value.Value<string>()));
+                }
+            }
+
             _nuGetReferences = references.OrderBy(r => r.Name).ToList();
         }
     }
