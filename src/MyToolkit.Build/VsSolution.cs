@@ -133,7 +133,7 @@ namespace MyToolkit.Build
         /// <returns>The solutions.</returns>
         public static Task<List<VsSolution>> LoadAllFromDirectoryAsync(string path, string pathFilter, bool ignoreExceptions, ProjectCollection projectCollection, Dictionary<string, Exception> errors)
         {
-            return LoadAllFromDirectoryAsync(path, pathFilter, ignoreExceptions, projectCollection, ".sln", Load, errors);
+            return LoadAllFromDirectoryAsync(path.Replace('/', '\\'), pathFilter.Replace('/', '\\'), ignoreExceptions, projectCollection, ".sln", Load, errors);
         }
 
         private static Type SolutionParserType

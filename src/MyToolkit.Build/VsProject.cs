@@ -183,7 +183,7 @@ namespace MyToolkit.Build
         /// <returns>The projects.</returns>
         public static Task<List<VsProject>> LoadAllFromDirectoryAsync(string path, string pathFilter, bool ignoreExceptions, ProjectCollection projectCollection, Dictionary<string, Exception> errors = null)
         {
-            return LoadAllFromDirectoryAsync(path, pathFilter.Replace('/', '\\'), ignoreExceptions, projectCollection, ".csproj", Load, errors);
+            return LoadAllFromDirectoryAsync(path.Replace('/', '\\'), pathFilter.Replace('/', '\\'), ignoreExceptions, projectCollection, ".csproj", Load, errors);
         }
 
         /// <summary>Loads the project's referenced assemblies, projects and NuGet packages. </summary>
