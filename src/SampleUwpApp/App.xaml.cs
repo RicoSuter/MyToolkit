@@ -22,7 +22,7 @@ namespace SampleUwpApp
 
         public override Type StartPageType => typeof(MainPage);
 
-        public override UIElement CreateWindowContentElement()
+        public override FrameworkElement CreateWindowContentElement()
         {
             _hamburgerFrameBuilder = new HamburgerFrameBuilder();
 
