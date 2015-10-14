@@ -62,6 +62,9 @@ namespace MyToolkit.Build
         /// <summary>Gets or sets the NuGet package identifier if a NuSpec file could be found.</summary>
         public string NuGetPackageId { get; private set; }
 
+        /// <summary>Gets or sets the NuGet package title if a NuSpec file could be found.</summary>
+        public string NuGetPackageTitle { get; private set; }
+
         /// <summary>Gets the list of referenced projects. </summary>
         public List<VsProjectReference> ProjectReferences
         {
@@ -335,7 +338,15 @@ namespace MyToolkit.Build
                     if (packageId != null && packageId.ToLower() == "$id$")
                         packageId = Name;
 
-                    NuGetPackageId = packageId; 
+                    NuGetPackageId = packageId;
+                    NuGetPackageTitle = Name; 
+
+                    var metadata = reader.GetMetadata().ToArray();
+                    if (metadata.Any(p => p.Key == "title"))
+                    {
+                        var titlePair = metadata.SingleOrDefault(p => p.Key == "title");
+                        NuGetPackageTitle = titlePair.Value;
+                    }
                 }
             }
         }
