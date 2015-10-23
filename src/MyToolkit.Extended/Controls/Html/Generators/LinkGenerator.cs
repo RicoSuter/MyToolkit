@@ -67,9 +67,12 @@ namespace MyToolkit.Controls.Html.Generators
                         foreach (var item in leaves)
                         {
                             if (item is Inline)
-                                hyperlink.Inlines.Add((Inline)item);
+                                hyperlink.Inlines.Add((Inline) item);
                             else
-                                hyperlink.Inlines.Add(new InlineUIContainer { Child = (UIElement) item });
+                            {
+                                var container = new InlineUIContainer {Child = (UIElement) item}; 
+                                hyperlink.Inlines.Add(container);
+                            }
                         }
                     }
                     else if (child is HtmlTextNode && !string.IsNullOrEmpty(((HtmlTextNode)child).Text))
