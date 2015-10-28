@@ -132,11 +132,8 @@ namespace MyToolkit.Storage
                 null, new object[] { Enum.Parse(enumType, "ApplicationData") });
 
             var assembly = (Assembly)typeof(Assembly).GetRuntimeMethod("GetEntryAssembly", new Type[] { }).Invoke(null, null);
-
-#if DEBUG
             if (assembly == null)
                 assembly = (Assembly)typeof(Assembly).GetRuntimeMethod("GetExecutingAssembly", new Type[] { }).Invoke(null, null);
-#endif
 
             var executableName = Path.GetFileNameWithoutExtension((string)assembly.GetType().GetRuntimeProperty("CodeBase").GetValue(assembly));
             var filePath = Path.Combine(appDataDirectory, executableName + "/MtConfig.xml");
