@@ -217,6 +217,7 @@
     <Compile Include="Utilities\ReflectionUtilities.cs" />
     <Compile Include="Utilities\StreamExtensions.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
+    <Compile Include="Utilities\TaskSynchronizationScope.cs" />
     <Compile Include="Utilities\TaskUtilities.cs" />
     <Compile Include="Utilities\VersionUtilities.cs" />
     <Compile Include="Events\WeakEvent.cs" />
