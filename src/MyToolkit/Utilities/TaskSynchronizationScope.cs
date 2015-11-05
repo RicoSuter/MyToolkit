@@ -17,9 +17,9 @@ namespace MyToolkit.Utilities
         /// <summary>Executes the given task when the previous task has been completed.</summary>
         /// <param name="task">The task function.</param>
         /// <returns>The task.</returns>
-        public Task Run(Func<Task> task)
+        public Task RunAsync(Func<Task> task)
         {
-            return Run(async () =>
+            return RunAsync(async () =>
             {
                 await task();
                 return null;
@@ -37,7 +37,7 @@ namespace MyToolkit.Utilities
         /// <summary>Executes the given task when the previous task has been completed.</summary>
         /// <param name="task">The task function.</param>
         /// <returns>The task.</returns>
-        public Task<T> Run(Func<Task<T>> task)
+        public Task<T> RunAsync(Func<Task<T>> task)
         {
             lock (_lock)
             {
