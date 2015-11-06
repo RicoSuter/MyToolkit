@@ -6,6 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using MyToolkit.Controls;
 using MyToolkit.Paging;
+using MyToolkit.UI;
 using SampleUwpApp.Views;
 using AppBarButton = Windows.UI.Xaml.Controls.AppBarButton;
 
@@ -86,6 +87,12 @@ namespace SampleUwpApp
         public override MtFrame GetFrame(UIElement windowContentElement)
         {
             return _hamburgerFrameBuilder.Frame;
+        }
+
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        {
+            base.OnLaunched(args);
+            ApplicationViewUtilities.ConnectRootElementSizeToVisibleBounds();
         }
     }
 }

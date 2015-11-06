@@ -112,7 +112,7 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty SelectedTopItemProperty = DependencyProperty.Register(
-            "SelectedTopItem", typeof(HamburgerItem), typeof(Hamburger), new PropertyMetadata(default(HamburgerItem), (o, args) => ((Hamburger)o).OnSelectedItemChanged((HamburgerItem) args.NewValue)));
+            "SelectedTopItem", typeof(object), typeof(Hamburger), new PropertyMetadata(default(object), (o, args) => ((Hamburger)o).OnSelectedItemChanged((HamburgerItem)args.NewValue)));
 
         /// <summary>Gets the currently selected top item.</summary>
         public HamburgerItem SelectedTopItem
@@ -122,7 +122,7 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty SelectedBottomItemProperty = DependencyProperty.Register(
-            "SelectedBottomItem", typeof(HamburgerItem), typeof(Hamburger), new PropertyMetadata(default(HamburgerItem), (o, args) => ((Hamburger)o).OnSelectedItemChanged((HamburgerItem)args.NewValue)));
+            "SelectedBottomItem", typeof(object), typeof(Hamburger), new PropertyMetadata(default(object), (o, args) => ((Hamburger)o).OnSelectedItemChanged((HamburgerItem)args.NewValue)));
 
         /// <summary>Gets the currently selected bottom item.</summary>
         public HamburgerItem SelectedBottomItem
