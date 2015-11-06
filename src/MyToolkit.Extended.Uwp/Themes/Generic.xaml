@@ -479,12 +479,13 @@
 
     <!-- MtFrame -->
     <Style TargetType="Paging:MtFrame">
+        <Setter Property="Background" Value="{StaticResource ApplicationPageBackgroundThemeBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Paging:MtFrame">
-                    <Frame x:Name="Frame" 
-                           Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
-						   ContentTransitions="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTransitions}" />
+                    <Frame x:Name="Frame" Background="{TemplateBinding Background}"
+                            Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
+						    ContentTransitions="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTransitions}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

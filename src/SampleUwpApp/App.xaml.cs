@@ -7,6 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using MyToolkit.Controls;
 using MyToolkit.Paging;
+using MyToolkit.Paging.Animations;
 using MyToolkit.UI;
 using SampleUwpApp.Views;
 using AppBarButton = Windows.UI.Xaml.Controls.AppBarButton;
@@ -82,6 +83,7 @@ namespace SampleUwpApp
                     PageType = typeof(SettingsPage)
                 }
             };
+            //_hamburgerFrameBuilder.Frame.PageAnimation = new TurnstilePageAnimation();
             return _hamburgerFrameBuilder.Hamburger;
         }
 
