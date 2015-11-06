@@ -1,5 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="TurnstilePageAnimation.cs" company="MyToolkit">
+﻿//-----------------------------------------------------------------------
+// <copyright file="ScalePageTransition.cs" company="MyToolkit">
 //     Copyright (c) Rico Suter. All rights reserved.
 // </copyright>
 // <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
@@ -13,29 +13,24 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using MyToolkit.Paging.Animations;
 
-namespace MyToolkit.Paging.Animations
+namespace TwentyMinutes
 {
-    /// <summary>A turnstile animation. </summary>
-    public class TurnstilePageAnimation : IPageAnimation
+    /// <summary>Scales the page like pushing a button.</summary>
+    public class ScalePageTransition : IPageAnimation
     {
         /// <summary>Initializes a new instance of the <see cref="TurnstilePageAnimation"/> class. </summary>
-        public TurnstilePageAnimation()
+        public ScalePageTransition()
         {
-            Duration = TimeSpan.FromMilliseconds(150);
+            Duration = TimeSpan.FromMilliseconds(80);
         }
 
         /// <summary>Gets or sets the duration of the animation (default: 150ms). </summary>
         public TimeSpan Duration { get; set; }
 
-        /// <summary>Gets or sets a value indicating whether to use bitmap cache mode for the page controls. </summary>
-        public bool UseBitmapCacheMode { get; set; }
-
         /// <summary>Gets the insertion mode for the next page.</summary>
-        public PageInsertionMode PageInsertionMode
-        {
-            get { return PageInsertionMode.Sequential; }
-        }
+        public PageInsertionMode PageInsertionMode { get { return PageInsertionMode.ConcurrentAbove; } }
 
         /// <summary>Animates for navigating forward from a page. </summary>
         /// <param name="previousPage">The previous page. </param>
@@ -43,7 +38,9 @@ namespace MyToolkit.Paging.Animations
         /// <returns>The task. </returns>
         public Task AnimateForwardNavigatingFromAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
-            return AnimateAsync(previousPage, 5, 75, 1, 0);
+            previousPage.Opacity = 1;
+            nextPage.Opacity = 0;
+            return AnimateAsync(previousPage, 1, 1.1, 1, 0);
         }
 
         /// <summary>Animates for navigating forward to a page. </summary>
@@ -52,7 +49,9 @@ namespace MyToolkit.Paging.Animations
         /// <returns>The task. </returns>
         public Task AnimateForwardNavigatedToAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
-            return AnimateAsync(nextPage, -75, 0, 0, 1);
+            previousPage.Opacity = 0;
+            nextPage.Opacity = 1;
+            return AnimateAsync(nextPage, 0.9, 1, 0, 1);
         }
 
         /// <summary>Animates for navigating backward from a page. </summary>
@@ -61,7 +60,9 @@ namespace MyToolkit.Paging.Animations
         /// <returns>The task. </returns>
         public Task AnimateBackwardNavigatingFromAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
-            return AnimateAsync(previousPage, -5, -75, 1, 0);
+            previousPage.Opacity = 1;
+            nextPage.Opacity = 0;
+            return AnimateAsync(previousPage, 1, 0.9, 1, 0);
         }
 
         /// <summary>Animates for navigating backward to a page. </summary>
@@ -70,57 +71,61 @@ namespace MyToolkit.Paging.Animations
         /// <returns>The task. </returns>
         public Task AnimateBackwardNavigatedToAsync(FrameworkElement previousPage, FrameworkElement nextPage)
         {
-            return AnimateAsync(nextPage, 75, 0, 0, 1);
+            previousPage.Opacity = 0;
+            nextPage.Opacity = 1;
+            return AnimateAsync(nextPage, 1.1, 1, 0, 1);
         }
 
-        private Task AnimateAsync(FrameworkElement page, double fromRotation, double toRotation, double fromOpacity, double toOpacity)
+        private Task AnimateAsync(FrameworkElement page, double fromPreviousPage, double toPreviousPage, double opacityFrom, double opacityTo)
         {
             if (page == null)
                 return Task.FromResult<object>(null);
 
-            CacheMode originalCacheMode = null;
-            if (UseBitmapCacheMode && !(page.CacheMode is BitmapCache))
+            page.RenderTransform = new ScaleTransform
             {
-                originalCacheMode = page.CacheMode;
-                page.CacheMode = new BitmapCache();
-            }
-
-            page.Opacity = 1;
-            page.Projection = new PlaneProjection { CenterOfRotationX = 0 };
+                CenterX = page.ActualWidth / 2,
+                CenterY = page.ActualHeight / 2
+            };
 
             var story = new Storyboard();
 
-            var turnstileAnimation = new DoubleAnimation
+            var scaleXAnimation = new DoubleAnimation
             {
                 EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseInOut },
                 Duration = Duration,
-                From = fromRotation,
-                To = toRotation
+                From = fromPreviousPage,
+                To = toPreviousPage
             };
-            Storyboard.SetTargetProperty(turnstileAnimation, "(UIElement.Projection).(PlaneProjection.RotationY)");
-            Storyboard.SetTarget(turnstileAnimation, page);
+            Storyboard.SetTargetProperty(scaleXAnimation, "(UIElement.RenderTransform).(ScaleTransform.ScaleX)");
+            Storyboard.SetTarget(scaleXAnimation, page);
+
+            var scaleYAnimation = new DoubleAnimation
+            {
+                EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseInOut },
+                Duration = Duration,
+                From = fromPreviousPage,
+                To = toPreviousPage
+            };
+            Storyboard.SetTargetProperty(scaleYAnimation, "(UIElement.RenderTransform).(ScaleTransform.ScaleY)");
+            Storyboard.SetTarget(scaleYAnimation, page);
 
             var opacityAnimation = new DoubleAnimation
             {
                 EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseInOut },
                 Duration = Duration,
-                From = fromOpacity,
-                To = toOpacity,
+                From = opacityFrom,
+                To = opacityTo
             };
             Storyboard.SetTargetProperty(opacityAnimation, "Opacity");
             Storyboard.SetTarget(opacityAnimation, page);
 
-            story.Children.Add(turnstileAnimation);
+            story.Children.Add(scaleXAnimation);
+            story.Children.Add(scaleYAnimation);
             story.Children.Add(opacityAnimation);
 
             var completion = new TaskCompletionSource<object>();
             story.Completed += delegate
             {
-                ((PlaneProjection)page.Projection).RotationY = toRotation;
-
-                page.Opacity = 1.0;
-                page.CacheMode = originalCacheMode;
-
                 completion.SetResult(null);
             };
             story.Begin();

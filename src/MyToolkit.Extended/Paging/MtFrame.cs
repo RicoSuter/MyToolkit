@@ -637,6 +637,7 @@ namespace MyToolkit.Paging
                 if (currentPage != null)
                     ContentGrid.Children.Remove(currentPage.GetPage(this).InternalPage);
                 ContentGrid.Children.Add(newPage.GetPage(this).InternalPage);
+                ContentGrid.UpdateLayout();
             }
         }
 

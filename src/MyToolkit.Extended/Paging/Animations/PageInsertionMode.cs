@@ -19,7 +19,8 @@ namespace MyToolkit.Paging.Animations
         /// <summary>Inserts the next page below the previous page before starting the animations so that both pages are in the visual tree during the animations. </summary>
         ConcurrentBelow,
 
-        /// <summary>Inserts the next page after the navigating from animation and removes the previous page. </summary>
+        /// <summary>Inserts the next page after the navigating from animation and removes the previous page.</summary>
+        /// <remarks>This mode should not be used because the page animation may stutter between the actual page changes.</remarks>
         Sequential
     }
 }

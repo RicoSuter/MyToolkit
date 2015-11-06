@@ -131,6 +131,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Paging\Animations\IPageAnimation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Paging\Animations\PageInsertionMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Paging\Animations\PushPageAnimation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Paging\Animations\ScalePageAnimation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Paging\Animations\TurnstilePageAnimation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Paging\Handlers\BackKeyPressedHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Paging\Handlers\NavigationKeyHandler.cs" />
