@@ -16,7 +16,7 @@ namespace MyToolkit.Controls
         /// <summary>Initializes a new instance of the <see cref="PageHamburgerItem"/> class.</summary>
         public PageHamburgerItem()
         {
-            FindPageType = true;
+            UseSinglePageInstance = true;
             AutoClosePane = true; 
         }
 
@@ -26,7 +26,7 @@ namespace MyToolkit.Controls
         /// <summary>Gets or sets the page navigation parameter.</summary>
         public object PageParameter { get; set; }
 
-        /// <summary>Gets or sets a value indicating whether to search for page in the current page stack (default: true).</summary>
-        public bool FindPageType { get; set; }
+        /// <summary>Gets or sets a value indicating whether to use a single page instance of the given type (default: true).</summary>
+        public bool UseSinglePageInstance { get; set; }
     }
 }

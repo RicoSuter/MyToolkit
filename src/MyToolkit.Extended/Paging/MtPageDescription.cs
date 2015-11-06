@@ -15,7 +15,7 @@ using MyToolkit.Serialization;
 namespace MyToolkit.Paging
 {
     /// <summary>Describes a page in the page stack. </summary>
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class MtPageDescription
     {
         private Type _type;
@@ -32,6 +32,7 @@ namespace MyToolkit.Paging
 
             SerializationType = pageType.AssemblyQualifiedName;
             Parameter = parameter;
+            PageKey = Guid.NewGuid().ToString();
         }
 
         /// <summary>Gets a value indicating whether the page is instantiated. </summary>
@@ -58,6 +59,9 @@ namespace MyToolkit.Paging
         public MtPage Page { get; private set; }
 
         [DataMember]
+        internal string PageKey { get; set; }
+
+        [DataMember]
         internal string SerializationType { get; set; }
 
         [DataMember(Name = "Parameter")]
@@ -82,8 +86,8 @@ namespace MyToolkit.Paging
                 if (page == null)
                     throw new InvalidOperationException("The base type is not an MtPage. Change the base type from Page to MtPage. ");
 
+                page.Initialize(frame, PageKey);
                 Page = page;
-                Page.Frame = frame;
             }
 
             return Page;

@@ -373,7 +373,7 @@ namespace MyToolkit.Paging
             return true;
         }
 
-        /// <summary>Navigates forward to a new instance of the given page type. </summary>
+        /// <summary>Navigates forward to a new instance of the given page type.</summary>
         /// <param name="pageType">The page type. </param>
         /// <param name="parameter">The page parameter. </param>
         /// <returns>Returns true if the navigation process has not been cancelled. </returns>
@@ -381,6 +381,23 @@ namespace MyToolkit.Paging
         {
             var newPage = new MtPageDescription(pageType, parameter);
             return await NavigateAsync(newPage);
+        }
+
+        /// <summary>Navigates forward to the existing page of the given page type or creates a new page instace.</summary>
+        /// <remarks>If the page exists it is referenced multiple times in the page stack: 
+        /// The <see cref="MtPageDescription"/> is contained multiple times in the page stack.</remarks>
+        /// <param name="pageType">The page type. </param>
+        /// <param name="pageParamter">The page parameter. </param>
+        /// <returns>Returns true if the navigation process has not been cancelled. </returns>
+        public async Task<bool> NavigateToExistingOrNewPageAsync(Type pageType, object pageParamter = null)
+        {
+            var existingPage = GetNearestPageOfTypeInBackStack(pageType);
+            if (existingPage != null)
+            {
+                existingPage.Parameter = pageParamter;
+                return await CopyToTopAndNavigateAsync(existingPage);
+            }
+            return await NavigateAsync(pageType, pageParamter);
         }
 
         /// <summary>Navigates to the given page and removes the page from the previous position in the page stack.</summary>
@@ -397,6 +414,25 @@ namespace MyToolkit.Paging
                 _pages.RemoveAt(index);
                 _currentIndex--;
 
+                if (await NavigateAsync(page))
+                    return true;
+
+                _pages.Insert(index, page);
+            }
+            return false;
+        }
+
+        /// <summary>Navigates to the given page and copies the page.</summary>
+        /// <param name="page">The page.</param>
+        /// <returns>True if page is now on top of the stack, false when navigation from the current page failed.</returns>
+        public async Task<bool> CopyToTopAndNavigateAsync(MtPageDescription page)
+        {
+            if (CurrentPage == page)
+                return true;
+
+            var index = _pages.IndexOf(page);
+            if (index != -1)
+            {
                 if (await NavigateAsync(page))
                     return true;
 

@@ -53,7 +53,7 @@ namespace MyToolkit.Paging
         /// <summary>
         /// Gets the <see cref="MtFrame"/> instance which is hosting the page. 
         /// </summary>
-        public MtFrame Frame { get; internal set; }
+        public MtFrame Frame { get; private set; }
 
         /// <summary>Gets or sets the control which is used for page animations. 
         /// If set to null, the root control of the page is used. </summary>
@@ -83,8 +83,13 @@ namespace MyToolkit.Paging
             HorizontalAlignment = HorizontalAlignment.Stretch;
             VerticalAlignment = VerticalAlignment.Stretch;
 
-            PageStateHandler = new PageStateHandler(this);
             NavigationKeyHandler = new NavigationKeyHandler(this);
+        }
+
+        internal void Initialize(MtFrame frame, string pageKey)
+        {
+            Frame = frame;
+            PageStateHandler = new PageStateHandler(this, pageKey);
         }
 
         /// <summary>Initializes the view model and registers events so that the OnLoaded and OnUnloaded methods are called. 

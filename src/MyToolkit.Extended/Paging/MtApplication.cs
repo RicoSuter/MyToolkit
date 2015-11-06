@@ -9,6 +9,7 @@
 #if WINRT
 
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -104,8 +105,10 @@ namespace MyToolkit.Paging
             {
                 await MtSuspensionManager.RestoreAsync();
             }
-            catch
+            catch (Exception exception)
             {
+                Debug.WriteLine("MtApplication.RestoreStateAsync: Could not deserialize the page frame state: \n" +
+                    "Own types must be registered with the MtSuspensionManager.KnownTypes.Add() method\n" + exception.ToString());
             }
         }
 

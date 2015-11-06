@@ -39,17 +39,6 @@ namespace MyToolkit.Paging
         /// <summary>Gets or sets the hamburger control.</summary>
         public Hamburger Hamburger { get; set; }
 
-        public async Task<bool> MoveOrNavigateToPageAsync(Type pageType, object pageParamter = null)
-        {
-            var existingPage = Frame.GetNearestPageOfTypeInBackStack(pageType);
-            if (existingPage != null)
-            {
-                existingPage.Parameter = pageParamter;
-                return await Frame.MoveToTopAndNavigateAsync(existingPage);
-            }
-            return await Frame.NavigateAsync(pageType, pageParamter);
-        }
-
         private void FrameOnNavigated(object sender, MtNavigationEventArgs args)
         {
             var currentItem = Hamburger.TopItems
@@ -68,8 +57,8 @@ namespace MyToolkit.Paging
                 var pageItem = (PageHamburgerItem)args.Item;
                 if (pageItem.PageType != null)
                 {
-                    if (pageItem.FindPageType)
-                        await MoveOrNavigateToPageAsync(pageItem.PageType, pageItem.PageParameter);
+                    if (pageItem.UseSinglePageInstance)
+                        await Frame.NavigateToExistingOrNewPageAsync(pageItem.PageType, pageItem.PageParameter);
                     else
                         await Frame.NavigateAsync(pageItem.PageType, pageItem.PageParameter);
                 }

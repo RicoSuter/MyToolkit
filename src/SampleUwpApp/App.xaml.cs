@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -33,7 +34,7 @@ namespace SampleUwpApp
             };
             searchItem.QuerySubmitted += async (sender, args) =>
             {
-                await _hamburgerFrameBuilder.MoveOrNavigateToPageAsync(typeof (DataGridPage));
+                await _hamburgerFrameBuilder.Frame.NavigateToExistingOrNewPageAsync(typeof (DataGridPage));
                 var dataGridPage = (DataGridPage) _hamburgerFrameBuilder.Frame.CurrentPage.Page;
                 dataGridPage.Model.Filter = args.QueryText;
             };
@@ -89,9 +90,9 @@ namespace SampleUwpApp
             return _hamburgerFrameBuilder.Frame;
         }
 
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
+        protected override void OnActivated(IActivatedEventArgs args)
         {
-            base.OnLaunched(args);
+            base.OnActivated(args);
             ApplicationViewUtilities.ConnectRootElementSizeToVisibleBounds();
         }
     }
