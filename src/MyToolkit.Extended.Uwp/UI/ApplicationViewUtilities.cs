@@ -32,7 +32,7 @@ namespace MyToolkit.UI
             var visibleBound = ApplicationView.GetForCurrentView().VisibleBounds;
             var windowHeight = Window.Current.Bounds.Height;
 
-            var difference = Math.Ceiling(windowHeight - visibleBound.Bottom);
+            var difference = Math.Ceiling(windowHeight - visibleBound.Height);
             rootElement.Margin = new Thickness(0, 0, 0, difference);
         }
     }
