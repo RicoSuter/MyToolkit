@@ -168,7 +168,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DependencyObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\DependencyPropertyChangedEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\EntityContainerExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Utilities\HttpUtilityExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\IdentityGenerator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\ItemsControlExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\PageUtilities.cs" />
@@ -181,7 +180,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Validation\ValidationContainer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)Libraries\DotNetZip\Changes.txt" />
-    <Content Include="$(MSBuildThisFileDirectory)Libraries\DotNetZip\License.zlib.txt" />
+    <None Include="$(MSBuildThisFileDirectory)Libraries\DotNetZip\Changes.txt" />
+    <None Include="$(MSBuildThisFileDirectory)Libraries\DotNetZip\License.zlib.txt" />
   </ItemGroup>
 </Project>
