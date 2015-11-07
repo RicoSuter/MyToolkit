@@ -189,22 +189,16 @@ namespace MyToolkit.Paging
         /// <summary>Tries to navigate forward to the next page. </summary>
         /// <remarks>After the task has completed the <see cref="Frame"/>'s current page has changed. </remarks>
         /// <returns>Returns true if navigating forward, false if cancelled</returns>
-        public async Task<bool> GoForwardAsync()
+        public Task<bool> GoForwardAsync()
         {
-            try
+            return RunNavigationWithCheckAsync(async () =>
             {
-                IsNavigating = true;
-
                 if (await RaisePageOnNavigatingFromAsync(CurrentPage, null, NavigationMode.Forward))
                     return false;
 
                 await GoForwardOrBackAsync(NavigationMode.Forward);
                 return true;
-            }
-            finally
-            {
-                IsNavigating = false; 
-            }
+            });
         }
 
         /// <summary>Gets a value indicating whether it is possible to navigate back. </summary>
@@ -263,18 +257,16 @@ namespace MyToolkit.Paging
         /// <summary>Navigates back to the given index. </summary>
         /// <param name="newPageIndex">The page index. </param>
         /// <returns>True if the navigation could be performed. </returns>
-        public async Task<bool> GoBackToAsync(int newPageIndex)
+        public Task<bool> GoBackToAsync(int newPageIndex)
         {
             if (newPageIndex == CurrentIndex)
-                return false;
+                return Task.FromResult(false);
 
             if (newPageIndex < 0 || newPageIndex > CurrentIndex)
-                return false;
+                return Task.FromResult(false);
 
-            try
+            return RunNavigationWithCheckAsync(async () =>
             {
-                IsNavigating = true;
-
                 if (await RaisePageOnNavigatingFromAsync(CurrentPage, _pages[newPageIndex], NavigationMode.Back))
                     return false;
 
@@ -287,11 +279,7 @@ namespace MyToolkit.Paging
                     RemoveForwardStack();
 
                 return true;
-            }
-            finally
-            {
-                IsNavigating = false;
-            }
+            });
         }
 
         /// <summary>Removes a page from the page stack. </summary>
@@ -331,22 +319,16 @@ namespace MyToolkit.Paging
         /// <summary>Tries to navigate back to the previous page. </summary>
         /// <remarks>After the task has completed the <see cref="Frame"/>'s current page has changed. </remarks>
         /// <returns>Returns true if navigating back, false if cancelled or CanGoBack is false. </returns>
-        public async Task<bool> GoBackAsync()
+        public Task<bool> GoBackAsync()
         {
-            try
+            return RunNavigationWithCheckAsync(async () =>
             {
-                IsNavigating = true;
-
                 if (await RaisePageOnNavigatingFromAsync(CurrentPage, PreviousPage, NavigationMode.Back))
                     return false;
 
                 await GoForwardOrBackAsync(NavigationMode.Back);
                 return true;
-            }
-            finally
-            {
-                IsNavigating = false;
-            }
+            });
         }
 
         /// <summary>Initializes the frame and navigates to the given first page. </summary>
@@ -520,12 +502,10 @@ namespace MyToolkit.Paging
             InternalFrame = (Frame)GetTemplateChild("Frame");
         }
 
-        private async Task<bool> NavigateAsync(MtPageDescription newPage)
+        private Task<bool> NavigateAsync(MtPageDescription newPage)
         {
-            try
+            return RunNavigationWithCheckAsync(async () =>
             {
-                IsNavigating = true;
-
                 var currentPage = CurrentPage;
                 if (currentPage != null)
                 {
@@ -537,6 +517,18 @@ namespace MyToolkit.Paging
                 await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.New, currentPage, newPage, CurrentIndex + 1);
 
                 return true;
+            });
+        }
+
+        private async Task<bool> RunNavigationWithCheckAsync(Func<Task<bool>> task)
+        {
+            if (IsNavigating)
+                return false;
+
+            try
+            {
+                IsNavigating = true;
+                return await task();
             }
             finally
             {
@@ -592,10 +584,15 @@ namespace MyToolkit.Paging
 
         private void AddNewPageToGridIfNotSequential(PageInsertionMode insertionMode, MtPageDescription newPage)
         {
-            if (insertionMode == PageInsertionMode.ConcurrentAbove)
-                ContentGrid.Children.Add(newPage.GetPage(this).InternalPage);
-            else if (insertionMode == PageInsertionMode.ConcurrentBelow)
-                ContentGrid.Children.Insert(0, newPage.GetPage(this).InternalPage);
+            var page = newPage.GetPage(this).InternalPage;
+
+            if (!ContentGrid.Children.Contains(page))
+            {
+                if (insertionMode == PageInsertionMode.ConcurrentAbove)
+                    ContentGrid.Children.Add(page);
+                else if (insertionMode == PageInsertionMode.ConcurrentBelow)
+                    ContentGrid.Children.Insert(0, page);
+            }
         }
 
         private async Task AnimateNavigatedFromIfCurrentPageNotNull(IPageAnimation pageAnimation, NavigationMode navigationMode,
