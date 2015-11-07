@@ -2,21 +2,20 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 
-[assembly: AssemblyTitle("MyToolkit")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Rico Suter, rsuter.com")]
+[assembly: AssemblyTitle("MyToolkit.Extended")]
 [assembly: AssemblyProduct("MyToolkit")]
-[assembly: AssemblyCopyright("Rico Suter, rsuter.com")]
+[assembly: AssemblyDescription("Website: http://mytoolkit.io")]
+[assembly: AssemblyCompany("Rico Suter, http://rsuter.com")]
+[assembly: AssemblyCopyright("Rico Suter, http://rsuter.com")]
+[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
-
 [assembly: Guid("08517582-2ece-440a-a5e3-196040cb1d3a")]
 
-[assembly: AssemblyVersion("2.4.3.0")]
-[assembly: AssemblyFileVersion("2.4.3.0")]
+[assembly: AssemblyVersion("2.5.0.0")]
+[assembly: AssemblyFileVersion("2.5.0.0")]
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, 
