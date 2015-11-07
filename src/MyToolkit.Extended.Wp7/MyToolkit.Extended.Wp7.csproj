@@ -306,8 +306,8 @@
       <Link>Resources\Strings.Designer.cs</Link>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
-    <Compile Include="..\MyToolkit.Extended.Wp8\UI\DataTemplateSelector.cs">
-      <Link>UI\DataTemplateSelector.cs</Link>
+    <Compile Include="..\MyToolkit.Extended\Controls\DataTemplateSelector.cs">
+      <Link>Controls\DataTemplateSelector.cs</Link>
     </Compile>
     <Compile Include="..\MyToolkit.Extended.Wp8\UI\PageDeactivator.cs">
       <Link>UI\PageDeactivator.cs</Link>
@@ -472,7 +472,7 @@
     <Compile Include="..\MyToolkit.Extended\Utilities\DependencyPropertyChangedEvent.cs">
       <Link>Utilities\DependencyPropertyChangedEvent.cs</Link>
     </Compile>
-    <Compile Include="..\MyToolkit.Extended\Utilities\EntityContainer.cs">
+    <Compile Include="..\MyToolkit\Utilities\EntityContainer.cs">
       <Link>Utilities\EntityContainer.cs</Link>
     </Compile>
     <Compile Include="..\MyToolkit.Extended\Utilities\ItemsControlExtensions.cs">

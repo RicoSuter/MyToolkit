@@ -87,7 +87,9 @@ namespace MyToolkit.Utilities
             }
 #endif
         }
-        
+
+#if !LEGACY
+
         public static IEnumerable<PropertyInfo> GetInheritedProperties(this Type type)
         {
             var typeInfo = type.GetTypeInfo();
@@ -142,5 +144,7 @@ namespace MyToolkit.Utilities
                 }
             }
         }
+
+#endif
     }
 }

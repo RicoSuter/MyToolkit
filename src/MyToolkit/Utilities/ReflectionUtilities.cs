@@ -14,6 +14,7 @@ namespace MyToolkit.Utilities
 {
     public class ReflectionUtilities
     {
+#if !LEGACY
         public static IEnumerable<PropertyInfo> GetProperties(Type type)
         {
             return type.GetRuntimeProperties();
@@ -43,5 +44,11 @@ namespace MyToolkit.Utilities
         {
             return type.GetTypeInfo().ImplementedInterfaces;
         }
+#else
+        public static Type GetBaseType(Type type)
+        {
+            return type.BaseType;
+        }
+#endif
     }
 }

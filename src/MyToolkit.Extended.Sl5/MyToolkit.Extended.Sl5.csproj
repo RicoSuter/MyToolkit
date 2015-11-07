@@ -154,9 +154,6 @@
     <Compile Include="..\MyToolkit.Extended\UI\Designer.cs">
       <Link>UI\Designer.cs</Link>
     </Compile>
-    <Compile Include="..\MyToolkit.Extended\UI\Element.cs">
-      <Link>UI\Element.cs</Link>
-    </Compile>
     <Compile Include="..\MyToolkit.Extended\UI\FrameworkElementExtensions.cs">
       <Link>UI\FrameworkElementExtensions.cs</Link>
     </Compile>
@@ -169,7 +166,7 @@
     <Compile Include="..\MyToolkit.Extended\Utilities\DependencyObjectExtensions.cs">
       <Link>Utilities\DependencyObjectExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\MyToolkit.Extended\Utilities\EntityContainer.cs">
+    <Compile Include="..\MyToolkit\Utilities\EntityContainer.cs">
       <Link>Utilities\EntityContainer.cs</Link>
     </Compile>
     <Compile Include="..\MyToolkit.Extended\Utilities\ItemsControlExtensions.cs">
