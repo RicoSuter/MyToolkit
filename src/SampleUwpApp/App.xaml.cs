@@ -2,7 +2,9 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation.Metadata;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using MyToolkit.Controls;
@@ -90,6 +92,20 @@ namespace SampleUwpApp
         public override MtFrame GetFrame(UIElement windowContentElement)
         {
             return _hamburgerFrameBuilder.Frame;
+        }
+
+        public override async Task OnInitializedAsync(MtFrame frame, ApplicationExecutionState args)
+        {
+            await HideStatusBarAsync();
+        }
+
+        private async Task HideStatusBarAsync()
+        {
+            if (ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var statusBar = StatusBar.GetForCurrentView();
+                await statusBar.HideAsync();
+            }
         }
 
         protected override void OnActivated(IActivatedEventArgs args)

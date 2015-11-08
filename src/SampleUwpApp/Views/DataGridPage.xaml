@@ -22,8 +22,8 @@
 
             <StackPanel>
                 <TextBlock Text="Filter" FontWeight="Bold" Margin="0,0,0,2" />
-                <SearchBox QueryText="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                           PlaceholderText="Filter" Margin="0,0,0,16" />
+                <AutoSuggestBox Text="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                PlaceholderText="Filter" Margin="0,0,0,16" AutoMaximizeSuggestionArea="False" />
             </StackPanel>
 
             <controls:DataGrid x:Name="DataGrid" Grid.Row="1" 
