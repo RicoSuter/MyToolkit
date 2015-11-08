@@ -84,12 +84,13 @@ namespace MyToolkit.Paging
             VerticalAlignment = VerticalAlignment.Stretch;
 
             NavigationKeyHandler = new NavigationKeyHandler(this);
+            PageStateHandler = new PageStateHandler(this, Guid.NewGuid().ToString());
         }
 
-        internal void Initialize(MtFrame frame, string pageKey)
+        internal void SetFrame(MtFrame frame, string pageKey)
         {
             Frame = frame;
-            PageStateHandler = new PageStateHandler(this, pageKey);
+            PageStateHandler.PageKey = pageKey;
         }
 
         /// <summary>Initializes the view model and registers events so that the OnLoaded and OnUnloaded methods are called. 

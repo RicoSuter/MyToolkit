@@ -19,7 +19,7 @@ namespace MyToolkit.Paging.Handlers
         private readonly MtPage _page;
         private bool _stateLoaded = false; 
 
-        public string PageKey { get; private set; }
+        public string PageKey { get; internal set; }
 
         internal event EventHandler<MtLoadStateEventArgs> LoadState;
         internal event EventHandler<MtSaveStateEventArgs> SaveState;

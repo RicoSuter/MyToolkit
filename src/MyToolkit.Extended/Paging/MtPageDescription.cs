@@ -86,7 +86,7 @@ namespace MyToolkit.Paging
                 if (page == null)
                     throw new InvalidOperationException("The base type is not an MtPage. Change the base type from Page to MtPage. ");
 
-                page.Initialize(frame, PageKey);
+                page.SetFrame(frame, PageKey);
                 Page = page;
             }
 
