@@ -17,12 +17,13 @@ namespace MyToolkit.Controls
     /// <summary>A hamburger item which shows a search box.</summary>
     public class SearchHamburgerItem : PageHamburgerItem
     {
-        private readonly SearchBox _searchBox;
+        private readonly AutoSuggestBox _searchBox;
 
         /// <summary>Initializes a new instance of the <see cref="SearchHamburgerItem"/> class.</summary>
         public SearchHamburgerItem()
         {
-            _searchBox = new SearchBox();
+            _searchBox = new AutoSuggestBox();
+            _searchBox.QueryIcon = new SymbolIcon { Symbol = Symbol.Find };
             _searchBox.Loaded += delegate { _searchBox.PlaceholderText = PlaceholderText; };
             _searchBox.QuerySubmitted += OnQuerySubmitted;
             _searchBox.GotFocus += OnGotFocus;
@@ -32,7 +33,7 @@ namespace MyToolkit.Controls
 
             CanBeSelected = false;
             ShowContentIcon = false;
-            PlaceholderText = string.Empty; 
+            PlaceholderText = string.Empty;
 
             Click += (sender, args) =>
             {
@@ -48,7 +49,7 @@ namespace MyToolkit.Controls
         public string PlaceholderText { get; set; }
 
         /// <summary>Occurs when the user submits a search query.</summary>
-        public event TypedEventHandler<SearchBox, SearchBoxQuerySubmittedEventArgs> QuerySubmitted
+        public event TypedEventHandler<AutoSuggestBox, AutoSuggestBoxQuerySubmittedEventArgs> QuerySubmitted
         {
             add { _searchBox.QuerySubmitted += value; }
             remove { _searchBox.QuerySubmitted -= value; }
@@ -59,15 +60,15 @@ namespace MyToolkit.Controls
             if (CanBeSelected)
             {
                 var hamburger = _searchBox.GetVisualParentOfType<Hamburger>();
-                hamburger.SelectedItem = this; 
+                hamburger.SelectedItem = this;
             }
         }
 
-        private void OnQuerySubmitted(SearchBox sender, SearchBoxQuerySubmittedEventArgs args)
+        private void OnQuerySubmitted(AutoSuggestBox box, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            _searchBox.QueryText = "";
+            _searchBox.Text = "";
 
-            var hamburger = sender.GetVisualParentOfType<Hamburger>();
+            var hamburger = box.GetVisualParentOfType<Hamburger>();
             hamburger.IsPaneOpen = false;
         }
     }
