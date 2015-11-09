@@ -135,6 +135,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Paging\Animations\TurnstilePageAnimation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Paging\Handlers\BackKeyPressedHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Paging\Handlers\NavigationKeyHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Paging\Handlers\PageStackManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Paging\Handlers\PageStateHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Paging\MtApplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Paging\MtFrame.cs" />

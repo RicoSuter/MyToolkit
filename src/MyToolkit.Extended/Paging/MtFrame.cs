@@ -426,13 +426,8 @@ namespace MyToolkit.Paging
         /// <summary>Clears all pages from the page back stack.</summary>
         public void ClearBackStack()
         {
-            var pages = _pages.ToArray();
-            for (var i = 0; i < _currentIndex; i++)
-            {
-                var page = pages[i];
-                _pages.Remove(page);
-            }
-            _currentIndex = 0;
+            for (var i = _currentIndex - 1; i >= 0; i--)
+                RemovePageFromStackAt(i);
         }
 
         /// <summary>Used set the serialized the current page stack (used in the SuspensionManager). </summary>
@@ -702,12 +697,7 @@ namespace MyToolkit.Paging
         private void RemoveForwardStack()
         {
             for (var i = _pages.Count - 1; i > CurrentIndex; i--)
-            {
-                var page = _pages[i];
-                page.ReleasePage();
-
-                _pages.Remove(page);
-            }
+                RemovePageFromStackAt(i);
         }
 
         private void RaisePageOnNavigatedFrom(MtPageDescription description, NavigationMode mode)

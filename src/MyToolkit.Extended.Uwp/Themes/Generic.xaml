@@ -1263,42 +1263,11 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="48" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <!-- Hamburger button -->
-                            <Button x:Name="HamburgerButton"
-                                    BorderThickness="0"
-                                    FontSize="16" 
-                                    Width="48" Height="48" 
-                                    FontFamily="Segoe MDL2 Assets" 
-                                    UseLayoutRounding="True"
-                                    VerticalAlignment="Center" 
-                                    HorizontalAlignment="Center"
-                                    Content="&#xE700;"
-                                    Foreground="{TemplateBinding HamburgerForegroundBrush}"
-                                    Background="{TemplateBinding HamburgerBackgroundBrush}">
-                            </Button>
-
-                            <!-- Header -->
-                            <Border Grid.Column="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                                <ContentPresenter Content="{TemplateBinding Header}" 
-                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-                                </ContentPresenter>
-                            </Border>
-                        </Grid>
-
                         <SplitView Grid.Row="1"
                                    x:Name="SplitView" 
                                    DisplayMode="{TemplateBinding DisplayMode}" 
                                    IsPaneOpen="{TemplateBinding IsPaneOpen}" 
                                    OpenPaneLength="{TemplateBinding PaneWidth}">
-
                             <SplitView.Pane>
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -1332,10 +1301,38 @@
                             </SplitView.Pane>
                             <SplitView.Content>
                                 <ContentPresenter Content="{TemplateBinding Content}" 
-                                                  Margin="{TemplateBinding ContentMargin}" 
-                                                  Grid.Row="1" />
+                                                  Margin="{TemplateBinding ContentMargin}" />
                             </SplitView.Content>
                         </SplitView>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="48" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Hamburger button -->
+                            <Button x:Name="HamburgerButton"
+                                    BorderThickness="0"
+                                    FontSize="16" 
+                                    Width="48" Height="48" 
+                                    FontFamily="Segoe MDL2 Assets" 
+                                    UseLayoutRounding="True"
+                                    VerticalAlignment="Center" 
+                                    HorizontalAlignment="Center"
+                                    Content="&#xE700;"
+                                    Foreground="{TemplateBinding HamburgerForegroundBrush}"
+                                    Background="{TemplateBinding HamburgerBackgroundBrush}">
+                            </Button>
+
+                            <!-- Header -->
+                            <ContentPresenter Grid.Column="1"
+                                              Content="{TemplateBinding Header}" 
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                              HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                            </ContentPresenter>
+                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
