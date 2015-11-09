@@ -78,6 +78,7 @@ namespace MyToolkit.Paging.Handlers
         }
 
 #if WINDOWS_UAP
+
         private void OnBackKeyPressed(object sender, BackRequestedEventArgs args)
         {
             var handled = args.Handled;
@@ -92,6 +93,7 @@ namespace MyToolkit.Paging.Handlers
                     return;
             }
         }
+
 #else
         private void OnBackKeyPressed(object sender, object args)
         {
