@@ -4,10 +4,11 @@ using MyToolkit.Command;
 using MyToolkit.Messaging;
 using MyToolkit.MVVM;
 using MyToolkit.Mvvm;
+using MyToolkit.Paging;
 
 namespace SampleWindowsStoreApp.ViewModels
 {
-    public class MvvmSamplePageModel : ViewModelBase
+    public class MvvmSamplePageModel : ViewModelBase, IStateHandlingViewModel
     {
         public MvvmSamplePageModel()
         {
@@ -52,5 +53,19 @@ namespace SampleWindowsStoreApp.ViewModels
         }
 
         #endregion
+
+        /// <summary>Used to save the state when the page gets suspended. </summary>
+        /// <param name="pageState">The dictionary to save the page state into. </param>
+        public void OnSaveState(MtSaveStateEventArgs pageState)
+        {
+            pageState.Set("SampleProperty", SampleProperty);
+        }
+
+        /// <summary>Used to load the saved state when the page has been reactivated. </summary>
+        /// <param name="pageState">The saved page state. </param>
+        public void OnLoadState(MtLoadStateEventArgs pageState)
+        {
+            SampleProperty = pageState.Get<string>("SampleProperty");
+        }
     }
 }

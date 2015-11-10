@@ -22,6 +22,8 @@ namespace SampleWindowsStoreApp.Views
         public MvvmSamplePage()
         {
             InitializeComponent();
+            RegisterViewModel(Model);
+
             Model.PropertyChanged += OnPropertyChanged;
         }
 

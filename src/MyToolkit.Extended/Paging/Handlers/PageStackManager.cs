@@ -194,9 +194,9 @@ namespace MyToolkit.Extended.Paging.Handlers
                 RemovePageFromStackAt(i);
         }
         
-        public void ChangeCurrentPage(NavigationMode navigationMode, MtPageDescription newPage, int nextPageIndex)
+        public void ChangeCurrentPage(MtPageDescription newPage, int nextPageIndex)
         {
-            if (navigationMode == NavigationMode.New)
+            if (_pages.Count <= nextPageIndex)
                 _pages.Add(newPage);
 
             CurrentIndex = nextPageIndex;

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Navigation;
 using MyToolkit.Paging;
 
 namespace SampleUwpApp.Views
@@ -12,10 +13,16 @@ namespace SampleUwpApp.Views
         public MainPage()
         {
             InitializeComponent();
-            Loaded += (sender, args) =>
-            {
-                Test.Text = "Test: " + Frame.BackStackDepth.ToString();
-            };
+        }
+
+        /// <summary>Called when navigated to this page. </summary>
+        /// <param name="args">The event arguments. </param>
+        protected override void OnNavigatedTo(MtNavigationEventArgs args)
+        {
+            if (args.NavigationMode == NavigationMode.New)
+                Test.Text = "Test: " + Frame.BackStackDepth;
+
+            base.OnNavigatedTo(args);
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)

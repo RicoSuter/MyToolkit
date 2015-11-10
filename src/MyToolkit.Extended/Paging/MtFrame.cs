@@ -259,6 +259,7 @@ namespace MyToolkit.Paging
                     return false;
 
                 await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.Back, currentPage, nextPage, newPageIndex);
+
                 if (DisableForwardStack)
                     _pageStackManager.ClearForwardStack();
 
@@ -333,7 +334,7 @@ namespace MyToolkit.Paging
         public async Task<bool> NavigateAsync(Type pageType, object parameter)
         {
             var newPage = new MtPageDescription(pageType, parameter);
-            return await NavigateAsync(newPage);
+            return await NavigateAsync(newPage, NavigationMode.New);
         }
 
         /// <summary>Navigates forward to the existing page of the given page type or creates a new page instace.</summary>
@@ -358,7 +359,7 @@ namespace MyToolkit.Paging
         /// <returns>True if page is now on top of the stack, false when navigation from the current page failed.</returns>
         public Task<bool> MoveToTopAndNavigateAsync(MtPageDescription page)
         {
-            return _pageStackManager.MoveToTop(page, async p => await NavigateAsync(p));
+            return _pageStackManager.MoveToTop(page, async p => await NavigateAsync(p, NavigationMode.Forward));
         }
 
         /// <summary>Navigates to the given page and copies the page.</summary>
@@ -371,7 +372,7 @@ namespace MyToolkit.Paging
 
             if (_pageStackManager.Pages.Contains(page))
             {
-                if (await NavigateAsync(page))
+                if (await NavigateAsync(page, NavigationMode.Forward))
                     return true;
             }
 
@@ -426,20 +427,21 @@ namespace MyToolkit.Paging
             InternalFrame = (Frame)GetTemplateChild("Frame");
         }
         
-        private Task<bool> NavigateAsync(MtPageDescription newPage)
+        private Task<bool> NavigateAsync(MtPageDescription newPage, NavigationMode navigationMode)
         {
             return RunNavigationWithCheckAsync(async () =>
             {
                 var currentPage = CurrentPage;
                 if (currentPage != null)
                 {
-                    if (await RaisePageOnNavigatingFromAsync(CurrentPage, newPage, NavigationMode.New))
+                    if (await RaisePageOnNavigatingFromAsync(CurrentPage, newPage, navigationMode))
                         return false;
                 }
 
                 _pageStackManager.ClearForwardStack();
-                await NavigateWithAnimationsAndCallbacksAsync(NavigationMode.New, currentPage, newPage, _pageStackManager.CurrentIndex + 1);
 
+                await NavigateWithAnimationsAndCallbacksAsync(navigationMode, currentPage, newPage, _pageStackManager.CurrentIndex + 1);
+                
                 return true;
             });
         }
@@ -525,7 +527,7 @@ namespace MyToolkit.Paging
             if (currentPage != null)
                 RaisePageOnNavigatedFrom(currentPage, navigationMode);
 
-            _pageStackManager.ChangeCurrentPage(navigationMode, newPage, nextPageIndex);
+            _pageStackManager.ChangeCurrentPage(newPage, nextPageIndex);
 
             RaisePageOnNavigatedTo(newPage, navigationMode);
             ((CommandBase)GoBackCommand).RaiseCanExecuteChanged();
