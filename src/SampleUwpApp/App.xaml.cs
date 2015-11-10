@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation.Metadata;
-using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -12,7 +11,6 @@ using MyToolkit.Paging;
 using MyToolkit.Paging.Animations;
 using MyToolkit.UI;
 using SampleUwpApp.Views;
-using AppBarButton = Windows.UI.Xaml.Controls.AppBarButton;
 
 namespace SampleUwpApp
 {
@@ -85,7 +83,7 @@ namespace SampleUwpApp
                     PageType = typeof(SettingsPage)
                 }
             };
-            //_hamburgerFrameBuilder.Frame.PageAnimation = new TurnstilePageAnimation();
+            _hamburgerFrameBuilder.Frame.PageAnimation = new ScalePageTransition();
             return _hamburgerFrameBuilder.Hamburger;
         }
 

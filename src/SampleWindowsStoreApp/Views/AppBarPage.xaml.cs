@@ -7,6 +7,7 @@ namespace SampleWindowsStoreApp.Views
         public AppBarPage()
         {
             InitializeComponent();
+            DataContext = "AppBarBindingTest";
         }
     }
 }

@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Navigation;
 using MyToolkit.Mvvm;
 using MyToolkit.Paging.Animations;
 using MyToolkit.Paging.Handlers;
+using MyToolkit.Utilities;
 
 namespace MyToolkit.Paging
 {
@@ -28,6 +29,31 @@ namespace MyToolkit.Paging
     public class MtPage : ContentControl
     {
         private bool _isLoaded = false;
+
+        public MtPage()
+        {
+            UseBackKeyToNavigate = true;
+            IsSuspendable = true;
+            UseAltLeftOrRightToNavigate = true;
+
+            NavigationCacheMode = NavigationCacheMode.Required;
+
+            HorizontalContentAlignment = HorizontalAlignment.Stretch;
+            VerticalContentAlignment = VerticalAlignment.Stretch;
+            HorizontalAlignment = HorizontalAlignment.Stretch;
+            VerticalAlignment = VerticalAlignment.Stretch;
+
+            NavigationKeyHandler = new NavigationKeyHandler(this);
+            PageStateHandler = new PageStateHandler(this, Guid.NewGuid().ToString());
+
+            DependencyPropertyChangedEvent.Register(this, DataContextProperty, delegate { OnDataContextChanged(); });
+        }
+
+        internal void SetFrame(MtFrame frame, string pageKey)
+        {
+            Frame = frame;
+            PageStateHandler.PageKey = pageKey;
+        }
 
         internal PageStateHandler PageStateHandler { get; private set; }
 
@@ -68,29 +94,6 @@ namespace MyToolkit.Paging
                     return AnimationContext;
                 return this;
             }
-        }
-
-        public MtPage()
-        {
-            UseBackKeyToNavigate = true;
-            IsSuspendable = true;
-            UseAltLeftOrRightToNavigate = true;
-
-            NavigationCacheMode = NavigationCacheMode.Required;
-
-            HorizontalContentAlignment = HorizontalAlignment.Stretch;
-            VerticalContentAlignment = VerticalAlignment.Stretch;
-            HorizontalAlignment = HorizontalAlignment.Stretch;
-            VerticalAlignment = VerticalAlignment.Stretch;
-
-            NavigationKeyHandler = new NavigationKeyHandler(this);
-            PageStateHandler = new PageStateHandler(this, Guid.NewGuid().ToString());
-        }
-
-        internal void SetFrame(MtFrame frame, string pageKey)
-        {
-            Frame = frame;
-            PageStateHandler.PageKey = pageKey;
         }
 
         /// <summary>Initializes the view model and registers events so that the OnLoaded and OnUnloaded methods are called. 
@@ -197,24 +200,18 @@ namespace MyToolkit.Paging
         /// </summary>
         public bool IsSuspendable { get; protected set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether to use the special pointer buttons to navigate (default: true). 
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether to use the special pointer buttons to navigate (default: true).</summary>
         public bool UsePointerButtonsToNavigate { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether to use alt-left or alt-right to navigate back or forward (default: true). 
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether to use alt-left or alt-right to 
+        /// navigate back or forward (default: true).</summary>
         public bool UseAltLeftOrRightToNavigate { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the back key is used to navigate back (default: true).
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether the back key is used to navigate back (default: true).</summary>
         public bool UseBackKeyToNavigate { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the back key is used to navigate back even if the focus is in a web view (default: false). 
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether the back key is used to navigate back 
+        /// even if the focus is in a web view (default: false).</summary>
         public bool UseBackKeyToNavigateInWebView { get; set; }
 
         /// <summary>Used to load the saved state when the page has been reactivated. </summary>
@@ -350,8 +347,16 @@ namespace MyToolkit.Paging
         private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             _isLoaded = true; 
+
             OnUpdateTopAppBar();
             OnUpdateBottomAppBar();
+            OnDataContextChanged();
+        }
+
+        private void OnDataContextChanged()
+        {
+            if (_isLoaded)
+                InternalPage.DataContext = DataContext;
         }
 
         private void OnUpdateTopAppBar()

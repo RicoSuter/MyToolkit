@@ -13,9 +13,8 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
-using MyToolkit.Paging.Animations;
 
-namespace TwentyMinutes
+namespace MyToolkit.Paging.Animations
 {
     /// <summary>Scales the page like pushing a button.</summary>
     public class ScalePageTransition : IPageAnimation

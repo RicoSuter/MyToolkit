@@ -84,7 +84,7 @@
             <!-- The available icons can be found here: http://msdn.microsoft.com/en-us/library/windows/apps/windows.ui.xaml.controls.symbol -->
             
             <CommandBar.PrimaryCommands>
-                <AppBarButton Icon="Play" Label="Play" />
+                <AppBarButton Icon="Play" Label="{Binding}" />
                 <AppBarSeparator />
                 <AppBarButton Icon="Add" Label="Add item" />
             </CommandBar.PrimaryCommands>

@@ -8,7 +8,6 @@
 
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using MyToolkit.Controls;
 
 namespace MyToolkit.Paging
