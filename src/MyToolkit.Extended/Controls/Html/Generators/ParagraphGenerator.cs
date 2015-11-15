@@ -115,20 +115,20 @@ namespace MyToolkit.Controls.Html.Generators
                         var split = splits[i];
                         current.Add(new Run { Text = split });
                         if (i < splits.Length - 1) // dont create for last
-                            CreateTextBox(list, current, htmlView, i == 0 && addTopMargin, false);
+                            CreateTextBox(node, list, current, htmlView, i == 0 && addTopMargin, false);
                     }
                     addTopMargin = list.Count == 0; 
                 } else if (child is Inline)
                     current.Add((Inline)child);
                 else
                 {
-                    CreateTextBox(list, current, htmlView, addTopMargin, true);
+                    CreateTextBox(node, list, current, htmlView, addTopMargin, true);
                     list.Add(child);
                     addTopMargin = true; 
                 }
             }
 
-            CreateTextBox(list, current, htmlView, addTopMargin, true);
+            CreateTextBox(node, list, current, htmlView, addTopMargin, true);
 
             if (list.Count == 0)
                 return null;
@@ -136,34 +136,51 @@ namespace MyToolkit.Controls.Html.Generators
             return list.ToArray();
         }
 
-        private void CreateTextBox(List<DependencyObject> list, List<Inline> current, IHtmlView htmlView, bool addTopMargin, bool addBottomMargin)
+        private void CreateTextBox(HtmlNode node, List<DependencyObject> list, List<Inline> current, IHtmlView htmlView, bool addTopMargin, bool addBottomMargin)
         {
             if (current.Count > 0)
             {
+                var textBlock = CreateTextBlock(node, htmlView);
+
                 var p = new Paragraph();
                 foreach (var r in current)
                     p.Inlines.Add(r);
 
+                textBlock.Blocks.Add(p);
+
 #if !WINRT
-                var textBlock = new RichTextBox();
                 textBlock.Background = textBlock.Background;
                 textBlock.Margin = new Thickness(-12, addTopMargin ? htmlView.ParagraphMargin : 0, -12, addBottomMargin ? htmlView.ParagraphMargin : 0);
 #else
-                var textBlock = new RichTextBlock();
-                textBlock.IsTextSelectionEnabled = false; 
+                textBlock.IsTextSelectionEnabled = false;
                 textBlock.Margin = new Thickness(0, addTopMargin ? htmlView.ParagraphMargin : 0, 0, addBottomMargin ? htmlView.ParagraphMargin : 0);
 #endif
 
-                textBlock.Blocks.Add(p);
-                textBlock.FontSize = htmlView.FontSize * FontSize;
-                textBlock.Foreground = Foreground ?? htmlView.Foreground;
-                textBlock.FontFamily = FontFamily ?? htmlView.FontFamily;
-                textBlock.FontStyle = FontStyle;
-                textBlock.FontWeight = FontWeight;
-                
                 list.Add(textBlock);
                 current.Clear();
             }
+        }
+
+        /// <summary>Creates a formatted text block.</summary>
+        /// <param name="node">The node.</param>
+        /// <param name="htmlView">The HTML view.</param>
+#if !WINRT
+        protected virtual RichTextBox CreateTextBlock(HtmlNode node, IHtmlView htmlView)
+        {
+            var textBlock = new RichTextBox();
+#else
+        protected virtual RichTextBlock CreateTextBlock(HtmlNode node, IHtmlView htmlView)
+        {
+            var textBlock = new RichTextBlock();
+#endif
+
+            textBlock.FontSize = htmlView.FontSize * FontSize;
+            textBlock.Foreground = Foreground ?? htmlView.Foreground;
+            textBlock.FontFamily = FontFamily ?? htmlView.FontFamily;
+            textBlock.FontStyle = FontStyle;
+            textBlock.FontWeight = FontWeight;
+
+            return textBlock;
         }
     }
 }
