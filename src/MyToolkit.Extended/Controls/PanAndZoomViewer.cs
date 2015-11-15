@@ -91,7 +91,7 @@ namespace MyToolkit.Controls
             listener.DragDelta += OnDragDelta;	
 #endif
 
-            _content = (ContentPresenter)GetTemplateChild("_content");
+            _content = (ContentPresenter)GetTemplateChild("content");
             if (_content.Content == null)
                 _content.Content = Content;
             

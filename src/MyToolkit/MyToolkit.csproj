@@ -221,6 +221,7 @@
     <Compile Include="Utilities\TaskUtilities.cs" />
     <Compile Include="Utilities\VersionUtilities.cs" />
     <Compile Include="Events\WeakEvent.cs" />
+    <Compile Include="Utilities\XmlDocumentationExtensions.cs" />
     <Compile Include="WorkflowEngine\IWorkflowActivityBase.cs" />
     <Compile Include="WorkflowEngine\ActivityData.cs" />
     <Compile Include="WorkflowEngine\WorkflowActivityOutput.cs" />
