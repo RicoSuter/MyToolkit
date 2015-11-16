@@ -11,5 +11,8 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <controls:PanAndZoomViewer>
+            <Image Source="http://img-s-msn-com.akamaized.net/tenant/amp/entityid/BBn4ize.img?h=1080&amp;w=1920amp;m=6amp;q=60amp;o=famp;l=famp;x=522amp;y=405" />
+        </controls:PanAndZoomViewer>
     </Grid>
 </paging:MtPage>
