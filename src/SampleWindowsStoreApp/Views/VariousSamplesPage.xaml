@@ -59,10 +59,11 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <controls:HtmlTextBlock Html="{Binding Html}" Loaded="OnHtmlTextBlockLoaded" x:Name="HtmlTextBlock" />
+                        <controls:ScrollableHtmlView Html="{Binding Html}" x:Name="Html" />
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1">
-                            <Button Content="Font Size" Click="OnChangeFontSize" />
+                            <TextBlock Text="Font size: " Margin="0,5,5,0" />
+                            <ComboBox x:Name="FontSizeComboBox" SelectedItem="{Binding ElementName=Html, Path=FontSize, Mode=TwoWay}" />
                         </StackPanel>
                     </Grid>
 

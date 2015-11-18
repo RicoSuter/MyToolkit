@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Collections.Generic;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using MyToolkit.Controls;
 using MyToolkit.Multimedia;
@@ -14,6 +15,7 @@ namespace SampleWindowsStoreApp.Views
         public VariousSamplesPage()
         {
             InitializeComponent();
+            FontSizeComboBox.ItemsSource = new List<double> { 10, Html.FontSize, 15, 20 };
         }
 
         private async void OnListPickerBoxTest(object sender, RoutedEventArgs e)
@@ -21,16 +23,6 @@ namespace SampleWindowsStoreApp.Views
             var list = new[] { "a", "b", "c", "d" };
             var selected = new[] { "a", "b" };
             await ListPickerBox.ShowAsync("header", list, selected, true, true);
-        }
-
-        private void OnHtmlTextBlockLoaded(object sender, RoutedEventArgs e)
-        {
-            HtmlTextBlock = (HtmlTextBlock)sender;
-        }
-
-        private void OnChangeFontSize(object sender, RoutedEventArgs e)
-        {
-            HtmlTextBlock.FontSize += 1;
         }
     }
 }
