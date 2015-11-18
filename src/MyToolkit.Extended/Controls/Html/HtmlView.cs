@@ -11,7 +11,7 @@
 using System;
 using System.Collections.Generic;
 using MyToolkit.Controls.Html;
-
+using MyToolkit.Utilities;
 #if WINRT
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -50,6 +50,11 @@ namespace MyToolkit.Controls
 
             SizeChanged += OnSizeChanged;
             SizeDependentControls = new List<ISizeDependentControl>();
+
+            DependencyPropertyChangedEvent.Register(this, FontSizeProperty, delegate { this.Generate(); });
+            DependencyPropertyChangedEvent.Register(this, FontFamilyProperty, delegate { this.Generate(); });
+            DependencyPropertyChangedEvent.Register(this, ForegroundProperty, delegate { this.Generate(); });
+            DependencyPropertyChangedEvent.Register(this, BackgroundProperty, delegate { this.Generate(); });
         }
 
         /// <summary>Gets the list of HTML element generators. </summary>
@@ -95,6 +100,19 @@ namespace MyToolkit.Controls
         {
             get { return (Uri)GetValue(BaseUriProperty); }
             set { SetValue(BaseUriProperty, value); }
+        }
+
+        /// <summary>Gets the generator for the tag name or creates a new one.</summary>
+        /// <typeparam name="TGenerator">The type of the generator.</typeparam>
+        /// <param name="tagName">Name of the tag.</param>
+        /// <returns>The generator.</returns>
+        public TGenerator GetGenerator<TGenerator>(string tagName)
+            where TGenerator : IControlGenerator, new()
+        {
+            if (Generators.ContainsKey(tagName))
+                return (TGenerator)Generators[tagName];
+            Generators[tagName] = new TGenerator();
+            return (TGenerator)Generators[tagName];
         }
 
         /// <summary>Calls the <see cref="HtmlLoaded"/> event. </summary>

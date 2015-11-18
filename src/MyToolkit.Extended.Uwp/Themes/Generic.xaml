@@ -1,9 +1,9 @@
 <ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-					xmlns:controls="using:MyToolkit.Controls" 
-					xmlns:converters="using:MyToolkit.Converters" 
-					xmlns:Paging="using:MyToolkit.Paging"
-					xmlns:data="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                    xmlns:controls="using:MyToolkit.Controls" 
+                    xmlns:converters="using:MyToolkit.Converters" 
+                    xmlns:Paging="using:MyToolkit.Paging"
+                    xmlns:data="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 
     <converters:NotConverter x:Key="nc" />
     <converters:VisibilityConverter x:Key="vc" />
@@ -129,10 +129,10 @@
 
                         <controls:MtListBox BorderThickness="0" Grid.Row="1"
                                             ItemContainerStyle="{TemplateBinding RowStyle}"
-											HorizontalContentAlignment="Stretch" 
+                                            HorizontalContentAlignment="Stretch" 
                                             VerticalContentAlignment="Stretch"
                                             Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}"
-											Style="{StaticResource TransparentListBox}" 
+                                            Style="{StaticResource TransparentListBox}" 
                                             Margin="0" x:Name="Rows" />
                     </Grid>
                 </ControlTemplate>
@@ -155,7 +155,7 @@
 
                         <StackPanel Grid.Column="1" 
                                     Visibility="{Binding IsSelected, Converter={StaticResource vc}}" 
-									VerticalAlignment="Center" 
+                                    VerticalAlignment="Center" 
                                     HorizontalAlignment="Left">
                             <Path Data="M4,0 L0,8 L8,8 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource vc}}"/>
                             <Path Data="M0,0 L4,8 L8,0 Z" Fill="White" Visibility="{Binding IsAscending, Converter={StaticResource nc}}"/>
@@ -174,8 +174,8 @@
                     <StackPanel Orientation="Horizontal" x:Name="container" Background="Transparent">
                         <ContentPresenter x:Name="content" VerticalAlignment="Center" />
                         <TextBlock x:Name="header" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header}"
-								   Margin="15,0,0,0" FontSize="36" FontWeight="SemiLight" VerticalAlignment="Center"
-								   Visibility="{Binding ElementName=header, Path=Text, Converter={StaticResource vc}}" />
+                                   Margin="15,0,0,0" FontSize="36" FontWeight="SemiLight" VerticalAlignment="Center"
+                                   Visibility="{Binding ElementName=header, Path=Text, Converter={StaticResource vc}}" />
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
@@ -210,8 +210,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
                     <Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" 
-							BorderThickness="{TemplateBinding BorderThickness}" 
-							Background="{TemplateBinding Background}">
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal"/>
@@ -231,14 +231,15 @@
                                 <VisualState x:Name="Unfocused"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <ScrollViewer x:Name="ScrollViewer" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" 
-											  HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-											  IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" 
-											  IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" 
-											  Padding="{TemplateBinding Padding}" TabNavigation="{TemplateBinding TabNavigation}" 
-											  VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" 
-											  VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" 
-											  ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
+                        <ScrollViewer x:Name="ScrollViewer" 
+                                      HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" 
+                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                      IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" 
+                                      IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" 
+                                      Padding="{TemplateBinding Padding}" TabNavigation="{TemplateBinding TabNavigation}" 
+                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" 
+                                      VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" 
+                                      ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
                             <ItemsPresenter/>
                         </ScrollViewer>
                     </Border>
@@ -275,8 +276,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:MtListBox">
                     <Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" 
-							BorderThickness="{TemplateBinding BorderThickness}" 
-							Background="{TemplateBinding Background}">
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal"/>
@@ -297,13 +298,13 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <ScrollViewer x:Name="ScrollViewer" HorizontalScrollMode="{TemplateBinding ScrollViewer.HorizontalScrollMode}" 
-											  HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-											  IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" 
-											  IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" 
-											  Padding="{TemplateBinding Padding}" TabNavigation="{TemplateBinding TabNavigation}" 
-											  VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" 
-											  VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" 
-											  ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
+                                              HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                              IsHorizontalRailEnabled="{TemplateBinding ScrollViewer.IsHorizontalRailEnabled}" 
+                                              IsVerticalRailEnabled="{TemplateBinding ScrollViewer.IsVerticalRailEnabled}" 
+                                              Padding="{TemplateBinding Padding}" TabNavigation="{TemplateBinding TabNavigation}" 
+                                              VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" 
+                                              VerticalScrollMode="{TemplateBinding ScrollViewer.VerticalScrollMode}" 
+                                              ZoomMode="{TemplateBinding ScrollViewer.ZoomMode}">
                             <ItemsPresenter/>
                         </ScrollViewer>
                     </Border>
@@ -335,12 +336,12 @@
                         <controls:MtListBox x:Name="List" Margin="0" BorderThickness="0" Grid.Row="0" 
                                             ItemTemplate="{TemplateBinding HeaderTemplate}"
                                             IsEnabled="{TemplateBinding IsHeaderEnabled}"
-											HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-											ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-											ScrollViewer.HorizontalScrollMode="Auto"
-											ScrollViewer.VerticalScrollMode="Disabled"
-											ScrollViewer.VerticalScrollBarVisibility="Disabled"
-											Style="{StaticResource TransparentListBox}">
+                                            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                            ScrollViewer.HorizontalScrollMode="Auto"
+                                            ScrollViewer.VerticalScrollMode="Disabled"
+                                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                            Style="{StaticResource TransparentListBox}">
 
                             <controls:MtListBox.Resources>
                                 <controls:ProxyElement x:Key="SelectedBrush" Tag="{TemplateBinding SelectedBrush}" />
@@ -426,7 +427,7 @@
                                                         <Rectangle x:Name="PressedBackground" Opacity="0"/>
                                                         <ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" 
                                                                           ContentTransitions="{TemplateBinding ContentTransitions}" 
-																		  Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                          Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                           Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
 
                                                         <Rectangle x:Name="FocusVisualWhite" Opacity="0" StrokeDashOffset=".5" StrokeEndLineCap="Square" StrokeDashArray="1,1"/>
@@ -441,11 +442,11 @@
                         </controls:MtListBox>
 
                         <Grid x:Name="Grid" VerticalAlignment="Stretch" Grid.Row="1"
-						      HorizontalAlignment="Stretch" Background="Transparent">
+                              HorizontalAlignment="Stretch" Background="Transparent">
                             <Grid.Resources>
                                 <Storyboard x:Name="Story">
                                     <DoubleAnimation From="30" To="0" Storyboard.TargetName="Translate" 
-													 Storyboard.TargetProperty="X" Duration="00:00:00.80">
+                                                     Storyboard.TargetProperty="X" Duration="00:00:00.80">
                                         <DoubleAnimation.EasingFunction>
                                             <ExponentialEase EasingMode="EaseOut" Exponent="6" />
                                         </DoubleAnimation.EasingFunction>
@@ -485,7 +486,7 @@
                 <ControlTemplate TargetType="Paging:MtFrame">
                     <Frame x:Name="Frame" Background="{TemplateBinding Background}"
                             Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"
-						    ContentTransitions="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTransitions}" />
+                            ContentTransitions="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ContentTransitions}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -799,7 +800,7 @@
                                     <RectangleGeometry Rect="0 0 40 40" />
                                 </Grid.Clip>
                                 <TextBlock x:Name="BackgroundGlyph" Text="&#xE0A8;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-3,-19,0,0" 
-										   Foreground="{StaticResource AppBarItemBackgroundThemeBrush}"/>
+                                           Foreground="{StaticResource AppBarItemBackgroundThemeBrush}"/>
                                 <TextBlock x:Name="OutlineGlyph" Text="&#xE0A7;" FontFamily="Segoe UI Symbol" FontSize="53.333" Margin="-3,-19,0,0"/>
                                 <ContentPresenter x:Name="Content" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center"/>
                             </Grid>
@@ -808,7 +809,7 @@
                                 Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header}"
                                 Foreground="{StaticResource AppBarItemForegroundThemeBrush}"
                                 Margin="10,0,0,0"
-								Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header, Converter={StaticResource vc}}"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header, Converter={StaticResource vc}}"
                                 TextAlignment="Center"
                                 TextTrimming="WordEllipsis"
                                 Style="{StaticResource SubheaderTextStyle}"/>
@@ -929,12 +930,12 @@
                             <controls:ExtendedItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Button VerticalContentAlignment="Stretch" VerticalAlignment="Stretch"
-											HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" >
+                                            HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" >
                                         <Button.Template>
                                             <ControlTemplate>
                                                 <Border Background="White" Height="40" x:Name="border">
                                                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,0" x:Name="text"
-															   Text="{Binding}" FontSize="16" Foreground="Black" FontWeight="SemiBold" />
+                                                               Text="{Binding}" FontSize="16" Foreground="Black" FontWeight="SemiBold" />
                                                     <VisualStateManager.VisualStateGroups>
                                                         <VisualStateGroup x:Name="CommonStates">
                                                             <VisualState x:Name="Normal" />
@@ -976,7 +977,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ColorChooser">
                     <ComboBox Width="80" ItemsSource="{Binding Colors, RelativeSource={RelativeSource TemplatedParent}}" 
-							  SelectedItem="{Binding SelectedColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                              SelectedItem="{Binding SelectedColor, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <Border Width="20" Height="20" BorderBrush="Black" BorderThickness="1">
@@ -1020,10 +1021,10 @@
                         </ContentPresenter.RenderTransform>
 
                         <Border Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}" 
-								Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InnerMargin}">
+                                Margin="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=InnerMargin}">
                             <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Source}" 
-								   Stretch="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Stretch}" 
-								   x:Name="image">
+                                   Stretch="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Stretch}" 
+                                   x:Name="image">
                             </Image>
                         </Border>
                     </ContentPresenter>
@@ -1133,15 +1134,15 @@
     <!--<Style TargetType="controls:SettingsHeader">
         <Setter Property="Template">
             <Setter.Value>
-				<ControlTemplate TargetType="controls:SettingsHeader">
-					<Border Background="#1B143B">
-						<StackPanel Orientation="Horizontal" Margin="40, 32, 17, 13">
-							<Button x:Name="button" Margin="0,3,0,0" Style="{StaticResource SettingsBackButtonStyle}"/>
-							<TextBlock Margin="10,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" 
-								   FontSize="24.6667" Text="{TemplateBinding Header}" Foreground="White"/>
-						</StackPanel>
-					</Border>
-				</ControlTemplate>
+                <ControlTemplate TargetType="controls:SettingsHeader">
+                    <Border Background="#1B143B">
+                        <StackPanel Orientation="Horizontal" Margin="40, 32, 17, 13">
+                            <Button x:Name="button" Margin="0,3,0,0" Style="{StaticResource SettingsBackButtonStyle}"/>
+                            <TextBlock Margin="10,0,0,0" FontFamily="Segoe UI" FontWeight="SemiLight" 
+                                   FontSize="24.6667" Text="{TemplateBinding Header}" Foreground="White"/>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>-->
@@ -1151,14 +1152,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="controls:ValidatedTextBox">
                     <StackPanel>
-						<TextBlock Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header, Converter={StaticResource vc}}" 
-								   Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header}"
-								   Style="{StaticResource BasicTextStyle}" Margin="0,0,0,5" FontWeight="Bold" />
-						<TextBox Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-						<TextBlock Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ValidationException, Converter={StaticResource vc}}" 
-								   Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ValidationException.Message}"
-								   Foreground="Red" Style="{StaticResource BasicTextStyle}" Margin="0,5,0,0" />
-					</StackPanel>
+                        <TextBlock Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header, Converter={StaticResource vc}}" 
+                                   Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Header}"
+                                   Style="{StaticResource BasicTextStyle}" Margin="0,0,0,5" FontWeight="Bold" />
+                        <TextBox Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ValidationException, Converter={StaticResource vc}}" 
+                                   Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ValidationException.Message}"
+                                   Foreground="Red" Style="{StaticResource BasicTextStyle}" Margin="0,5,0,0" />
+                    </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -1219,7 +1220,7 @@
                                   Content="{Binding Content}"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Stretch"
-                        		  AutomationProperties.AccessibilityView="Raw" />
+                                  AutomationProperties.AccessibilityView="Raw" />
             </Grid>
         </Grid>
     </DataTemplate>

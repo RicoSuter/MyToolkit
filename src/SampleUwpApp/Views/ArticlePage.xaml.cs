@@ -1,4 +1,5 @@
-﻿using Windows.UI;
+﻿using System.Collections.Generic;
+using Windows.UI;
 using Windows.UI.Xaml.Media;
 using MyToolkit.Controls.Html.Generators;
 
@@ -9,6 +10,8 @@ namespace SampleUwpApp.Views
         public ArticlePage()
         {
             InitializeComponent();
+
+            FontSizeComboBox.ItemsSource = new List<double> { 10, 15,20 };
 
             Html.GetGenerator<ParagraphGenerator>("h1").Foreground = new SolidColorBrush(Colors.DarkBlue);
             Html.GetGenerator<LinkGenerator>("a").Foreground = new SolidColorBrush(Colors.DarkGreen);
