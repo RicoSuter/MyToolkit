@@ -18,20 +18,19 @@ namespace MyToolkit.Data
     public class AsyncCacheManager<TKey, TItem> : IAsyncCacheManager<TKey, TItem>
     {
         private readonly object _lock = new object();
-
         private readonly Dictionary<TKey, Task<TItem>> _cache = new Dictionary<TKey, Task<TItem>>();
 
         /// <summary>Gets an existing item or asynchronously creates a new one.</summary>
         /// <param name="key">The key of the item.</param>
-        /// <param name="itemCreator">The item creator.</param>
+        /// <param name="creationFunction">The item creation function.</param>
         /// <returns>The item.</returns>
-        public Task<TItem> GetOrCreateAsync(TKey key, Func<Task<TItem>> itemCreator)
+        public Task<TItem> GetOrCreateAsync(TKey key, Func<Task<TItem>> creationFunction)
         {
             lock (_lock)
             {
                 if (!_cache.ContainsKey(key))
                 {
-                    var task = itemCreator();
+                    var task = creationFunction();
                     _cache[key] = task;
                     return task;
                 }

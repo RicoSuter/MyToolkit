@@ -133,8 +133,16 @@ namespace MyToolkit.Multimedia
                             {
                                 if (javaScriptCode == null)
                                 {
-                                    var javaScriptUri = "http://s.ytimg.com/yts/jsbin/html5player-" +
-                                        Regex.Match(response, "\"\\\\/\\\\/s.ytimg.com\\\\/yts\\\\/jsbin\\\\/html5player-(.+?)\\.js\"").Groups[1] + ".js";
+                                    string javaScriptUri; 
+                                    var urlMatch = Regex.Match(response, "\"\\\\/\\\\/s.ytimg.com\\\\/yts\\\\/jsbin\\\\/html5player-(.+?)\\.js\"");
+                                    if (urlMatch.Success)
+                                        javaScriptUri = "http://s.ytimg.com/yts/jsbin/html5player-" + urlMatch.Groups[1] + ".js";
+                                    else
+                                    {
+                                        // new format
+                                        javaScriptUri = "https://s.ytimg.com/yts/jsbin/player-" +
+                                            Regex.Match(response, "\"\\\\/\\\\/s.ytimg.com\\\\/yts\\\\/jsbin\\\\/player-(.+?)\\.js\"").Groups[1] + ".js";
+                                    }
                                     javaScriptCode = await HttpGetAsync(javaScriptUri);
                                 }
 
@@ -181,7 +189,10 @@ namespace MyToolkit.Multimedia
                     functionNameMatch = Regex.Match(javaScriptCode, @"\.signature\s*=\s*([a-zA-Z_$][\w$]*)\([a-zA-Z_$][\w$]*\)");
             }
             var functionName = functionNameMatch.Groups[1].ToString();
+
             var functionMath = Regex.Match(javaScriptCode, "function " + Regex.Escape(functionName) + "\\((\\w+)\\)\\{(.+?)\\}", RegexOptions.Singleline);
+            if (!functionMath.Success) 
+                functionMath = Regex.Match(javaScriptCode, "var " + Regex.Escape(functionName) + "=function\\((\\w+)\\)\\{(.+?)\\}", RegexOptions.Singleline); // new format
 
             var parameterName = Regex.Escape(functionMath.Groups[1].ToString());
             var functionBody = functionMath.Groups[2].ToString();
@@ -212,7 +223,11 @@ namespace MyToolkit.Multimedia
                             // Parse methods
                             methods = new Dictionary<string, Func<string, int, string>>();
 
-                            var code = Regex.Match(javaScriptCode, "var " + Regex.Escape(root) + "={(.*?)};function").Groups[1].ToString();
+                            var codeMatch = Regex.Match(javaScriptCode, "var " + Regex.Escape(root) + "={(.*?)};function");
+                            if (!codeMatch.Success)
+                                codeMatch = Regex.Match(javaScriptCode, "var " + Regex.Escape(root) + "={(.*?)};var"); // new format
+
+                            var code = codeMatch.Groups[1].ToString();
                             var methodsArray = code.Split(new[] { "}," }, StringSplitOptions.None);
                             foreach (var m in methodsArray)
                             {

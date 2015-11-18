@@ -16,8 +16,8 @@ namespace MyToolkit.Data
     {
         /// <summary>Gets an existing item or asynchronously creates a new one.</summary>
         /// <param name="key">The key of the item.</param>
-        /// <param name="itemCreator">The item creator.</param>
+        /// <param name="creationFunction">The item creator.</param>
         /// <returns>The item.</returns>
-        Task<TItem> GetOrCreateAsync(TKey key, Func<Task<TItem>> itemCreator);
+        Task<TItem> GetOrCreateAsync(TKey key, Func<Task<TItem>> creationFunction);
     }
 }
