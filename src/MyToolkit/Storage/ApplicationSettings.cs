@@ -8,7 +8,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
+using MyToolkit.Serialization;
 
 namespace MyToolkit.Storage
 {
@@ -47,6 +49,50 @@ namespace MyToolkit.Storage
                 throw new NotImplementedException();
 
             _applicationSettings.SetSetting(key, value, roaming, save);
+        }
+
+        /// <summary>Sets a complex setting in the isolated storage by serializing the value with the XML serializer.</summary>
+        /// <typeparam name="T">The type of the setting. </typeparam>
+        /// <param name="key">The key of the setting. </param>
+        /// <param name="value">The value of the setting. </param>
+        /// <param name="roaming">True if the setting should be roamed to other devices. </param>
+        /// <param name="save">True if the the change should be written to the isolated storage. </param>
+        public static void SetSettingWithXmlSerializer<T>(string key, T value, bool roaming = false, bool save = false)
+        {
+            SetSetting(key, XmlSerialization.Serialize(value), roaming, save);
+        }
+
+        /// <summary>Gets a complex setting from the isolated storage by deserializing the value with the XML serializer.</summary>
+        /// <typeparam name="T">The type of the setting. </typeparam>
+        /// <param name="key">The key of the setting. </param>
+        /// <returns>The setting. </returns>
+        public static T GetSettingWithXmlSerializer<T>(string key)
+        {
+            return GetSettingWithXmlSerializer(key, default(T));
+        }
+
+        /// <summary>Gets a complex setting from the isolated storage by deserializing the value with the XML serializer. </summary>
+        /// <remarks>Returns the default value when a serialization error occured.</remarks>
+        /// <typeparam name="T">The type of the setting. </typeparam>
+        /// <param name="key">The key of the setting. </param>
+        /// <param name="defaultValue">The default value of the settings (returned if it is not currently set). </param>
+        /// <param name="roaming">True if the setting is roamed to other devices. </param>
+        /// <returns>The setting. </returns>
+        public static T GetSettingWithXmlSerializer<T>(string key, T defaultValue, bool roaming = false)
+        {
+            var value = GetSetting<string>(key, null, roaming);
+            if (value == null)
+                return defaultValue;
+
+            try
+            {
+                return XmlSerialization.Deserialize<T>(value);
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("ApplicationSettings.GetSettingWithXmlSerializer exception:\n" + exception.ToString());
+                return defaultValue;
+            }
         }
 
         /// <summary>Gets a setting from the isolated storage. </summary>
