@@ -223,17 +223,17 @@ namespace MyToolkit.Multimedia
                             // Parse methods
                             methods = new Dictionary<string, Func<string, int, string>>();
 
-                            var codeMatch = Regex.Match(javaScriptCode, "var " + Regex.Escape(root) + "={(.*?)};function");
+                            var codeMatch = Regex.Match(javaScriptCode, "var " + Regex.Escape(root) + "={([\\s\\S]*?)};function");
                             if (!codeMatch.Success)
-                                codeMatch = Regex.Match(javaScriptCode, "var " + Regex.Escape(root) + "={(.*?)};var"); // new format
+                                codeMatch = Regex.Match(javaScriptCode, "var " + Regex.Escape(root) + "={([\\s\\S]*?)};var"); // new format
 
                             var code = codeMatch.Groups[1].ToString();
                             var methodsArray = code.Split(new[] { "}," }, StringSplitOptions.None);
                             foreach (var m in methodsArray)
                             {
                                 var arr = m.Split(':');
-                                var methodName = arr[0];
-                                var methodBody = arr[1];
+                                var methodName = arr[0].Trim('\n', '\r', '\t');
+                                var methodBody = arr[1].Trim('\n', '\r', '\t');
 
                                 if (methodBody.Contains("reverse()"))
                                     methods[methodName] = (s, i) => Reverse(s);
