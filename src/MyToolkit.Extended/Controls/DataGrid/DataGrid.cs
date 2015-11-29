@@ -97,8 +97,8 @@ namespace MyToolkit.Controls
         public static readonly DependencyProperty ColumnsProperty = DependencyProperty.RegisterAttached("Columns",
             typeof(ObservableCollection<DataGridColumnBase>), typeof(DataGrid), new PropertyMetadata(null, OnColumnsPropertyChanged));
 
-        public static readonly DependencyProperty CellMarginProperty = DependencyProperty.Register(
-            "CellMargin", typeof(Thickness), typeof(DataGrid), new PropertyMetadata(default(Thickness)));
+        public static readonly DependencyProperty CellTemplateProperty = 
+            DependencyProperty.Register("CellTemplate", typeof(DataTemplate), typeof(DataGrid), new PropertyMetadata(default(DataTemplate)));
 
         /// <summary>Gets or sets the header background. </summary>
         public Brush HeaderBackground
@@ -142,12 +142,6 @@ namespace MyToolkit.Controls
             set { SetValue(RowStyleProperty, value); }
         }
 
-        public Thickness CellMargin
-        {
-            get { return (Thickness) GetValue(CellMarginProperty); }
-            set { SetValue(CellMarginProperty, value); }
-        }
-
         /// <summary>Gets or sets the data template for item details (shown when an item is selected). When null then no details are shown.</summary>
         public DataTemplate ItemDetailsTemplate
         {
@@ -160,6 +154,13 @@ namespace MyToolkit.Controls
         {
             get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
             set { SetValue(HeaderTemplateProperty, value); }
+        }
+
+        /// <summary>Gets or sets the cell data template (styling of cell container).</summary>
+        public DataTemplate CellTemplate
+        {
+            get { return (DataTemplate) GetValue(CellTemplateProperty); }
+            set { SetValue(CellTemplateProperty, value); }
         }
 
         /// <summary>Gets the column description of the <see cref="DataGrid"/>. </summary>

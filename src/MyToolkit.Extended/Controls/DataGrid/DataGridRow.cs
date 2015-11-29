@@ -79,15 +79,19 @@ namespace MyToolkit.Controls
             {
                 var cell = column.CreateCell(item);
                 cell.Control.Tag = cell;
-                cell.Control.Margin = DataGrid.CellMargin; // TODO: Update UI when margin changes
+                cell.Control.DataContext = item; 
 
-                SetColumn(cell.Control, columnIndex++);
-                Children.Add(cell.Control);
+                var cellControl = new ContentPresenter();
+                cellControl.Content = cell;
+                cellControl.ContentTemplate = DataGrid.CellTemplate;
 
-                var def = column.CreateGridColumnDefinition();
-                hasStar = hasStar || def.Width.IsStar;
+                SetColumn(cellControl, columnIndex++);
+                Children.Add(cellControl);
 
-                ColumnDefinitions.Add(def);
+                var columnDefinition = column.CreateGridColumnDefinition();
+                hasStar = hasStar || columnDefinition.Width.IsStar;
+
+                ColumnDefinitions.Add(columnDefinition);
             }
             return hasStar;
         }
