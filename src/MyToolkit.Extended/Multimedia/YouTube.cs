@@ -320,7 +320,7 @@ namespace MyToolkit.Multimedia
 
         #region Retrieving title or thumbnail
 
-#if WINRT
+#if WINRT || WINDOWS_UAP
 
         /// <summary>Returns the title of the YouTube video. </summary>
         /// <exception cref="WebException">An error occurred while downloading the resource. </exception>
