@@ -110,13 +110,14 @@
     <!-- DataGrid -->
     <Style TargetType="controls:DataGrid">
         <Setter Property="HeaderBackground" Value="{StaticResource ListBoxItemDisabledForegroundThemeBrush}" />
-        <Setter Property="RowStyle">
+        <Setter Property="CellMargin" Value="15" />
+        <!--<Setter Property="RowStyle">
             <Setter.Value>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="Padding" Value="20,15,20,15" />
                 </Style>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:DataGrid">

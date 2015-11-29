@@ -32,17 +32,17 @@
                            SelectedItem="{Binding SelectedPerson, Mode=TwoWay}"
                            DefaultOrderIndex="1">
                 <controls:DataGrid.Columns>
-                    <controls:DataGridTextColumn Width="200" Header="Firstname" Binding="{Binding FirstName}" />
-                    <controls:DataGridTextColumn Width="200" Binding="{Binding LastName}" IsAscendingDefault="False">
+                    <controls:DataGridTextColumn Width="*" Header="Firstname" Binding="{Binding FirstName}" />
+                    <controls:DataGridTextColumn Width="*" Binding="{Binding LastName}" IsAscendingDefault="False">
                         <controls:DataGridTextColumn.Header>
                             <TextBlock Text="Lastname" Foreground="Green" />
                         </controls:DataGridTextColumn.Header>
                     </controls:DataGridTextColumn>
-                    <controls:DataGridTextColumn Width="*" Header="Category" Binding="{Binding Category}" />
+                    <controls:DataGridTextColumn Width="2*" Header="Category" Binding="{Binding Category}" />
                 </controls:DataGrid.Columns>
                 <controls:DataGrid.ItemDetailsTemplate>
                     <DataTemplate>
-                        <StackPanel Margin="0,4,0,0">
+                        <StackPanel Margin="12,0,12,12">
                             <TextBlock Text="Details: " FontWeight="Bold" />
                             <TextBlock Text="{Binding FirstName}" />
                             <TextBlock Text="{Binding LastName}" />

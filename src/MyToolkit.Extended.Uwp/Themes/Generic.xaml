@@ -111,6 +111,7 @@
     <Style TargetType="controls:DataGrid">
         <Setter Property="HeaderBackground" Value="{ThemeResource SystemControlHighlightChromeHighBrush}" />
         <Setter Property="RowBackgroundOddBrush" Value="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" />
+        <Setter Property="CellMargin" Value="12" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="controls:DataGrid">

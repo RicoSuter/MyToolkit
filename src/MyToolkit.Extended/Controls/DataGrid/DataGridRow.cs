@@ -11,8 +11,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using MyToolkit.UI;
 
 namespace MyToolkit.Controls
@@ -77,6 +79,7 @@ namespace MyToolkit.Controls
             {
                 var cell = column.CreateCell(item);
                 cell.Control.Tag = cell;
+                cell.Control.Margin = DataGrid.CellMargin; // TODO: Update UI when margin changes
 
                 SetColumn(cell.Control, columnIndex++);
                 Children.Add(cell.Control);
@@ -124,7 +127,10 @@ namespace MyToolkit.Controls
                 if (IsSelected)
                     listBoxItem.Background = null;
                 else
-                    listBoxItem.Background = DataGrid.Items.IndexOf(Item) % 2 == 0 ? DataGrid.RowBackgroundEvenBrush : DataGrid.RowBackgroundOddBrush;
+                {
+                    listBoxItem.Background = DataGrid.Items.IndexOf(Item) % 2 == 0 ? 
+                        DataGrid.RowBackgroundEvenBrush : DataGrid.RowBackgroundOddBrush;
+                }
             }
         }
 

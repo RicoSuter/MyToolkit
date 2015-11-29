@@ -97,6 +97,9 @@ namespace MyToolkit.Controls
         public static readonly DependencyProperty ColumnsProperty = DependencyProperty.RegisterAttached("Columns",
             typeof(ObservableCollection<DataGridColumnBase>), typeof(DataGrid), new PropertyMetadata(null, OnColumnsPropertyChanged));
 
+        public static readonly DependencyProperty CellMarginProperty = DependencyProperty.Register(
+            "CellMargin", typeof(Thickness), typeof(DataGrid), new PropertyMetadata(default(Thickness)));
+
         /// <summary>Gets or sets the header background. </summary>
         public Brush HeaderBackground
         {
@@ -137,6 +140,12 @@ namespace MyToolkit.Controls
         {
             get { return (Style)GetValue(RowStyleProperty); }
             set { SetValue(RowStyleProperty, value); }
+        }
+
+        public Thickness CellMargin
+        {
+            get { return (Thickness) GetValue(CellMarginProperty); }
+            set { SetValue(CellMarginProperty, value); }
         }
 
         /// <summary>Gets or sets the data template for item details (shown when an item is selected). When null then no details are shown.</summary>
@@ -329,6 +338,7 @@ namespace MyToolkit.Controls
         private void OnPrepareContainerForItem(object sender, PrepareContainerForItemEventArgs args)
         {
             var item = (ListBoxItem)args.Element;
+            item.Padding = new Thickness(); // remove padding (use CellMargin instead)
             item.Content = new DataGridRow(this, args.Item);
             item.ContentTemplate = null;
             item.HorizontalContentAlignment = HorizontalAlignment.Stretch;

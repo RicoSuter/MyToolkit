@@ -67,7 +67,7 @@
                 </controls:DataGrid.Columns>
                 <controls:DataGrid.ItemDetailsTemplate>
                     <DataTemplate>
-                        <StackPanel Margin="0,10,0,0" d:DataContext="{d:DesignInstance Type=models:Person}">
+                        <StackPanel Margin="15,0,15,15" d:DataContext="{d:DesignInstance Type=models:Person}">
                             <TextBlock Text="Details: " FontWeight="Bold" />
                             <TextBlock Text="{Binding Firstname}" />
                             <TextBlock Text="{Binding Lastname}" />
