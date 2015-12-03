@@ -39,5 +39,10 @@ namespace SampleUwpApp.Views
         {
             MyTextBox.Text = pageState.Get<string>("MyTextBox");
         }
+
+        private void OnClearBackStack(object sender, RoutedEventArgs e)
+        {
+            Frame.ClearBackStack();
+        }
     }
 }
