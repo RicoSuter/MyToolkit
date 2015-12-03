@@ -76,7 +76,7 @@ namespace MyToolkit.Extended.Paging.Handlers
 
         public int BackStackDepth
         {
-            get { return CurrentIndex + 1; }
+            get { return CurrentIndex + 1; } // TODO: Do not add 1 => breaking change!!!
         }
 
         public MtPageDescription GetNearestPageOfTypeInBackStack(Type pageType)
