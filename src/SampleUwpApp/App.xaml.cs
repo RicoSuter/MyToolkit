@@ -94,7 +94,7 @@ namespace SampleUwpApp
 
         public override async Task OnInitializedAsync(MtFrame frame, ApplicationExecutionState args)
         {
-            await HideStatusBarAsync();
+            //await HideStatusBarAsync();
         }
 
         private async Task HideStatusBarAsync()
@@ -106,9 +106,9 @@ namespace SampleUwpApp
             }
         }
 
-        protected override void OnActivated(IActivatedEventArgs args)
+        protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            base.OnActivated(args);
+            base.OnLaunched(args);
             ApplicationViewUtilities.ConnectRootElementSizeToVisibleBounds();
         }
     }
