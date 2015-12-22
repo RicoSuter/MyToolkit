@@ -34,8 +34,10 @@ namespace MyToolkit.UI
 
             var top = Math.Ceiling(visibleBound.Top - windowBound.Top);
             var bottom = Math.Ceiling(windowBound.Bottom - visibleBound.Bottom);
+            var left = Math.Ceiling(visibleBound.Left - windowBound.Left);
+            var right = Math.Ceiling(windowBound.Right - visibleBound.Right);
 
-            rootElement.Margin = new Thickness(0, top, 0, bottom);
+            rootElement.Margin = new Thickness(left, top, right, bottom);
         }
     }
 }
