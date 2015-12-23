@@ -30,10 +30,14 @@ namespace MyToolkit.UI
         private static void OnVisibleBoundsChanged(FrameworkElement rootElement)
         {
             var visibleBound = ApplicationView.GetForCurrentView().VisibleBounds;
-            var windowHeight = Window.Current.Bounds.Height;
+            var windowBound = Window.Current.Bounds;
 
-            var difference = Math.Ceiling(windowHeight - visibleBound.Height);
-            rootElement.Margin = new Thickness(0, 0, 0, difference);
+            var top = Math.Ceiling(visibleBound.Top - windowBound.Top);
+            var bottom = Math.Ceiling(windowBound.Bottom - visibleBound.Bottom);
+            var left = Math.Ceiling(visibleBound.Left - windowBound.Left);
+            var right = Math.Ceiling(windowBound.Right - visibleBound.Right);
+
+            rootElement.Margin = new Thickness(left, top, right, bottom);
         }
     }
 }
