@@ -10,6 +10,7 @@
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 
 namespace MyToolkit.Controls
 {
@@ -91,6 +92,25 @@ namespace MyToolkit.Controls
         internal ColumnDefinition CreateGridColumnDefinition()
         {
             return new ColumnDefinition { Width = Width };
+        }
+
+        protected void CreateBinding(
+            DependencyProperty sourceDependencyProperty,
+            string sourceDependencyPropertyName,
+            FrameworkElement targetElement,
+            DependencyProperty targetElementDependencyProperty)
+        {
+            var binding = ReadLocalValue(sourceDependencyProperty) as BindingExpression;
+            if (binding != null)
+                targetElement.SetBinding(targetElementDependencyProperty, binding.ParentBinding);
+            else
+            {
+                targetElement.SetBinding(targetElementDependencyProperty, new Binding
+                {
+                    Path = new PropertyPath(sourceDependencyPropertyName),
+                    Source = this
+                });
+            }
         }
     }
 }

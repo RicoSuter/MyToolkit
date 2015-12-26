@@ -31,9 +31,9 @@ namespace MyToolkit.Controls
         /// <summary>Gets or sets a value indicating whether the column is only visible when the column is selected.  </summary>
         public bool OnlyVisibleOnSelection { get; set; }
 
-        /// <summary>Generates the cell for the given item. </summary>
-        /// <param name="dataItem">The item to generate the cell for. </param>
-        /// <returns>The <see cref="DataGridCellBase"/>. </returns>
+        /// <summary>Generates the cell for the given item.</summary>
+        /// <param name="dataItem">The item to generate the cell for.</param>
+        /// <returns>The <see cref="DataGridCellBase" />.</returns>
         public override DataGridCellBase CreateCell(object dataItem)
         {
             var control = new ContentControl();

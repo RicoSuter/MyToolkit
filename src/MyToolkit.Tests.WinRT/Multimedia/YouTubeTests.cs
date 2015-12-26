@@ -39,8 +39,10 @@ namespace MyToolkit.Tests.WinRT.Multimedia
         }
 
         [DataTestMethod]
-        [DataRow("yT27MHg5Hls")]  
-        [DataRow("TS1pSsOYTvQ")]  
+        [DataRow("oeCihv9A3ac")]
+        [DataRow("6Yl9tgkEbTg")]
+        [DataRow("yT27MHg5Hls")]
+        [DataRow("TS1pSsOYTvQ")]
         [DataRow("7M_jHUawccI")] // rtmpe 
         [DataRow("kYQ8w7kxdDk")]
         [DataRow("J3UjJ4wKLkg")]
@@ -60,7 +62,7 @@ namespace MyToolkit.Tests.WinRT.Multimedia
         [DataRow("nfWlot6h_JM")] // vevo 
         [DataRow("xFfCG_hffPA")] // vevo 
         [DataRow("H74AIvjDifo")] // vevo 
-        //[DataRow("rSy0JtBCZMQ")] // different problem => missing URL key
+        [DataRow("rSy0JtBCZMQ")] // different problem => missing URL key
         public async Task When_loading_video_then_uri_should_be_available_accessible(string youTubeId)
         {
             //// Act
