@@ -168,12 +168,12 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty InnerMaxWidthProperty = DependencyProperty.Register(
-            "InnerMaxWidth", typeof (double), typeof (ScrollableHtmlView), new PropertyMetadata(default(double)));
+            "InnerMaxWidth", typeof(double), typeof(ScrollableHtmlView), new PropertyMetadata(default(double)));
 
         /// <summary>Gets or sets the maximum width of the elements in the scroll viewer.</summary>
         public double InnerMaxWidth
         {
-            get { return (double) GetValue(InnerMaxWidthProperty); }
+            get { return (double)GetValue(InnerMaxWidthProperty); }
             set { SetValue(InnerMaxWidthProperty, value); }
         }
 
@@ -242,7 +242,7 @@ namespace MyToolkit.Controls
             {
                 if (_headerPresenter == null)
                 {
-                    _headerPresenter = new ContentPresenter();
+                    _headerPresenter = CreatePresenter();
                     _headerPresenter.Visibility = ShowHeader ? Visibility.Visible : Visibility.Collapsed;
                 }
 
@@ -271,7 +271,7 @@ namespace MyToolkit.Controls
             {
                 if (_footerPresenter == null)
                 {
-                    _footerPresenter = new ContentPresenter();
+                    _footerPresenter = CreatePresenter();
                     _footerPresenter.Visibility = ShowFooter ? Visibility.Visible : Visibility.Collapsed;
                 }
 
@@ -280,6 +280,18 @@ namespace MyToolkit.Controls
 
                 _footerPresenter.ContentTemplate = FooterTemplate;
             }
+        }
+
+        private ContentPresenter CreatePresenter()
+        {
+            var presenter = new ContentPresenter();
+
+            // May be only required in WP8/SL5
+            var dataContext = this.FindParentDataContext();
+            if (!(dataContext is DependencyObject))
+                presenter.Content = dataContext;
+
+            return presenter;
         }
 
         private void UpdateShowHeader()
