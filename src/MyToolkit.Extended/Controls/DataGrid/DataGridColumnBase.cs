@@ -80,9 +80,10 @@ namespace MyToolkit.Controls
         }
 
         /// <summary>Generates the cell for the given item. </summary>
+        /// <param name="dataGrid">The data grid.</param>
         /// <param name="dataItem">The item to generate the cell for. </param>
         /// <returns>The <see cref="DataGridCellBase"/>. </returns>
-        public abstract DataGridCellBase CreateCell(object dataItem);
+        public abstract DataGridCellBase CreateCell(DataGrid dataGrid, object dataItem);
 
         /// <summary>Gets the property path which is used for sorting. </summary>
         public abstract PropertyPath OrderPropertyPath { get; }

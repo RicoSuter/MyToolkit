@@ -61,15 +61,16 @@ namespace MyToolkit.Controls
         }
 
         /// <summary>Generates the cell for the given item. </summary>
+        /// <param name="dataGrid"></param>
         /// <param name="dataItem">The item to generate the cell for. </param>
         /// <returns>The <see cref="DataGridCellBase"/>. </returns>
-        public override DataGridCellBase CreateCell(object dataItem)
+        public override DataGridCellBase CreateCell(DataGrid dataGrid, object dataItem)
         {
             var block = new TextBlock();
             block.VerticalAlignment = VerticalAlignment.Center;
 
             if (FontSize <= 0)
-                FontSize = (double)block.Resources["ControlContentThemeFontSize"];
+                FontSize = dataGrid.FontSize;
 
             CreateBinding(StyleProperty, "Style", block, TextBlock.StyleProperty);
             CreateBinding(FontStyleProperty, "FontStyle", block, TextBlock.FontStyleProperty);

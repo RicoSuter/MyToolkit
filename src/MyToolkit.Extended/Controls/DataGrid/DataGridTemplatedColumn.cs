@@ -32,9 +32,10 @@ namespace MyToolkit.Controls
         public bool OnlyVisibleOnSelection { get; set; }
 
         /// <summary>Generates the cell for the given item.</summary>
+        /// <param name="dataGrid">The data grid.</param>
         /// <param name="dataItem">The item to generate the cell for.</param>
         /// <returns>The <see cref="DataGridCellBase" />.</returns>
-        public override DataGridCellBase CreateCell(object dataItem)
+        public override DataGridCellBase CreateCell(DataGrid dataGrid, object dataItem)
         {
             var control = new ContentControl();
             control.HorizontalContentAlignment = HorizontalAlignment.Stretch;

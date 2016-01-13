@@ -13,7 +13,7 @@
     <iconUrl>http://rsuter.com/Projects/MyToolkit/IconNuGet.png</iconUrl>
     <dependencies>
       <group>
-        <dependency id="MyToolkit" version="2.5.8.0" />
+        <dependency id="MyToolkit" version="2.5.9.0" />
       </group>
     </dependencies>
   </metadata>

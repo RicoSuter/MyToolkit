@@ -13,27 +13,27 @@
     <iconUrl>http://rsuter.com/Projects/MyToolkit/IconNuGet.png</iconUrl>
     <dependencies>
       <group>
-        <dependency id="MyToolkit" version="2.5.8.0" />
+        <dependency id="MyToolkit" version="2.5.9.0" />
       </group>
 	  <group targetFramework="win50">
-        <dependency id="MyToolkit" version="2.5.8.0" />
+        <dependency id="MyToolkit" version="2.5.9.0" />
       </group>
       <group targetFramework="sl50">
-        <dependency id="MyToolkit" version="2.5.8.0" />
+        <dependency id="MyToolkit" version="2.5.9.0" />
       </group>
       <group targetFramework="sl4-wp71">
-        <dependency id="MyToolkit" version="2.5.8.0" />
+        <dependency id="MyToolkit" version="2.5.9.0" />
         <dependency id="WPtoolkit" version="4.2013.08.16" />
       </group>
       <group targetFramework="wp80">
-        <dependency id="MyToolkit" version="2.5.8.0" />
+        <dependency id="MyToolkit" version="2.5.9.0" />
         <dependency id="WPtoolkit" version="4.2013.08.16" />
       </group>
       <group targetFramework="net40">
         <dependency id="AsyncBridge" version="0.1.1" />
       </group>
       <group targetFramework="net45">
-        <dependency id="MyToolkit" version="2.5.8.0" />
+        <dependency id="MyToolkit" version="2.5.9.0" />
       </group>
     </dependencies>
   </metadata>

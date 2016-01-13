@@ -201,6 +201,12 @@ namespace MyToolkit.Controls
             return (TGenerator)Generators[tagName];
         }
 
+        /// <summary>Refreshes the rendered HTML (should be called when changing the generators).</summary>
+        public void Refresh()
+        {
+            this.Generate();
+        }
+
 #if WINRT
         /// <summary>Attaches a binding to a FrameworkElement, using the provided binding object.</summary>
         protected override void OnApplyTemplate()
