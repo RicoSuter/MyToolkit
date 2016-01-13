@@ -7,8 +7,11 @@ namespace SampleWindowsStoreApp.ViewModels
     {
 		public string Html { get; private set; }
 
+        public string Test { get; set; }
+
 		public VariousSamplesPageModel()
 		{
+		    Test = "Hello world";
             Html =
 @"<h1>Heading 1</h1>
 <h2>Heading 2</h2>

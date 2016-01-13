@@ -243,7 +243,6 @@ namespace MyToolkit.Controls
                 if (_headerPresenter == null)
                 {
                     _headerPresenter = new ContentPresenter();
-                    _headerPresenter.Content = this.FindParentDataContext();
                     _headerPresenter.Visibility = ShowHeader ? Visibility.Visible : Visibility.Collapsed;
                 }
 
@@ -273,7 +272,6 @@ namespace MyToolkit.Controls
                 if (_footerPresenter == null)
                 {
                     _footerPresenter = new ContentPresenter();
-                    _footerPresenter.Content = this.FindParentDataContext();
                     _footerPresenter.Visibility = ShowFooter ? Visibility.Visible : Visibility.Collapsed;
                 }
 

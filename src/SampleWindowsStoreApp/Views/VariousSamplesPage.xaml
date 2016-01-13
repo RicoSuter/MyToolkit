@@ -59,7 +59,13 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <controls:ScrollableHtmlView Html="{Binding Html}" x:Name="Html" />
+                        <controls:ScrollableHtmlView Html="{Binding Html}" x:Name="Html">
+                            <controls:ScrollableHtmlView.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Test}"/>
+                                </DataTemplate>
+                            </controls:ScrollableHtmlView.HeaderTemplate>
+                        </controls:ScrollableHtmlView>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1">
                             <TextBlock Text="Font size: " Margin="0,5,5,0" />
