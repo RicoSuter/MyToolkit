@@ -40,10 +40,12 @@ namespace MyToolkit.Tests.WinRT.Multimedia
 
         [DataTestMethod]
         [DataRow("oeCihv9A3ac")]
+        [DataRow("SuBDt7GCbIc")]
+        [DataRow("D4sTViBfjVE")]
         [DataRow("6Yl9tgkEbTg")]
         [DataRow("yT27MHg5Hls")]
         [DataRow("TS1pSsOYTvQ")]
-        [DataRow("7M_jHUawccI")] // rtmpe 
+        //[DataRow("7M_jHUawccI")] // rtmpe 
         [DataRow("kYQ8w7kxdDk")]
         [DataRow("J3UjJ4wKLkg")]
         [DataRow("O-zpOMYRi0w")]
@@ -53,7 +55,7 @@ namespace MyToolkit.Tests.WinRT.Multimedia
         [DataRow("7-7knsP2n5w")]
         [DataRow("kPsd2XaBKzc")]
         [DataRow("Z6FPJOgfCkc")]
-        [DataRow("xE2MxCv5vVY")]
+        //[DataRow("xE2MxCv5vVY")] // not available in US
         [DataRow("-ynZN3p6FH8")]
         [DataRow("JF8BRvqGCNs")]
         [DataRow("ohfSspPiOF8")]
@@ -62,7 +64,7 @@ namespace MyToolkit.Tests.WinRT.Multimedia
         [DataRow("nfWlot6h_JM")] // vevo 
         [DataRow("xFfCG_hffPA")] // vevo 
         [DataRow("H74AIvjDifo")] // vevo 
-        [DataRow("rSy0JtBCZMQ")] // different problem => missing URL key
+        //[DataRow("rSy0JtBCZMQ")] // different problem => missing URL key
         public async Task When_loading_video_then_uri_should_be_available_accessible(string youTubeId)
         {
             //// Act
