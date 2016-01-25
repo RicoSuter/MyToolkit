@@ -51,7 +51,7 @@ namespace MyToolkit.Controls
         }
 
         /// <summary>Occurs when the selected pivot changed. </summary>
-        public event SelectionChangedEventHandler SelectionChanged;
+        public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 
         /// <summary>Gets the list of <see cref="MtPivotItem"/> objects. </summary>
         public ObservableCollection<MtPivotItem> Items { get { return _items; } }
