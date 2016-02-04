@@ -49,6 +49,7 @@ namespace MyToolkit.Utilities
                 }
                 catch { }
             });
+            thread.IsBackground = true; 
             thread.Start();
 
             window.Closed += (sender, eventArgs) => cancelEvent.Set();
