@@ -77,7 +77,7 @@ namespace MyToolkit.Controls
             var hasStar = false;
             foreach (var column in DataGrid.Columns)
             {
-                var cell = column.CreateCell(item);
+                var cell = column.CreateCell(DataGrid, item);
                 cell.Control.Tag = cell;
                 cell.Control.DataContext = item; 
 
@@ -155,6 +155,7 @@ namespace MyToolkit.Controls
                     if (_detailsControl == null)
                     {
                         _detailsControl = new ContentControl();
+                        _detailsControl.FontSize = DataGrid.FontSize; 
                         _detailsControl.Content = Item;
                         _detailsControl.ContentTemplate = DataGrid.ItemDetailsTemplate;
                         _detailsControl.VerticalContentAlignment = VerticalAlignment.Stretch;

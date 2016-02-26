@@ -115,6 +115,12 @@ namespace MyToolkit.Controls
             return (TGenerator)Generators[tagName];
         }
 
+        /// <summary>Refreshes the rendered HTML (should be called when changing the generators).</summary>
+        public void Refresh()
+        {
+            this.Generate();
+        }
+
         /// <summary>Calls the <see cref="HtmlLoaded"/> event. </summary>
         internal void OnHtmlLoaded()
         {

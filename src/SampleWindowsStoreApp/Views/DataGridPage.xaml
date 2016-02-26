@@ -50,7 +50,7 @@
         </StackPanel>
 
         <Grid Grid.Row="2" Margin="120,0,40,20">
-            <controls:DataGrid ItemsSource="{Binding People}" x:Name="DataGrid" SelectionMode="Multiple" 
+            <controls:DataGrid ItemsSource="{Binding People}" x:Name="DataGrid" SelectionMode="Multiple"
                                SelectedItem="{Binding SelectedPerson, Mode=TwoWay}" SelectionChanged="OnSelectedItemsChanged"
                                DefaultOrderIndex="1">
                 <controls:DataGrid.Columns>

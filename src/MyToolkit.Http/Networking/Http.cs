@@ -415,7 +415,7 @@ namespace MyToolkit.Networking
             }
             else
                 result.RawResponse = await stream.ReadToEndAsync(
-                    response.Content.Headers.ContentLength.HasValue ? response.Content.Headers.ContentLength.Value : -1, 
+                    response.Content.Headers.ContentLength ?? -1, 
                     token, progress);
         }
 

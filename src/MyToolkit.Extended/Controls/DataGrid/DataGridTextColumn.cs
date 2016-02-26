@@ -13,65 +13,69 @@ using System.ComponentModel;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 
 namespace MyToolkit.Controls
 {
     public class DataGridTextColumn : DataGridBoundColumn
     {
-        private double? _fontSize;
-        private FontStyle? _fontStyle;
-        private Brush _foreground;
-        private Style _style;
+        public static readonly DependencyProperty StyleProperty = DependencyProperty.Register(
+            "Style", typeof (Style), typeof (DataGridTextColumn), new PropertyMetadata(default(Style)));
 
-        /// <summary>Gets or sets the font size. </summary>
-        [DefaultValue(double.NaN)]
+        public static readonly DependencyProperty FontSizeProperty = DependencyProperty.Register(
+            "FontSize", typeof(double), typeof(DataGridTextColumn), new PropertyMetadata(default(double)));
+
+        public static readonly DependencyProperty FontStyleProperty = DependencyProperty.Register(
+            "FontStyle", typeof(FontStyle), typeof(DataGridTextColumn), new PropertyMetadata(default(FontStyle)));
+
+        public static readonly DependencyProperty ForegroundProperty = DependencyProperty.Register(
+            "Foreground", typeof(Brush), typeof(DataGridTextColumn), new PropertyMetadata(default(Brush)));
+
+        /// <summary>Gets or sets the style.</summary>
+        public Style Style
+        {
+            get { return (Style) GetValue(StyleProperty); }
+            set { SetValue(StyleProperty, value); }
+        }
+
+        /// <summary>Gets or sets the size of the font.</summary>
         public double FontSize
         {
-            get { return _fontSize ?? Double.NaN; }
-            set { _fontSize = value; }
+            get { return (double) GetValue(FontSizeProperty); }
+            set { SetValue(FontSizeProperty, value); }
         }
 
         /// <summary>Gets or sets the font style. </summary>
         public FontStyle FontStyle
         {
-            get { return _fontStyle ?? FontStyle.Normal; }
-            set { _fontStyle = value; }
+            get { return (FontStyle) GetValue(FontStyleProperty); }
+            set { SetValue(FontStyleProperty, value); }
         }
 
-        /// <summary>Gets or sets the foreground. </summary>
+        /// <summary>Gets or sets the foreground brush.</summary>
         public Brush Foreground
         {
-            get { return _foreground; }
-            set { _foreground = value; }
-        }
-
-        /// <summary>Gets or sets the style. </summary>
-        public Style Style
-        {
-            get { return _style; }
-            set { _style = value; }
+            get { return (Brush)GetValue(ForegroundProperty); }
+            set { SetValue(ForegroundProperty, value); }
         }
 
         /// <summary>Generates the cell for the given item. </summary>
+        /// <param name="dataGrid"></param>
         /// <param name="dataItem">The item to generate the cell for. </param>
         /// <returns>The <see cref="DataGridCellBase"/>. </returns>
-        public override DataGridCellBase CreateCell(object dataItem)
+        public override DataGridCellBase CreateCell(DataGrid dataGrid, object dataItem)
         {
             var block = new TextBlock();
             block.VerticalAlignment = VerticalAlignment.Center;
 
-            if (_style != null)
-                block.Style = _style;
+            if (FontSize <= 0)
+                FontSize = dataGrid.FontSize;
 
-            if (_fontSize.HasValue)
-                block.FontSize = _fontSize.Value;
-
-            if (_fontStyle.HasValue)
-                block.FontStyle = _fontStyle.Value;
-
-            if (_foreground != null)
-                block.Foreground = _foreground;
+            CreateBinding(StyleProperty, "Style", block, TextBlock.StyleProperty);
+            CreateBinding(FontStyleProperty, "FontStyle", block, TextBlock.FontStyleProperty);
+            CreateBinding(FontSizeProperty, "FontSize", block, TextBlock.FontSizeProperty);
+            CreateBinding(ForegroundProperty, "Foreground", block, TextBlock.ForegroundProperty);
 
             if (Binding != null)
                 block.SetBinding(TextBlock.TextProperty, Binding);

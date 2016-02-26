@@ -109,6 +109,7 @@
 
     <!-- DataGrid -->
     <Style TargetType="controls:DataGrid">
+        <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}" />
         <Setter Property="HeaderBackground" Value="{StaticResource ListBoxItemDisabledForegroundThemeBrush}" />
         <Setter Property="CellTemplate">
             <Setter.Value>

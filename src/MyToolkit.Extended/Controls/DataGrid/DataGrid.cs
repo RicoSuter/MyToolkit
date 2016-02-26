@@ -47,7 +47,7 @@ namespace MyToolkit.Controls
         }
 
         /// <summary>Occurs when the selected item (row) has changed. </summary>
-        public event SelectionChangedEventHandler SelectionChanged;
+        public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 
         /// <summary>Occurs when the user clicked on an item and wants to navigate to its detail page. </summary>
         public event EventHandler<NavigationListEventArgs> Navigate;

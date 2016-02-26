@@ -39,9 +39,14 @@ namespace MyToolkit.Tests.WinRT.Multimedia
         }
 
         [DataTestMethod]
-        [DataRow("yT27MHg5Hls")]  
-        [DataRow("TS1pSsOYTvQ")]  
-        [DataRow("7M_jHUawccI")] // rtmpe 
+        [DataRow("JT8zLTaKxeE")]
+        [DataRow("oeCihv9A3ac")]
+        [DataRow("SuBDt7GCbIc")]
+        [DataRow("D4sTViBfjVE")]
+        [DataRow("6Yl9tgkEbTg")]
+        [DataRow("yT27MHg5Hls")]
+        [DataRow("TS1pSsOYTvQ")]
+        //[DataRow("7M_jHUawccI")] // rtmpe 
         [DataRow("kYQ8w7kxdDk")]
         [DataRow("J3UjJ4wKLkg")]
         [DataRow("O-zpOMYRi0w")]
@@ -51,7 +56,7 @@ namespace MyToolkit.Tests.WinRT.Multimedia
         [DataRow("7-7knsP2n5w")]
         [DataRow("kPsd2XaBKzc")]
         [DataRow("Z6FPJOgfCkc")]
-        [DataRow("xE2MxCv5vVY")]
+        //[DataRow("xE2MxCv5vVY")] // not available in US
         [DataRow("-ynZN3p6FH8")]
         [DataRow("JF8BRvqGCNs")]
         [DataRow("ohfSspPiOF8")]

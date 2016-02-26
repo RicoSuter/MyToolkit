@@ -10,6 +10,7 @@
 
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 
 namespace MyToolkit.Controls
 {
@@ -79,9 +80,10 @@ namespace MyToolkit.Controls
         }
 
         /// <summary>Generates the cell for the given item. </summary>
+        /// <param name="dataGrid">The data grid.</param>
         /// <param name="dataItem">The item to generate the cell for. </param>
         /// <returns>The <see cref="DataGridCellBase"/>. </returns>
-        public abstract DataGridCellBase CreateCell(object dataItem);
+        public abstract DataGridCellBase CreateCell(DataGrid dataGrid, object dataItem);
 
         /// <summary>Gets the property path which is used for sorting. </summary>
         public abstract PropertyPath OrderPropertyPath { get; }
@@ -91,6 +93,25 @@ namespace MyToolkit.Controls
         internal ColumnDefinition CreateGridColumnDefinition()
         {
             return new ColumnDefinition { Width = Width };
+        }
+
+        protected void CreateBinding(
+            DependencyProperty sourceDependencyProperty,
+            string sourceDependencyPropertyName,
+            FrameworkElement targetElement,
+            DependencyProperty targetElementDependencyProperty)
+        {
+            var binding = ReadLocalValue(sourceDependencyProperty) as BindingExpression;
+            if (binding != null)
+                targetElement.SetBinding(targetElementDependencyProperty, binding.ParentBinding);
+            else
+            {
+                targetElement.SetBinding(targetElementDependencyProperty, new Binding
+                {
+                    Path = new PropertyPath(sourceDependencyPropertyName),
+                    Source = this
+                });
+            }
         }
     }
 }
