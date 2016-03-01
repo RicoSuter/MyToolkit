@@ -50,8 +50,10 @@ namespace MyToolkit.Utilities
                 catch { }
             });
             thread.Start();
-
-            window.Closed += (sender, eventArgs) => cancelEvent.Set();
+            window.Dispatcher.ShutdownStarted += (sender, eventArgs) =>
+            {
+                cancelEvent.Set();
+            };
         }
 
         private string GetHash(string text)

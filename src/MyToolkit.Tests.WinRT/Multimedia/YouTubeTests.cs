@@ -39,6 +39,7 @@ namespace MyToolkit.Tests.WinRT.Multimedia
         }
 
         [DataTestMethod]
+        [DataRow("JT8zLTaKxeE")]
         [DataRow("oeCihv9A3ac")]
         [DataRow("SuBDt7GCbIc")]
         [DataRow("D4sTViBfjVE")]
