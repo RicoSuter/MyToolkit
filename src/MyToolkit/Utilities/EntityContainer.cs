@@ -13,19 +13,14 @@ namespace MyToolkit.Utilities
     /// <typeparam name="TIdentity">The type of the identity.</typeparam>
     public class EntityContainer<TEntity, TIdentity> where TEntity : class, IEntity<TIdentity>
     {
-        private readonly MtObservableCollection<TEntity> _collection = new MtObservableCollection<TEntity>();
-
         /// <summary>Gets the entity collection.</summary>
-        public MtObservableCollection<TEntity> Collection
-        {
-            get { return _collection; }
-        }
+        public MtObservableCollection<TEntity> Collection { get; } = new MtObservableCollection<TEntity>();
 
         /// <summary>Gets an entity by ID.</summary>
         /// <returns>The entity.</returns>
         public TEntity Get(TIdentity id)
         {
-            return _collection.SingleOrDefault(n => Equals(n.Id, id));
+            return Collection.SingleOrDefault(n => Equals(n.Id, id));
         }
 
         /// <summary>Initializes the container with some entities.</summary>
@@ -43,16 +38,12 @@ namespace MyToolkit.Utilities
 
         /// <summary>Adds multiple entities.</summary>
         /// <param name="items">The entities.</param>
-        public void AddRange(IEnumerable<TEntity> items)
+        public void AddRange(IList<TEntity> items)
         {
-            foreach (var item in items)
-            {
-                var c = Get(item.Id);
-                if (c != null)
-                    _collection.Remove(c);
-            }
+            foreach (var c in items.Select(item => Get(item.Id)).Where(c => c != null))
+                Collection.Remove(c);
 
-            _collection.AddRange(items);
+            Collection.AddRange(items);
         }
 
         /// <summary>Inserts an entity.</summary>
@@ -62,8 +53,8 @@ namespace MyToolkit.Utilities
         {
             var entity = Get(item.Id);
             if (entity != null)
-                _collection.Remove(entity);
-            _collection.Insert(position, item);
+                Collection.Remove(entity);
+            Collection.Insert(position, item);
         }
 
         /// <summary>Adds an entity at the end of the collection.</summary>
@@ -72,8 +63,8 @@ namespace MyToolkit.Utilities
         {
             var c = Get(item.Id);
             if (c != null)
-                _collection.Remove(c);
-            _collection.Add(item);
+                Collection.Remove(c);
+            Collection.Add(item);
         }
 
         /// <summary>Removes an entity from the collection.</summary>
@@ -86,7 +77,7 @@ namespace MyToolkit.Utilities
                 if (c is IDisposable)
                     ((IDisposable)c).Dispose();
 
-                _collection.Remove(c);
+                Collection.Remove(c);
             }
             else if (item is IDisposable)
                 ((IDisposable)item).Dispose();
