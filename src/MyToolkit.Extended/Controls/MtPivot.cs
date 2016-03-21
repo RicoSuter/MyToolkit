@@ -128,9 +128,11 @@ namespace MyToolkit.Controls
             _items.CollectionChanged += OnCollectionChanged;
 
             if (_initialItem != null)
-                _list.SelectedItem = _initialItem;
+                SelectedItem = _initialItem;
+            else if (Items.Count > _initialIndex)
+                SelectedItem = _items[_initialIndex];
             else
-                _list.SelectedIndex = _initialIndex;
+                SelectedItem = _items.FirstOrDefault();
         }
 
         private FrameworkElement CurrentPivotElement
@@ -179,6 +181,8 @@ namespace MyToolkit.Controls
                         AddElement(item.Content);
                 }
             }
+
+            SelectedItem = _items.FirstOrDefault();
         }
 
         private void ShowSelectedPivot()
