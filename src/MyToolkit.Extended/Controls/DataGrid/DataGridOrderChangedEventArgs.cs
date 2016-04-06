@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="DataGridColumnEventArgs.cs" company="MyToolkit">
+// <copyright file="DataGridOrderChangedEventArgs.cs" company="MyToolkit">
 //     Copyright (c) Bram Stoeller. All rights reserved.
 // </copyright>
 // <license>https://github.com/MyToolkit/MyToolkit/blob/master/LICENSE.md</license>
@@ -13,9 +13,9 @@ using System;
 
 namespace MyToolkit.Controls
 {
-    public class DataGridColumnEventArgs : EventArgs
+    public class DataGridOrderChangedEventArgs : EventArgs
     {
-        internal DataGridColumnEventArgs(DataGridColumnBase column)
+        internal DataGridOrderChangedEventArgs(DataGridColumnBase column)
         {
             Column = column;
         }

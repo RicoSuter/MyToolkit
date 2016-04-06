@@ -12,5 +12,5 @@ using System.Reflection;
 
 [assembly: NeutralResourcesLanguage("en")]
 
-[assembly: AssemblyVersion("2.5.11.0")]
-[assembly: AssemblyFileVersion("2.5.11.0")]
+[assembly: AssemblyVersion("2.5.12.0")]
+[assembly: AssemblyFileVersion("2.5.12.0")]

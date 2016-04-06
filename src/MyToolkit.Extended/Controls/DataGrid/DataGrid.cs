@@ -49,8 +49,8 @@ namespace MyToolkit.Controls
         /// <summary>Occurs when the selected item (row) has changed. </summary>
         public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
 
-        /// <summary>Occurs when the order (column) has changed. </summary>
-        public event EventHandler<DataGridColumnEventArgs> OrderChanged;
+        /// <summary>Occurs when the order of the grid has changed (column or direction). </summary>
+        public event EventHandler<DataGridOrderChangedEventArgs> OrderChanged;
 
         /// <summary>Occurs when the user clicked on an item and wants to navigate to its detail page. </summary>
         public event EventHandler<NavigationListEventArgs> Navigate;
@@ -219,7 +219,9 @@ namespace MyToolkit.Controls
                 SelectedColumn.IsSelected = true;
                 SelectedColumn.IsAscending = ascending;
 
-                OnOrderChanged(this, new DataGridColumnEventArgs(SelectedColumn));
+                UpdateItemsOrder();
+                OnOrderChanged();
+
                 return true;
             }
             return false;
@@ -318,13 +320,11 @@ namespace MyToolkit.Controls
                 copy(this, e);
         }
 
-        private void OnOrderChanged(object sender, DataGridColumnEventArgs e)
+        private void OnOrderChanged()
         {
-            UpdateItemsOrder();
-
             var copy = OrderChanged;
             if (copy != null)
-                copy(this, e);
+                copy(this, new DataGridOrderChangedEventArgs(SelectedColumn));
         }
 
         private void ChangeItemSelection(object item, bool isSelected)
