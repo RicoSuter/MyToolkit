@@ -20,6 +20,14 @@ namespace SampleUwpApp.Views
                         p.Category.ToLower().Contains(Model.Filter.ToLower()));
                 }
             };
+            DataGrid.OrderChanged += (sender, args) =>
+            {
+                Status.Text = string.Format(
+                    "Items are ordered by {0} ({1})",
+                    args.Column.OrderPropertyPath.Path,
+                    (args.Column.IsAscending ? "ascending" : "descending")
+                );
+            };
         }
 
         public DataGridPageModel Model
