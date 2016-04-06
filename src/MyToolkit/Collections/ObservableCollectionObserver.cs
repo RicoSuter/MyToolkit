@@ -67,7 +67,8 @@ namespace MyToolkit.Collections
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
             var copy = ItemChanged;
-            copy?.Invoke(sender, args);
+            if (copy != null)
+                copy(sender, args);
         }
 
         private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
@@ -91,7 +92,8 @@ namespace MyToolkit.Collections
             }
 
             var copy = CollectionChanged;
-            copy?.Invoke(sender, new MtNotifyCollectionChangedEventArgs<T>(addedItems, removedItems, null));
+            if (copy != null)
+                copy(sender, new MtNotifyCollectionChangedEventArgs<T>(addedItems, removedItems, null));
         }
     }
 }

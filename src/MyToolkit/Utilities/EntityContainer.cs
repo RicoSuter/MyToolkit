@@ -13,8 +13,13 @@ namespace MyToolkit.Utilities
     /// <typeparam name="TIdentity">The type of the identity.</typeparam>
     public class EntityContainer<TEntity, TIdentity> where TEntity : class, IEntity<TIdentity>
     {
+        private MtObservableCollection<TEntity> _collection = new MtObservableCollection<TEntity>();
+        
         /// <summary>Gets the entity collection.</summary>
-        public MtObservableCollection<TEntity> Collection { get; } = new MtObservableCollection<TEntity>();
+        public MtObservableCollection<TEntity> Collection
+        {
+            get { return _collection; }
+        }
 
         /// <summary>Gets an entity by ID.</summary>
         /// <returns>The entity.</returns>

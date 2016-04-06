@@ -27,6 +27,7 @@ namespace MyToolkit.Collections
         private readonly Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler> _events =
             new Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler>();
 
+        private readonly object _syncRoot = new object();
         private bool _isTracking;
         private bool _trackItemChanges;
         private bool _trackCollectionChanges;
@@ -283,13 +284,15 @@ namespace MyToolkit.Collections
         private void OnInternalCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             var copy = CollectionChanged;
-            copy?.Invoke(this, e);
+            if (copy != null)
+                copy(this, e);
         }
 
         private void OnInternalPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var copy = PropertyChanged;
-            copy?.Invoke(this, e);
+            if (copy != null)
+                copy(this, e);
         }
 
         public int Count
@@ -345,7 +348,7 @@ namespace MyToolkit.Collections
                 return _internalCollection.Contains(item);
         }
 
-        public bool IsReadOnly => true;
+        public bool IsReadOnly { get { return true; } }
 
         public bool Contains(object value)
         {
@@ -362,11 +365,14 @@ namespace MyToolkit.Collections
                 return _internalCollection.IndexOf((TItem)value);
         }
 
-        public bool IsFixedSize => false;
+        public bool IsFixedSize { get { return false; } }
 
-        public bool IsSynchronized => true;
-
-        public object SyncRoot { get; } = new object();
+        public bool IsSynchronized { get { return true; } }
+        
+        public object SyncRoot
+        {
+            get { return _syncRoot; }
+        }
 
         public void CopyTo(Array array, int index)
         {
