@@ -27,11 +27,9 @@ namespace MyToolkit.Collections
         private readonly Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler> _events =
             new Dictionary<INotifyPropertyChanged, PropertyChangedEventHandler>();
 
-        private bool _isTracking = false;
+        private bool _isTracking;
         private bool _trackItemChanges;
-        private bool _trackCollectionChanges = false;
-
-        private readonly object _syncRoot = new object();
+        private bool _trackCollectionChanges;
 
         /// <summary>Initializes a new instance of the <see cref="ObservableCollectionViewBase{TItem}"/> class. </summary>
         protected ObservableCollectionViewBase()
@@ -125,13 +123,14 @@ namespace MyToolkit.Collections
         /// <summary>Adds a multiple elements to the underlying collection. </summary>
         /// <param name="items">The items to add. </param>
         [Obsolete("Use methods on Items property instead. 9/20/2014")]
-        public void AddRange(IEnumerable<TItem> items)
+        public void AddRange(IList<TItem> items)
         {
             var old = TrackCollectionChanges;
             TrackCollectionChanges = false;
 
-            if (Items is MtObservableCollection<TItem>)
-                ((MtObservableCollection<TItem>)Items).AddRange(items);
+            var collection = Items as MtObservableCollection<TItem>;
+            if (collection != null)
+                collection.AddRange(items);
             else
             {
                 foreach (var i in items)
@@ -241,9 +240,10 @@ namespace MyToolkit.Collections
 
         private void TrackCollection()
         {
-            if (Items is ObservableCollection<TItem>)
+            var items = Items as ObservableCollection<TItem>;
+            if (items != null)
             {
-                var collection = (ObservableCollection<TItem>)Items;
+                var collection = items;
                 _itemsChangedHandler = WeakEvent.RegisterEvent<ObservableCollectionViewBase<TItem>, NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
                     this,
                     h => collection.CollectionChanged += h,
@@ -283,15 +283,13 @@ namespace MyToolkit.Collections
         private void OnInternalCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             var copy = CollectionChanged;
-            if (copy != null)
-                copy(this, e);
+            copy?.Invoke(this, e);
         }
 
         private void OnInternalPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var copy = PropertyChanged;
-            if (copy != null)
-                copy(this, e);
+            copy?.Invoke(this, e);
         }
 
         public int Count
@@ -347,10 +345,7 @@ namespace MyToolkit.Collections
                 return _internalCollection.Contains(item);
         }
 
-        public bool IsReadOnly
-        {
-            get { return true; }
-        }
+        public bool IsReadOnly => true;
 
         public bool Contains(object value)
         {
@@ -367,20 +362,11 @@ namespace MyToolkit.Collections
                 return _internalCollection.IndexOf((TItem)value);
         }
 
-        public bool IsFixedSize
-        {
-            get { return false; }
-        }
+        public bool IsFixedSize => false;
 
-        public bool IsSynchronized
-        {
-            get { return true; }
-        }
+        public bool IsSynchronized => true;
 
-        public object SyncRoot
-        {
-            get { return _syncRoot; }
-        }
+        public object SyncRoot { get; } = new object();
 
         public void CopyTo(Array array, int index)
         {

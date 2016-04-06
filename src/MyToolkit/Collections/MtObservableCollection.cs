@@ -20,7 +20,7 @@ namespace MyToolkit.Collections
     /// <typeparam name="T"></typeparam>
     public class MtObservableCollection<T> : ObservableCollection<T>
     {
-        private List<T> _oldCollection = null;
+        private List<T> _oldCollection;
         private event EventHandler<MtNotifyCollectionChangedEventArgs<T>> _extendedCollectionChanged;
 
         /// <summary>Initializes a new instance of the <see cref="MtObservableCollection{T}"/> class.</summary>
@@ -45,31 +45,31 @@ namespace MyToolkit.Collections
         /// <summary>Adds multiple items to the collection. </summary>
         /// <param name="collection">The items to add. </param>
         /// <exception cref="ArgumentNullException">The value of 'collection' cannot be null. </exception>
-        public void AddRange(IEnumerable<T> collection)
+        public void AddRange(IList<T> collection)
         {
             if (collection == null)
-                throw new ArgumentNullException("collection");
+                throw new ArgumentNullException(nameof(collection));
 
             foreach (var item in collection)
                 Items.Add(item);
 
-            OnPropertyChanged(new PropertyChangedEventArgs("Count"));
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(Count)));
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, (System.Collections.IList)collection));
         }
 
         /// <summary>Removes multiple items from the collection. </summary>
         /// <param name="collection">The items to remove. </param>
         /// <exception cref="ArgumentNullException">The value of 'collection' cannot be null. </exception>
-        public void RemoveRange(IEnumerable<T> collection)
+        public void RemoveRange(IList<T> collection)
         {
             if (collection == null)
-                throw new ArgumentNullException("collection");
+                throw new ArgumentNullException(nameof(collection));
 
             foreach (var item in collection.ToList())
                 Items.Remove(item);
 
-            OnPropertyChanged(new PropertyChangedEventArgs("Count"));
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(Count)));
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, (System.Collections.IList)collection));
         }
 
         /// <summary>Resets the whole collection with a given list. </summary>
@@ -78,13 +78,13 @@ namespace MyToolkit.Collections
         public void Initialize(IEnumerable<T> collection)
         {
             if (collection == null)
-                throw new ArgumentNullException("collection");
+                throw new ArgumentNullException(nameof(collection));
 
             Items.Clear();
             foreach (var i in collection)
                 Items.Add(i);
 
-            OnPropertyChanged(new PropertyChangedEventArgs("Count"));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(Count)));
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
