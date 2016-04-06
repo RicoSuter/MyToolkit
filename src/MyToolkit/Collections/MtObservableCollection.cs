@@ -45,7 +45,7 @@ namespace MyToolkit.Collections
         /// <summary>Adds multiple items to the collection. </summary>
         /// <param name="collection">The items to add. </param>
         /// <exception cref="ArgumentNullException">The value of 'collection' cannot be null. </exception>
-        public void AddRange(IList<T> collection)
+        public void AddRange(IEnumerable<T> collection)
         {
             if (collection == null)
                 throw new ArgumentNullException(nameof(collection));
@@ -54,13 +54,13 @@ namespace MyToolkit.Collections
                 Items.Add(item);
 
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(Count)));
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, (System.Collections.IList)collection));
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, collection.ToList()));
         }
 
         /// <summary>Removes multiple items from the collection. </summary>
         /// <param name="collection">The items to remove. </param>
         /// <exception cref="ArgumentNullException">The value of 'collection' cannot be null. </exception>
-        public void RemoveRange(IList<T> collection)
+        public void RemoveRange(IEnumerable<T> collection)
         {
             if (collection == null)
                 throw new ArgumentNullException(nameof(collection));
@@ -69,7 +69,7 @@ namespace MyToolkit.Collections
                 Items.Remove(item);
 
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(Count)));
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, (System.Collections.IList)collection));
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, collection.ToList()));
         }
 
         /// <summary>Resets the whole collection with a given list. </summary>

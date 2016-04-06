@@ -123,7 +123,7 @@ namespace MyToolkit.Collections
         /// <summary>Adds a multiple elements to the underlying collection. </summary>
         /// <param name="items">The items to add. </param>
         [Obsolete("Use methods on Items property instead. 9/20/2014")]
-        public void AddRange(IList<TItem> items)
+        public void AddRange(IEnumerable<TItem> items)
         {
             var old = TrackCollectionChanges;
             TrackCollectionChanges = false;
