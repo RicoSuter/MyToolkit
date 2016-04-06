@@ -23,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DataGrid\DataGridColumnBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DataGrid\DataGridColumnCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DataGrid\DataGridExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\DataGrid\DataGridColumnEventArgs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DataGrid\DataGridRow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DataGrid\DataGridTemplatedCell.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\DataGrid\DataGridTemplatedColumn.cs" />
