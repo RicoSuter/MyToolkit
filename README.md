@@ -18,7 +18,7 @@ MyToolkit is a set of .NET libraries containing lots of useful classes for vario
 
 If you found some bugs or have other comments, please create a Pull Request or GitHub issue. The library is free to use, but please put a link to this GitHub site in the source code or your application. 
 
-The project is maintained and developed by [Rico Suter](http://rsuter.com) and other contributors. Check my blog for other programming stuff on my website at <http://blog.rsuter.com>. 
+The project is maintained and developed by [Rico Suter](http://rsuter.com) and other contributors. 
 
 ## Installation
 
