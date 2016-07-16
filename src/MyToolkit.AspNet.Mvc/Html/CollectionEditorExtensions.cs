@@ -28,17 +28,18 @@ namespace MyToolkit.Html
         /// <param name="controllerActionPath">The controller action path to generate a new item editor.</param>
         /// <param name="addButtonTitle">The title of the add button.</param>
         /// <param name="addButtonHtmlAttributes">The HTML attributes of the add button.</param>
+        /// <param name="viewDataDictionary">The ViewDataDictionary for the partial view.</param>
         /// <returns>The HTML string. </returns>
         public static IHtmlString CollectionEditorFor<TModel, TItem>(this HtmlHelper<TModel> html,
             Func<TModel, IEnumerable<TItem>> collection, string partialViewName,
-            string controllerActionPath, string addButtonTitle, object addButtonHtmlAttributes = null)
+            string controllerActionPath, string addButtonTitle, object addButtonHtmlAttributes = null, ViewDataDictionary viewDataDictionary = null)
         {
             var editorId = "CollectionEditor_" + Guid.NewGuid().ToString("N");
             var addButtonId = "CollectionEditorAdd_" + Guid.NewGuid().ToString("N");
 
             var output = new StringBuilder();
 
-            RenderInitialCollection(output, html, collection, partialViewName, editorId);
+            RenderInitialCollection(output, html, collection, partialViewName, editorId, viewDataDictionary);
             RenderAddButton(output, addButtonId, addButtonTitle, addButtonHtmlAttributes);
             RenderEditorScript(controllerActionPath, output, editorId, addButtonId);
 
@@ -46,14 +47,19 @@ namespace MyToolkit.Html
         }
 
         private static void RenderInitialCollection<TModel, TItem>(StringBuilder output, HtmlHelper<TModel> html,
-            Func<TModel, IEnumerable<TItem>> collection, string partialViewName, string editorId)
+            Func<TModel, IEnumerable<TItem>> collection, string partialViewName, string editorId, ViewDataDictionary viewDataDictionary = null)
         {
             output.AppendLine(@"<ul id=""" + editorId + @""" style=""list-style-type: none; padding: 0"">");
             var items = collection(html.ViewData.Model);
             if (items != null)
             {
                 foreach (var item in collection(html.ViewData.Model))
-                    output.AppendLine(html.Partial(partialViewName, item).ToString());
+                {
+                    if (viewDataDictionary != null)
+                        output.AppendLine(html.Partial(partialViewName, item, viewDataDictionary).ToString());
+                    else
+                        output.AppendLine(html.Partial(partialViewName, item).ToString());
+                }
             }
             output.AppendLine(@"</ul>");
         }
