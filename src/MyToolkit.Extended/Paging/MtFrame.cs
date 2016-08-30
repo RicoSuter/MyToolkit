@@ -64,7 +64,7 @@ namespace MyToolkit.Paging
 
         /// <summary>Gets or sets a value indicating whether to show the animation when launching, leaving or switching to the app. Default: false. </summary>
         public bool ShowNavigationOnAppInAndOut { get; set; }
-        
+
         /// <summary>Gets or sets a value indicating whether the forward stack is disabled 
         /// (default: disabled on Windows Phone, enabled on Windows). </summary>
         public bool DisableForwardStack { get; set; }
@@ -125,7 +125,7 @@ namespace MyToolkit.Paging
 
         /// <summary>Gets a command to navigate to the previous page. </summary>
         public ICommand GoBackCommand { get; private set; }
-        
+
         /// <summary>Gets a value indicating whether the first/root page is visible. </summary>
         public bool IsFirstPage
         {
@@ -341,17 +341,17 @@ namespace MyToolkit.Paging
         /// <remarks>If the page exists it is referenced multiple times in the page stack: 
         /// The <see cref="MtPageDescription"/> is contained multiple times in the page stack.</remarks>
         /// <param name="pageType">The page type. </param>
-        /// <param name="pageParamter">The page parameter. </param>
+        /// <param name="pageParameter">The page parameter. </param>
         /// <returns>Returns true if the navigation process has not been cancelled. </returns>
-        public async Task<bool> NavigateToExistingOrNewPageAsync(Type pageType, object pageParamter = null)
+        public async Task<bool> NavigateToExistingOrNewPageAsync(Type pageType, object pageParameter = null)
         {
             var existingPage = GetNearestPageOfTypeInBackStack(pageType);
             if (existingPage != null)
             {
-                existingPage.Parameter = pageParamter;
+                existingPage.Parameter = pageParameter;
                 return await CopyToTopAndNavigateAsync(existingPage);
             }
-            return await NavigateAsync(pageType, pageParamter);
+            return await NavigateAsync(pageType, pageParameter);
         }
 
         /// <summary>Navigates to the given page and removes the page from the previous position in the page stack.</summary>
@@ -426,7 +426,7 @@ namespace MyToolkit.Paging
             base.OnApplyTemplate();
             InternalFrame = (Frame)GetTemplateChild("Frame");
         }
-        
+
         private Task<bool> NavigateAsync(MtPageDescription newPage, NavigationMode navigationMode)
         {
             return RunNavigationWithCheckAsync(async () =>
@@ -441,7 +441,7 @@ namespace MyToolkit.Paging
                 _pageStackManager.ClearForwardStack();
 
                 await NavigateWithAnimationsAndCallbacksAsync(navigationMode, currentPage, newPage, _pageStackManager.CurrentIndex + 1);
-                
+
                 return true;
             });
         }

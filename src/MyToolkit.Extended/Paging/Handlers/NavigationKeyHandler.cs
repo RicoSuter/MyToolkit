@@ -111,7 +111,7 @@ namespace MyToolkit.Paging.Handlers
                 return;
 
             var virtualKey = args.VirtualKey;
-            if (args.KeyStatus.IsKeyReleased)
+            if (args.EventType == CoreAcceleratorKeyEventType.KeyDown || args.EventType == CoreAcceleratorKeyEventType.SystemKeyDown)
             {
                 var isLeftOrRightKey =
                     _page.UseAltLeftOrRightToNavigate && (

@@ -31,7 +31,10 @@ namespace MyToolkit.UI
         /// </summary>
         public static bool IsPopupVisible
         {
-            get { return VisualTreeHelper.GetOpenPopups(Window.Current).Any(); }
+            get
+            {
+                return VisualTreeHelper.GetOpenPopups(Window.Current).Any(p => p.ActualWidth > 0 && p.ActualHeight > 0);
+            }
         }
 
         /// <summary>
@@ -39,7 +42,7 @@ namespace MyToolkit.UI
         /// </summary>
         public static Popup GetParentPopup(FrameworkElement element)
         {
-            return element.GetVisualAncestors().LastOrDefault() as Popup; 
+            return element.GetVisualAncestors().LastOrDefault() as Popup;
         }
 
         /// <summary>
@@ -50,7 +53,7 @@ namespace MyToolkit.UI
             if (element is Popup)
                 return true;
 
-            return GetParentPopup(element) != null; 
+            return GetParentPopup(element) != null;
         }
 
         /// <summary>
@@ -59,7 +62,7 @@ namespace MyToolkit.UI
         /// <param name="childControl">The child control. </param>
         public static void ClosePopup(this FrameworkElement childControl)
         {
-            ((Popup) childControl.Tag).IsOpen = false; 
+            ((Popup)childControl.Tag).IsOpen = false;
         }
 
         /// <summary>
@@ -107,17 +110,17 @@ namespace MyToolkit.UI
                 UpdatePopupOffsets(control, isHorizontal, popup);
             });
 
-            var controlSizeChanged = new SizeChangedEventHandler((sender, e) => 
+            var controlSizeChanged = new SizeChangedEventHandler((sender, e) =>
                 UpdatePopupOffsets(control, isHorizontal, popup));
 
             Window.Current.Activated += windowActivated;
             UpdatePopupControlSize(control, isHorizontal);
 
             control.SizeChanged += controlSizeChanged;
-            control.Tag = popup; 
+            control.Tag = popup;
 
             var oldOpacity = parent.Opacity;
-            parent.Opacity = 0.5; 
+            parent.Opacity = 0.5;
             parent.IsHitTestVisible = false;
 
             var topAppBarVisibility = Visibility.Collapsed;
@@ -139,7 +142,7 @@ namespace MyToolkit.UI
                         page.BottomAppBar.Visibility = Visibility.Collapsed;
                     }
                 }
-            } 
+            }
             else if (parent is Frame)
             {
                 var page = ((Frame)parent).Content as Page;
@@ -162,7 +165,7 @@ namespace MyToolkit.UI
             popup.IsLightDismissEnabled = isLightDismissEnabled;
             popup.Closed += delegate
             {
-                parent.Opacity = oldOpacity; 
+                parent.Opacity = oldOpacity;
                 parent.IsHitTestVisible = true;
 
                 if (parent is Paging.MtFrame)
@@ -209,9 +212,9 @@ namespace MyToolkit.UI
         private static void UpdatePopupOffsets(FrameworkElement control, bool isHorizontal, Popup popup)
         {
             if (isHorizontal)
-                popup.VerticalOffset = Window.Current.Bounds.Top + (Window.Current.Bounds.Height - control.ActualHeight)/2;
+                popup.VerticalOffset = Window.Current.Bounds.Top + (Window.Current.Bounds.Height - control.ActualHeight) / 2;
             else
-                popup.HorizontalOffset = Window.Current.Bounds.Left + (Window.Current.Bounds.Width - control.ActualWidth)/2;
+                popup.HorizontalOffset = Window.Current.Bounds.Left + (Window.Current.Bounds.Width - control.ActualWidth) / 2;
         }
 
         private static void UpdatePopupControlSize(FrameworkElement control, bool isHorizontal)
@@ -275,7 +278,7 @@ namespace MyToolkit.UI
 
             popup.IsLightDismissEnabled = true;
             popup.Child = control;
-            popup.Closed += delegate 
+            popup.Closed += delegate
             {
                 Window.Current.Activated -= del1;
                 control.SizeChanged -= del2;

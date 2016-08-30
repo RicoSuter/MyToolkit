@@ -78,7 +78,7 @@ namespace MyToolkit.Extended.Paging.Handlers
         {
             get { return CurrentIndex + 1; } // TODO: Do not add 1 => breaking change!!!
         }
-
+        
         public MtPageDescription GetNearestPageOfTypeInBackStack(Type pageType)
         {
             var index = CurrentIndex;
@@ -193,7 +193,7 @@ namespace MyToolkit.Extended.Paging.Handlers
             for (var i = _pages.Count - 1; i > CurrentIndex; i--)
                 RemovePageFromStackAt(i);
         }
-        
+
         public void ChangeCurrentPage(MtPageDescription newPage, int nextPageIndex)
         {
             if (_pages.Count <= nextPageIndex)
@@ -210,7 +210,7 @@ namespace MyToolkit.Extended.Paging.Handlers
             if (newPageIndex < 0 || newPageIndex > CurrentIndex)
                 return false;
 
-            return true; 
+            return true;
         }
     }
 }

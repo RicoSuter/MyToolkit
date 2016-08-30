@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -29,6 +30,7 @@ namespace MyToolkit.Controls
 
             TopItems = new ObservableCollection<HamburgerItem>();
             BottomItems = new ObservableCollection<HamburgerItem>();
+            HamburgerForegroundBrush = new SolidColorBrush(Colors.White);
 
             SizeChanged += OnSizeChanged;
         }
@@ -64,7 +66,7 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty HamburgerForegroundBrushProperty = DependencyProperty.Register(
-            "HamburgerForegroundBrush", typeof(Brush), typeof(Hamburger), new PropertyMetadata(default(Brush)));
+            "HamburgerForegroundBrush", typeof(Brush), typeof(Hamburger), new PropertyMetadata(new SolidColorBrush(Colors.White)));
 
         /// <summary>Gets or sets the foreground brush of the hamburger button.</summary>
         public Brush HamburgerForegroundBrush
@@ -84,12 +86,12 @@ namespace MyToolkit.Controls
         }
 
         public static readonly DependencyProperty ContentMarginProperty = DependencyProperty.Register(
-            "ContentMargin", typeof (Thickness), typeof (Hamburger), new PropertyMetadata(default(Thickness)));
+            "ContentMargin", typeof(Thickness), typeof(Hamburger), new PropertyMetadata(default(Thickness)));
 
         /// <summary>Gets or sets the content margin.</summary>
         public Thickness ContentMargin
         {
-            get { return (Thickness) GetValue(ContentMarginProperty); }
+            get { return (Thickness)GetValue(ContentMarginProperty); }
             set { SetValue(ContentMarginProperty, value); }
         }
 
@@ -169,7 +171,7 @@ namespace MyToolkit.Controls
         /// <summary>Gets or sets a value indicating whether the pane is visible, i.e. it is not in mobile mode (hamburger button only).</summary>
         public bool IsPaneVisible
         {
-            get { return (bool) GetValue(IsPaneVisibleProperty); }
+            get { return (bool)GetValue(IsPaneVisibleProperty); }
             set { SetValue(IsPaneVisibleProperty, value); }
         }
 
@@ -220,7 +222,7 @@ namespace MyToolkit.Controls
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
         {
-            var currentIsPaneHidden = IsPaneVisible; 
+            var currentIsPaneHidden = IsPaneVisible;
             IsPaneVisible = ActualWidth >= 400;
 
             if (currentIsPaneHidden != IsPaneVisible)

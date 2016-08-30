@@ -8,6 +8,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using MyToolkit.Controls;
 
@@ -27,7 +28,7 @@ namespace MyToolkit.Paging
 
             Hamburger = new Hamburger();
             Hamburger.Content = Frame;
-            Hamburger.ItemChanged += OnHamburgerItemChanged;
+            Hamburger.ItemChanged += async (s, e) => await OnSelectedHamburgerItemChanged(s, e);
             Hamburger.PaneVisibilityChanged += HamburgerOnPaneVisibilityChanged;
         }
 
@@ -43,20 +44,12 @@ namespace MyToolkit.Paging
         /// <summary>Gets or sets the hamburger control.</summary>
         public Hamburger Hamburger { get; set; }
 
-        private void OnFrameNavigated(object sender, MtNavigationEventArgs args)
-        {
-            var currentItem = Hamburger.TopItems
-                .Concat(Hamburger.BottomItems)
-                .OfType<PageHamburgerItem>()
-                .FirstOrDefault(i => i.PageType == Frame.CurrentPage.Type);
 
-            if (DeselectWhenPageNotFound || currentItem != null)
-                Hamburger.SelectedItem = currentItem;
-
-            UpdateCurrentPageAppBarMargin();
-        }
-
-        private async void OnHamburgerItemChanged(object sender, HamburgerItemChangedEventArgs args)
+        /// <summary>Called when the selected hamburger item has changed.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="args">The <see cref="HamburgerItemChangedEventArgs"/> instance containing the event data.</param>
+        /// <returns>The task.</returns>
+        protected virtual async Task OnSelectedHamburgerItemChanged(object sender, HamburgerItemChangedEventArgs args)
         {
             if (args.Item is PageHamburgerItem)
             {
@@ -64,11 +57,38 @@ namespace MyToolkit.Paging
                 if (pageItem.PageType != null)
                 {
                     if (pageItem.UseSinglePageInstance)
-                        await Frame.NavigateToExistingOrNewPageAsync(pageItem.PageType, pageItem.PageParameter);
+                    {
+                        var page = Frame.Pages.Reverse().FirstOrDefault(p => IsHamburgerItemForPage(pageItem, p));
+                        if (page != null)
+                            await Frame.CopyToTopAndNavigateAsync(page);
+                        else
+                            await Frame.NavigateAsync(pageItem.PageType, pageItem.PageParameter);
+                    }
                     else
                         await Frame.NavigateAsync(pageItem.PageType, pageItem.PageParameter);
                 }
             }
+        }
+
+        /// <summary>Determines whether the HamburgerItem represents the given page description.</summary>
+        /// <param name="item">The hamburger item.</param>
+        /// <param name="pageDescription">The page description.</param>
+        /// <returns>true or false.</returns>
+        protected virtual bool IsHamburgerItemForPage(HamburgerItem item, MtPageDescription pageDescription)
+        {
+            return item is PageHamburgerItem && ((PageHamburgerItem)item).PageType == pageDescription.Type;
+        }
+
+        private void OnFrameNavigated(object sender, MtNavigationEventArgs args)
+        {
+            var currentItem = Hamburger.TopItems
+                .Concat(Hamburger.BottomItems)
+                .FirstOrDefault(i => IsHamburgerItemForPage(i, Frame.CurrentPage));
+
+            if (DeselectWhenPageNotFound || currentItem != null)
+                Hamburger.SelectedItem = currentItem;
+
+            UpdateCurrentPageAppBarMargin();
         }
 
         private void HamburgerOnPaneVisibilityChanged(object sender, bool b)
