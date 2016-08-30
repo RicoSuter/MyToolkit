@@ -3,7 +3,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/4oox3d156y9n6efp?svg=true)](https://ci.appveyor.com/project/rsuter/mytoolkit)
 [![NuGet Version](https://badge.fury.io/nu/mytoolkit.svg)](https://www.nuget.org/packages?q=MyToolkit) 
 
-MyToolkit is a set of .NET libraries containing lots of useful classes for various .NET platforms like UWP/WinRT (Universal Windows Apps), Windows Phone and WPF. The goal is to provide missing or replace existing classes to support the development of high-quality Windows and Windows Phone applications. For example, the library provides often used MVVM infrastructure classes, missing UI controls, IoC classes, additional LINQ extension methods and much more. The project is developed and maintained by [Rico Suter](http://rsuter.com).
+MyToolkit is a set of .NET libraries containing lots of useful classes for various .NET platforms like UWP/WinRT (Universal Windows Apps), Windows Phone and WPF. The goal is to provide missing or replace existing classes to support the development of high-quality Windows and Windows Phone applications. For example, the library provides often used MVVM infrastructure classes, missing UI controls, IoC classes, additional LINQ extension methods and much more. 
 
 [Available classes and components](https://github.com/MyToolkit/Core/wiki)
 
@@ -18,7 +18,7 @@ MyToolkit is a set of .NET libraries containing lots of useful classes for vario
 
 If you found some bugs or have other comments, please create a Pull Request or GitHub issue. The library is free to use, but please put a link to this GitHub site in the source code or your application. 
 
-Check my blog for other programming stuff on my website at <http://blog.rsuter.com>. 
+The project is maintained and developed by [Rico Suter](http://rsuter.com) and other contributors. 
 
 ## Installation
 
