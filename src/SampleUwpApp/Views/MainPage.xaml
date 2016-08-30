@@ -17,4 +17,10 @@
             <Button Content="Clear Back Stack" Click="OnClearBackStack" />
         </StackPanel>
     </Grid>
+    <paging:MtPage.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Add" Label="Add" />
+            <AppBarButton Icon="Remove" Label="Remove" />
+        </CommandBar>
+    </paging:MtPage.BottomAppBar>
 </paging:MtPage>

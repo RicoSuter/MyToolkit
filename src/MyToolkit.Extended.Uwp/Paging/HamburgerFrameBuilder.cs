@@ -8,6 +8,7 @@
 
 using System;
 using System.Linq;
+using Windows.UI.Xaml;
 using MyToolkit.Controls;
 
 namespace MyToolkit.Paging
@@ -18,19 +19,23 @@ namespace MyToolkit.Paging
         /// <summary>Initializes a new instance of the <see cref="HamburgerFrameBuilder"/> class.</summary>
         public HamburgerFrameBuilder()
         {
-            DeselectWhenPageNotFound = true; 
-                 
+            DeselectWhenPageNotFound = true;
+
             Frame = new MtFrame();
-            Frame.PageAnimation = null; 
-            Frame.Navigated += FrameOnNavigated;
+            Frame.PageAnimation = null;
+            Frame.Navigated += OnFrameNavigated;
 
             Hamburger = new Hamburger();
-            Hamburger.Content = Frame; 
-            Hamburger.ItemChanged += HamburgerOnItemChanged;
+            Hamburger.Content = Frame;
+            Hamburger.ItemChanged += OnHamburgerItemChanged;
+            Hamburger.PaneVisibilityChanged += HamburgerOnPaneVisibilityChanged;
         }
 
         /// <summary>Gets or sets a value indicating whether to deselect the current item when the page could not be found.</summary>
         public bool DeselectWhenPageNotFound { get; set; }
+
+        /// <summary>Gets or sets a value indicating whether to manage the margins of the page's AppBars to avoid overlapping AppBars.</summary>
+        public bool ManagePageAppBarMargins { get; set; } = true;
 
         /// <summary>Gets the frame.</summary>
         public MtFrame Frame { get; private set; }
@@ -38,7 +43,7 @@ namespace MyToolkit.Paging
         /// <summary>Gets or sets the hamburger control.</summary>
         public Hamburger Hamburger { get; set; }
 
-        private void FrameOnNavigated(object sender, MtNavigationEventArgs args)
+        private void OnFrameNavigated(object sender, MtNavigationEventArgs args)
         {
             var currentItem = Hamburger.TopItems
                 .Concat(Hamburger.BottomItems)
@@ -47,9 +52,11 @@ namespace MyToolkit.Paging
 
             if (DeselectWhenPageNotFound || currentItem != null)
                 Hamburger.SelectedItem = currentItem;
+
+            UpdateCurrentPageAppBarMargin();
         }
 
-        private async void HamburgerOnItemChanged(object sender, HamburgerItemChangedEventArgs args)
+        private async void OnHamburgerItemChanged(object sender, HamburgerItemChangedEventArgs args)
         {
             if (args.Item is PageHamburgerItem)
             {
@@ -61,6 +68,23 @@ namespace MyToolkit.Paging
                     else
                         await Frame.NavigateAsync(pageItem.PageType, pageItem.PageParameter);
                 }
+            }
+        }
+
+        private void HamburgerOnPaneVisibilityChanged(object sender, bool b)
+        {
+            UpdateCurrentPageAppBarMargin();
+        }
+
+        private void UpdateCurrentPageAppBarMargin()
+        {
+            if (ManagePageAppBarMargins)
+            {
+                if (Frame?.CurrentPage?.Page?.TopAppBar != null)
+                    Frame.CurrentPage.Page.TopAppBar.Margin = new Thickness(Hamburger.IsPaneVisible ? 48 : 0, 0, 0, 0);
+
+                if (Frame?.CurrentPage?.Page?.BottomAppBar != null)
+                    Frame.CurrentPage.Page.BottomAppBar.Margin = new Thickness(Hamburger.IsPaneVisible ? 48 : 0, 0, 0, 0);
             }
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
 using Windows.Foundation.Metadata;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -95,6 +96,7 @@ namespace SampleUwpApp
         public override async Task OnInitializedAsync(MtFrame frame, ApplicationExecutionState args)
         {
             //await HideStatusBarAsync();
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 320));
         }
 
         private async Task HideStatusBarAsync()

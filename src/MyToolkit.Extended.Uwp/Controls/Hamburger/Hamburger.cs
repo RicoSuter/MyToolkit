@@ -29,6 +29,8 @@ namespace MyToolkit.Controls
 
             TopItems = new ObservableCollection<HamburgerItem>();
             BottomItems = new ObservableCollection<HamburgerItem>();
+
+            SizeChanged += OnSizeChanged;
         }
 
         public static readonly DependencyProperty PaneWidthProperty = DependencyProperty.Register(
@@ -161,6 +163,19 @@ namespace MyToolkit.Controls
             set { SetValue(IsPaneOpenProperty, value); }
         }
 
+        public static readonly DependencyProperty IsPaneVisibleProperty = DependencyProperty.Register(
+            "IsPaneVisible", typeof(bool), typeof(Hamburger), new PropertyMetadata(default(bool)));
+
+        /// <summary>Gets or sets a value indicating whether the pane is visible, i.e. it is not in mobile mode (hamburger button only).</summary>
+        public bool IsPaneVisible
+        {
+            get { return (bool) GetValue(IsPaneVisibleProperty); }
+            set { SetValue(IsPaneVisibleProperty, value); }
+        }
+
+        /// <summary>Occurs when the pane visibility has changed.</summary>
+        public event EventHandler<bool> PaneVisibilityChanged;
+
         /// <summary>Occurs when the hamburger item changed.</summary>
         public event EventHandler<HamburgerItemChangedEventArgs> ItemChanged;
 
@@ -201,6 +216,15 @@ namespace MyToolkit.Controls
 
             _hamburgerButton = (Button)GetTemplateChild("HamburgerButton");
             _hamburgerButton.Click += OnTogglePane;
+        }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
+        {
+            var currentIsPaneHidden = IsPaneVisible; 
+            IsPaneVisible = ActualWidth >= 400;
+
+            if (currentIsPaneHidden != IsPaneVisible)
+                PaneVisibilityChanged?.Invoke(this, IsPaneVisible);
         }
 
         private async void OnSelectedItemChanged(HamburgerItem selectedItem)
