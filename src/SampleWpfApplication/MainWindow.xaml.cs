@@ -1,11 +1,14 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
+using MyToolkit;
 using MyToolkit.Command;
 using MyToolkit.Multimedia;
 using MyToolkit.Networking;
 using MyToolkit.Notifications;
 using MyToolkit.Utilities;
+using ExceptionBox = MyToolkit.Dialogs.ExceptionBox;
 
 namespace SampleWpfApplication
 {
@@ -63,5 +66,18 @@ namespace SampleWpfApplication
         }
 
         #endregion
+
+        private void OnShowExceptionDialog(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                throw new Exception("Foobar");
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("fasdf", "as", MessageBoxButton.OK, MessageBoxImage.Error);
+                ExceptionBox.Show("Error", exception, this);
+            }
+        }
     }
 }

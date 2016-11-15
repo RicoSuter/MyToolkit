@@ -45,13 +45,30 @@ namespace MyToolkit.Messaging
         {
             _actions.Add(new MessageRegistration { Receiver = receiver, Type = typeof(T), Action = action});
         }
-
+        
         /// <summary>Registers an action for no receiver. </summary>
         /// <typeparam name="T">Type of the message. </typeparam>
         /// <param name="action">Action to register. </param>
         public void Register<T>(Action<T> action)
         {
             Register(null, action);
+        }
+
+        /// <summary>Registers an action which handles all messages for the given receiver. 
+        /// WARNING: You have to deregister the action to avoid memory leaks! </summary>
+        /// <param name="receiver">Receiver to use as identifier. </param>
+        /// <param name="action">Action to register. </param>
+        public void RegisterAll(object receiver, Action<object> action)
+        {
+            _actions.Add(new MessageRegistration { Receiver = receiver, Type = null, Action = action });
+        }
+
+        /// <summary>Registers an action which handles all messages for the given receiver. 
+        /// WARNING: You have to deregister the action to avoid memory leaks! </summary>
+        /// <param name="action">Action to register. </param>
+        public void RegisterAll(Action<object> action)
+        {
+            RegisterAll(null, action);
         }
 
         /// <summary>Deregisters all actions with no receiver. </summary>
@@ -110,7 +127,7 @@ namespace MyToolkit.Messaging
         public virtual T Send<T>(T message)
         {
             var type = message.GetType();
-            foreach (var a in _actions.Where(a => a.Type == type).ToArray())
+            foreach (var a in _actions.Where(a => a.Type == type || a.Type == null).ToArray())
                 ((Delegate)a.Action).DynamicInvoke(message);
             return message;
         }

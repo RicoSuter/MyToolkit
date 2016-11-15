@@ -50,6 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
@@ -68,6 +69,14 @@
   <ItemGroup>
     <Compile Include="Controls\FilterListBox.cs" />
     <Compile Include="Controls\TreeViewExtensions.cs" />
+    <Compile Include="Dialogs\FileOpenPicker.cs" />
+    <Compile Include="Dialogs\FilePickerBase.xaml.cs">
+      <DependentUpon>FilePickerBase.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\FileSavePicker.cs" />
+    <Compile Include="Dialogs\ExceptionBox.xaml.cs">
+      <DependentUpon>ExceptionBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\XsdGenerator.cs" />
     <Compile Include="UI\ProgressDialog.xaml.cs">
@@ -94,6 +103,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Dialogs\FilePickerBase.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dialogs\ExceptionBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
