@@ -25,6 +25,17 @@ namespace MyToolkit.Messaging
         /// <param name="action">Action to register</param>
         void Register<T>(Action<T> action);
 
+        /// <summary>Registers an action which handles all messages for the given receiver. 
+        /// WARNING: You have to deregister the action to avoid memory leaks! </summary>
+        /// <param name="receiver">Receiver to use as identifier. </param>
+        /// <param name="action">Action to register. </param>
+        void RegisterAll(object receiver, Action<object> action);
+
+        /// <summary>Registers an action which handles all messages for the given receiver. 
+        /// WARNING: You have to deregister the action to avoid memory leaks! </summary>
+        /// <param name="action">Action to register. </param>
+        void RegisterAll(Action<object> action);
+
         /// <summary>Deregisters all actions with no receiver. </summary>
         void Deregister();
 
