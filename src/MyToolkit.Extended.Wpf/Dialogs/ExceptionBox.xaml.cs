@@ -49,7 +49,7 @@ namespace MyToolkit.Dialogs
                 dlg.Owner = owner;
 
             dlg.Button.Focus();
-            dlg.Show();
+            dlg.ShowDialog();
         }
 
         private void OnOkClicked(object sender, RoutedEventArgs e)

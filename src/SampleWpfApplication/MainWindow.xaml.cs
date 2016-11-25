@@ -75,7 +75,7 @@ namespace SampleWpfApplication
             }
             catch (Exception exception)
             {
-                MessageBox.Show("fasdf", "as", MessageBoxButton.OK, MessageBoxImage.Error);
+                //MessageBox.Show("fasdf", "as", MessageBoxButton.OK, MessageBoxImage.Error);
                 ExceptionBox.Show("Error", exception, this);
             }
         }
