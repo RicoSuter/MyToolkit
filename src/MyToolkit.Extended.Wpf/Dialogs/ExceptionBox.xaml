@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner"
-        Width="500" Height="400"
+        Width="600" Height="450" ShowInTaskbar="False"
         d:DesignHeight="300" d:DesignWidth="300">
     
     <Grid Margin="8">
