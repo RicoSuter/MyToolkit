@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyToolkit", "MyToolkit\MyToolkit.csproj", "{F01F49C0-5DA2-4757-B4E0-02EC7A187DED}"
 EndProject
@@ -59,11 +59,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuSpecs", "NuSpecs", "{DB60
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		MyToolkit.Extended\MyToolkit.Extended.projitems*{165d7bf6-152c-427f-97ae-f09a69f646ab}*SharedItemsImports = 4
-		MyToolkit.Extended\MyToolkit.Extended.projitems*{c5ff4b9f-18cb-4a29-91ac-c0eafda2ec8e}*SharedItemsImports = 4
-		MyToolkit.Extended\MyToolkit.Extended.projitems*{28cdf611-02d2-474c-ac37-616024caf0c1}*SharedItemsImports = 4
 		MyToolkit.Extended\MyToolkit.Extended.projitems*{0d8f527d-868f-4de3-8559-ea3597d9d079}*SharedItemsImports = 4
+		MyToolkit.Extended\MyToolkit.Extended.projitems*{165d7bf6-152c-427f-97ae-f09a69f646ab}*SharedItemsImports = 4
+		MyToolkit.Extended\MyToolkit.Extended.projitems*{28cdf611-02d2-474c-ac37-616024caf0c1}*SharedItemsImports = 4
 		MyToolkit.Extended\MyToolkit.Extended.projitems*{625d4222-ce80-4703-ab84-d6b876ecab16}*SharedItemsImports = 13
+		MyToolkit.Extended\MyToolkit.Extended.projitems*{c5ff4b9f-18cb-4a29-91ac-c0eafda2ec8e}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
