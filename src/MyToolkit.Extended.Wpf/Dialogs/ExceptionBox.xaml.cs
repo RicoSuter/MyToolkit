@@ -41,6 +41,9 @@ namespace MyToolkit.Dialogs
             dlg.Title = title; 
             dlg.Description.Text = description;
             dlg.Remarks.Text = exception.ToString();
+            dlg.WindowStartupLocation = owner != null
+                ? WindowStartupLocation.CenterOwner
+                : WindowStartupLocation.CenterScreen;
 
             if (owner != null)
                 dlg.Owner = owner;
