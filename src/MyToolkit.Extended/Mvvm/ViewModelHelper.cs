@@ -91,6 +91,8 @@ namespace MyToolkit.Mvvm
 
             view.Loaded += (sender, args) => viewModel.CallOnLoaded();
             view.Unloaded += (sender, args) => viewModel.CallOnUnloaded();
+
+            view.Dispatcher.ShutdownStarted += delegate { viewModel.CallOnUnloaded(); };
         }
 
         #endif
