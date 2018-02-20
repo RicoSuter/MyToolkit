@@ -195,13 +195,9 @@ namespace MyToolkit.Paging.Handlers
 
         private bool TryGoBackAsync()
         {
-            if (_page.Frame.CanGoBack)
-            {
-                var args = new CancelEventArgs();
-                CallGoBackActions(args, _goBackActions);
-                return _page.Frame.CanGoBack || args.Cancel;
-            }
-            return false;
+            var args = new CancelEventArgs();
+            CallGoBackActions(args, _goBackActions);
+            return _page.Frame.CanGoBack || args.Cancel;
         }
 
         private void CallGoBackActions(CancelEventArgs e, List<Func<CancelEventArgs, Task>> actions)
